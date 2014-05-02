@@ -40,7 +40,7 @@ define("_MSG_TITLE_WITH_LINK", "<a href='http://shareaza.sourceforge.net/'>Share
 
 define("_MSG_LANGUAGES", "Test also in:");
 define("_MSG_FOOTER", "Kysymykset ja kommentit:
-<a href='http://sourceforge.net/apps/phpbb/shareaza/'>Shareaza Forum (EN)</a>.");
+<a href='http://shareaza.sourceforge.net/phpbb/'>Shareaza Forum (EN)</a>.");
 
 /* stats line */
 define("_MSG_STATS", "T&auml;m&auml; testi on tehty %d kertaa %s l&auml;htien. Onnistumisarvio: TCP &amp; UPD %d%%,
@@ -66,7 +66,7 @@ define("_MSG_ERROR_IP", "Yhteystesti ei pystynyt selvitt&auml;m&auml;&auml;n IP-
 
 /* the link to the wiki */
 define("_MSG_WIKI_FR", "Jos tarvitset apua palomuurin (firewall) tai reitittimen (router) asetusten kanssa, k&auml;y Shareazan Wiki:ss&auml;:
-<a href='http://sourceforge.net/apps/mediawiki/shareaza/index.php?title=FAQ.FirewallsRouters'>FAQ:&nbsp;Routers/Firewalls</a>.");
+<a href='http://shareaza.sourceforge.net/mediawiki/index.php?title=FAQ.FirewallsRouters'>FAQ:&nbsp;Routers/Firewalls</a>.");
 
 /* progress box */
 define("_MSG_PROGRESS", "Yhteystesti on nyt k&auml;ynniss&auml;, t&auml;m&auml; voi vied&auml; muutaman sekunnin. Ole hyv&auml; ja odota...");

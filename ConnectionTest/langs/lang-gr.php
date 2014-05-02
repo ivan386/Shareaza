@@ -40,7 +40,7 @@ define("_MSG_TITLE_WITH_LINK", "Δοκιμή Σύνδεσης του <a href='ht
 
 define("_MSG_LANGUAGES", "Αυτή η δοκιμή σύνδεσης είναι επίσης διαθέσιμη στα:");
 define("_MSG_FOOTER", "Ερωτήσεις και σχόλια σχετικά με αυτήν τη δοκιμή είναι ευπρόσδεκτα στα
-<a href='http://sourceforge.net/apps/phpbb/shareaza/'>Shareaza Forums</a>.");
+<a href='http://shareaza.sourceforge.net/phpbb/'>Shareaza Forums</a>.");
 
 /* stats line */
 define("_MSG_STATS", "Αυτή η δοκιμή έχει γίνει %d&nbsp;φορές από %s.  Δείκτης
@@ -72,7 +72,7 @@ define("_MSG_ERROR_IP", "Η δοκιμή σύνδεσης δεν μπόρεσε 
 
 /* the link to the wiki */
 define("_MSG_WIKI_FR", "Αν χρειαστείτε βοήθεια στην παραμετροποίηση του firewall ή router σας, επισκεφθείτε την εξής σελίδα στο wiki:
-<a href='http://sourceforge.net/apps/mediawiki/shareaza/index.php?title=FAQ.FirewallsRouters'>FAQ:&nbsp;Routers/Firewalls</a>.");
+<a href='http://shareaza.sourceforge.net/mediawiki/index.php?title=FAQ.FirewallsRouters'>FAQ:&nbsp;Routers/Firewalls</a>.");
 
 /* progress box */
 define("_MSG_PROGRESS", "Η δοκιμή σύνδεσης εξελίσσεται αυτήν τη στιγμή και ενδέχεται να διαρκέσει λίγα δευτερόλεπτα. Παρακαλώ περιμένετε...");

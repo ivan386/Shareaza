@@ -40,7 +40,7 @@ define("_MSG_TITLE_WITH_LINK", "Ryšio testas, skirtas „<a href='http://sharea
 
 define("_MSG_LANGUAGES", "Šį puslapį galite skaityti ir šiomis kalbomis:");
 define("_MSG_FOOTER", "Klausimus ir pastabas apie šį testą siųskite į:
-<a href='http://sourceforge.net/apps/phpbb/shareaza/'>„Shareaza“ forumus</a>.");
+<a href='http://shareaza.sourceforge.net/phpbb/'>„Shareaza“ forumus</a>.");
 
 /* stats line */
 define("_MSG_STATS", "Šis testas buvo atliktas %d&nbsp;kartus(-ą,-ų) nuo %s.  Sėkmingi 
@@ -70,7 +70,7 @@ define("_MSG_ERROR_IP", "Ryšio testas negalėjo nustatyti Jūsų kompiuterio IP
 
 /* the link to the wiki */
 define("_MSG_WIKI_FR", "Jei Jums reikalinga pagalba, kaip susiderinti ugniasienę arba maršrutizatorių, aplankykite wiki
-puslapį: <a href='http://sourceforge.net/apps/mediawiki/shareaza/index.php?title=FAQ.FirewallsRouters'>FAQ:&nbsp;Routers/Firewalls</a>. Rašykite lietuviškai, jei nemokate
+puslapį: <a href='http://shareaza.sourceforge.net/mediawiki/index.php?title=FAQ.FirewallsRouters'>FAQ:&nbsp;Routers/Firewalls</a>. Rašykite lietuviškai, jei nemokate
 anglų kalbos, atsiras bet kas, kas galės atsakyti.");
 
 /* progress box */

@@ -38,7 +38,7 @@ define("_MSG_TITLE", "Shareaza Verbindungstest");
 define("_MSG_TITLE_WITH_LINK", "<a href='http://shareaza.sourceforge.net/'>Shareaza</a> Verbindungstest");
 define("_MSG_LANGUAGES", "Diesen Verbindungstest gibt es auch in:");
 define("_MSG_FOOTER", "Fragen und Kommentare zu diesem Verbindungstest sind auf
-den <a href='http://sourceforge.net/apps/phpbb/shareaza/'>Shareaza Foren</a> willkommen.");
+den <a href='http://shareaza.sourceforge.net/phpbb/'>Shareaza Foren</a> willkommen.");
 
 /* stats line */
 define("_MSG_STATS", "Dieser Test wurde %d&nbsp;mal durchgeführt, seit dem %s.
@@ -74,7 +74,7 @@ herausfinden.  Bitte melden Sie dieses Problem.");
 /* the link to the wiki */
 define("_MSG_WIKI_FR", "Falls Sie bei der Konfiguration Ihrer Firewall oder
 Ihres Routers Hilfe benötigen, dann besuchen Sie folgende Seite der Shareaza Wiki:
-<a href='http://sourceforge.net/apps/mediawiki/shareaza/index.php?title=FAQ.FirewallsRouters/de'>FAQ:&nbsp;Router/Firewall</a>.");
+<a href='http://shareaza.sourceforge.net/mediawiki/index.php?title=FAQ.FirewallsRouters/de'>FAQ:&nbsp;Router/Firewall</a>.");
 
 /* progress box */
 define("_MSG_PROGRESS", "Der Verbindungstest ist jetzt am laufen; dies kann

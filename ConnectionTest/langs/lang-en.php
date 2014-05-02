@@ -56,7 +56,7 @@ define("_MSG_TITLE_WITH_LINK", "<a href='http://shareaza.sourceforge.net/'>Share
 
 define("_MSG_LANGUAGES", "This connection test is also available in:");
 define("_MSG_FOOTER", "Questions and comments about this test are welcome on the
-<a href='http://sourceforge.net/apps/phpbb/shareaza/'>Shareaza Forums</a>.");
+<a href='http://shareaza.sourceforge.net/phpbb/'>Shareaza Forums</a>.");
 
 /* stats line */
 define("_MSG_STATS", "This test has been done %d&nbsp;times since %s.  Success
@@ -88,7 +88,7 @@ is.  Please report this problem.");
 
 /* the link to the wiki */
 define("_MSG_WIKI_FR", "If you need help with configuring your firewall or router, visit this page on the
-wiki: <a href='http://sourceforge.net/apps/mediawiki/shareaza/index.php?title=FAQ.FirewallsRouters'>FAQ:&nbsp;Routers/Firewalls</a>.");
+wiki: <a href='http://shareaza.sourceforge.net/mediawiki/index.php?title=FAQ.FirewallsRouters'>FAQ:&nbsp;Routers/Firewalls</a>.");
 
 /* progress box */
 define("_MSG_PROGRESS", "Connection test now in progress; it might take a few seconds, please stand by...");

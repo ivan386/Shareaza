@@ -40,7 +40,7 @@ define("_MSG_TITLE_WITH_LINK", "Test de connexion de <a href='http://shareaza.so
 
 define("_MSG_LANGUAGES", "Ce test de connexion est aussi disponible dans les langues suivantes&nbsp;:");
 define("_MSG_FOOTER", "Questions et commentaires sont les bienvenus sur
-<a href='http://sourceforge.net/apps/phpbb/shareaza/'>les forums de Shareaza</a>.");
+<a href='http://shareaza.sourceforge.net/phpbb/'>les forums de Shareaza</a>.");
 
 /* stats line */
 define("_MSG_STATS", "Ce test a été effectué %d&nbsp;fois depuis le %s.
@@ -74,7 +74,7 @@ define("_MSG_ERROR_IP", "Le test de connexion n'arrive pas à trouver votre IP. 
 
 /* the link to the wiki */
 define("_MSG_WIKI_FR", "Si vous désirez de l'aide pour configurer votre pare-feu ou votre routeur, consultez cette page
-du wiki&nbsp;: <a href='http://sourceforge.net/apps/mediawiki/shareaza/index.php?title=FAQ.FirewallsRouters/fr'>FAQ&nbsp;:&nbsp;Routeurs et pare-feu</a>.");
+du wiki&nbsp;: <a href='http://shareaza.sourceforge.net/mediawiki/index.php?title=FAQ.FirewallsRouters/fr'>FAQ&nbsp;:&nbsp;Routeurs et pare-feu</a>.");
 
 /* progress box */
 define("_MSG_PROGRESS", "Test en cours, cela peut prendre quelques secondes, patientez SVP...");

@@ -40,7 +40,7 @@ define("_MSG_TITLE_WITH_LINK", "<a href='http://shareaza.sourceforge.net/'>Share
 
 define("_MSG_LANGUAGES", "此连接测试有以下其他语言版本可用:");
 define("_MSG_FOOTER", "欢迎将有关此测试的问题和评论发送到
-<a href='http://sourceforge.net/apps/phpbb/shareaza/'>Shareaza 论坛</a>.");
+<a href='http://shareaza.sourceforge.net/phpbb/'>Shareaza 论坛</a>.");
 
 /* stats line */
 define("_MSG_STATS", "此测试已经进行了 %d&nbsp;次, 始于 %s. 成功
@@ -71,7 +71,7 @@ define("_MSG_ERROR_IP", "此连接测试无法找到您的 IP 地址. 请
 
 /* the link to the wiki */
 define("_MSG_WIKI_FR", "如果您需要帮助来设置您的防火墙或路由器, 请访问
-wiki: <a href='http://sourceforge.net/apps/mediawiki/shareaza/index.php?title=FAQ.FirewallsRouters'>FAQ:&nbsp;路由器/防火墙</a>.");
+wiki: <a href='http://shareaza.sourceforge.net/mediawiki/index.php?title=FAQ.FirewallsRouters'>FAQ:&nbsp;路由器/防火墙</a>.");
 
 /* progress box */
 define("_MSG_PROGRESS", "连接测试正在进行中；可能需要几秒钟, 请稍候...");

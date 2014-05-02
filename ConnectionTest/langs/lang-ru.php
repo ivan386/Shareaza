@@ -40,7 +40,7 @@ define("_MSG_TITLE_WITH_LINK", "Тест соединения <a href='http://sh
 
 define("_MSG_LANGUAGES", "Тест соединения также доступен на других языках:");
 define("_MSG_FOOTER", "Вопросы и комментарии приветствуются на
-<a href='http://sourceforge.net/apps/phpbb/shareaza/'>форуме Shareaza</a>.");
+<a href='http://shareaza.sourceforge.net/phpbb/'>форуме Shareaza</a>.");
 
 /* stats line */
 define("_MSG_STATS", "Этот тест пройден %d&nbsp;раз с %s.  Частота успешного тестирования:
@@ -70,7 +70,7 @@ define("_MSG_ERROR_IP", "Не удается определить ваш IP-ад
 /* the link to the wiki */
 define("_MSG_WIKI_FR", "Если вам нужна помощь по настройке фаерволла или роутера,
 обратитесь к вики:
-<a href='http://sourceforge.net/apps/mediawiki/shareaza/index.php?title=FAQ.FirewallsRouters/ru'>FAQ:&nbsp;Routers/Firewalls</a>.");
+<a href='http://shareaza.sourceforge.net/mediawiki/index.php?title=FAQ.FirewallsRouters/ru'>FAQ:&nbsp;Routers/Firewalls</a>.");
 
 /* progress box */
 define("_MSG_PROGRESS", "Начато тестирование соединения, это может занять несколько секунд.");

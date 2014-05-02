@@ -40,7 +40,7 @@ define("_MSG_TITLE_WITH_LINK", "בדיקת החיבור של שרזה");
 
 define("_MSG_LANGUAGES", "בדיקת החיבור זמינה גם בשפות הבאות:");
 define("_MSG_FOOTER", "שאלות והערות לגבי הבדיקה יתקבלו בברכה
-<a href='http://sourceforge.net/apps/phpbb/shareaza/'>בפורום שרזה</a>.");
+<a href='http://shareaza.sourceforge.net/phpbb/'>בפורום שרזה</a>.");
 
 /* stats line */
 define("_MSG_STATS", "מאז %d הבדיקה התבצעה %s פעמים.
@@ -69,7 +69,7 @@ define("_MSG_ERROR_PORT_ZERO", "מספר הפתחה שהכנסת לא חוקי.
 define("_MSG_ERROR_IP", "בדיקת החיבור לא הצליחה לזהות את מספר ה-IP שלך, אנא דווח על התקלה.");
 
 /* the link to the wiki */
-define("_MSG_WIKI_FR", "<a href='http://sourceforge.net/apps/mediawiki/shareaza/index.php?title=FAQ.FirewallsRouters'>שאלות נפוצות:&nbsp;נתבים/חומות אש</a>. :אם אתה צריך עזרה בהגדרת חומת האש או הנתב שלך בקר בעמוד זה במערכת הויקי");
+define("_MSG_WIKI_FR", "<a href='http://shareaza.sourceforge.net/mediawiki/index.php?title=FAQ.FirewallsRouters'>שאלות נפוצות:&nbsp;נתבים/חומות אש</a>. :אם אתה צריך עזרה בהגדרת חומת האש או הנתב שלך בקר בעמוד זה במערכת הויקי");
 
 /* progress box */
 define("_MSG_PROGRESS", "בדיקת החיבור מתבצעת כעת, הבדיקה תמשך מספר שניות, אנא המתן...");

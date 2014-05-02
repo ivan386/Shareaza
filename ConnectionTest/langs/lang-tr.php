@@ -40,7 +40,7 @@ define("_MSG_TITLE_WITH_LINK", "<a href='http://shareaza.sourceforge.net/'>Share
 
 define("_MSG_LANGUAGES", "Bu bağlantı testini şu dillerde de kullanabilirsiniz:");
 define("_MSG_FOOTER", "Bu test hakkında sorularınız ve yorumlarınız için en uygun yer
-<a href='http://sourceforge.net/apps/phpbb/shareaza/'>Shareaza Forumlarıdır</a>.");
+<a href='http://shareaza.sourceforge.net/phpbb/'>Shareaza Forumlarıdır</a>.");
 
 /* stats line */
 define("_MSG_STATS", "Bu testin yapılış sayısı %d&nbsp;kez başlangıç tarihi %s.  Başarı yüzdesi: heriki&nbsp;test:&nbsp;%d%%, sadece&nbsp;TCP:&nbsp;%d%%,
@@ -69,7 +69,7 @@ etkinleşmesi için Shareaza istemcisinin bağlantısını kesip onu tekrar çev
 define("_MSG_ERROR_IP", "Bağlantı testi IP adresinizi bulamadı. Bu sorunu Shareaza forumlarında belirtiniz.");
 
 /* the link to the wiki */
-define("_MSG_WIKI_FR", "Eğer güvenlik duvarı ya da yönlendiricinizin ayarları için yardıma ihtiyacınız varsa, wiki'deki şu sayfayı okumanız önerilir: <a href='http://sourceforge.net/apps/mediawiki/shareaza/index.php?title=FAQ.FirewallsRouters'>FAQ:&nbsp;Routers/Firewalls</a>.");
+define("_MSG_WIKI_FR", "Eğer güvenlik duvarı ya da yönlendiricinizin ayarları için yardıma ihtiyacınız varsa, wiki'deki şu sayfayı okumanız önerilir: <a href='http://shareaza.sourceforge.net/mediawiki/index.php?title=FAQ.FirewallsRouters'>FAQ:&nbsp;Routers/Firewalls</a>.");
 
 /* progress box */
 define("_MSG_PROGRESS", "Bağlantı testi yapılmaktadır, bu birkaç saniye alabilir, bekleyiniz...");

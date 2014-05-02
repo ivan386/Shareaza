@@ -40,7 +40,7 @@ define("_MSG_TITLE_WITH_LINK", "Test Połączenia <a href='http://shareaza.sourc
 
 define("_MSG_LANGUAGES", "Ten test jest dostępny również w następujących językach:");
 define("_MSG_FOOTER", "Pytania i komentarze odnośnie tego testu są mile widziane na
-<a href='http://sourceforge.net/apps/phpbb/shareaza/'>Forum Shareazy</a>.");
+<a href='http://shareaza.sourceforge.net/phpbb/'>Forum Shareazy</a>.");
 
 /* stats line */
 define("_MSG_STATS", "Ten test został przeprowadzony %d&nbsp;razy od %s.  Sukcesywność:
@@ -66,7 +66,7 @@ define("_MSG_ERROR_IP", "Ten test nie może znaleźć Twojego adresu IP. Proszę
 
 /* the link to the wiki */
 define("_MSG_WIKI_FR", "Jeśli potrzebujesz pomocy z konfiguracją Twojego firewalla bądź routera - zajrzyj do
-wiki: <a href='http://sourceforge.net/apps/mediawiki/shareaza/index.php?title=FAQ.FirewallsRouters/pl'>FAQ:&nbsp;Routers/Firewalls</a>.");
+wiki: <a href='http://shareaza.sourceforge.net/mediawiki/index.php?title=FAQ.FirewallsRouters/pl'>FAQ:&nbsp;Routers/Firewalls</a>.");
 
 /* progress box */
 define("_MSG_PROGRESS", "Test połączenia jest właśnie wykonywany; może to zająć kilka sekund, proszę czekać...");

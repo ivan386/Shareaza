@@ -873,7 +873,7 @@ if ($opt_enable_stats)
 	} while (FALSE);
 }
 
-echo "<span class='nowrap'>Copyright &copy; 2004-2008 jlh</span>";
+echo "<span class='nowrap'>Copyright &copy; 2004-2009 jlh</span>";
 
 if (_MSG_TRANSLATOR_STRING)
 	echo ", <span class='nowrap'>" . _MSG_TRANSLATOR_STRING . '</span>';

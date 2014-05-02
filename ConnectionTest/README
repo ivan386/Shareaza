@@ -14,7 +14,7 @@ NOTE: This package contains the source of the test, which you only need
 if you intend to run a copy of this test on a server.  If you just want
 to test your client, then you don't need this package; instead use one
 of the tests that is already running an a server.  Refer to the Shareaza
-Forums to find them (http://sourceforge.net/apps/phpbb/shareaza/).
+Forums to find them (http://shareaza.sourceforge.net/phpbb/).
 
 
 License
@@ -123,7 +123,7 @@ that everyone can make use of it.  The test doesn't consume much
 bandwidth; on average, there's currently one test being done every 3-4
 minutes on my server (rising tendency).  For making the test public,
 either contact me or post the link on the Shareaza Forums
-(http://sourceforge.net/apps/phpbb/shareaza/).
+(http://shareaza.sourceforge.net/phpbb/).
 
 
 That's it
@@ -137,13 +137,11 @@ Please don't send me questions about installing web server software
 and/or PHP itself, I won't be of much help; instead, see the respective
 documentations.  Also, don't send me questions about configuring your
 firewall and/or router; instead, go to the Shareaza Forums
-(http://sourceforge.net/apps/phpbb/shareaza/) or to the Shareaza Wiki
-(http://sourceforge.net/apps/mediawiki/shareaza/).
+(http://shareaza.sourceforge.net/phpbb/) or to the Shareaza Wiki
+(http://shareaza.sourceforge.net/mediawiki/).
 
 Last but not least, thanks go to everyone that helped me making this
 test, to everyone that provided translations and to everyone that is
 hosting it!  :)
 
                                                        -- jlh, July 2009
-
- vi:set tw=72:

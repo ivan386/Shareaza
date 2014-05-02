@@ -40,7 +40,7 @@ define("_MSG_TITLE_WITH_LINK", "<a href='http://shareaza.sourceforge.net/'>Share
 
 define("_MSG_LANGUAGES", "Deze verbindingstest is ook beschikbaar in:");
 define("_MSG_FOOTER", "Vragen en suggesties over deze test zijn altijd welkom in de
-<a href='http://sourceforge.net/apps/phpbb/shareaza/'>Shareaza Forums</a>.");
+<a href='http://shareaza.sourceforge.net/phpbb/'>Shareaza Forums</a>.");
 
 /* stats line */
 define("_MSG_STATS", "Deze test werd reeds %d keer uitgevoerd sinds %s. Geslaagde tests: Beide tests %d%%, enkel TCP: %d%%, enkel UDP: %d%%, geen: %d%%.");
@@ -57,7 +57,7 @@ define("_MSG_ERROR_IP", "De test kon je IP-adres niet te weten komen. Gelieve di
 
 /* the link to the wiki */
 define("_MSG_WIKI_FR", "Indien je hulp nodig hebt met het instellen van je firewall of router, bekijk dan deze pagina in de
-wiki: <a href='http://sourceforge.net/apps/mediawiki/shareaza/index.php?title=FAQ.FirewallsRouters/nl'>FAQ:&nbsp;Routers/Firewalls</a>.");
+wiki: <a href='http://shareaza.sourceforge.net/mediawiki/index.php?title=FAQ.FirewallsRouters/nl'>FAQ:&nbsp;Routers/Firewalls</a>.");
 
 /* progress box */
 define("_MSG_PROGRESS", "De connectietest is nu bezig; dit kan enkele seconden duren, even geduld...");
