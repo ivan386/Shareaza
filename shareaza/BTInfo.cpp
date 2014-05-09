@@ -1017,21 +1017,16 @@ BOOL CBTInfo::LoadTorrentTree(const CBENode* pRoot)
 
 			// Try path.utf8 if it's set
 			const CBENode* pPath = pFile->GetNode( "path.utf-8" );
-			if ( pPath )
+			if ( pPath && pPath->IsType( CBENode::beList ) )
 			{
-				if ( pPath->IsType( CBENode::beList ) && pPath->GetCount() > 32 )
-				{
-					CBENode* pPart = pPath->GetNode( 0 );
-					if ( pPart && pPart->IsType( CBENode::beString ) )
-						strPath = pPart->GetString();
-				}
+				const CBENode* pPart = pPath->GetNode( 0 );
+				if ( pPart && pPart->IsType( CBENode::beString ) )
+					strPath = pPart->GetString();
 			}
 
 			// Get the regular path
 			pPath = pFile->GetNode( "path" );
-
-			if ( ! pPath ) return FALSE;
-			if ( ! pPath->IsType( CBENode::beList ) ) return FALSE;
+			if ( ! pPath || ! pPath->IsType( CBENode::beList ) ) return FALSE;
 
 			const CBENode* pPathPart = pPath->GetNode( 0 );
 			if ( pPathPart && pPathPart->IsType( CBENode::beString ) )
@@ -1053,7 +1048,7 @@ BOOL CBTInfo::LoadTorrentTree(const CBENode* pRoot)
 			}
 
 			// If that didn't work, try decoding the path
-			if ( ( ! IsValid( strPath ) )  )
+			if ( ! IsValid( strPath ) )
 			{
 				// There was an error reading the path
 				m_bEncodingError = true;
@@ -1067,10 +1062,8 @@ BOOL CBTInfo::LoadTorrentTree(const CBENode* pRoot)
 				}
 			}
 
-			if ( ! pPath ) return FALSE;
-			if ( ! pPath->IsType( CBENode::beList ) ) return FALSE;
-			if ( pPath->GetCount() > 32 ) return FALSE;
-			if ( _tcsicmp( strPath.GetString() , _T("#ERROR#") ) == 0 ) return FALSE;
+			if ( ! pPath || ! pPath->IsType( CBENode::beList ) ) return FALSE;
+			if ( strPath.CompareNoCase( _T("#ERROR#") ) == 0 ) return FALSE;
 
 			pBTFile->m_sName = PathFindFileName( strPath );
 
@@ -1082,8 +1075,9 @@ BOOL CBTInfo::LoadTorrentTree(const CBENode* pRoot)
 				const CBENode* pPart = pPath->GetNode( nPath );
 				if ( ! pPart || ! pPart->IsType( CBENode::beString ) ) return FALSE;
 
-				if ( pBTFile->m_sPath.GetLength() )
-					pBTFile->m_sPath += '\\';
+				const int nPathLength = pBTFile->m_sPath.GetLength();
+				if ( nPathLength && pBTFile->m_sPath.GetAt( nPathLength - 1 ) != _T('\\') )
+					pBTFile->m_sPath += _T('\\');
 
 				// Get the path
 
