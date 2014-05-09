@@ -300,7 +300,7 @@ void CSettings::Load()
 	Add( _T("Connection"), _T("TimeoutTraffic"), &Connection.TimeoutTraffic, 140*1000, 1000, 10, 60*60, _T(" s") );
 	Add( _T("Connection"), _T("UPnPRefreshTime"), &Connection.UPnPRefreshTime, 30*60*1000, 60*1000, 5, 24*60, _T(" m") );
 	Add( _T("Connection"), _T("UPnPTimeout"), &Connection.UPnPTimeout, 5*1000, 1, 0, 60*1000, _T(" ms") );
-	Add( _T("Connection"), _T("ZLibCompressionLevel"), &Connection.ZLibCompressionLevel, 6, 1, 0, 9, _T(" level") ); 
+	Add( _T("Connection"), _T("ZLibCompressionLevel"), &Connection.ZLibCompressionLevel, 9, 1, 0, 9, _T(" level") ); 
 
 	Add( _T("Bandwidth"), _T("Downloads"), &Bandwidth.Downloads, 0 );
 	Add( _T("Bandwidth"), _T("HubIn"), &Bandwidth.HubIn, 0, 128, 0, 8192, _T(" Kb/s") );
@@ -496,7 +496,7 @@ void CSettings::Load()
 	Add( _T("Downloads"), _T("MaxAllowedFailures"), &Downloads.MaxAllowedFailures, 10, 1, 3, 40 );
 	Add( _T("Downloads"), _T("MaxConnectingSources"), &Downloads.MaxConnectingSources, 28, 1, 5, 50 );
 	Add( _T("Downloads"), _T("MaxFileSearches"), &Downloads.MaxFileSearches, 2, 1, 0, 5 );
-	Add( _T("Downloads"), _T("MaxFileTransfers"), &Downloads.MaxFileTransfers, 10 );
+	Add( _T("Downloads"), _T("MaxFileTransfers"), &Downloads.MaxFileTransfers, 10, 1, 1, 250 );
 	Add( _T("Downloads"), _T("MaxFiles"), &Downloads.MaxFiles, 20, 1, 1, 100 );
 	Add( _T("Downloads"), _T("MaxReviews"), &Downloads.MaxReviews, 64, 1, 0, 256 );
 	Add( _T("Downloads"), _T("MaxTransfers"), &Downloads.MaxTransfers, 100, 1, 1, 250 );
@@ -533,7 +533,7 @@ void CSettings::Load()
 
 	Add( _T("Uploads"), _T("AllowBackwards"), &Uploads.AllowBackwards, true );
 	Add( _T("Uploads"), _T("AutoClear"), &Uploads.AutoClear, false );
-	Add( _T("Uploads"), _T("BlockAgents"), &Uploads.BlockAgents, _T("|Mozilla|Fake Shareaza|") );
+	Add( _T("Uploads"), _T("BlockAgents"), &Uploads.BlockAgents, _T("|Mozilla|Foxy|Fake Shareaza|") );
 	Add( _T("Uploads"), _T("ClampdownFactor"), &Uploads.ClampdownFactor, 20, 1, 0, 100, _T("%") );
 	Add( _T("Uploads"), _T("ClampdownFloor"), &Uploads.ClampdownFloor, 8*128, 128, 0, 4096, _T(" Kb/s") );
 	Add( _T("Uploads"), _T("ClearDelay"), &Uploads.ClearDelay, 30*1000, 1000, 1, 1800, _T(" s") );
@@ -835,7 +835,7 @@ void CSettings::SmartUpgrade()
 		{
 			Gnutella2.UdpOutResend			= 6000;
 			Gnutella2.UdpOutExpire			= 26000;
-			Library.TigerHeight		= 9;
+			Library.TigerHeight				= 9;
 
 			Downloads.AutoExpand			= false;
 
