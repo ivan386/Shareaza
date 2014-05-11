@@ -35,8 +35,8 @@ using namespace System::Runtime::InteropServices;
 //      Build Number
 //      Revision
 //
-[assembly: AssemblyVersion("1.3.3466.24114")];
-[assembly: AssemblyFileVersion("1.3.3466.24114")];
+[assembly: AssemblyVersion("1.3.3718.38316")];
+[assembly: AssemblyFileVersion("1.3.3718.38316")];
 
 using namespace System::Security::Permissions;
 
