@@ -80,23 +80,24 @@ THE SOFTWARE.
 #ifndef EAFNOSUPPORT
 #define EAFNOSUPPORT WSAEAFNOSUPPORT
 #endif
-//static int
-//set_nonblocking(int fd, int nonblocking)
-//{
-//    int rc;
-//
-//    unsigned long mode = !!nonblocking;
-//    rc = ioctlsocket(fd, FIONBIO, &mode);
-//    if(rc != 0)
-//        errno = WSAGetLastError();
-//    return (rc == 0 ? 0 : -1);
-//}
+static int
+set_nonblocking(int fd, int nonblocking)
+{
+    int rc;
+
+    unsigned long mode = !!nonblocking;
+    rc = ioctlsocket(fd, FIONBIO, &mode);
+    if(rc != 0)
+        errno = WSAGetLastError();
+    return (rc == 0 ? 0 : -1);
+}
 
 static int
 random(void)
 {
     return rand();
 }
+//extern const char *inet_ntop(int, const void *, char *, socklen_t);
 
 #if defined(_MSC_VER)
 
@@ -285,6 +286,7 @@ struct storage {
     struct storage *next;
 };
 
+static struct storage * find_storage(const unsigned char *id);
 static void flush_search_node(struct search_node *n, struct search *sr);
 
 static int send_ping(const struct sockaddr *sa, int salen,
@@ -404,7 +406,8 @@ debugf(const char *format, ...)
     if(dht_debug)
         vfprintf(dht_debug, format, args);
     va_end(args);
-    fflush(dht_debug);
+    if(dht_debug)
+        fflush(dht_debug);
 }
 
 static void
@@ -491,29 +494,29 @@ lowbit(const unsigned char *id)
 }
 
 /* Find how many bits two ids have in common. */
-//static int
-//common_bits(const unsigned char *id1, const unsigned char *id2)
-//{
-//    int i, j;
-//    unsigned char xor;
-//    for(i = 0; i < 20; i++) {
-//        if(id1[i] != id2[i])
-//            break;
-//    }
-//
-//    if(i == 20)
-//        return 160;
-//
-//    xor = id1[i] ^ id2[i];
-//
-//    j = 0;
-//    while((xor & 0x80) == 0) {
-//        xor <<= 1;
-//        j++;
-//    }
-//
-//    return 8 * i + j;
-//}
+static int
+common_bits(const unsigned char *id1, const unsigned char *id2)
+{
+    int i, j;
+    unsigned char xor;
+    for(i = 0; i < 20; i++) {
+        if(id1[i] != id2[i])
+            break;
+    }
+
+    if(i == 20)
+        return 160;
+
+    xor = id1[i] ^ id2[i];
+
+    j = 0;
+    while((xor & 0x80) == 0) {
+        xor <<= 1;
+        j++;
+    }
+
+    return 8 * i + j;
+}
 
 /* Determine whether id1 or id2 is closer to ref */
 static int
@@ -1293,11 +1296,42 @@ dht_search(const unsigned char *id, int port, int af,
            dht_callback *callback, void *closure)
 {
     struct search *sr;
+    struct storage *st;
     struct bucket *b = find_bucket(id, af);
 
     if(b == NULL) {
         errno = EAFNOSUPPORT;
         return -1;
+    }
+
+    /* Try to answer this search locally.  In a fully grown DHT this
+       is very unlikely, but people are running modified versions of
+       this code in private DHTs with very few nodes.  What's wrong
+       with flooding? */
+    if(callback) {
+        st = find_storage(id);
+        if(st) {
+            unsigned short swapped;
+            unsigned char buf[18];
+            int i;
+
+            debugf("Found local data (%d peers).\n", st->numpeers);
+
+            for(i = 0; i < st->numpeers; i++) {
+                swapped = htons(st->peers[i].port);
+                if(st->peers[i].len == 4) {
+                    memcpy(buf, st->peers[i].ip, 4);
+                    memcpy(buf + 4, &swapped, 2);
+                    (*callback)(closure, DHT_EVENT_VALUES, id,
+                                (void*)buf, 6);
+                } else if(st->peers[i].len == 16) {
+                    memcpy(buf, st->peers[i].ip, 16);
+                    memcpy(buf + 16, &swapped, 2);
+                    (*callback)(closure, DHT_EVENT_VALUES6, id,
+                                (void*)buf, 18);
+                }
+            }
+        }
     }
 
     sr = searches;
