@@ -922,7 +922,6 @@
 				<item id="ID_SEARCH_FOR_SERIES" text="Sama Seriaali Osasid"/>
 			</menu>
 			<menu text="_Weebiteenused">
-				<item id="ID_LIBRARY_BITZI_WEB" text="Vaata _Bitzist"/>
 			</menu>
 		</menu>
 		<menu name="CSearchWnd">
@@ -943,7 +942,6 @@
 				<item id="ID_SEARCH_FOR_SERIES" text="Sama Seriaali Osasid"/>
 			</menu>
 			<menu text="_Weebiteenused">
-				<item id="ID_LIBRARY_BITZI_WEB" text="Vaata _Bitzist"/>
 			</menu>
 			<separator/>
 			<item id="ID_SEARCH_FILTER" text="_Filtreeri tulemusi..."/>
@@ -969,7 +967,6 @@
 				<item id="ID_SEARCH_FOR_SERIES" text="Sama Seriaali Osasid"/>
 			</menu>
 			<menu text="_Weebiteenused">
-				<item id="ID_LIBRARY_BITZI_WEB" text="Vaata _Bitzist"/>
 			</menu>
 		</menu>
 		<menu name="CBrowseHostWnd">
@@ -988,7 +985,6 @@
 				<item id="ID_SEARCH_FOR_SERIES" text="Sama Seriaali Osasid"/>
 			</menu>
 			<menu text="_Weebiteenused">
-				<item id="ID_LIBRARY_BITZI_WEB" text="Vaata _Bitzist"/>
 			</menu>
 			<separator/>
 			<item id="ID_SEARCH_FILTER" text="_Filtreeri tulemusi..."/>
@@ -1013,7 +1009,6 @@
 				<item id="ID_SEARCH_FOR_SERIES" text="Sama Seriaali Osasid"/>
 			</menu>
 			<menu text="_Weebiteenused">
-				<item id="ID_LIBRARY_BITZI_WEB" text="Vaata _Bitzist"/>
 			</menu>
 			<separator/>
 			<item id="ID_SEARCH_FILTER" text="_Filtreeri tulemusi..."/>
@@ -1249,8 +1244,6 @@
 				<item id="ID_SEARCH_FOR_SERIES" text="Sama Seriaali Osasid"/>
 			</menu>
 			<menu text="_Weebiteenused">
-				<item id="ID_LIBRARY_BITZI_WEB" text="Vaata _Bitzist"/>
-				<item id="ID_LIBRARY_BITZI_DOWNLOAD" text="_Tõmba Andmebaas"/>
 				<item id="ID_WEBSERVICES_MUSICBRAINZ" text="_MusicBrainz"/>
 			</menu>
 			<menu text="Ko_rrasta">
@@ -1281,8 +1274,6 @@
 				<item id="ID_SEARCH_FOR_SERIES" text="Sama Seriaali Osasid"/>
 			</menu>
 			<menu text="_Weebiteenused">
-				<item id="ID_LIBRARY_BITZI_WEB" text="Vaata _Bitzist"/>
-				<item id="ID_LIBRARY_BITZI_DOWNLOAD" text="_Tõmba Andmebaas"/>
 				<item id="ID_WEBSERVICES_MUSICBRAINZ" text="_MusicBrainz"/>
 				<separator/>
 				<item id="ID_LIBRARY_CREATETORRENT" text="Loo .torrent Fail"/>
@@ -1321,8 +1312,6 @@
 				<item id="ID_SEARCH_FOR_SERIES" text="Sama Seriaali Osasid"/>
 			</menu>
 			<menu text="_Weebiteenused">
-				<item id="ID_LIBRARY_BITZI_WEB" text="Vaata _Bitzist"/>
-				<item id="ID_LIBRARY_BITZI_DOWNLOAD" text="_Tõmba Andmebaas"/>
 			</menu>
 			<menu text="Ko_rrasta">
 				<item id="ID_LIBRARY_RENAME" text="_Nimeta Ümber"/>
@@ -1356,9 +1345,6 @@
 				<item id="ID_SEARCH_FOR_SERIES" text="Sama Seriaali Osasid"/>
 			</menu>
 			<menu text="_Weebiteenused">
-				<item id="ID_LIBRARY_BITZI_WEB" text="Vaata _Bitzist"/>
-				<item id="ID_LIBRARY_BITZI_DOWNLOAD" text="_Tõmba Andmebaas"/>
-				<separator/>
 				<item id="ID_LIBRARY_CREATETORRENT" text="Loo .torrent Fail"/>
 			</menu>
 			<menu text="Ko_rrasta">
@@ -1661,8 +1647,6 @@
 			</menu>
 		</menu>
 		<menu name="WebServices.List.Menu">
-			<item id="ID_LIBRARY_BITZI_WEB" text="Vaata _Bitzist"/>
-			<item id="ID_LIBRARY_BITZI_DOWNLOAD" text="_Tõmba Andmebaas"/>
 			<item id="ID_WEBSERVICES_MUSICBRAINZ" text="_MusicBrainz"/>
 		</menu>
 	</menus>
@@ -2457,8 +2441,6 @@
 		<tip id="ID_LIBRARY_ALBUM_DELETE" message="Kustuta valitud Albumi kaust."/>
 		<tip id="ID_LIBRARY_ALBUM_OPEN" message="Ava valitud Albumi kaust."/>
 		<tip id="ID_LIBRARY_ALBUM_PROPERTIES" message="Vaata ja muuda valitud Albumi kausta omadusi..."/>
-		<tip id="ID_LIBRARY_BITZI_DOWNLOAD" message="Tõmba Bitzist(TM) valitud faili kohta andmebaas ..."/>
-		<tip id="ID_LIBRARY_BITZI_WEB" message="Vaata Bitzi(TM) infot valitud faili kohta."/>
 		<tip id="ID_LIBRARY_COLUMNS" message="Vali andmebaasi info, mida kuvada..."/>
 		<tip id="ID_LIBRARY_COPY" message="Kopeeri valitud failid raamatukogu teise kausta..."/>
 		<tip id="ID_LIBRARY_CREATETORRENT" message="Loo .torrent fail mida jagada."/>
@@ -3070,8 +3052,6 @@
 		<string id="16384" value="Oled kuindel, et tahad selle faili käivitada &quot;%s&quot; ?\n\nMõned failid võivad sinu arvutile kahjulikud olla.  Ole enne faili käivitamist kindel, millega tegu."/>
 		<string id="16385" value="Sa hakkad faili %i andmebaasi muutma, oled kindel, et tahad jätkata?"/>
 		<string id="16386" value="Faili %i andmebaasi muutmine."/>
-		<string id="16387" value="Fail &quot;%s&quot; on alles segamini.  Palun oota kuni fail koos on ja proovi siis uuesti."/>
-		<string id="16388" value="See võimalus kasutab teenuseid, mida pakub Bitzi.com failide tuvastamise ja jagamiste kohta.\n\nShareaza võtab SHA1 koodi, valitud failide kohta Bitzi andmebaasist.  Kui oled mures oma turvalisuse pärast, siis võid tutvuda Bitzi.com privaatsus poliitikaga.\n\nKas tahad jätkata?"/>
 		<string id="16389" value="Oled kindel, et tahad lõplikult kustutada %i faili ?\n\nFailid viiakse sinu &quot;prügikasti&quot; kui see on võimaldatud."/>
 		<string id="16390" value="Sa ei ole veel valinud meedia pleierit oma valitud failide jaoks, nagu WinAmp.  Kas sooviksid valida selle nüüd?\n\nShareaza seob sinupoolt valitud failinime, valitud programmiga &quot;/Lisa&quot; argumendiga."/>
 		<string id="16391" value="Sa ei ole võrku ühendatud."/>
@@ -3145,10 +3125,6 @@
 		<string id="16778" value="URL:"/>
 		<string id="16779" value="Tüüp:"/>
 		<string id="16780" value="Täpsustamata"/>
-		<string id="16781" value="Saadan päringu..."/>
-		<string id="16782" value="Õnnestus!"/>
-		<string id="16783" value="Lõpetatud, kliki Sule"/>
-		<string id="16784" value="&amp;Sule"/>
 		<string id="16785" value="(Ilma Visualisatioonita)"/>
 		<string id="16800" value="Sa ei ole veel oma internetiühenduse kiirust täpsustanud.  Enne jätkamist, vali kas Interneti ühenduse tüüp või kiirus."/>
 		<string id="16802" value="Sa ei ole veel täpsustanud oma jagatavaid kausu.  Oled kindel?"/>
@@ -4330,14 +4306,6 @@
 			<control caption="_Pea minu valik meeles"/>
 			<control caption="Ava allalaadimise _jälgimise aken"/>
 			<control caption="Sa oled klikkinud Shareaza poolt koostatud URI-l, mis lisab järgmised Serverid sinu Serverite mälusse."/>
-		</dialog>
-		<dialog name="CBitziDownloadDlg" cookie="StStmsBuSySt" caption="Tõmban Andmebaasi...">
-			<control/>
-			<control caption="Shareaza üritab tõmmata Bitzi(TM) andmebaasi..."/>
-			<control/>
-			<control caption="Tühista"/>
-			<control/>
-			<control caption="www.bitzi.com"/>
 		</dialog>
 		<dialog name="CFilePreviewDlg" cookie="StStStmsStBu" caption="Tark Eelvaade...">
 			<control/>

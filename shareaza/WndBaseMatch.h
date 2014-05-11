@@ -1,7 +1,7 @@
 //
 // WndBaseMatch.h
 //
-// Copyright (c) Shareaza Development Team, 2002-2012.
+// Copyright (c) Shareaza Development Team, 2002-2014.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -101,8 +101,6 @@ protected:
 	afx_msg void OnUpdateSearchFilterRemove(CCmdUI* pCmdUI);
 	afx_msg void OnSearchFilterRemove();
 	afx_msg void OnSearchColumns();
-	afx_msg void OnUpdateLibraryBitziWeb(CCmdUI* pCmdUI);
-	afx_msg void OnLibraryBitziWeb();
 	afx_msg void OnUpdateSecurityBan(CCmdUI* pCmdUI);
 	afx_msg void OnSecurityBan();
 	afx_msg void OnUpdateHitMonitorSearch(CCmdUI* pCmdUI);
@@ -122,15 +120,12 @@ protected:
 	afx_msg void OnSearchForAlbum();
 	afx_msg void OnUpdateSearchForSeries(CCmdUI* pCmdUI);
 	afx_msg void OnSearchForSeries();
-	//afx_msg void OnUpdateLibraryJigle(CCmdUI* pCmdUI);
-	//afx_msg void OnLibraryJigle();
 	afx_msg void OnKillFocusFilter();
 	afx_msg void OnToolbarReturn();
 	afx_msg void OnToolbarEscape();
 	afx_msg void OnUpdateBlocker(CCmdUI* pCmdUI);
 	afx_msg void OnUpdateFilters(CCmdUI* pCmdUI);
 	afx_msg void OnFilters(UINT nID);
-	//}}AFX_MSG
 
 	DECLARE_MESSAGE_MAP()
 };

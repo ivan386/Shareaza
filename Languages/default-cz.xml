@@ -922,7 +922,6 @@
 				<item id="ID_SEARCH_FOR_SERIES" text="Epizody ze stejné série"/>
 			</menu>
 			<menu text="_Webové služby">
-				<item id="ID_LIBRARY_BITZI_WEB" text="Prohlížet _Bitzi Ticket"/>
 			</menu>
 		</menu>
 		<menu name="CSearchWnd">
@@ -943,7 +942,6 @@
 				<item id="ID_SEARCH_FOR_SERIES" text="Epizody ze stejné série"/>
 			</menu>
 			<menu text="_Webové služby">
-				<item id="ID_LIBRARY_BITZI_WEB" text="Prohlížet _Bitzi Ticket"/>
 			</menu>
 			<separator/>
 			<item id="ID_SEARCH_FILTER" text="_Výsledky filtru..."/>
@@ -969,7 +967,6 @@
 				<item id="ID_SEARCH_FOR_SERIES" text="Epizody ze stejné série"/>
 			</menu>
 			<menu text="_Webové služby">
-				<item id="ID_LIBRARY_BITZI_WEB" text="Prohlížet _Bitzi Ticket"/>
 			</menu>
 		</menu>
 		<menu name="CBrowseHostWnd">
@@ -988,7 +985,6 @@
 				<item id="ID_SEARCH_FOR_SERIES" text="Epizody ze stejné série"/>
 			</menu>
 			<menu text="_Webové služby">
-				<item id="ID_LIBRARY_BITZI_WEB" text="Prohlížet _Bitzi Ticket"/>
 			</menu>
 			<separator/>
 			<item id="ID_SEARCH_FILTER" text="_Výsledky filtru..."/>
@@ -1013,7 +1009,6 @@
 				<item id="ID_SEARCH_FOR_SERIES" text="Epizody ze stejné série"/>
 			</menu>
 			<menu text="_Webové služby">
-				<item id="ID_LIBRARY_BITZI_WEB" text="Prohlížet _Bitzi Ticket"/>
 			</menu>
 			<separator/>
 			<item id="ID_SEARCH_FILTER" text="_Výsledky filtru..."/>
@@ -1249,8 +1244,6 @@
 				<item id="ID_SEARCH_FOR_SERIES" text="Epizody ze stejné série"/>
 			</menu>
 			<menu text="_Webové služby">
-				<item id="ID_LIBRARY_BITZI_WEB" text="Prohlížet _Bitzi Ticket"/>
-				<item id="ID_LIBRARY_BITZI_DOWNLOAD" text="_Stáhnout popisky"/>
 				<item id="ID_WEBSERVICES_MUSICBRAINZ" text="_MusicBrainz"/>
 			</menu>
 			<menu text="Sp_ráva souborů">
@@ -1281,8 +1274,6 @@
 				<item id="ID_SEARCH_FOR_SERIES" text="Epizody ze stejné série"/>
 			</menu>
 			<menu text="_Webové služby">
-				<item id="ID_LIBRARY_BITZI_WEB" text="Prohlížet _Bitzi Ticket"/>
-				<item id="ID_LIBRARY_BITZI_DOWNLOAD" text="_Stáhnout popisky"/>
 				<item id="ID_WEBSERVICES_MUSICBRAINZ" text="_MusicBrainz"/>
 				<separator/>
 				<item id="ID_LIBRARY_CREATETORRENT" text="Vytvořit soubor .torrent"/>
@@ -1321,8 +1312,6 @@
 				<item id="ID_SEARCH_FOR_SERIES" text="Epizody ze stejné série"/>
 			</menu>
 			<menu text="_Webové služby">
-				<item id="ID_LIBRARY_BITZI_WEB" text="Prohlížet _Bitzi Ticket"/>
-				<item id="ID_LIBRARY_BITZI_DOWNLOAD" text="_Stáhnout popisky"/>
 			</menu>
 			<menu text="Sp_ráva souborů">
 				<item id="ID_LIBRARY_RENAME" text="_Přejmenovat soubor"/>
@@ -1356,9 +1345,6 @@
 				<item id="ID_SEARCH_FOR_SERIES" text="Epizody ze stejné série"/>
 			</menu>
 			<menu text="_Webové služby">
-				<item id="ID_LIBRARY_BITZI_WEB" text="Prohlížet _Bitzi Ticket"/>
-				<item id="ID_LIBRARY_BITZI_DOWNLOAD" text="_Stáhnout popisky"/>
-				<separator/>
 				<item id="ID_LIBRARY_CREATETORRENT" text="Vytvořit soubor .torrent"/>
 			</menu>
 			<menu text="Sp_ráva souborů">
@@ -1661,8 +1647,6 @@
 			</menu>
 		</menu>
 		<menu name="WebServices.List.Menu">
-			<item id="ID_LIBRARY_BITZI_WEB" text="Prohlížet _Bitzi Ticket"/>
-			<item id="ID_LIBRARY_BITZI_DOWNLOAD" text="_Stáhnout popisky"/>
 			<item id="ID_WEBSERVICES_MUSICBRAINZ" text="_MusicBrainz"/>
 		</menu>
 	</menus>
@@ -2465,8 +2449,6 @@
 		<tip id="ID_LIBRARY_ALBUM_DELETE" message="Vymazat označené album ve složce."/>
 		<tip id="ID_LIBRARY_ALBUM_OPEN" message="Otevřít označené album ve složce."/>
 		<tip id="ID_LIBRARY_ALBUM_PROPERTIES" message="Prohlížet a upravit vlastnosti označeného alba ve složce..."/>
-		<tip id="ID_LIBRARY_BITZI_DOWNLOAD" message="Stahovat popisky pro vybraný soubor(y) z Bitzi(TM)..."/>
-		<tip id="ID_LIBRARY_BITZI_WEB" message="Prohlížet záznam Bitzi(TM) pro vybraný soubor na webu."/>
 		<tip id="ID_LIBRARY_COLUMNS" message="Vybrat popisky sloupce které budou zobrazeny..."/>
 		<tip id="ID_LIBRARY_COPY" message="Kopírovat vybrané soubory do další složky knihovny..."/>
 		<tip id="ID_LIBRARY_CREATETORRENT" message="Vytvořit .torrent pro tento soubor, můžete jej tak poskytnout na webu."/>
@@ -3078,8 +3060,6 @@
 		<string id="16384" value="Opravdu chcete spustit soubor &quot;%s&quot; ?\n\nNěkteré soubory mohou poškodit váš počítač. Ujistěte se, že víte jaký soubor spouštíte."/>
 		<string id="16385" value="Chystáte se upravit popisky pro %i souborů, opravdu chcete pokračovat?"/>
 		<string id="16386" value="Upravuji popisky %i souborů."/>
-		<string id="16387" value="Soubor &quot;%s&quot; ještě nemá hash. Prosím čekejte než bude pro soubor vypočítán hash, a potom to zkuste znovu."/>
-		<string id="16388" value="Tuto možnost využívá služba poskytovaná Bitzi.com která zjišťuje a sdílí informace o vybraných souborech.\n\nShareaza bude přenášet SHA1 hash pro označený soubor(y) v rámci dotazu poslaného databázi Bitzi. Pokud máte obavy o soukromí přečtěte si prohlášení Bitzi.com o ochraně osobních údajů.\n\nChcete pokračovat?"/>
 		<string id="16389" value="Opravdu chcete trvale vymazat vybraný soubor(y) %i ?\n\nPokud to povolíte, soubory budou přesunuty do &quot;koše&quot; (pokud je povolený)."/>
 		<string id="16390" value="Ještě jste nevybrali přehrávač pro multimédiální soubory, jako např. Nullsoft WinAmp. Chcete přehrávač vybrat nyní?\n\nShareaza předá programu název souboru s parametrem &quot;/ADD&quot;."/>
 		<string id="16391" value="Nejste připojeni do sítě."/>
@@ -3153,10 +3133,6 @@
 		<string id="16778" value="URL:"/>
 		<string id="16779" value="Typ:"/>
 		<string id="16780" value="Nespecifikované"/>
-		<string id="16781" value="Žádám..."/>
-		<string id="16782" value="Úspěšně!"/>
-		<string id="16783" value="Po dokončení klikněte na Zavřít"/>
-		<string id="16784" value="&amp;Zavřít"/>
 		<string id="16785" value="(Nezobrazovat)"/>
 		<string id="16800" value="Ještě jste nezadali vaši rychlost připojení. Aby jste mohli pokračovat, buď vyberte vaše připojení k Internetu, nebo zadejte rychlost připojení."/>
 		<string id="16802" value="Nezadali jste žádné složky ke sdílení. Opravdu nechcete nic sdílet?"/>
@@ -4338,14 +4314,6 @@
 			<control caption="_Pamatovat si příště mou volbu"/>
 			<control caption="Otevřít okno _Monitoru stahování"/>
 			<control caption="Kliknuli jste v Shareaze na spustit URI které přidá následující vyhledávací službu k vaší službě vyhledávání."/>
-		</dialog>
-		<dialog name="CBitziDownloadDlg" cookie="StStmsBuSySt" caption="Stažení popisků pro soubory...">
-			<control/>
-			<control caption="Shareaza se pokusí stáhnout popisky z Bitzi(TM)..."/>
-			<control/>
-			<control caption="Zrušit"/>
-			<control/>
-			<control caption="www.bitzi.com"/>
 		</dialog>
 		<dialog name="CFilePreviewDlg" cookie="StStStmsStBu" caption="Inteligentní náhled stahování...">
 			<control/>

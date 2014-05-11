@@ -922,7 +922,6 @@
 				<item id="ID_SEARCH_FOR_SERIES" text="Episodis d'aquesta sèrie"/>
 			</menu>
 			<menu text="Serveis _Web">
-				<item id="ID_LIBRARY_BITZI_WEB" text="Veure tiquet _Bitzi"/>
 			</menu>
 		</menu>
 		<menu name="CSearchWnd">
@@ -943,7 +942,6 @@
 				<item id="ID_SEARCH_FOR_SERIES" text="Episodis d'aquesta sèrie"/>
 			</menu>
 			<menu text="Serveis _Web">
-				<item id="ID_LIBRARY_BITZI_WEB" text="Veure tiquet _Bitzi"/>
 			</menu>
 			<separator/>
 			<item id="ID_SEARCH_FILTER" text="_Filtra resultats..."/>
@@ -969,7 +967,6 @@
 				<item id="ID_SEARCH_FOR_SERIES" text="Episodis d'aquesta sèrie"/>
 			</menu>
 			<menu text="Serveis _Web">
-				<item id="ID_LIBRARY_BITZI_WEB" text="Veure tiquet _Bitzi"/>
 			</menu>
 		</menu>
 		<menu name="CBrowseHostWnd">
@@ -988,7 +985,6 @@
 				<item id="ID_SEARCH_FOR_SERIES" text="Episodis d'aquesta sèrie"/>
 			</menu>
 			<menu text="Serveis _Web">
-				<item id="ID_LIBRARY_BITZI_WEB" text="Veure tiquet _Bitzi"/>
 			</menu>
 			<separator/>
 			<item id="ID_SEARCH_FILTER" text="_Filtra resultats..."/>
@@ -1013,7 +1009,6 @@
 				<item id="ID_SEARCH_FOR_SERIES" text="Episodis d'aquesta sèrie"/>
 			</menu>
 			<menu text="Serveis _Web">
-				<item id="ID_LIBRARY_BITZI_WEB" text="Veure tiquet _Bitzi"/>
 			</menu>
 			<separator/>
 			<item id="ID_SEARCH_FILTER" text="_Filtra resultats..."/>
@@ -1249,8 +1244,6 @@
 				<item id="ID_SEARCH_FOR_SERIES" text="Episodis d'aquesta sèrie"/>
 			</menu>
 			<menu text="Serveis _Web">
-				<item id="ID_LIBRARY_BITZI_WEB" text="Veure tiquet _Bitzi"/>
-				<item id="ID_LIBRARY_BITZI_DOWNLOAD" text="_Descarrega la metainformació"/>
 				<item id="ID_WEBSERVICES_MUSICBRAINZ" text="_MusicBrainz"/>
 			</menu>
 			<menu text="O_rganitza">
@@ -1281,8 +1274,6 @@
 				<item id="ID_SEARCH_FOR_SERIES" text="Episodis d'aquesta sèrie"/>
 			</menu>
 			<menu text="Serveis _Web">
-				<item id="ID_LIBRARY_BITZI_WEB" text="Veure tiquet _Bitzi"/>
-				<item id="ID_LIBRARY_BITZI_DOWNLOAD" text="_Descarrega la metainformació"/>
 				<item id="ID_WEBSERVICES_MUSICBRAINZ" text="_MusicBrainz"/>
 				<separator/>
 				<item id="ID_LIBRARY_CREATETORRENT" text="Crea arxiu .torrent"/>
@@ -1321,8 +1312,6 @@
 				<item id="ID_SEARCH_FOR_SERIES" text="Episodis d'aquesta sèrie"/>
 			</menu>
 			<menu text="Serveis _Web">
-				<item id="ID_LIBRARY_BITZI_WEB" text="Veure tiquet _Bitzi"/>
-				<item id="ID_LIBRARY_BITZI_DOWNLOAD" text="_Descarrega la metainformació"/>
 			</menu>
 			<menu text="O_rganitza">
 				<item id="ID_LIBRARY_RENAME" text="_Reanomena arxiu"/>
@@ -1356,9 +1345,6 @@
 				<item id="ID_SEARCH_FOR_SERIES" text="Episodis d'aquesta sèrie"/>
 			</menu>
 			<menu text="Serveis _Web">
-				<item id="ID_LIBRARY_BITZI_WEB" text="Veure tiquet _Bitzi"/>
-				<item id="ID_LIBRARY_BITZI_DOWNLOAD" text="_Descarrega la metainformació"/>
-				<separator/>
 				<item id="ID_LIBRARY_CREATETORRENT" text="Crea arxiu .torrent"/>
 			</menu>
 			<menu text="O_rganitza">
@@ -1661,8 +1647,6 @@
 			</menu>
 		</menu>
 		<menu name="WebServices.List.Menu">
-			<item id="ID_LIBRARY_BITZI_WEB" text="Veure tiquet _Bitzi"/>
-			<item id="ID_LIBRARY_BITZI_DOWNLOAD" text="_Descarrega la metainformació"/>
 			<item id="ID_WEBSERVICES_MUSICBRAINZ" text="_MusicBrainz"/>
 		</menu>
 	</menus>
@@ -2452,8 +2436,6 @@
 		<tip id="ID_LIBRARY_ALBUM_DELETE" message="Esborra l'àlbum seleccionat."/>
 		<tip id="ID_LIBRARY_ALBUM_OPEN" message="Obre l'àlbum seleccionat."/>
 		<tip id="ID_LIBRARY_ALBUM_PROPERTIES" message="Mostra o edita les propietats de l'àlbum seleccionat"/>
-		<tip id="ID_LIBRARY_BITZI_DOWNLOAD" message="Adquireix la metainformació des de Bitzi(TM)..."/>
-		<tip id="ID_LIBRARY_BITZI_WEB" message="Mostra el resum de Bitzi(TM) a la web."/>
 		<tip id="ID_LIBRARY_COLUMNS" message="Selecciona quines columnes de metainformació s'han de mostrar."/>
 		<tip id="ID_LIBRARY_COPY" message="Copia arxius a altra carpeta de col·lecció..."/>
 		<tip id="ID_LIBRARY_CREATETORRENT" message="Crea un .torrent per a aquest arxiu i puja-lo a un lloc web."/>
@@ -3065,8 +3047,6 @@
 		<string id="16384" value="Estàs segur(a) que vols executar l'arxiu &quot;%s&quot;?\n\nAlguns arxius poden ser perillosos per a l'ordinador, i es recomana tenir l'antivirus actiu i actualitzat."/>
 		<string id="16385" value="Estàs a punt de modificar la metainformació de %i arxius. Estàs segur(a) en continuar?"/>
 		<string id="16386" value="Editant la metainformació de %i arxius."/>
-		<string id="16387" value="l'arxiu %s no ha estat escanejat.  Per favor, espera a que sigui escanejat i intenta-ho més tard."/>
-		<string id="16388" value="Aquesta opció utilitza un servei ofrerit per Bitzi, per a adquirir metainformació de l'arxiu.\n\nShareaza enviarà una petita informació sobre la marca digital 'bitprint' de l'arxiu per a que Bitzi el pugui reconèixer. Si tens algun dubte sobre la privacitat d'aquest servei, visita bitzi.com per a més informació.\n\nVols continuar?"/>
 		<string id="16389" value="Estàs segur(a) d'esborrar els %i arxiu(s) seleccionats de forma permanent ?\n\nEs portaran a la Paperera de reciclatge si està activada."/>
 		<string id="16390" value="No has seleccionat un reproductor per als arxius de multimèdia. Vols seleccionar-ne un ara?\n\nL'arxiu serà passat amb l'argument &quot;/ADD&quot;."/>
 		<string id="16391" value="Shareaza no està connectat a cap xarxa."/>
@@ -3140,10 +3120,6 @@
 		<string id="16778" value="URL:"/>
 		<string id="16779" value="tipus:"/>
 		<string id="16780" value="No "/>
-		<string id="16781" value="Demanat..."/>
-		<string id="16782" value="Procesat"/>
-		<string id="16783" value="Acabat, fes clic a tancar"/>
-		<string id="16784" value="&amp;Tancar"/>
 		<string id="16785" value="(No Visualització)"/>
 		<string id="16800" value="encara no ha especificat la velocitat de Connexió.  Abans de continuar, per favor escull o escriu la velocitat de la teva Connexió."/>
 		<string id="16802" value="No has especificat cap carpeta per a compartir. Recorda que la qualitat de la Xarxa està basada a la quantitat d'arxius que els demés comparteixen, per tant si comparteixes les teves carpetes, la Xarxa tindrà més contingut.  ¿Estàs segur(a) de no compartir les teves carpetes?"/>
@@ -4325,14 +4301,6 @@
 			<control caption="_Recorda la selecció"/>
 			<control caption="Obre el _monitor de transferències"/>
 			<control caption="Aquest enllaç URI permet afegir a Shareaza el següent servei de descobriment:"/>
-		</dialog>
-		<dialog name="CBitziDownloadDlg" cookie="StStmsBuSySt" caption="Descarregant metainformació...">
-			<control/>
-			<control caption="Shareaza està contactant amb Bitzi(TM)..."/>
-			<control/>
-			<control caption="Cancel·la"/>
-			<control/>
-			<control caption="www.bitzi.com"/>
 		</dialog>
 		<dialog name="CFilePreviewDlg" cookie="StStStmsStBu" caption="Vista prèvia intel·ligent...">
 			<control/>

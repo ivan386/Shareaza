@@ -689,19 +689,6 @@ BEGIN
     PUSHBUTTON      "Open &Torrent...",IDC_TORRENT_FILE,205,151,80,16
 END
 
-IDD_BITZI_DOWNLOAD DIALOGEX 0, 0, 262, 132
-STYLE DS_SETFONT | DS_MODALFRAME | DS_CENTER | WS_POPUP | WS_CAPTION | WS_SYSMENU
-CAPTION "Downloading Metadata..."
-FONT 8, "Tahoma", 0, 0, 0x0
-BEGIN
-    ICON            IDR_MAINFRAME,IDC_STATIC,10,10,21,20
-    LTEXT           "Shareaza is attempting to download metadata from Bitzi(TM)...",IDC_STATIC,40,10,215,10
-    CONTROL         "Progress1",IDC_PROGRESS,"msctls_progress32",WS_BORDER,40,25,215,10
-    PUSHBUTTON      "Cancel",IDCANCEL,195,109,60,16
-    CONTROL         "List1",IDC_FILES,"SysListView32",LVS_REPORT | LVS_SHAREIMAGELISTS | LVS_NOCOLUMNHEADER | WS_BORDER | WS_TABSTOP,40,40,215,60
-    LTEXT           "www.bitzi.com",IDC_WEB,7,115,50,10
-END
-
 IDD_SECURE_RULE DIALOGEX 0, 0, 192, 220
 STYLE DS_SETFONT | DS_MODALFRAME | WS_POPUP | WS_CAPTION | WS_SYSMENU
 CAPTION "Security Rule"
@@ -2133,14 +2120,6 @@ BEGIN
         LEFTMARGIN, 7
         RIGHTMARGIN, 285
         TOPMARGIN, 7
-    END
-
-    IDD_BITZI_DOWNLOAD, DIALOG
-    BEGIN
-        LEFTMARGIN, 7
-        RIGHTMARGIN, 255
-        TOPMARGIN, 7
-        BOTTOMMARGIN, 125
     END
 
     IDD_SECURE_RULE, DIALOG
@@ -3750,10 +3729,6 @@ BEGIN
     IDS_LIBRARY_METADATA_MANY 
                             "You are about to modify the metadata of %i files, are you sure you want to continue?"
     IDS_LIBRARY_METADATA_EDIT "Editing metadata of %i files."
-    IDS_LIBRARY_BITZI_HASHED 
-                            "The file ""%s"" has not yet been hashed. Please wait for the file to be hashed, and then try again."
-    IDS_LIBRARY_BITZI_MESSAGE 
-                            "This option uses services provided by Bitzi.com for recognising and sharing information about selected files.\n\nShareaza will transmit the SHA1 hash code for the selected file(s) in order to query the Bitzi database. If you are concerned about privacy, you may wish to consult the Bitzi.com privacy policy.\n\nWould you like to proceed?"
     IDS_LIBRARY_DELETE      "Are you sure you want to permanently delete the %i selected file(s) ?\n\nThe files will be moved to your ""recycle bin"" if it is enabled."
     IDS_LIBRARY_ENQUEUE     "You have not yet selected a media player to enqueue files with, such as Nullsoft Winamp. Would you like to select one now?\n\nShareaza will pass the name of the file to your selected program with the ""/ADD"" argument."
     IDS_NEIGHBOURS_NOT_CONNECTED "You're not connected to the network."
@@ -3978,14 +3953,10 @@ BEGIN
     IDS_URL_URL             "URL:"
     IDS_URL_TYPE            "Type:"
     IDS_URL_UNSPECIFIED     "Unspecified"
-    IDS_BITZI_REQUESTING    "Requesting..."
-    IDS_BITZI_SUCCESS       "Success!"
-    IDS_BITZI_FINISHED      "Finished, click Close"
 END
 
 STRINGTABLE
 BEGIN
-    IDS_BITZI_CLOSE         "&Close"
     IDS_MEDIAVIS_NOVIS      "(No Visualisation)"
 END
 
@@ -4516,9 +4487,6 @@ BEGIN
     ID_SEARCH_STOP          "Stop receiving results in this window."
     ID_TOOLS_DOWNLOAD       "Start downloading a new file or BitTorrent torrent..."
     ID_DOWNLOADS_URL        "Add a source URL to the selected download..."
-    ID_LIBRARY_BITZI_WEB    "View the Bitzi(TM) ticket for the selected file on the web."
-    ID_LIBRARY_BITZI_DOWNLOAD 
-                            "Download metadata for the selected file(s) from Bitzi(TM)..."
     ID_LIBRARY_REFRESH_METADATA "Refresh file metadata"
     ID_VIEW_SECURITY        "Show or hide the SECURITY window."
 END

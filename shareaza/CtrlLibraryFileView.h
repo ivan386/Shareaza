@@ -1,7 +1,7 @@
 //
 // CtrlLibraryFileView.h
 //
-// Copyright (c) Shareaza Development Team, 2002-2012.
+// Copyright (c) Shareaza Development Team, 2002-2014.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -74,10 +74,6 @@ protected:
 	afx_msg void OnLibraryCopy();
 	afx_msg void OnUpdateLibraryDelete(CCmdUI* pCmdUI);
 	afx_msg void OnLibraryDelete();
-	afx_msg void OnUpdateLibraryBitziWeb(CCmdUI* pCmdUI);
-	afx_msg void OnLibraryBitziWeb();
-	afx_msg void OnUpdateLibraryBitziDownload(CCmdUI* pCmdUI);
-	afx_msg void OnLibraryBitziDownload();
 	afx_msg void OnUpdateLibraryRefreshMetadata(CCmdUI* pCmdUI);
 	afx_msg void OnLibraryRefreshMetadata();
 	afx_msg void OnUpdateLibraryShared(CCmdUI* pCmdUI);

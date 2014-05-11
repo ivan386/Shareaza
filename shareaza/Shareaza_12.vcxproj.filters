@@ -75,9 +75,6 @@
     <ClCompile Include="BENode.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="BitziDownloader.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="BTClient.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -738,9 +735,6 @@
     <ClCompile Include="DlgAbout.cpp">
       <Filter>Source Files\Dialogs</Filter>
     </ClCompile>
-    <ClCompile Include="DlgBitziDownload.cpp">
-      <Filter>Source Files\Dialogs</Filter>
-    </ClCompile>
     <ClCompile Include="DlgCloseMode.cpp">
       <Filter>Source Files\Dialogs</Filter>
     </ClCompile>
@@ -1177,9 +1171,6 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="BENode.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="BitziDownloader.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="BTClient.h">
@@ -1948,9 +1939,6 @@
       <Filter>Header Files\Windows</Filter>
     </ClInclude>
     <ClInclude Include="DlgAbout.h">
-      <Filter>Header Files\Dialogs</Filter>
-    </ClInclude>
-    <ClInclude Include="DlgBitziDownload.h">
       <Filter>Header Files\Dialogs</Filter>
     </ClInclude>
     <ClInclude Include="DlgCloseMode.h">

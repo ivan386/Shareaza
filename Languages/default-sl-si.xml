@@ -922,7 +922,6 @@
 				<item id="ID_SEARCH_FOR_SERIES" text="Epizodah iste serije"/>
 			</menu>
 			<menu text="_Spletne storitve">
-				<item id="ID_LIBRARY_BITZI_WEB" text="Poglej _Bitzi karto"/>
 			</menu>
 		</menu>
 		<menu name="CSearchWnd">
@@ -943,7 +942,6 @@
 				<item id="ID_SEARCH_FOR_SERIES" text="Epizodah iste serije"/>
 			</menu>
 			<menu text="_Spletne storitve">
-				<item id="ID_LIBRARY_BITZI_WEB" text="Poglej _Bitzi karto"/>
 			</menu>
 			<separator/>
 			<item id="ID_SEARCH_FILTER" text="_Filtriraj rezultate..."/>
@@ -969,7 +967,6 @@
 				<item id="ID_SEARCH_FOR_SERIES" text="Epizodah iste serije"/>
 			</menu>
 			<menu text="_Spletne storitve">
-				<item id="ID_LIBRARY_BITZI_WEB" text="Poglej _Bitzi karto"/>
 			</menu>
 		</menu>
 		<menu name="CBrowseHostWnd">
@@ -988,7 +985,6 @@
 				<item id="ID_SEARCH_FOR_SERIES" text="Epizodah iste serije"/>
 			</menu>
 			<menu text="_Spletne storitve">
-				<item id="ID_LIBRARY_BITZI_WEB" text="Poglej _Bitzi karto"/>
 			</menu>
 			<separator/>
 			<item id="ID_SEARCH_FILTER" text="_Filtriraj rezultate..."/>
@@ -1013,7 +1009,6 @@
 				<item id="ID_SEARCH_FOR_SERIES" text="Epizodah iste serije"/>
 			</menu>
 			<menu text="_Spletne storitve">
-				<item id="ID_LIBRARY_BITZI_WEB" text="Poglej _Bitzi karto"/>
 			</menu>
 			<separator/>
 			<item id="ID_SEARCH_FILTER" text="_Filtriraj rezultate..."/>
@@ -1249,8 +1244,6 @@
 				<item id="ID_SEARCH_FOR_SERIES" text="Epizodah iste serije"/>
 			</menu>
 			<menu text="_Spletne storitve">
-				<item id="ID_LIBRARY_BITZI_WEB" text="Poglej _Bitzi karto"/>
-				<item id="ID_LIBRARY_BITZI_DOWNLOAD" text="_Prenesi metapodatke"/>
 				<item id="ID_WEBSERVICES_MUSICBRAINZ" text="_MusicBrainz"/>
 			</menu>
 			<menu text="_Organiziraj">
@@ -1281,8 +1274,6 @@
 				<item id="ID_SEARCH_FOR_SERIES" text="Epizodah iste serije"/>
 			</menu>
 			<menu text="_Spletne storitve">
-				<item id="ID_LIBRARY_BITZI_WEB" text="Poglej _Bitzi karto"/>
-				<item id="ID_LIBRARY_BITZI_DOWNLOAD" text="_Prenesi metapodatke"/>
 				<item id="ID_WEBSERVICES_MUSICBRAINZ" text="_MusicBrainz"/>
 				<separator/>
 				<item id="ID_LIBRARY_CREATETORRENT" text="Ustvari datoteko tipa .torrent"/>
@@ -1321,8 +1312,6 @@
 				<item id="ID_SEARCH_FOR_SERIES" text="Epizodah iste serije"/>
 			</menu>
 			<menu text="_Spletne storitve">
-				<item id="ID_LIBRARY_BITZI_WEB" text="Poglej _Bitzi karto"/>
-				<item id="ID_LIBRARY_BITZI_DOWNLOAD" text="_Prenesi metapodatke"/>
 			</menu>
 			<menu text="_Organiziraj">
 				<item id="ID_LIBRARY_RENAME" text="_Preimenuj datoteko"/>
@@ -1356,9 +1345,6 @@
 				<item id="ID_SEARCH_FOR_SERIES" text="Epizodah iste serije"/>
 			</menu>
 			<menu text="_Spletne storitve">
-				<item id="ID_LIBRARY_BITZI_WEB" text="Poglej _Bitzi karto"/>
-				<item id="ID_LIBRARY_BITZI_DOWNLOAD" text="_Prenesi metapodatke"/>
-				<separator/>
 				<item id="ID_LIBRARY_CREATETORRENT" text="Ustvari datoteko tipa .torrent"/>
 			</menu>
 			<menu text="_Organiziraj">
@@ -1661,8 +1647,6 @@
 			</menu>
 		</menu>
 		<menu name="WebServices.List.Menu">
-			<item id="ID_LIBRARY_BITZI_WEB" text="Poglej _Bitzi karto"/>
-			<item id="ID_LIBRARY_BITZI_DOWNLOAD" text="_Prenesi metapodatke"/>
 			<item id="ID_WEBSERVICES_MUSICBRAINZ" text="_MusicBrainz"/>
 		</menu>
 	</menus>
@@ -2459,8 +2443,6 @@
 		<tip id="ID_LIBRARY_ALBUM_DELETE" message="Zbriši izbrano albumsko mapo."/>
 		<tip id="ID_LIBRARY_ALBUM_OPEN" message="Odpri izbrano albumsko mapo."/>
 		<tip id="ID_LIBRARY_ALBUM_PROPERTIES" message="Poglej in uredi lastnosti izbranih albumskih map..."/>
-		<tip id="ID_LIBRARY_BITZI_DOWNLOAD" message="Prenesi metapodatke za izbrane datoteke od sistema Bitzi(TM)..."/>
-		<tip id="ID_LIBRARY_BITZI_WEB" message="Ogled Bitzi(TM) kart za izbrane datoteke na spletu."/>
 		<tip id="ID_LIBRARY_COLUMNS" message="Izberi stolpce z metapodatki za prikaz..."/>
 		<tip id="ID_LIBRARY_COPY" message="Kopiranje izbranih datotek v drugo knjižnično mapo..."/>
 		<tip id="ID_LIBRARY_CREATETORRENT" message="Ustvari .torrent za to datoteko za naložitev (upload) na spletno stran."/>
@@ -3072,8 +3054,6 @@
 		<string id="16384" value="Ste prepričani, da želite zagnati datoteko &quot;%s&quot; ?\n\nNekatere datoteke lahko škodijo vašemu računalniku. Prepričajte se o datoteki predno jo zaženete."/>
 		<string id="16385" value="Pravkar boste spremenili metapodatke %i datotek, ste prepričani, da želite nadaljevati?"/>
 		<string id="16386" value="Urejujem metapodatke v številu datotek: %i."/>
-		<string id="16387" value="Datoteka &quot;%s&quot; še ni bila zgoščena (hashed). Počakajte, da se postopek sgoščevanja (hashing) konča in nato poskusite znova."/>
-		<string id="16388" value="Ta možnost uporablja storitve, ki jih zagotavlja Bitzi.com za prepoznavanje in deljenje informacij o izbranih datotekah.\n\nShareaza bo prenesla SHA1 izvleček (hash code) za izbrane datoteke z namenom poizvedbe po Bitzi podatkovni zbirki. Če ste zaskrbljeni glede zasebnosti, vam svetujemo, da si ogledate izjavo o varovanju zasebnosti na Bitzi.com.\n\nŽelite nadaljevati?"/>
 		<string id="16389" value="Ste preričani, da želite trajno zbrisati število izbranih datotek %i.  ?\n\nDatoteke bodo premaknjene v vaš &quot;koš&quot; če je seveda le-ta omogočen."/>
 		<string id="16390" value="Niste še izbrali predvajalnika medijev, kot je to npr. WinAmp podjetja Nullsoft, s katerim bi postavili datoteke v čakalno vrsto. Želite izbrati program zdaj?\n\nShareaza bo posredovala ime datoteke izbranemu programu z argumentom &quot;/ADD&quot;."/>
 		<string id="16391" value="Niste povezani v omrežje."/>
@@ -3147,10 +3127,6 @@
 		<string id="16778" value="URL:"/>
 		<string id="16779" value="Tip:"/>
 		<string id="16780" value="Nedoločen"/>
-		<string id="16781" value="Naprošam..."/>
-		<string id="16782" value="Uspeh!"/>
-		<string id="16783" value="Končano, kliknite gumb Zapri"/>
-		<string id="16784" value="&amp;Zapri"/>
 		<string id="16785" value="(Brez vizualizacije)"/>
 		<string id="16800" value="Niste še določili hitrosti za povezavo. Pred nadaljevanjem boste morali ali izbrati tip medmrežne povezave ali ročno vnesti hitrost povezave."/>
 		<string id="16802" value="Niste izbrali map za deljenje. Ste prepričani?"/>
@@ -4332,14 +4308,6 @@
 			<control caption="_Zapomni si moj izbor za naslednjič"/>
 			<control caption="Odpri _nadzorno okno za prenos"/>
 			<control caption="Kliknile ste na Shareaza podprt URI, ki bo dodal storitev Discovery v predpomnilnik vaše Discovery storitve."/>
-		</dialog>
-		<dialog name="CBitziDownloadDlg" cookie="StStmsBuSySt" caption="Prenašanje metapodatkov...">
-			<control/>
-			<control caption="Shareaza poskuša prenesti metapodatke iz sistema Bitzi(tm)..."/>
-			<control/>
-			<control caption="Prekliči"/>
-			<control/>
-			<control caption="www.bitzi.com"/>
 		</dialog>
 		<dialog name="CFilePreviewDlg" cookie="StStStmsStBu" caption="Pametni predogled prenosa...">
 			<control/>

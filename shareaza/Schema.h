@@ -1,7 +1,7 @@
 //
 // Schema.h
 //
-// Copyright (c) Shareaza Development Team, 2002-2011.
+// Copyright (c) Shareaza Development Team, 2002-2014.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -25,7 +25,6 @@ class CSchema;
 class CSchemaMember;
 class CSchemaChild;
 class CXMLElement;
-class CSchemaBitzi;
 
 typedef const CSchema* CSchemaPtr;
 
@@ -49,8 +48,6 @@ public:
 	CList< CString >	m_pExtends;
 	CList< CSchemaChild* >	m_pContains;
 	CString		m_sDefaultColumns;
-	CList< CSchemaBitzi* >	m_pBitziMap;
-	CString		m_sBitziTest;
 	CString		m_sLibraryView;
 	CString		m_sHeaderTitle;
 	CString		m_sHeaderSubtitle;
@@ -100,7 +97,6 @@ protected:
 	void			LoadDescriptorTypeFilter(CXMLElement* pElement);
 	void			LoadDescriptorExtends(CXMLElement* pElement);
 	void			LoadDescriptorContains(CXMLElement* pElement);
-	void			LoadDescriptorBitziImport(CXMLElement* pElement);
 	void			LoadDescriptorHeaderContent(CXMLElement* pElement);
 	void			LoadDescriptorViewContent(CXMLElement* pElement);
 	BOOL			LoadIcon();
@@ -181,15 +177,4 @@ public:
 private:
 	CSchema(const CSchema&);
 	CSchema& operator=(const CSchema&);
-};
-
-
-class CSchemaBitzi
-{
-public:
-	CString		m_sFrom;
-	CString		m_sTo;
-	double		m_nFactor;
-public:
-	BOOL		Load(CXMLElement* pXML);
 };

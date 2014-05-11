@@ -922,7 +922,6 @@
 				<item id="ID_SEARCH_FOR_SERIES" text="Avsnitt från samma serie"/>
 			</menu>
 			<menu text="_Webbtjänster">
-				<item id="ID_LIBRARY_BITZI_WEB" text="Visa _Bitzibiljett"/>
 			</menu>
 		</menu>
 		<menu name="CSearchWnd">
@@ -943,7 +942,6 @@
 				<item id="ID_SEARCH_FOR_SERIES" text="Avsnitt från samma serie"/>
 			</menu>
 			<menu text="_Webbtjänster">
-				<item id="ID_LIBRARY_BITZI_WEB" text="Visa _Bitzibiljett"/>
 			</menu>
 			<separator/>
 			<item id="ID_SEARCH_FILTER" text="_Filtrera resultatet…"/>
@@ -969,7 +967,6 @@
 				<item id="ID_SEARCH_FOR_SERIES" text="Avsnitt från samma serie"/>
 			</menu>
 			<menu text="_Webbtjänster">
-				<item id="ID_LIBRARY_BITZI_WEB" text="Visa _Bitzibiljett"/>
 			</menu>
 		</menu>
 		<menu name="CBrowseHostWnd">
@@ -988,7 +985,6 @@
 				<item id="ID_SEARCH_FOR_SERIES" text="Avsnitt från samma serie"/>
 			</menu>
 			<menu text="_Webbtjänster">
-				<item id="ID_LIBRARY_BITZI_WEB" text="Visa _Bitzibiljett"/>
 			</menu>
 			<separator/>
 			<item id="ID_SEARCH_FILTER" text="_Filtrera resultatet…"/>
@@ -1013,7 +1009,6 @@
 				<item id="ID_SEARCH_FOR_SERIES" text="Avsnitt från samma serie"/>
 			</menu>
 			<menu text="_Webbtjänster">
-				<item id="ID_LIBRARY_BITZI_WEB" text="Visa _Bitzibiljett"/>
 			</menu>
 			<separator/>
 			<item id="ID_SEARCH_FILTER" text="_Filtrera resultatet…"/>
@@ -1249,8 +1244,6 @@
 				<item id="ID_SEARCH_FOR_SERIES" text="Avsnitt från samma serie"/>
 			</menu>
 			<menu text="_Webbtjänster">
-				<item id="ID_LIBRARY_BITZI_WEB" text="Visa _Bitzibiljett"/>
-				<item id="ID_LIBRARY_BITZI_DOWNLOAD" text="_Ladda ned metadata"/>
 				<item id="ID_WEBSERVICES_MUSICBRAINZ" text="_MusicBrainz"/>
 			</menu>
 			<menu text="O_rganisera">
@@ -1281,8 +1274,6 @@
 				<item id="ID_SEARCH_FOR_SERIES" text="Avsnitt från samma serie"/>
 			</menu>
 			<menu text="_Webbtjänster">
-				<item id="ID_LIBRARY_BITZI_WEB" text="Visa _Bitzibiljett"/>
-				<item id="ID_LIBRARY_BITZI_DOWNLOAD" text="_Ladda ned metadata"/>
 				<item id="ID_WEBSERVICES_MUSICBRAINZ" text="_MusicBrainz"/>
 				<separator/>
 				<item id="ID_LIBRARY_CREATETORRENT" text="Skapa .torrent-fil"/>
@@ -1321,8 +1312,6 @@
 				<item id="ID_SEARCH_FOR_SERIES" text="Avsnitt från samma serie"/>
 			</menu>
 			<menu text="_Webbtjänster">
-				<item id="ID_LIBRARY_BITZI_WEB" text="Visa _Bitzibiljett"/>
-				<item id="ID_LIBRARY_BITZI_DOWNLOAD" text="_Ladda ned metadata"/>
 			</menu>
 			<menu text="O_rganisera">
 				<item id="ID_LIBRARY_RENAME" text="_Byt namn på fil"/>
@@ -1356,9 +1345,6 @@
 				<item id="ID_SEARCH_FOR_SERIES" text="Avsnitt från samma serie"/>
 			</menu>
 			<menu text="_Webbtjänster">
-				<item id="ID_LIBRARY_BITZI_WEB" text="Visa _Bitzibiljett"/>
-				<item id="ID_LIBRARY_BITZI_DOWNLOAD" text="_Ladda ned metadata"/>
-				<separator/>
 				<item id="ID_LIBRARY_CREATETORRENT" text="Skapa .torrent-fil"/>
 			</menu>
 			<menu text="O_rganisera">
@@ -1661,8 +1647,6 @@
 			</menu>
 		</menu>
 		<menu name="WebServices.List.Menu">
-			<item id="ID_LIBRARY_BITZI_WEB" text="Visa _Bitzibiljett"/>
-			<item id="ID_LIBRARY_BITZI_DOWNLOAD" text="_Ladda ned metadata"/>
 			<item id="ID_WEBSERVICES_MUSICBRAINZ" text="_MusicBrainz"/>
 		</menu>
 	</menus>
@@ -2459,8 +2443,6 @@ Du kan undersöka varje källa för att se hur högt upp i kön du befinner dig.
 		<tip id="ID_LIBRARY_ALBUM_DELETE" message="Radera de valda albummapparna."/>
 		<tip id="ID_LIBRARY_ALBUM_OPEN" message="Öppna de valda albummapparna."/>
 		<tip id="ID_LIBRARY_ALBUM_PROPERTIES" message="Visa och ändra egenskaper för de valda albummapparna…"/>
-		<tip id="ID_LIBRARY_BITZI_DOWNLOAD" message="Ladda ned metadata för de valda filerna från Bitzi(TM)…"/>
-		<tip id="ID_LIBRARY_BITZI_WEB" message="Visa Bitzi(TM)-biljett för den valda filen på webben."/>
 		<tip id="ID_LIBRARY_COLUMNS" message="Välj en metadatakolumn att visa…"/>
 		<tip id="ID_LIBRARY_COPY" message="Kopiera de valda filerna till en annan biblioteksmapp…"/>
 		<tip id="ID_LIBRARY_CREATETORRENT" message="Skapa en .torrent-fil för uppladdning till en webbsida."/>
@@ -3072,8 +3054,6 @@ Du kan undersöka varje källa för att se hur högt upp i kön du befinner dig.
 		<string id="16384" value="Är du säker på att du vill köra filen &quot;%s&quot;?\n\nVissa filer kan skada din dator. Försäkra dig om vad det är för fil innan du kör den."/>
 		<string id="16385" value="Du är på väg att förändra metadatan för %i filer. Är du säker på att du vill fortsätta?"/>
 		<string id="16386" value="Ändrar metadata för %i filer."/>
-		<string id="16387" value="Filen &quot;%s&quot; har inte blivit granskad ännu. Vänta tills filen har blivit granskad och försök sedan igen."/>
-		<string id="16388" value="Detta val använder tjänster tillhandahållna av Bitzi.com för igenkänning och utdelning av information om valda filer.\n\nShareaza kommer att överföra SHA1-granskningskoden för de valda filerna för att begära information från Bitzidatabasen. Om du är rädd om din integritet kan du välja att läsa integritetspolicyn för Bitzi.com.\n\nVill du fortsätta?"/>
 		<string id="16389" value="Är du säker på att du vill radera de %i valda filerna?\n\nFilerna kommer att flyttas till din papperskorg om den är aktiverad, annars raderas de för alltid."/>
 		<string id="16390" value="Du har inte valt en mediaspelare att kölägga filerna med, som t.ex. Nullsoft WinAmp. Vill du välja en nu?\n\nShareaza kommer att skicka namnet på filen till ditt valda program med &quot;/ADD&quot;-argumentet."/>
 		<string id="16391" value="Du är inte ansluten till nätverket."/>
@@ -3147,10 +3127,6 @@ Du kan undersöka varje källa för att se hur högt upp i kön du befinner dig.
 		<string id="16778" value="URL:"/>
 		<string id="16779" value="Typ:"/>
 		<string id="16780" value="Ospecifierad"/>
-		<string id="16781" value="Efterfrågar…"/>
-		<string id="16782" value="Framgång!"/>
-		<string id="16783" value="Avslutad, klicka Stäng"/>
-		<string id="16784" value="&amp;Stäng"/>
 		<string id="16785" value="(Ingen visualisering)"/>
 		<string id="16800" value="Du har ännu inte valt en anslutningshastighet. Innan du kan fortsätta ska du välja den typ av Internetanslutning du använder eller din anslutningshastighet."/>
 		<string id="16802" value="Du har inte valt någon mapp att dela ut. Vill du fortsätta?"/>
@@ -4332,14 +4308,6 @@ Du kan undersöka varje källa för att se hur högt upp i kön du befinner dig.
 			<control caption="_Kom ihåg mitt val till nästa gång"/>
 			<control caption="Öppna en nedladdningsmonitor"/>
 			<control caption="Du har klickat på en Shareaza-URI som kommer att lägga till följande upptäckstjänst till din cache över upptäckstjänster."/>
-		</dialog>
-		<dialog name="CBitziDownloadDlg" cookie="StStmsBuSySt" caption="Ladda ned metadata…">
-			<control/>
-			<control caption="Shareaza försöker ladda ned metadata från Bitzi(TM)…"/>
-			<control/>
-			<control caption="Avbryt"/>
-			<control/>
-			<control caption="www.bitzi.com"/>
 		</dialog>
 		<dialog name="CFilePreviewDlg" cookie="StStStmsStBu" caption="Smart förhandsvisning">
 			<control/>

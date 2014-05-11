@@ -922,7 +922,6 @@
 				<item id="ID_SEARCH_FOR_SERIES" text="同一系列的情节"/>
 			</menu>
 			<menu text="网页服务(_W)">
-				<item id="ID_LIBRARY_BITZI_WEB" text="查看 Bitzi 标签(_B)"/>
 			</menu>
 		</menu>
 		<menu name="CSearchWnd">
@@ -943,7 +942,6 @@
 				<item id="ID_SEARCH_FOR_SERIES" text="同一系列的情节"/>
 			</menu>
 			<menu text="网页服务(_W)">
-				<item id="ID_LIBRARY_BITZI_WEB" text="查看 Bitzi 标签(_B)"/>
 			</menu>
 			<separator/>
 			<item id="ID_SEARCH_FILTER" text="过滤结果(_F)..."/>
@@ -969,7 +967,6 @@
 				<item id="ID_SEARCH_FOR_SERIES" text="同一系列的情节"/>
 			</menu>
 			<menu text="网页服务(_W)">
-				<item id="ID_LIBRARY_BITZI_WEB" text="查看 Bitzi 标签(_B)"/>
 			</menu>
 		</menu>
 		<menu name="CBrowseHostWnd">
@@ -988,7 +985,6 @@
 				<item id="ID_SEARCH_FOR_SERIES" text="同一系列的情节"/>
 			</menu>
 			<menu text="网页服务(_W)">
-				<item id="ID_LIBRARY_BITZI_WEB" text="查看 Bitzi 标签(_B)"/>
 			</menu>
 			<separator/>
 			<item id="ID_SEARCH_FILTER" text="过滤结果(_F)..."/>
@@ -1013,7 +1009,6 @@
 				<item id="ID_SEARCH_FOR_SERIES" text="同一系列的情节"/>
 			</menu>
 			<menu text="网页服务(_W)">
-				<item id="ID_LIBRARY_BITZI_WEB" text="查看 Bitzi 标签(_B)"/>
 			</menu>
 			<separator/>
 			<item id="ID_SEARCH_FILTER" text="过滤结果(_F)..."/>
@@ -1249,8 +1244,6 @@
 				<item id="ID_SEARCH_FOR_SERIES" text="同一系列的情节"/>
 			</menu>
 			<menu text="网页服务(_W)">
-				<item id="ID_LIBRARY_BITZI_WEB" text="查看 Bitzi 标签(_B)"/>
-				<item id="ID_LIBRARY_BITZI_DOWNLOAD" text="下载元数据(_D)"/>
 				<item id="ID_WEBSERVICES_MUSICBRAINZ" text="MusicBrainz(_M)"/>
 			</menu>
 			<menu text="O_rganise">
@@ -1281,8 +1274,6 @@
 				<item id="ID_SEARCH_FOR_SERIES" text="同一系列的情节"/>
 			</menu>
 			<menu text="网页服务(_W)">
-				<item id="ID_LIBRARY_BITZI_WEB" text="查看 Bitzi 标签(_B)"/>
-				<item id="ID_LIBRARY_BITZI_DOWNLOAD" text="下载元数据(_D)"/>
 				<item id="ID_WEBSERVICES_MUSICBRAINZ" text="MusicBrainz(_M)"/>
 				<separator/>
 				<item id="ID_LIBRARY_CREATETORRENT" text="创建种子文件(_T)"/>
@@ -1321,8 +1312,6 @@
 				<item id="ID_SEARCH_FOR_SERIES" text="同一系列的情节"/>
 			</menu>
 			<menu text="网页服务(_W)">
-				<item id="ID_LIBRARY_BITZI_WEB" text="查看 Bitzi 标签(_B)"/>
-				<item id="ID_LIBRARY_BITZI_DOWNLOAD" text="下载元数据(_D)"/>
 			</menu>
 			<menu text="O_rganise">
 				<item id="ID_LIBRARY_RENAME" text="重命名文件(_R)"/>
@@ -1356,9 +1345,6 @@
 				<item id="ID_SEARCH_FOR_SERIES" text="同一系列的情节"/>
 			</menu>
 			<menu text="网页服务(_W)">
-				<item id="ID_LIBRARY_BITZI_WEB" text="查看 Bitzi 标签(_B)"/>
-				<item id="ID_LIBRARY_BITZI_DOWNLOAD" text="下载元数据(_D)"/>
-				<separator/>
 				<item id="ID_LIBRARY_CREATETORRENT" text="创建种子文件(_T)"/>
 			</menu>
 			<menu text="O_rganise">
@@ -1661,8 +1647,6 @@
 			</menu>
 		</menu>
 		<menu name="WebServices.List.Menu">
-			<item id="ID_LIBRARY_BITZI_WEB" text="查看 Bitzi 标签(_B)"/>
-			<item id="ID_LIBRARY_BITZI_DOWNLOAD" text="下载元数据(_D)"/>
 			<item id="ID_WEBSERVICES_MUSICBRAINZ" text="MusicBrainz(_M)"/>
 		</menu>
 	</menus>
@@ -2444,8 +2428,6 @@
 		<tip id="ID_LIBRARY_ALBUM_DELETE" message="删除选定的专辑文件夹。"/>
 		<tip id="ID_LIBRARY_ALBUM_OPEN" message="打开选定的专辑文件夹。"/>
 		<tip id="ID_LIBRARY_ALBUM_PROPERTIES" message="查看或编辑选定专辑文件夹的属性..."/>
-		<tip id="ID_LIBRARY_BITZI_DOWNLOAD" message="从 Bitzi(TM) 下载选定文件的元数据..."/>
-		<tip id="ID_LIBRARY_BITZI_WEB" message="查看选定文件在网络上的 Bitzi(TM)。"/>
 		<tip id="ID_LIBRARY_COLUMNS" message="选择显示元数据列设置..."/>
 		<tip id="ID_LIBRARY_COPY" message="将选定的文件复制到收藏中其它的文件夹..."/>
 		<tip id="ID_LIBRARY_CREATETORRENT" message="为此文件创建一个 .torrent 文件以上传至网页。"/>
@@ -3057,8 +3039,6 @@
 		<string id="16384" value="确定要载入 &quot;%s&quot; 此文件吗？\n\n某些文件可能对您的电脑有害。载入文件前最好能确定文件的用途。"/>
 		<string id="16385" value="您将修改 %i 文件的元数据，确定要继续吗？"/>
 		<string id="16386" value="正在修改 %i 的元数据。"/>
-		<string id="16387" value="文件 &quot;%s&quot; 未被 Hash。请等待文件被 Hash，稍后再试。"/>
-		<string id="16388" value="识别和共享选定文件的功能由 Bitzi.com 提供。\n\n为了到 Bitzi 数据库进行查询，Shareaza 自动转换成 SHA1 Hash。如果涉及隐私，您可能需要查看 Bitzi.com 的隐私申明。\n\n您确定继续吗？"/>
 		<string id="16389" value="确定要永久删除选定的 %i 文件吗？ \n\n如果您确定，文件将会被移动到 &quot;回收站&quot;。"/>
 		<string id="16390" value="您还没有选定文件将被加入的媒体播放器，比如 winamp。您要选择一个吗？\n\nShareaza 会用 &quot;/ADD&quot; 把文件名传值过去。"/>
 		<string id="16391" value="您还未连接到网络。"/>
@@ -3132,10 +3112,6 @@
 		<string id="16778" value="链接:"/>
 		<string id="16779" value="类型:"/>
 		<string id="16780" value="未指定"/>
-		<string id="16781" value="请求中..."/>
-		<string id="16782" value="成功！"/>
-		<string id="16783" value="已完成，单击关闭"/>
-		<string id="16784" value="关闭(_C)"/>
 		<string id="16785" value="(无可视化效果)"/>
 		<string id="16800" value="您还未指定一个连接速度。在连接前，请选择您的 Internet 连接类型，或者输入连接速度。"/>
 		<string id="16802" value="您还未指定任何共享文件夹。您确定吗？"/>
@@ -4317,14 +4293,6 @@
 			<control caption="取消"/>
 			<control caption="记住我的选择(_R)"/>
 			<control caption="打开下载监视器窗口(_M)"/>
-		</dialog>
-		<dialog name="CBitziDownloadDlg" cookie="StStmsBuSySt" caption="下载元数据...">
-			<control/>
-			<control caption="Shareaza 正从 Bitzi(TM) 尝试下载元数据..."/>
-			<control/>
-			<control caption="取消"/>
-			<control/>
-			<control caption="www.bitzi.com"/>
 		</dialog>
 		<dialog name="CFilePreviewDlg" cookie="StStStmsStBu" caption="智能下载预览...">
 			<control/>

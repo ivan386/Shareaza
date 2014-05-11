@@ -201,12 +201,6 @@ void CSettings::Load()
 	Add( _T("Library"), _T("URLExportFormat"), &Library.URLExportFormat, _T("<a href=\"magnet:?xt=urn:bitprint:[SHA1].[TIGER]&amp;xt=urn:ed2khash:[ED2K]&amp;xt=urn:md5:[MD5]&amp;xl=[ByteSize]&amp;dn=[NameURI]\">[Name]</a><br>") );
 	Add( _T("Library"), _T("TooManyWarning"), &Library.TooManyWarning, 0, 1, 0, 2 );
 
-	Add( _T("WebServices"), _T("BitziAgent"), &WebServices.BitziAgent, _T(".") );
-	Add( _T("WebServices"), _T("BitziOkay"), &WebServices.BitziOkay, false, true );
-	Add( _T("WebServices"), _T("BitziWebSubmit"), &WebServices.BitziWebSubmit, _T("http://bitzi.com/lookup/(SHA1).(TTH)?fl=(SIZE)&ff=(FIRST20)&fn=(NAME)&tag.ed2k.ed2khash=(ED2K)&(INFO)&a=(AGENT)&v=Q0.4&ref=shareaza") );
-	Add( _T("WebServices"), _T("BitziWebView"), &WebServices.BitziWebView, _T("http://bitzi.com/lookup/(URN)?v=detail&ref=shareaza") );
-	Add( _T("WebServices"), _T("BitziXML"), &WebServices.BitziXML, _T("http://bitzi.com/rdf/(SHA1)") );
-
 	Add( _T("Search"), _T("AdultFilter"), &Search.AdultFilter, false );
 	Add( _T("Search"), _T("AdvancedPanel"), &Search.AdvancedPanel, true );
 	Add( _T("Search"), _T("BlankSchemaURI"), &Search.BlankSchemaURI, CSchema::uriAudio );
@@ -1111,25 +1105,6 @@ void CSettings::SmartUpgrade()
 			// uTorrent
 			if ( ! IsIn( Library.PrivateTypes, _T("!ut") ) )
 				Library.PrivateTypes.insert( _T("!ut") );
-		}
-
-		if ( General.SmartVersion < 55 ) // Migrate values to other section
-		{
-			WebServices.BitziOkay		= theApp.GetProfileInt( L"Library", L"BitziOkay", false ) != 0;
-
-			// Delete old values
-			theApp.WriteProfileString( L"Library", L"BitziAgent", NULL );
-			theApp.WriteProfileString( L"Library", L"BitziWebSubmit", NULL );
-			theApp.WriteProfileString( L"Library", L"BitziWebView", NULL );
-			theApp.WriteProfileString( L"Library", L"BitziXML", NULL );
-			theApp.WriteProfileString( L"Library", L"BitziWebView", NULL );
-			SHDeleteValue( HKEY_CURRENT_USER,
-				REGISTRY_KEY _T("\\Library"), _T("BitziOkay") );
-		}
-
-		if ( General.SmartVersion < 56 )
-		{
-			WebServices.BitziXML = _T("http://bitzi.com/rdf/(SHA1)");
 		}
 
 		if ( General.SmartVersion < 57 )

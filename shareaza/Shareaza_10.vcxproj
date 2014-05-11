@@ -301,7 +301,6 @@
     <ClCompile Include="Application.cpp" />
     <ClCompile Include="AutocompleteEdit.cpp" />
     <ClCompile Include="BENode.cpp" />
-    <ClCompile Include="BitziDownloader.cpp" />
     <ClCompile Include="BTClient.cpp" />
     <ClCompile Include="BTClients.cpp" />
     <ClCompile Include="BTInfo.cpp" />
@@ -564,7 +563,6 @@
     <ClCompile Include="CtrlWizard.cpp" />
     <ClCompile Include="CtrlWndTabBar.cpp" />
     <ClCompile Include="DlgAbout.cpp" />
-    <ClCompile Include="DlgBitziDownload.cpp" />
     <ClCompile Include="DlgCloseMode.cpp" />
     <ClCompile Include="DlgCollectionExport.cpp" />
     <ClCompile Include="DlgConnectTo.cpp" />
@@ -721,7 +719,6 @@
     <ClInclude Include="Application.h" />
     <ClInclude Include="AutocompleteEdit.h" />
     <ClInclude Include="BENode.h" />
-    <ClInclude Include="BitziDownloader.h" />
     <ClInclude Include="BTClient.h" />
     <ClInclude Include="BTClients.h" />
     <ClInclude Include="BTInfo.h" />
@@ -991,7 +988,6 @@
     <ClInclude Include="WndTraffic.h" />
     <ClInclude Include="WndUploads.h" />
     <ClInclude Include="DlgAbout.h" />
-    <ClInclude Include="DlgBitziDownload.h" />
     <ClInclude Include="DlgCloseMode.h" />
     <ClInclude Include="DlgCollectionExport.h" />
     <ClInclude Include="DlgConnectTo.h" />

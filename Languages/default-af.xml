@@ -922,7 +922,6 @@
 				<item id="ID_SEARCH_FOR_SERIES" text="Episodes van dieselfde Reeks"/>
 			</menu>
 			<menu text="_Web Dienste">
-				<item id="ID_LIBRARY_BITZI_WEB" text="Vertoon _Bitzi Ticket"/>
 			</menu>
 		</menu>
 		<menu name="CSearchWnd">
@@ -943,7 +942,6 @@
 				<item id="ID_SEARCH_FOR_SERIES" text="Episodes van dieselfde Reeks"/>
 			</menu>
 			<menu text="_Web Dienste">
-				<item id="ID_LIBRARY_BITZI_WEB" text="Vertoon _Bitzi Ticket"/>
 			</menu>
 			<separator/>
 			<item id="ID_SEARCH_FILTER" text="_Filtreer Resultate..."/>
@@ -969,7 +967,6 @@
 				<item id="ID_SEARCH_FOR_SERIES" text="Episodes van dieselfde Reeks"/>
 			</menu>
 			<menu text="_Web Dienste">
-				<item id="ID_LIBRARY_BITZI_WEB" text="Vertoon _Bitzi Ticket"/>
 			</menu>
 		</menu>
 		<menu name="CBrowseHostWnd">
@@ -988,7 +985,6 @@
 				<item id="ID_SEARCH_FOR_SERIES" text="Episodes van dieselfde Reeks"/>
 			</menu>
 			<menu text="_Web Dienste">
-				<item id="ID_LIBRARY_BITZI_WEB" text="Vertoon _Bitzi Ticket"/>
 			</menu>
 			<separator/>
 			<item id="ID_SEARCH_FILTER" text="_Filtreer Resultate..."/>
@@ -1013,7 +1009,6 @@
 				<item id="ID_SEARCH_FOR_SERIES" text="Episodes van dieselfde Reeks"/>
 			</menu>
 			<menu text="_Web Dienste">
-				<item id="ID_LIBRARY_BITZI_WEB" text="Vertoon _Bitzi Ticket"/>
 			</menu>
 			<separator/>
 			<item id="ID_SEARCH_FILTER" text="_Filtreer Resultate..."/>
@@ -1249,8 +1244,6 @@
 				<item id="ID_SEARCH_FOR_SERIES" text="Episodes van dieselfde Reeks"/>
 			</menu>
 			<menu text="_Web Dienste">
-				<item id="ID_LIBRARY_BITZI_WEB" text="Vertoon _Bitzi Ticket"/>
-				<item id="ID_LIBRARY_BITZI_DOWNLOAD" text="_Laai Metadata Af"/>
 				<item id="ID_WEBSERVICES_MUSICBRAINZ" text="_MusicBrainz"/>
 			</menu>
 			<menu text="O_rganiseer">
@@ -1281,8 +1274,6 @@
 				<item id="ID_SEARCH_FOR_SERIES" text="Episodes van dieselfde Reeks"/>
 			</menu>
 			<menu text="_Web Dienste">
-				<item id="ID_LIBRARY_BITZI_WEB" text="Vertoon _Bitzi Ticket"/>
-				<item id="ID_LIBRARY_BITZI_DOWNLOAD" text="_Laai Metadata Af"/>
 				<item id="ID_WEBSERVICES_MUSICBRAINZ" text="_MusicBrainz"/>
 				<separator/>
 				<item id="ID_LIBRARY_CREATETORRENT" text="Skep .torrent Lêer"/>
@@ -1321,8 +1312,6 @@
 				<item id="ID_SEARCH_FOR_SERIES" text="Episodes van dieselfde Reeks"/>
 			</menu>
 			<menu text="_Web Dienste">
-				<item id="ID_LIBRARY_BITZI_WEB" text="Vertoon _Bitzi Ticket"/>
-				<item id="ID_LIBRARY_BITZI_DOWNLOAD" text="_Laai Metadata Af"/>
 			</menu>
 			<menu text="O_rganiseer">
 				<item id="ID_LIBRARY_RENAME" text="_Hernoem Lêer"/>
@@ -1356,9 +1345,6 @@
 				<item id="ID_SEARCH_FOR_SERIES" text="Episodes van dieselfde Reeks"/>
 			</menu>
 			<menu text="_Web Dienste">
-				<item id="ID_LIBRARY_BITZI_WEB" text="Vertoon _Bitzi Ticket"/>
-				<item id="ID_LIBRARY_BITZI_DOWNLOAD" text="_Laai Metadata Af"/>
-				<separator/>
 				<item id="ID_LIBRARY_CREATETORRENT" text="Skep .torrent Lêer"/>
 			</menu>
 			<menu text="O_rganiseer">
@@ -1661,8 +1647,6 @@
 			</menu>
 		</menu>
 		<menu name="WebServices.List.Menu">
-			<item id="ID_LIBRARY_BITZI_WEB" text="Vertoon _Bitzi Ticket"/>
-			<item id="ID_LIBRARY_BITZI_DOWNLOAD" text="_Laai Metadata Af"/>
 			<item id="ID_WEBSERVICES_MUSICBRAINZ" text="_MusicBrainz"/>
 		</menu>
 	</menus>
@@ -2468,8 +2452,6 @@
 		<tip id="ID_LIBRARY_ALBUM_DELETE" message="Skrap die geselekteerde albumgids."/>
 		<tip id="ID_LIBRARY_ALBUM_OPEN" message="Open die geselekteerde albumgids."/>
 		<tip id="ID_LIBRARY_ALBUM_PROPERTIES" message="Vertoon of verander die kenmerke van die geselekteerde albumgids..."/>
-		<tip id="ID_LIBRARY_BITZI_DOWNLOAD" message="Laai metadata vir die geselekteerde lêer(s) af vanaf Bitzi(TM)..."/>
-		<tip id="ID_LIBRARY_BITZI_WEB" message="Vertoon die Bitzi(TM) kaartjie vir die geselekteerde lêer op die web."/>
 		<tip id="ID_LIBRARY_COLUMNS" message="Selekteer metadata-kolomme om te vertoon..."/>
 		<tip id="ID_LIBRARY_COPY" message="Kopieer die geselekteerde lêers na 'n ander biblioteek gids..."/>
 		<tip id="ID_LIBRARY_CREATETORRENT" message="Skep 'n .torrent vir hierdie lêer vir oplaai na 'n webblad."/>
@@ -3081,8 +3063,6 @@
 		<string id="16384" value="Is jy seker jy wil die lêer &quot;%s&quot; oopmaak ?\n\nSommige lêers mag dalk skadelik wees vir jou rekenaar.  Maak seker jy weet wat die lêer is voordat jy dit oopmaak."/>
 		<string id="16385" value="Jy is op pad om die metadata te verander van %i lêers, Is jy seker jy wil voortgaan?"/>
 		<string id="16386" value="Metadata van %i lêers word verander."/>
-		<string id="16387" value="Die lêer &quot;%s&quot; is nog nie geprosesseer nie.  Wag asseblief vir die lêer om geprosesseer te word en probeer weer."/>
-		<string id="16388" value="Hierdie opsie gebruik dienste verskaf deur Bitzi.com vir herkenning en deel van inligting oor sekere lêers.\n\nShareaza sal die SHA1 hash-kode vir die geselekteerde lêer(s) stuur sodat die Bitzi databasis geraadpleeg kan word.  As jy bekommerd is oor privaatheid, kan jy gerus die Bitzi.com privaatheidsbeleid lees.\n\nWil jy voortgaan?"/>
 		<string id="16389" value="Is jy seker jy wil die %i geselekteerde lêer(s) permanent skrap?\n\nDie lêers sal verskuif word na jou &quot;recycle bin&quot; as dit aangeskakel is."/>
 		<string id="16390" value="Jy het nog nie 'n media speler geselekteer waarmee lêers gelys moet word nie, soos byvoorbeeld Nullsoft WinAmp.  Wil jy nou een selekteer?\n\nShareaza sal die naam van die lêer aanpas met die &quot;/ADD&quot; argument."/>
 		<string id="16391" value="Jy is nie aan die netwerk gekonnekteer nie."/>
@@ -3156,10 +3136,6 @@
 		<string id="16778" value="URL:"/>
 		<string id="16779" value="Tipe:"/>
 		<string id="16780" value="Nie Gespesifiseer"/>
-		<string id="16781" value="Stuur versoek..."/>
-		<string id="16782" value="Sukses!"/>
-		<string id="16783" value="Voltooi, kliek Maak Toe"/>
-		<string id="16784" value="&amp;Maak Toe"/>
 		<string id="16785" value="(Geen Visualisering)"/>
 		<string id="16800" value="Jy het nog nie 'n konneksie-spoed gespesifiseer nie.  Voor jy aangaan, selekteer asseblief jou internet konneksietipe, of sleutel 'n konneksiespoed in."/>
 		<string id="16802" value="Jy het nie enige gidse geselekteer om te deel nie.  Is jy seker?"/>
@@ -4341,14 +4317,6 @@
 			<control caption="_Onthou my keuse volgende keer"/>
 			<control caption="Open 'n aflaai_monitor venster"/>
 			<control caption="Jy het gekliek op 'n Shareaza ondersteunende URI wat die volgende Ontdekkingsdiens by jou Ontdekkingsdienskasgeheue sal voeg."/>
-		</dialog>
-		<dialog name="CBitziDownloadDlg" cookie="StStmsBuSySt" caption="Laai Metadata Af...">
-			<control/>
-			<control caption="Shareaza probeer metadata aflaai vanaf Bitzi(TM)..."/>
-			<control/>
-			<control caption="Kanselleer"/>
-			<control/>
-			<control caption="www.bitzi.com"/>
 		</dialog>
 		<dialog name="CFilePreviewDlg" cookie="StStStmsStBu" caption="Slim Aflaai Voorskou...">
 			<control/>

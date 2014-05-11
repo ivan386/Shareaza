@@ -1,7 +1,7 @@
 //
 // WndBaseMatch.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2012.
+// Copyright (c) Shareaza Development Team, 2002-2014.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -65,7 +65,6 @@ static char THIS_FILE[] = __FILE__;
 IMPLEMENT_DYNCREATE(CBaseMatchWnd, CPanelWnd)
 
 BEGIN_MESSAGE_MAP(CBaseMatchWnd, CPanelWnd)
-	//{{AFX_MSG_MAP(CBaseMatchWnd)
 	ON_WM_CREATE()
 	ON_WM_DESTROY()
 	ON_WM_SIZE()
@@ -86,8 +85,6 @@ BEGIN_MESSAGE_MAP(CBaseMatchWnd, CPanelWnd)
 	ON_UPDATE_COMMAND_UI(ID_SEARCH_FILTER_REMOVE, OnUpdateSearchFilterRemove)
 	ON_COMMAND(ID_SEARCH_FILTER_REMOVE, OnSearchFilterRemove)
 	ON_COMMAND(ID_SEARCH_COLUMNS, OnSearchColumns)
-	ON_UPDATE_COMMAND_UI(ID_LIBRARY_BITZI_WEB, OnUpdateLibraryBitziWeb)
-	ON_COMMAND(ID_LIBRARY_BITZI_WEB, OnLibraryBitziWeb)
 	ON_UPDATE_COMMAND_UI(ID_SECURITY_BAN, OnUpdateSecurityBan)
 	ON_COMMAND(ID_SECURITY_BAN, OnSecurityBan)
 	ON_UPDATE_COMMAND_UI(ID_HITMONITOR_SEARCH, OnUpdateHitMonitorSearch)
@@ -115,8 +112,6 @@ BEGIN_MESSAGE_MAP(CBaseMatchWnd, CPanelWnd)
 	ON_UPDATE_COMMAND_UI_RANGE(ID_SCHEMA_MENU_MIN, ID_SCHEMA_MENU_MAX, OnUpdateBlocker)
 	ON_UPDATE_COMMAND_UI_RANGE(3000, 3100, OnUpdateFilters)
 	ON_COMMAND_RANGE(3000, 3100, OnFilters)
-	//}}AFX_MSG_MAP
-
 END_MESSAGE_MAP()
 
 
@@ -524,129 +519,6 @@ void CBaseMatchWnd::OnBrowseLaunch()
 			pHit->m_bPush == TRI_TRUE, pHit->m_oClientID, pHit->m_sNick  );
 	}
 }
-
-void CBaseMatchWnd::OnUpdateLibraryBitziWeb(CCmdUI* pCmdUI)
-{
-	if ( m_pMatches->GetSelectedCount() != 1 || Settings.WebServices.BitziWebView.IsEmpty() )
-	{
-		pCmdUI->Enable( FALSE );
-	}
-	else if ( CMatchFile* pFile = m_pMatches->GetSelectedFile() )
-	{
-		pCmdUI->Enable( TRUE );
-	}
-	else if ( CQueryHit* pHit = m_pMatches->GetSelectedHit() )
-	{
-		pCmdUI->Enable( TRUE );
-	}
-}
-
-void CBaseMatchWnd::OnLibraryBitziWeb()
-{
-	if ( ! Settings.WebServices.BitziOkay )
-	{
-		CString strMessage;
-		Skin.LoadString( strMessage, IDS_LIBRARY_BITZI_MESSAGE );
-		if ( AfxMessageBox( strMessage, MB_ICONQUESTION|MB_YESNO ) != IDYES ) return;
-		Settings.WebServices.BitziOkay = true;
-		Settings.Save();
-	}
-
-	if ( m_pMatches->GetSelectedCount() != 1 ) return;
-
-	CString strURN;
-
-	if ( CMatchFile* pFile = m_pMatches->GetSelectedFile() )
-	{
-		if ( pFile->m_oSHA1 )
-			strURN = pFile->m_oSHA1.toString();
-
-		if ( pFile->m_oTiger )
-		{
-			if ( strURN.GetLength() )
-				strURN	+= _T(".");
-			else
-				strURN	= _T("tree:tiger:");
-
-			strURN += pFile->m_oTiger.toString();
-		}
-
-		if ( pFile->m_oED2K && ! strURN.GetLength() )
-			strURN = _T("ed2k:") + pFile->m_oED2K.toString();
-
-		if ( pFile->m_oMD5 && ! strURN.GetLength() )
-			strURN = _T("md5:") + pFile->m_oMD5.toString();
-	}
-	else if ( CQueryHit* pHit = m_pMatches->GetSelectedHit() )
-	{
-		if ( pHit->m_oSHA1 )
-			strURN = pHit->m_oSHA1.toString();
-
-		if ( pHit->m_oTiger )
-		{
-			if ( strURN.GetLength() )
-				strURN	+= _T(".");
-			else
-				strURN	= _T("tree:tiger:");
-
-			strURN += pHit->m_oTiger.toString();
-		}
-
-		if ( pHit->m_oED2K && ! strURN.GetLength() )
-			strURN = _T("ed2k:") + pHit->m_oED2K.toString();
-
-		if ( pHit->m_oMD5 && ! strURN.GetLength() )
-			strURN = _T("md5:") + pHit->m_oMD5.toString();
-	}
-
-	if ( strURN.IsEmpty() ) return;
-
-	CString strURL = Settings.WebServices.BitziWebView;
-	strURL.Replace( _T("(URN)"), strURN );
-	ShellExecute( GetSafeHwnd(), _T("open"), strURL, NULL, NULL, SW_SHOWNORMAL );
-}
-
-/*
-void CBaseMatchWnd::OnUpdateLibraryJigle(CCmdUI* pCmdUI)
-{
-	if ( m_pMatches->GetSelectedCount() != 1 )
-	{
-		pCmdUI->Enable( FALSE );
-	}
-	else if ( CMatchFile* pFile = m_pMatches->GetSelectedFile() )
-	{
-		pCmdUI->Enable( pFile->m_bED2K );
-	}
-	else if ( CQueryHit* pHit = m_pMatches->GetSelectedHit() )
-	{
-		pCmdUI->Enable( pHit->m_bED2K );
-	}
-}
-
-void CBaseMatchWnd::OnLibraryJigle()
-{
-	if ( m_pMatches->GetSelectedCount() != 1 ) return;
-
-	CString strED2K;
-
-	if ( CMatchFile* pFile = m_pMatches->GetSelectedFile() )
-	{
-		if ( pFile->m_bED2K )
-			strED2K = CED2K::HashToString( &pFile->m_pED2K );
-	}
-	else if ( CQueryHit* pHit = m_pMatches->GetSelectedHit() )
-	{
-		if ( pHit->m_bED2K )
-			strED2K = CED2K::HashToString( &pHit->m_pED2K );
-	}
-
-	if ( strED2K.IsEmpty() ) return;
-
-	CString strURL;
-	strURL.Format( _T("http://jigle.com/search?p=ed2k%%3A%s&v=1"), (LPCTSTR)strED2K );
-	ShellExecute( GetSafeHwnd(), _T("open"), strURL, NULL, NULL, SW_SHOWNORMAL );
-}
-*/
 
 void CBaseMatchWnd::OnUpdateSearchForThis(CCmdUI* pCmdUI)
 {

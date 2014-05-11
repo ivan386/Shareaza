@@ -1,7 +1,7 @@
 //
 // FileExecutor.h
 //
-// Copyright (c) Shareaza Development Team, 2002-2012.
+// Copyright (c) Shareaza Development Team, 2002-2014.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -39,7 +39,7 @@ public:
 	static BOOL		Enqueue(LPCTSTR pszFile, LPCTSTR pszExt = NULL);
 	// Enqueue file list
 	static BOOL		Enqueue(const CStringList& pList);
-	static BOOL		ShowBitziTicket(DWORD nFile);
+
 	static BOOL		DisplayURL(LPCTSTR pszURL);
 
 protected:

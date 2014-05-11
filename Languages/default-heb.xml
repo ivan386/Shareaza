@@ -922,7 +922,6 @@
 				<item id="ID_SEARCH_FOR_SERIES" text="‪פרקים באותה _סדרה"/>
 			</menu>
 			<menu text="‪שירותי רשת">
-				<item id="ID_LIBRARY_BITZI_WEB" text="‪Bitzi הראה כרטיס"/>
 			</menu>
 		</menu>
 		<menu name="CSearchWnd">
@@ -943,7 +942,6 @@
 				<item id="ID_SEARCH_FOR_SERIES" text="‪פרקים באותה _סדרה"/>
 			</menu>
 			<menu text="‪שירותי רשת">
-				<item id="ID_LIBRARY_BITZI_WEB" text="‪Bitzi הראה כרטיס"/>
 			</menu>
 			<separator/>
 			<item id="ID_SEARCH_FILTER" text="‪...סנן תוצאות"/>
@@ -969,7 +967,6 @@
 				<item id="ID_SEARCH_FOR_SERIES" text="‪פרקים באותה _סדרה"/>
 			</menu>
 			<menu text="‪שירותי רשת">
-				<item id="ID_LIBRARY_BITZI_WEB" text="‪Bitzi הראה כרטיס"/>
 			</menu>
 		</menu>
 		<menu name="CBrowseHostWnd">
@@ -988,7 +985,6 @@
 				<item id="ID_SEARCH_FOR_SERIES" text="‪פרקים באותה _סדרה"/>
 			</menu>
 			<menu text="‪שירותי רשת">
-				<item id="ID_LIBRARY_BITZI_WEB" text="‪Bitzi הראה כרטיס"/>
 			</menu>
 			<separator/>
 			<item id="ID_SEARCH_FILTER" text="‪...סנן תוצאות"/>
@@ -1013,7 +1009,6 @@
 				<item id="ID_SEARCH_FOR_SERIES" text="‪פרקים באותה _סדרה"/>
 			</menu>
 			<menu text="‪שירותי רשת">
-				<item id="ID_LIBRARY_BITZI_WEB" text="‪Bitzi הראה כרטיס"/>
 			</menu>
 			<separator/>
 			<item id="ID_SEARCH_FILTER" text="‪...סנן תוצאות"/>
@@ -1249,8 +1244,6 @@
 				<item id="ID_SEARCH_FOR_SERIES" text="‪פרקים באותה _סדרה"/>
 			</menu>
 			<menu text="‪שירותי רשת">
-				<item id="ID_LIBRARY_BITZI_WEB" text="‪Bitzi הראה כרטיס"/>
-				<item id="ID_LIBRARY_BITZI_DOWNLOAD" text="‪Metadata הורד"/>
 				<item id="ID_WEBSERVICES_MUSICBRAINZ" text="_MusicBrainz"/>
 			</menu>
 			<menu text="‪אירגון">
@@ -1281,8 +1274,6 @@
 				<item id="ID_SEARCH_FOR_SERIES" text="‪פרקים באותה _סדרה"/>
 			</menu>
 			<menu text="‪שירותי רשת">
-				<item id="ID_LIBRARY_BITZI_WEB" text="‪Bitzi הראה כרטיס"/>
-				<item id="ID_LIBRARY_BITZI_DOWNLOAD" text="‪Metadata הורד"/>
 				<item id="ID_WEBSERVICES_MUSICBRAINZ" text="_MusicBrainz"/>
 				<separator/>
 				<item id="ID_LIBRARY_CREATETORRENT" text="‪.torrent צור קובץ"/>
@@ -1321,8 +1312,6 @@
 				<item id="ID_SEARCH_FOR_SERIES" text="‪פרקים באותה _סדרה"/>
 			</menu>
 			<menu text="‪שירותי רשת">
-				<item id="ID_LIBRARY_BITZI_WEB" text="‪Bitzi הראה כרטיס"/>
-				<item id="ID_LIBRARY_BITZI_DOWNLOAD" text="‪Metadata הורד"/>
 			</menu>
 			<menu text="‪אירגון">
 				<item id="ID_LIBRARY_RENAME" text="‪שנה שם קובץ"/>
@@ -1356,9 +1345,6 @@
 				<item id="ID_SEARCH_FOR_SERIES" text="‪פרקים באותה _סדרה"/>
 			</menu>
 			<menu text="‪שירותי רשת">
-				<item id="ID_LIBRARY_BITZI_WEB" text="‪Bitzi הראה כרטיס"/>
-				<item id="ID_LIBRARY_BITZI_DOWNLOAD" text="‪Metadata הורד"/>
-				<separator/>
 				<item id="ID_LIBRARY_CREATETORRENT" text="‪.torrent צור קובץ"/>
 			</menu>
 			<menu text="‪אירגון">
@@ -1661,8 +1647,6 @@
 			</menu>
 		</menu>
 		<menu name="WebServices.List.Menu">
-			<item id="ID_LIBRARY_BITZI_WEB" text="‪Bitzi הראה כרטיס"/>
-			<item id="ID_LIBRARY_BITZI_DOWNLOAD" text="‪Metadata הורד"/>
 			<item id="ID_WEBSERVICES_MUSICBRAINZ" text="_MusicBrainz"/>
 		</menu>
 	</menus>
@@ -2467,8 +2451,6 @@
 		<tip id="ID_LIBRARY_ALBUM_DELETE" message="מחק את תיקיית האלבום הנבחרת"/>
 		<tip id="ID_LIBRARY_ALBUM_OPEN" message="פתח את תיקיית האלבום הנבחרת"/>
 		<tip id="ID_LIBRARY_ALBUM_PROPERTIES" message="הצג וערוך מאפיינים של תיקיית האלבום הנבחרת"/>
-		<tip id="ID_LIBRARY_BITZI_DOWNLOAD" message="הורד metadata לקובץ/ים הנבחר/ים מ-Bitzi(TM)..."/>
-		<tip id="ID_LIBRARY_BITZI_WEB" message="הצג את כרטיס ה-Bitzi(TM) לקובץ הנבחר ברשת."/>
 		<tip id="ID_LIBRARY_COLUMNS" message="בחר את עמודות המידע שתרצה להציג"/>
 		<tip id="ID_LIBRARY_COPY" message="העתק את הקצבים הנבחרים לתיקייה אחרת בספריה"/>
 		<tip id="ID_LIBRARY_CREATETORRENT" message="צור טורנט לקובץ זה בכדי להעלותו לאתר"/>
@@ -3080,8 +3062,6 @@
 		<string id="16384" value="‪? &quot;%s&quot; הם הינך בטוח/ה שברצונך להפעיל את הקובץ\n\n.קבצים מסויימים יכולים לפגוע במחשב שלך, אנא וודא איזה קובץ אתה מפעיל"/>
 		<string id="16385" value="‪?קבצים, האם הינך מעוניינ/ת להמשיך %i-ל Meta את/ה עומד/ת לשנות את המידע"/>
 		<string id="16386" value="‪.ל- %i קבצים Meta עורך מידע "/>
-		<string id="16387" value="‪The file &quot;%s&quot; has not yet been hashed.  Please wait for the file to be hashed, and then try again."/>
-		<string id="16388" value="‪This option uses services provided by Bitzi.com for recognising and sharing information about selected files.\n\nShareaza will transmit the SHA1 hash code for the selected file(s) in order to query the Bitzi database.  If you are concerned about privacy, you may wish to consult the Bitzi.com privacy policy.\n\nWould you like to proceed?"/>
 		<string id="16389" value="‪Are you sure you want to permenantly delete the %i selected file(s) ?\n\nThe files will be moved to your &quot;recycle bin&quot; if it is enabled."/>
 		<string id="16390" value="‪You have not yet selected a media player to enqueue files with, such as Nullsoft WinAmp.  Would you like to select one now?\n\nShareaza will pass the name of the file to your selected program with the &quot;/ADD&quot; argument."/>
 		<string id="16391" value="‪אתה לא מחובר לרשת"/>
@@ -3155,10 +3135,6 @@
 		<string id="16778" value="‪‪:URL כתובת"/>
 		<string id="16779" value="‪:סוג"/>
 		<string id="16780" value="‪לא מוגדר"/>
-		<string id="16781" value="‪...מבקש"/>
-		<string id="16782" value="‪!הצלחה"/>
-		<string id="16783" value="‪הסתיים, לחץ על סגירה"/>
-		<string id="16784" value="‪&amp;סגור"/>
 		<string id="16785" value="‪(ללא אפקטים ויזואליים)"/>
 		<string id="16800" value="‪You have not yet specified a connection speed.  Before continuing, please either choose your Internet connection type, or type in a connection speed."/>
 		<string id="16802" value="‪?לא בחרת אף תיקייה לשיתוף, האם הינך מעוניין להמשיך"/>
@@ -4340,14 +4316,6 @@
 			<control caption="‪זכור את בחירתי בפעם הבאה"/>
 			<control caption="‪פתוח חלון מוניטור הורדות"/>
 			<control caption="‪של שרזה אשר יוסיף את שירותי משאבי חיבור הבאים לזיכרון המטמון של שירותי המשאבי חיבור URI לחצתה על"/>
-		</dialog>
-		<dialog name="CBitziDownloadDlg" cookie="StStmsBuSySt" caption="...Metadata מוריד">
-			<control/>
-			<control caption="...Bitzi(TM)-מ Metadata שרזה מנסה להוריד"/>
-			<control/>
-			<control caption="ביטול"/>
-			<control/>
-			<control caption="www.bitzi.com"/>
 		</dialog>
 		<dialog name="CFilePreviewDlg" cookie="StStStmsStBu" caption="...תצוגה מקדימה חכמה להורדה">
 			<control/>

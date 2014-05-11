@@ -922,7 +922,6 @@
 				<item id="ID_SEARCH_FOR_SERIES" text="Ugyanabból a _sorozatból"/>
 			</menu>
 			<menu text="_Webszolgáltatások">
-				<item id="ID_LIBRARY_BITZI_WEB" text="_Bitzi Ticket"/>
 			</menu>
 		</menu>
 		<menu name="CSearchWnd">
@@ -943,7 +942,6 @@
 				<item id="ID_SEARCH_FOR_SERIES" text="Ugyanabból a _sorozatból"/>
 			</menu>
 			<menu text="_Webszolgáltatások">
-				<item id="ID_LIBRARY_BITZI_WEB" text="_Bitzi Ticket"/>
 			</menu>
 			<separator/>
 			<item id="ID_SEARCH_FILTER" text="_Találatok szűrése..."/>
@@ -969,7 +967,6 @@
 				<item id="ID_SEARCH_FOR_SERIES" text="Ugyanabból a _sorozatból"/>
 			</menu>
 			<menu text="_Webszolgáltatások">
-				<item id="ID_LIBRARY_BITZI_WEB" text="_Bitzi Ticket"/>
 			</menu>
 		</menu>
 		<menu name="CBrowseHostWnd">
@@ -988,7 +985,6 @@
 				<item id="ID_SEARCH_FOR_SERIES" text="Ugyanabból a _sorozatból"/>
 			</menu>
 			<menu text="_Webszolgáltatások">
-				<item id="ID_LIBRARY_BITZI_WEB" text="_Bitzi Ticket"/>
 			</menu>
 			<separator/>
 			<item id="ID_SEARCH_FILTER" text="_Találatok szűrése..."/>
@@ -1013,7 +1009,6 @@
 				<item id="ID_SEARCH_FOR_SERIES" text="Ugyanabból a _sorozatból"/>
 			</menu>
 			<menu text="_Webszolgáltatások">
-				<item id="ID_LIBRARY_BITZI_WEB" text="_Bitzi Ticket"/>
 			</menu>
 			<separator/>
 			<item id="ID_SEARCH_FILTER" text="_Találatok szűrése..."/>
@@ -1249,8 +1244,6 @@
 				<item id="ID_SEARCH_FOR_SERIES" text="Ugyanabból a _sorozatból"/>
 			</menu>
 			<menu text="_Webszolgáltatások">
-				<item id="ID_LIBRARY_BITZI_WEB" text="_Bitzi Ticket"/>
-				<item id="ID_LIBRARY_BITZI_DOWNLOAD" text="_Metaadat letöltése"/>
 				<item id="ID_WEBSERVICES_MUSICBRAINZ" text="_MusicBrainz"/>
 			</menu>
 			<menu text="_Rendezés">
@@ -1281,8 +1274,6 @@
 				<item id="ID_SEARCH_FOR_SERIES" text="Ugyanabból a _sorozatból"/>
 			</menu>
 			<menu text="_Webszolgáltatások">
-				<item id="ID_LIBRARY_BITZI_WEB" text="_Bitzi Ticket"/>
-				<item id="ID_LIBRARY_BITZI_DOWNLOAD" text="_Metaadat letöltése"/>
 				<item id="ID_WEBSERVICES_MUSICBRAINZ" text="_MusicBrainz"/>
 				<separator/>
 				<item id="ID_LIBRARY_CREATETORRENT" text="._torrent fájl készítése"/>
@@ -1321,8 +1312,6 @@
 				<item id="ID_SEARCH_FOR_SERIES" text="Ugyanabból a _sorozatból"/>
 			</menu>
 			<menu text="_Webszolgáltatások">
-				<item id="ID_LIBRARY_BITZI_WEB" text="_Bitzi Ticket"/>
-				<item id="ID_LIBRARY_BITZI_DOWNLOAD" text="_Metaadat letöltése"/>
 			</menu>
 			<menu text="_Rendezés">
 				<item id="ID_LIBRARY_RENAME" text="Fájl _átnevezése"/>
@@ -1356,9 +1345,6 @@
 				<item id="ID_SEARCH_FOR_SERIES" text="Ugyanabból a _sorozatból"/>
 			</menu>
 			<menu text="_Webszolgáltatások">
-				<item id="ID_LIBRARY_BITZI_WEB" text="_Bitzi Ticket"/>
-				<item id="ID_LIBRARY_BITZI_DOWNLOAD" text="_Metaadat letöltése"/>
-				<separator/>
 				<item id="ID_LIBRARY_CREATETORRENT" text="._torrent fájl készítése"/>
 			</menu>
 			<menu text="_Rendezés">
@@ -1661,8 +1647,6 @@
 			</menu>
 		</menu>
 		<menu name="WebServices.List.Menu">
-			<item id="ID_LIBRARY_BITZI_WEB" text="_Bitzi Ticket"/>
-			<item id="ID_LIBRARY_BITZI_DOWNLOAD" text="_Metaadat letöltése"/>
 			<item id="ID_WEBSERVICES_MUSICBRAINZ" text="_MusicBrainz"/>
 		</menu>
 	</menus>
@@ -2437,8 +2421,6 @@
 		<tip id="ID_LIBRARY_ALBUM_DELETE" message="Törli a kiválasztott mappát."/>
 		<tip id="ID_LIBRARY_ALBUM_OPEN" message="Album megnyitása."/>
 		<tip id="ID_LIBRARY_ALBUM_PROPERTIES" message="A kiválasztott mappa tulajdonságainak szerkesztése..."/>
-		<tip id="ID_LIBRARY_BITZI_DOWNLOAD" message="Metaadat letöltésea Bitzi(TM)-ről..."/>
-		<tip id="ID_LIBRARY_BITZI_WEB" message="Bitzi(TM) ticket megnézése."/>
 		<tip id="ID_LIBRARY_COLUMNS" message="Milyen oszlopokat kívánsz megjeleníteni..."/>
 		<tip id="ID_LIBRARY_COPY" message="A kiválasztott fájlok másolása egy másik mappába..."/>
 		<tip id="ID_LIBRARY_CREATETORRENT" message=".torrent fájl létrehozása ehhez a fájl(ok)hoz."/>
@@ -3050,8 +3032,6 @@
 		<string id="16384" value="Biztos, hogy futtatni akarja: &quot;%s&quot; ?\n\nNéhány fájl káros a számítógépnek. Ha nem bízik meg a fájlban, inkább futtasson le egy vírusellenőrzét."/>
 		<string id="16385" value="%i fájl metaadat részét akarja módosítani. Biztos ezt akarja?"/>
 		<string id="16386" value="Fájl metaadatának a szerkesztése: %i"/>
-		<string id="16387" value="A(z) &quot;%s&quot; még nem volt hashelve. Várja meg a hashelést és próbálja újra."/>
-		<string id="16388" value="Ez az opció a Bitzi.com fájlinformációs szolgáltatásait használja.\n\nA Shareaza a fájl SHA1 hash kódját elküldi a Bitzi adatbázisába. Ha nem bízik meg a Bitziben, akkor olvassa el a Bitzi.com adatvédelmi nyilatkozatát.\n\nTovább akar menni?"/>
 		<string id="16389" value="Biztos, hogy törölni akarja a %i fájlt?\n\nA fájl(ok) a &quot;Lomtárba&quot; kerülnek, ha be van kapcsolva."/>
 		<string id="16390" value="Nincs médialejátszó kiválasztva(pl. Nullsoft Winamp), ami fel tudná venni a fájlokat egy lejátszólistába. Most akarja kiválasztani?\n\nA Shareaza a(z) &quot;/ADD&quot; paranccsal küldi át a fájlokat a listába."/>
 		<string id="16391" value="Nincs kapcsolat a hálózatokkal."/>
@@ -3125,10 +3105,6 @@
 		<string id="16778" value="URL:"/>
 		<string id="16779" value="Típus:"/>
 		<string id="16780" value="Nincs meghatározva"/>
-		<string id="16781" value="Kérés..."/>
-		<string id="16782" value="Siker!"/>
-		<string id="16783" value="Kész, zárd be"/>
-		<string id="16784" value="Bezárás"/>
 		<string id="16785" value="(Nincs képi megjelenítés)"/>
 		<string id="16800" value="Nem választott ki kapcsolatot. Válasszon egy kapcsolattípust vagy írja be a kapcsolata sebességét."/>
 		<string id="16802" value="Nem választott ki megosztani való mappákat. Biztos, hogy ezt akarja?"/>
@@ -4310,14 +4286,6 @@
 			<control caption="_Beállítás megjegyzése"/>
 			<control caption="Letöltés_monitor megnyitása"/>
 			<control caption="Egy Shareaza által is támogatott URI-re kattintott, amely a következő Szerverkereső szolgáltatást adja hozzá a gyűjteményhez."/>
-		</dialog>
-		<dialog name="CBitziDownloadDlg" cookie="StStmsBuSySt" caption="Metaadat letöltése...">
-			<control/>
-			<control caption="Metaadat letöltése: Bitzi(TM)..."/>
-			<control/>
-			<control caption="Mégse"/>
-			<control/>
-			<control caption="www.bitzi.com"/>
 		</dialog>
 		<dialog name="CFilePreviewDlg" cookie="StStStmsStBu" caption="Előnézet...">
 			<control/>

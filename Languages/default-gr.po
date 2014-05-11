@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Shareaza\n"
 "Report-Msgid-Bugs-To: ryo-oh-ki <ryo-oh-ki@narod.ru>\n"
-"POT-Creation-Date: 2014-01-27 13:47+0000\n"
+"POT-Creation-Date: 2014-05-11 13:41+0000\n"
 "PO-Revision-Date: \n"
 "Last-Translator: ryo-oh-ki <ryo-oh-ki@narod.ru>\n"
 "Language-Team: Shareaza Development Team\n"
@@ -1184,19 +1184,6 @@ msgstr "_Επεισόδια από την ίδια Σειρά"
 msgid "_Web Services"
 msgstr "_Υπηρεσίες Ιστού"
 
-#: csearchwnd.basic;30;item;id_library_bitzi_web
-#: csearchwnd;32;item;id_library_bitzi_web
-#: cbrowsehostwnd.basic;34;item;id_library_bitzi_web
-#: cbrowsehostwnd;36;item;id_library_bitzi_web
-#: chitmonitorwnd;38;item;id_library_bitzi_web
-#: clibraryfileview.physical.basic;41;item;id_library_bitzi_web
-#: clibraryfileview.physical;44;item;id_library_bitzi_web
-#: clibraryfileview.virtual.basic;47;item;id_library_bitzi_web
-#: clibraryfileview.virtual;50;item;id_library_bitzi_web
-#: webservices.list.menu;item;id_library_bitzi_web
-msgid "View _Bitzi Ticket"
-msgstr "Προβολή _Bitzi Ticket"
-
 #: csearchwnd;item;id_search_downloadnow
 #: cbrowsehostwnd.basic;item;id_search_downloadnow
 #: cbrowsehostwnd;item;id_search_downloadnow
@@ -1567,14 +1554,6 @@ msgstr "_Νέο Album..."
 #: clibrarytileview;item;id_library_album_open
 msgid "_Open"
 msgstr "_Άνοιγμα"
-
-#: clibraryfileview.physical.basic;41;item;id_library_bitzi_download
-#: clibraryfileview.physical;44;item;id_library_bitzi_download
-#: clibraryfileview.virtual.basic;47;item;id_library_bitzi_download
-#: clibraryfileview.virtual;50;item;id_library_bitzi_download
-#: webservices.list.menu;item;id_library_bitzi_download
-msgid "_Download Metadata"
-msgstr "Λήψη _Metadata"
 
 #: clibraryfileview.physical.basic;41;item;id_webservices_musicbrainz
 #: clibraryfileview.physical;44;item;id_webservices_musicbrainz
@@ -3661,14 +3640,6 @@ msgstr "Άνοιγμα επιλεγμένου album."
 #: message;id_library_album_properties message;id_library_folder_properties
 msgid "View and edit the properties of the selected album folder..."
 msgstr "Προβολή και επεξεργασία ιδιοτήτων επιλεγμένου album..."
-
-#: message;id_library_bitzi_download
-msgid "Download metadata for the selected file(s) from Bitzi(TM)..."
-msgstr "Λήψη metadata για τα επιλεγμένα αρχεία από το Bitzi(TM)..."
-
-#: message;id_library_bitzi_web
-msgid "View the Bitzi(TM) ticket for the selected file on the web."
-msgstr "Προβολή Bitzi(TM) ticket για το επιλεγμένο αρχείο."
 
 #: message;id_library_columns message;id_search_columns
 msgid "Select metadata columns to be displayed..."
@@ -6054,14 +6025,6 @@ msgstr "Θέλετε σίγουρα να τροποποιήσετε τα metadat
 msgid "Editing metadata of %i files."
 msgstr "Επεξεργασία των metadata των αρχείων %i."
 
-#: string;16387
-msgid "The file \"%s\" has not yet been hashed. Please wait for the file to be hashed, and then try again."
-msgstr "Το αρχείο \"%s\" ακόμη δεν έχει σαρωθεί. Παρακαλώ περιμένετε να τελειώσει και ξαναπροσπαθείστε."
-
-#: string;16388
-msgid "This option uses services provided by Bitzi.com for recognising and sharing information about selected files.\\n\\nShareaza will transmit the SHA1 hash code for the selected file(s) in order to query the Bitzi database. If you are concerned about privacy, you may wish to consult the Bitzi.com privacy policy.\\n\\nWould you like to proceed?"
-msgstr "Αυτή η επιλογή χρησιμοποιεί υπηρεσίες παρεχόμενες από το Bitzi.com προς αναγνώριση και κοινοποίηση πληροφοριών για τα επιλεγμένα αρχεία.\\n\\nΤο Shareaza θα αποστείλει το SHA1 hash code για τα επιλεγμένα αρχεία, προκειμένου να ρωτήσει τη βάση δεδομένων του Bitzi. Αν ανησυχείται για την ιδιωτικότητά σας, συμβουλευτείτε την πολιτική ιδιωτικότητας του Bitzi.com.\\n\\nΘέλετε να συνεχίσετε;"
-
 #: string;16389
 msgid "Are you sure you want to permanently delete the %i selected file(s) ?\\n\\nThe files will be moved to your \"recycle bin\" if it is enabled."
 msgstr "Θέλετε σίγουρα να διαγράψετε οριστικά τα %i επιλεγμένα αρχεία ;\\n\\nΤα αρχεία θα μετακινηθούν στον \"κάδο ανακύκλωσης\", εφόσον λειτουργεί και τα χωράει."
@@ -6351,22 +6314,6 @@ msgstr "Τύπος:"
 #: string;16780
 msgid "Unspecified"
 msgstr "Απροσδιόριστο"
-
-#: string;16781
-msgid "Requesting..."
-msgstr "Αίτηση..."
-
-#: string;16782
-msgid "Success!"
-msgstr "Επιτυχία!"
-
-#: string;16783
-msgid "Finished, click Close"
-msgstr "Ολοκληρώθηκε, κλικ στο Κλείσιμο"
-
-#: string;16784
-msgid "&Close"
-msgstr "&Κλείσιμο"
 
 #: string;16785
 msgid "(No Visualisation)"
@@ -7426,12 +7373,11 @@ msgstr "OK"
 #: cgraphlistdlg;control;17 cgraphitemdlg;control;2
 #: cschemacolumnsdlg;control;4 csecureruledlg;control;34
 #: csharemanagerdlg;control;6 curlcopydlg;control;6 curlexportdlg;control;10
-#: curlactiondlg;control;11 cbitzidownloaddlg;control;4
-#: cfilepreviewdlg;control;6 cexistingfiledlg;control;2
-#: cclosemodedlg;control;6 cdonkeyserversdlg;control;5
-#: cdeletefiledlg;control;5 ctorrentseeddlg;control;4
-#: cdownloadgroupdlg;control;2 cmediavisdlg;control;6
-#: cdecodemetadatadlg;control;9 circinputdlg;control;3
+#: curlactiondlg;control;11 cfilepreviewdlg;control;6
+#: cexistingfiledlg;control;2 cclosemodedlg;control;6
+#: cdonkeyserversdlg;control;5 cdeletefiledlg;control;5
+#: ctorrentseeddlg;control;4 cdownloadgroupdlg;control;2
+#: cmediavisdlg;control;6 cdecodemetadatadlg;control;9 circinputdlg;control;3
 msgid "Cancel"
 msgstr "Άκυρο"
 
@@ -9391,18 +9337,6 @@ msgstr "Άνοιγμα παραθύρου _εποπτίας λήψης"
 msgid "You have clicked on a Shareaza-powered URI which will add the following Discovery Service to your Discovery Services cache."
 msgstr "Κάνατε κλικ σε ένα URI που προσθέτει την εξής Υπηρεσία Ανακάλυψης:"
 
-#: dialog;cbitzidownloaddlg
-msgid "Downloading Metadata..."
-msgstr "Λήψη Metadata..."
-
-#: cbitzidownloaddlg;control;2
-msgid "Shareaza is attempting to download metadata from Bitzi(TM)..."
-msgstr "Προσπάθεια λήψης metadata από Bitzi(TM)..."
-
-#: cbitzidownloaddlg;control;6
-msgid "www.bitzi.com"
-msgstr "www.bitzi.com"
-
 #: dialog;cfilepreviewdlg
 msgid "Smart Download Preview..."
 msgstr "Έξυπνη Προεπισκόπηση Λήψης..."
@@ -10065,6 +9999,45 @@ msgstr "TigerTree"
 #, fuzzy
 msgid "NextRun"
 msgstr "Επόμενο"
+
+#~ msgid "Requesting..."
+#~ msgstr "Αίτηση..."
+
+#~ msgid "Success!"
+#~ msgstr "Επιτυχία!"
+
+#~ msgid "Finished, click Close"
+#~ msgstr "Ολοκληρώθηκε, κλικ στο Κλείσιμο"
+
+#~ msgid "&Close"
+#~ msgstr "&Κλείσιμο"
+
+#~ msgid "The file \"%s\" has not yet been hashed. Please wait for the file to be hashed, and then try again."
+#~ msgstr "Το αρχείο \"%s\" ακόμη δεν έχει σαρωθεί. Παρακαλώ περιμένετε να τελειώσει και ξαναπροσπαθείστε."
+
+#~ msgid "View _Bitzi Ticket"
+#~ msgstr "Προβολή _Bitzi Ticket"
+
+#~ msgid "_Download Metadata"
+#~ msgstr "Λήψη _Metadata"
+
+#~ msgid "Download metadata for the selected file(s) from Bitzi(TM)..."
+#~ msgstr "Λήψη metadata για τα επιλεγμένα αρχεία από το Bitzi(TM)..."
+
+#~ msgid "View the Bitzi(TM) ticket for the selected file on the web."
+#~ msgstr "Προβολή Bitzi(TM) ticket για το επιλεγμένο αρχείο."
+
+#~ msgid "This option uses services provided by Bitzi.com for recognising and sharing information about selected files.\\n\\nShareaza will transmit the SHA1 hash code for the selected file(s) in order to query the Bitzi database. If you are concerned about privacy, you may wish to consult the Bitzi.com privacy policy.\\n\\nWould you like to proceed?"
+#~ msgstr "Αυτή η επιλογή χρησιμοποιεί υπηρεσίες παρεχόμενες από το Bitzi.com προς αναγνώριση και κοινοποίηση πληροφοριών για τα επιλεγμένα αρχεία.\\n\\nΤο Shareaza θα αποστείλει το SHA1 hash code για τα επιλεγμένα αρχεία, προκειμένου να ρωτήσει τη βάση δεδομένων του Bitzi. Αν ανησυχείται για την ιδιωτικότητά σας, συμβουλευτείτε την πολιτική ιδιωτικότητας του Bitzi.com.\\n\\nΘέλετε να συνεχίσετε;"
+
+#~ msgid "Downloading Metadata..."
+#~ msgstr "Λήψη Metadata..."
+
+#~ msgid "Shareaza is attempting to download metadata from Bitzi(TM)..."
+#~ msgstr "Προσπάθεια λήψης metadata από Bitzi(TM)..."
+
+#~ msgid "www.bitzi.com"
+#~ msgstr "www.bitzi.com"
 
 #~ msgid "Get Data"
 #~ msgstr "Λήψη Δεδομένων"

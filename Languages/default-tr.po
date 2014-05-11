@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Shareaza\n"
 "Report-Msgid-Bugs-To: ryo-oh-ki <ryo-oh-ki@narod.ru>\n"
-"POT-Creation-Date: 2014-01-27 13:47+0000\n"
+"POT-Creation-Date: 2014-05-11 13:41+0000\n"
 "PO-Revision-Date: \n"
 "Last-Translator: ryo-oh-ki <ryo-oh-ki@narod.ru>\n"
 "Language-Team: Shareaza Development Team\n"
@@ -1184,19 +1184,6 @@ msgstr "Aynı _Seriden Bölümler"
 msgid "_Web Services"
 msgstr "_Web Servisleri"
 
-#: csearchwnd.basic;30;item;id_library_bitzi_web
-#: csearchwnd;32;item;id_library_bitzi_web
-#: cbrowsehostwnd.basic;34;item;id_library_bitzi_web
-#: cbrowsehostwnd;36;item;id_library_bitzi_web
-#: chitmonitorwnd;38;item;id_library_bitzi_web
-#: clibraryfileview.physical.basic;41;item;id_library_bitzi_web
-#: clibraryfileview.physical;44;item;id_library_bitzi_web
-#: clibraryfileview.virtual.basic;47;item;id_library_bitzi_web
-#: clibraryfileview.virtual;50;item;id_library_bitzi_web
-#: webservices.list.menu;item;id_library_bitzi_web
-msgid "View _Bitzi Ticket"
-msgstr "_Bitzi Etiketi Göster"
-
 #: csearchwnd;item;id_search_downloadnow
 #: cbrowsehostwnd.basic;item;id_search_downloadnow
 #: cbrowsehostwnd;item;id_search_downloadnow
@@ -1567,14 +1554,6 @@ msgstr "Ye_ni Klasör..."
 #: clibrarytileview;item;id_library_album_open
 msgid "_Open"
 msgstr "_Aç"
-
-#: clibraryfileview.physical.basic;41;item;id_library_bitzi_download
-#: clibraryfileview.physical;44;item;id_library_bitzi_download
-#: clibraryfileview.virtual.basic;47;item;id_library_bitzi_download
-#: clibraryfileview.virtual;50;item;id_library_bitzi_download
-#: webservices.list.menu;item;id_library_bitzi_download
-msgid "_Download Metadata"
-msgstr "_Veri İndir"
 
 #: clibraryfileview.physical.basic;41;item;id_webservices_musicbrainz
 #: clibraryfileview.physical;44;item;id_webservices_musicbrainz
@@ -3606,14 +3585,6 @@ msgstr "Seçilmiş albüm klasörlerini aç."
 #: message;id_library_album_properties message;id_library_folder_properties
 msgid "View and edit the properties of the selected album folder..."
 msgstr "Seçilmiş albüm klasörlerinin özelliklerini göster ve yayınla..."
-
-#: message;id_library_bitzi_download
-msgid "Download metadata for the selected file(s) from Bitzi(TM)..."
-msgstr "Bitzi(TM)'den seçilmiş dosya verilerini indir..."
-
-#: message;id_library_bitzi_web
-msgid "View the Bitzi(TM) ticket for the selected file on the web."
-msgstr "Seçilmiş dosyanın Bitzi(TM) etiketini web'de göster"
 
 #: message;id_library_columns message;id_search_columns
 msgid "Select metadata columns to be displayed..."
@@ -5999,14 +5970,6 @@ msgstr "%i dosyada veri değiştirmek üzeresiniz, devam etmek istediğinize emi
 msgid "Editing metadata of %i files."
 msgstr "%i dosyada veri yayınlanıyor."
 
-#: string;16387
-msgid "The file \"%s\" has not yet been hashed. Please wait for the file to be hashed, and then try again."
-msgstr "\"%s\" dosyası henüz taranmadı. Lütfen dosyanın taranması için bekleyin ve sonra tekrar deneyin."
-
-#: string;16388
-msgid "This option uses services provided by Bitzi.com for recognising and sharing information about selected files.\\n\\nShareaza will transmit the SHA1 hash code for the selected file(s) in order to query the Bitzi database. If you are concerned about privacy, you may wish to consult the Bitzi.com privacy policy.\\n\\nWould you like to proceed?"
-msgstr "Bu seçeneklerle seçilen dosyada onaylanan ve paylaşılan bilgi için Bitzi.com tarafından sağlanan servisler kullanılır.\\n\\nShareaza Bitzi veritabanı sorgu düzeninde seçilen dosyalar için SHA1 hash kod gönderecek.Eğer gizlilikle ilgileniyorsan Bitzi.com gizlilik politikasını danışmak isteyebilirsin.\\n\\nİlerlemek istiyor musun?"
-
 #: string;16389
 msgid "Are you sure you want to permanently delete the %i selected file(s) ?\\n\\nThe files will be moved to your \"recycle bin\" if it is enabled."
 msgstr "Seçilen %i dosyasını silmek istediğinize emin misiniz? \\n\\n Eğer bunu seçerseniz, bu dosyalar \"geri dönüşüm kutusu\" taşınacaktır."
@@ -6296,22 +6259,6 @@ msgstr "Tür:"
 #: string;16780
 msgid "Unspecified"
 msgstr "Açıklanmayan"
-
-#: string;16781
-msgid "Requesting..."
-msgstr "İsteniyor..."
-
-#: string;16782
-msgid "Success!"
-msgstr "Başarılı!"
-
-#: string;16783
-msgid "Finished, click Close"
-msgstr "Bitti, Kapat'ı tıklayın"
-
-#: string;16784
-msgid "&Close"
-msgstr "&Kapat"
 
 #: string;16785
 msgid "(No Visualisation)"
@@ -7371,12 +7318,11 @@ msgstr "Tamam"
 #: cgraphlistdlg;control;17 cgraphitemdlg;control;2
 #: cschemacolumnsdlg;control;4 csecureruledlg;control;34
 #: csharemanagerdlg;control;6 curlcopydlg;control;6 curlexportdlg;control;10
-#: curlactiondlg;control;11 cbitzidownloaddlg;control;4
-#: cfilepreviewdlg;control;6 cexistingfiledlg;control;2
-#: cclosemodedlg;control;6 cdonkeyserversdlg;control;5
-#: cdeletefiledlg;control;5 ctorrentseeddlg;control;4
-#: cdownloadgroupdlg;control;2 cmediavisdlg;control;6
-#: cdecodemetadatadlg;control;9 circinputdlg;control;3
+#: curlactiondlg;control;11 cfilepreviewdlg;control;6
+#: cexistingfiledlg;control;2 cclosemodedlg;control;6
+#: cdonkeyserversdlg;control;5 cdeletefiledlg;control;5
+#: ctorrentseeddlg;control;4 cdownloadgroupdlg;control;2
+#: cmediavisdlg;control;6 cdecodemetadatadlg;control;9 circinputdlg;control;3
 msgid "Cancel"
 msgstr "İptal"
 
@@ -9336,18 +9282,6 @@ msgstr "İndirme Penceresi Aç"
 msgid "You have clicked on a Shareaza-powered URI which will add the following Discovery Service to your Discovery Services cache."
 msgstr "Shareaza-Güç sağlayıcısı URI'ye tıkladınız, keşif servis belleğinize takip ettiğiniz keşif servisiniz eklenecek."
 
-#: dialog;cbitzidownloaddlg
-msgid "Downloading Metadata..."
-msgstr "Veri İndirmesi..."
-
-#: cbitzidownloaddlg;control;2
-msgid "Shareaza is attempting to download metadata from Bitzi(TM)..."
-msgstr "Shareaza Bitzi(TM) den veri indirmeye çalışıyor ..."
-
-#: cbitzidownloaddlg;control;6
-msgid "www.bitzi.com"
-msgstr "www.bitzi.com"
-
 #: dialog;cfilepreviewdlg
 msgid "Smart Download Preview..."
 msgstr "Akıllı İndirim Önizleme..."
@@ -10010,6 +9944,45 @@ msgstr "TigerTree"
 #, fuzzy
 msgid "NextRun"
 msgstr "Sonraki"
+
+#~ msgid "Requesting..."
+#~ msgstr "İsteniyor..."
+
+#~ msgid "Success!"
+#~ msgstr "Başarılı!"
+
+#~ msgid "Finished, click Close"
+#~ msgstr "Bitti, Kapat'ı tıklayın"
+
+#~ msgid "&Close"
+#~ msgstr "&Kapat"
+
+#~ msgid "The file \"%s\" has not yet been hashed. Please wait for the file to be hashed, and then try again."
+#~ msgstr "\"%s\" dosyası henüz taranmadı. Lütfen dosyanın taranması için bekleyin ve sonra tekrar deneyin."
+
+#~ msgid "View _Bitzi Ticket"
+#~ msgstr "_Bitzi Etiketi Göster"
+
+#~ msgid "_Download Metadata"
+#~ msgstr "_Veri İndir"
+
+#~ msgid "Download metadata for the selected file(s) from Bitzi(TM)..."
+#~ msgstr "Bitzi(TM)'den seçilmiş dosya verilerini indir..."
+
+#~ msgid "View the Bitzi(TM) ticket for the selected file on the web."
+#~ msgstr "Seçilmiş dosyanın Bitzi(TM) etiketini web'de göster"
+
+#~ msgid "This option uses services provided by Bitzi.com for recognising and sharing information about selected files.\\n\\nShareaza will transmit the SHA1 hash code for the selected file(s) in order to query the Bitzi database. If you are concerned about privacy, you may wish to consult the Bitzi.com privacy policy.\\n\\nWould you like to proceed?"
+#~ msgstr "Bu seçeneklerle seçilen dosyada onaylanan ve paylaşılan bilgi için Bitzi.com tarafından sağlanan servisler kullanılır.\\n\\nShareaza Bitzi veritabanı sorgu düzeninde seçilen dosyalar için SHA1 hash kod gönderecek.Eğer gizlilikle ilgileniyorsan Bitzi.com gizlilik politikasını danışmak isteyebilirsin.\\n\\nİlerlemek istiyor musun?"
+
+#~ msgid "Downloading Metadata..."
+#~ msgstr "Veri İndirmesi..."
+
+#~ msgid "Shareaza is attempting to download metadata from Bitzi(TM)..."
+#~ msgstr "Shareaza Bitzi(TM) den veri indirmeye çalışıyor ..."
+
+#~ msgid "www.bitzi.com"
+#~ msgstr "www.bitzi.com"
 
 #~ msgid "Get Data"
 #~ msgstr "Bilgi istemi"

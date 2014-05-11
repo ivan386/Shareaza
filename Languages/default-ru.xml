@@ -922,7 +922,6 @@
 				<item id="ID_SEARCH_FOR_SERIES" text="Серии из этого же сериала"/>
 			</menu>
 			<menu text="_Сервис">
-				<item id="ID_LIBRARY_BITZI_WEB" text="Посмотреть _Bitzi этикетку"/>
 			</menu>
 		</menu>
 		<menu name="CSearchWnd">
@@ -943,7 +942,6 @@
 				<item id="ID_SEARCH_FOR_SERIES" text="Серии из этого же сериала"/>
 			</menu>
 			<menu text="_Сервис">
-				<item id="ID_LIBRARY_BITZI_WEB" text="Посмотреть _Bitzi этикетку"/>
 			</menu>
 			<separator/>
 			<item id="ID_SEARCH_FILTER" text="_Фильтровать результаты..."/>
@@ -969,7 +967,6 @@
 				<item id="ID_SEARCH_FOR_SERIES" text="Серии из этого же сериала"/>
 			</menu>
 			<menu text="_Сервис">
-				<item id="ID_LIBRARY_BITZI_WEB" text="Посмотреть _Bitzi этикетку"/>
 			</menu>
 		</menu>
 		<menu name="CBrowseHostWnd">
@@ -988,7 +985,6 @@
 				<item id="ID_SEARCH_FOR_SERIES" text="Серии из этого же сериала"/>
 			</menu>
 			<menu text="_Сервис">
-				<item id="ID_LIBRARY_BITZI_WEB" text="Посмотреть _Bitzi этикетку"/>
 			</menu>
 			<separator/>
 			<item id="ID_SEARCH_FILTER" text="_Фильтровать результаты..."/>
@@ -1013,7 +1009,6 @@
 				<item id="ID_SEARCH_FOR_SERIES" text="Серии из этого же сериала"/>
 			</menu>
 			<menu text="_Сервис">
-				<item id="ID_LIBRARY_BITZI_WEB" text="Посмотреть _Bitzi этикетку"/>
 			</menu>
 			<separator/>
 			<item id="ID_SEARCH_FILTER" text="_Фильтровать результаты..."/>
@@ -1249,8 +1244,6 @@
 				<item id="ID_SEARCH_FOR_SERIES" text="Серии из этого же сериала"/>
 			</menu>
 			<menu text="_Сервис">
-				<item id="ID_LIBRARY_BITZI_WEB" text="Посмотреть _Bitzi этикетку"/>
-				<item id="ID_LIBRARY_BITZI_DOWNLOAD" text="_Загрузить метаданные"/>
 				<item id="ID_WEBSERVICES_MUSICBRAINZ" text="_MusicBrainz"/>
 			</menu>
 			<menu text="О_перации">
@@ -1281,8 +1274,6 @@
 				<item id="ID_SEARCH_FOR_SERIES" text="Серии из этого же сериала"/>
 			</menu>
 			<menu text="_Сервис">
-				<item id="ID_LIBRARY_BITZI_WEB" text="Посмотреть _Bitzi этикетку"/>
-				<item id="ID_LIBRARY_BITZI_DOWNLOAD" text="_Загрузить метаданные"/>
 				<item id="ID_WEBSERVICES_MUSICBRAINZ" text="_MusicBrainz"/>
 				<separator/>
 				<item id="ID_LIBRARY_CREATETORRENT" text="_Создать .torrent файл"/>
@@ -1321,8 +1312,6 @@
 				<item id="ID_SEARCH_FOR_SERIES" text="Серии из этого же сериала"/>
 			</menu>
 			<menu text="_Сервис">
-				<item id="ID_LIBRARY_BITZI_WEB" text="Посмотреть _Bitzi этикетку"/>
-				<item id="ID_LIBRARY_BITZI_DOWNLOAD" text="_Загрузить метаданные"/>
 			</menu>
 			<menu text="О_перации">
 				<item id="ID_LIBRARY_RENAME" text="_Переименовать файл"/>
@@ -1356,9 +1345,6 @@
 				<item id="ID_SEARCH_FOR_SERIES" text="Серии из этого же сериала"/>
 			</menu>
 			<menu text="_Сервис">
-				<item id="ID_LIBRARY_BITZI_WEB" text="Посмотреть _Bitzi этикетку"/>
-				<item id="ID_LIBRARY_BITZI_DOWNLOAD" text="_Загрузить метаданные"/>
-				<separator/>
 				<item id="ID_LIBRARY_CREATETORRENT" text="_Создать .torrent файл"/>
 			</menu>
 			<menu text="О_перации">
@@ -1661,8 +1647,6 @@
 			</menu>
 		</menu>
 		<menu name="WebServices.List.Menu">
-			<item id="ID_LIBRARY_BITZI_WEB" text="Посмотреть _Bitzi этикетку"/>
-			<item id="ID_LIBRARY_BITZI_DOWNLOAD" text="_Загрузить метаданные"/>
 			<item id="ID_WEBSERVICES_MUSICBRAINZ" text="_MusicBrainz"/>
 		</menu>
 	</menus>
@@ -2461,8 +2445,6 @@
 		<tip id="ID_LIBRARY_ALBUM_DELETE" message="Удалить помеченную папку альбома."/>
 		<tip id="ID_LIBRARY_ALBUM_OPEN" message="Открыть помеченную папку альбома."/>
 		<tip id="ID_LIBRARY_ALBUM_PROPERTIES" message="Просмотр и правка свойств помеченной папки альбома..."/>
-		<tip id="ID_LIBRARY_BITZI_DOWNLOAD" message="Загрузить мета данные для помеченного файла(ов) с Bitzi(TM)..."/>
-		<tip id="ID_LIBRARY_BITZI_WEB" message="Просмотреть Bitzi(TM) этикетку помеченного файла в Интернете."/>
 		<tip id="ID_LIBRARY_COLUMNS" message="Выбрать колонки мета данных для показа..."/>
 		<tip id="ID_LIBRARY_COPY" message="Копировать помеченные файлы в другую папку хранилища..."/>
 		<tip id="ID_LIBRARY_CREATETORRENT" message="Создать .torrent для этого файла,чтобы поместить на веб сайт."/>
@@ -3074,8 +3056,6 @@
 		<string id="16384" value="Уверены, что хотите открыть файл «%s» ?\n\nНекоторые файлы могут причинить вред для вашего компьютера.  Удостоверьтесь, что это за файл прежде чем открывать его."/>
 		<string id="16385" value="Вы собираетесь изменить мета данные для %i файлов, уверены, что хотите продолжить?"/>
 		<string id="16386" value="Правка мета данных %i файлов."/>
-		<string id="16387" value="Файл «%s» ещё не имеет хеша.  Подождите пока хеширование будет закончено и попробуйте снова."/>
-		<string id="16388" value="Эта опция использует службу, предоставленную Bitzi.com для получения и обмена информацией о помеченных файлах.\n\nShareaza перешлет SHA1 хеш код помеченного файла(ов) для того, чтобы запросить базу данных Bitzi.  Если Вы заинтересованы в секретности, наверное, Вы захотите познакомиться с политикой конфиденциальности Bitzi.com.\n\nХотите ли продолжать?"/>
 		<string id="16389" value="Вы уверены, что хотите удалить %i помеченных файлов(а)?\n\nФайлы будут помещены в Ваш мусорный ящик, если он активирован."/>
 		<string id="16390" value="Вы ещё не указали, какой проигрыватель использовать для ставки медиа файлов в очередь воспроизведения (напр., Nullsoft WinAmp).  Хотите ли выбрать его сейчас?\n\nShareaza передаст имя файла вашей выбранной программе вместе с /ADD аргументом."/>
 		<string id="16391" value="Вы не подключены к сети."/>
@@ -3149,10 +3129,6 @@
 		<string id="16778" value="Ссылка:"/>
 		<string id="16779" value="Тип:"/>
 		<string id="16780" value="Не указано"/>
-		<string id="16781" value="Запрашивается..."/>
-		<string id="16782" value="Успех!"/>
-		<string id="16783" value="Окончено, нажмите «Закрыть»"/>
-		<string id="16784" value="&amp;Закрыть"/>
 		<string id="16785" value="(Без визуализации)"/>
 		<string id="16800" value="Вы ещё не указали скорости соединения.  Прежде чем продолжить, выберите Ваш тип интернетного соединения или его скорость."/>
 		<string id="16802" value="Вы не открыли доступ к никаким папкам.  Вы уверены?"/>
@@ -4334,14 +4310,6 @@
 			<control caption="Запомнить мой _выбор"/>
 			<control caption="Открыть окно _Монитора"/>
 			<control caption="Вы щёлкнули по Shareaza-поддерживаемой ссылке, которая добавит следующую службу ресурсов соединений в Ваш список."/>
-		</dialog>
-		<dialog name="CBitziDownloadDlg" cookie="StStmsBuSySt" caption="Загрузка мета данных...">
-			<control/>
-			<control caption="Shareaza пытается загрузить мета данные с Bitzi(TM)..."/>
-			<control/>
-			<control caption="Отмена"/>
-			<control/>
-			<control caption="www.bitzi.com"/>
 		</dialog>
 		<dialog name="CFilePreviewDlg" cookie="StStStmsStBu" caption="Просмотр копии загрузки...">
 			<control/>

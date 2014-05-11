@@ -922,7 +922,6 @@
 				<item id="ID_SEARCH_FOR_SERIES" text="Episode fra samme serie"/>
 			</menu>
 			<menu text="_Web søk">
-				<item id="ID_LIBRARY_BITZI_WEB" text="Søk med Bitzi Ticket"/>
 			</menu>
 		</menu>
 		<menu name="CSearchWnd">
@@ -943,7 +942,6 @@
 				<item id="ID_SEARCH_FOR_SERIES" text="Episode fra samme serie"/>
 			</menu>
 			<menu text="_Web søk">
-				<item id="ID_LIBRARY_BITZI_WEB" text="Søk med Bitzi Ticket"/>
 			</menu>
 			<separator/>
 			<item id="ID_SEARCH_FILTER" text="Filtrer resultat..."/>
@@ -969,7 +967,6 @@
 				<item id="ID_SEARCH_FOR_SERIES" text="Episode fra samme serie"/>
 			</menu>
 			<menu text="_Web søk">
-				<item id="ID_LIBRARY_BITZI_WEB" text="Søk med Bitzi Ticket"/>
 			</menu>
 		</menu>
 		<menu name="CBrowseHostWnd">
@@ -988,7 +985,6 @@
 				<item id="ID_SEARCH_FOR_SERIES" text="Episode fra samme serie"/>
 			</menu>
 			<menu text="_Web søk">
-				<item id="ID_LIBRARY_BITZI_WEB" text="Søk med Bitzi Ticket"/>
 			</menu>
 			<separator/>
 			<item id="ID_SEARCH_FILTER" text="Filtrer resultat..."/>
@@ -1013,7 +1009,6 @@
 				<item id="ID_SEARCH_FOR_SERIES" text="Episode fra samme serie"/>
 			</menu>
 			<menu text="_Web søk">
-				<item id="ID_LIBRARY_BITZI_WEB" text="Søk med Bitzi Ticket"/>
 			</menu>
 			<separator/>
 			<item id="ID_SEARCH_FILTER" text="Filtrer resultat..."/>
@@ -1249,8 +1244,6 @@
 				<item id="ID_SEARCH_FOR_SERIES" text="Episode fra samme serie"/>
 			</menu>
 			<menu text="_Web søk">
-				<item id="ID_LIBRARY_BITZI_WEB" text="Søk med Bitzi Ticket"/>
-				<item id="ID_LIBRARY_BITZI_DOWNLOAD" text="Hent Metadata"/>
 				<item id="ID_WEBSERVICES_MUSICBRAINZ" text="_MusicBrainz"/>
 			</menu>
 			<menu text="Organisert">
@@ -1281,8 +1274,6 @@
 				<item id="ID_SEARCH_FOR_SERIES" text="Episode fra samme serie"/>
 			</menu>
 			<menu text="_Web søk">
-				<item id="ID_LIBRARY_BITZI_WEB" text="Søk med Bitzi Ticket"/>
-				<item id="ID_LIBRARY_BITZI_DOWNLOAD" text="Hent Metadata"/>
 				<item id="ID_WEBSERVICES_MUSICBRAINZ" text="_MusicBrainz"/>
 				<separator/>
 				<item id="ID_LIBRARY_CREATETORRENT" text="Lag .torrent"/>
@@ -1321,8 +1312,6 @@
 				<item id="ID_SEARCH_FOR_SERIES" text="Episode fra samme serie"/>
 			</menu>
 			<menu text="_Web søk">
-				<item id="ID_LIBRARY_BITZI_WEB" text="Søk med Bitzi Ticket"/>
-				<item id="ID_LIBRARY_BITZI_DOWNLOAD" text="Hent Metadata"/>
 			</menu>
 			<menu text="Organisert">
 				<item id="ID_LIBRARY_RENAME" text="Gi nytt navn"/>
@@ -1356,9 +1345,6 @@
 				<item id="ID_SEARCH_FOR_SERIES" text="Episode fra samme serie"/>
 			</menu>
 			<menu text="_Web søk">
-				<item id="ID_LIBRARY_BITZI_WEB" text="Søk med Bitzi Ticket"/>
-				<item id="ID_LIBRARY_BITZI_DOWNLOAD" text="Hent Metadata"/>
-				<separator/>
 				<item id="ID_LIBRARY_CREATETORRENT" text="Lag .torrent"/>
 			</menu>
 			<menu text="Organisert">
@@ -1661,8 +1647,6 @@
 			</menu>
 		</menu>
 		<menu name="WebServices.List.Menu">
-			<item id="ID_LIBRARY_BITZI_WEB" text="Søk med Bitzi Ticket"/>
-			<item id="ID_LIBRARY_BITZI_DOWNLOAD" text="Hent Metadata"/>
 			<item id="ID_WEBSERVICES_MUSICBRAINZ" text="_MusicBrainz"/>
 		</menu>
 	</menus>
@@ -2458,8 +2442,6 @@
 		<tip id="ID_LIBRARY_ALBUM_DELETE" message="Slett valgte mappe."/>
 		<tip id="ID_LIBRARY_ALBUM_OPEN" message="Åpne valgte mappe."/>
 		<tip id="ID_LIBRARY_ALBUM_PROPERTIES" message="Vis og endre egenskapene til valgte mappe..."/>
-		<tip id="ID_LIBRARY_BITZI_DOWNLOAD" message="Last ned metadata for valgte fil(er) fra Bitzi(TM)..."/>
-		<tip id="ID_LIBRARY_BITZI_WEB" message="Søk med Bitzi(TM) ticket for informasjon om valgte fil på nettet."/>
 		<tip id="ID_LIBRARY_COLUMNS" message="Velg hvilke metadata-kolonner som skal vises."/>
 		<tip id="ID_LIBRARY_COPY" message="Kopier valgte filer til en annen mappe..."/>
 		<tip id="ID_LIBRARY_CREATETORRENT" message="Lag en .torrent for denne filen."/>
@@ -3071,8 +3053,6 @@
 		<string id="16384" value="Er du sikker på at du vil åpne denne filen &quot;%s&quot; ?\n\nNoen filer kan være skadelige for pc-en. Forsikre deg om at du vet hva filen er før du åpner den."/>
 		<string id="16385" value="Du prøver å endre metadataene til %i filer, er du sikker på at du vil fortsette?"/>
 		<string id="16386" value="Endrer metadata til %i filer."/>
-		<string id="16387" value="Filen &quot;%s&quot; er ikke hashet. Vennligst vent til filen er hashet og prøv på nytt."/>
-		<string id="16388" value="Dette valget bruker Bitzi.com for å finne informasjon om valgte filer.\n\nShareaza sender SHA1 hash koden til den valgte filen for å søke i Bitzi databasen. Hvis du er redd for å dele slik informasjon, kan du lese Bitzi.com's retningslinjer for personopplysninger.\n\nVil du fortsette?"/>
 		<string id="16389" value="Er du sikker på at du vil slette %i valgte fil(er) ?\n\nFilene vil bli sendt til din &quot;papirkurv&quot; hvis den er skrudd på."/>
 		<string id="16390" value="Du har ikke valgt en mediaspiller å sende filer i kø til. Vil du velge en nå?\n\nShareaza kan sende navnet til filen ved hjelp av &quot;/Legg til&quot; kommandoen."/>
 		<string id="16391" value="Du er ikke koblet til nettverket."/>
@@ -3146,10 +3126,6 @@
 		<string id="16778" value="URL:"/>
 		<string id="16779" value="Type:"/>
 		<string id="16780" value="Ikke spesifisert"/>
-		<string id="16781" value="spør..."/>
-		<string id="16782" value="Suksess!"/>
-		<string id="16783" value="Ferdig, Klikk Lukk"/>
-		<string id="16784" value="&amp;Lukk"/>
 		<string id="16785" value="(Visualisering av)"/>
 		<string id="16800" value="Du har ikke spesifisert tilkoblingshastigheten. Før du fortsetter, vennligst velg din type internett tilkobling eller skriv inn tilkoblingshastigheten."/>
 		<string id="16802" value="Du har ikke spesifisert hvilke mapper du vil dele. Er du sikker?"/>
@@ -4331,14 +4307,6 @@
 			<control caption="_Husk mitt valg neste gang"/>
 			<control caption="Åpne et nedlastings _monitor vindu"/>
 			<control caption="Du har klikket på en Shareaza-URI som vil legge til følgende oppdagelsestjeneste i din oppdagelsestjeneste cache."/>
-		</dialog>
-		<dialog name="CBitziDownloadDlg" cookie="StStmsBuSySt" caption="Laster ned metadata...">
-			<control/>
-			<control caption="Shareaza prøver å laste ned metadata fra Bitzi(TM)..."/>
-			<control/>
-			<control caption="Avbryt"/>
-			<control/>
-			<control caption="www.bitzi.com"/>
 		</dialog>
 		<dialog name="CFilePreviewDlg" cookie="StStStmsStBu" caption="Smart forhåndsvisning...">
 			<control/>

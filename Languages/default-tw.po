@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Shareaza\n"
 "Report-Msgid-Bugs-To: ryo-oh-ki <ryo-oh-ki@narod.ru>\n"
-"POT-Creation-Date: 2014-01-27 13:47+0000\n"
+"POT-Creation-Date: 2014-05-11 13:41+0000\n"
 "PO-Revision-Date: \n"
 "Last-Translator: ryo-oh-ki <ryo-oh-ki@narod.ru>\n"
 "Language-Team: Shareaza Development Team\n"
@@ -1191,19 +1191,6 @@ msgstr "同一個系列的 Episodes"
 msgid "_Web Services"
 msgstr "網際網路服務"
 
-#: csearchwnd.basic;30;item;id_library_bitzi_web
-#: csearchwnd;32;item;id_library_bitzi_web
-#: cbrowsehostwnd.basic;34;item;id_library_bitzi_web
-#: cbrowsehostwnd;36;item;id_library_bitzi_web
-#: chitmonitorwnd;38;item;id_library_bitzi_web
-#: clibraryfileview.physical.basic;41;item;id_library_bitzi_web
-#: clibraryfileview.physical;44;item;id_library_bitzi_web
-#: clibraryfileview.virtual.basic;47;item;id_library_bitzi_web
-#: clibraryfileview.virtual;50;item;id_library_bitzi_web
-#: webservices.list.menu;item;id_library_bitzi_web
-msgid "View _Bitzi Ticket"
-msgstr "檢視 Bitzi 標籤"
-
 #: csearchwnd;item;id_search_downloadnow
 #: cbrowsehostwnd.basic;item;id_search_downloadnow
 #: cbrowsehostwnd;item;id_search_downloadnow
@@ -1574,14 +1561,6 @@ msgstr "新增資料夾..."
 #: clibrarytileview;item;id_library_album_open
 msgid "_Open"
 msgstr "開啟"
-
-#: clibraryfileview.physical.basic;41;item;id_library_bitzi_download
-#: clibraryfileview.physical;44;item;id_library_bitzi_download
-#: clibraryfileview.virtual.basic;47;item;id_library_bitzi_download
-#: clibraryfileview.virtual;50;item;id_library_bitzi_download
-#: webservices.list.menu;item;id_library_bitzi_download
-msgid "_Download Metadata"
-msgstr "下載解釋資料"
 
 #: clibraryfileview.physical.basic;41;item;id_webservices_musicbrainz
 #: clibraryfileview.physical;44;item;id_webservices_musicbrainz
@@ -3569,14 +3548,6 @@ msgstr "開啟選擇的專輯資料夾."
 #: message;id_library_album_properties message;id_library_folder_properties
 msgid "View and edit the properties of the selected album folder..."
 msgstr "檢視與編輯選擇的專輯資料夾的屬性..."
-
-#: message;id_library_bitzi_download
-msgid "Download metadata for the selected file(s) from Bitzi(TM)..."
-msgstr "正在從 Bitzi(TM) 為選擇的檔案下載解釋資料..."
-
-#: message;id_library_bitzi_web
-msgid "View the Bitzi(TM) ticket for the selected file on the web."
-msgstr "View the Bitzi(TM) ticket for the selected file on the web."
 
 #: message;id_library_columns message;id_search_columns
 msgid "Select metadata columns to be displayed..."
@@ -5964,14 +5935,6 @@ msgstr "您即將修改這個檔案的解釋資料: %i , 您要繼續嗎?"
 msgid "Editing metadata of %i files."
 msgstr "正在編輯檔案 %i 的解釋資料."
 
-#: string;16387
-msgid "The file \"%s\" has not yet been hashed. Please wait for the file to be hashed, and then try again."
-msgstr "這個檔案 \"%s\" 尚未切細.  請等到檔案完成切細後,再試一次."
-
-#: string;16388
-msgid "This option uses services provided by Bitzi.com for recognising and sharing information about selected files.\\n\\nShareaza will transmit the SHA1 hash code for the selected file(s) in order to query the Bitzi database. If you are concerned about privacy, you may wish to consult the Bitzi.com privacy policy.\\n\\nWould you like to proceed?"
-msgstr "This option uses services provided by Bitzi.com for recognising and sharing information about selected files.\\n\\nShareaza will transmit the SHA1 hash code for the selected file(s) in order to query the Bitzi database.  If you are concerned about privacy, you may wish to consult the Bitzi.com privacy policy.\\n\\nWould you like to proceed?"
-
 #: string;16389
 msgid "Are you sure you want to permanently delete the %i selected file(s) ?\\n\\nThe files will be moved to your \"recycle bin\" if it is enabled."
 msgstr "您要永久刪除%i 個選擇的檔案嗎?\\n\\n這些檔案將移至 \"資訊回收筒\", 如果您有啟用它的話."
@@ -6261,22 +6224,6 @@ msgstr "類型:"
 #: string;16780
 msgid "Unspecified"
 msgstr "沒有特別指定"
-
-#: string;16781
-msgid "Requesting..."
-msgstr "要求..."
-
-#: string;16782
-msgid "Success!"
-msgstr "成功!"
-
-#: string;16783
-msgid "Finished, click Close"
-msgstr "完成, 請點選 關閉"
-
-#: string;16784
-msgid "&Close"
-msgstr "&關閉"
 
 #: string;16785
 msgid "(No Visualisation)"
@@ -7336,12 +7283,11 @@ msgstr "確定"
 #: cgraphlistdlg;control;17 cgraphitemdlg;control;2
 #: cschemacolumnsdlg;control;4 csecureruledlg;control;34
 #: csharemanagerdlg;control;6 curlcopydlg;control;6 curlexportdlg;control;10
-#: curlactiondlg;control;11 cbitzidownloaddlg;control;4
-#: cfilepreviewdlg;control;6 cexistingfiledlg;control;2
-#: cclosemodedlg;control;6 cdonkeyserversdlg;control;5
-#: cdeletefiledlg;control;5 ctorrentseeddlg;control;4
-#: cdownloadgroupdlg;control;2 cmediavisdlg;control;6
-#: cdecodemetadatadlg;control;9 circinputdlg;control;3
+#: curlactiondlg;control;11 cfilepreviewdlg;control;6
+#: cexistingfiledlg;control;2 cclosemodedlg;control;6
+#: cdonkeyserversdlg;control;5 cdeletefiledlg;control;5
+#: ctorrentseeddlg;control;4 cdownloadgroupdlg;control;2
+#: cmediavisdlg;control;6 cdecodemetadatadlg;control;9 circinputdlg;control;3
 msgid "Cancel"
 msgstr "取消"
 
@@ -9310,18 +9256,6 @@ msgstr "開啟一個下載監控視窗"
 msgid "You have clicked on a Shareaza-powered URI which will add the following Discovery Service to your Discovery Services cache."
 msgstr "您點選了由 Shareaza 驅動的 URI, 將會新增以下的揭示服務至您的揭示服務快取."
 
-#: dialog;cbitzidownloaddlg
-msgid "Downloading Metadata..."
-msgstr "正在下載解釋資料..."
-
-#: cbitzidownloaddlg;control;2
-msgid "Shareaza is attempting to download metadata from Bitzi(TM)..."
-msgstr "Shareaza 正在嘗試從 Bitzi (TM) 下載解釋資料..."
-
-#: cbitzidownloaddlg;control;6
-msgid "www.bitzi.com"
-msgstr "www.bitzi.com"
-
 #: dialog;cfilepreviewdlg
 msgid "Smart Download Preview..."
 msgstr "智慧型下載預覽..."
@@ -9987,6 +9921,45 @@ msgstr "TigerTree"
 #, fuzzy
 msgid "NextRun"
 msgstr "下一個"
+
+#~ msgid "Requesting..."
+#~ msgstr "要求..."
+
+#~ msgid "Success!"
+#~ msgstr "成功!"
+
+#~ msgid "Finished, click Close"
+#~ msgstr "完成, 請點選 關閉"
+
+#~ msgid "&Close"
+#~ msgstr "&關閉"
+
+#~ msgid "The file \"%s\" has not yet been hashed. Please wait for the file to be hashed, and then try again."
+#~ msgstr "這個檔案 \"%s\" 尚未切細.  請等到檔案完成切細後,再試一次."
+
+#~ msgid "View _Bitzi Ticket"
+#~ msgstr "檢視 Bitzi 標籤"
+
+#~ msgid "_Download Metadata"
+#~ msgstr "下載解釋資料"
+
+#~ msgid "Download metadata for the selected file(s) from Bitzi(TM)..."
+#~ msgstr "正在從 Bitzi(TM) 為選擇的檔案下載解釋資料..."
+
+#~ msgid "View the Bitzi(TM) ticket for the selected file on the web."
+#~ msgstr "View the Bitzi(TM) ticket for the selected file on the web."
+
+#~ msgid "This option uses services provided by Bitzi.com for recognising and sharing information about selected files.\\n\\nShareaza will transmit the SHA1 hash code for the selected file(s) in order to query the Bitzi database. If you are concerned about privacy, you may wish to consult the Bitzi.com privacy policy.\\n\\nWould you like to proceed?"
+#~ msgstr "This option uses services provided by Bitzi.com for recognising and sharing information about selected files.\\n\\nShareaza will transmit the SHA1 hash code for the selected file(s) in order to query the Bitzi database.  If you are concerned about privacy, you may wish to consult the Bitzi.com privacy policy.\\n\\nWould you like to proceed?"
+
+#~ msgid "Downloading Metadata..."
+#~ msgstr "正在下載解釋資料..."
+
+#~ msgid "Shareaza is attempting to download metadata from Bitzi(TM)..."
+#~ msgstr "Shareaza 正在嘗試從 Bitzi (TM) 下載解釋資料..."
+
+#~ msgid "www.bitzi.com"
+#~ msgstr "www.bitzi.com"
 
 #, fuzzy
 #~ msgid "This option uses services provided by ShareMonkey.com for recognising information about selected files.\\n\\nShareaza will transmit file details and your location in order to query the ShareMonkey database.  If you are concerned about privacy, you may wish to consult the ShareMonkey.com privacy policy.\\n\\nWould you like to proceed?"

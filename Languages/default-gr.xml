@@ -922,7 +922,6 @@
 				<item id="ID_SEARCH_FOR_SERIES" text="_Επεισόδια από την ίδια Σειρά"/>
 			</menu>
 			<menu text="_Υπηρεσίες Ιστού">
-				<item id="ID_LIBRARY_BITZI_WEB" text="Προβολή _Bitzi Ticket"/>
 			</menu>
 		</menu>
 		<menu name="CSearchWnd">
@@ -943,7 +942,6 @@
 				<item id="ID_SEARCH_FOR_SERIES" text="_Επεισόδια από την ίδια Σειρά"/>
 			</menu>
 			<menu text="_Υπηρεσίες Ιστού">
-				<item id="ID_LIBRARY_BITZI_WEB" text="Προβολή _Bitzi Ticket"/>
 			</menu>
 			<separator/>
 			<item id="ID_SEARCH_FILTER" text="_Φιλτράρισμα Αποτελεσμάτων..."/>
@@ -969,7 +967,6 @@
 				<item id="ID_SEARCH_FOR_SERIES" text="_Επεισόδια από την ίδια Σειρά"/>
 			</menu>
 			<menu text="_Υπηρεσίες Ιστού">
-				<item id="ID_LIBRARY_BITZI_WEB" text="Προβολή _Bitzi Ticket"/>
 			</menu>
 		</menu>
 		<menu name="CBrowseHostWnd">
@@ -988,7 +985,6 @@
 				<item id="ID_SEARCH_FOR_SERIES" text="_Επεισόδια από την ίδια Σειρά"/>
 			</menu>
 			<menu text="_Υπηρεσίες Ιστού">
-				<item id="ID_LIBRARY_BITZI_WEB" text="Προβολή _Bitzi Ticket"/>
 			</menu>
 			<separator/>
 			<item id="ID_SEARCH_FILTER" text="_Φιλτράρισμα Αποτελεσμάτων..."/>
@@ -1013,7 +1009,6 @@
 				<item id="ID_SEARCH_FOR_SERIES" text="_Επεισόδια από την ίδια Σειρά"/>
 			</menu>
 			<menu text="_Υπηρεσίες Ιστού">
-				<item id="ID_LIBRARY_BITZI_WEB" text="Προβολή _Bitzi Ticket"/>
 			</menu>
 			<separator/>
 			<item id="ID_SEARCH_FILTER" text="_Φιλτράρισμα Αποτελεσμάτων..."/>
@@ -1249,8 +1244,6 @@
 				<item id="ID_SEARCH_FOR_SERIES" text="_Επεισόδια από την ίδια Σειρά"/>
 			</menu>
 			<menu text="_Υπηρεσίες Ιστού">
-				<item id="ID_LIBRARY_BITZI_WEB" text="Προβολή _Bitzi Ticket"/>
-				<item id="ID_LIBRARY_BITZI_DOWNLOAD" text="Λήψη _Metadata"/>
 				<item id="ID_WEBSERVICES_MUSICBRAINZ" text="_MusicBrainz"/>
 			</menu>
 			<menu text="_Οργάνωση">
@@ -1281,8 +1274,6 @@
 				<item id="ID_SEARCH_FOR_SERIES" text="_Επεισόδια από την ίδια Σειρά"/>
 			</menu>
 			<menu text="_Υπηρεσίες Ιστού">
-				<item id="ID_LIBRARY_BITZI_WEB" text="Προβολή _Bitzi Ticket"/>
-				<item id="ID_LIBRARY_BITZI_DOWNLOAD" text="Λήψη _Metadata"/>
 				<item id="ID_WEBSERVICES_MUSICBRAINZ" text="_MusicBrainz"/>
 				<separator/>
 				<item id="ID_LIBRARY_CREATETORRENT" text="Δημιουργία Αρχείου .torrent"/>
@@ -1321,8 +1312,6 @@
 				<item id="ID_SEARCH_FOR_SERIES" text="_Επεισόδια από την ίδια Σειρά"/>
 			</menu>
 			<menu text="_Υπηρεσίες Ιστού">
-				<item id="ID_LIBRARY_BITZI_WEB" text="Προβολή _Bitzi Ticket"/>
-				<item id="ID_LIBRARY_BITZI_DOWNLOAD" text="Λήψη _Metadata"/>
 			</menu>
 			<menu text="_Οργάνωση">
 				<item id="ID_LIBRARY_RENAME" text="_Μετονομασία Αρχείου"/>
@@ -1356,9 +1345,6 @@
 				<item id="ID_SEARCH_FOR_SERIES" text="_Επεισόδια από την ίδια Σειρά"/>
 			</menu>
 			<menu text="_Υπηρεσίες Ιστού">
-				<item id="ID_LIBRARY_BITZI_WEB" text="Προβολή _Bitzi Ticket"/>
-				<item id="ID_LIBRARY_BITZI_DOWNLOAD" text="Λήψη _Metadata"/>
-				<separator/>
 				<item id="ID_LIBRARY_CREATETORRENT" text="Δημιουργία Αρχείου .torrent"/>
 			</menu>
 			<menu text="_Οργάνωση">
@@ -1661,8 +1647,6 @@
 			</menu>
 		</menu>
 		<menu name="WebServices.List.Menu">
-			<item id="ID_LIBRARY_BITZI_WEB" text="Προβολή _Bitzi Ticket"/>
-			<item id="ID_LIBRARY_BITZI_DOWNLOAD" text="Λήψη _Metadata"/>
 			<item id="ID_WEBSERVICES_MUSICBRAINZ" text="_MusicBrainz"/>
 		</menu>
 	</menus>
@@ -2463,8 +2447,6 @@
 		<tip id="ID_LIBRARY_ALBUM_DELETE" message="Διαγραφή επιλεγμένου album."/>
 		<tip id="ID_LIBRARY_ALBUM_OPEN" message="Άνοιγμα επιλεγμένου album."/>
 		<tip id="ID_LIBRARY_ALBUM_PROPERTIES" message="Προβολή και επεξεργασία ιδιοτήτων επιλεγμένου album..."/>
-		<tip id="ID_LIBRARY_BITZI_DOWNLOAD" message="Λήψη metadata για τα επιλεγμένα αρχεία από το Bitzi(TM)..."/>
-		<tip id="ID_LIBRARY_BITZI_WEB" message="Προβολή Bitzi(TM) ticket για το επιλεγμένο αρχείο."/>
 		<tip id="ID_LIBRARY_COLUMNS" message="Επιλογή στηλών metadata που θα εμφανίζονται..."/>
 		<tip id="ID_LIBRARY_COPY" message="Αντιγραφή επιλεγμένων αρχείων σε άλλο φάκελο της Βιβλιοθήκης..."/>
 		<tip id="ID_LIBRARY_CREATETORRENT" message="Δημιουργία .torrent αυτού του αρχείου για αποστολή σε έναν ιστότοπο."/>
@@ -3076,8 +3058,6 @@
 		<string id="16384" value="Θέλετε σίγουρα να ανοίξετε το αρχείο &quot;%s&quot; ;\n\nΜερικά αρχεία μπορεί να είναι βλαβερά για τον υπολογιστή σας! Βεβαιωθείτε ότι ξέρετε τι είναι το αρχείο πριν το ανοίξετε."/>
 		<string id="16385" value="Θέλετε σίγουρα να τροποποιήσετε τα metadata του αρχείου %i;"/>
 		<string id="16386" value="Επεξεργασία των metadata των αρχείων %i."/>
-		<string id="16387" value="Το αρχείο &quot;%s&quot; ακόμη δεν έχει σαρωθεί. Παρακαλώ περιμένετε να τελειώσει και ξαναπροσπαθείστε."/>
-		<string id="16388" value="Αυτή η επιλογή χρησιμοποιεί υπηρεσίες παρεχόμενες από το Bitzi.com προς αναγνώριση και κοινοποίηση πληροφοριών για τα επιλεγμένα αρχεία.\n\nΤο Shareaza θα αποστείλει το SHA1 hash code για τα επιλεγμένα αρχεία, προκειμένου να ρωτήσει τη βάση δεδομένων του Bitzi. Αν ανησυχείται για την ιδιωτικότητά σας, συμβουλευτείτε την πολιτική ιδιωτικότητας του Bitzi.com.\n\nΘέλετε να συνεχίσετε;"/>
 		<string id="16389" value="Θέλετε σίγουρα να διαγράψετε οριστικά τα %i επιλεγμένα αρχεία ;\n\nΤα αρχεία θα μετακινηθούν στον &quot;κάδο ανακύκλωσης&quot;, εφόσον λειτουργεί και τα χωράει."/>
 		<string id="16390" value="Δεν επιλέξατε ακόμη μια εφαρμογή αναπαραγωγής πολυμέσων, όπως είναι το Nullsoft Winamp. Θέλετε να επιλέξετε μία τώρα;\n\nΤο Shareaza θα περάσει το όνομα του επιλεγμένου αρχείου με την παράμετρο &quot;/ADD&quot;."/>
 		<string id="16391" value="Δεν είστε ενωμένοι στο δίκτυο."/>
@@ -3151,10 +3131,6 @@
 		<string id="16778" value="URL:"/>
 		<string id="16779" value="Τύπος:"/>
 		<string id="16780" value="Απροσδιόριστο"/>
-		<string id="16781" value="Αίτηση..."/>
-		<string id="16782" value="Επιτυχία!"/>
-		<string id="16783" value="Ολοκληρώθηκε, κλικ στο Κλείσιμο"/>
-		<string id="16784" value="&amp;Κλείσιμο"/>
 		<string id="16785" value="(Καμία Απεικόνιση)"/>
 		<string id="16800" value="Δεν καθορίσατε ακόμη μια ταχύτητα σύνδεσης. Πριν συνεχίσετε, παρακαλώ επιλέξτε τον τύπο της σύνδεσής σας στο Διαδίκτυο ή εισάγετε μια ταχύτητα σύνδεσης."/>
 		<string id="16802" value="Δεν καθορίσατε φακέλους για κοινοποίηση. Είστε σίγουροι;"/>
@@ -4336,14 +4312,6 @@
 			<control caption="_Απομνημόνευση επιλογής"/>
 			<control caption="Άνοιγμα παραθύρου _εποπτίας λήψης"/>
 			<control caption="Κάνατε κλικ σε ένα URI που προσθέτει την εξής Υπηρεσία Ανακάλυψης:"/>
-		</dialog>
-		<dialog name="CBitziDownloadDlg" cookie="StStmsBuSySt" caption="Λήψη Metadata...">
-			<control/>
-			<control caption="Προσπάθεια λήψης metadata από Bitzi(TM)..."/>
-			<control/>
-			<control caption="Άκυρο"/>
-			<control/>
-			<control caption="www.bitzi.com"/>
 		</dialog>
 		<dialog name="CFilePreviewDlg" cookie="StStStmsStBu" caption="Έξυπνη Προεπισκόπηση Λήψης...">
 			<control/>

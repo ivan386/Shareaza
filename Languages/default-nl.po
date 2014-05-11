@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Shareaza\n"
 "Report-Msgid-Bugs-To: ryo-oh-ki <ryo-oh-ki@narod.ru>\n"
-"POT-Creation-Date: 2014-01-27 13:47+0000\n"
+"POT-Creation-Date: 2014-05-11 13:41+0000\n"
 "PO-Revision-Date: \n"
 "Last-Translator: HanV <hanv@sourceforge.net>\n"
 "Language-Team: Shareaza Development Team\n"
@@ -1184,19 +1184,6 @@ msgstr "Afleveringen uit dezelfde _serie"
 msgid "_Web Services"
 msgstr "_Internetdiensten"
 
-#: csearchwnd.basic;30;item;id_library_bitzi_web
-#: csearchwnd;32;item;id_library_bitzi_web
-#: cbrowsehostwnd.basic;34;item;id_library_bitzi_web
-#: cbrowsehostwnd;36;item;id_library_bitzi_web
-#: chitmonitorwnd;38;item;id_library_bitzi_web
-#: clibraryfileview.physical.basic;41;item;id_library_bitzi_web
-#: clibraryfileview.physical;44;item;id_library_bitzi_web
-#: clibraryfileview.virtual.basic;47;item;id_library_bitzi_web
-#: clibraryfileview.virtual;50;item;id_library_bitzi_web
-#: webservices.list.menu;item;id_library_bitzi_web
-msgid "View _Bitzi Ticket"
-msgstr "_Bitzi Ticket bekijken"
-
 #: csearchwnd;item;id_search_downloadnow
 #: cbrowsehostwnd.basic;item;id_search_downloadnow
 #: cbrowsehostwnd;item;id_search_downloadnow
@@ -1565,14 +1552,6 @@ msgstr "_Nieuwe map..."
 #: clibrarytileview;item;id_library_album_open
 msgid "_Open"
 msgstr "_Openen"
-
-#: clibraryfileview.physical.basic;41;item;id_library_bitzi_download
-#: clibraryfileview.physical;44;item;id_library_bitzi_download
-#: clibraryfileview.virtual.basic;47;item;id_library_bitzi_download
-#: clibraryfileview.virtual;50;item;id_library_bitzi_download
-#: webservices.list.menu;item;id_library_bitzi_download
-msgid "_Download Metadata"
-msgstr "Metadata _downloaden"
 
 #: clibraryfileview.physical.basic;41;item;id_webservices_musicbrainz
 #: clibraryfileview.physical;44;item;id_webservices_musicbrainz
@@ -3601,14 +3580,6 @@ msgstr "Open het geselecteerde album."
 #: message;id_library_album_properties message;id_library_folder_properties
 msgid "View and edit the properties of the selected album folder..."
 msgstr "Toon en wijzig de eigenschappen van het geselecteerde album..."
-
-#: message;id_library_bitzi_download
-msgid "Download metadata for the selected file(s) from Bitzi(TM)..."
-msgstr "Download metadata voor de geselecteerde bestand(en) vanaf Bitzi..."
-
-#: message;id_library_bitzi_web
-msgid "View the Bitzi(TM) ticket for the selected file on the web."
-msgstr "Toon het Bitzi ticket voor het geselecteerde bestand op het internet."
 
 #: message;id_library_columns message;id_search_columns
 msgid "Select metadata columns to be displayed..."
@@ -5971,14 +5942,6 @@ msgstr "Je staat op het punt om de metadata van %i bestanden te wijzigen, weet j
 msgid "Editing metadata of %i files."
 msgstr "Metadata van %i bestanden worden gewijzigd."
 
-#: string;16387
-msgid "The file \"%s\" has not yet been hashed. Please wait for the file to be hashed, and then try again."
-msgstr "Het bestand \"%s\" is nog niet gehasht. Wacht alsjeblieft even totdat het bestand gehasht is en probeer het dan nog een keer."
-
-#: string;16388
-msgid "This option uses services provided by Bitzi.com for recognising and sharing information about selected files.\\n\\nShareaza will transmit the SHA1 hash code for the selected file(s) in order to query the Bitzi database. If you are concerned about privacy, you may wish to consult the Bitzi.com privacy policy.\\n\\nWould you like to proceed?"
-msgstr "Deze optie gebruikt diensten die zijn verstrekt door Bitzi.com voor het herkennen en delen van informatie over de geselecteerde bestanden.\\n\\nShareaza geeft de SHA1 hash-code door voor de geselecteerde bestand(en) om de Bitzi gegevensbank op te vragen. Als je je zorgen maakt over privacy, kun je de privacypolis van Bitzi.com raadplegen.\\n\\nWil je verdergaan?"
-
 #: string;16389
 msgid "Are you sure you want to permanently delete the %i selected file(s) ?\\n\\nThe files will be moved to your \"recycle bin\" if it is enabled."
 msgstr "Weet je zeker dat je de %i geselecteerde bestand(en) voorgoed wilt verwijderen ?\\n\\nDe bestanden zullen worden verplaatst naar je \"prullenbak\" als dit mogelijk is."
@@ -6266,22 +6229,6 @@ msgstr "Type:"
 #: string;16780
 msgid "Unspecified"
 msgstr "Niet gespecificeerd"
-
-#: string;16781
-msgid "Requesting..."
-msgstr "Aanvragen..."
-
-#: string;16782
-msgid "Success!"
-msgstr "Gelukt!"
-
-#: string;16783
-msgid "Finished, click Close"
-msgstr "Klaar, klik op sluiten"
-
-#: string;16784
-msgid "&Close"
-msgstr "&Sluiten"
 
 #: string;16785
 msgid "(No Visualisation)"
@@ -7333,12 +7280,11 @@ msgstr "OK"
 #: cgraphlistdlg;control;17 cgraphitemdlg;control;2
 #: cschemacolumnsdlg;control;4 csecureruledlg;control;34
 #: csharemanagerdlg;control;6 curlcopydlg;control;6 curlexportdlg;control;10
-#: curlactiondlg;control;11 cbitzidownloaddlg;control;4
-#: cfilepreviewdlg;control;6 cexistingfiledlg;control;2
-#: cclosemodedlg;control;6 cdonkeyserversdlg;control;5
-#: cdeletefiledlg;control;5 ctorrentseeddlg;control;4
-#: cdownloadgroupdlg;control;2 cmediavisdlg;control;6
-#: cdecodemetadatadlg;control;9 circinputdlg;control;3
+#: curlactiondlg;control;11 cfilepreviewdlg;control;6
+#: cexistingfiledlg;control;2 cclosemodedlg;control;6
+#: cdonkeyserversdlg;control;5 cdeletefiledlg;control;5
+#: ctorrentseeddlg;control;4 cdownloadgroupdlg;control;2
+#: cmediavisdlg;control;6 cdecodemetadatadlg;control;9 circinputdlg;control;3
 msgid "Cancel"
 msgstr "Annuleren"
 
@@ -9290,18 +9236,6 @@ msgstr "Open een _monitor venster"
 msgid "You have clicked on a Shareaza-powered URI which will add the following Discovery Service to your Discovery Services cache."
 msgstr "Je hebt geklikt op een Shareaza-gestuurde URI die de volgende discovery service zal toevoegen aan je Discovery Services cache."
 
-#: dialog;cbitzidownloaddlg
-msgid "Downloading Metadata..."
-msgstr "Bezig met het downloaden van metadata..."
-
-#: cbitzidownloaddlg;control;2
-msgid "Shareaza is attempting to download metadata from Bitzi(TM)..."
-msgstr "Shareaza probeert metadata te downloaden van Bitzi(TM)..."
-
-#: cbitzidownloaddlg;control;6
-msgid "www.bitzi.com"
-msgstr "www.bitzi.com"
-
 #: dialog;cfilepreviewdlg
 msgid "Smart Download Preview..."
 msgstr "Slimme Download Voorvertoning..."
@@ -9961,3 +9895,42 @@ msgstr "Trigger"
 #: column;nextrun
 msgid "NextRun"
 msgstr "Volgende uitvoering"
+
+#~ msgid "Requesting..."
+#~ msgstr "Aanvragen..."
+
+#~ msgid "Success!"
+#~ msgstr "Gelukt!"
+
+#~ msgid "Finished, click Close"
+#~ msgstr "Klaar, klik op sluiten"
+
+#~ msgid "&Close"
+#~ msgstr "&Sluiten"
+
+#~ msgid "The file \"%s\" has not yet been hashed. Please wait for the file to be hashed, and then try again."
+#~ msgstr "Het bestand \"%s\" is nog niet gehasht. Wacht alsjeblieft even totdat het bestand gehasht is en probeer het dan nog een keer."
+
+#~ msgid "View _Bitzi Ticket"
+#~ msgstr "_Bitzi Ticket bekijken"
+
+#~ msgid "_Download Metadata"
+#~ msgstr "Metadata _downloaden"
+
+#~ msgid "Download metadata for the selected file(s) from Bitzi(TM)..."
+#~ msgstr "Download metadata voor de geselecteerde bestand(en) vanaf Bitzi..."
+
+#~ msgid "View the Bitzi(TM) ticket for the selected file on the web."
+#~ msgstr "Toon het Bitzi ticket voor het geselecteerde bestand op het internet."
+
+#~ msgid "This option uses services provided by Bitzi.com for recognising and sharing information about selected files.\\n\\nShareaza will transmit the SHA1 hash code for the selected file(s) in order to query the Bitzi database. If you are concerned about privacy, you may wish to consult the Bitzi.com privacy policy.\\n\\nWould you like to proceed?"
+#~ msgstr "Deze optie gebruikt diensten die zijn verstrekt door Bitzi.com voor het herkennen en delen van informatie over de geselecteerde bestanden.\\n\\nShareaza geeft de SHA1 hash-code door voor de geselecteerde bestand(en) om de Bitzi gegevensbank op te vragen. Als je je zorgen maakt over privacy, kun je de privacypolis van Bitzi.com raadplegen.\\n\\nWil je verdergaan?"
+
+#~ msgid "Downloading Metadata..."
+#~ msgstr "Bezig met het downloaden van metadata..."
+
+#~ msgid "Shareaza is attempting to download metadata from Bitzi(TM)..."
+#~ msgstr "Shareaza probeert metadata te downloaden van Bitzi(TM)..."
+
+#~ msgid "www.bitzi.com"
+#~ msgstr "www.bitzi.com"

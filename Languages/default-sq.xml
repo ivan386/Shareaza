@@ -922,7 +922,6 @@
 				<item id="ID_SEARCH_FOR_SERIES" text="_Episode në këtë Serial"/>
 			</menu>
 			<menu text="Shërbime _Rrjeti">
-				<item id="ID_LIBRARY_BITZI_WEB" text="Shiko Biletën _Bitzi"/>
 			</menu>
 		</menu>
 		<menu name="CSearchWnd">
@@ -943,7 +942,6 @@
 				<item id="ID_SEARCH_FOR_SERIES" text="_Episode në këtë Serial"/>
 			</menu>
 			<menu text="Shërbime _Rrjeti">
-				<item id="ID_LIBRARY_BITZI_WEB" text="Shiko Biletën _Bitzi"/>
 			</menu>
 			<separator/>
 			<item id="ID_SEARCH_FILTER" text="_Filtro Rezultatet..."/>
@@ -969,7 +967,6 @@
 				<item id="ID_SEARCH_FOR_SERIES" text="_Episode në këtë Serial"/>
 			</menu>
 			<menu text="Shërbime _Rrjeti">
-				<item id="ID_LIBRARY_BITZI_WEB" text="Shiko Biletën _Bitzi"/>
 			</menu>
 		</menu>
 		<menu name="CBrowseHostWnd">
@@ -988,7 +985,6 @@
 				<item id="ID_SEARCH_FOR_SERIES" text="_Episode në këtë Serial"/>
 			</menu>
 			<menu text="Shërbime _Rrjeti">
-				<item id="ID_LIBRARY_BITZI_WEB" text="Shiko Biletën _Bitzi"/>
 			</menu>
 			<separator/>
 			<item id="ID_SEARCH_FILTER" text="_Filtro Rezultatet..."/>
@@ -1013,7 +1009,6 @@
 				<item id="ID_SEARCH_FOR_SERIES" text="_Episode në këtë Serial"/>
 			</menu>
 			<menu text="Shërbime _Rrjeti">
-				<item id="ID_LIBRARY_BITZI_WEB" text="Shiko Biletën _Bitzi"/>
 			</menu>
 			<separator/>
 			<item id="ID_SEARCH_FILTER" text="_Filtro Rezultatet..."/>
@@ -1249,8 +1244,6 @@
 				<item id="ID_SEARCH_FOR_SERIES" text="_Episode në këtë Serial"/>
 			</menu>
 			<menu text="Shërbime _Rrjeti">
-				<item id="ID_LIBRARY_BITZI_WEB" text="Shiko Biletën _Bitzi"/>
-				<item id="ID_LIBRARY_BITZI_DOWNLOAD" text="_Shkarko Metadata"/>
 				<item id="ID_WEBSERVICES_MUSICBRAINZ" text="_MusicBrainz"/>
 			</menu>
 			<menu text="O_rganizo">
@@ -1281,8 +1274,6 @@
 				<item id="ID_SEARCH_FOR_SERIES" text="_Episode në këtë Serial"/>
 			</menu>
 			<menu text="Shërbime _Rrjeti">
-				<item id="ID_LIBRARY_BITZI_WEB" text="Shiko Biletën _Bitzi"/>
-				<item id="ID_LIBRARY_BITZI_DOWNLOAD" text="_Shkarko Metadata"/>
 				<item id="ID_WEBSERVICES_MUSICBRAINZ" text="_MusicBrainz"/>
 				<separator/>
 				<item id="ID_LIBRARY_CREATETORRENT" text="Krijo Skedë _.torrent"/>
@@ -1321,8 +1312,6 @@
 				<item id="ID_SEARCH_FOR_SERIES" text="_Episode në këtë Serial"/>
 			</menu>
 			<menu text="Shërbime _Rrjeti">
-				<item id="ID_LIBRARY_BITZI_WEB" text="Shiko Biletën _Bitzi"/>
-				<item id="ID_LIBRARY_BITZI_DOWNLOAD" text="_Shkarko Metadata"/>
 			</menu>
 			<menu text="O_rganizo">
 				<item id="ID_LIBRARY_RENAME" text="_Riemërto Skedën"/>
@@ -1356,9 +1345,6 @@
 				<item id="ID_SEARCH_FOR_SERIES" text="_Episode në këtë Serial"/>
 			</menu>
 			<menu text="Shërbime _Rrjeti">
-				<item id="ID_LIBRARY_BITZI_WEB" text="Shiko Biletën _Bitzi"/>
-				<item id="ID_LIBRARY_BITZI_DOWNLOAD" text="_Shkarko Metadata"/>
-				<separator/>
 				<item id="ID_LIBRARY_CREATETORRENT" text="Krijo Skedë _.torrent"/>
 			</menu>
 			<menu text="O_rganizo">
@@ -1661,8 +1647,6 @@
 			</menu>
 		</menu>
 		<menu name="WebServices.List.Menu">
-			<item id="ID_LIBRARY_BITZI_WEB" text="Shiko Biletën _Bitzi"/>
-			<item id="ID_LIBRARY_BITZI_DOWNLOAD" text="_Shkarko Metadata"/>
 			<item id="ID_WEBSERVICES_MUSICBRAINZ" text="_MusicBrainz"/>
 		</menu>
 	</menus>
@@ -2464,8 +2448,6 @@
 		<tip id="ID_LIBRARY_ALBUM_DELETE" message="Fshin dosjen e zgjedhur me albume."/>
 		<tip id="ID_LIBRARY_ALBUM_OPEN" message="Hap dosjen e zgjedhur me albume."/>
 		<tip id="ID_LIBRARY_ALBUM_PROPERTIES" message="Tregon dhe editon vetitë e dosjes së zgjedhur me albume..."/>
-		<tip id="ID_LIBRARY_BITZI_DOWNLOAD" message="Shkarkon metadatat për skedën e zgjedhur me Bitzi(TM)..."/>
-		<tip id="ID_LIBRARY_BITZI_WEB" message="Tregon biletën Bitzi(TM) në rrjet për skedën e zgjedhur."/>
 		<tip id="ID_LIBRARY_COLUMNS" message="Zgjedh kolonat me metadatat që do të shfaqen..."/>
 		<tip id="ID_LIBRARY_COPY" message="Kopjon skedën e zgjedhur në një dosje tjetër në librari..."/>
 		<tip id="ID_LIBRARY_CREATETORRENT" message="Krijon një .torrent për skedën që ajo të ngarkohet në truall."/>
@@ -3077,8 +3059,6 @@
 		<string id="16384" value="Are you sure you want to launch the file &quot;%s&quot; ?\n\nSome files can be harmful to your computer. Ensure you know what the file is before launching it."/>
 		<string id="16385" value="You are about to modify the metadata of %i files, are you sure you want to continue?"/>
 		<string id="16386" value="Editing metadata of %i files."/>
-		<string id="16387" value="The file &quot;%s&quot; has not yet been hashed. Please wait for the file to be hashed, and then try again."/>
-		<string id="16388" value="This option uses services provided by Bitzi.com for recognising and sharing information about selected files.\n\nShareaza will transmit the SHA1 hash code for the selected file(s) in order to query the Bitzi database. If you are concerned about privacy, you may wish to consult the Bitzi.com privacy policy.\n\nWould you like to proceed?"/>
 		<string id="16389" value="Are you sure you want to permanently delete the %i selected file(s) ?\n\nThe files will be moved to your &quot;recycle bin&quot; if it is enabled."/>
 		<string id="16390" value="You have not yet selected a media player to enqueue files with, such as Nullsoft Winamp. Would you like to select one now?\n\nShareaza will pass the name of the file to your selected program with the &quot;/ADD&quot; argument."/>
 		<string id="16391" value="Nuk je i lidhur në rrjet."/>
@@ -3152,10 +3132,6 @@
 		<string id="16778" value="URLi:"/>
 		<string id="16779" value="Lloji:"/>
 		<string id="16780" value="I pacaktuar"/>
-		<string id="16781" value="Kërkim..."/>
-		<string id="16782" value="Sukses!"/>
-		<string id="16783" value="Përfundon, klikoni Mbylle"/>
-		<string id="16784" value="&amp;Mbylle"/>
 		<string id="16785" value="(Asnjë vegim)"/>
 		<string id="16800" value="Nuk e ke përcaktuar shpejtësinë e lidhjes. Përpara se të vijosh, të lutem zgjidhe llojin e lidhjes tënde me Internetin, ose shkruaj shpejtësinë e lidhjes."/>
 		<string id="16802" value="Nuk ke përcaktuar asnjë dosje për ta shpërndarë. Je i sigurt?"/>
@@ -4337,14 +4313,6 @@
 			<control caption="_Mbaje mend këtë zgjedhjen"/>
 			<control caption="_Monitoro shkarkimin"/>
 			<control caption="Ke klikuar në një URI me fuqi në Shareaza i cili do e shtojë Shërbimin Zbulues të mëposhtëm në depon tënde për Shërbimin Zbulues."/>
-		</dialog>
-		<dialog name="CBitziDownloadDlg" cookie="StStmsBuSySt" caption="Shkarkim i Metadatave...">
-			<control/>
-			<control caption="Shareaza orvatet të shkarkojë metadatat me Bitzi(TM)..."/>
-			<control/>
-			<control caption="Anulo"/>
-			<control/>
-			<control caption="www.bitzi.com"/>
 		</dialog>
 		<dialog name="CFilePreviewDlg" cookie="StStStmsStBu" caption="Parashikim i Shkarkimit Inteligjent...">
 			<control/>

@@ -922,7 +922,6 @@
 				<item id="ID_SEARCH_FOR_SERIES" text="_Episódios da mesma Série"/>
 			</menu>
 			<menu text="_Serviços da Web">
-				<item id="ID_LIBRARY_BITZI_WEB" text="Ver o _Ticket do Bitzi"/>
 			</menu>
 		</menu>
 		<menu name="CSearchWnd">
@@ -943,7 +942,6 @@
 				<item id="ID_SEARCH_FOR_SERIES" text="_Episódios da mesma Série"/>
 			</menu>
 			<menu text="_Serviços da Web">
-				<item id="ID_LIBRARY_BITZI_WEB" text="Ver o _Ticket do Bitzi"/>
 			</menu>
 			<separator/>
 			<item id="ID_SEARCH_FILTER" text="_Filtrar Resultados..."/>
@@ -969,7 +967,6 @@
 				<item id="ID_SEARCH_FOR_SERIES" text="_Episódios da mesma Série"/>
 			</menu>
 			<menu text="_Serviços da Web">
-				<item id="ID_LIBRARY_BITZI_WEB" text="Ver o _Ticket do Bitzi"/>
 			</menu>
 		</menu>
 		<menu name="CBrowseHostWnd">
@@ -988,7 +985,6 @@
 				<item id="ID_SEARCH_FOR_SERIES" text="_Episódios da mesma Série"/>
 			</menu>
 			<menu text="_Serviços da Web">
-				<item id="ID_LIBRARY_BITZI_WEB" text="Ver o _Ticket do Bitzi"/>
 			</menu>
 			<separator/>
 			<item id="ID_SEARCH_FILTER" text="_Filtrar Resultados..."/>
@@ -1013,7 +1009,6 @@
 				<item id="ID_SEARCH_FOR_SERIES" text="_Episódios da mesma Série"/>
 			</menu>
 			<menu text="_Serviços da Web">
-				<item id="ID_LIBRARY_BITZI_WEB" text="Ver o _Ticket do Bitzi"/>
 			</menu>
 			<separator/>
 			<item id="ID_SEARCH_FILTER" text="_Filtrar Resultados..."/>
@@ -1249,8 +1244,6 @@
 				<item id="ID_SEARCH_FOR_SERIES" text="_Episódios da mesma Série"/>
 			</menu>
 			<menu text="_Serviços da Web">
-				<item id="ID_LIBRARY_BITZI_WEB" text="Ver o _Ticket do Bitzi"/>
-				<item id="ID_LIBRARY_BITZI_DOWNLOAD" text="_Baixar Metadata"/>
 				<item id="ID_WEBSERVICES_MUSICBRAINZ" text="_MusicBrainz"/>
 			</menu>
 			<menu text="O_rganizar">
@@ -1281,8 +1274,6 @@
 				<item id="ID_SEARCH_FOR_SERIES" text="_Episódios da mesma Série"/>
 			</menu>
 			<menu text="_Serviços da Web">
-				<item id="ID_LIBRARY_BITZI_WEB" text="Ver o _Ticket do Bitzi"/>
-				<item id="ID_LIBRARY_BITZI_DOWNLOAD" text="_Baixar Metadata"/>
 				<item id="ID_WEBSERVICES_MUSICBRAINZ" text="_MusicBrainz"/>
 				<separator/>
 				<item id="ID_LIBRARY_CREATETORRENT" text="Criar _Arquivo .torrent"/>
@@ -1321,8 +1312,6 @@
 				<item id="ID_SEARCH_FOR_SERIES" text="_Episódios da mesma Série"/>
 			</menu>
 			<menu text="_Serviços da Web">
-				<item id="ID_LIBRARY_BITZI_WEB" text="Ver o _Ticket do Bitzi"/>
-				<item id="ID_LIBRARY_BITZI_DOWNLOAD" text="_Baixar Metadata"/>
 			</menu>
 			<menu text="O_rganizar">
 				<item id="ID_LIBRARY_RENAME" text="_Renomear Arquivo"/>
@@ -1356,9 +1345,6 @@
 				<item id="ID_SEARCH_FOR_SERIES" text="_Episódios da mesma Série"/>
 			</menu>
 			<menu text="_Serviços da Web">
-				<item id="ID_LIBRARY_BITZI_WEB" text="Ver o _Ticket do Bitzi"/>
-				<item id="ID_LIBRARY_BITZI_DOWNLOAD" text="_Baixar Metadata"/>
-				<separator/>
 				<item id="ID_LIBRARY_CREATETORRENT" text="Criar _Arquivo .torrent"/>
 			</menu>
 			<menu text="O_rganizar">
@@ -1661,8 +1647,6 @@
 			</menu>
 		</menu>
 		<menu name="WebServices.List.Menu">
-			<item id="ID_LIBRARY_BITZI_WEB" text="Ver o _Ticket do Bitzi"/>
-			<item id="ID_LIBRARY_BITZI_DOWNLOAD" text="_Baixar Metadata"/>
 			<item id="ID_WEBSERVICES_MUSICBRAINZ" text="_MusicBrainz"/>
 		</menu>
 	</menus>
@@ -2464,8 +2448,6 @@ t		Alternativamente, você pode manualmente iniciar este download com o comando 
 		<tip id="ID_LIBRARY_ALBUM_DELETE" message="Apagar a pasta do álbum selecionada."/>
 		<tip id="ID_LIBRARY_ALBUM_OPEN" message="Abrir a pasta do álbum selecionada."/>
 		<tip id="ID_LIBRARY_ALBUM_PROPERTIES" message="Ver e editar as propriedades da pasta do álbum selecionada..."/>
-		<tip id="ID_LIBRARY_BITZI_DOWNLOAD" message="Baixar metadata para o(s) arquivo(s) selecionado(s) do Bitzi(TM)..."/>
-		<tip id="ID_LIBRARY_BITZI_WEB" message="Ver na rede o ticket Bitzi(TM) do arquivo selecionado."/>
 		<tip id="ID_LIBRARY_COLUMNS" message="Selecionar as colunas do metadata a serem exibidas..."/>
 		<tip id="ID_LIBRARY_COPY" message="Copiar os arquivos selecionados para outra pasta na biblioteca..."/>
 		<tip id="ID_LIBRARY_CREATETORRENT" message="Criar um .torrent para este arquivo para fazer upload para um site."/>
@@ -3077,8 +3059,6 @@ t		Alternativamente, você pode manualmente iniciar este download com o comando 
 		<string id="16384" value="Você tem certeza que você quer abrir o arquivo &quot;%s&quot; ?\n\nAlguns arquivos podem danificar seu computador. Certifique-se que você saiba o que o arquivo é antes de executá-lo."/>
 		<string id="16385" value="Você está prestes a modificar a metadata de %i arquivos. Você tem certeza que você quer continuar?"/>
 		<string id="16386" value="Editando metadata de %i arquivos."/>
-		<string id="16387" value="O arquivo &quot;%s&quot; ainda não possui informação de hash. Por favr espere que o arquivo tenha um hash, e então tente novamente."/>
-		<string id="16388" value="Esta opção usa os serviços providenciados pelo Bitzi.com para identificação e compartilhamento sobre os arquivos selecionados.\n\nO Shareaza enviará o código de hash SHA1 para o(s) arquivo(s) selecionado(s) de modo a pesquisar o banco de dados do Bitzi. Se você está preocupado com sua privacidade, você pode desejar consultar a política de privacidade do Bitzi.com.\n\nVocê gostaria de prosseguir?"/>
 		<string id="16389" value="Você tem certeza que você quer apagar permanentemente o(s) %i arquivo(s) selecionados(s) ?\n\nOs arquivos serão movidos para a sua &quot;pasta recycle bin&quot; se ela estiver ativada."/>
 		<string id="16390" value="Você não selecionou ainda nenhum media player para os seus arquivos, tais como o WinAmp da Nullsoft. Você gostaria de selecionar um agora?\n\nO Shareaza passará o nome do arquivo para o seu programa selecionado com o argumento &quot;/ADD&quot;."/>
 		<string id="16391" value="Você não está conectado a rede."/>
@@ -3156,10 +3136,6 @@ pasta dos arquivos baixados a sua biblioteca agora?"/>
 		<string id="16778" value="URL:"/>
 		<string id="16779" value="Tipo:"/>
 		<string id="16780" value="Não Especificado"/>
-		<string id="16781" value="Pedindo..."/>
-		<string id="16782" value="Sucesso!"/>
-		<string id="16783" value="Terminado, clique em Fechar"/>
-		<string id="16784" value="&amp;Fechar"/>
 		<string id="16785" value="(Sem visualização)"/>
 		<string id="16800" value="Você ainda não especificou uma velocidade de conexão. Antes de continuar, por favor escolha seu tipo de conexão com a internet ou digite a velocidade de conexão."/>
 		<string id="16802" value="Você não selecionou quaisquer pastas para compartilhar. Você tem certeza?"/>
@@ -4341,14 +4317,6 @@ pasta dos arquivos baixados a sua biblioteca agora?"/>
 			<control caption="_Lembrar minha seleção da próxima vez"/>
 			<control caption="Abrir uma janela do _monitor de downloads"/>
 			<control caption="Você clicou numa URI do Shareaza a qual adicionará o seguinte Serviço de Descobrimento ao seu cache de Serviços de Descobrimento."/>
-		</dialog>
-		<dialog name="CBitziDownloadDlg" cookie="StStmsBuSySt" caption="Baixando Metadata...">
-			<control/>
-			<control caption="O Shareaza está tentando baixar o metadata do Bitzi(TM)..."/>
-			<control/>
-			<control caption="Cancelar"/>
-			<control/>
-			<control caption="www.bitzi.com"/>
 		</dialog>
 		<dialog name="CFilePreviewDlg" cookie="StStStmsStBu" caption="Prévia Inteligente do Download...">
 			<control/>

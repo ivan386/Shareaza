@@ -178,15 +178,6 @@ public:
 		DWORD		TooManyWarning;				// Too many files warning. 0 - ask user; 1 - no; 2 - yes.
 	} Library;
 
-	struct sWebServices
-	{
-		CString		BitziAgent;
-		CString		BitziWebView;
-		CString		BitziWebSubmit;
-		CString		BitziXML;
-		bool		BitziOkay;
-	} WebServices;
-
 	struct sSearch
 	{
 		CString		LastSchemaURI;

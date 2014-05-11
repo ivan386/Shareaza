@@ -922,7 +922,6 @@
 				<item id="ID_SEARCH_FOR_SERIES" text="同一個系列的 Episodes"/>
 			</menu>
 			<menu text="網際網路服務">
-				<item id="ID_LIBRARY_BITZI_WEB" text="檢視 Bitzi 標籤"/>
 			</menu>
 		</menu>
 		<menu name="CSearchWnd">
@@ -943,7 +942,6 @@
 				<item id="ID_SEARCH_FOR_SERIES" text="同一個系列的 Episodes"/>
 			</menu>
 			<menu text="網際網路服務">
-				<item id="ID_LIBRARY_BITZI_WEB" text="檢視 Bitzi 標籤"/>
 			</menu>
 			<separator/>
 			<item id="ID_SEARCH_FILTER" text="過濾搜尋結果..."/>
@@ -969,7 +967,6 @@
 				<item id="ID_SEARCH_FOR_SERIES" text="同一個系列的 Episodes"/>
 			</menu>
 			<menu text="網際網路服務">
-				<item id="ID_LIBRARY_BITZI_WEB" text="檢視 Bitzi 標籤"/>
 			</menu>
 		</menu>
 		<menu name="CBrowseHostWnd">
@@ -988,7 +985,6 @@
 				<item id="ID_SEARCH_FOR_SERIES" text="同一個系列的 Episodes"/>
 			</menu>
 			<menu text="網際網路服務">
-				<item id="ID_LIBRARY_BITZI_WEB" text="檢視 Bitzi 標籤"/>
 			</menu>
 			<separator/>
 			<item id="ID_SEARCH_FILTER" text="過濾搜尋結果..."/>
@@ -1013,7 +1009,6 @@
 				<item id="ID_SEARCH_FOR_SERIES" text="同一個系列的 Episodes"/>
 			</menu>
 			<menu text="網際網路服務">
-				<item id="ID_LIBRARY_BITZI_WEB" text="檢視 Bitzi 標籤"/>
 			</menu>
 			<separator/>
 			<item id="ID_SEARCH_FILTER" text="過濾搜尋結果..."/>
@@ -1249,8 +1244,6 @@
 				<item id="ID_SEARCH_FOR_SERIES" text="同一個系列的 Episodes"/>
 			</menu>
 			<menu text="網際網路服務">
-				<item id="ID_LIBRARY_BITZI_WEB" text="檢視 Bitzi 標籤"/>
-				<item id="ID_LIBRARY_BITZI_DOWNLOAD" text="下載解釋資料"/>
 				<item id="ID_WEBSERVICES_MUSICBRAINZ" text="_MusicBrainz"/>
 			</menu>
 			<menu text="整理">
@@ -1281,8 +1274,6 @@
 				<item id="ID_SEARCH_FOR_SERIES" text="同一個系列的 Episodes"/>
 			</menu>
 			<menu text="網際網路服務">
-				<item id="ID_LIBRARY_BITZI_WEB" text="檢視 Bitzi 標籤"/>
-				<item id="ID_LIBRARY_BITZI_DOWNLOAD" text="下載解釋資料"/>
 				<item id="ID_WEBSERVICES_MUSICBRAINZ" text="_MusicBrainz"/>
 				<separator/>
 				<item id="ID_LIBRARY_CREATETORRENT" text="製作 .torrent 檔"/>
@@ -1321,8 +1312,6 @@
 				<item id="ID_SEARCH_FOR_SERIES" text="同一個系列的 Episodes"/>
 			</menu>
 			<menu text="網際網路服務">
-				<item id="ID_LIBRARY_BITZI_WEB" text="檢視 Bitzi 標籤"/>
-				<item id="ID_LIBRARY_BITZI_DOWNLOAD" text="下載解釋資料"/>
 			</menu>
 			<menu text="整理">
 				<item id="ID_LIBRARY_RENAME" text="重新命名檔案"/>
@@ -1356,9 +1345,6 @@
 				<item id="ID_SEARCH_FOR_SERIES" text="同一個系列的 Episodes"/>
 			</menu>
 			<menu text="網際網路服務">
-				<item id="ID_LIBRARY_BITZI_WEB" text="檢視 Bitzi 標籤"/>
-				<item id="ID_LIBRARY_BITZI_DOWNLOAD" text="下載解釋資料"/>
-				<separator/>
 				<item id="ID_LIBRARY_CREATETORRENT" text="製作 .torrent 檔"/>
 			</menu>
 			<menu text="整理">
@@ -1661,8 +1647,6 @@
 			</menu>
 		</menu>
 		<menu name="WebServices.List.Menu">
-			<item id="ID_LIBRARY_BITZI_WEB" text="檢視 Bitzi 標籤"/>
-			<item id="ID_LIBRARY_BITZI_DOWNLOAD" text="下載解釋資料"/>
 			<item id="ID_WEBSERVICES_MUSICBRAINZ" text="_MusicBrainz"/>
 		</menu>
 	</menus>
@@ -2400,8 +2384,6 @@
 		<tip id="ID_LIBRARY_ALBUM_DELETE" message="刪除選擇的專輯資料夾."/>
 		<tip id="ID_LIBRARY_ALBUM_OPEN" message="開啟選擇的專輯資料夾."/>
 		<tip id="ID_LIBRARY_ALBUM_PROPERTIES" message="檢視與編輯選擇的專輯資料夾的屬性..."/>
-		<tip id="ID_LIBRARY_BITZI_DOWNLOAD" message="正在從 Bitzi(TM) 為選擇的檔案下載解釋資料..."/>
-		<tip id="ID_LIBRARY_BITZI_WEB" message="View the Bitzi(TM) ticket for the selected file on the web."/>
 		<tip id="ID_LIBRARY_COLUMNS" message="選擇要顯示的解釋資料欄位..."/>
 		<tip id="ID_LIBRARY_COPY" message="複製選擇的檔案至另一個收藏資料夾..."/>
 		<tip id="ID_LIBRARY_CREATETORRENT" message="為這個檔案建立 torrent 檔以上傳至網站."/>
@@ -3013,8 +2995,6 @@
 		<string id="16384" value="您確定要執行檔案: &quot;%s&quot; ?\n\n 有些檔案可能對您的檔案造成損害.  執行本檔案前請確定其內容為何."/>
 		<string id="16385" value="您即將修改這個檔案的解釋資料: %i , 您要繼續嗎?"/>
 		<string id="16386" value="正在編輯檔案 %i 的解釋資料."/>
-		<string id="16387" value="這個檔案 &quot;%s&quot; 尚未切細.  請等到檔案完成切細後,再試一次."/>
-		<string id="16388" value="This option uses services provided by Bitzi.com for recognising and sharing information about selected files.\n\nShareaza will transmit the SHA1 hash code for the selected file(s) in order to query the Bitzi database.  If you are concerned about privacy, you may wish to consult the Bitzi.com privacy policy.\n\nWould you like to proceed?"/>
 		<string id="16389" value="您要永久刪除%i 個選擇的檔案嗎?\n\n這些檔案將移至 &quot;資訊回收筒&quot;, 如果您有啟用它的話."/>
 		<string id="16390" value="您還沒有選擇一個與檔案產生關聯的多媒體播放程式, 像是 Nullsoft WinAmp. 您現在要選擇嗎?\n\nShareaza will pass the name of the file to your selected program with the &quot;/ADD&quot; argument."/>
 		<string id="16391" value="您還尚未連線至網路."/>
@@ -3088,10 +3068,6 @@
 		<string id="16778" value="URL:"/>
 		<string id="16779" value="類型:"/>
 		<string id="16780" value="沒有特別指定"/>
-		<string id="16781" value="要求..."/>
-		<string id="16782" value="成功!"/>
-		<string id="16783" value="完成, 請點選 關閉"/>
-		<string id="16784" value="&amp;關閉"/>
 		<string id="16785" value="(沒有視覺效果)"/>
 		<string id="16800" value="您還沒有具體指定連線速度. 繼續下一步動作前, 請選擇您的網路連線類型或是自行輸入連線速度."/>
 		<string id="16802" value="您還沒有具體指定任何要分享的資料夾. 您確定要這樣做嗎?"/>
@@ -4273,14 +4249,6 @@
 			<control caption="下次記住我的選擇"/>
 			<control caption="開啟一個下載監控視窗"/>
 			<control caption="您點選了由 Shareaza 驅動的 URI, 將會新增以下的揭示服務至您的揭示服務快取."/>
-		</dialog>
-		<dialog name="CBitziDownloadDlg" cookie="StStmsBuSySt" caption="正在下載解釋資料...">
-			<control/>
-			<control caption="Shareaza 正在嘗試從 Bitzi (TM) 下載解釋資料..."/>
-			<control/>
-			<control caption="取消"/>
-			<control/>
-			<control caption="www.bitzi.com"/>
 		</dialog>
 		<dialog name="CFilePreviewDlg" cookie="StStStmsStBu" caption="智慧型下載預覽...">
 			<control/>

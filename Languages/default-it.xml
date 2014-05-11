@@ -922,7 +922,6 @@
 				<item id="ID_SEARCH_FOR_SERIES" text="_Episodi della stessa serie"/>
 			</menu>
 			<menu text="Servizi web">
-				<item id="ID_LIBRARY_BITZI_WEB" text="Visualizza la ricerca su Bitzi"/>
 			</menu>
 		</menu>
 		<menu name="CSearchWnd">
@@ -943,7 +942,6 @@
 				<item id="ID_SEARCH_FOR_SERIES" text="_Episodi della stessa serie"/>
 			</menu>
 			<menu text="Servizi web">
-				<item id="ID_LIBRARY_BITZI_WEB" text="Visualizza la ricerca su Bitzi"/>
 			</menu>
 			<separator/>
 			<item id="ID_SEARCH_FILTER" text="Filtra i risultati..."/>
@@ -969,7 +967,6 @@
 				<item id="ID_SEARCH_FOR_SERIES" text="_Episodi della stessa serie"/>
 			</menu>
 			<menu text="Servizi web">
-				<item id="ID_LIBRARY_BITZI_WEB" text="Visualizza la ricerca su Bitzi"/>
 			</menu>
 		</menu>
 		<menu name="CBrowseHostWnd">
@@ -988,7 +985,6 @@
 				<item id="ID_SEARCH_FOR_SERIES" text="_Episodi della stessa serie"/>
 			</menu>
 			<menu text="Servizi web">
-				<item id="ID_LIBRARY_BITZI_WEB" text="Visualizza la ricerca su Bitzi"/>
 			</menu>
 			<separator/>
 			<item id="ID_SEARCH_FILTER" text="Filtra i risultati..."/>
@@ -1013,7 +1009,6 @@
 				<item id="ID_SEARCH_FOR_SERIES" text="_Episodi della stessa serie"/>
 			</menu>
 			<menu text="Servizi web">
-				<item id="ID_LIBRARY_BITZI_WEB" text="Visualizza la ricerca su Bitzi"/>
 			</menu>
 			<separator/>
 			<item id="ID_SEARCH_FILTER" text="Filtra i risultati..."/>
@@ -1249,8 +1244,6 @@
 				<item id="ID_SEARCH_FOR_SERIES" text="_Episodi della stessa serie"/>
 			</menu>
 			<menu text="Servizi web">
-				<item id="ID_LIBRARY_BITZI_WEB" text="Visualizza la ricerca su Bitzi"/>
-				<item id="ID_LIBRARY_BITZI_DOWNLOAD" text="_Scarica metadata"/>
 				<item id="ID_WEBSERVICES_MUSICBRAINZ" text="_MusicBrainz"/>
 			</menu>
 			<menu text="_Organizza">
@@ -1281,8 +1274,6 @@
 				<item id="ID_SEARCH_FOR_SERIES" text="_Episodi della stessa serie"/>
 			</menu>
 			<menu text="Servizi web">
-				<item id="ID_LIBRARY_BITZI_WEB" text="Visualizza la ricerca su Bitzi"/>
-				<item id="ID_LIBRARY_BITZI_DOWNLOAD" text="_Scarica metadata"/>
 				<item id="ID_WEBSERVICES_MUSICBRAINZ" text="_MusicBrainz"/>
 				<separator/>
 				<item id="ID_LIBRARY_CREATETORRENT" text="Crea file ._torrent"/>
@@ -1321,8 +1312,6 @@
 				<item id="ID_SEARCH_FOR_SERIES" text="_Episodi della stessa serie"/>
 			</menu>
 			<menu text="Servizi web">
-				<item id="ID_LIBRARY_BITZI_WEB" text="Visualizza la ricerca su Bitzi"/>
-				<item id="ID_LIBRARY_BITZI_DOWNLOAD" text="_Scarica metadata"/>
 			</menu>
 			<menu text="_Organizza">
 				<item id="ID_LIBRARY_RENAME" text="_Rinomina file"/>
@@ -1356,9 +1345,6 @@
 				<item id="ID_SEARCH_FOR_SERIES" text="_Episodi della stessa serie"/>
 			</menu>
 			<menu text="Servizi web">
-				<item id="ID_LIBRARY_BITZI_WEB" text="Visualizza la ricerca su Bitzi"/>
-				<item id="ID_LIBRARY_BITZI_DOWNLOAD" text="_Scarica metadata"/>
-				<separator/>
 				<item id="ID_LIBRARY_CREATETORRENT" text="Crea file ._torrent"/>
 			</menu>
 			<menu text="_Organizza">
@@ -1661,8 +1647,6 @@
 			</menu>
 		</menu>
 		<menu name="WebServices.List.Menu">
-			<item id="ID_LIBRARY_BITZI_WEB" text="Visualizza la ricerca su Bitzi"/>
-			<item id="ID_LIBRARY_BITZI_DOWNLOAD" text="_Scarica metadata"/>
 			<item id="ID_WEBSERVICES_MUSICBRAINZ" text="_MusicBrainz"/>
 		</menu>
 	</menus>
@@ -2463,8 +2447,6 @@
 		<tip id="ID_LIBRARY_ALBUM_DELETE" message="Elimina la cartella album selezionata."/>
 		<tip id="ID_LIBRARY_ALBUM_OPEN" message="Apri la cartella album selezionata."/>
 		<tip id="ID_LIBRARY_ALBUM_PROPERTIES" message="Visualizza e modifica le proprietà della cartella album selezionata..."/>
-		<tip id="ID_LIBRARY_BITZI_DOWNLOAD" message="Scarica i metadata dei file selezionati da Bitzi(TM)..."/>
-		<tip id="ID_LIBRARY_BITZI_WEB" message="Visualizza la ricerca dei file selezionati su Bitzi(TM)."/>
 		<tip id="ID_LIBRARY_COLUMNS" message="Seleziona le colonne metadata da mostrare..."/>
 		<tip id="ID_LIBRARY_COPY" message="Copia i file selezionati in un'altra cartella della libreria..."/>
 		<tip id="ID_LIBRARY_CREATETORRENT" message="Crea un .torrent per questo file da uplodare in un sito web."/>
@@ -3076,8 +3058,6 @@
 		<string id="16384" value="Desideri eseguire il file &quot;%s&quot; ?\n\nAlcuni file potrebbero essere pericolosi per il tuo computer. Assicurati di conoscere la natura del file prima di eseguirlo."/>
 		<string id="16385" value="Stai per modificare i metadata di %i file, desideri continuare?"/>
 		<string id="16386" value="Modifica dei metadata di %i file."/>
-		<string id="16387" value="Il file &quot;%s&quot; non ha subito il processo di hash. Attendi che il file abbia subito il processo di hash, poi prova ancora."/>
-		<string id="16388" value="Questa opzione utilizza i servizi di Bitzi.com per il riconoscimento e la condivisione delle informazioni sui file selezionati.\n\nShareaza trasmetterà il codice hash SHA1 per i file selezionati per poter effettuare richieste al database di Bitzi. Se non conosci le condizioni sulla privacy, consultale su Bitzi.com .\n\nDesideri continuare?"/>
 		<string id="16389" value="Desideri eliminare definitivamente i %i file selezionati?\n\nI file saranno spostati nel tuo &quot;cestino&quot; se è abilitato."/>
 		<string id="16390" value="Non hai selezionato un lettore multimediale per accodare i file (per esempio Nullsoft Winamp). Desideri selezionarlo ora?\n\nShareaza passerà il nome del file al programma indicato con il parametro &quot;/ADD&quot;."/>
 		<string id="16391" value="Non sei connesso alla rete."/>
@@ -3151,10 +3131,6 @@
 		<string id="16778" value="URL:"/>
 		<string id="16779" value="Tipo:"/>
 		<string id="16780" value="Non specificato"/>
-		<string id="16781" value="Richiesta in corso..."/>
-		<string id="16782" value="Successo!"/>
-		<string id="16783" value="Finito, clicca Chiudi"/>
-		<string id="16784" value="&amp;Chiudi"/>
 		<string id="16785" value="(Nessuna visualizzazione)"/>
 		<string id="16800" value="Non hai ancora specificato la velocità di connessione. Prima di continuare, scegli il tipo di connessione Internet, o scrivi la velocità di connessione."/>
 		<string id="16802" value="Non hai indicato nessuna cartella da condividere. Desideri continuare?"/>
@@ -4336,14 +4312,6 @@
 			<control caption="_Utilizza questa scelta in futuro"/>
 			<control caption="Apri finestra _monitor del download"/>
 			<control caption="Hai cliccato su una URI adattata per Shareaza che ti permetterà di aggiungere il seguente servizio di ricerca alla tua cache di servizi di ricerca."/>
-		</dialog>
-		<dialog name="CBitziDownloadDlg" cookie="StStmsBuSySt" caption="Trasferimento metadata...">
-			<control/>
-			<control caption="Shareaza sta tentando di scaricare i metadata da Bitzi(TM)..."/>
-			<control/>
-			<control caption="Annulla"/>
-			<control/>
-			<control caption="www.bitzi.com"/>
 		</dialog>
 		<dialog name="CFilePreviewDlg" cookie="StStStmsStBu" caption="Anteprima download...">
 			<control/>

@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Shareaza\n"
 "Report-Msgid-Bugs-To: ryo-oh-ki <ryo-oh-ki@narod.ru>\n"
-"POT-Creation-Date: 2014-01-27 13:47+0000\n"
+"POT-Creation-Date: 2014-05-11 13:41+0000\n"
 "PO-Revision-Date: \n"
 "Last-Translator: ryo-oh-ki <ryo-oh-ki@narod.ru>\n"
 "Language-Team: Shareaza Development Team\n"
@@ -1184,19 +1184,6 @@ msgstr "Epizody ze stejné série"
 msgid "_Web Services"
 msgstr "_Webové služby"
 
-#: csearchwnd.basic;30;item;id_library_bitzi_web
-#: csearchwnd;32;item;id_library_bitzi_web
-#: cbrowsehostwnd.basic;34;item;id_library_bitzi_web
-#: cbrowsehostwnd;36;item;id_library_bitzi_web
-#: chitmonitorwnd;38;item;id_library_bitzi_web
-#: clibraryfileview.physical.basic;41;item;id_library_bitzi_web
-#: clibraryfileview.physical;44;item;id_library_bitzi_web
-#: clibraryfileview.virtual.basic;47;item;id_library_bitzi_web
-#: clibraryfileview.virtual;50;item;id_library_bitzi_web
-#: webservices.list.menu;item;id_library_bitzi_web
-msgid "View _Bitzi Ticket"
-msgstr "Prohlížet _Bitzi Ticket"
-
 #: csearchwnd;item;id_search_downloadnow
 #: cbrowsehostwnd.basic;item;id_search_downloadnow
 #: cbrowsehostwnd;item;id_search_downloadnow
@@ -1567,14 +1554,6 @@ msgstr "_Nová složka..."
 #: clibrarytileview;item;id_library_album_open
 msgid "_Open"
 msgstr "_Otevřít"
-
-#: clibraryfileview.physical.basic;41;item;id_library_bitzi_download
-#: clibraryfileview.physical;44;item;id_library_bitzi_download
-#: clibraryfileview.virtual.basic;47;item;id_library_bitzi_download
-#: clibraryfileview.virtual;50;item;id_library_bitzi_download
-#: webservices.list.menu;item;id_library_bitzi_download
-msgid "_Download Metadata"
-msgstr "_Stáhnout popisky"
 
 #: clibraryfileview.physical.basic;41;item;id_webservices_musicbrainz
 #: clibraryfileview.physical;44;item;id_webservices_musicbrainz
@@ -3653,14 +3632,6 @@ msgstr "Otevřít označené album ve složce."
 #: message;id_library_album_properties message;id_library_folder_properties
 msgid "View and edit the properties of the selected album folder..."
 msgstr "Prohlížet a upravit vlastnosti označeného alba ve složce..."
-
-#: message;id_library_bitzi_download
-msgid "Download metadata for the selected file(s) from Bitzi(TM)..."
-msgstr "Stahovat popisky pro vybraný soubor(y) z Bitzi(TM)..."
-
-#: message;id_library_bitzi_web
-msgid "View the Bitzi(TM) ticket for the selected file on the web."
-msgstr "Prohlížet záznam Bitzi(TM) pro vybraný soubor na webu."
 
 #: message;id_library_columns message;id_search_columns
 msgid "Select metadata columns to be displayed..."
@@ -6045,14 +6016,6 @@ msgstr "Chystáte se upravit popisky pro %i souborů, opravdu chcete pokračovat
 msgid "Editing metadata of %i files."
 msgstr "Upravuji popisky %i souborů."
 
-#: string;16387
-msgid "The file \"%s\" has not yet been hashed. Please wait for the file to be hashed, and then try again."
-msgstr "Soubor \"%s\" ještě nemá hash. Prosím čekejte než bude pro soubor vypočítán hash, a potom to zkuste znovu."
-
-#: string;16388
-msgid "This option uses services provided by Bitzi.com for recognising and sharing information about selected files.\\n\\nShareaza will transmit the SHA1 hash code for the selected file(s) in order to query the Bitzi database. If you are concerned about privacy, you may wish to consult the Bitzi.com privacy policy.\\n\\nWould you like to proceed?"
-msgstr "Tuto možnost využívá služba poskytovaná Bitzi.com která zjišťuje a sdílí informace o vybraných souborech.\\n\\nShareaza bude přenášet SHA1 hash pro označený soubor(y) v rámci dotazu poslaného databázi Bitzi. Pokud máte obavy o soukromí přečtěte si prohlášení Bitzi.com o ochraně osobních údajů.\\n\\nChcete pokračovat?"
-
 #: string;16389
 msgid "Are you sure you want to permanently delete the %i selected file(s) ?\\n\\nThe files will be moved to your \"recycle bin\" if it is enabled."
 msgstr "Opravdu chcete trvale vymazat vybraný soubor(y) %i ?\\n\\nPokud to povolíte, soubory budou přesunuty do \"koše\" (pokud je povolený)."
@@ -6342,22 +6305,6 @@ msgstr "Typ:"
 #: string;16780
 msgid "Unspecified"
 msgstr "Nespecifikované"
-
-#: string;16781
-msgid "Requesting..."
-msgstr "Žádám..."
-
-#: string;16782
-msgid "Success!"
-msgstr "Úspěšně!"
-
-#: string;16783
-msgid "Finished, click Close"
-msgstr "Po dokončení klikněte na Zavřít"
-
-#: string;16784
-msgid "&Close"
-msgstr "&Zavřít"
 
 #: string;16785
 msgid "(No Visualisation)"
@@ -7417,12 +7364,11 @@ msgstr "OK"
 #: cgraphlistdlg;control;17 cgraphitemdlg;control;2
 #: cschemacolumnsdlg;control;4 csecureruledlg;control;34
 #: csharemanagerdlg;control;6 curlcopydlg;control;6 curlexportdlg;control;10
-#: curlactiondlg;control;11 cbitzidownloaddlg;control;4
-#: cfilepreviewdlg;control;6 cexistingfiledlg;control;2
-#: cclosemodedlg;control;6 cdonkeyserversdlg;control;5
-#: cdeletefiledlg;control;5 ctorrentseeddlg;control;4
-#: cdownloadgroupdlg;control;2 cmediavisdlg;control;6
-#: cdecodemetadatadlg;control;9 circinputdlg;control;3
+#: curlactiondlg;control;11 cfilepreviewdlg;control;6
+#: cexistingfiledlg;control;2 cclosemodedlg;control;6
+#: cdonkeyserversdlg;control;5 cdeletefiledlg;control;5
+#: ctorrentseeddlg;control;4 cdownloadgroupdlg;control;2
+#: cmediavisdlg;control;6 cdecodemetadatadlg;control;9 circinputdlg;control;3
 msgid "Cancel"
 msgstr "Zrušit"
 
@@ -9382,18 +9328,6 @@ msgstr "Otevřít okno _Monitoru stahování"
 msgid "You have clicked on a Shareaza-powered URI which will add the following Discovery Service to your Discovery Services cache."
 msgstr "Kliknuli jste v Shareaze na spustit URI které přidá následující vyhledávací službu k vaší službě vyhledávání."
 
-#: dialog;cbitzidownloaddlg
-msgid "Downloading Metadata..."
-msgstr "Stažení popisků pro soubory..."
-
-#: cbitzidownloaddlg;control;2
-msgid "Shareaza is attempting to download metadata from Bitzi(TM)..."
-msgstr "Shareaza se pokusí stáhnout popisky z Bitzi(TM)..."
-
-#: cbitzidownloaddlg;control;6
-msgid "www.bitzi.com"
-msgstr "www.bitzi.com"
-
 #: dialog;cfilepreviewdlg
 msgid "Smart Download Preview..."
 msgstr "Inteligentní náhled stahování..."
@@ -10056,6 +9990,45 @@ msgstr "TigerTree"
 #, fuzzy
 msgid "NextRun"
 msgstr "Další"
+
+#~ msgid "Requesting..."
+#~ msgstr "Žádám..."
+
+#~ msgid "Success!"
+#~ msgstr "Úspěšně!"
+
+#~ msgid "Finished, click Close"
+#~ msgstr "Po dokončení klikněte na Zavřít"
+
+#~ msgid "&Close"
+#~ msgstr "&Zavřít"
+
+#~ msgid "The file \"%s\" has not yet been hashed. Please wait for the file to be hashed, and then try again."
+#~ msgstr "Soubor \"%s\" ještě nemá hash. Prosím čekejte než bude pro soubor vypočítán hash, a potom to zkuste znovu."
+
+#~ msgid "View _Bitzi Ticket"
+#~ msgstr "Prohlížet _Bitzi Ticket"
+
+#~ msgid "_Download Metadata"
+#~ msgstr "_Stáhnout popisky"
+
+#~ msgid "Download metadata for the selected file(s) from Bitzi(TM)..."
+#~ msgstr "Stahovat popisky pro vybraný soubor(y) z Bitzi(TM)..."
+
+#~ msgid "View the Bitzi(TM) ticket for the selected file on the web."
+#~ msgstr "Prohlížet záznam Bitzi(TM) pro vybraný soubor na webu."
+
+#~ msgid "This option uses services provided by Bitzi.com for recognising and sharing information about selected files.\\n\\nShareaza will transmit the SHA1 hash code for the selected file(s) in order to query the Bitzi database. If you are concerned about privacy, you may wish to consult the Bitzi.com privacy policy.\\n\\nWould you like to proceed?"
+#~ msgstr "Tuto možnost využívá služba poskytovaná Bitzi.com která zjišťuje a sdílí informace o vybraných souborech.\\n\\nShareaza bude přenášet SHA1 hash pro označený soubor(y) v rámci dotazu poslaného databázi Bitzi. Pokud máte obavy o soukromí přečtěte si prohlášení Bitzi.com o ochraně osobních údajů.\\n\\nChcete pokračovat?"
+
+#~ msgid "Downloading Metadata..."
+#~ msgstr "Stažení popisků pro soubory..."
+
+#~ msgid "Shareaza is attempting to download metadata from Bitzi(TM)..."
+#~ msgstr "Shareaza se pokusí stáhnout popisky z Bitzi(TM)..."
+
+#~ msgid "www.bitzi.com"
+#~ msgstr "www.bitzi.com"
 
 #, fuzzy
 #~ msgid "This option uses services provided by ShareMonkey.com for recognising information about selected files.\\n\\nShareaza will transmit file details and your location in order to query the ShareMonkey database.  If you are concerned about privacy, you may wish to consult the ShareMonkey.com privacy policy.\\n\\nWould you like to proceed?"

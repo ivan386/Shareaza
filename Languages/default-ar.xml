@@ -922,7 +922,6 @@
 				<item id="ID_SEARCH_FOR_SERIES" text="الأحداث في نفس السلسلة"/>
 			</menu>
 			<menu text="_خدمات الانترنت">
-				<item id="ID_LIBRARY_BITZI_WEB" text="عرض ب_طافة Bitzi"/>
 			</menu>
 		</menu>
 		<menu name="CSearchWnd">
@@ -943,7 +942,6 @@
 				<item id="ID_SEARCH_FOR_SERIES" text="الأحداث في نفس السلسلة"/>
 			</menu>
 			<menu text="_خدمات الانترنت">
-				<item id="ID_LIBRARY_BITZI_WEB" text="عرض ب_طافة Bitzi"/>
 			</menu>
 			<separator/>
 			<item id="ID_SEARCH_FILTER" text="_فرز النتائج..."/>
@@ -969,7 +967,6 @@
 				<item id="ID_SEARCH_FOR_SERIES" text="الأحداث في نفس السلسلة"/>
 			</menu>
 			<menu text="_خدمات الانترنت">
-				<item id="ID_LIBRARY_BITZI_WEB" text="عرض ب_طافة Bitzi"/>
 			</menu>
 		</menu>
 		<menu name="CBrowseHostWnd">
@@ -988,7 +985,6 @@
 				<item id="ID_SEARCH_FOR_SERIES" text="الأحداث في نفس السلسلة"/>
 			</menu>
 			<menu text="_خدمات الانترنت">
-				<item id="ID_LIBRARY_BITZI_WEB" text="عرض ب_طافة Bitzi"/>
 			</menu>
 			<separator/>
 			<item id="ID_SEARCH_FILTER" text="_فرز النتائج..."/>
@@ -1013,7 +1009,6 @@
 				<item id="ID_SEARCH_FOR_SERIES" text="الأحداث في نفس السلسلة"/>
 			</menu>
 			<menu text="_خدمات الانترنت">
-				<item id="ID_LIBRARY_BITZI_WEB" text="عرض ب_طافة Bitzi"/>
 			</menu>
 			<separator/>
 			<item id="ID_SEARCH_FILTER" text="_فرز النتائج..."/>
@@ -1249,8 +1244,6 @@
 				<item id="ID_SEARCH_FOR_SERIES" text="الأحداث في نفس السلسلة"/>
 			</menu>
 			<menu text="_خدمات الانترنت">
-				<item id="ID_LIBRARY_BITZI_WEB" text="عرض ب_طافة Bitzi"/>
-				<item id="ID_LIBRARY_BITZI_DOWNLOAD" text="_تحميل ملف تعريف"/>
 				<item id="ID_WEBSERVICES_MUSICBRAINZ" text="_MusicBrainz"/>
 			</menu>
 			<menu text="ت_نظيم">
@@ -1281,8 +1274,6 @@
 				<item id="ID_SEARCH_FOR_SERIES" text="الأحداث في نفس السلسلة"/>
 			</menu>
 			<menu text="_خدمات الانترنت">
-				<item id="ID_LIBRARY_BITZI_WEB" text="عرض ب_طافة Bitzi"/>
-				<item id="ID_LIBRARY_BITZI_DOWNLOAD" text="_تحميل ملف تعريف"/>
 				<item id="ID_WEBSERVICES_MUSICBRAINZ" text="_MusicBrainz"/>
 				<separator/>
 				<item id="ID_LIBRARY_CREATETORRENT" text="إنشاء ملف torrent"/>
@@ -1321,8 +1312,6 @@
 				<item id="ID_SEARCH_FOR_SERIES" text="الأحداث في نفس السلسلة"/>
 			</menu>
 			<menu text="_خدمات الانترنت">
-				<item id="ID_LIBRARY_BITZI_WEB" text="عرض ب_طافة Bitzi"/>
-				<item id="ID_LIBRARY_BITZI_DOWNLOAD" text="_تحميل ملف تعريف"/>
 			</menu>
 			<menu text="ت_نظيم">
 				<item id="ID_LIBRARY_RENAME" text="_اعادة تسمية ملف"/>
@@ -1356,9 +1345,6 @@
 				<item id="ID_SEARCH_FOR_SERIES" text="الأحداث في نفس السلسلة"/>
 			</menu>
 			<menu text="_خدمات الانترنت">
-				<item id="ID_LIBRARY_BITZI_WEB" text="عرض ب_طافة Bitzi"/>
-				<item id="ID_LIBRARY_BITZI_DOWNLOAD" text="_تحميل ملف تعريف"/>
-				<separator/>
 				<item id="ID_LIBRARY_CREATETORRENT" text="إنشاء ملف torrent"/>
 			</menu>
 			<menu text="ت_نظيم">
@@ -1661,8 +1647,6 @@
 			</menu>
 		</menu>
 		<menu name="WebServices.List.Menu">
-			<item id="ID_LIBRARY_BITZI_WEB" text="عرض ب_طافة Bitzi"/>
-			<item id="ID_LIBRARY_BITZI_DOWNLOAD" text="_تحميل ملف تعريف"/>
 			<item id="ID_WEBSERVICES_MUSICBRAINZ" text="_MusicBrainz"/>
 		</menu>
 	</menus>
@@ -2461,8 +2445,6 @@
 		<tip id="ID_LIBRARY_ALBUM_DELETE" message="حذف مجلد الألبوم المحدد"/>
 		<tip id="ID_LIBRARY_ALBUM_OPEN" message="فتح مجلد الألبوم المحدد"/>
 		<tip id="ID_LIBRARY_ALBUM_PROPERTIES" message="عرض و تحرير الخصائص لمجلد الألبوم المحدد..."/>
-		<tip id="ID_LIBRARY_BITZI_DOWNLOAD" message="تحميل بيانات التعريف للملف المحدد من Bitzi(TM)..."/>
-		<tip id="ID_LIBRARY_BITZI_WEB" message="عرض بطاقة Bitzi(TM) للملف المحدد على الشبكة"/>
 		<tip id="ID_LIBRARY_COLUMNS" message="تحديد أعمدة بيانات التعريف للعرض..."/>
 		<tip id="ID_LIBRARY_COPY" message="إنسخ الملفات المحددة إلى مجلد مكتبة آخر..."/>
 		<tip id="ID_LIBRARY_CREATETORRENT" message="إنشاء .torrent لهذا الملف لرفعه إلى أي موقع على الشبكة"/>
@@ -3074,8 +3056,6 @@
 		<string id="16384" value="Are you sure you want to launch the file &quot;%s&quot; ?\n\nSome files can be harmful to your computer.  Ensure you know what the file is before launching it."/>
 		<string id="16385" value="You are about to modify the metadata of %i files, are you sure you want to continue?"/>
 		<string id="16386" value="Editing metadata of %i files."/>
-		<string id="16387" value="The file &quot;%s&quot; has not yet been hashed.  Please wait for the file to be hashed, and then try again."/>
-		<string id="16388" value="This option uses services provided by Bitzi.com for recognising and sharing information about selected files.\n\nShareaza will transmit the SHA1 hash code for the selected file(s) in order to query the Bitzi database.  If you are concerned about privacy, you may wish to consult the Bitzi.com privacy policy.\n\nWould you like to proceed?"/>
 		<string id="16389" value="Are you sure you want to permanently delete the %i selected file(s) ?\n\nThe files will be moved to your &quot;recycle bin&quot; if it is enabled."/>
 		<string id="16390" value="You have not yet selected a media player to enqueue files with, such as Nullsoft Winamp. Would you like to select one now?\n\nShareaza will pass the name of the file to your selected program with the &quot;/ADD&quot; argument."/>
 		<string id="16391" value="You're not connected to the network."/>
@@ -3149,10 +3129,6 @@
 		<string id="16778" value="الرابط:"/>
 		<string id="16779" value="النوع:"/>
 		<string id="16780" value="Unspecified"/>
-		<string id="16781" value="Requesting..."/>
-		<string id="16782" value="نجاح!"/>
-		<string id="16783" value="إنتهاء, اضغط إغلاق"/>
-		<string id="16784" value="&amp;إغلاق"/>
 		<string id="16785" value="(No Visualisation)"/>
 		<string id="16800" value="You have not yet specified a connection speed.  Before continuing, please either choose your Internet connection type, or type in a connection speed."/>
 		<string id="16802" value="You have not specified any folders to share.  Are you sure?"/>
@@ -4334,14 +4310,6 @@
 			<control caption="_تذكر اختياري في المرة القادمة"/>
 			<control caption="شاشة التحميل _افتح نافذة "/>
 			<control caption="أنت نقرت على رابط مقدم من Shareaza و الذي سيضيف خدمة الإستكشاف التالية إلى مخزون خدمة إستكشافك المؤقت"/>
-		</dialog>
-		<dialog name="CBitziDownloadDlg" cookie="StStmsBuSySt" caption="تحميل بيانات التعريف...">
-			<control/>
-			<control caption="Shareaza يحاول تحميل بيانات تعريف من Bitzi(TM) ..."/>
-			<control/>
-			<control caption="إلغاء الأمر"/>
-			<control/>
-			<control caption="www.bitzi.com"/>
 		</dialog>
 		<dialog name="CFilePreviewDlg" cookie="StStStmsStBu" caption="المعاينة الذكية للتحميل...">
 			<control/>

@@ -59,7 +59,6 @@
 #define IDD_FOLDER_SCAN                 160
 #define IDI_BROWSE                      160
 #define IDD_DOWNLOAD                    162
-#define IDD_BITZI_DOWNLOAD              163
 #define IDD_SECURE_RULE                 165
 #define IDD_FILE_COPY                   167
 #define IDD_URL_ACTION                  168
@@ -1182,8 +1181,6 @@
 #define IDS_LIBRARY_CONFIRM_EXECUTE     16384
 #define IDS_LIBRARY_METADATA_MANY       16385
 #define IDS_LIBRARY_METADATA_EDIT       16386
-#define IDS_LIBRARY_BITZI_HASHED        16387
-#define IDS_LIBRARY_BITZI_MESSAGE       16388
 #define IDS_LIBRARY_DELETE              16389
 #define IDS_LIBRARY_ENQUEUE             16390
 #define IDS_NEIGHBOURS_NOT_CONNECTED    16391
@@ -1257,10 +1254,6 @@
 #define IDS_URL_URL                     16778
 #define IDS_URL_TYPE                    16779
 #define IDS_URL_UNSPECIFIED             16780
-#define IDS_BITZI_REQUESTING            16781
-#define IDS_BITZI_SUCCESS               16782
-#define IDS_BITZI_FINISHED              16783
-#define IDS_BITZI_CLOSE                 16784
 #define IDS_MEDIAVIS_NOVIS              16785
 #define IDS_WIZARD_NEED_SPEED           16800
 #define IDS_WIZARD_SHARE_CONFIRM        16802
@@ -1664,8 +1657,6 @@
 #define ID_SEARCH_STOP                  32889
 #define ID_TOOLS_DOWNLOAD               32890
 #define ID_DOWNLOADS_URL                32891
-#define ID_LIBRARY_BITZI_WEB            32892
-#define ID_LIBRARY_BITZI_DOWNLOAD       32893
 #define ID_LIBRARY_REFRESH_METADATA     32894
 #define ID_VIEW_SECURITY                32895
 #define ID_SECURITY_EDIT                32896

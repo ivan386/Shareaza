@@ -922,7 +922,6 @@
 				<item id="ID_SEARCH_FOR_SERIES" text="同じシリーズのエピソード"/>
 			</menu>
 			<menu text="ウェブサービス(_W)">
-				<item id="ID_LIBRARY_BITZI_WEB" text="Bitzi Ticketを表示(_B)"/>
 			</menu>
 		</menu>
 		<menu name="CSearchWnd">
@@ -943,7 +942,6 @@
 				<item id="ID_SEARCH_FOR_SERIES" text="同じシリーズのエピソード"/>
 			</menu>
 			<menu text="ウェブサービス(_W)">
-				<item id="ID_LIBRARY_BITZI_WEB" text="Bitzi Ticketを表示(_B)"/>
 			</menu>
 			<separator/>
 			<item id="ID_SEARCH_FILTER" text="フィルタ結果(_F)..."/>
@@ -969,7 +967,6 @@
 				<item id="ID_SEARCH_FOR_SERIES" text="同じシリーズのエピソード"/>
 			</menu>
 			<menu text="ウェブサービス(_W)">
-				<item id="ID_LIBRARY_BITZI_WEB" text="Bitzi Ticketを表示(_B)"/>
 			</menu>
 		</menu>
 		<menu name="CBrowseHostWnd">
@@ -988,7 +985,6 @@
 				<item id="ID_SEARCH_FOR_SERIES" text="同じシリーズのエピソード"/>
 			</menu>
 			<menu text="ウェブサービス(_W)">
-				<item id="ID_LIBRARY_BITZI_WEB" text="Bitzi Ticketを表示(_B)"/>
 			</menu>
 			<separator/>
 			<item id="ID_SEARCH_FILTER" text="フィルタ結果(_F)..."/>
@@ -1013,7 +1009,6 @@
 				<item id="ID_SEARCH_FOR_SERIES" text="同じシリーズのエピソード"/>
 			</menu>
 			<menu text="ウェブサービス(_W)">
-				<item id="ID_LIBRARY_BITZI_WEB" text="Bitzi Ticketを表示(_B)"/>
 			</menu>
 			<separator/>
 			<item id="ID_SEARCH_FILTER" text="フィルタ結果(_F)..."/>
@@ -1249,8 +1244,6 @@
 				<item id="ID_SEARCH_FOR_SERIES" text="同じシリーズのエピソード"/>
 			</menu>
 			<menu text="ウェブサービス(_W)">
-				<item id="ID_LIBRARY_BITZI_WEB" text="Bitzi Ticketを表示(_B)"/>
-				<item id="ID_LIBRARY_BITZI_DOWNLOAD" text="メタデータをダウンロード(_D)"/>
 				<item id="ID_WEBSERVICES_MUSICBRAINZ" text="_MusicBrainz"/>
 			</menu>
 			<menu text="構成(_R)">
@@ -1281,8 +1274,6 @@
 				<item id="ID_SEARCH_FOR_SERIES" text="同じシリーズのエピソード"/>
 			</menu>
 			<menu text="ウェブサービス(_W)">
-				<item id="ID_LIBRARY_BITZI_WEB" text="Bitzi Ticketを表示(_B)"/>
-				<item id="ID_LIBRARY_BITZI_DOWNLOAD" text="メタデータをダウンロード(_D)"/>
 				<item id="ID_WEBSERVICES_MUSICBRAINZ" text="_MusicBrainz"/>
 				<separator/>
 				<item id="ID_LIBRARY_CREATETORRENT" text=".torrentファイルを作成"/>
@@ -1321,8 +1312,6 @@
 				<item id="ID_SEARCH_FOR_SERIES" text="同じシリーズのエピソード"/>
 			</menu>
 			<menu text="ウェブサービス(_W)">
-				<item id="ID_LIBRARY_BITZI_WEB" text="Bitzi Ticketを表示(_B)"/>
-				<item id="ID_LIBRARY_BITZI_DOWNLOAD" text="メタデータをダウンロード(_D)"/>
 			</menu>
 			<menu text="構成(_R)">
 				<item id="ID_LIBRARY_RENAME" text="ファイル名変更(_R)"/>
@@ -1356,9 +1345,6 @@
 				<item id="ID_SEARCH_FOR_SERIES" text="同じシリーズのエピソード"/>
 			</menu>
 			<menu text="ウェブサービス(_W)">
-				<item id="ID_LIBRARY_BITZI_WEB" text="Bitzi Ticketを表示(_B)"/>
-				<item id="ID_LIBRARY_BITZI_DOWNLOAD" text="メタデータをダウンロード(_D)"/>
-				<separator/>
 				<item id="ID_LIBRARY_CREATETORRENT" text=".torrentファイルを作成"/>
 			</menu>
 			<menu text="構成(_R)">
@@ -1661,8 +1647,6 @@
 			</menu>
 		</menu>
 		<menu name="WebServices.List.Menu">
-			<item id="ID_LIBRARY_BITZI_WEB" text="Bitzi Ticketを表示(_B)"/>
-			<item id="ID_LIBRARY_BITZI_DOWNLOAD" text="メタデータをダウンロード(_D)"/>
 			<item id="ID_WEBSERVICES_MUSICBRAINZ" text="_MusicBrainz"/>
 		</menu>
 	</menus>
@@ -2457,8 +2441,6 @@
 		<tip id="ID_LIBRARY_ALBUM_DELETE" message="選択したアルバムフォルダを削除します"/>
 		<tip id="ID_LIBRARY_ALBUM_OPEN" message="選択したアルバムフォルダを開きます"/>
 		<tip id="ID_LIBRARY_ALBUM_PROPERTIES" message="選択したアルバムフォルダのプロパティを表示・編集します..."/>
-		<tip id="ID_LIBRARY_BITZI_DOWNLOAD" message="Bitzi(TM)から選択したファイル用のメタデータをダウンロードします..."/>
-		<tip id="ID_LIBRARY_BITZI_WEB" message="ウェブ上で選択したファイル用のBitzi(TM) ticketを表示します"/>
 		<tip id="ID_LIBRARY_COLUMNS" message="表示するメタデータカラムを選択します..."/>
 		<tip id="ID_LIBRARY_COPY" message="選択したファイルを別のライブラリフォルダにコピーします..."/>
 		<tip id="ID_LIBRARY_CREATETORRENT" message="ウェブサイトへアップロードするための.torrentファイルを作成します"/>
@@ -3070,8 +3052,6 @@
 		<string id="16384" value="ファイル &quot;%s&quot; を開いてよろしいですか?\n\nファイルがコンピュータに有害であることもあります。  ファイルを開く前に安全であるか確認して下さい"/>
 		<string id="16385" value="%i ファイルのメタデータを改変しようとしています。 続けて宜しいですか?"/>
 		<string id="16386" value="%i ファイルのメタデータを編集中です"/>
-		<string id="16387" value="ファイル &quot;%s&quot; はまだハッシュされていません。 ファイルがハッシュされるまで待ってから再試行して下さい"/>
-		<string id="16388" value="このオプション選択されたファイルに関する識別・共有情報が提供されるBitzi.comのサービスを使用します\n\nShareazaは選択したファイルのためにBitziデータベースにSHA1ハッシュコードを送信して問い合わせます。 プライバシーが心配ならBitzi.comプライバシーポリシーを参照できます\n\n続けて宜しいですか?"/>
 		<string id="16389" value="選択した %1 ファイルを完全に削除して本当に宜しいですか?\n\n設定次第では削除したファイルが&quot;ごみ箱&quot;に移動される可能性があります"/>
 		<string id="16390" value="まだ選択したファイルを再生するメディアプレーヤーを設定していません(例:Nullsoft WinAmp)。 今すぐプレーヤーを選択しますか?\n\nShareazaは &quot;/ADD&quot; 引数でファイル名を選択したプログラムに渡します"/>
 		<string id="16391" value="ネットワーク未接続です"/>
@@ -3145,10 +3125,6 @@
 		<string id="16778" value="URL:"/>
 		<string id="16779" value="種類:"/>
 		<string id="16780" value="不特定"/>
-		<string id="16781" value="要求中..."/>
-		<string id="16782" value="成功!"/>
-		<string id="16783" value="完了しました。閉じるをクリックして下さい"/>
-		<string id="16784" value="閉じる(&amp;C)"/>
 		<string id="16785" value="(視覚効果無し)"/>
 		<string id="16800" value="まだ接続速度を設定していません。 続けるにはインターネット接続形式を選択するか、接続速度を入力して下さい"/>
 		<string id="16802" value="共有フォルダが指定されていません。宜しいですかですか?"/>
@@ -4330,14 +4306,6 @@
 			<control caption="この選択を記憶(_R)"/>
 			<control caption="ﾀﾞｳﾝﾛｰﾄﾞﾓﾆﾀｳｨﾝﾄﾞｳを開く(_M)"/>
 			<control caption="ディスカバリサービスキャッシュに以下のディスカバリサービスを加えるURIをクリックしました:"/>
-		</dialog>
-		<dialog name="CBitziDownloadDlg" cookie="StStmsBuSySt" caption="メタデータをダウンロード中...">
-			<control/>
-			<control caption="ShareazaはBitzi(TM)からメタデータのダウンロードしようとしています..."/>
-			<control/>
-			<control caption="キャンセル"/>
-			<control/>
-			<control caption="www.bitzi.com"/>
 		</dialog>
 		<dialog name="CFilePreviewDlg" cookie="StStStmsStBu" caption="ダウンロードプレビュー...">
 			<control/>

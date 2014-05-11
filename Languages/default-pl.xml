@@ -922,7 +922,6 @@
 				<item id="ID_SEARCH_FOR_SERIES" text="Odcinki tego samego serialu"/>
 			</menu>
 			<menu text="Usługi Web">
-				<item id="ID_LIBRARY_BITZI_WEB" text="Widok Bitzi Ticket"/>
 			</menu>
 		</menu>
 		<menu name="CSearchWnd">
@@ -943,7 +942,6 @@
 				<item id="ID_SEARCH_FOR_SERIES" text="Odcinki tego samego serialu"/>
 			</menu>
 			<menu text="Usługi Web">
-				<item id="ID_LIBRARY_BITZI_WEB" text="Widok Bitzi Ticket"/>
 			</menu>
 			<separator/>
 			<item id="ID_SEARCH_FILTER" text="Filtruj wyniki..."/>
@@ -969,7 +967,6 @@
 				<item id="ID_SEARCH_FOR_SERIES" text="Odcinki tego samego serialu"/>
 			</menu>
 			<menu text="Usługi Web">
-				<item id="ID_LIBRARY_BITZI_WEB" text="Widok Bitzi Ticket"/>
 			</menu>
 		</menu>
 		<menu name="CBrowseHostWnd">
@@ -988,7 +985,6 @@
 				<item id="ID_SEARCH_FOR_SERIES" text="Odcinki tego samego serialu"/>
 			</menu>
 			<menu text="Usługi Web">
-				<item id="ID_LIBRARY_BITZI_WEB" text="Widok Bitzi Ticket"/>
 			</menu>
 			<separator/>
 			<item id="ID_SEARCH_FILTER" text="Filtruj wyniki..."/>
@@ -1013,7 +1009,6 @@
 				<item id="ID_SEARCH_FOR_SERIES" text="Odcinki tego samego serialu"/>
 			</menu>
 			<menu text="Usługi Web">
-				<item id="ID_LIBRARY_BITZI_WEB" text="Widok Bitzi Ticket"/>
 			</menu>
 			<separator/>
 			<item id="ID_SEARCH_FILTER" text="Filtruj wyniki..."/>
@@ -1249,8 +1244,6 @@
 				<item id="ID_SEARCH_FOR_SERIES" text="Odcinki tego samego serialu"/>
 			</menu>
 			<menu text="Usługi Web">
-				<item id="ID_LIBRARY_BITZI_WEB" text="Widok Bitzi Ticket"/>
-				<item id="ID_LIBRARY_BITZI_DOWNLOAD" text="Pobierz Metadane"/>
 				<item id="ID_WEBSERVICES_MUSICBRAINZ" text="_MusicBrainz"/>
 			</menu>
 			<menu text="Organizuj">
@@ -1281,8 +1274,6 @@
 				<item id="ID_SEARCH_FOR_SERIES" text="Odcinki tego samego serialu"/>
 			</menu>
 			<menu text="Usługi Web">
-				<item id="ID_LIBRARY_BITZI_WEB" text="Widok Bitzi Ticket"/>
-				<item id="ID_LIBRARY_BITZI_DOWNLOAD" text="Pobierz Metadane"/>
 				<item id="ID_WEBSERVICES_MUSICBRAINZ" text="_MusicBrainz"/>
 				<separator/>
 				<item id="ID_LIBRARY_CREATETORRENT" text="Stwórz plik .torrent"/>
@@ -1321,8 +1312,6 @@
 				<item id="ID_SEARCH_FOR_SERIES" text="Odcinki tego samego serialu"/>
 			</menu>
 			<menu text="Usługi Web">
-				<item id="ID_LIBRARY_BITZI_WEB" text="Widok Bitzi Ticket"/>
-				<item id="ID_LIBRARY_BITZI_DOWNLOAD" text="Pobierz Metadane"/>
 			</menu>
 			<menu text="Organizuj">
 				<item id="ID_LIBRARY_RENAME" text="Zmień nazwę pliku"/>
@@ -1356,9 +1345,6 @@
 				<item id="ID_SEARCH_FOR_SERIES" text="Odcinki tego samego serialu"/>
 			</menu>
 			<menu text="Usługi Web">
-				<item id="ID_LIBRARY_BITZI_WEB" text="Widok Bitzi Ticket"/>
-				<item id="ID_LIBRARY_BITZI_DOWNLOAD" text="Pobierz Metadane"/>
-				<separator/>
 				<item id="ID_LIBRARY_CREATETORRENT" text="Stwórz plik .torrent"/>
 			</menu>
 			<menu text="Organizuj">
@@ -1661,8 +1647,6 @@
 			</menu>
 		</menu>
 		<menu name="WebServices.List.Menu">
-			<item id="ID_LIBRARY_BITZI_WEB" text="Widok Bitzi Ticket"/>
-			<item id="ID_LIBRARY_BITZI_DOWNLOAD" text="Pobierz Metadane"/>
 			<item id="ID_WEBSERVICES_MUSICBRAINZ" text="_MusicBrainz"/>
 		</menu>
 	</menus>
@@ -2464,8 +2448,6 @@
 		<tip id="ID_LIBRARY_ALBUM_DELETE" message="Usuń zaznaczony folder albumu."/>
 		<tip id="ID_LIBRARY_ALBUM_OPEN" message="Otwórz zaznaczony folder albumu."/>
 		<tip id="ID_LIBRARY_ALBUM_PROPERTIES" message="Pokaż i edytuj właściwości zaznaczonego folderu albumu..."/>
-		<tip id="ID_LIBRARY_BITZI_DOWNLOAD" message="Pobierz metadane dla zaznaczonego(ych) pliku(ów) od Bitzi(TM)..."/>
-		<tip id="ID_LIBRARY_BITZI_WEB" message="Pokaż fiszkę Bitzi(TM) w sieci web dla zaznaczonego pliku."/>
 		<tip id="ID_LIBRARY_COLUMNS" message="Wybierz kolumny metadanych, które mają być wyświetlone..."/>
 		<tip id="ID_LIBRARY_COPY" message="Skopiuj zaznaczony plik do innego folderu (zasobów) biblioteki..."/>
 		<tip id="ID_LIBRARY_CREATETORRENT" message="Stwórz dla tego pliku plik .torrent, który będzie wysłany na stronę internetową."/>
@@ -3077,8 +3059,6 @@
 		<string id="16384" value="Are you sure you want to launch the file &quot;%s&quot; ?\n\nSome files can be harmful to your computer.  Ensure you know what the file is before launching it."/>
 		<string id="16385" value="You are about to modify the metadata of %i files, are you sure you want to continue?"/>
 		<string id="16386" value="Editing metadata of %i files."/>
-		<string id="16387" value="The file &quot;%s&quot; has not yet been hashed.  Please wait for the file to be hashed, and then try again."/>
-		<string id="16388" value="This option uses services provided by Bitzi.com for recognising and sharing information about selected files.\n\nShareaza will transmit the SHA1 hash code for the selected file(s) in order to query the Bitzi database.  If you are concerned about privacy, you may wish to consult the Bitzi.com privacy policy.\n\nWould you like to proceed?"/>
 		<string id="16389" value="Are you sure you want to permenantly delete the %i selected file(s) ?\n\nThe files will be moved to your &quot;recycle bin&quot; if it is enabled."/>
 		<string id="16390" value="You have not yet selected a media player to enqueue files with, such as Nullsoft WinAmp.  Would you like to select one now?\n\nShareaza will pass the name of the file to your selected program with the &quot;/ADD&quot; argument."/>
 		<string id="16391" value="You're not connected to the network."/>
@@ -3152,10 +3132,6 @@
 		<string id="16778" value="URL:"/>
 		<string id="16779" value="Typ:"/>
 		<string id="16780" value="Nieokreślony"/>
-		<string id="16781" value="Żądanie..."/>
-		<string id="16782" value="Sukces!"/>
-		<string id="16783" value="Zakończono, kliknij Zamknij"/>
-		<string id="16784" value="&amp;Zamknij"/>
 		<string id="16785" value="(Bez wizualizacji)"/>
 		<string id="16800" value="You have not yet specified a connection speed.  Before continuing, please either choose your Internet connection type, or type in a connection speed."/>
 		<string id="16802" value="You have not specified any folders to share.  Are you sure?"/>
@@ -4337,14 +4313,6 @@
 			<control caption="Zapamiętaj mój wybór"/>
 			<control caption="Otwórz okno monitora pobierań"/>
 			<control caption="Kliknąłeś na Shareaza-powered URI które doda następujący serwis Discovery do twojego cache'u serwisów Discovery."/>
-		</dialog>
-		<dialog name="CBitziDownloadDlg" cookie="StStmsBuSySt" caption="Pobieranie Metadanych...">
-			<control/>
-			<control caption="Shareaza próbuje pobrać metadane z Bitzi(TM)..."/>
-			<control/>
-			<control caption="Anuluj"/>
-			<control/>
-			<control caption="www.bitzi.com"/>
 		</dialog>
 		<dialog name="CFilePreviewDlg" cookie="StStStmsStBu" caption="Inteligentny Podgląd Pobierania...">
 			<control/>

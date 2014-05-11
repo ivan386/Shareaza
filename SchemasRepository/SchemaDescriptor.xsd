@@ -11,7 +11,6 @@
 				<element name="extends" type="extendsType" minOccurs="0" maxOccurs="1"/>
 				<element name="memberDisplay" type="memberDisplayType" minOccurs="0" maxOccurs="1"/>
 				<element name="typeFilter" type="typeFilterType" minOccurs="0" maxOccurs="1"/>
-				<element name="bitziImport" type="bitziImportType" minOccurs="0" maxOccurs="1"/>
 			</all>
 		</complexType>
 	</element>
@@ -52,19 +51,6 @@
 			<element name="type" minOccurs="0" maxOccurs="unbounded">
 				<complexType>
 					<attribute name="extension" type="string" use="required"/>
-				</complexType>
-			</element>
-		</sequence>
-	</complexType>
-	
-	<complexType name="bitziImportType">
-		<attribute name="testExists" type="string" use="required"/>
-		<sequence>
-			<element name="mapping" minOccurs="0" maxOccurs="unbounded">
-				<complexType>
-					<attribute name="from" type="string" use="required"/>
-					<attribute name="to" type="string" use="required"/>
-					<attribute name="factor" type="decimal"/>
 				</complexType>
 			</element>
 		</sequence>

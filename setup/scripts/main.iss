@@ -393,9 +393,6 @@ Root: HKCU; Subkey: "AppEvents\Schemes\Apps\Shareaza\RAZA_IncomingChat\.default"
 Root: HKCU; Subkey: "Software\Shareaza\Shareaza\Connection"; ValueType: dword; ValueName: "EnableUPnP"; ValueData: 1; Flags: deletevalue; Tasks: upnp
 Root: HKCU; Subkey: "Software\Shareaza\Shareaza\Connection"; ValueType: dword; ValueName: "EnableUPnP"; ValueData: 0; Flags: deletevalue; Tasks: not upnp
 
-; ShareMonkey CID
-Root: HKCU; Subkey: "Software\Shareaza\Shareaza\WebServices"; ValueType: string; ValueName: "ShareMonkeyCid"; ValueData: "197506"; Flags: deletevalue uninsdeletekey
-
 ; Delete keys at uninstall
 Root: HKLM; Subkey: "SOFTWARE\Shareaza"; Flags: dontcreatekey uninsdeletekey
 Root: HKCU; Subkey: "Software\Shareaza"; Flags: dontcreatekey uninsdeletekey

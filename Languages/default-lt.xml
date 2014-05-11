@@ -922,7 +922,6 @@
 				<item id="ID_SEARCH_FOR_SERIES" text="Epizodų iš to pačio serialo"/>
 			</menu>
 			<menu text="P_aslaugos internete">
-				<item id="ID_LIBRARY_BITZI_WEB" text="Peržiūrėti _Bitzi etiketę"/>
 			</menu>
 		</menu>
 		<menu name="CSearchWnd">
@@ -943,7 +942,6 @@
 				<item id="ID_SEARCH_FOR_SERIES" text="Epizodų iš to pačio serialo"/>
 			</menu>
 			<menu text="P_aslaugos internete">
-				<item id="ID_LIBRARY_BITZI_WEB" text="Peržiūrėti _Bitzi etiketę"/>
 			</menu>
 			<separator/>
 			<item id="ID_SEARCH_FILTER" text="_Filtruoti radinius..."/>
@@ -969,7 +967,6 @@
 				<item id="ID_SEARCH_FOR_SERIES" text="Epizodų iš to pačio serialo"/>
 			</menu>
 			<menu text="P_aslaugos internete">
-				<item id="ID_LIBRARY_BITZI_WEB" text="Peržiūrėti _Bitzi etiketę"/>
 			</menu>
 		</menu>
 		<menu name="CBrowseHostWnd">
@@ -988,7 +985,6 @@
 				<item id="ID_SEARCH_FOR_SERIES" text="Epizodų iš to pačio serialo"/>
 			</menu>
 			<menu text="P_aslaugos internete">
-				<item id="ID_LIBRARY_BITZI_WEB" text="Peržiūrėti _Bitzi etiketę"/>
 			</menu>
 			<separator/>
 			<item id="ID_SEARCH_FILTER" text="_Filtruoti radinius..."/>
@@ -1013,7 +1009,6 @@
 				<item id="ID_SEARCH_FOR_SERIES" text="Epizodų iš to pačio serialo"/>
 			</menu>
 			<menu text="P_aslaugos internete">
-				<item id="ID_LIBRARY_BITZI_WEB" text="Peržiūrėti _Bitzi etiketę"/>
 			</menu>
 			<separator/>
 			<item id="ID_SEARCH_FILTER" text="_Filtruoti radinius..."/>
@@ -1249,8 +1244,6 @@
 				<item id="ID_SEARCH_FOR_SERIES" text="Epizodų iš to pačio serialo"/>
 			</menu>
 			<menu text="P_aslaugos internete">
-				<item id="ID_LIBRARY_BITZI_WEB" text="Peržiūrėti _Bitzi etiketę"/>
-				<item id="ID_LIBRARY_BITZI_DOWNLOAD" text="_Parsisiųsti meta duomenis"/>
 				<item id="ID_WEBSERVICES_MUSICBRAINZ" text="_MusicBrainz"/>
 			</menu>
 			<menu text="_Organizuoti">
@@ -1281,8 +1274,6 @@
 				<item id="ID_SEARCH_FOR_SERIES" text="Epizodų iš to pačio serialo"/>
 			</menu>
 			<menu text="P_aslaugos internete">
-				<item id="ID_LIBRARY_BITZI_WEB" text="Peržiūrėti _Bitzi etiketę"/>
-				<item id="ID_LIBRARY_BITZI_DOWNLOAD" text="_Parsisiųsti meta duomenis"/>
 				<item id="ID_WEBSERVICES_MUSICBRAINZ" text="_MusicBrainz"/>
 				<separator/>
 				<item id="ID_LIBRARY_CREATETORRENT" text="Sukurti .torrent failą"/>
@@ -1321,8 +1312,6 @@
 				<item id="ID_SEARCH_FOR_SERIES" text="Epizodų iš to pačio serialo"/>
 			</menu>
 			<menu text="P_aslaugos internete">
-				<item id="ID_LIBRARY_BITZI_WEB" text="Peržiūrėti _Bitzi etiketę"/>
-				<item id="ID_LIBRARY_BITZI_DOWNLOAD" text="_Parsisiųsti meta duomenis"/>
 			</menu>
 			<menu text="_Organizuoti">
 				<item id="ID_LIBRARY_RENAME" text="_Pervadinti failą"/>
@@ -1356,9 +1345,6 @@
 				<item id="ID_SEARCH_FOR_SERIES" text="Epizodų iš to pačio serialo"/>
 			</menu>
 			<menu text="P_aslaugos internete">
-				<item id="ID_LIBRARY_BITZI_WEB" text="Peržiūrėti _Bitzi etiketę"/>
-				<item id="ID_LIBRARY_BITZI_DOWNLOAD" text="_Parsisiųsti meta duomenis"/>
-				<separator/>
 				<item id="ID_LIBRARY_CREATETORRENT" text="Sukurti .torrent failą"/>
 			</menu>
 			<menu text="_Organizuoti">
@@ -1661,8 +1647,6 @@
 			</menu>
 		</menu>
 		<menu name="WebServices.List.Menu">
-			<item id="ID_LIBRARY_BITZI_WEB" text="Peržiūrėti _Bitzi etiketę"/>
-			<item id="ID_LIBRARY_BITZI_DOWNLOAD" text="_Parsisiųsti meta duomenis"/>
 			<item id="ID_WEBSERVICES_MUSICBRAINZ" text="_MusicBrainz"/>
 		</menu>
 	</menus>
@@ -2456,8 +2440,6 @@
 		<tip id="ID_LIBRARY_ALBUM_DELETE" message="Pašalinti pasirinktą albumo katalogą."/>
 		<tip id="ID_LIBRARY_ALBUM_OPEN" message="Atverti pasirinktą albumo katalogą."/>
 		<tip id="ID_LIBRARY_ALBUM_PROPERTIES" message="Peržiūrėti ir taisyti pasirinkto albumo katalogo ypatybes..."/>
-		<tip id="ID_LIBRARY_BITZI_DOWNLOAD" message="Parsisiųsti pasirinkto failo(-ų) meta duomenis iš Bitzi(TM)..."/>
-		<tip id="ID_LIBRARY_BITZI_WEB" message="Peržiūrėti pasirinkto failo Bitzi(TM) etiketę internete."/>
 		<tip id="ID_LIBRARY_COLUMNS" message="Pasirinkti, kuriuos meta duomenų stulpelius rodyti..."/>
 		<tip id="ID_LIBRARY_COPY" message="Kopijuoti pasirinktus failus į kitą kolekcijos aplanką..."/>
 		<tip id="ID_LIBRARY_CREATETORRENT" message="Sukurti šiam failui .torrent, kurį talpinsite į svetainę."/>
@@ -3069,8 +3051,6 @@
 		<string id="16384" value="Ar tikrai norite vykdyti failą „%s“ ?\n\nKai kurie failai gali pakenkti Jūsų kompiuteriui. Įsitikinkite, kas tai per failas, prieš vykdydami jį."/>
 		<string id="16385" value="Jūs ruošiatės pakeisti %i failų(-os) meta duomenis. Ar tikrai norite tęsti?"/>
 		<string id="16386" value="Taisomi %i failų(-os) meta duomenys."/>
-		<string id="16387" value="Failo „%s“ maiša (tapatybės kodas) dar nebuvo apskaičiuota. Palaukite, kol ji bus apskaičiuota, ir po to mėginkite dar kartą."/>
-		<string id="16388" value="Šios parinkties naudojimas reikalauja Bitzi.com paslaugos pasirinktiems failams atpažinti ir dalintis su kitais failo informacija.\n\nShareaza persiųs pasirinkto failo(-ų) SHA1 maišą(-as), kuri reikalinga(-os) užklausoms Bitzi duomenų bazėje. Jei Jums svarbus slaptumas, Jūs galbūt norėsite susipažinti su Bitzi.com privatumo laidavimo dokumentu.\n\nAr norite tęsti?"/>
 		<string id="16389" value="Ar tikrai norite visam laikui ištrinti %i pasirinktus failus(-ą)?\n\nFailai bus patalpintos į „Šiukšliadėžę“, jei ji yra įgalinta."/>
 		<string id="16390" value="Jūs dar nenurodėte grotuvo programos, pvz., Nullsoft WinAmp, į kurio grojaraštį norite įtraukti savo failus. Ar norite dabar jį nurodyti?\n\nShareaza perduos failo pavadinimą Jūsų pasirinktai programai kartu su „/ADD“ argumentu."/>
 		<string id="16391" value="Jūsų kompiuteris nėra prijungtas prie tinklo."/>
@@ -3144,10 +3124,6 @@
 		<string id="16778" value="URL adresas:"/>
 		<string id="16779" value="Tipas:"/>
 		<string id="16780" value="Nenurodyta"/>
-		<string id="16781" value="Užklausiama..."/>
-		<string id="16782" value="Sėkmė!"/>
-		<string id="16783" value="Baigta, paspauskite „Užverti“"/>
-		<string id="16784" value="&amp;Užverti"/>
 		<string id="16785" value="(Be muzikos vaizdo)"/>
 		<string id="16800" value="Jūs nenurodėte ryšio spartos. Prieš tęsdami, pasirinkite arba savo interneto susijungimo tipą, arba susijungimo spartą."/>
 		<string id="16802" value="Jūs nenurodėte, kokius aplankus bendrinti. Ar tikrai tęsti?"/>
@@ -4329,14 +4305,6 @@
 			<control caption="_Prisiminti pasirinkimą sekantį kartą"/>
 			<control caption="Stebėti parsisiuntimą _monitoriuje"/>
 			<control caption="Jūs paspaudėte su „Shareaza“ susietą nuorodą, kuri pridės šią paslaugų radimo tarnybą į Jūsų tarnybų talpyklą."/>
-		</dialog>
-		<dialog name="CBitziDownloadDlg" cookie="StStmsBuSySt" caption="Parsiunčiami meta duomenys...">
-			<control/>
-			<control caption="„Shareaza“ mėgina parsiųsti meta duomenis iš Bitzi(TM)..."/>
-			<control/>
-			<control caption="Atšaukti"/>
-			<control/>
-			<control caption="www.bitzi.com"/>
 		</dialog>
 		<dialog name="CFilePreviewDlg" cookie="StStStmsStBu" caption="Parsisiunčiamo failo gudri peržiūra...">
 			<control/>

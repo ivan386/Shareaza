@@ -922,7 +922,6 @@
 				<item id="ID_SEARCH_FOR_SERIES" text="Aynı _Seriden Bölümler"/>
 			</menu>
 			<menu text="_Web Servisleri">
-				<item id="ID_LIBRARY_BITZI_WEB" text="_Bitzi Etiketi Göster"/>
 			</menu>
 		</menu>
 		<menu name="CSearchWnd">
@@ -943,7 +942,6 @@
 				<item id="ID_SEARCH_FOR_SERIES" text="Aynı _Seriden Bölümler"/>
 			</menu>
 			<menu text="_Web Servisleri">
-				<item id="ID_LIBRARY_BITZI_WEB" text="_Bitzi Etiketi Göster"/>
 			</menu>
 			<separator/>
 			<item id="ID_SEARCH_FILTER" text="_Filtre Sonuçları..."/>
@@ -969,7 +967,6 @@
 				<item id="ID_SEARCH_FOR_SERIES" text="Aynı _Seriden Bölümler"/>
 			</menu>
 			<menu text="_Web Servisleri">
-				<item id="ID_LIBRARY_BITZI_WEB" text="_Bitzi Etiketi Göster"/>
 			</menu>
 		</menu>
 		<menu name="CBrowseHostWnd">
@@ -988,7 +985,6 @@
 				<item id="ID_SEARCH_FOR_SERIES" text="Aynı _Seriden Bölümler"/>
 			</menu>
 			<menu text="_Web Servisleri">
-				<item id="ID_LIBRARY_BITZI_WEB" text="_Bitzi Etiketi Göster"/>
 			</menu>
 			<separator/>
 			<item id="ID_SEARCH_FILTER" text="_Filtre Sonuçları..."/>
@@ -1013,7 +1009,6 @@
 				<item id="ID_SEARCH_FOR_SERIES" text="Aynı _Seriden Bölümler"/>
 			</menu>
 			<menu text="_Web Servisleri">
-				<item id="ID_LIBRARY_BITZI_WEB" text="_Bitzi Etiketi Göster"/>
 			</menu>
 			<separator/>
 			<item id="ID_SEARCH_FILTER" text="_Filtre Sonuçları..."/>
@@ -1249,8 +1244,6 @@
 				<item id="ID_SEARCH_FOR_SERIES" text="Aynı _Seriden Bölümler"/>
 			</menu>
 			<menu text="_Web Servisleri">
-				<item id="ID_LIBRARY_BITZI_WEB" text="_Bitzi Etiketi Göster"/>
-				<item id="ID_LIBRARY_BITZI_DOWNLOAD" text="_Veri İndir"/>
 				<item id="ID_WEBSERVICES_MUSICBRAINZ" text="_MusicBrainz"/>
 			</menu>
 			<menu text="_Düzenle">
@@ -1281,8 +1274,6 @@
 				<item id="ID_SEARCH_FOR_SERIES" text="Aynı _Seriden Bölümler"/>
 			</menu>
 			<menu text="_Web Servisleri">
-				<item id="ID_LIBRARY_BITZI_WEB" text="_Bitzi Etiketi Göster"/>
-				<item id="ID_LIBRARY_BITZI_DOWNLOAD" text="_Veri İndir"/>
 				<item id="ID_WEBSERVICES_MUSICBRAINZ" text="_MusicBrainz"/>
 				<separator/>
 				<item id="ID_LIBRARY_CREATETORRENT" text="._torrent Dosyası Oluştur"/>
@@ -1321,8 +1312,6 @@
 				<item id="ID_SEARCH_FOR_SERIES" text="Aynı _Seriden Bölümler"/>
 			</menu>
 			<menu text="_Web Servisleri">
-				<item id="ID_LIBRARY_BITZI_WEB" text="_Bitzi Etiketi Göster"/>
-				<item id="ID_LIBRARY_BITZI_DOWNLOAD" text="_Veri İndir"/>
 			</menu>
 			<menu text="_Düzenle">
 				<item id="ID_LIBRARY_RENAME" text="_Dosya Adı Değiştir"/>
@@ -1356,9 +1345,6 @@
 				<item id="ID_SEARCH_FOR_SERIES" text="Aynı _Seriden Bölümler"/>
 			</menu>
 			<menu text="_Web Servisleri">
-				<item id="ID_LIBRARY_BITZI_WEB" text="_Bitzi Etiketi Göster"/>
-				<item id="ID_LIBRARY_BITZI_DOWNLOAD" text="_Veri İndir"/>
-				<separator/>
 				<item id="ID_LIBRARY_CREATETORRENT" text="._torrent Dosyası Oluştur"/>
 			</menu>
 			<menu text="_Düzenle">
@@ -1661,8 +1647,6 @@
 			</menu>
 		</menu>
 		<menu name="WebServices.List.Menu">
-			<item id="ID_LIBRARY_BITZI_WEB" text="_Bitzi Etiketi Göster"/>
-			<item id="ID_LIBRARY_BITZI_DOWNLOAD" text="_Veri İndir"/>
 			<item id="ID_WEBSERVICES_MUSICBRAINZ" text="_MusicBrainz"/>
 		</menu>
 	</menus>
@@ -2431,8 +2415,6 @@
 		<tip id="ID_LIBRARY_ALBUM_DELETE" message="Seçilmiş albüm klasörlerini sil."/>
 		<tip id="ID_LIBRARY_ALBUM_OPEN" message="Seçilmiş albüm klasörlerini aç."/>
 		<tip id="ID_LIBRARY_ALBUM_PROPERTIES" message="Seçilmiş albüm klasörlerinin özelliklerini göster ve yayınla..."/>
-		<tip id="ID_LIBRARY_BITZI_DOWNLOAD" message="Bitzi(TM)'den seçilmiş dosya verilerini indir..."/>
-		<tip id="ID_LIBRARY_BITZI_WEB" message="Seçilmiş dosyanın Bitzi(TM) etiketini web'de göster"/>
 		<tip id="ID_LIBRARY_COLUMNS" message="Seçilmiş veri sütunlarını görüntüle..."/>
 		<tip id="ID_LIBRARY_COPY" message="Seçilmiş klasörleri, başka bir kütüphane klasörüne kopyala..."/>
 		<tip id="ID_LIBRARY_CREATETORRENT" message="Websitesinden bu dosyanın aktarımı için bir .torrent oluştur."/>
@@ -3044,8 +3026,6 @@
 		<string id="16384" value="&quot;%s&quot; dosyasını atmak istediğinize emin misiniz?\n\nBazı dosyalar bilgisayarınıza zarar verebilir. Dosyayı atmadan önce ne dosyası olduğundan emin olun."/>
 		<string id="16385" value="%i dosyada veri değiştirmek üzeresiniz, devam etmek istediğinize emin misiniz?"/>
 		<string id="16386" value="%i dosyada veri yayınlanıyor."/>
-		<string id="16387" value="&quot;%s&quot; dosyası henüz taranmadı. Lütfen dosyanın taranması için bekleyin ve sonra tekrar deneyin."/>
-		<string id="16388" value="Bu seçeneklerle seçilen dosyada onaylanan ve paylaşılan bilgi için Bitzi.com tarafından sağlanan servisler kullanılır.\n\nShareaza Bitzi veritabanı sorgu düzeninde seçilen dosyalar için SHA1 hash kod gönderecek.Eğer gizlilikle ilgileniyorsan Bitzi.com gizlilik politikasını danışmak isteyebilirsin.\n\nİlerlemek istiyor musun?"/>
 		<string id="16389" value="Seçilen %i dosyasını silmek istediğinize emin misiniz? \n\n Eğer bunu seçerseniz, bu dosyalar &quot;geri dönüşüm kutusu&quot; taşınacaktır."/>
 		<string id="16390" value="Sıralı dosyalar için henüz Nullsoft WinAmp gibi bir ortam oynatıcısı seçmediniz. Şimdi bir tane seçmek ister misiniz? \n\nShareaza &quot;/EKLE&quot; butonuyla seçtiğiniz programın dosya adını kabul edecektir."/>
 		<string id="16391" value="Ağa bağlanamadınız."/>
@@ -3119,10 +3099,6 @@
 		<string id="16778" value="URL:"/>
 		<string id="16779" value="Tür:"/>
 		<string id="16780" value="Açıklanmayan"/>
-		<string id="16781" value="İsteniyor..."/>
-		<string id="16782" value="Başarılı!"/>
-		<string id="16783" value="Bitti, Kapat'ı tıklayın"/>
-		<string id="16784" value="&amp;Kapat"/>
 		<string id="16785" value="(Görüntü Yok)"/>
 		<string id="16800" value="Henüz bir bağlantı hızı belirlemediniz. Devam etmeden önce lütfen internet bağlantı hızını ya da internet bağlantı tipini seçiniz."/>
 		<string id="16802" value="Paylaşım için açıkça bir klasör belirtmediniz. Bundan emin misiniz?"/>
@@ -4304,14 +4280,6 @@
 			<control caption="_Seçimimi Hatırla"/>
 			<control caption="İndirme Penceresi Aç"/>
 			<control caption="Shareaza-Güç sağlayıcısı URI'ye tıkladınız, keşif servis belleğinize takip ettiğiniz keşif servisiniz eklenecek."/>
-		</dialog>
-		<dialog name="CBitziDownloadDlg" cookie="StStmsBuSySt" caption="Veri İndirmesi...">
-			<control/>
-			<control caption="Shareaza Bitzi(TM) den veri indirmeye çalışıyor ..."/>
-			<control/>
-			<control caption="İptal"/>
-			<control/>
-			<control caption="www.bitzi.com"/>
 		</dialog>
 		<dialog name="CFilePreviewDlg" cookie="StStStmsStBu" caption="Akıllı İndirim Önizleme...">
 			<control/>

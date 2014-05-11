@@ -154,14 +154,8 @@ void CSchema::Clear()
 		delete m_pContains.GetNext( pos );
 	}
 
-	for ( POSITION pos = m_pBitziMap.GetHeadPosition() ; pos ; )
-	{
-		delete m_pBitziMap.GetNext( pos );
-	}
-
 	m_pMembers.RemoveAll();
 	m_pContains.RemoveAll();
-	m_pBitziMap.RemoveAll();
 }
 
 //////////////////////////////////////////////////////////////////////
@@ -393,10 +387,6 @@ BOOL CSchema::LoadDescriptor(LPCTSTR pszFile)
 		{
 			LoadDescriptorTypeFilter( pElement );
 		}
-		else if ( pElement->IsNamed( _T("bitziImport") ) )
-		{
-			LoadDescriptorBitziImport( pElement );
-		}
 		else if ( pElement->IsNamed( _T("headerContent") ) )
 		{
 			LoadDescriptorHeaderContent( pElement );
@@ -531,23 +521,6 @@ void CSchema::LoadDescriptorTypeFilter(CXMLElement* pElement)
 			ASSERT( strExt.GetLength() );
 
 			m_pTypeFilters.SetAt( strExt.MakeLower(), bResult );
-		}
-	}
-}
-
-void CSchema::LoadDescriptorBitziImport(CXMLElement* pElement)
-{
-	m_sBitziTest = pElement->GetAttributeValue( _T("testExists"), NULL );
-
-	for ( POSITION pos = pElement->GetElementIterator() ; pos ; )
-	{
-		CXMLElement* pBitzi = pElement->GetNextElement( pos );
-
-		if ( pBitzi->GetName().CompareNoCase( _T("mapping") ) == 0 )
-		{
-			CSchemaBitzi* pMap = new CSchemaBitzi();
-			pMap->Load( pBitzi );
-			m_pBitziMap.AddTail( pMap );
 		}
 	}
 }
@@ -820,22 +793,6 @@ void CSchema::ResolveTokens(CString& str, CXMLElement* pXML) const
 
 		str = str.Left( nOpen ) + strValue + str.Mid( nClose + 1 );
 	}
-}
-
-//////////////////////////////////////////////////////////////////////
-// CSchemaBitzi Bitzi map
-
-BOOL CSchemaBitzi::Load(CXMLElement* pXML)
-{
-	m_sFrom	= pXML->GetAttributeValue( _T("from"), NULL );
-	m_sTo	= pXML->GetAttributeValue( _T("to"), NULL );
-
-	CString strFactor = pXML->GetAttributeValue( _T("factor"), NULL );
-
-	if ( strFactor.IsEmpty() || _stscanf( strFactor, _T("%lf"), &m_nFactor ) != 1 )
-		m_nFactor = 0;
-
-	return m_sFrom.GetLength() && m_sTo.GetLength();
 }
 
 //////////////////////////////////////////////////////////////////////

@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Shareaza\n"
 "Report-Msgid-Bugs-To: ryo-oh-ki <ryo-oh-ki@narod.ru>\n"
-"POT-Creation-Date: 2014-01-27 13:47+0000\n"
+"POT-Creation-Date: 2014-05-11 13:41+0000\n"
 "PO-Revision-Date: \n"
 "Last-Translator: ryo-oh-ki <ryo-oh-ki@narod.ru>\n"
 "Language-Team: Shareaza Development Team\n"
@@ -1184,19 +1184,6 @@ msgstr "‪פרקים באותה _סדרה"
 msgid "_Web Services"
 msgstr "‪שירותי רשת"
 
-#: csearchwnd.basic;30;item;id_library_bitzi_web
-#: csearchwnd;32;item;id_library_bitzi_web
-#: cbrowsehostwnd.basic;34;item;id_library_bitzi_web
-#: cbrowsehostwnd;36;item;id_library_bitzi_web
-#: chitmonitorwnd;38;item;id_library_bitzi_web
-#: clibraryfileview.physical.basic;41;item;id_library_bitzi_web
-#: clibraryfileview.physical;44;item;id_library_bitzi_web
-#: clibraryfileview.virtual.basic;47;item;id_library_bitzi_web
-#: clibraryfileview.virtual;50;item;id_library_bitzi_web
-#: webservices.list.menu;item;id_library_bitzi_web
-msgid "View _Bitzi Ticket"
-msgstr "‪Bitzi הראה כרטיס"
-
 #: csearchwnd;item;id_search_downloadnow
 #: cbrowsehostwnd.basic;item;id_search_downloadnow
 #: cbrowsehostwnd;item;id_search_downloadnow
@@ -1567,14 +1554,6 @@ msgstr "‪...ספריה חדשה"
 #: clibrarytileview;item;id_library_album_open
 msgid "_Open"
 msgstr "‪_פתח"
-
-#: clibraryfileview.physical.basic;41;item;id_library_bitzi_download
-#: clibraryfileview.physical;44;item;id_library_bitzi_download
-#: clibraryfileview.virtual.basic;47;item;id_library_bitzi_download
-#: clibraryfileview.virtual;50;item;id_library_bitzi_download
-#: webservices.list.menu;item;id_library_bitzi_download
-msgid "_Download Metadata"
-msgstr "‪Metadata הורד"
 
 #: clibraryfileview.physical.basic;41;item;id_webservices_musicbrainz
 #: clibraryfileview.physical;44;item;id_webservices_musicbrainz
@@ -3656,14 +3635,6 @@ msgstr "פתח את תיקיית האלבום הנבחרת"
 #: message;id_library_album_properties message;id_library_folder_properties
 msgid "View and edit the properties of the selected album folder..."
 msgstr "הצג וערוך מאפיינים של תיקיית האלבום הנבחרת"
-
-#: message;id_library_bitzi_download
-msgid "Download metadata for the selected file(s) from Bitzi(TM)..."
-msgstr "הורד metadata לקובץ/ים הנבחר/ים מ-Bitzi(TM)..."
-
-#: message;id_library_bitzi_web
-msgid "View the Bitzi(TM) ticket for the selected file on the web."
-msgstr "הצג את כרטיס ה-Bitzi(TM) לקובץ הנבחר ברשת."
 
 #: message;id_library_columns message;id_search_columns
 msgid "Select metadata columns to be displayed..."
@@ -6049,14 +6020,6 @@ msgstr "‪?קבצים, האם הינך מעוניינ/ת להמשיך %i-ל Met
 msgid "Editing metadata of %i files."
 msgstr "‪.ל- %i קבצים Meta עורך מידע "
 
-#: string;16387
-msgid "The file \"%s\" has not yet been hashed. Please wait for the file to be hashed, and then try again."
-msgstr "‪The file \"%s\" has not yet been hashed.  Please wait for the file to be hashed, and then try again."
-
-#: string;16388
-msgid "This option uses services provided by Bitzi.com for recognising and sharing information about selected files.\\n\\nShareaza will transmit the SHA1 hash code for the selected file(s) in order to query the Bitzi database. If you are concerned about privacy, you may wish to consult the Bitzi.com privacy policy.\\n\\nWould you like to proceed?"
-msgstr "‪This option uses services provided by Bitzi.com for recognising and sharing information about selected files.\\n\\nShareaza will transmit the SHA1 hash code for the selected file(s) in order to query the Bitzi database.  If you are concerned about privacy, you may wish to consult the Bitzi.com privacy policy.\\n\\nWould you like to proceed?"
-
 #: string;16389
 msgid "Are you sure you want to permanently delete the %i selected file(s) ?\\n\\nThe files will be moved to your \"recycle bin\" if it is enabled."
 msgstr "‪Are you sure you want to permenantly delete the %i selected file(s) ?\\n\\nThe files will be moved to your \"recycle bin\" if it is enabled."
@@ -6346,22 +6309,6 @@ msgstr "‪:סוג"
 #: string;16780
 msgid "Unspecified"
 msgstr "‪לא מוגדר"
-
-#: string;16781
-msgid "Requesting..."
-msgstr "‪...מבקש"
-
-#: string;16782
-msgid "Success!"
-msgstr "‪!הצלחה"
-
-#: string;16783
-msgid "Finished, click Close"
-msgstr "‪הסתיים, לחץ על סגירה"
-
-#: string;16784
-msgid "&Close"
-msgstr "‪&סגור"
 
 #: string;16785
 msgid "(No Visualisation)"
@@ -7421,12 +7368,11 @@ msgstr "אישור"
 #: cgraphlistdlg;control;17 cgraphitemdlg;control;2
 #: cschemacolumnsdlg;control;4 csecureruledlg;control;34
 #: csharemanagerdlg;control;6 curlcopydlg;control;6 curlexportdlg;control;10
-#: curlactiondlg;control;11 cbitzidownloaddlg;control;4
-#: cfilepreviewdlg;control;6 cexistingfiledlg;control;2
-#: cclosemodedlg;control;6 cdonkeyserversdlg;control;5
-#: cdeletefiledlg;control;5 ctorrentseeddlg;control;4
-#: cdownloadgroupdlg;control;2 cmediavisdlg;control;6
-#: cdecodemetadatadlg;control;9 circinputdlg;control;3
+#: curlactiondlg;control;11 cfilepreviewdlg;control;6
+#: cexistingfiledlg;control;2 cclosemodedlg;control;6
+#: cdonkeyserversdlg;control;5 cdeletefiledlg;control;5
+#: ctorrentseeddlg;control;4 cdownloadgroupdlg;control;2
+#: cmediavisdlg;control;6 cdecodemetadatadlg;control;9 circinputdlg;control;3
 msgid "Cancel"
 msgstr "ביטול"
 
@@ -9386,18 +9332,6 @@ msgstr "‪פתוח חלון מוניטור הורדות"
 msgid "You have clicked on a Shareaza-powered URI which will add the following Discovery Service to your Discovery Services cache."
 msgstr "‪של שרזה אשר יוסיף את שירותי משאבי חיבור הבאים לזיכרון המטמון של שירותי המשאבי חיבור URI לחצתה על"
 
-#: dialog;cbitzidownloaddlg
-msgid "Downloading Metadata..."
-msgstr "...Metadata מוריד"
-
-#: cbitzidownloaddlg;control;2
-msgid "Shareaza is attempting to download metadata from Bitzi(TM)..."
-msgstr "...Bitzi(TM)-מ Metadata שרזה מנסה להוריד"
-
-#: cbitzidownloaddlg;control;6
-msgid "www.bitzi.com"
-msgstr "www.bitzi.com"
-
 #: dialog;cfilepreviewdlg
 msgid "Smart Download Preview..."
 msgstr "...תצוגה מקדימה חכמה להורדה"
@@ -10060,6 +9994,45 @@ msgstr "‪TigerTree"
 #, fuzzy
 msgid "NextRun"
 msgstr "‪הבא"
+
+#~ msgid "Requesting..."
+#~ msgstr "‪...מבקש"
+
+#~ msgid "Success!"
+#~ msgstr "‪!הצלחה"
+
+#~ msgid "Finished, click Close"
+#~ msgstr "‪הסתיים, לחץ על סגירה"
+
+#~ msgid "&Close"
+#~ msgstr "‪&סגור"
+
+#~ msgid "The file \"%s\" has not yet been hashed. Please wait for the file to be hashed, and then try again."
+#~ msgstr "‪The file \"%s\" has not yet been hashed.  Please wait for the file to be hashed, and then try again."
+
+#~ msgid "View _Bitzi Ticket"
+#~ msgstr "‪Bitzi הראה כרטיס"
+
+#~ msgid "_Download Metadata"
+#~ msgstr "‪Metadata הורד"
+
+#~ msgid "Download metadata for the selected file(s) from Bitzi(TM)..."
+#~ msgstr "הורד metadata לקובץ/ים הנבחר/ים מ-Bitzi(TM)..."
+
+#~ msgid "View the Bitzi(TM) ticket for the selected file on the web."
+#~ msgstr "הצג את כרטיס ה-Bitzi(TM) לקובץ הנבחר ברשת."
+
+#~ msgid "This option uses services provided by Bitzi.com for recognising and sharing information about selected files.\\n\\nShareaza will transmit the SHA1 hash code for the selected file(s) in order to query the Bitzi database. If you are concerned about privacy, you may wish to consult the Bitzi.com privacy policy.\\n\\nWould you like to proceed?"
+#~ msgstr "‪This option uses services provided by Bitzi.com for recognising and sharing information about selected files.\\n\\nShareaza will transmit the SHA1 hash code for the selected file(s) in order to query the Bitzi database.  If you are concerned about privacy, you may wish to consult the Bitzi.com privacy policy.\\n\\nWould you like to proceed?"
+
+#~ msgid "Downloading Metadata..."
+#~ msgstr "...Metadata מוריד"
+
+#~ msgid "Shareaza is attempting to download metadata from Bitzi(TM)..."
+#~ msgstr "...Bitzi(TM)-מ Metadata שרזה מנסה להוריד"
+
+#~ msgid "www.bitzi.com"
+#~ msgstr "www.bitzi.com"
 
 #~ msgid "Get Data"
 #~ msgstr "השג מידע"
