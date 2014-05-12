@@ -266,7 +266,7 @@ CString URLEncode(LPCTSTR pszInputT)
 {
 	// Setup two strings, one with all the hexidecimal digits, the other with all the characters to find and encode
 	static LPCTSTR pszHex	= _T("0123456789ABCDEF");	// A string with all the hexidecimal digits
-	static LPCSTR pszUnsafe	= "<>\"#%{}|\\^~[]+?&@=:,$";// A string with all the characters unsafe for a URL
+	static LPCSTR pszUnsafe	= "<>\"#%{}|\\^~[]+?&@=:,$/";// A string with all the characters unsafe for a URL
 
 	// The output string starts blank
 	CString strOutput;
