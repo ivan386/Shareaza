@@ -674,19 +674,19 @@ BEGIN
     PUSHBUTTON      "Close",IDCANCEL,170,26,60,16
 END
 
-IDD_DOWNLOAD DIALOGEX 0, 0, 292, 174
+IDD_DOWNLOAD DIALOGEX 0, 0, 292, 220
 STYLE DS_SETFONT | DS_MODALFRAME | DS_3DLOOK | WS_POPUP | WS_CAPTION | WS_SYSMENU
 CAPTION "Download File or Torrent"
 FONT 8, "Tahoma", 0, 0, 0x1
 BEGIN
-    ICON            IDI_FILE,IDC_STATIC,6,6,21,20
+    ICON            IDI_FILE,IDC_STATIC,6,6,20,20
     LTEXT           "Downloading any file with Shareaza is easy.  Simply type or paste the URL or URI describing the file into the box below and press Enter.",IDC_STATIC,36,8,249,18
-    EDITTEXT        IDC_URL,7,36,278,30,ES_MULTILINE | ES_AUTOVSCROLL
-    DEFPUSHBUTTON   "Download",IDOK,158,72,60,16,WS_DISABLED
-    PUSHBUTTON      "Cancel",IDCANCEL,225,72,60,16
-    LTEXT           "Shareaza can download files from the web (HTTP), and automatically search and download P2P links (Magnet, Gnutella, eDonkey, mP2P).",IDC_STATIC,7,95,278,18
-    LTEXT           "Shareaza can also download BitTorrent files.  A torrent can be described by a .torrent file, or a HTTP link to the .torrent file.  To download a torrent HTTP link, paste it in the box above.  If you already have a .torrent file, click Open Torrent:",IDC_STATIC,7,119,278,26
-    PUSHBUTTON      "Open &Torrent...",IDC_TORRENT_FILE,205,151,80,16
+    EDITTEXT        IDC_URL,7,36,278,75,ES_MULTILINE | ES_AUTOVSCROLL
+    DEFPUSHBUTTON   "Download",IDOK,158,119,60,16,WS_DISABLED
+    PUSHBUTTON      "Cancel",IDCANCEL,225,119,60,16
+    LTEXT           "Shareaza can download files from the web (HTTP), and automatically search and download P2P links (Magnet, Gnutella, eDonkey, mP2P).",IDC_STATIC,7,142,278,18
+    LTEXT           "Shareaza can also download BitTorrent files.  A torrent can be described by a .torrent file, or a HTTP link to the .torrent file.  To download a torrent HTTP link, paste it in the box above.  If you already have a .torrent file, click Open Torrent:",IDC_STATIC,7,166,278,26
+    PUSHBUTTON      "Open &Torrent...",IDC_TORRENT_FILE,205,198,80,16
 END
 
 IDD_SECURE_RULE DIALOGEX 0, 0, 192, 220
@@ -3881,7 +3881,7 @@ BEGIN
                             "Would you like to download all files in this collection?\r\n\r\nChoose Cancel to stop any further prompts."
     IDS_LIBRARY_COLLECTION_LOCKDOWN 
                             "Would you like to prevent this collection from prompting you to download anything else?"
-    IDS_LIBRARY_COPYURI     "Copy &URI"
+    IDS_LIBRARY_COPYURI     "Copy &URI..."
     IDS_LIBRARY_EXPORTURIS  "Export &URIs..."
     IDS_LIBRARY_SUBFOLDER_IN_LIBRARY 
                             "A subfolder of the selected folder ""%s"" is already part of your library.\nAdding this folder will cause re-hashing of some files.\n\nDo you want to continue ?"
