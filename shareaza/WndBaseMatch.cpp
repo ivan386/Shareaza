@@ -369,21 +369,21 @@ void CBaseMatchWnd::OnSearchDownloadNow()
 
 void CBaseMatchWnd::OnUpdateSearchCopy(CCmdUI* pCmdUI)
 {
-	CString strMessage;
-	BOOL bSelected = m_pMatches->m_pSelectedFiles.GetCount() ||
-		m_pMatches->m_pSelectedHits.GetCount();
+	const bool bShift = ( GetAsyncKeyState( VK_SHIFT ) & 0x8000 ) != 0;
+
+	BOOL bSelected = m_pMatches->m_pSelectedFiles.GetCount() + m_pMatches->m_pSelectedHits.GetCount();
 	pCmdUI->Enable( bSelected );
-	bSelected > 1 ? LoadString( strMessage, IDS_LIBRARY_EXPORTURIS ) : LoadString( strMessage, IDS_LIBRARY_COPYURI );
-	pCmdUI->SetText( strMessage );
+	pCmdUI->SetText( LoadString( ( bSelected == 1 && ! bShift ) ? IDS_LIBRARY_COPYURI : IDS_LIBRARY_EXPORTURIS ) );
 }
 
 void CBaseMatchWnd::OnSearchCopy()
 {
+	const bool bShift = ( GetAsyncKeyState( VK_SHIFT ) & 0x8000 ) != 0;
+
 	CSingleLock pLock( &m_pMatches->m_pSection, TRUE );
 
-	INT_PTR bSelected = m_pMatches->m_pSelectedFiles.GetCount() +
-		m_pMatches->m_pSelectedHits.GetCount();
-	if ( bSelected == 1 )
+	INT_PTR bSelected = m_pMatches->m_pSelectedFiles.GetCount() + m_pMatches->m_pSelectedHits.GetCount();
+	if ( bSelected == 1 && ! bShift )
 	{
 		CURLCopyDlg dlg;
 
@@ -400,7 +400,7 @@ void CBaseMatchWnd::OnSearchCopy()
 
 		dlg.DoModal();
 	}
-	else if ( bSelected > 1 )
+	else if ( bSelected > 0 )
 	{
 		CURLExportDlg dlg;
 

@@ -1,7 +1,7 @@
 //
 // WndDownloads.h
 //
-// Copyright (c) Shareaza Development Team, 2002-2007.
+// Copyright (c) Shareaza Development Team, 2002-2014.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -60,6 +60,7 @@ protected:
 	DWORD			m_tLastUpdate;
 	bool			m_bMouseCaptured;
 	DWORD			m_nSelectedDownloads;
+	DWORD			m_nSelectedSources;
 	DWORD			m_tSel;
 	BOOL			m_bSelAny;
 	BOOL			m_bSelDownload;

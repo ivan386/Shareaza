@@ -1,7 +1,7 @@
 //
 // WndDownloads.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2013.
+// Copyright (c) Shareaza Development Team, 2002-2014.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -530,7 +530,7 @@ void CDownloadsWnd::Prepare()
 	DWORD tNow = GetTickCount();
 	if ( tNow - m_tSel < 250 ) return;
 
-	m_nSelectedDownloads = 0;
+	m_nSelectedDownloads = m_nSelectedSources = 0;
 	m_bSelAny = m_bSelDownload = m_bSelSource = m_bSelTrying = m_bSelPaused = FALSE;
 	m_bSelNotPausedOrMoving = m_bSelNoPreview = m_bSelNotCompleteAndNoPreview = FALSE;
 	m_bSelCompletedAndNoPreview = m_bSelStartedAndNotMoving = m_bSelCompleted = FALSE;
@@ -613,6 +613,7 @@ void CDownloadsWnd::Prepare()
 
 			if ( pSource->m_bSelected )
 			{
+				m_nSelectedSources ++;
 				m_bSelAny = TRUE;
 				m_bSelSource = TRUE;
 				m_bSelSourceExtended = pSource->m_bClientExtended;
@@ -1245,11 +1246,17 @@ void CDownloadsWnd::OnDownloadsBoost()
 void CDownloadsWnd::OnUpdateDownloadsCopy(CCmdUI* pCmdUI)
 {
 	Prepare();
+
+	const bool bShift = ( GetAsyncKeyState( VK_SHIFT ) & 0x8000 ) != 0;
+
 	pCmdUI->Enable( m_bSelSHA1orTTHorED2KorName || m_bSelSource );
+	pCmdUI->SetText( LoadString( ( ( m_nSelectedSources + m_nSelectedDownloads ) == 1 && ! bShift ) ? IDS_LIBRARY_COPYURI : IDS_LIBRARY_EXPORTURIS ) );
 }
 
 void CDownloadsWnd::OnDownloadsCopy()
 {
+	const bool bShift = ( GetAsyncKeyState( VK_SHIFT ) & 0x8000 ) != 0;
+
 	CList< CShareazaFile > pList;
 
 	{
@@ -1278,13 +1285,13 @@ void CDownloadsWnd::OnDownloadsCopy()
 		}
 	}
 
-	if ( pList.GetCount() == 1 )
+	if ( pList.GetCount() == 1  && ! bShift )
 	{
 		CURLCopyDlg dlg;
 		dlg.Add( &pList.GetHead() );
 		dlg.DoModal();
 	}
-	else if ( pList.GetCount() > 1 )
+	else if ( pList.GetCount() > 0 )
 	{
 		CURLExportDlg dlg;
 		for ( POSITION pos = pList.GetHeadPosition(); pos; )

@@ -278,19 +278,21 @@ void CLibraryFileView::OnLibraryEnqueue()
 
 void CLibraryFileView::OnUpdateLibraryURL(CCmdUI* pCmdUI)
 {
-	CString strMessage;
+	const bool bShift = ( GetAsyncKeyState( VK_SHIFT ) & 0x8000 ) != 0;
+
 	pCmdUI->Enable( GetSelectedCount() > 0 );
-	GetSelectedCount() > 1 ? LoadString( strMessage, IDS_LIBRARY_EXPORTURIS ) : LoadString( strMessage, IDS_LIBRARY_COPYURI );
-	pCmdUI->SetText( strMessage );
+	pCmdUI->SetText( LoadString( ( GetSelectedCount() == 1 && ! bShift ) ? IDS_LIBRARY_COPYURI : IDS_LIBRARY_EXPORTURIS ) );
 }
 
 void CLibraryFileView::OnLibraryURL()
 {
+	const bool bShift = ( GetAsyncKeyState( VK_SHIFT ) & 0x8000 ) != 0;
+
 	CSingleLock pLock( &Library.m_pSection, TRUE );
 
-	if ( GetSelectedCount() == 1 )
+	if ( GetSelectedCount() == 1 && ! bShift )
 	{
-		CLibraryFile* pFile = GetSelectedFile();
+		const CLibraryFile* pFile = GetSelectedFile();
 		if ( ! pFile ) return;
 
 		CURLCopyDlg dlg;
@@ -301,13 +303,13 @@ void CLibraryFileView::OnLibraryURL()
 
 		dlg.DoModal();
 	}
-	else
+	else if ( GetSelectedCount() > 0 )
 	{
 		CURLExportDlg dlg;
 
 		POSITION posSel = StartSelectedFileLoop();
 
-		while ( CLibraryFile* pFile = GetNextSelectedFile( posSel ) )
+		while ( const CLibraryFile* pFile = GetNextSelectedFile( posSel ) )
 		{
 			dlg.Add( pFile );
 		}
