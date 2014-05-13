@@ -1,7 +1,7 @@
 //
 // PageDownloadEdit.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2012.
+// Copyright (c) Shareaza Development Team, 2002-2014.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -318,6 +318,32 @@ BOOL CDownloadEditPage::OnApply()
 		pDownload->ClearFailedSources();
 		pDownload->ClearVerification();
 		bNeedUpdate = true;
+	}
+
+	if ( pDownload->m_oBTH && ! pDownload->IsTorrent() )
+	{
+		// Mutate regular download to torrent download
+		bool bPaused = pDownload->IsPaused();
+		if ( ! bPaused ) pDownload->Pause();
+		pDownload->m_pTorrent.Clear();
+		pDownload->m_pTorrent.m_oMD5	= pDownload->m_oMD5;
+		pDownload->m_pTorrent.m_oBTH	= pDownload->m_oBTH;
+		pDownload->m_pTorrent.m_oSHA1	= pDownload->m_oSHA1;
+		pDownload->m_pTorrent.m_oED2K	= pDownload->m_oED2K;
+		pDownload->m_pTorrent.m_oTiger	= pDownload->m_oTiger;
+		pDownload->m_pTorrent.m_sName	= pDownload->m_sName;
+		pDownload->m_pTorrent.m_nSize	= pDownload->m_nSize;
+		pDownload->SetTorrent();
+		if ( ! bPaused ) pDownload->Resume();
+	}
+	else if ( ! pDownload->m_oBTH && pDownload->IsTorrent() )
+	{
+		// Mutate torrent download to regular download
+		bool bPaused = pDownload->IsPaused();
+		if ( ! bPaused ) pDownload->Pause();
+		pDownload->m_pTorrent.Clear();
+		pDownload->SetTorrent();
+		if ( ! bPaused ) pDownload->Resume();
 	}
 
 	if ( bNeedUpdate )

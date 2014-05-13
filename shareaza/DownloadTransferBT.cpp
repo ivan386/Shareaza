@@ -1,7 +1,7 @@
 //
 // DownloadTransferBT.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2013.
+// Copyright (c) Shareaza Development Team, 2002-2014.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -647,7 +647,7 @@ BOOL CDownloadTransferBT::OnSourceResponse(CBTPacket* pPacket)
 		
 		if ( pURL->IsType( CBENode::beString ) )
 		{
-			nCount += m_pDownload->AddSourceURL( pURL->GetString(), TRUE );
+			nCount += m_pDownload->AddSourceURL( pURL->GetString() );
 		}
 		else
 		{

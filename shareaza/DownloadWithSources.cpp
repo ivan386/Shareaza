@@ -1,7 +1,7 @@
 //
 // DownloadWithSources.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2012.
+// Copyright (c) Shareaza Development Team, 2002-2014.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -22,25 +22,26 @@
 #include "StdAfx.h"
 #include "Shareaza.h"
 #include "Settings.h"
-#include "Downloads.h"
 #include "Download.h"
-#include "DownloadWithSources.h"
-#include "DownloadTransfer.h"
 #include "DownloadSource.h"
+#include "DownloadTransfer.h"
+#include "DownloadWithSources.h"
+#include "Downloads.h"
+#include "Library.h"
 #include "MatchObjects.h"
-#include "Network.h"
 #include "Neighbours.h"
-#include "Transfer.h"
+#include "Network.h"
+#include "QueryHashMaster.h"
 #include "QueryHit.h"
-#include "ShareazaURL.h"
 #include "Schema.h"
 #include "SchemaCache.h"
-#include "Library.h"
+#include "Security.h"
+#include "ShareazaURL.h"
 #include "SharedFile.h"
-#include "XML.h"
-#include "QueryHashMaster.h"
-#include "VendorCache.h"
+#include "Transfer.h"
 #include "Transfers.h"
+#include "VendorCache.h"
+#include "XML.h"
 
 #ifdef _DEBUG
 #undef THIS_FILE
@@ -250,8 +251,9 @@ BOOL CDownloadWithSources::AddSource(const CShareazaFile* pHit, BOOL bForce)
 {
 	ASSUME_LOCK( Transfers.m_pSection );
 
-	BOOL bHitHasName = ( pHit->m_sName.GetLength() != 0 );
-	BOOL bHitHasSize = ( pHit->m_nSize != 0 && pHit->m_nSize != SIZE_UNKNOWN );
+	const bool bHasHash = HasHash();
+	const BOOL bHitHasName = ( pHit->m_sName.GetLength() != 0 );
+	const BOOL bHitHasSize = ( pHit->m_nSize != 0 && pHit->m_nSize != SIZE_UNKNOWN );
 	BOOL bHash = FALSE;
 	BOOL bUpdated = FALSE;
 	
@@ -322,12 +324,12 @@ BOOL CDownloadWithSources::AddSource(const CShareazaFile* pHit, BOOL bForce)
 		m_oMD5 = pHit->m_oMD5;
 		bUpdated = TRUE;
 	}
-	if ( m_nSize == SIZE_UNKNOWN && bHitHasSize )
+	if ( ( m_nSize == SIZE_UNKNOWN || ! bHasHash ) && bHitHasSize )
 	{
 		m_nSize = pHit->m_nSize;
 		bUpdated = TRUE;
 	}
-	if ( m_sName.IsEmpty() && bHitHasName )
+	if ( ( m_sName.IsEmpty() || ! bHasHash ) && bHitHasName )
 	{
 		Rename( pHit->m_sName );
 		bUpdated = TRUE;
@@ -407,7 +409,7 @@ BOOL CDownloadWithSources::AddSourceHit(const CMatchFile* pMatchFile, BOOL bForc
 	return bRet;
 }
 
-BOOL CDownloadWithSources::AddSourceHit(const CShareazaURL& oURL, BOOL bForce)
+BOOL CDownloadWithSources::AddSourceHit(const CShareazaURL& oURL, BOOL bForce, int nRedirectionCount)
 {
 	CQuickLock oLock( Transfers.m_pSection );
 
@@ -419,11 +421,17 @@ BOOL CDownloadWithSources::AddSourceHit(const CShareazaURL& oURL, BOOL bForce)
 		((CDownload*)this)->SetTorrent( oURL.m_pTorrent );
 	}
 
-	if ( oURL.m_sURL.GetLength() )
+	for ( CString sURLs = oURL.m_sURL; sURLs.GetLength(); )
 	{
-		if ( ! AddSourceURL( oURL.m_sURL ) )
+		CString sURL = sURLs.SpanExcluding( _T(",") );
+		sURLs = sURLs.Mid( sURL.GetLength() + 1 );
+		sURL.Trim();
+		if ( sURL.GetLength() )
 		{
-			return FALSE;
+			if ( ! AddSourceURL( sURL, NULL, nRedirectionCount, FALSE ) )
+			{
+				return FALSE;
+			}
 		}
 	}
 
@@ -450,7 +458,7 @@ BOOL CDownloadWithSources::AddSourceBT(const Hashes::BtGuid& oGUID, const IN_ADD
 //////////////////////////////////////////////////////////////////////
 // CDownloadWithSources add a single URL source
 
-BOOL CDownloadWithSources::AddSourceURL(LPCTSTR pszURL, BOOL bURN, FILETIME* pLastSeen, int nRedirectionCount, BOOL bFailed)
+BOOL CDownloadWithSources::AddSourceURL(LPCTSTR pszURL, FILETIME* pLastSeen, int nRedirectionCount, BOOL bFailed)
 {
 	if ( pszURL == NULL || *pszURL == 0 )
 		return FALSE;
@@ -483,11 +491,11 @@ BOOL CDownloadWithSources::AddSourceURL(LPCTSTR pszURL, BOOL bURN, FILETIME* pLa
 		 pURL.m_nAction != CShareazaURL::uriSource )
 		return FALSE;	// Wrong URL type
 
-	if ( bURN )
+	if ( pURL.m_pAddress.s_addr != INADDR_ANY && pURL.m_pAddress.s_addr != INADDR_NONE )
 	{
 		if ( Network.IsFirewalledAddress( &pURL.m_pAddress, TRUE ) || 
 			 Network.IsReserved( &pURL.m_pAddress ) )
-			 return FALSE;
+			 return FALSE;	// Unreachable URL
 	}
 
 	CQuickLock pLock( Transfers.m_pSection );
@@ -512,6 +520,8 @@ BOOL CDownloadWithSources::AddSourceURL(LPCTSTR pszURL, BOOL bURN, FILETIME* pLa
 		VoteSource( pszURL, false );
 		return TRUE;
 	}
+
+	const bool bHasHash = HasHash();
 
 	// Validate SHA1
 	if ( pURL.m_oSHA1 && m_oSHA1 )
@@ -575,25 +585,23 @@ BOOL CDownloadWithSources::AddSourceURL(LPCTSTR pszURL, BOOL bURN, FILETIME* pLa
 		m_oBTH = pURL.m_oBTH;
 	}
 	// Get size
-	if ( m_nSize == SIZE_UNKNOWN &&
-		pURL.m_bSize && pURL.m_nSize && pURL.m_nSize != SIZE_UNKNOWN )
+	if ( ( m_nSize == SIZE_UNKNOWN || ! bHasHash ) && pURL.m_bSize && pURL.m_nSize && pURL.m_nSize != SIZE_UNKNOWN )
 	{
 		m_nSize = pURL.m_nSize;
 	}
 	// Get name
-	if ( m_sName.IsEmpty() && pURL.m_sName.GetLength() )
+	if ( ( m_sName.IsEmpty() || ! bHasHash ) && pURL.m_sName.GetLength() )
 	{
 		Rename( pURL.m_sName );
 	}
 
-	return AddSourceInternal( new CDownloadSource( static_cast< const CDownload* >( this ),
-		pszURL, bURN, bHashAuth, pLastSeen, nRedirectionCount ) );
+	return AddSourceInternal( new CDownloadSource( static_cast< const CDownload* >( this ), pszURL, bHashAuth, pLastSeen, nRedirectionCount ) );
 }
 
 //////////////////////////////////////////////////////////////////////
 // CDownloadWithSources add several URL sources
 
-int CDownloadWithSources::AddSourceURLs(LPCTSTR pszURLs, BOOL bURN, BOOL bFailed)
+int CDownloadWithSources::AddSourceURLs(LPCTSTR pszURLs, BOOL bFailed)
 {
 	int nCount = 0;
 
@@ -606,8 +614,7 @@ int CDownloadWithSources::AddSourceURLs(LPCTSTR pszURLs, BOOL bURN, BOOL bFailed
 		FILETIME tSeen = {};
 		oUrls.GetNextAssoc( pos, strURL, tSeen );
 		
-		if ( AddSourceURL( strURL, bURN,
-			( tSeen.dwLowDateTime | tSeen.dwHighDateTime ) ? &tSeen : NULL, 0, bFailed ) )
+		if ( AddSourceURL( strURL, ( tSeen.dwLowDateTime | tSeen.dwHighDateTime ) ? &tSeen : NULL, 0, bFailed ) )
 		{
 			if ( bFailed )
 			{
@@ -963,7 +970,7 @@ void CDownloadWithSources::AddFailedSource(LPCTSTR pszUrl, bool bLocal, bool bOf
 		if ( CFailedSource* pBadSource = new CFailedSource( pszUrl, bLocal, bOffline ) )
 		{
 			m_pFailedSources.AddTail( pBadSource );
-			theApp.Message( MSG_DEBUG, L"Bad sources count for \"%s\": %i", m_sName, m_pFailedSources.GetCount() );
+			theApp.Message( MSG_DEBUG, L"Bad sources count for \"%s\": %i. URL: %s", m_sName, m_pFailedSources.GetCount(), pszUrl );
 		}
 	}
 }

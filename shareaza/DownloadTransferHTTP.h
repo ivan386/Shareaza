@@ -1,7 +1,7 @@
 //
 // DownloadTransferHTTP.h
 //
-// Copyright (c) Shareaza Development Team, 2002-2013.
+// Copyright (c) Shareaza Development Team, 2002-2014.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -39,7 +39,6 @@ protected:
 	BOOL			m_bBusyFault;
 	BOOL			m_bRangeFault;
 	BOOL			m_bKeepAlive;
-	BOOL			m_bHashMatch;
 	CString			m_sTigerTree;		// X-TigerTree-Path
 	BOOL			m_bTigerFetch;
 	BOOL			m_bTigerIgnore;

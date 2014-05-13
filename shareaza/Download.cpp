@@ -649,7 +649,14 @@ BOOL CDownload::OpenDownload()
 	if ( IsTorrent() )
 	{
 		if ( Open( m_pTorrent ) )
-			return TRUE;
+		{
+			if ( IsFileOpen() )
+				return TRUE;
+
+			// Try mutated download
+			if ( Open() )
+				return TRUE;
+		}
 	}
 	else
 	{

@@ -1,7 +1,7 @@
 //
 // UploadTransferHTTP.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2012.
+// Copyright (c) Shareaza Development Team, 2002-2014.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -278,7 +278,7 @@ BOOL CUploadTransferHTTP::OnHeaderLine(CString& strHeader, CString& strValue)
 			{
 				if ( strValue.Find( _T("://") ) < 0 )
 				{
-					pDownload->AddSourceURLs( strValue, TRUE, TRUE );
+					pDownload->AddSourceURLs( strValue, TRUE );
 				}
 			}
 		}
@@ -783,7 +783,7 @@ BOOL CUploadTransferHTTP::RequestPartialFile(CDownload* pDownload)
 
 	if ( m_sLocations.GetLength() )
 	{
-		pDownload->AddSourceURLs( m_sLocations, TRUE );
+		pDownload->AddSourceURLs( m_sLocations );
 		m_sLocations.Empty();
 	}
 
