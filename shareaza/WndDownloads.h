@@ -94,6 +94,7 @@ protected:
 public:
 	virtual BOOL PreTranslateMessage(MSG* pMsg);
 	virtual BOOL OnCmdMsg(UINT nID, int nCode, void* pExtra, AFX_CMDHANDLERINFO* pHandlerInfo);
+	virtual HRESULT	GetGenericView(IGenericView** ppView);
 	
 // Implementation
 protected:
