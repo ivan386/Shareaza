@@ -59,7 +59,7 @@ CSplashDlg::CSplashDlg(int nMax, bool bClosing) :
 	m_nPos( 0 ),
 	m_nMax( nMax ),
 	m_bClosing( bClosing ),
-	m_sState( theApp.m_sSmartAgent ),
+	m_sState( Settings.SmartAgent() ),
 	m_pfnAnimateWindow( NULL )
 {
 	Create( IDD, GetDesktopWindow() );

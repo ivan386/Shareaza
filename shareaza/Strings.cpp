@@ -99,7 +99,7 @@ const CLowerCaseTable ToLower;
 CLowerCaseTable::CLowerCaseTable()
 {
 	for ( size_t i = 0; i < 65536; ++i ) cTable[ i ] = TCHAR( i );
-	VERIFY( CharLowerBuff( cTable, 65536 ) == 65536 );
+	CharLowerBuff( cTable, 65536 );
 	
 	cTable[ 0x0130 ] = 0x0069;	// Turkish Capital I with dot above to Latin Small I
 
@@ -640,6 +640,7 @@ bool atoin(__in_bcount(nLen) const char* pszString, __in size_t nLen, __int64& n
 	return true;
 }
 
+#ifdef __AFXCOLL_H__
 void Split(const CString& strSource, TCHAR cDelimiter, CStringArray& pAddIt, BOOL bAddFirstEmpty)
 {
 	for ( LPCTSTR start = strSource; *start; start++ )
@@ -656,6 +657,7 @@ void Split(const CString& strSource, TCHAR cDelimiter, CStringArray& pAddIt, BOO
 		start = c;
 	}
 }
+#endif // __AFXCOLL_H__
 
 BOOL StartsWith(const CString& sInput, LPCTSTR pszText, size_t nLen)
 {
@@ -663,6 +665,7 @@ BOOL StartsWith(const CString& sInput, LPCTSTR pszText, size_t nLen)
 		! _tcsnicmp( (LPCTSTR)sInput, pszText, nLen );
 }
 
+#ifdef __AFX_H__
 CString LoadFile(LPCTSTR pszPath)
 {
 	CString strXML;
@@ -732,6 +735,7 @@ CString LoadFile(LPCTSTR pszPath)
 
 	return strXML;
 }
+#endif // __AFX_H__
 
 BOOL ReplaceNoCase(CString& sInStr, LPCTSTR pszOldStr, LPCTSTR pszNewStr)
 {
@@ -770,12 +774,14 @@ fail:
 	return bModified;
 }
 
+#ifdef _WINSOCKAPI_
 CString HostToString(const SOCKADDR_IN* pHost)
 {
 	CString sHost;
 	sHost.Format( _T("%s:%hu"), (LPCTSTR)CString( inet_ntoa( pHost->sin_addr ) ), ntohs( pHost->sin_port ) );
 	return sHost;
 }
+#endif // _WINSOCKAPI_
 
 CString MakeKeywords(const CString& strPhrase, bool bExpression)
 {
@@ -829,7 +835,6 @@ CString MakeKeywords(const CString& strPhrase, bool bExpression)
 			if ( nPos > nPrevWord )
 			{
 				int len = str.GetLength();
-				ASSERT( len );
 				TCHAR last1 = str.GetAt( len - 1 );
 				TCHAR last2 = ( len > 1 ) ? str.GetAt( len - 2 ) : _T('\0');
 				TCHAR last3 = ( len > 2 ) ? str.GetAt( len - 3 ) : _T('\0');
@@ -848,10 +853,8 @@ CString MakeKeywords(const CString& strPhrase, bool bExpression)
 						( ! bNegative || ! ( boundary[ 0 ] & ( sHiragana | sKatakana | sKanji ) ) ) )
 						str += _T(' ');
 				}
-				ASSERT( strPhrase.GetLength() > nPos - 1 );
 				if ( strPhrase.GetAt( nPos - 1 ) == _T('-') && nPos > 1 )
 				{
-					ASSERT( strPhrase.GetLength() > nPos - 2 );
 					if ( *pszPtr != _T(' ') && strPhrase.GetAt( nPos - 2 ) != _T(' ') )
 					{
 						nPrevWord += nDistance + 1;
@@ -879,7 +882,6 @@ CString MakeKeywords(const CString& strPhrase, bool bExpression)
 	}
 
 	int len = str.GetLength();
-	ASSERT( len );
 	TCHAR last1 = str.GetAt( len - 1 );
 	TCHAR last2 = ( len > 1 ) ? str.GetAt( len - 2 ) : _T('\0');
 	if ( boundary[ 0 ] && boundary[ 1 ] &&
@@ -1147,8 +1149,6 @@ CString Unescape(const TCHAR* __restrict pszXML, int nLength)
 		}
 	}
 
-	ASSERT( pszNull == pszXML );
-	ASSERT( pszOut - pszValue <= nLength );
 	strValue.ReleaseBuffer( (int)( pszOut - pszValue ) );
 
 	return strValue;

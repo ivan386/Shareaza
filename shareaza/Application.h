@@ -1,7 +1,7 @@
 //
 // Application.h
 //
-// Copyright (c) Shareaza Development Team, 2002-2012.
+// Copyright (c) Shareaza Development Team, 2002-2014.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -46,6 +46,8 @@ protected:
 		STDMETHOD(get_Library)(ILibrary FAR* FAR* ppLibrary);
 		STDMETHOD(get_Settings)(ISettings FAR* FAR* ppSettings);
 		STDMETHOD(get_ImageService)(IImageServicePlugin FAR* FAR* ppImageService);
+		STDMETHOD(get_SmartAgent)(BSTR FAR* psSmartAgent);
+		STDMETHOD(Message)(WORD nType, BSTR bsMessage);
 	END_INTERFACE_PART(Application)
 
 	BEGIN_INTERFACE_PART(UserInterface, IUserInterface)
@@ -61,6 +63,9 @@ protected:
 		STDMETHOD(AddFromXML)(ISXMLElement FAR* pXML);
 		STDMETHOD(GetMenu)(BSTR bsName, VARIANT_BOOL bCreate, ISMenu FAR* FAR* ppMenu);
 		STDMETHOD(GetToolbar)(BSTR bsName, VARIANT_BOOL bCreate, ISToolbar FAR* FAR* ppToolbar);
+		STDMETHOD(NameToID)(BSTR bsName, UINT* pnCommandID);
+		STDMETHOD(AddString)(UINT nStringID, BSTR sText);
+		STDMETHOD(LoadString)(UINT nStringID, BSTR* psText);
 	END_INTERFACE_PART(UserInterface)
 
 	BEGIN_INTERFACE_PART(Settings, ISettings)

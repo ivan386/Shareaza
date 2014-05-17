@@ -1,7 +1,7 @@
 //
 // ComMenu.h
 //
-// Copyright (c) Shareaza Development Team, 2002-2007.
+// Copyright (c) Shareaza Development Team, 2002-2014.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -18,9 +18,6 @@
 // along with Shareaza; if not, write to the Free Software
 // Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 //
-
-#if !defined(AFX_COMMENU_H__CF7CC23F_25E1_48A8_8957_B1787AF67599__INCLUDED_)
-#define AFX_COMMENU_H__CF7CC23F_25E1_48A8_8957_B1787AF67599__INCLUDED_
 
 #pragma once
 
@@ -62,6 +59,8 @@ protected:
 		STDMETHOD(InsertSeparator)(LONG nPosition);
 		STDMETHOD(InsertMenu)(LONG nPosition, BSTR sText, ISMenu FAR* FAR* ppMenu);
 		STDMETHOD(InsertCommand)(LONG nPosition, LONG nCommandID, BSTR sText, ISMenu FAR* FAR* ppMenu);
+		STDMETHOD(get_Position)(LONG FAR* pnCommandID);
+		STDMETHOD(get_Parent)(ISMenu FAR* FAR* ppMenu);
 	END_INTERFACE_PART(SMenu)
 
 	BEGIN_INTERFACE_PART(EnumVARIANT, IEnumVARIANT)
@@ -74,16 +73,5 @@ protected:
 
 	DECLARE_INTERFACE_MAP()
 
-// Implementation
-protected:
-	//{{AFX_MSG(CComMenu)
-	//}}AFX_MSG
-	//{{AFX_VIRTUAL(CComMenu)
-	//}}AFX_VIRTUAL
-
 	DECLARE_MESSAGE_MAP()
 };
-
-//{{AFX_INSERT_LOCATION}}
-
-#endif // !defined(AFX_COMMENU_H__CF7CC23F_25E1_48A8_8957_B1787AF67599__INCLUDED_)

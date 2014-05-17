@@ -1,7 +1,7 @@
 //
 // ShareazaFile.h
 //
-// Copyright (c) Shareaza Development Team, 2002-2012.
+// Copyright (c) Shareaza Development Team, 2002-2014.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -103,6 +103,7 @@ protected:
 		STDMETHOD(get_URN)(BSTR sURN, BSTR FAR* psURN);
 		STDMETHOD(get_Hash)(URN_TYPE nType, ENCODING nBase, BSTR FAR* psURN);
 		STDMETHOD(get_URL)(BSTR FAR* psURL);
+		STDMETHOD(get_Magnet)(BSTR FAR* psMagnet);
 	END_INTERFACE_PART(ShareazaFile)
 
 	DECLARE_INTERFACE_MAP()

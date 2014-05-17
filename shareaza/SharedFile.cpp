@@ -1,7 +1,7 @@
 //
 // SharedFile.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2013.
+// Copyright (c) Shareaza Development Team, 2002-2014.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -1528,6 +1528,12 @@ STDMETHODIMP CLibraryFile::XLibraryFile::get_URL(BSTR FAR* psURL)
 {
 	METHOD_PROLOGUE( CLibraryFile, LibraryFile )
 	return pThis->m_xShareazaFile.get_URL( psURL );
+}
+
+STDMETHODIMP CLibraryFile::XLibraryFile::get_Magnet(BSTR FAR* psMagnet)
+{
+	METHOD_PROLOGUE( CLibraryFile, LibraryFile )
+	return pThis->m_xShareazaFile.get_Magnet( psMagnet );
 }
 
 STDMETHODIMP CLibraryFile::XLibraryFile::get_Application(IApplication FAR* FAR* ppApplication)

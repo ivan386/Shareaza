@@ -1,7 +1,7 @@
 //
 // Strings.h 
 //
-// Copyright (c) Shareaza Development Team, 2010-2012.
+// Copyright (c) Shareaza Development Team, 2010-2014.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -97,20 +97,26 @@ LPCTSTR _tcsnistr(LPCTSTR pszString, LPCTSTR pszSubString, size_t nlen);
 // Convert string to integer (64-bit, decimal only, with sign, no spaces allowed). Returns false on error.
 bool atoin(__in_bcount(nLen) const char* pszString, __in size_t nLen, __int64& nNum);
 
+#ifdef __AFXCOLL_H__
 // Split string using delimiter to string array
 void Split(const CString& strSource, TCHAR cDelimiter, CStringArray& pAddIt, BOOL bAddFirstEmpty = FALSE);
+#endif // __AFXCOLL_H__
 
 // StartsWith("hello world", "hello") is true
 BOOL StartsWith(const CString& sInput, LPCTSTR pszText, size_t nLen);
 
+#ifdef __AFX_H__
 // Load all text from file (Unicode-compatible)
 CString LoadFile(LPCTSTR pszPath);
+#endif // __AFX_H__
 
 // Replaces a substring with another (case-insensitive)
 BOOL ReplaceNoCase(CString& sInStr, LPCTSTR pszOldStr, LPCTSTR pszNewStr);
 
+#ifdef _WINSOCKAPI_
 // Returns "a.a.a.a:port"
 CString HostToString(const SOCKADDR_IN* pHost);
+#endif // _WINSOCKAPI_
 
 // Function is used to split a phrase in Asian languages to separate keywords
 // to ease keyword matching, allowing user to type as in the natural language.

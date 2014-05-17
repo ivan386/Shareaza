@@ -1,7 +1,7 @@
 //
 // ShareazaFile.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2012.
+// Copyright (c) Shareaza Development Team, 2002-2014.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -23,6 +23,7 @@
 #include "Shareaza.h"
 #include "Network.h"
 #include "ShareazaFile.h"
+#include "DlgURLCopy.h"
 
 #ifdef _DEBUG
 #undef THIS_FILE
@@ -493,5 +494,12 @@ STDMETHODIMP CShareazaFile::XShareazaFile::get_URL(BSTR FAR* psURL)
 {
 	METHOD_PROLOGUE( CShareazaFile, ShareazaFile )
 	*psURL = CComBSTR( pThis->m_sURL ).Detach();
+	return S_OK;
+}
+
+STDMETHODIMP CShareazaFile::XShareazaFile::get_Magnet(BSTR FAR* psMagnet)
+{
+	METHOD_PROLOGUE( CShareazaFile, ShareazaFile )
+	*psMagnet = CComBSTR( CURLCopyDlg::CreateMagnet( *pThis ) ).Detach();
 	return S_OK;
 }
