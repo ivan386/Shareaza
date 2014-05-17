@@ -4,7 +4,10 @@
 //
 #define IDS_PROJNAME                    100
 #define IDR_SearchExport                101
+#define IDS_MENU_ITEM                   101
 #define IDR_PLUGIN                      102
+#define IDS_COMMAND                     102
+#define IDS_COMMAND_TIP                 103
 #define IDI_ICON                        201
 
 // Next default values for new objects
