@@ -258,6 +258,7 @@ Source: "{#Compiler}\{#PlatformName}\{#ConfigurationName}\unrar64.dll"; DestDir:
 Source: "{#Compiler}\{#PlatformName}\{#ConfigurationName}\RatDVDReader.dll"; DestDir: "{app}"; Flags: overwritereadonly replacesameversion restartreplace uninsremovereadonly sortfilesbyextension regserver
 Source: "{#Compiler}\Win32\{#ConfigurationName}\RazaWebHook32.dll"; DestDir: "{app}"; Flags: overwritereadonly replacesameversion restartreplace uninsremovereadonly uninsrestartdelete sortfilesbyextension regserver noregerror
 Source: "{#Compiler}\x64\{#ConfigurationName}\RazaWebHook64.dll"; DestDir: "{app}"; Flags: overwritereadonly replacesameversion restartreplace uninsremovereadonly uninsrestartdelete sortfilesbyextension regserver noregerror
+Source: "{#Compiler}\{#PlatformName}\{#ConfigurationName}\ShortURL.dll"; DestDir: "{app}"; Flags: overwritereadonly replacesameversion restartreplace uninsremovereadonly sortfilesbyextension regserver
 Source: "{#Compiler}\{#PlatformName}\{#ConfigurationName}\SkinScanSKS.dll"; DestDir: "{app}"; Flags: overwritereadonly replacesameversion restartreplace uninsremovereadonly sortfilesbyextension regserver
 Source: "{#Compiler}\{#PlatformName}\{#ConfigurationName}\SWFPlugin.dll"; DestDir: "{app}"; Flags: overwritereadonly replacesameversion restartreplace uninsremovereadonly sortfilesbyextension regserver
 Source: "{#Compiler}\{#PlatformName}\{#ConfigurationName}\VirusTotal.dll"; DestDir: "{app}"; Flags: overwritereadonly replacesameversion restartreplace uninsremovereadonly sortfilesbyextension regserver
