@@ -921,7 +921,7 @@
 				<item id="ID_SEARCH_FOR_ALBUM" text="同一专辑的音乐"/>
 				<item id="ID_SEARCH_FOR_SERIES" text="同一系列的情节"/>
 			</menu>
-			<menu text="网页服务(_W)">
+			<menu id="ID_WEBSERVICES_LIST" text="网页服务(_W)">
 			</menu>
 		</menu>
 		<menu name="CSearchWnd">
@@ -941,7 +941,7 @@
 				<item id="ID_SEARCH_FOR_ALBUM" text="同一专辑的音乐"/>
 				<item id="ID_SEARCH_FOR_SERIES" text="同一系列的情节"/>
 			</menu>
-			<menu text="网页服务(_W)">
+			<menu id="ID_WEBSERVICES_LIST" text="网页服务(_W)">
 			</menu>
 			<separator/>
 			<item id="ID_SEARCH_FILTER" text="过滤结果(_F)..."/>
@@ -966,7 +966,7 @@
 				<item id="ID_SEARCH_FOR_ALBUM" text="同一专辑的音乐"/>
 				<item id="ID_SEARCH_FOR_SERIES" text="同一系列的情节"/>
 			</menu>
-			<menu text="网页服务(_W)">
+			<menu id="ID_WEBSERVICES_LIST" text="网页服务(_W)">
 			</menu>
 		</menu>
 		<menu name="CBrowseHostWnd">
@@ -984,7 +984,7 @@
 				<item id="ID_SEARCH_FOR_ALBUM" text="同一专辑的音乐"/>
 				<item id="ID_SEARCH_FOR_SERIES" text="同一系列的情节"/>
 			</menu>
-			<menu text="网页服务(_W)">
+			<menu id="ID_WEBSERVICES_LIST" text="网页服务(_W)">
 			</menu>
 			<separator/>
 			<item id="ID_SEARCH_FILTER" text="过滤结果(_F)..."/>
@@ -1008,7 +1008,7 @@
 				<item id="ID_SEARCH_FOR_ALBUM" text="同一专辑的音乐"/>
 				<item id="ID_SEARCH_FOR_SERIES" text="同一系列的情节"/>
 			</menu>
-			<menu text="网页服务(_W)">
+			<menu id="ID_WEBSERVICES_LIST" text="网页服务(_W)">
 			</menu>
 			<separator/>
 			<item id="ID_SEARCH_FILTER" text="过滤结果(_F)..."/>
@@ -1243,7 +1243,7 @@
 				<item id="ID_SEARCH_FOR_ALBUM" text="同一专辑的音乐"/>
 				<item id="ID_SEARCH_FOR_SERIES" text="同一系列的情节"/>
 			</menu>
-			<menu text="网页服务(_W)">
+			<menu id="ID_WEBSERVICES_LIST" text="网页服务(_W)">
 				<item id="ID_WEBSERVICES_MUSICBRAINZ" text="MusicBrainz(_M)"/>
 			</menu>
 			<menu text="O_rganise">
@@ -1273,7 +1273,7 @@
 				<item id="ID_SEARCH_FOR_ALBUM" text="同一专辑的音乐"/>
 				<item id="ID_SEARCH_FOR_SERIES" text="同一系列的情节"/>
 			</menu>
-			<menu text="网页服务(_W)">
+			<menu id="ID_WEBSERVICES_LIST" text="网页服务(_W)">
 				<item id="ID_WEBSERVICES_MUSICBRAINZ" text="MusicBrainz(_M)"/>
 				<separator/>
 				<item id="ID_LIBRARY_CREATETORRENT" text="创建种子文件(_T)"/>
@@ -1311,7 +1311,7 @@
 				<item id="ID_SEARCH_FOR_ALBUM" text="同一专辑的音乐"/>
 				<item id="ID_SEARCH_FOR_SERIES" text="同一系列的情节"/>
 			</menu>
-			<menu text="网页服务(_W)">
+			<menu id="ID_WEBSERVICES_LIST" text="网页服务(_W)">
 			</menu>
 			<menu text="O_rganise">
 				<item id="ID_LIBRARY_RENAME" text="重命名文件(_R)"/>
@@ -1344,7 +1344,7 @@
 				<item id="ID_SEARCH_FOR_ALBUM" text="同一专辑的音乐"/>
 				<item id="ID_SEARCH_FOR_SERIES" text="同一系列的情节"/>
 			</menu>
-			<menu text="网页服务(_W)">
+			<menu id="ID_WEBSERVICES_LIST" text="网页服务(_W)">
 				<item id="ID_LIBRARY_CREATETORRENT" text="创建种子文件(_T)"/>
 			</menu>
 			<menu text="O_rganise">

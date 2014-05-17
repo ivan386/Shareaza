@@ -921,7 +921,7 @@
 				<item id="ID_SEARCH_FOR_ALBUM" text="Musiikkia samalta Albumilta"/>
 				<item id="ID_SEARCH_FOR_SERIES" text="Jaksoja samasta Sarjasta"/>
 			</menu>
-			<menu text="_Web Palvelut">
+			<menu id="ID_WEBSERVICES_LIST" text="_Web Palvelut">
 			</menu>
 		</menu>
 		<menu name="CSearchWnd">
@@ -941,7 +941,7 @@
 				<item id="ID_SEARCH_FOR_ALBUM" text="Musiikkia samalta Albumilta"/>
 				<item id="ID_SEARCH_FOR_SERIES" text="Jaksoja samasta Sarjasta"/>
 			</menu>
-			<menu text="_Web Palvelut">
+			<menu id="ID_WEBSERVICES_LIST" text="_Web Palvelut">
 			</menu>
 			<separator/>
 			<item id="ID_SEARCH_FILTER" text="_Suodata Tuloksia..."/>
@@ -966,7 +966,7 @@
 				<item id="ID_SEARCH_FOR_ALBUM" text="Musiikkia samalta Albumilta"/>
 				<item id="ID_SEARCH_FOR_SERIES" text="Jaksoja samasta Sarjasta"/>
 			</menu>
-			<menu text="_Web Palvelut">
+			<menu id="ID_WEBSERVICES_LIST" text="_Web Palvelut">
 			</menu>
 		</menu>
 		<menu name="CBrowseHostWnd">
@@ -984,7 +984,7 @@
 				<item id="ID_SEARCH_FOR_ALBUM" text="Musiikkia samalta Albumilta"/>
 				<item id="ID_SEARCH_FOR_SERIES" text="Jaksoja samasta Sarjasta"/>
 			</menu>
-			<menu text="_Web Palvelut">
+			<menu id="ID_WEBSERVICES_LIST" text="_Web Palvelut">
 			</menu>
 			<separator/>
 			<item id="ID_SEARCH_FILTER" text="_Suodata Tuloksia..."/>
@@ -1008,7 +1008,7 @@
 				<item id="ID_SEARCH_FOR_ALBUM" text="Musiikkia samalta Albumilta"/>
 				<item id="ID_SEARCH_FOR_SERIES" text="Jaksoja samasta Sarjasta"/>
 			</menu>
-			<menu text="_Web Palvelut">
+			<menu id="ID_WEBSERVICES_LIST" text="_Web Palvelut">
 			</menu>
 			<separator/>
 			<item id="ID_SEARCH_FILTER" text="_Suodata Tuloksia..."/>
@@ -1243,7 +1243,7 @@
 				<item id="ID_SEARCH_FOR_ALBUM" text="Musiikkia samalta Albumilta"/>
 				<item id="ID_SEARCH_FOR_SERIES" text="Jaksoja samasta Sarjasta"/>
 			</menu>
-			<menu text="_Web Palvelut">
+			<menu id="ID_WEBSERVICES_LIST" text="_Web Palvelut">
 				<item id="ID_WEBSERVICES_MUSICBRAINZ" text="_MusicBrainz"/>
 			</menu>
 			<menu text="J_ärjestä">
@@ -1273,7 +1273,7 @@
 				<item id="ID_SEARCH_FOR_ALBUM" text="Musiikkia samalta Albumilta"/>
 				<item id="ID_SEARCH_FOR_SERIES" text="Jaksoja samasta Sarjasta"/>
 			</menu>
-			<menu text="_Web Palvelut">
+			<menu id="ID_WEBSERVICES_LIST" text="_Web Palvelut">
 				<item id="ID_WEBSERVICES_MUSICBRAINZ" text="_MusicBrainz"/>
 				<separator/>
 				<item id="ID_LIBRARY_CREATETORRENT" text="Luo .torrent Tiedosto"/>
@@ -1311,7 +1311,7 @@
 				<item id="ID_SEARCH_FOR_ALBUM" text="Musiikkia samalta Albumilta"/>
 				<item id="ID_SEARCH_FOR_SERIES" text="Jaksoja samasta Sarjasta"/>
 			</menu>
-			<menu text="_Web Palvelut">
+			<menu id="ID_WEBSERVICES_LIST" text="_Web Palvelut">
 			</menu>
 			<menu text="J_ärjestä">
 				<item id="ID_LIBRARY_RENAME" text="_Nimeä Uudelleen"/>
@@ -1344,7 +1344,7 @@
 				<item id="ID_SEARCH_FOR_ALBUM" text="Musiikkia samalta Albumilta"/>
 				<item id="ID_SEARCH_FOR_SERIES" text="Jaksoja samasta Sarjasta"/>
 			</menu>
-			<menu text="_Web Palvelut">
+			<menu id="ID_WEBSERVICES_LIST" text="_Web Palvelut">
 				<item id="ID_LIBRARY_CREATETORRENT" text="Luo .torrent Tiedosto"/>
 			</menu>
 			<menu text="J_ärjestä">

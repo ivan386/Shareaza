@@ -921,7 +921,7 @@
 				<item id="ID_SEARCH_FOR_ALBUM" text="Μουσική από το ίδιο _Album"/>
 				<item id="ID_SEARCH_FOR_SERIES" text="_Επεισόδια από την ίδια Σειρά"/>
 			</menu>
-			<menu text="_Υπηρεσίες Ιστού">
+			<menu id="ID_WEBSERVICES_LIST" text="_Υπηρεσίες Ιστού">
 			</menu>
 		</menu>
 		<menu name="CSearchWnd">
@@ -941,7 +941,7 @@
 				<item id="ID_SEARCH_FOR_ALBUM" text="Μουσική από το ίδιο _Album"/>
 				<item id="ID_SEARCH_FOR_SERIES" text="_Επεισόδια από την ίδια Σειρά"/>
 			</menu>
-			<menu text="_Υπηρεσίες Ιστού">
+			<menu id="ID_WEBSERVICES_LIST" text="_Υπηρεσίες Ιστού">
 			</menu>
 			<separator/>
 			<item id="ID_SEARCH_FILTER" text="_Φιλτράρισμα Αποτελεσμάτων..."/>
@@ -966,7 +966,7 @@
 				<item id="ID_SEARCH_FOR_ALBUM" text="Μουσική από το ίδιο _Album"/>
 				<item id="ID_SEARCH_FOR_SERIES" text="_Επεισόδια από την ίδια Σειρά"/>
 			</menu>
-			<menu text="_Υπηρεσίες Ιστού">
+			<menu id="ID_WEBSERVICES_LIST" text="_Υπηρεσίες Ιστού">
 			</menu>
 		</menu>
 		<menu name="CBrowseHostWnd">
@@ -984,7 +984,7 @@
 				<item id="ID_SEARCH_FOR_ALBUM" text="Μουσική από το ίδιο _Album"/>
 				<item id="ID_SEARCH_FOR_SERIES" text="_Επεισόδια από την ίδια Σειρά"/>
 			</menu>
-			<menu text="_Υπηρεσίες Ιστού">
+			<menu id="ID_WEBSERVICES_LIST" text="_Υπηρεσίες Ιστού">
 			</menu>
 			<separator/>
 			<item id="ID_SEARCH_FILTER" text="_Φιλτράρισμα Αποτελεσμάτων..."/>
@@ -1008,7 +1008,7 @@
 				<item id="ID_SEARCH_FOR_ALBUM" text="Μουσική από το ίδιο _Album"/>
 				<item id="ID_SEARCH_FOR_SERIES" text="_Επεισόδια από την ίδια Σειρά"/>
 			</menu>
-			<menu text="_Υπηρεσίες Ιστού">
+			<menu id="ID_WEBSERVICES_LIST" text="_Υπηρεσίες Ιστού">
 			</menu>
 			<separator/>
 			<item id="ID_SEARCH_FILTER" text="_Φιλτράρισμα Αποτελεσμάτων..."/>
@@ -1243,7 +1243,7 @@
 				<item id="ID_SEARCH_FOR_ALBUM" text="Μουσική από το ίδιο _Album"/>
 				<item id="ID_SEARCH_FOR_SERIES" text="_Επεισόδια από την ίδια Σειρά"/>
 			</menu>
-			<menu text="_Υπηρεσίες Ιστού">
+			<menu id="ID_WEBSERVICES_LIST" text="_Υπηρεσίες Ιστού">
 				<item id="ID_WEBSERVICES_MUSICBRAINZ" text="_MusicBrainz"/>
 			</menu>
 			<menu text="_Οργάνωση">
@@ -1273,7 +1273,7 @@
 				<item id="ID_SEARCH_FOR_ALBUM" text="Μουσική από το ίδιο _Album"/>
 				<item id="ID_SEARCH_FOR_SERIES" text="_Επεισόδια από την ίδια Σειρά"/>
 			</menu>
-			<menu text="_Υπηρεσίες Ιστού">
+			<menu id="ID_WEBSERVICES_LIST" text="_Υπηρεσίες Ιστού">
 				<item id="ID_WEBSERVICES_MUSICBRAINZ" text="_MusicBrainz"/>
 				<separator/>
 				<item id="ID_LIBRARY_CREATETORRENT" text="Δημιουργία Αρχείου .torrent"/>
@@ -1311,7 +1311,7 @@
 				<item id="ID_SEARCH_FOR_ALBUM" text="Μουσική από το ίδιο _Album"/>
 				<item id="ID_SEARCH_FOR_SERIES" text="_Επεισόδια από την ίδια Σειρά"/>
 			</menu>
-			<menu text="_Υπηρεσίες Ιστού">
+			<menu id="ID_WEBSERVICES_LIST" text="_Υπηρεσίες Ιστού">
 			</menu>
 			<menu text="_Οργάνωση">
 				<item id="ID_LIBRARY_RENAME" text="_Μετονομασία Αρχείου"/>
@@ -1344,7 +1344,7 @@
 				<item id="ID_SEARCH_FOR_ALBUM" text="Μουσική από το ίδιο _Album"/>
 				<item id="ID_SEARCH_FOR_SERIES" text="_Επεισόδια από την ίδια Σειρά"/>
 			</menu>
-			<menu text="_Υπηρεσίες Ιστού">
+			<menu id="ID_WEBSERVICES_LIST" text="_Υπηρεσίες Ιστού">
 				<item id="ID_LIBRARY_CREATETORRENT" text="Δημιουργία Αρχείου .torrent"/>
 			</menu>
 			<menu text="_Οργάνωση">

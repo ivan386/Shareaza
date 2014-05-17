@@ -921,7 +921,7 @@
 				<item id="ID_SEARCH_FOR_ALBUM" text="‪מוזיקה באותו א_לבום"/>
 				<item id="ID_SEARCH_FOR_SERIES" text="‪פרקים באותה _סדרה"/>
 			</menu>
-			<menu text="‪שירותי רשת">
+			<menu id="ID_WEBSERVICES_LIST" text="‪שירותי רשת">
 			</menu>
 		</menu>
 		<menu name="CSearchWnd">
@@ -941,7 +941,7 @@
 				<item id="ID_SEARCH_FOR_ALBUM" text="‪מוזיקה באותו א_לבום"/>
 				<item id="ID_SEARCH_FOR_SERIES" text="‪פרקים באותה _סדרה"/>
 			</menu>
-			<menu text="‪שירותי רשת">
+			<menu id="ID_WEBSERVICES_LIST" text="‪שירותי רשת">
 			</menu>
 			<separator/>
 			<item id="ID_SEARCH_FILTER" text="‪...סנן תוצאות"/>
@@ -966,7 +966,7 @@
 				<item id="ID_SEARCH_FOR_ALBUM" text="‪מוזיקה באותו א_לבום"/>
 				<item id="ID_SEARCH_FOR_SERIES" text="‪פרקים באותה _סדרה"/>
 			</menu>
-			<menu text="‪שירותי רשת">
+			<menu id="ID_WEBSERVICES_LIST" text="‪שירותי רשת">
 			</menu>
 		</menu>
 		<menu name="CBrowseHostWnd">
@@ -984,7 +984,7 @@
 				<item id="ID_SEARCH_FOR_ALBUM" text="‪מוזיקה באותו א_לבום"/>
 				<item id="ID_SEARCH_FOR_SERIES" text="‪פרקים באותה _סדרה"/>
 			</menu>
-			<menu text="‪שירותי רשת">
+			<menu id="ID_WEBSERVICES_LIST" text="‪שירותי רשת">
 			</menu>
 			<separator/>
 			<item id="ID_SEARCH_FILTER" text="‪...סנן תוצאות"/>
@@ -1008,7 +1008,7 @@
 				<item id="ID_SEARCH_FOR_ALBUM" text="‪מוזיקה באותו א_לבום"/>
 				<item id="ID_SEARCH_FOR_SERIES" text="‪פרקים באותה _סדרה"/>
 			</menu>
-			<menu text="‪שירותי רשת">
+			<menu id="ID_WEBSERVICES_LIST" text="‪שירותי רשת">
 			</menu>
 			<separator/>
 			<item id="ID_SEARCH_FILTER" text="‪...סנן תוצאות"/>
@@ -1243,7 +1243,7 @@
 				<item id="ID_SEARCH_FOR_ALBUM" text="‪מוזיקה באותו א_לבום"/>
 				<item id="ID_SEARCH_FOR_SERIES" text="‪פרקים באותה _סדרה"/>
 			</menu>
-			<menu text="‪שירותי רשת">
+			<menu id="ID_WEBSERVICES_LIST" text="‪שירותי רשת">
 				<item id="ID_WEBSERVICES_MUSICBRAINZ" text="_MusicBrainz"/>
 			</menu>
 			<menu text="‪אירגון">
@@ -1273,7 +1273,7 @@
 				<item id="ID_SEARCH_FOR_ALBUM" text="‪מוזיקה באותו א_לבום"/>
 				<item id="ID_SEARCH_FOR_SERIES" text="‪פרקים באותה _סדרה"/>
 			</menu>
-			<menu text="‪שירותי רשת">
+			<menu id="ID_WEBSERVICES_LIST" text="‪שירותי רשת">
 				<item id="ID_WEBSERVICES_MUSICBRAINZ" text="_MusicBrainz"/>
 				<separator/>
 				<item id="ID_LIBRARY_CREATETORRENT" text="‪.torrent צור קובץ"/>
@@ -1311,7 +1311,7 @@
 				<item id="ID_SEARCH_FOR_ALBUM" text="‪מוזיקה באותו א_לבום"/>
 				<item id="ID_SEARCH_FOR_SERIES" text="‪פרקים באותה _סדרה"/>
 			</menu>
-			<menu text="‪שירותי רשת">
+			<menu id="ID_WEBSERVICES_LIST" text="‪שירותי רשת">
 			</menu>
 			<menu text="‪אירגון">
 				<item id="ID_LIBRARY_RENAME" text="‪שנה שם קובץ"/>
@@ -1344,7 +1344,7 @@
 				<item id="ID_SEARCH_FOR_ALBUM" text="‪מוזיקה באותו א_לבום"/>
 				<item id="ID_SEARCH_FOR_SERIES" text="‪פרקים באותה _סדרה"/>
 			</menu>
-			<menu text="‪שירותי רשת">
+			<menu id="ID_WEBSERVICES_LIST" text="‪שירותי רשת">
 				<item id="ID_LIBRARY_CREATETORRENT" text="‪.torrent צור קובץ"/>
 			</menu>
 			<menu text="‪אירגון">

@@ -921,7 +921,7 @@
 				<item id="ID_SEARCH_FOR_ALBUM" text="同一個專輯的音樂"/>
 				<item id="ID_SEARCH_FOR_SERIES" text="同一個系列的 Episodes"/>
 			</menu>
-			<menu text="網際網路服務">
+			<menu id="ID_WEBSERVICES_LIST" text="網際網路服務">
 			</menu>
 		</menu>
 		<menu name="CSearchWnd">
@@ -941,7 +941,7 @@
 				<item id="ID_SEARCH_FOR_ALBUM" text="同一個專輯的音樂"/>
 				<item id="ID_SEARCH_FOR_SERIES" text="同一個系列的 Episodes"/>
 			</menu>
-			<menu text="網際網路服務">
+			<menu id="ID_WEBSERVICES_LIST" text="網際網路服務">
 			</menu>
 			<separator/>
 			<item id="ID_SEARCH_FILTER" text="過濾搜尋結果..."/>
@@ -966,7 +966,7 @@
 				<item id="ID_SEARCH_FOR_ALBUM" text="同一個專輯的音樂"/>
 				<item id="ID_SEARCH_FOR_SERIES" text="同一個系列的 Episodes"/>
 			</menu>
-			<menu text="網際網路服務">
+			<menu id="ID_WEBSERVICES_LIST" text="網際網路服務">
 			</menu>
 		</menu>
 		<menu name="CBrowseHostWnd">
@@ -984,7 +984,7 @@
 				<item id="ID_SEARCH_FOR_ALBUM" text="同一個專輯的音樂"/>
 				<item id="ID_SEARCH_FOR_SERIES" text="同一個系列的 Episodes"/>
 			</menu>
-			<menu text="網際網路服務">
+			<menu id="ID_WEBSERVICES_LIST" text="網際網路服務">
 			</menu>
 			<separator/>
 			<item id="ID_SEARCH_FILTER" text="過濾搜尋結果..."/>
@@ -1008,7 +1008,7 @@
 				<item id="ID_SEARCH_FOR_ALBUM" text="同一個專輯的音樂"/>
 				<item id="ID_SEARCH_FOR_SERIES" text="同一個系列的 Episodes"/>
 			</menu>
-			<menu text="網際網路服務">
+			<menu id="ID_WEBSERVICES_LIST" text="網際網路服務">
 			</menu>
 			<separator/>
 			<item id="ID_SEARCH_FILTER" text="過濾搜尋結果..."/>
@@ -1243,7 +1243,7 @@
 				<item id="ID_SEARCH_FOR_ALBUM" text="同一個專輯的音樂"/>
 				<item id="ID_SEARCH_FOR_SERIES" text="同一個系列的 Episodes"/>
 			</menu>
-			<menu text="網際網路服務">
+			<menu id="ID_WEBSERVICES_LIST" text="網際網路服務">
 				<item id="ID_WEBSERVICES_MUSICBRAINZ" text="_MusicBrainz"/>
 			</menu>
 			<menu text="整理">
@@ -1273,7 +1273,7 @@
 				<item id="ID_SEARCH_FOR_ALBUM" text="同一個專輯的音樂"/>
 				<item id="ID_SEARCH_FOR_SERIES" text="同一個系列的 Episodes"/>
 			</menu>
-			<menu text="網際網路服務">
+			<menu id="ID_WEBSERVICES_LIST" text="網際網路服務">
 				<item id="ID_WEBSERVICES_MUSICBRAINZ" text="_MusicBrainz"/>
 				<separator/>
 				<item id="ID_LIBRARY_CREATETORRENT" text="製作 .torrent 檔"/>
@@ -1311,7 +1311,7 @@
 				<item id="ID_SEARCH_FOR_ALBUM" text="同一個專輯的音樂"/>
 				<item id="ID_SEARCH_FOR_SERIES" text="同一個系列的 Episodes"/>
 			</menu>
-			<menu text="網際網路服務">
+			<menu id="ID_WEBSERVICES_LIST" text="網際網路服務">
 			</menu>
 			<menu text="整理">
 				<item id="ID_LIBRARY_RENAME" text="重新命名檔案"/>
@@ -1344,7 +1344,7 @@
 				<item id="ID_SEARCH_FOR_ALBUM" text="同一個專輯的音樂"/>
 				<item id="ID_SEARCH_FOR_SERIES" text="同一個系列的 Episodes"/>
 			</menu>
-			<menu text="網際網路服務">
+			<menu id="ID_WEBSERVICES_LIST" text="網際網路服務">
 				<item id="ID_LIBRARY_CREATETORRENT" text="製作 .torrent 檔"/>
 			</menu>
 			<menu text="整理">

@@ -921,7 +921,7 @@
 				<item id="ID_SEARCH_FOR_ALBUM" text="Musik från samma album"/>
 				<item id="ID_SEARCH_FOR_SERIES" text="Avsnitt från samma serie"/>
 			</menu>
-			<menu text="_Webbtjänster">
+			<menu id="ID_WEBSERVICES_LIST" text="_Webbtjänster">
 			</menu>
 		</menu>
 		<menu name="CSearchWnd">
@@ -941,7 +941,7 @@
 				<item id="ID_SEARCH_FOR_ALBUM" text="Musik från samma album"/>
 				<item id="ID_SEARCH_FOR_SERIES" text="Avsnitt från samma serie"/>
 			</menu>
-			<menu text="_Webbtjänster">
+			<menu id="ID_WEBSERVICES_LIST" text="_Webbtjänster">
 			</menu>
 			<separator/>
 			<item id="ID_SEARCH_FILTER" text="_Filtrera resultatet…"/>
@@ -966,7 +966,7 @@
 				<item id="ID_SEARCH_FOR_ALBUM" text="Musik från samma album"/>
 				<item id="ID_SEARCH_FOR_SERIES" text="Avsnitt från samma serie"/>
 			</menu>
-			<menu text="_Webbtjänster">
+			<menu id="ID_WEBSERVICES_LIST" text="_Webbtjänster">
 			</menu>
 		</menu>
 		<menu name="CBrowseHostWnd">
@@ -984,7 +984,7 @@
 				<item id="ID_SEARCH_FOR_ALBUM" text="Musik från samma album"/>
 				<item id="ID_SEARCH_FOR_SERIES" text="Avsnitt från samma serie"/>
 			</menu>
-			<menu text="_Webbtjänster">
+			<menu id="ID_WEBSERVICES_LIST" text="_Webbtjänster">
 			</menu>
 			<separator/>
 			<item id="ID_SEARCH_FILTER" text="_Filtrera resultatet…"/>
@@ -1008,7 +1008,7 @@
 				<item id="ID_SEARCH_FOR_ALBUM" text="Musik från samma album"/>
 				<item id="ID_SEARCH_FOR_SERIES" text="Avsnitt från samma serie"/>
 			</menu>
-			<menu text="_Webbtjänster">
+			<menu id="ID_WEBSERVICES_LIST" text="_Webbtjänster">
 			</menu>
 			<separator/>
 			<item id="ID_SEARCH_FILTER" text="_Filtrera resultatet…"/>
@@ -1243,7 +1243,7 @@
 				<item id="ID_SEARCH_FOR_ALBUM" text="Musik från samma album"/>
 				<item id="ID_SEARCH_FOR_SERIES" text="Avsnitt från samma serie"/>
 			</menu>
-			<menu text="_Webbtjänster">
+			<menu id="ID_WEBSERVICES_LIST" text="_Webbtjänster">
 				<item id="ID_WEBSERVICES_MUSICBRAINZ" text="_MusicBrainz"/>
 			</menu>
 			<menu text="O_rganisera">
@@ -1273,7 +1273,7 @@
 				<item id="ID_SEARCH_FOR_ALBUM" text="Musik från samma album"/>
 				<item id="ID_SEARCH_FOR_SERIES" text="Avsnitt från samma serie"/>
 			</menu>
-			<menu text="_Webbtjänster">
+			<menu id="ID_WEBSERVICES_LIST" text="_Webbtjänster">
 				<item id="ID_WEBSERVICES_MUSICBRAINZ" text="_MusicBrainz"/>
 				<separator/>
 				<item id="ID_LIBRARY_CREATETORRENT" text="Skapa .torrent-fil"/>
@@ -1311,7 +1311,7 @@
 				<item id="ID_SEARCH_FOR_ALBUM" text="Musik från samma album"/>
 				<item id="ID_SEARCH_FOR_SERIES" text="Avsnitt från samma serie"/>
 			</menu>
-			<menu text="_Webbtjänster">
+			<menu id="ID_WEBSERVICES_LIST" text="_Webbtjänster">
 			</menu>
 			<menu text="O_rganisera">
 				<item id="ID_LIBRARY_RENAME" text="_Byt namn på fil"/>
@@ -1344,7 +1344,7 @@
 				<item id="ID_SEARCH_FOR_ALBUM" text="Musik från samma album"/>
 				<item id="ID_SEARCH_FOR_SERIES" text="Avsnitt från samma serie"/>
 			</menu>
-			<menu text="_Webbtjänster">
+			<menu id="ID_WEBSERVICES_LIST" text="_Webbtjänster">
 				<item id="ID_LIBRARY_CREATETORRENT" text="Skapa .torrent-fil"/>
 			</menu>
 			<menu text="O_rganisera">

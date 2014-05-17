@@ -921,7 +921,7 @@
 				<item id="ID_SEARCH_FOR_ALBUM" text="Hudbu ze stejném alba"/>
 				<item id="ID_SEARCH_FOR_SERIES" text="Epizody ze stejné série"/>
 			</menu>
-			<menu text="_Webové služby">
+			<menu id="ID_WEBSERVICES_LIST" text="_Webové služby">
 			</menu>
 		</menu>
 		<menu name="CSearchWnd">
@@ -941,7 +941,7 @@
 				<item id="ID_SEARCH_FOR_ALBUM" text="Hudbu ze stejném alba"/>
 				<item id="ID_SEARCH_FOR_SERIES" text="Epizody ze stejné série"/>
 			</menu>
-			<menu text="_Webové služby">
+			<menu id="ID_WEBSERVICES_LIST" text="_Webové služby">
 			</menu>
 			<separator/>
 			<item id="ID_SEARCH_FILTER" text="_Výsledky filtru..."/>
@@ -966,7 +966,7 @@
 				<item id="ID_SEARCH_FOR_ALBUM" text="Hudbu ze stejném alba"/>
 				<item id="ID_SEARCH_FOR_SERIES" text="Epizody ze stejné série"/>
 			</menu>
-			<menu text="_Webové služby">
+			<menu id="ID_WEBSERVICES_LIST" text="_Webové služby">
 			</menu>
 		</menu>
 		<menu name="CBrowseHostWnd">
@@ -984,7 +984,7 @@
 				<item id="ID_SEARCH_FOR_ALBUM" text="Hudbu ze stejném alba"/>
 				<item id="ID_SEARCH_FOR_SERIES" text="Epizody ze stejné série"/>
 			</menu>
-			<menu text="_Webové služby">
+			<menu id="ID_WEBSERVICES_LIST" text="_Webové služby">
 			</menu>
 			<separator/>
 			<item id="ID_SEARCH_FILTER" text="_Výsledky filtru..."/>
@@ -1008,7 +1008,7 @@
 				<item id="ID_SEARCH_FOR_ALBUM" text="Hudbu ze stejném alba"/>
 				<item id="ID_SEARCH_FOR_SERIES" text="Epizody ze stejné série"/>
 			</menu>
-			<menu text="_Webové služby">
+			<menu id="ID_WEBSERVICES_LIST" text="_Webové služby">
 			</menu>
 			<separator/>
 			<item id="ID_SEARCH_FILTER" text="_Výsledky filtru..."/>
@@ -1243,7 +1243,7 @@
 				<item id="ID_SEARCH_FOR_ALBUM" text="Hudbu ze stejném alba"/>
 				<item id="ID_SEARCH_FOR_SERIES" text="Epizody ze stejné série"/>
 			</menu>
-			<menu text="_Webové služby">
+			<menu id="ID_WEBSERVICES_LIST" text="_Webové služby">
 				<item id="ID_WEBSERVICES_MUSICBRAINZ" text="_MusicBrainz"/>
 			</menu>
 			<menu text="Sp_ráva souborů">
@@ -1273,7 +1273,7 @@
 				<item id="ID_SEARCH_FOR_ALBUM" text="Hudbu ze stejném alba"/>
 				<item id="ID_SEARCH_FOR_SERIES" text="Epizody ze stejné série"/>
 			</menu>
-			<menu text="_Webové služby">
+			<menu id="ID_WEBSERVICES_LIST" text="_Webové služby">
 				<item id="ID_WEBSERVICES_MUSICBRAINZ" text="_MusicBrainz"/>
 				<separator/>
 				<item id="ID_LIBRARY_CREATETORRENT" text="Vytvořit soubor .torrent"/>
@@ -1311,7 +1311,7 @@
 				<item id="ID_SEARCH_FOR_ALBUM" text="Hudbu ze stejném alba"/>
 				<item id="ID_SEARCH_FOR_SERIES" text="Epizody ze stejné série"/>
 			</menu>
-			<menu text="_Webové služby">
+			<menu id="ID_WEBSERVICES_LIST" text="_Webové služby">
 			</menu>
 			<menu text="Sp_ráva souborů">
 				<item id="ID_LIBRARY_RENAME" text="_Přejmenovat soubor"/>
@@ -1344,7 +1344,7 @@
 				<item id="ID_SEARCH_FOR_ALBUM" text="Hudbu ze stejném alba"/>
 				<item id="ID_SEARCH_FOR_SERIES" text="Epizody ze stejné série"/>
 			</menu>
-			<menu text="_Webové služby">
+			<menu id="ID_WEBSERVICES_LIST" text="_Webové služby">
 				<item id="ID_LIBRARY_CREATETORRENT" text="Vytvořit soubor .torrent"/>
 			</menu>
 			<menu text="Sp_ráva souborů">

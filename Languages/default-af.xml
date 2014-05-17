@@ -921,7 +921,7 @@
 				<item id="ID_SEARCH_FOR_ALBUM" text="Musiek in dieselfde Album"/>
 				<item id="ID_SEARCH_FOR_SERIES" text="Episodes van dieselfde Reeks"/>
 			</menu>
-			<menu text="_Web Dienste">
+			<menu id="ID_WEBSERVICES_LIST" text="_Web Dienste">
 			</menu>
 		</menu>
 		<menu name="CSearchWnd">
@@ -941,7 +941,7 @@
 				<item id="ID_SEARCH_FOR_ALBUM" text="Musiek in dieselfde Album"/>
 				<item id="ID_SEARCH_FOR_SERIES" text="Episodes van dieselfde Reeks"/>
 			</menu>
-			<menu text="_Web Dienste">
+			<menu id="ID_WEBSERVICES_LIST" text="_Web Dienste">
 			</menu>
 			<separator/>
 			<item id="ID_SEARCH_FILTER" text="_Filtreer Resultate..."/>
@@ -966,7 +966,7 @@
 				<item id="ID_SEARCH_FOR_ALBUM" text="Musiek in dieselfde Album"/>
 				<item id="ID_SEARCH_FOR_SERIES" text="Episodes van dieselfde Reeks"/>
 			</menu>
-			<menu text="_Web Dienste">
+			<menu id="ID_WEBSERVICES_LIST" text="_Web Dienste">
 			</menu>
 		</menu>
 		<menu name="CBrowseHostWnd">
@@ -984,7 +984,7 @@
 				<item id="ID_SEARCH_FOR_ALBUM" text="Musiek in dieselfde Album"/>
 				<item id="ID_SEARCH_FOR_SERIES" text="Episodes van dieselfde Reeks"/>
 			</menu>
-			<menu text="_Web Dienste">
+			<menu id="ID_WEBSERVICES_LIST" text="_Web Dienste">
 			</menu>
 			<separator/>
 			<item id="ID_SEARCH_FILTER" text="_Filtreer Resultate..."/>
@@ -1008,7 +1008,7 @@
 				<item id="ID_SEARCH_FOR_ALBUM" text="Musiek in dieselfde Album"/>
 				<item id="ID_SEARCH_FOR_SERIES" text="Episodes van dieselfde Reeks"/>
 			</menu>
-			<menu text="_Web Dienste">
+			<menu id="ID_WEBSERVICES_LIST" text="_Web Dienste">
 			</menu>
 			<separator/>
 			<item id="ID_SEARCH_FILTER" text="_Filtreer Resultate..."/>
@@ -1243,7 +1243,7 @@
 				<item id="ID_SEARCH_FOR_ALBUM" text="Musiek in dieselfde Album"/>
 				<item id="ID_SEARCH_FOR_SERIES" text="Episodes van dieselfde Reeks"/>
 			</menu>
-			<menu text="_Web Dienste">
+			<menu id="ID_WEBSERVICES_LIST" text="_Web Dienste">
 				<item id="ID_WEBSERVICES_MUSICBRAINZ" text="_MusicBrainz"/>
 			</menu>
 			<menu text="O_rganiseer">
@@ -1273,7 +1273,7 @@
 				<item id="ID_SEARCH_FOR_ALBUM" text="Musiek in dieselfde Album"/>
 				<item id="ID_SEARCH_FOR_SERIES" text="Episodes van dieselfde Reeks"/>
 			</menu>
-			<menu text="_Web Dienste">
+			<menu id="ID_WEBSERVICES_LIST" text="_Web Dienste">
 				<item id="ID_WEBSERVICES_MUSICBRAINZ" text="_MusicBrainz"/>
 				<separator/>
 				<item id="ID_LIBRARY_CREATETORRENT" text="Skep .torrent Lêer"/>
@@ -1311,7 +1311,7 @@
 				<item id="ID_SEARCH_FOR_ALBUM" text="Musiek in dieselfde Album"/>
 				<item id="ID_SEARCH_FOR_SERIES" text="Episodes van dieselfde Reeks"/>
 			</menu>
-			<menu text="_Web Dienste">
+			<menu id="ID_WEBSERVICES_LIST" text="_Web Dienste">
 			</menu>
 			<menu text="O_rganiseer">
 				<item id="ID_LIBRARY_RENAME" text="_Hernoem Lêer"/>
@@ -1344,7 +1344,7 @@
 				<item id="ID_SEARCH_FOR_ALBUM" text="Musiek in dieselfde Album"/>
 				<item id="ID_SEARCH_FOR_SERIES" text="Episodes van dieselfde Reeks"/>
 			</menu>
-			<menu text="_Web Dienste">
+			<menu id="ID_WEBSERVICES_LIST" text="_Web Dienste">
 				<item id="ID_LIBRARY_CREATETORRENT" text="Skep .torrent Lêer"/>
 			</menu>
 			<menu text="O_rganiseer">

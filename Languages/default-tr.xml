@@ -921,7 +921,7 @@
 				<item id="ID_SEARCH_FOR_ALBUM" text="Aynı _Albümden Müzikler"/>
 				<item id="ID_SEARCH_FOR_SERIES" text="Aynı _Seriden Bölümler"/>
 			</menu>
-			<menu text="_Web Servisleri">
+			<menu id="ID_WEBSERVICES_LIST" text="_Web Servisleri">
 			</menu>
 		</menu>
 		<menu name="CSearchWnd">
@@ -941,7 +941,7 @@
 				<item id="ID_SEARCH_FOR_ALBUM" text="Aynı _Albümden Müzikler"/>
 				<item id="ID_SEARCH_FOR_SERIES" text="Aynı _Seriden Bölümler"/>
 			</menu>
-			<menu text="_Web Servisleri">
+			<menu id="ID_WEBSERVICES_LIST" text="_Web Servisleri">
 			</menu>
 			<separator/>
 			<item id="ID_SEARCH_FILTER" text="_Filtre Sonuçları..."/>
@@ -966,7 +966,7 @@
 				<item id="ID_SEARCH_FOR_ALBUM" text="Aynı _Albümden Müzikler"/>
 				<item id="ID_SEARCH_FOR_SERIES" text="Aynı _Seriden Bölümler"/>
 			</menu>
-			<menu text="_Web Servisleri">
+			<menu id="ID_WEBSERVICES_LIST" text="_Web Servisleri">
 			</menu>
 		</menu>
 		<menu name="CBrowseHostWnd">
@@ -984,7 +984,7 @@
 				<item id="ID_SEARCH_FOR_ALBUM" text="Aynı _Albümden Müzikler"/>
 				<item id="ID_SEARCH_FOR_SERIES" text="Aynı _Seriden Bölümler"/>
 			</menu>
-			<menu text="_Web Servisleri">
+			<menu id="ID_WEBSERVICES_LIST" text="_Web Servisleri">
 			</menu>
 			<separator/>
 			<item id="ID_SEARCH_FILTER" text="_Filtre Sonuçları..."/>
@@ -1008,7 +1008,7 @@
 				<item id="ID_SEARCH_FOR_ALBUM" text="Aynı _Albümden Müzikler"/>
 				<item id="ID_SEARCH_FOR_SERIES" text="Aynı _Seriden Bölümler"/>
 			</menu>
-			<menu text="_Web Servisleri">
+			<menu id="ID_WEBSERVICES_LIST" text="_Web Servisleri">
 			</menu>
 			<separator/>
 			<item id="ID_SEARCH_FILTER" text="_Filtre Sonuçları..."/>
@@ -1243,7 +1243,7 @@
 				<item id="ID_SEARCH_FOR_ALBUM" text="Aynı _Albümden Müzikler"/>
 				<item id="ID_SEARCH_FOR_SERIES" text="Aynı _Seriden Bölümler"/>
 			</menu>
-			<menu text="_Web Servisleri">
+			<menu id="ID_WEBSERVICES_LIST" text="_Web Servisleri">
 				<item id="ID_WEBSERVICES_MUSICBRAINZ" text="_MusicBrainz"/>
 			</menu>
 			<menu text="_Düzenle">
@@ -1273,7 +1273,7 @@
 				<item id="ID_SEARCH_FOR_ALBUM" text="Aynı _Albümden Müzikler"/>
 				<item id="ID_SEARCH_FOR_SERIES" text="Aynı _Seriden Bölümler"/>
 			</menu>
-			<menu text="_Web Servisleri">
+			<menu id="ID_WEBSERVICES_LIST" text="_Web Servisleri">
 				<item id="ID_WEBSERVICES_MUSICBRAINZ" text="_MusicBrainz"/>
 				<separator/>
 				<item id="ID_LIBRARY_CREATETORRENT" text="._torrent Dosyası Oluştur"/>
@@ -1311,7 +1311,7 @@
 				<item id="ID_SEARCH_FOR_ALBUM" text="Aynı _Albümden Müzikler"/>
 				<item id="ID_SEARCH_FOR_SERIES" text="Aynı _Seriden Bölümler"/>
 			</menu>
-			<menu text="_Web Servisleri">
+			<menu id="ID_WEBSERVICES_LIST" text="_Web Servisleri">
 			</menu>
 			<menu text="_Düzenle">
 				<item id="ID_LIBRARY_RENAME" text="_Dosya Adı Değiştir"/>
@@ -1344,7 +1344,7 @@
 				<item id="ID_SEARCH_FOR_ALBUM" text="Aynı _Albümden Müzikler"/>
 				<item id="ID_SEARCH_FOR_SERIES" text="Aynı _Seriden Bölümler"/>
 			</menu>
-			<menu text="_Web Servisleri">
+			<menu id="ID_WEBSERVICES_LIST" text="_Web Servisleri">
 				<item id="ID_LIBRARY_CREATETORRENT" text="._torrent Dosyası Oluştur"/>
 			</menu>
 			<menu text="_Düzenle">

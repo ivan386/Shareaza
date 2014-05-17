@@ -1,7 +1,7 @@
 //
 // Skin.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2012.
+// Copyright (c) Shareaza Development Team, 2002-2014.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -712,6 +712,11 @@ CMenu* CSkin::CreatePopupMenu(LPCTSTR pszName)
 
 BOOL CSkin::CreateMenu(CXMLElement* pRoot, HMENU hMenu)
 {
+	if ( const UINT nID = LookupCommandID( pRoot, _T("id") ) )
+	{
+		VERIFY( SetMenuContextHelpId( hMenu, nID ) );
+	}
+
 	for ( POSITION pos = pRoot->GetElementIterator() ; pos ; )
 	{
 		CXMLElement* pXML	= pRoot->GetNextElement( pos );

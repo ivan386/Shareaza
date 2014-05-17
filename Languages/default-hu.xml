@@ -921,7 +921,7 @@
 				<item id="ID_SEARCH_FOR_ALBUM" text="Ugyanabból az _albumból"/>
 				<item id="ID_SEARCH_FOR_SERIES" text="Ugyanabból a _sorozatból"/>
 			</menu>
-			<menu text="_Webszolgáltatások">
+			<menu id="ID_WEBSERVICES_LIST" text="_Webszolgáltatások">
 			</menu>
 		</menu>
 		<menu name="CSearchWnd">
@@ -941,7 +941,7 @@
 				<item id="ID_SEARCH_FOR_ALBUM" text="Ugyanabból az _albumból"/>
 				<item id="ID_SEARCH_FOR_SERIES" text="Ugyanabból a _sorozatból"/>
 			</menu>
-			<menu text="_Webszolgáltatások">
+			<menu id="ID_WEBSERVICES_LIST" text="_Webszolgáltatások">
 			</menu>
 			<separator/>
 			<item id="ID_SEARCH_FILTER" text="_Találatok szűrése..."/>
@@ -966,7 +966,7 @@
 				<item id="ID_SEARCH_FOR_ALBUM" text="Ugyanabból az _albumból"/>
 				<item id="ID_SEARCH_FOR_SERIES" text="Ugyanabból a _sorozatból"/>
 			</menu>
-			<menu text="_Webszolgáltatások">
+			<menu id="ID_WEBSERVICES_LIST" text="_Webszolgáltatások">
 			</menu>
 		</menu>
 		<menu name="CBrowseHostWnd">
@@ -984,7 +984,7 @@
 				<item id="ID_SEARCH_FOR_ALBUM" text="Ugyanabból az _albumból"/>
 				<item id="ID_SEARCH_FOR_SERIES" text="Ugyanabból a _sorozatból"/>
 			</menu>
-			<menu text="_Webszolgáltatások">
+			<menu id="ID_WEBSERVICES_LIST" text="_Webszolgáltatások">
 			</menu>
 			<separator/>
 			<item id="ID_SEARCH_FILTER" text="_Találatok szűrése..."/>
@@ -1008,7 +1008,7 @@
 				<item id="ID_SEARCH_FOR_ALBUM" text="Ugyanabból az _albumból"/>
 				<item id="ID_SEARCH_FOR_SERIES" text="Ugyanabból a _sorozatból"/>
 			</menu>
-			<menu text="_Webszolgáltatások">
+			<menu id="ID_WEBSERVICES_LIST" text="_Webszolgáltatások">
 			</menu>
 			<separator/>
 			<item id="ID_SEARCH_FILTER" text="_Találatok szűrése..."/>
@@ -1243,7 +1243,7 @@
 				<item id="ID_SEARCH_FOR_ALBUM" text="Ugyanabból az _albumból"/>
 				<item id="ID_SEARCH_FOR_SERIES" text="Ugyanabból a _sorozatból"/>
 			</menu>
-			<menu text="_Webszolgáltatások">
+			<menu id="ID_WEBSERVICES_LIST" text="_Webszolgáltatások">
 				<item id="ID_WEBSERVICES_MUSICBRAINZ" text="_MusicBrainz"/>
 			</menu>
 			<menu text="_Rendezés">
@@ -1273,7 +1273,7 @@
 				<item id="ID_SEARCH_FOR_ALBUM" text="Ugyanabból az _albumból"/>
 				<item id="ID_SEARCH_FOR_SERIES" text="Ugyanabból a _sorozatból"/>
 			</menu>
-			<menu text="_Webszolgáltatások">
+			<menu id="ID_WEBSERVICES_LIST" text="_Webszolgáltatások">
 				<item id="ID_WEBSERVICES_MUSICBRAINZ" text="_MusicBrainz"/>
 				<separator/>
 				<item id="ID_LIBRARY_CREATETORRENT" text="._torrent fájl készítése"/>
@@ -1311,7 +1311,7 @@
 				<item id="ID_SEARCH_FOR_ALBUM" text="Ugyanabból az _albumból"/>
 				<item id="ID_SEARCH_FOR_SERIES" text="Ugyanabból a _sorozatból"/>
 			</menu>
-			<menu text="_Webszolgáltatások">
+			<menu id="ID_WEBSERVICES_LIST" text="_Webszolgáltatások">
 			</menu>
 			<menu text="_Rendezés">
 				<item id="ID_LIBRARY_RENAME" text="Fájl _átnevezése"/>
@@ -1344,7 +1344,7 @@
 				<item id="ID_SEARCH_FOR_ALBUM" text="Ugyanabból az _albumból"/>
 				<item id="ID_SEARCH_FOR_SERIES" text="Ugyanabból a _sorozatból"/>
 			</menu>
-			<menu text="_Webszolgáltatások">
+			<menu id="ID_WEBSERVICES_LIST" text="_Webszolgáltatások">
 				<item id="ID_LIBRARY_CREATETORRENT" text="._torrent fájl készítése"/>
 			</menu>
 			<menu text="_Rendezés">

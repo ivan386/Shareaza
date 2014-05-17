@@ -921,7 +921,7 @@
 				<item id="ID_SEARCH_FOR_ALBUM" text="同じアルバムの曲"/>
 				<item id="ID_SEARCH_FOR_SERIES" text="同じシリーズのエピソード"/>
 			</menu>
-			<menu text="ウェブサービス(_W)">
+			<menu id="ID_WEBSERVICES_LIST" text="ウェブサービス(_W)">
 			</menu>
 		</menu>
 		<menu name="CSearchWnd">
@@ -941,7 +941,7 @@
 				<item id="ID_SEARCH_FOR_ALBUM" text="同じアルバムの曲"/>
 				<item id="ID_SEARCH_FOR_SERIES" text="同じシリーズのエピソード"/>
 			</menu>
-			<menu text="ウェブサービス(_W)">
+			<menu id="ID_WEBSERVICES_LIST" text="ウェブサービス(_W)">
 			</menu>
 			<separator/>
 			<item id="ID_SEARCH_FILTER" text="フィルタ結果(_F)..."/>
@@ -966,7 +966,7 @@
 				<item id="ID_SEARCH_FOR_ALBUM" text="同じアルバムの曲"/>
 				<item id="ID_SEARCH_FOR_SERIES" text="同じシリーズのエピソード"/>
 			</menu>
-			<menu text="ウェブサービス(_W)">
+			<menu id="ID_WEBSERVICES_LIST" text="ウェブサービス(_W)">
 			</menu>
 		</menu>
 		<menu name="CBrowseHostWnd">
@@ -984,7 +984,7 @@
 				<item id="ID_SEARCH_FOR_ALBUM" text="同じアルバムの曲"/>
 				<item id="ID_SEARCH_FOR_SERIES" text="同じシリーズのエピソード"/>
 			</menu>
-			<menu text="ウェブサービス(_W)">
+			<menu id="ID_WEBSERVICES_LIST" text="ウェブサービス(_W)">
 			</menu>
 			<separator/>
 			<item id="ID_SEARCH_FILTER" text="フィルタ結果(_F)..."/>
@@ -1008,7 +1008,7 @@
 				<item id="ID_SEARCH_FOR_ALBUM" text="同じアルバムの曲"/>
 				<item id="ID_SEARCH_FOR_SERIES" text="同じシリーズのエピソード"/>
 			</menu>
-			<menu text="ウェブサービス(_W)">
+			<menu id="ID_WEBSERVICES_LIST" text="ウェブサービス(_W)">
 			</menu>
 			<separator/>
 			<item id="ID_SEARCH_FILTER" text="フィルタ結果(_F)..."/>
@@ -1243,7 +1243,7 @@
 				<item id="ID_SEARCH_FOR_ALBUM" text="同じアルバムの曲"/>
 				<item id="ID_SEARCH_FOR_SERIES" text="同じシリーズのエピソード"/>
 			</menu>
-			<menu text="ウェブサービス(_W)">
+			<menu id="ID_WEBSERVICES_LIST" text="ウェブサービス(_W)">
 				<item id="ID_WEBSERVICES_MUSICBRAINZ" text="_MusicBrainz"/>
 			</menu>
 			<menu text="構成(_R)">
@@ -1273,7 +1273,7 @@
 				<item id="ID_SEARCH_FOR_ALBUM" text="同じアルバムの曲"/>
 				<item id="ID_SEARCH_FOR_SERIES" text="同じシリーズのエピソード"/>
 			</menu>
-			<menu text="ウェブサービス(_W)">
+			<menu id="ID_WEBSERVICES_LIST" text="ウェブサービス(_W)">
 				<item id="ID_WEBSERVICES_MUSICBRAINZ" text="_MusicBrainz"/>
 				<separator/>
 				<item id="ID_LIBRARY_CREATETORRENT" text=".torrentファイルを作成"/>
@@ -1311,7 +1311,7 @@
 				<item id="ID_SEARCH_FOR_ALBUM" text="同じアルバムの曲"/>
 				<item id="ID_SEARCH_FOR_SERIES" text="同じシリーズのエピソード"/>
 			</menu>
-			<menu text="ウェブサービス(_W)">
+			<menu id="ID_WEBSERVICES_LIST" text="ウェブサービス(_W)">
 			</menu>
 			<menu text="構成(_R)">
 				<item id="ID_LIBRARY_RENAME" text="ファイル名変更(_R)"/>
@@ -1344,7 +1344,7 @@
 				<item id="ID_SEARCH_FOR_ALBUM" text="同じアルバムの曲"/>
 				<item id="ID_SEARCH_FOR_SERIES" text="同じシリーズのエピソード"/>
 			</menu>
-			<menu text="ウェブサービス(_W)">
+			<menu id="ID_WEBSERVICES_LIST" text="ウェブサービス(_W)">
 				<item id="ID_LIBRARY_CREATETORRENT" text=".torrentファイルを作成"/>
 			</menu>
 			<menu text="構成(_R)">

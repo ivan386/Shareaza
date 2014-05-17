@@ -921,7 +921,7 @@
 				<item id="ID_SEARCH_FOR_ALBUM" text="Музыку из этого же альбома"/>
 				<item id="ID_SEARCH_FOR_SERIES" text="Серии из этого же сериала"/>
 			</menu>
-			<menu text="_Сервис">
+			<menu id="ID_WEBSERVICES_LIST" text="_Сервис">
 			</menu>
 		</menu>
 		<menu name="CSearchWnd">
@@ -941,7 +941,7 @@
 				<item id="ID_SEARCH_FOR_ALBUM" text="Музыку из этого же альбома"/>
 				<item id="ID_SEARCH_FOR_SERIES" text="Серии из этого же сериала"/>
 			</menu>
-			<menu text="_Сервис">
+			<menu id="ID_WEBSERVICES_LIST" text="_Сервис">
 			</menu>
 			<separator/>
 			<item id="ID_SEARCH_FILTER" text="_Фильтровать результаты..."/>
@@ -966,7 +966,7 @@
 				<item id="ID_SEARCH_FOR_ALBUM" text="Музыку из этого же альбома"/>
 				<item id="ID_SEARCH_FOR_SERIES" text="Серии из этого же сериала"/>
 			</menu>
-			<menu text="_Сервис">
+			<menu id="ID_WEBSERVICES_LIST" text="_Сервис">
 			</menu>
 		</menu>
 		<menu name="CBrowseHostWnd">
@@ -984,7 +984,7 @@
 				<item id="ID_SEARCH_FOR_ALBUM" text="Музыку из этого же альбома"/>
 				<item id="ID_SEARCH_FOR_SERIES" text="Серии из этого же сериала"/>
 			</menu>
-			<menu text="_Сервис">
+			<menu id="ID_WEBSERVICES_LIST" text="_Сервис">
 			</menu>
 			<separator/>
 			<item id="ID_SEARCH_FILTER" text="_Фильтровать результаты..."/>
@@ -1008,7 +1008,7 @@
 				<item id="ID_SEARCH_FOR_ALBUM" text="Музыку из этого же альбома"/>
 				<item id="ID_SEARCH_FOR_SERIES" text="Серии из этого же сериала"/>
 			</menu>
-			<menu text="_Сервис">
+			<menu id="ID_WEBSERVICES_LIST" text="_Сервис">
 			</menu>
 			<separator/>
 			<item id="ID_SEARCH_FILTER" text="_Фильтровать результаты..."/>
@@ -1243,7 +1243,7 @@
 				<item id="ID_SEARCH_FOR_ALBUM" text="Музыку из этого же альбома"/>
 				<item id="ID_SEARCH_FOR_SERIES" text="Серии из этого же сериала"/>
 			</menu>
-			<menu text="_Сервис">
+			<menu id="ID_WEBSERVICES_LIST" text="_Сервис">
 				<item id="ID_WEBSERVICES_MUSICBRAINZ" text="_MusicBrainz"/>
 			</menu>
 			<menu text="О_перации">
@@ -1273,7 +1273,7 @@
 				<item id="ID_SEARCH_FOR_ALBUM" text="Музыку из этого же альбома"/>
 				<item id="ID_SEARCH_FOR_SERIES" text="Серии из этого же сериала"/>
 			</menu>
-			<menu text="_Сервис">
+			<menu id="ID_WEBSERVICES_LIST" text="_Сервис">
 				<item id="ID_WEBSERVICES_MUSICBRAINZ" text="_MusicBrainz"/>
 				<separator/>
 				<item id="ID_LIBRARY_CREATETORRENT" text="_Создать .torrent файл"/>
@@ -1311,7 +1311,7 @@
 				<item id="ID_SEARCH_FOR_ALBUM" text="Музыку из этого же альбома"/>
 				<item id="ID_SEARCH_FOR_SERIES" text="Серии из этого же сериала"/>
 			</menu>
-			<menu text="_Сервис">
+			<menu id="ID_WEBSERVICES_LIST" text="_Сервис">
 			</menu>
 			<menu text="О_перации">
 				<item id="ID_LIBRARY_RENAME" text="_Переименовать файл"/>
@@ -1344,7 +1344,7 @@
 				<item id="ID_SEARCH_FOR_ALBUM" text="Музыку из этого же альбома"/>
 				<item id="ID_SEARCH_FOR_SERIES" text="Серии из этого же сериала"/>
 			</menu>
-			<menu text="_Сервис">
+			<menu id="ID_WEBSERVICES_LIST" text="_Сервис">
 				<item id="ID_LIBRARY_CREATETORRENT" text="_Создать .torrent файл"/>
 			</menu>
 			<menu text="О_перации">

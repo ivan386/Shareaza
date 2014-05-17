@@ -921,7 +921,7 @@
 				<item id="ID_SEARCH_FOR_ALBUM" text="Muzikos iš to pačio albumo"/>
 				<item id="ID_SEARCH_FOR_SERIES" text="Epizodų iš to pačio serialo"/>
 			</menu>
-			<menu text="P_aslaugos internete">
+			<menu id="ID_WEBSERVICES_LIST" text="P_aslaugos internete">
 			</menu>
 		</menu>
 		<menu name="CSearchWnd">
@@ -941,7 +941,7 @@
 				<item id="ID_SEARCH_FOR_ALBUM" text="Muzikos iš to pačio albumo"/>
 				<item id="ID_SEARCH_FOR_SERIES" text="Epizodų iš to pačio serialo"/>
 			</menu>
-			<menu text="P_aslaugos internete">
+			<menu id="ID_WEBSERVICES_LIST" text="P_aslaugos internete">
 			</menu>
 			<separator/>
 			<item id="ID_SEARCH_FILTER" text="_Filtruoti radinius..."/>
@@ -966,7 +966,7 @@
 				<item id="ID_SEARCH_FOR_ALBUM" text="Muzikos iš to pačio albumo"/>
 				<item id="ID_SEARCH_FOR_SERIES" text="Epizodų iš to pačio serialo"/>
 			</menu>
-			<menu text="P_aslaugos internete">
+			<menu id="ID_WEBSERVICES_LIST" text="P_aslaugos internete">
 			</menu>
 		</menu>
 		<menu name="CBrowseHostWnd">
@@ -984,7 +984,7 @@
 				<item id="ID_SEARCH_FOR_ALBUM" text="Muzikos iš to pačio albumo"/>
 				<item id="ID_SEARCH_FOR_SERIES" text="Epizodų iš to pačio serialo"/>
 			</menu>
-			<menu text="P_aslaugos internete">
+			<menu id="ID_WEBSERVICES_LIST" text="P_aslaugos internete">
 			</menu>
 			<separator/>
 			<item id="ID_SEARCH_FILTER" text="_Filtruoti radinius..."/>
@@ -1008,7 +1008,7 @@
 				<item id="ID_SEARCH_FOR_ALBUM" text="Muzikos iš to pačio albumo"/>
 				<item id="ID_SEARCH_FOR_SERIES" text="Epizodų iš to pačio serialo"/>
 			</menu>
-			<menu text="P_aslaugos internete">
+			<menu id="ID_WEBSERVICES_LIST" text="P_aslaugos internete">
 			</menu>
 			<separator/>
 			<item id="ID_SEARCH_FILTER" text="_Filtruoti radinius..."/>
@@ -1243,7 +1243,7 @@
 				<item id="ID_SEARCH_FOR_ALBUM" text="Muzikos iš to pačio albumo"/>
 				<item id="ID_SEARCH_FOR_SERIES" text="Epizodų iš to pačio serialo"/>
 			</menu>
-			<menu text="P_aslaugos internete">
+			<menu id="ID_WEBSERVICES_LIST" text="P_aslaugos internete">
 				<item id="ID_WEBSERVICES_MUSICBRAINZ" text="_MusicBrainz"/>
 			</menu>
 			<menu text="_Organizuoti">
@@ -1273,7 +1273,7 @@
 				<item id="ID_SEARCH_FOR_ALBUM" text="Muzikos iš to pačio albumo"/>
 				<item id="ID_SEARCH_FOR_SERIES" text="Epizodų iš to pačio serialo"/>
 			</menu>
-			<menu text="P_aslaugos internete">
+			<menu id="ID_WEBSERVICES_LIST" text="P_aslaugos internete">
 				<item id="ID_WEBSERVICES_MUSICBRAINZ" text="_MusicBrainz"/>
 				<separator/>
 				<item id="ID_LIBRARY_CREATETORRENT" text="Sukurti .torrent failą"/>
@@ -1311,7 +1311,7 @@
 				<item id="ID_SEARCH_FOR_ALBUM" text="Muzikos iš to pačio albumo"/>
 				<item id="ID_SEARCH_FOR_SERIES" text="Epizodų iš to pačio serialo"/>
 			</menu>
-			<menu text="P_aslaugos internete">
+			<menu id="ID_WEBSERVICES_LIST" text="P_aslaugos internete">
 			</menu>
 			<menu text="_Organizuoti">
 				<item id="ID_LIBRARY_RENAME" text="_Pervadinti failą"/>
@@ -1344,7 +1344,7 @@
 				<item id="ID_SEARCH_FOR_ALBUM" text="Muzikos iš to pačio albumo"/>
 				<item id="ID_SEARCH_FOR_SERIES" text="Epizodų iš to pačio serialo"/>
 			</menu>
-			<menu text="P_aslaugos internete">
+			<menu id="ID_WEBSERVICES_LIST" text="P_aslaugos internete">
 				<item id="ID_LIBRARY_CREATETORRENT" text="Sukurti .torrent failą"/>
 			</menu>
 			<menu text="_Organizuoti">

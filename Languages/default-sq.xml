@@ -921,7 +921,7 @@
 				<item id="ID_SEARCH_FOR_ALBUM" text="Muzikë në këtë _Album"/>
 				<item id="ID_SEARCH_FOR_SERIES" text="_Episode në këtë Serial"/>
 			</menu>
-			<menu text="Shërbime _Rrjeti">
+			<menu id="ID_WEBSERVICES_LIST" text="Shërbime _Rrjeti">
 			</menu>
 		</menu>
 		<menu name="CSearchWnd">
@@ -941,7 +941,7 @@
 				<item id="ID_SEARCH_FOR_ALBUM" text="Muzikë në këtë _Album"/>
 				<item id="ID_SEARCH_FOR_SERIES" text="_Episode në këtë Serial"/>
 			</menu>
-			<menu text="Shërbime _Rrjeti">
+			<menu id="ID_WEBSERVICES_LIST" text="Shërbime _Rrjeti">
 			</menu>
 			<separator/>
 			<item id="ID_SEARCH_FILTER" text="_Filtro Rezultatet..."/>
@@ -966,7 +966,7 @@
 				<item id="ID_SEARCH_FOR_ALBUM" text="Muzikë në këtë _Album"/>
 				<item id="ID_SEARCH_FOR_SERIES" text="_Episode në këtë Serial"/>
 			</menu>
-			<menu text="Shërbime _Rrjeti">
+			<menu id="ID_WEBSERVICES_LIST" text="Shërbime _Rrjeti">
 			</menu>
 		</menu>
 		<menu name="CBrowseHostWnd">
@@ -984,7 +984,7 @@
 				<item id="ID_SEARCH_FOR_ALBUM" text="Muzikë në këtë _Album"/>
 				<item id="ID_SEARCH_FOR_SERIES" text="_Episode në këtë Serial"/>
 			</menu>
-			<menu text="Shërbime _Rrjeti">
+			<menu id="ID_WEBSERVICES_LIST" text="Shërbime _Rrjeti">
 			</menu>
 			<separator/>
 			<item id="ID_SEARCH_FILTER" text="_Filtro Rezultatet..."/>
@@ -1008,7 +1008,7 @@
 				<item id="ID_SEARCH_FOR_ALBUM" text="Muzikë në këtë _Album"/>
 				<item id="ID_SEARCH_FOR_SERIES" text="_Episode në këtë Serial"/>
 			</menu>
-			<menu text="Shërbime _Rrjeti">
+			<menu id="ID_WEBSERVICES_LIST" text="Shërbime _Rrjeti">
 			</menu>
 			<separator/>
 			<item id="ID_SEARCH_FILTER" text="_Filtro Rezultatet..."/>
@@ -1243,7 +1243,7 @@
 				<item id="ID_SEARCH_FOR_ALBUM" text="Muzikë në këtë _Album"/>
 				<item id="ID_SEARCH_FOR_SERIES" text="_Episode në këtë Serial"/>
 			</menu>
-			<menu text="Shërbime _Rrjeti">
+			<menu id="ID_WEBSERVICES_LIST" text="Shërbime _Rrjeti">
 				<item id="ID_WEBSERVICES_MUSICBRAINZ" text="_MusicBrainz"/>
 			</menu>
 			<menu text="O_rganizo">
@@ -1273,7 +1273,7 @@
 				<item id="ID_SEARCH_FOR_ALBUM" text="Muzikë në këtë _Album"/>
 				<item id="ID_SEARCH_FOR_SERIES" text="_Episode në këtë Serial"/>
 			</menu>
-			<menu text="Shërbime _Rrjeti">
+			<menu id="ID_WEBSERVICES_LIST" text="Shërbime _Rrjeti">
 				<item id="ID_WEBSERVICES_MUSICBRAINZ" text="_MusicBrainz"/>
 				<separator/>
 				<item id="ID_LIBRARY_CREATETORRENT" text="Krijo Skedë _.torrent"/>
@@ -1311,7 +1311,7 @@
 				<item id="ID_SEARCH_FOR_ALBUM" text="Muzikë në këtë _Album"/>
 				<item id="ID_SEARCH_FOR_SERIES" text="_Episode në këtë Serial"/>
 			</menu>
-			<menu text="Shërbime _Rrjeti">
+			<menu id="ID_WEBSERVICES_LIST" text="Shërbime _Rrjeti">
 			</menu>
 			<menu text="O_rganizo">
 				<item id="ID_LIBRARY_RENAME" text="_Riemërto Skedën"/>
@@ -1344,7 +1344,7 @@
 				<item id="ID_SEARCH_FOR_ALBUM" text="Muzikë në këtë _Album"/>
 				<item id="ID_SEARCH_FOR_SERIES" text="_Episode në këtë Serial"/>
 			</menu>
-			<menu text="Shërbime _Rrjeti">
+			<menu id="ID_WEBSERVICES_LIST" text="Shërbime _Rrjeti">
 				<item id="ID_LIBRARY_CREATETORRENT" text="Krijo Skedë _.torrent"/>
 			</menu>
 			<menu text="O_rganizo">

@@ -921,7 +921,7 @@
 				<item id="ID_SEARCH_FOR_ALBUM" text="Musik aus dem gleichen Album"/>
 				<item id="ID_SEARCH_FOR_SERIES" text="Folgen der gleichen Serie"/>
 			</menu>
-			<menu text="_Web Dienste">
+			<menu id="ID_WEBSERVICES_LIST" text="_Web Dienste">
 			</menu>
 		</menu>
 		<menu name="CSearchWnd">
@@ -941,7 +941,7 @@
 				<item id="ID_SEARCH_FOR_ALBUM" text="Musik aus dem gleichen Album"/>
 				<item id="ID_SEARCH_FOR_SERIES" text="Folgen der gleichen Serie"/>
 			</menu>
-			<menu text="_Web Dienste">
+			<menu id="ID_WEBSERVICES_LIST" text="_Web Dienste">
 			</menu>
 			<separator/>
 			<item id="ID_SEARCH_FILTER" text="Ergebnisse _filtern..."/>
@@ -966,7 +966,7 @@
 				<item id="ID_SEARCH_FOR_ALBUM" text="Musik aus dem gleichen Album"/>
 				<item id="ID_SEARCH_FOR_SERIES" text="Folgen der gleichen Serie"/>
 			</menu>
-			<menu text="_Web Dienste">
+			<menu id="ID_WEBSERVICES_LIST" text="_Web Dienste">
 			</menu>
 		</menu>
 		<menu name="CBrowseHostWnd">
@@ -984,7 +984,7 @@
 				<item id="ID_SEARCH_FOR_ALBUM" text="Musik aus dem gleichen Album"/>
 				<item id="ID_SEARCH_FOR_SERIES" text="Folgen der gleichen Serie"/>
 			</menu>
-			<menu text="_Web Dienste">
+			<menu id="ID_WEBSERVICES_LIST" text="_Web Dienste">
 			</menu>
 			<separator/>
 			<item id="ID_SEARCH_FILTER" text="Ergebnisse _filtern..."/>
@@ -1008,7 +1008,7 @@
 				<item id="ID_SEARCH_FOR_ALBUM" text="Musik aus dem gleichen Album"/>
 				<item id="ID_SEARCH_FOR_SERIES" text="Folgen der gleichen Serie"/>
 			</menu>
-			<menu text="_Web Dienste">
+			<menu id="ID_WEBSERVICES_LIST" text="_Web Dienste">
 			</menu>
 			<separator/>
 			<item id="ID_SEARCH_FILTER" text="Ergebnisse _filtern..."/>
@@ -1243,7 +1243,7 @@
 				<item id="ID_SEARCH_FOR_ALBUM" text="Musik aus dem gleichen Album"/>
 				<item id="ID_SEARCH_FOR_SERIES" text="Folgen der gleichen Serie"/>
 			</menu>
-			<menu text="_Web Dienste">
+			<menu id="ID_WEBSERVICES_LIST" text="_Web Dienste">
 				<item id="ID_WEBSERVICES_MUSICBRAINZ" text="_MusicBrainz"/>
 			</menu>
 			<menu text="_Verwalten">
@@ -1273,7 +1273,7 @@
 				<item id="ID_SEARCH_FOR_ALBUM" text="Musik aus dem gleichen Album"/>
 				<item id="ID_SEARCH_FOR_SERIES" text="Folgen der gleichen Serie"/>
 			</menu>
-			<menu text="_Web Dienste">
+			<menu id="ID_WEBSERVICES_LIST" text="_Web Dienste">
 				<item id="ID_WEBSERVICES_MUSICBRAINZ" text="_MusicBrainz"/>
 				<separator/>
 				<item id="ID_LIBRARY_CREATETORRENT" text="._torrent-Datei erstellen"/>
@@ -1311,7 +1311,7 @@
 				<item id="ID_SEARCH_FOR_ALBUM" text="Musik aus dem gleichen Album"/>
 				<item id="ID_SEARCH_FOR_SERIES" text="Folgen der gleichen Serie"/>
 			</menu>
-			<menu text="_Web Dienste">
+			<menu id="ID_WEBSERVICES_LIST" text="_Web Dienste">
 			</menu>
 			<menu text="_Verwalten">
 				<item id="ID_LIBRARY_RENAME" text="Datei _umbenennen"/>
@@ -1344,7 +1344,7 @@
 				<item id="ID_SEARCH_FOR_ALBUM" text="Musik aus dem gleichen Album"/>
 				<item id="ID_SEARCH_FOR_SERIES" text="Folgen der gleichen Serie"/>
 			</menu>
-			<menu text="_Web Dienste">
+			<menu id="ID_WEBSERVICES_LIST" text="_Web Dienste">
 				<item id="ID_LIBRARY_CREATETORRENT" text="._torrent-Datei erstellen"/>
 			</menu>
 			<menu text="_Verwalten">

@@ -921,7 +921,7 @@
 				<item id="ID_SEARCH_FOR_ALBUM" text="Pijesme iz Istog Albuma"/>
 				<item id="ID_SEARCH_FOR_SERIES" text="Epizode Iste Serije"/>
 			</menu>
-			<menu text="_Web Usluge">
+			<menu id="ID_WEBSERVICES_LIST" text="_Web Usluge">
 			</menu>
 		</menu>
 		<menu name="CSearchWnd">
@@ -941,7 +941,7 @@
 				<item id="ID_SEARCH_FOR_ALBUM" text="Pijesme iz Istog Albuma"/>
 				<item id="ID_SEARCH_FOR_SERIES" text="Epizode Iste Serije"/>
 			</menu>
-			<menu text="_Web Usluge">
+			<menu id="ID_WEBSERVICES_LIST" text="_Web Usluge">
 			</menu>
 			<separator/>
 			<item id="ID_SEARCH_FILTER" text="_Filtriraj Rezultate..."/>
@@ -966,7 +966,7 @@
 				<item id="ID_SEARCH_FOR_ALBUM" text="Pijesme iz Istog Albuma"/>
 				<item id="ID_SEARCH_FOR_SERIES" text="Epizode Iste Serije"/>
 			</menu>
-			<menu text="_Web Usluge">
+			<menu id="ID_WEBSERVICES_LIST" text="_Web Usluge">
 			</menu>
 		</menu>
 		<menu name="CBrowseHostWnd">
@@ -984,7 +984,7 @@
 				<item id="ID_SEARCH_FOR_ALBUM" text="Pijesme iz Istog Albuma"/>
 				<item id="ID_SEARCH_FOR_SERIES" text="Epizode Iste Serije"/>
 			</menu>
-			<menu text="_Web Usluge">
+			<menu id="ID_WEBSERVICES_LIST" text="_Web Usluge">
 			</menu>
 			<separator/>
 			<item id="ID_SEARCH_FILTER" text="_Filtriraj Rezultate..."/>
@@ -1008,7 +1008,7 @@
 				<item id="ID_SEARCH_FOR_ALBUM" text="Pijesme iz Istog Albuma"/>
 				<item id="ID_SEARCH_FOR_SERIES" text="Epizode Iste Serije"/>
 			</menu>
-			<menu text="_Web Usluge">
+			<menu id="ID_WEBSERVICES_LIST" text="_Web Usluge">
 			</menu>
 			<separator/>
 			<item id="ID_SEARCH_FILTER" text="_Filtriraj Rezultate..."/>
@@ -1243,7 +1243,7 @@
 				<item id="ID_SEARCH_FOR_ALBUM" text="Pijesme iz Istog Albuma"/>
 				<item id="ID_SEARCH_FOR_SERIES" text="Epizode Iste Serije"/>
 			</menu>
-			<menu text="_Web Usluge">
+			<menu id="ID_WEBSERVICES_LIST" text="_Web Usluge">
 				<item id="ID_WEBSERVICES_MUSICBRAINZ" text="_MusicBrainz"/>
 			</menu>
 			<menu text="Posloži">
@@ -1273,7 +1273,7 @@
 				<item id="ID_SEARCH_FOR_ALBUM" text="Pijesme iz Istog Albuma"/>
 				<item id="ID_SEARCH_FOR_SERIES" text="Epizode Iste Serije"/>
 			</menu>
-			<menu text="_Web Usluge">
+			<menu id="ID_WEBSERVICES_LIST" text="_Web Usluge">
 				<item id="ID_WEBSERVICES_MUSICBRAINZ" text="_MusicBrainz"/>
 				<separator/>
 				<item id="ID_LIBRARY_CREATETORRENT" text="Napravi .torrent Datoteku"/>
@@ -1311,7 +1311,7 @@
 				<item id="ID_SEARCH_FOR_ALBUM" text="Pijesme iz Istog Albuma"/>
 				<item id="ID_SEARCH_FOR_SERIES" text="Epizode Iste Serije"/>
 			</menu>
-			<menu text="_Web Usluge">
+			<menu id="ID_WEBSERVICES_LIST" text="_Web Usluge">
 			</menu>
 			<menu text="Posloži">
 				<item id="ID_LIBRARY_RENAME" text="P_reimenuj Datoteku"/>
@@ -1344,7 +1344,7 @@
 				<item id="ID_SEARCH_FOR_ALBUM" text="Pijesme iz Istog Albuma"/>
 				<item id="ID_SEARCH_FOR_SERIES" text="Epizode Iste Serije"/>
 			</menu>
-			<menu text="_Web Usluge">
+			<menu id="ID_WEBSERVICES_LIST" text="_Web Usluge">
 				<item id="ID_LIBRARY_CREATETORRENT" text="Napravi .torrent Datoteku"/>
 			</menu>
 			<menu text="Posloži">

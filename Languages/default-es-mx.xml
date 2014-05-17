@@ -921,7 +921,7 @@
 				<item id="ID_SEARCH_FOR_ALBUM" text="Música de este Album"/>
 				<item id="ID_SEARCH_FOR_SERIES" text="Episodios de esta Serie"/>
 			</menu>
-			<menu text="_Web Services">
+			<menu id="ID_WEBSERVICES_LIST" text="_Web Services">
 			</menu>
 		</menu>
 		<menu name="CSearchWnd">
@@ -941,7 +941,7 @@
 				<item id="ID_SEARCH_FOR_ALBUM" text="Música de este Album"/>
 				<item id="ID_SEARCH_FOR_SERIES" text="Episodios de esta Serie"/>
 			</menu>
-			<menu text="_Web Services">
+			<menu id="ID_WEBSERVICES_LIST" text="_Web Services">
 			</menu>
 			<separator/>
 			<item id="ID_SEARCH_FILTER" text="_Filtrar Resultados..."/>
@@ -966,7 +966,7 @@
 				<item id="ID_SEARCH_FOR_ALBUM" text="Música de este Album"/>
 				<item id="ID_SEARCH_FOR_SERIES" text="Episodios de esta Serie"/>
 			</menu>
-			<menu text="_Web Services">
+			<menu id="ID_WEBSERVICES_LIST" text="_Web Services">
 			</menu>
 		</menu>
 		<menu name="CBrowseHostWnd">
@@ -984,7 +984,7 @@
 				<item id="ID_SEARCH_FOR_ALBUM" text="Música de este Album"/>
 				<item id="ID_SEARCH_FOR_SERIES" text="Episodios de esta Serie"/>
 			</menu>
-			<menu text="_Web Services">
+			<menu id="ID_WEBSERVICES_LIST" text="_Web Services">
 			</menu>
 			<separator/>
 			<item id="ID_SEARCH_FILTER" text="_Filtrar Resultados..."/>
@@ -1008,7 +1008,7 @@
 				<item id="ID_SEARCH_FOR_ALBUM" text="Música de este Album"/>
 				<item id="ID_SEARCH_FOR_SERIES" text="Episodios de esta Serie"/>
 			</menu>
-			<menu text="_Web Services">
+			<menu id="ID_WEBSERVICES_LIST" text="_Web Services">
 			</menu>
 			<separator/>
 			<item id="ID_SEARCH_FILTER" text="_Filtrar Resultados..."/>
@@ -1243,7 +1243,7 @@
 				<item id="ID_SEARCH_FOR_ALBUM" text="Música de este Album"/>
 				<item id="ID_SEARCH_FOR_SERIES" text="Episodios de esta Serie"/>
 			</menu>
-			<menu text="_Web Services">
+			<menu id="ID_WEBSERVICES_LIST" text="_Web Services">
 				<item id="ID_WEBSERVICES_MUSICBRAINZ" text="_MusicBrainz"/>
 			</menu>
 			<menu text="O_rganizar">
@@ -1273,7 +1273,7 @@
 				<item id="ID_SEARCH_FOR_ALBUM" text="Música de este Album"/>
 				<item id="ID_SEARCH_FOR_SERIES" text="Episodios de esta Serie"/>
 			</menu>
-			<menu text="_Web Services">
+			<menu id="ID_WEBSERVICES_LIST" text="_Web Services">
 				<item id="ID_WEBSERVICES_MUSICBRAINZ" text="_MusicBrainz"/>
 				<separator/>
 				<item id="ID_LIBRARY_CREATETORRENT" text="Crear Archivo .torrent"/>
@@ -1311,7 +1311,7 @@
 				<item id="ID_SEARCH_FOR_ALBUM" text="Música de este Album"/>
 				<item id="ID_SEARCH_FOR_SERIES" text="Episodios de esta Serie"/>
 			</menu>
-			<menu text="_Web Services">
+			<menu id="ID_WEBSERVICES_LIST" text="_Web Services">
 			</menu>
 			<menu text="O_rganizar">
 				<item id="ID_LIBRARY_RENAME" text="_Renombrar Archivo"/>
@@ -1344,7 +1344,7 @@
 				<item id="ID_SEARCH_FOR_ALBUM" text="Música de este Album"/>
 				<item id="ID_SEARCH_FOR_SERIES" text="Episodios de esta Serie"/>
 			</menu>
-			<menu text="_Web Services">
+			<menu id="ID_WEBSERVICES_LIST" text="_Web Services">
 				<item id="ID_LIBRARY_CREATETORRENT" text="Crear Archivo .torrent"/>
 			</menu>
 			<menu text="O_rganizar">

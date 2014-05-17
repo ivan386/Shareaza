@@ -921,7 +921,7 @@
 				<item id="ID_SEARCH_FOR_ALBUM" text="موسيقى لنفس الألبوم"/>
 				<item id="ID_SEARCH_FOR_SERIES" text="الأحداث في نفس السلسلة"/>
 			</menu>
-			<menu text="_خدمات الانترنت">
+			<menu id="ID_WEBSERVICES_LIST" text="_خدمات الانترنت">
 			</menu>
 		</menu>
 		<menu name="CSearchWnd">
@@ -941,7 +941,7 @@
 				<item id="ID_SEARCH_FOR_ALBUM" text="موسيقى لنفس الألبوم"/>
 				<item id="ID_SEARCH_FOR_SERIES" text="الأحداث في نفس السلسلة"/>
 			</menu>
-			<menu text="_خدمات الانترنت">
+			<menu id="ID_WEBSERVICES_LIST" text="_خدمات الانترنت">
 			</menu>
 			<separator/>
 			<item id="ID_SEARCH_FILTER" text="_فرز النتائج..."/>
@@ -966,7 +966,7 @@
 				<item id="ID_SEARCH_FOR_ALBUM" text="موسيقى لنفس الألبوم"/>
 				<item id="ID_SEARCH_FOR_SERIES" text="الأحداث في نفس السلسلة"/>
 			</menu>
-			<menu text="_خدمات الانترنت">
+			<menu id="ID_WEBSERVICES_LIST" text="_خدمات الانترنت">
 			</menu>
 		</menu>
 		<menu name="CBrowseHostWnd">
@@ -984,7 +984,7 @@
 				<item id="ID_SEARCH_FOR_ALBUM" text="موسيقى لنفس الألبوم"/>
 				<item id="ID_SEARCH_FOR_SERIES" text="الأحداث في نفس السلسلة"/>
 			</menu>
-			<menu text="_خدمات الانترنت">
+			<menu id="ID_WEBSERVICES_LIST" text="_خدمات الانترنت">
 			</menu>
 			<separator/>
 			<item id="ID_SEARCH_FILTER" text="_فرز النتائج..."/>
@@ -1008,7 +1008,7 @@
 				<item id="ID_SEARCH_FOR_ALBUM" text="موسيقى لنفس الألبوم"/>
 				<item id="ID_SEARCH_FOR_SERIES" text="الأحداث في نفس السلسلة"/>
 			</menu>
-			<menu text="_خدمات الانترنت">
+			<menu id="ID_WEBSERVICES_LIST" text="_خدمات الانترنت">
 			</menu>
 			<separator/>
 			<item id="ID_SEARCH_FILTER" text="_فرز النتائج..."/>
@@ -1243,7 +1243,7 @@
 				<item id="ID_SEARCH_FOR_ALBUM" text="موسيقى لنفس الألبوم"/>
 				<item id="ID_SEARCH_FOR_SERIES" text="الأحداث في نفس السلسلة"/>
 			</menu>
-			<menu text="_خدمات الانترنت">
+			<menu id="ID_WEBSERVICES_LIST" text="_خدمات الانترنت">
 				<item id="ID_WEBSERVICES_MUSICBRAINZ" text="_MusicBrainz"/>
 			</menu>
 			<menu text="ت_نظيم">
@@ -1273,7 +1273,7 @@
 				<item id="ID_SEARCH_FOR_ALBUM" text="موسيقى لنفس الألبوم"/>
 				<item id="ID_SEARCH_FOR_SERIES" text="الأحداث في نفس السلسلة"/>
 			</menu>
-			<menu text="_خدمات الانترنت">
+			<menu id="ID_WEBSERVICES_LIST" text="_خدمات الانترنت">
 				<item id="ID_WEBSERVICES_MUSICBRAINZ" text="_MusicBrainz"/>
 				<separator/>
 				<item id="ID_LIBRARY_CREATETORRENT" text="إنشاء ملف torrent"/>
@@ -1311,7 +1311,7 @@
 				<item id="ID_SEARCH_FOR_ALBUM" text="موسيقى لنفس الألبوم"/>
 				<item id="ID_SEARCH_FOR_SERIES" text="الأحداث في نفس السلسلة"/>
 			</menu>
-			<menu text="_خدمات الانترنت">
+			<menu id="ID_WEBSERVICES_LIST" text="_خدمات الانترنت">
 			</menu>
 			<menu text="ت_نظيم">
 				<item id="ID_LIBRARY_RENAME" text="_اعادة تسمية ملف"/>
@@ -1344,7 +1344,7 @@
 				<item id="ID_SEARCH_FOR_ALBUM" text="موسيقى لنفس الألبوم"/>
 				<item id="ID_SEARCH_FOR_SERIES" text="الأحداث في نفس السلسلة"/>
 			</menu>
-			<menu text="_خدمات الانترنت">
+			<menu id="ID_WEBSERVICES_LIST" text="_خدمات الانترنت">
 				<item id="ID_LIBRARY_CREATETORRENT" text="إنشاء ملف torrent"/>
 			</menu>
 			<menu text="ت_نظيم">

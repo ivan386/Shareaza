@@ -921,7 +921,7 @@
 				<item id="ID_SEARCH_FOR_ALBUM" text="Samalt Albumilt"/>
 				<item id="ID_SEARCH_FOR_SERIES" text="Sama Seriaali Osasid"/>
 			</menu>
-			<menu text="_Weebiteenused">
+			<menu id="ID_WEBSERVICES_LIST" text="_Weebiteenused">
 			</menu>
 		</menu>
 		<menu name="CSearchWnd">
@@ -941,7 +941,7 @@
 				<item id="ID_SEARCH_FOR_ALBUM" text="Samalt Albumilt"/>
 				<item id="ID_SEARCH_FOR_SERIES" text="Sama Seriaali Osasid"/>
 			</menu>
-			<menu text="_Weebiteenused">
+			<menu id="ID_WEBSERVICES_LIST" text="_Weebiteenused">
 			</menu>
 			<separator/>
 			<item id="ID_SEARCH_FILTER" text="_Filtreeri tulemusi..."/>
@@ -966,7 +966,7 @@
 				<item id="ID_SEARCH_FOR_ALBUM" text="Samalt Albumilt"/>
 				<item id="ID_SEARCH_FOR_SERIES" text="Sama Seriaali Osasid"/>
 			</menu>
-			<menu text="_Weebiteenused">
+			<menu id="ID_WEBSERVICES_LIST" text="_Weebiteenused">
 			</menu>
 		</menu>
 		<menu name="CBrowseHostWnd">
@@ -984,7 +984,7 @@
 				<item id="ID_SEARCH_FOR_ALBUM" text="Samalt Albumilt"/>
 				<item id="ID_SEARCH_FOR_SERIES" text="Sama Seriaali Osasid"/>
 			</menu>
-			<menu text="_Weebiteenused">
+			<menu id="ID_WEBSERVICES_LIST" text="_Weebiteenused">
 			</menu>
 			<separator/>
 			<item id="ID_SEARCH_FILTER" text="_Filtreeri tulemusi..."/>
@@ -1008,7 +1008,7 @@
 				<item id="ID_SEARCH_FOR_ALBUM" text="Samalt Albumilt"/>
 				<item id="ID_SEARCH_FOR_SERIES" text="Sama Seriaali Osasid"/>
 			</menu>
-			<menu text="_Weebiteenused">
+			<menu id="ID_WEBSERVICES_LIST" text="_Weebiteenused">
 			</menu>
 			<separator/>
 			<item id="ID_SEARCH_FILTER" text="_Filtreeri tulemusi..."/>
@@ -1243,7 +1243,7 @@
 				<item id="ID_SEARCH_FOR_ALBUM" text="Samalt Albumilt"/>
 				<item id="ID_SEARCH_FOR_SERIES" text="Sama Seriaali Osasid"/>
 			</menu>
-			<menu text="_Weebiteenused">
+			<menu id="ID_WEBSERVICES_LIST" text="_Weebiteenused">
 				<item id="ID_WEBSERVICES_MUSICBRAINZ" text="_MusicBrainz"/>
 			</menu>
 			<menu text="Ko_rrasta">
@@ -1273,7 +1273,7 @@
 				<item id="ID_SEARCH_FOR_ALBUM" text="Samalt Albumilt"/>
 				<item id="ID_SEARCH_FOR_SERIES" text="Sama Seriaali Osasid"/>
 			</menu>
-			<menu text="_Weebiteenused">
+			<menu id="ID_WEBSERVICES_LIST" text="_Weebiteenused">
 				<item id="ID_WEBSERVICES_MUSICBRAINZ" text="_MusicBrainz"/>
 				<separator/>
 				<item id="ID_LIBRARY_CREATETORRENT" text="Loo .torrent Fail"/>
@@ -1311,7 +1311,7 @@
 				<item id="ID_SEARCH_FOR_ALBUM" text="Samalt Albumilt"/>
 				<item id="ID_SEARCH_FOR_SERIES" text="Sama Seriaali Osasid"/>
 			</menu>
-			<menu text="_Weebiteenused">
+			<menu id="ID_WEBSERVICES_LIST" text="_Weebiteenused">
 			</menu>
 			<menu text="Ko_rrasta">
 				<item id="ID_LIBRARY_RENAME" text="_Nimeta Ümber"/>
@@ -1344,7 +1344,7 @@
 				<item id="ID_SEARCH_FOR_ALBUM" text="Samalt Albumilt"/>
 				<item id="ID_SEARCH_FOR_SERIES" text="Sama Seriaali Osasid"/>
 			</menu>
-			<menu text="_Weebiteenused">
+			<menu id="ID_WEBSERVICES_LIST" text="_Weebiteenused">
 				<item id="ID_LIBRARY_CREATETORRENT" text="Loo .torrent Fail"/>
 			</menu>
 			<menu text="Ko_rrasta">

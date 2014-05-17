@@ -921,7 +921,7 @@
 				<item id="ID_SEARCH_FOR_ALBUM" text="Glasbi istega albuma"/>
 				<item id="ID_SEARCH_FOR_SERIES" text="Epizodah iste serije"/>
 			</menu>
-			<menu text="_Spletne storitve">
+			<menu id="ID_WEBSERVICES_LIST" text="_Spletne storitve">
 			</menu>
 		</menu>
 		<menu name="CSearchWnd">
@@ -941,7 +941,7 @@
 				<item id="ID_SEARCH_FOR_ALBUM" text="Glasbi istega albuma"/>
 				<item id="ID_SEARCH_FOR_SERIES" text="Epizodah iste serije"/>
 			</menu>
-			<menu text="_Spletne storitve">
+			<menu id="ID_WEBSERVICES_LIST" text="_Spletne storitve">
 			</menu>
 			<separator/>
 			<item id="ID_SEARCH_FILTER" text="_Filtriraj rezultate..."/>
@@ -966,7 +966,7 @@
 				<item id="ID_SEARCH_FOR_ALBUM" text="Glasbi istega albuma"/>
 				<item id="ID_SEARCH_FOR_SERIES" text="Epizodah iste serije"/>
 			</menu>
-			<menu text="_Spletne storitve">
+			<menu id="ID_WEBSERVICES_LIST" text="_Spletne storitve">
 			</menu>
 		</menu>
 		<menu name="CBrowseHostWnd">
@@ -984,7 +984,7 @@
 				<item id="ID_SEARCH_FOR_ALBUM" text="Glasbi istega albuma"/>
 				<item id="ID_SEARCH_FOR_SERIES" text="Epizodah iste serije"/>
 			</menu>
-			<menu text="_Spletne storitve">
+			<menu id="ID_WEBSERVICES_LIST" text="_Spletne storitve">
 			</menu>
 			<separator/>
 			<item id="ID_SEARCH_FILTER" text="_Filtriraj rezultate..."/>
@@ -1008,7 +1008,7 @@
 				<item id="ID_SEARCH_FOR_ALBUM" text="Glasbi istega albuma"/>
 				<item id="ID_SEARCH_FOR_SERIES" text="Epizodah iste serije"/>
 			</menu>
-			<menu text="_Spletne storitve">
+			<menu id="ID_WEBSERVICES_LIST" text="_Spletne storitve">
 			</menu>
 			<separator/>
 			<item id="ID_SEARCH_FILTER" text="_Filtriraj rezultate..."/>
@@ -1243,7 +1243,7 @@
 				<item id="ID_SEARCH_FOR_ALBUM" text="Glasbi istega albuma"/>
 				<item id="ID_SEARCH_FOR_SERIES" text="Epizodah iste serije"/>
 			</menu>
-			<menu text="_Spletne storitve">
+			<menu id="ID_WEBSERVICES_LIST" text="_Spletne storitve">
 				<item id="ID_WEBSERVICES_MUSICBRAINZ" text="_MusicBrainz"/>
 			</menu>
 			<menu text="_Organiziraj">
@@ -1273,7 +1273,7 @@
 				<item id="ID_SEARCH_FOR_ALBUM" text="Glasbi istega albuma"/>
 				<item id="ID_SEARCH_FOR_SERIES" text="Epizodah iste serije"/>
 			</menu>
-			<menu text="_Spletne storitve">
+			<menu id="ID_WEBSERVICES_LIST" text="_Spletne storitve">
 				<item id="ID_WEBSERVICES_MUSICBRAINZ" text="_MusicBrainz"/>
 				<separator/>
 				<item id="ID_LIBRARY_CREATETORRENT" text="Ustvari datoteko tipa .torrent"/>
@@ -1311,7 +1311,7 @@
 				<item id="ID_SEARCH_FOR_ALBUM" text="Glasbi istega albuma"/>
 				<item id="ID_SEARCH_FOR_SERIES" text="Epizodah iste serije"/>
 			</menu>
-			<menu text="_Spletne storitve">
+			<menu id="ID_WEBSERVICES_LIST" text="_Spletne storitve">
 			</menu>
 			<menu text="_Organiziraj">
 				<item id="ID_LIBRARY_RENAME" text="_Preimenuj datoteko"/>
@@ -1344,7 +1344,7 @@
 				<item id="ID_SEARCH_FOR_ALBUM" text="Glasbi istega albuma"/>
 				<item id="ID_SEARCH_FOR_SERIES" text="Epizodah iste serije"/>
 			</menu>
-			<menu text="_Spletne storitve">
+			<menu id="ID_WEBSERVICES_LIST" text="_Spletne storitve">
 				<item id="ID_LIBRARY_CREATETORRENT" text="Ustvari datoteko tipa .torrent"/>
 			</menu>
 			<menu text="_Organiziraj">
