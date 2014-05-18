@@ -72,8 +72,23 @@ HRESULT CPlugin::Request(LPCWSTR szHash)
 		pProgress->StartProgressDialog( NULL, NULL, PROGDLG_NOTIME | PROGDLG_NOCANCEL | PROGDLG_MARQUEEPROGRESS, NULL );
 	}
 
-	CStringA sURL = RequestURL( LoadString( IDS_URL ) + URLEncode( szHash ) );
-	if ( ! sURL.IsEmpty() )
+	CStringA sShortURL;
+	for ( CString sURLs = LoadString( IDS_URL ); sURLs.GetLength(); )
+	{
+		CString sURL = sURLs.SpanExcluding( _T("|") );
+		sURLs = sURLs.Mid( sURL.GetLength() + 1 );
+		sURL.Trim();
+		if ( sURL.GetLength() )
+		{
+			if ( pProgress )
+				pProgress->SetLine( 2, sURL.Left( sURL.ReverseFind( _T('/') ) ), FALSE, NULL );
+			sShortURL = RequestURL( sURL + URLEncode( szHash ) );
+			if ( ! sShortURL.IsEmpty() )
+				break;
+		}
+	}
+
+	if ( ! sShortURL.IsEmpty() )
 	{
 		HWND hWnd = NULL;
 		m_pUserInterface->get_MainWindowHwnd( &hWnd );
@@ -81,11 +96,11 @@ HRESULT CPlugin::Request(LPCWSTR szHash)
 		BOOL bSuccess = FALSE;
 		if ( OpenClipboard( hWnd ) )
 		{
-			if ( HANDLE hMem = GlobalAlloc( GMEM_MOVEABLE | GMEM_DDESHARE, sURL.GetLength() + 1 ) )
+			if ( HANDLE hMem = GlobalAlloc( GMEM_MOVEABLE | GMEM_DDESHARE, sShortURL.GetLength() + 1 ) )
 			{
 				if ( LPVOID pMem = GlobalLock( hMem ) )
 				{
-					CopyMemory( pMem, (LPCSTR)sURL, sURL.GetLength() + 1 );
+					CopyMemory( pMem, (LPCSTR)sShortURL, sShortURL.GetLength() + 1 );
 					GlobalUnlock( hMem );
 				}
 			
@@ -100,7 +115,7 @@ HRESULT CPlugin::Request(LPCWSTR szHash)
 			pProgress->SetLine( 2, LoadString( IDS_SUCCESS ), FALSE, NULL );
 		m_pApplication->Message( MSG_TRAY | MSG_NOTICE | MSG_FACILITY_DEFAULT, CComBSTR( LoadString( IDS_SUCCESS ) ) );
 
-		m_pApplication->Message( MSG_INFO | MSG_FACILITY_DEFAULT, CComBSTR( LoadString( IDS_URL_REPORT ) + CA2T( sURL ) ) );
+		m_pApplication->Message( MSG_INFO | MSG_FACILITY_DEFAULT, CComBSTR( LoadString( IDS_URL_REPORT ) + CA2T( sShortURL ) ) );
 	}
 	else
 	{

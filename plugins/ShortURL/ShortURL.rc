@@ -91,7 +91,7 @@ BEGIN
     IDS_PROGRESS            "Retrieving a short URL..."
     IDS_SUCCESS             "Short URL successfully copied to clipboard."
     IDS_FAILED              "Failed to get short URL."
-    IDS_URL                 "http://is.gd/create.php?format=simple&url="
+    IDS_URL                 "http://tinyurl.com/api-create.php?url=|http://is.gd/create.php?format=simple&url=|http://v.gd/create.php?format=simple&url="
     IDS_COMMAND             "ShortURLPlugin_Check"
     IDS_COMMAND_TIP         "Shorten magnet link using online service."
     IDS_URL_REPORT          "Short URL: "
