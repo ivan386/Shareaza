@@ -91,7 +91,7 @@ protected:
 	// Close files of this download, clear its list but save all other data
 	void				ClearFile();
 	// Replace files by specified ones, old one will be dropped
-	void				AttachFile(auto_ptr< CFragmentedFile >& pFile);
+	void				AttachFile(CFragmentedFile* pFile);
 	// Delete files of this download
 	void				DeleteFile();
 	// Flush unsaved data to disk

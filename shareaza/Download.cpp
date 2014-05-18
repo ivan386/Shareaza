@@ -246,8 +246,6 @@ void CDownload::StopTrying()
 	if ( !IsTrying() || ( IsCompleted() && !IsSeeding() ) )
 		return;
 
-	Downloads.StopTrying( IsTorrent() );
-
 	m_tBegan = 0;
 	m_bDownloading = false;
 
@@ -275,7 +273,6 @@ void CDownload::StartTrying()
 	if ( !Network.IsConnected() && !Network.Connect( TRUE ) )
 		return;
 
-	Downloads.StartTrying( IsTorrent() );
 	m_tBegan = GetTickCount();
 }
 
@@ -702,7 +699,7 @@ BOOL CDownload::SeedTorrent()
 		return FALSE;
 	}
 
-	AttachFile( pFragmentedFile );
+	AttachFile( pFragmentedFile.release() );
 
 	if ( IsSingleFileTorrent() )
 	{
@@ -1110,4 +1107,25 @@ BOOL CDownload::Enqueue(int nIndex, CSingleLock* pLock)
 	}
 
 	return bResult;
+}
+
+void CDownload::Resize(QWORD nNewSize)
+{
+	if ( m_nSize == nNewSize )
+		return;
+
+	// Check for possible change to multi-file download
+	if ( ! m_oSHA1 && ! m_oTiger && ! m_oED2K && ! m_oMD5 && ( m_oBTH || IsTorrent() ) && IsFileOpen() )
+	{
+		// Remove old file
+		AbortTask();
+		ClearVerification();
+		CloseFile();
+		DeleteFile();
+
+		// Create a fresh one
+		AttachFile( new CFragmentedFile );
+	}
+
+	SetSize( nNewSize );
 }

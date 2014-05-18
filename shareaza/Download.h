@@ -1,7 +1,7 @@
 //
 // Download.h
 //
-// Copyright (c) Shareaza Development Team, 2002-2013.
+// Copyright (c) Shareaza Development Team, 2002-2014.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -106,6 +106,9 @@ private:
 
 // Overrides
 public:
+	// Set download new size
+	virtual void	Resize(QWORD nNewSize);
+
 	// Return currently running task
 	virtual dtask	GetTaskType() const;
 

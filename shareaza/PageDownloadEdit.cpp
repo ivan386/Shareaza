@@ -288,6 +288,7 @@ BOOL CDownloadEditPage::OnApply()
 		bCriticalChange = true;
 	}
 
+	BOOL bNewBTH = FALSE;
 	if ( pDownload->m_oBTH.isValid() != oBTH.isValid()
 		|| validAndUnequal( pDownload->m_oBTH, oBTH ) )
 	{
@@ -303,6 +304,7 @@ BOOL CDownloadEditPage::OnApply()
 		pDownload->CloseTransfers();
 		pDownload->ClearVerification();
 		bCriticalChange = true;
+		bNewBTH = TRUE;
 	}
 
 	pDownload->m_bSHA1Trusted = m_bSHA1Trusted != FALSE;
@@ -320,30 +322,27 @@ BOOL CDownloadEditPage::OnApply()
 		bNeedUpdate = true;
 	}
 
-	if ( pDownload->m_oBTH && ! pDownload->IsTorrent() )
+	if ( bNewBTH )
 	{
-		// Mutate regular download to torrent download
-		bool bPaused = pDownload->IsPaused();
-		if ( ! bPaused ) pDownload->Pause();
-		pDownload->m_pTorrent.Clear();
-		pDownload->m_pTorrent.m_oMD5	= pDownload->m_oMD5;
-		pDownload->m_pTorrent.m_oBTH	= pDownload->m_oBTH;
-		pDownload->m_pTorrent.m_oSHA1	= pDownload->m_oSHA1;
-		pDownload->m_pTorrent.m_oED2K	= pDownload->m_oED2K;
-		pDownload->m_pTorrent.m_oTiger	= pDownload->m_oTiger;
-		pDownload->m_pTorrent.m_sName	= pDownload->m_sName;
-		pDownload->m_pTorrent.m_nSize	= pDownload->m_nSize;
-		pDownload->SetTorrent();
-		if ( ! bPaused ) pDownload->Resume();
-	}
-	else if ( ! pDownload->m_oBTH && pDownload->IsTorrent() )
-	{
-		// Mutate torrent download to regular download
-		bool bPaused = pDownload->IsPaused();
-		if ( ! bPaused ) pDownload->Pause();
-		pDownload->m_pTorrent.Clear();
-		pDownload->SetTorrent();
-		if ( ! bPaused ) pDownload->Resume();
+		if ( pDownload->m_oBTH && ! pDownload->IsTorrent() )
+		{
+			// Mutate regular download to torrent download
+			pDownload->m_pTorrent.Clear();
+			pDownload->m_pTorrent.m_oMD5	= pDownload->m_oMD5;
+			pDownload->m_pTorrent.m_oBTH	= pDownload->m_oBTH;
+			pDownload->m_pTorrent.m_oSHA1	= pDownload->m_oSHA1;
+			pDownload->m_pTorrent.m_oED2K	= pDownload->m_oED2K;
+			pDownload->m_pTorrent.m_oTiger	= pDownload->m_oTiger;
+			pDownload->m_pTorrent.m_sName	= pDownload->m_sName;
+			pDownload->m_pTorrent.m_nSize	= pDownload->m_nSize;
+			pDownload->SetTorrent();
+		}
+		else if ( ! pDownload->m_oBTH && pDownload->IsTorrent() )
+		{
+			// Mutate torrent download to regular download
+			pDownload->m_pTorrent.Clear();
+			pDownload->SetTorrent();
+		}
 	}
 
 	if ( bNeedUpdate )

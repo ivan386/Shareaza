@@ -48,6 +48,9 @@ public:
 	// Set download new (and safe) name
 	virtual bool	Rename(const CString& strName) = 0;
 
+	// Set download new size
+	virtual void	Resize(QWORD nNewSize) = 0;
+
 	// Return currently running task
 	virtual dtask	GetTaskType() const = 0;
 

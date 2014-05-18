@@ -296,7 +296,7 @@ BOOL CDownloadWithSources::AddSource(const CShareazaFile* pHit, BOOL bForce)
 		if ( m_sName.CompareNoCase( pHit->m_sName ) ) return FALSE;
 	}
 
-	if ( m_nSize != SIZE_UNKNOWN && bHitHasSize && m_nSize != pHit->m_nSize )
+	if ( m_nSize != SIZE_UNKNOWN && bHasHash && bHitHasSize && m_nSize != pHit->m_nSize )
 		return FALSE;
 
 	if ( !m_oSHA1 && pHit->m_oSHA1 )
@@ -324,14 +324,14 @@ BOOL CDownloadWithSources::AddSource(const CShareazaFile* pHit, BOOL bForce)
 		m_oMD5 = pHit->m_oMD5;
 		bUpdated = TRUE;
 	}
-	if ( ( m_nSize == SIZE_UNKNOWN || ! bHasHash ) && bHitHasSize )
-	{
-		m_nSize = pHit->m_nSize;
-		bUpdated = TRUE;
-	}
 	if ( ( m_sName.IsEmpty() || ! bHasHash ) && bHitHasName )
 	{
 		Rename( pHit->m_sName );
+		bUpdated = TRUE;
+	}
+	if ( ( m_nSize == SIZE_UNKNOWN || ! bHasHash ) && bHitHasSize )
+	{
+		Resize( pHit->m_nSize );
 		bUpdated = TRUE;
 	}
 
@@ -467,7 +467,6 @@ BOOL CDownloadWithSources::AddSourceURL(LPCTSTR pszURL, FILETIME* pLastSeen, int
 		return FALSE; // No more than 5 redirections
 	
 	BOOL bHashAuth = FALSE;
-	BOOL bValidated = FALSE;
 	CShareazaURL pURL;
 	
 	if ( *pszURL == '@' )
@@ -500,8 +499,7 @@ BOOL CDownloadWithSources::AddSourceURL(LPCTSTR pszURL, FILETIME* pLastSeen, int
 
 	CQuickLock pLock( Transfers.m_pSection );
 
-	CFailedSource* pBadSource = LookupFailedSource( pszURL );
-	if ( pBadSource )
+	if ( CFailedSource* pBadSource = LookupFailedSource( pszURL ) )
 	{
 		// Add a positive vote, add to the downloads if the negative votes compose
 		// less than 2/3 of total.
@@ -521,79 +519,9 @@ BOOL CDownloadWithSources::AddSourceURL(LPCTSTR pszURL, FILETIME* pLastSeen, int
 		return TRUE;
 	}
 
-	const bool bHasHash = HasHash();
-
-	// Validate SHA1
-	if ( pURL.m_oSHA1 && m_oSHA1 )
-	{
-		if ( m_oSHA1 != pURL.m_oSHA1 ) return FALSE;
-		bValidated = TRUE;
-	}
-	// Validate Tiger
-	if ( pURL.m_oTiger && m_oTiger )
-	{
-		if ( m_oTiger != pURL.m_oTiger ) return FALSE;
-		bValidated = TRUE;
-	}
-	// Validate ED2K
-	if ( pURL.m_oED2K && m_oED2K )
-	{
-		if ( m_oED2K != pURL.m_oED2K ) return FALSE;
-		bValidated = TRUE;
-	}
-	// Validate MD5
-	if ( pURL.m_oMD5 && m_oMD5 )
-	{
-		if ( m_oMD5 != pURL.m_oMD5 ) return FALSE;
-		bValidated = TRUE;
-	}
-	// Validate BTH
-	if ( pURL.m_oBTH && m_oBTH && ! bValidated )
-	{
-		if ( m_oBTH != pURL.m_oBTH ) return FALSE;
-		bValidated = TRUE;
-	}
-	// Validate size
-	if ( m_nSize != SIZE_UNKNOWN && pURL.m_bSize && pURL.m_nSize != SIZE_UNKNOWN )
-	{
-		if ( m_nSize != pURL.m_nSize ) return FALSE;
-	}
-
-	// Get SHA1
-	if ( pURL.m_oSHA1 && ! m_oSHA1 )
-	{
-		m_oSHA1 = pURL.m_oSHA1;
-	}
-	// Get Tiger
-	if ( pURL.m_oTiger && ! m_oTiger )
-	{
-		m_oTiger = pURL.m_oTiger;
-	}
-	// Get ED2K
-	if ( pURL.m_oED2K && ! m_oED2K )
-	{
-		m_oED2K = pURL.m_oED2K;
-	}
-	// Get MD5
-	if ( pURL.m_oMD5 && ! m_oMD5 )
-	{
-		m_oMD5 = pURL.m_oMD5;
-	}
-	// Get BTH
-	if ( pURL.m_oBTH && ! m_oBTH )
-	{
-		m_oBTH = pURL.m_oBTH;
-	}
-	// Get size
-	if ( ( m_nSize == SIZE_UNKNOWN || ! bHasHash ) && pURL.m_bSize && pURL.m_nSize && pURL.m_nSize != SIZE_UNKNOWN )
-	{
-		m_nSize = pURL.m_nSize;
-	}
-	// Get name
-	if ( ( m_sName.IsEmpty() || ! bHasHash ) && pURL.m_sName.GetLength() )
-	{
-		Rename( pURL.m_sName );
-	}
+	if ( AddSource( &pURL, FALSE ) )
+		// Not match
+		return FALSE;
 
 	return AddSourceInternal( new CDownloadSource( static_cast< const CDownload* >( this ), pszURL, bHashAuth, pLastSeen, nRedirectionCount ) );
 }

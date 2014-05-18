@@ -45,7 +45,7 @@ CDownloadWithFile::CDownloadWithFile()
 	, m_pFile		( new CFragmentedFile )
 	, m_nFileError	( ERROR_SUCCESS )
 {
-	m_pFile->SetDownload( static_cast< CDownload*>( this ) );
+	if ( m_pFile.get() ) m_pFile->SetDownload( static_cast< CDownload*>( this ) );
 }
 
 CDownloadWithFile::~CDownloadWithFile()
@@ -74,7 +74,7 @@ Fragments::List CDownloadWithFile::GetEmptyFragmentList() const
 
 CFragmentedFile* CDownloadWithFile::GetFile()
 {
-	m_pFile->AddRef();
+	if ( m_pFile.get() ) m_pFile->AddRef();
 	return m_pFile.get();
 }
 
@@ -206,9 +206,10 @@ void CDownloadWithFile::ClearFile()
 //////////////////////////////////////////////////////////////////////
 // CDownloadWithFile attach the file
 
-void CDownloadWithFile::AttachFile(auto_ptr< CFragmentedFile >& pFile)
+void CDownloadWithFile::AttachFile(CFragmentedFile* pFile)
 {
-	m_pFile = pFile;
+	m_pFile.reset( pFile );
+	if ( m_pFile.get() ) m_pFile->SetDownload( static_cast< CDownload*>( this ) );
 }
 
 //////////////////////////////////////////////////////////////////////
@@ -655,12 +656,12 @@ void CDownloadWithFile::Serialize(CArchive& ar, int nVersion)
 				for ( POSITION pos = oInfo.m_pFiles.GetHeadPosition() ; pos ; ++nIndex )
 				{
 					CBTInfo::CBTFile* pBTFile = oInfo.m_pFiles.GetNext( pos );
-					if ( m_pFile->GetName( nIndex ).IsEmpty() )
+					if ( m_pFile.get() && m_pFile->GetName( nIndex ).IsEmpty() )
 						m_pFile->SetName( nIndex, pBTFile->m_sPath );
 				}
 			}
 			else
-				if ( m_pFile->GetName( nIndex ).IsEmpty() )
+				if ( m_pFile.get() && m_pFile->GetName( nIndex ).IsEmpty() )
 					m_pFile->SetName( nIndex, m_sName );
 		}
 

@@ -62,8 +62,6 @@ CDownloads::CDownloads()
 	, m_tBandwidthLastCalc	( 0 )
 	, m_nLimitGeneric		( 0 )
 	, m_nLimitDonkey		( 0 )
-	, m_nTryingCount		( 0 )
-	, m_nBTTryingCount		( 0 )
 	, m_bAllowMoreDownloads	( true )
 	, m_bAllowMoreTransfers	( true )
 	, m_nComplete			( 0 )
@@ -108,22 +106,6 @@ BOOL CDownloads::Check(CDownload* pDownload) const
 	ASSUME_LOCK( Transfers.m_pSection );
 
 	return m_pList.Find( pDownload ) != NULL;
-}
-
-void CDownloads::StartTrying(bool bIsTorrent)
-{
-	if ( bIsTorrent )
-		++m_nBTTryingCount;
-
-	++m_nTryingCount;
-}
-
-void CDownloads::StopTrying(bool bIsTorrent)
-{
-	if ( bIsTorrent )
-		--m_nBTTryingCount;
-
-	--m_nTryingCount;
 }
 
 //////////////////////////////////////////////////////////////////////
@@ -433,10 +415,9 @@ INT_PTR CDownloads::GetCount(BOOL bActiveOnly) const
 
 	for ( POSITION pos = GetIterator() ; pos ; )
 	{
-		CDownload* pDownload = GetNext( pos );
+		const CDownload* pDownload = GetNext( pos );
 
-		if ( ! pDownload->IsMoving() && ! pDownload->IsPaused() &&
-			 pDownload->GetEffectiveSourceCount() > 0 )
+		if ( ! pDownload->IsMoving() && ! pDownload->IsPaused() && pDownload->GetEffectiveSourceCount() > 0 )
 				nCount++;
 	}
 
@@ -459,10 +440,19 @@ INT_PTR CDownloads::GetCount(BOOL bActiveOnly) const
 
 DWORD CDownloads::GetTryingCount(bool bTorrentsOnly) const
 {
-	if ( bTorrentsOnly )
-		return m_nBTTryingCount;
-	else
-		return m_nTryingCount;
+	DWORD nCount = 0;
+
+	CQuickLock pLock( Transfers.m_pSection );
+
+	for ( POSITION pos = GetIterator() ; pos ; )
+	{
+		const CDownload* pDownload = GetNext( pos );
+
+		if ( pDownload->IsTrying() && ! pDownload->IsPaused() && ! pDownload->IsCompleted() && ( ! bTorrentsOnly || pDownload->IsTorrent() ) )
+			++nCount;
+	}
+
+	return nCount;
 }
 
 DWORD CDownloads::GetConnectingTransferCount() const
@@ -473,7 +463,7 @@ DWORD CDownloads::GetConnectingTransferCount() const
 
 	for ( POSITION pos = GetIterator() ; pos ; )
 	{
-		CDownload* pDownload = GetNext( pos );
+		const CDownload* pDownload = GetNext( pos );
 
 		nCount += pDownload->GetTransferCount( dtsConnecting );
 	}
