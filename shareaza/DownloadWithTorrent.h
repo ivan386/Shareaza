@@ -1,7 +1,7 @@
 //
 // DownloadWithTorrent.h
 //
-// Copyright (c) Shareaza Development Team, 2002-2012.
+// Copyright (c) Shareaza Development Team, 2002-2014.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -80,6 +80,7 @@ public:
 	BOOL			SetTorrent(const CBTInfo* pTorrent = NULL);
 	// Generate Peer ID
 	BOOL			GenerateTorrentDownloadID();
+	virtual BOOL	SubmitData(QWORD nOffset, LPBYTE pData, QWORD nLength);
 
 protected:
 	bool			RunTorrent(DWORD tNow);

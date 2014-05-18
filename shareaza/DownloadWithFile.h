@@ -1,7 +1,7 @@
 //
 // DownloadWithFile.h
 //
-// Copyright (c) Shareaza Development Team, 2002-2013.
+// Copyright (c) Shareaza Development Team, 2002-2014.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -56,7 +56,7 @@ public:
 	BOOL				ClipUploadRange(QWORD nOffset, QWORD& nLength) const;
 	BOOL				GetRandomRange(QWORD& nOffset, QWORD& nLength) const;
 	bool				GetAvailableRanges( CString& strRanges ) const;
-	BOOL				SubmitData(QWORD nOffset, LPBYTE pData, QWORD nLength);
+	virtual BOOL		SubmitData(QWORD nOffset, LPBYTE pData, QWORD nLength);
 	QWORD				EraseRange(QWORD nOffset, QWORD nLength);
 	BOOL				SetSize(QWORD nSize);
 	BOOL				MakeComplete();
@@ -84,7 +84,7 @@ public:
 
 protected:
 	// Open files of this download
-	BOOL				Open();
+	BOOL				Open(const CShareazaFile* pFile);
 	BOOL				Open(const CBTInfo& pBTInfo);
 	// Close files of this download
 	void				CloseFile();

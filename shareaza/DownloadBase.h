@@ -1,7 +1,7 @@
 //
 // DownloadBase.h
 //
-// Copyright (c) Shareaza Development Team, 2002-2013.
+// Copyright (c) Shareaza Development Team, 2002-2014.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -42,6 +42,8 @@ public:
 
 	void			SetModified();
 	bool			IsModified() const;
+
+	virtual BOOL	SubmitData(QWORD nOffset, LPBYTE pData, QWORD nLength) = 0;
 
 	// Set download new (and safe) name
 	virtual bool	Rename(const CString& strName) = 0;

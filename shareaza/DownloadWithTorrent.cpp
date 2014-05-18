@@ -273,6 +273,26 @@ void CDownloadWithTorrent::Serialize(CArchive& ar, int nVersion)
 	}
 }
 
+//////////////////////////////////////////////////////////////////////
+// CDownloadWithTorrent submit data
+
+BOOL CDownloadWithTorrent::SubmitData(QWORD nOffset, LPBYTE pData, QWORD nLength)
+{
+	if ( IsTorrent() )
+	{
+		CSingleLock oLock( &Transfers.m_pSection );
+		if ( oLock.Lock( 250 ) )
+		{
+			for ( CDownloadTransfer* pTransfer = GetFirstTransfer() ; pTransfer ; pTransfer = pTransfer->m_pDlNext )
+			{
+				if ( pTransfer->m_nProtocol == PROTOCOL_BT )
+					pTransfer->UnrequestRange( nOffset, nLength );
+			}
+		}
+	}
+
+	return CDownloadWithFile::SubmitData( nOffset, pData, nLength );
+}
 
 //////////////////////////////////////////////////////////////////////
 // CDownloadWithTorrent set torrent

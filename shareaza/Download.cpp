@@ -653,7 +653,7 @@ BOOL CDownload::OpenDownload()
 	}
 	else
 	{
-		if ( Open() )
+		if ( Open( this ) )
 			return TRUE;
 	}
 

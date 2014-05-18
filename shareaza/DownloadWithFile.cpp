@@ -1,7 +1,7 @@
 //
 // DownloadWithFile.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2013.
+// Copyright (c) Shareaza Development Team, 2002-2014.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -154,13 +154,13 @@ void CDownloadWithFile::ClearFileError()
 //////////////////////////////////////////////////////////////////////
 // CDownloadWithFile open the file
 
-BOOL CDownloadWithFile::Open()
+BOOL CDownloadWithFile::Open(const CShareazaFile* pFile)
 {
 	if ( m_pFile.get() )
 	{
 		ClearFileError();
 
-		if ( m_pFile->Open( this, ! IsCompleted() ) )
+		if ( m_pFile->Open( pFile, ! IsCompleted() ) )
 			return TRUE;
 
 		SetFileError( m_pFile->GetFileError(), m_pFile->GetFileErrorString() );
@@ -517,21 +517,7 @@ BOOL CDownloadWithFile::SubmitData(QWORD nOffset, LPBYTE pData, QWORD nLength)
 	SetModified();
 	m_tReceived = GetTickCount();
 
-	if ( static_cast< CDownload* >( this )->IsTorrent() )	// HACK: Only do this for BitTorrent
-															// TODO: Fix bad inheritance
-	{
-		CSingleLock oLock( &Transfers.m_pSection );
-		if ( oLock.Lock( 250 ) )
-		{
-			for ( CDownloadTransfer* pTransfer = GetFirstTransfer() ; pTransfer ; pTransfer = pTransfer->m_pDlNext )
-			{
-				if ( pTransfer->m_nProtocol == PROTOCOL_BT )
-					pTransfer->UnrequestRange( nOffset, nLength );
-			}
-		}
-	}
-
-	return ( m_pFile.get() && m_pFile->Write( nOffset, pData, nLength ) );
+	return WriteFile( nOffset, pData, nLength, NULL );
 }
 
 //////////////////////////////////////////////////////////////////////
