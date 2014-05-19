@@ -1,7 +1,7 @@
 //
 // DlgURLAction.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2012.
+// Copyright (c) Shareaza Development Team, 2002-2014.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -193,7 +193,7 @@ BOOL CURLActionDlg::OnInitDialog()
 		{
 			m_sNameValue = m_pURL->m_sName;
 
-			if ( m_pURL->m_bSize )
+			if ( m_pURL->m_nSize != SIZE_UNKNOWN )
 				m_sNameValue += _T(" (") + Settings.SmartVolume( m_pURL->m_nSize ) + _T(")");
 		}
 		else

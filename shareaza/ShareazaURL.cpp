@@ -50,7 +50,6 @@ CShareazaURL::CShareazaURL(LPCTSTR pszURL)
 	, m_nPort			( 0 )
 	, m_pServerAddress	()
 	, m_nServerPort		( 0 )
-	, m_bSize			( FALSE )
 {
 	if ( pszURL != NULL ) Parse( pszURL );
 }
@@ -64,7 +63,6 @@ CShareazaURL::CShareazaURL(CBTInfo* pTorrent)
 	, m_nPort			( 0 )
 	, m_pServerAddress	()
 	, m_nServerPort		( 0 )
-	, m_bSize			( TRUE )
 {
 }
 
@@ -78,7 +76,6 @@ CShareazaURL::CShareazaURL(const CShareazaURL& pURL)
 	, m_nPort			( pURL.m_nPort )
 	, m_pServerAddress	( pURL.m_pServerAddress )
 	, m_nServerPort		( pURL.m_nServerPort )
-	, m_bSize			( pURL.m_bSize )
 	, m_sLogin			( pURL.m_sLogin )
 	, m_sPassword		( pURL.m_sPassword )
 	, m_oBTC			( pURL.m_oBTC )
@@ -114,7 +111,6 @@ void CShareazaURL::Clear()
 	m_nPort					= 0;
 	m_pServerAddress.s_addr = 0;
 	m_nServerPort			= 0;
-	m_bSize					= FALSE;
 	m_sLogin.Empty ();
 	m_sPassword.Empty ();
 	m_oBTC.clear();
@@ -403,8 +399,9 @@ BOOL CShareazaURL::ParseED2KFTP(LPCTSTR pszURL, BOOL bResolve)
 
 	if ( !m_oED2K.fromString( strHash ) ) return FALSE;
 
-	m_bSize = _stscanf( strURL, _T("%I64i"), &m_nSize ) == 1;
-	if ( ! m_bSize ) return FALSE;
+	QWORD nSize = 0;
+	if ( _stscanf( strURL, _T("%I64u"), &nSize ) != 1 || nSize == 0 ) return FALSE;
+	m_nSize = nSize;
 
 	nSlash = m_sAddress.Find( _T('@') );
 
@@ -478,10 +475,9 @@ BOOL CShareazaURL::ParseDCHub(LPCTSTR pszURL, BOOL bResolve)
 		if ( ! m_oTiger.fromString( strHash ) )
 			return FALSE;
 
-		if ( _stscanf( strURL, _T("/%I64i"), &m_nSize ) == 1 )
-		{
-			m_bSize = TRUE;
-		}
+		QWORD nSize = 0;
+		if ( _stscanf( strURL, _T("/%I64u"), &nSize ) == 1 && nSize != 0 )
+			m_nSize = nSize;
 	}
 	else
 	{
@@ -555,13 +551,17 @@ BOOL CShareazaURL::ParseMagnet(LPCTSTR pszURL)
 	CString strURL( pszURL );
 	CAutoPtr< CBTInfo > pTorrent( new CBTInfo() );
 
+	// TODO: Add multi-file magnets
+	DWORD nMyNumber = (DWORD)-1;
+
 	for ( strURL += _T('&') ; strURL.GetLength() ; )
 	{
 		CString strPart = strURL.SpanExcluding( _T("&") );
 		strURL = strURL.Mid( strPart.GetLength() + 1 );
 
 		int nEquals = strPart.Find( _T('=') );
-		if ( nEquals < 0 ) continue;
+		if ( nEquals < 0 )
+			continue;
 
 		CString strKey		= URLDecode( strPart.Left( nEquals ) );
 		CString strValue	= URLDecode( strPart.Mid( nEquals + 1 ) );
@@ -569,12 +569,20 @@ BOOL CShareazaURL::ParseMagnet(LPCTSTR pszURL)
 		SafeString( strKey );
 		SafeString( strValue );
 
-		// Cutoff number of key i.e. "tr.1" -> "tr"
+		// Parse numbered keys
+		DWORD nNumber = 0;
 		int nDot = strKey.Find( _T('.') );
-		if ( nDot > 0 && _istdigit( strKey.GetAt( nDot + 1 ) ) )
+		if ( nDot > 0 )
+		{
+			if ( _istdigit( strKey.GetAt( nDot + 1 ) ) )
+				nNumber = _tcstoul( strKey.Mid( nDot + 1 ), NULL, 10 );
 			strKey = strKey.Left( nDot );
+		}
+		if ( nMyNumber == (DWORD)-1 )
+			nMyNumber = nNumber;
 
-		if ( strKey.IsEmpty() || strValue.IsEmpty() ) continue;
+		if ( strKey.IsEmpty() || strValue.IsEmpty() )
+			continue;
 
 		strKey.MakeLower();
 
@@ -591,12 +599,15 @@ BOOL CShareazaURL::ParseMagnet(LPCTSTR pszURL)
 				 StartsWith( strValue, _PT("btih:") ) ||
 				 StartsWith( strValue, _PT("ed2k:") ) )
 			{
-				if ( ! m_oSHA1 )	m_oSHA1.fromUrn( strValue );
-				if ( ! m_oTiger )	m_oTiger.fromUrn( strValue );
-				if ( ! m_oMD5 )		m_oMD5.fromUrn( strValue );
-				if ( ! m_oED2K )	m_oED2K.fromUrn( strValue );
-				if ( ! m_oBTH )		m_oBTH.fromUrn( strValue );
-				if ( ! m_oBTH )		m_oBTH.fromUrn< Hashes::base16Encoding >( strValue );
+				if ( nMyNumber == nNumber )
+				{
+					if ( ! m_oSHA1 )	m_oSHA1.fromUrn( strValue );
+					if ( ! m_oTiger )	m_oTiger.fromUrn( strValue );
+					if ( ! m_oMD5 )		m_oMD5.fromUrn( strValue );
+					if ( ! m_oED2K )	m_oED2K.fromUrn( strValue );
+					if ( ! m_oBTH )		m_oBTH.fromUrn( strValue );
+					if ( ! m_oBTH )		m_oBTH.fromUrn< Hashes::base16Encoding >( strValue );
+				}
 			}
 			else if ( StartsWith( strValue, _PT("http://") ) ||
 					  StartsWith( strValue, _PT("http%3A//") ) ||
@@ -612,50 +623,66 @@ BOOL CShareazaURL::ParseMagnet(LPCTSTR pszURL)
 
 				if ( strKey == _T("xt") )		// "eXact Topic" (URN containing file hash)
 				{
-					CString strURL = _T("@") + strValue;
-
-					if ( m_sURL.GetLength() )
-						m_sURL = strURL + _T(", ") + m_sURL;
-					else
-						m_sURL = strURL;
+					if ( nMyNumber == nNumber )
+					{
+						if ( m_sURL.GetLength() )
+							m_sURL = _T("@") + strURL + _T(", ") + m_sURL;
+						else
+							m_sURL = _T("@") + strURL;
+					}
 				}
 				else if( strKey == _T("tr") )	// "TRacker address" (tracker URL for BitTorrent downloads)
 				{
+					// Trackers are common
 					pTorrent->SetTracker( strValue );
 				}
 				else
 				{
-					if ( m_sURL.GetLength() ) m_sURL += _T(", ");
-					m_sURL += strValue;
+					if ( nMyNumber == nNumber )
+					{
+						if ( m_sURL.GetLength() )
+							m_sURL = m_sURL + _T(", ") + strValue;
+						else
+							m_sURL = m_sURL + strValue;
+					}
 				}
 			}
 		}
 		else if ( strKey == _T("dn") )	// "Display Name" (filename)
 		{
-			m_sName = strValue;
+			if ( nMyNumber == nNumber )
+			{
+				m_sName = strValue;
+			}
 		}
 		else if ( strKey == _T("kt") )	// "Keyword Topic" (key words for search)
 		{
-			m_sName = strValue;
-			m_oSHA1.clear();
-			m_oTiger.clear();
-			m_oED2K.clear();
-			m_oMD5.clear();
-			m_oBTH.clear();
+			if ( nMyNumber == nNumber )
+			{
+				m_sName = strValue;
+				m_oSHA1.clear();
+				m_oTiger.clear();
+				m_oED2K.clear();
+				m_oMD5.clear();
+				m_oBTH.clear();
+			}
 		}
 		else if ( strKey == _T("xl") ||	// "eXact Length" (size in bytes)
 				  strKey == _T("sz") ||	// used by old Shareaza
 				  strKey == _T("fs") )	// used by Foxy
 		{
-			QWORD nSize;
-			if ( ( ! m_bSize ) && ( _stscanf( strValue, _T("%I64i"), &nSize ) == 1 ) && ( nSize > 0 ) )
+			if ( nMyNumber == nNumber )
 			{
-				m_nSize = nSize;
-				m_bSize = TRUE;
+				QWORD nSize = 0;
+				if ( m_nSize == SIZE_UNKNOWN && _stscanf( strValue, _T("%I64u"), &nSize ) == 1 && nSize != 0 )
+				{
+					m_nSize = nSize;
+				}
 			}
 		}
 		else if ( strKey == _T("bn") )	// "Bittorrent Node" (BitTorrent node address for DHT bootstrapping)
 		{
+			// Nodes are common
 			pTorrent->SetNode( strValue );
 		}
 	}
@@ -951,8 +978,9 @@ BOOL CShareazaURL::ParseDonkeyFile(LPCTSTR pszURL)
 	strPart	= strURL.Left( nSep );
 	strURL	= strURL.Mid( nSep + 1 );
 
-	if ( _stscanf( strPart, _T("%I64i"), &m_nSize ) != 1 ) return FALSE;
-	m_bSize = TRUE;
+	QWORD nSize = 0;
+	if ( _stscanf( strPart, _T("%I64u"), &nSize ) != 1 || nSize == 0 ) return FALSE;
+	m_nSize = nSize;
 
 	// Hash
 	nSep = strURL.Find( '|' );
@@ -1102,8 +1130,9 @@ BOOL CShareazaURL::ParsePioletFile(LPCTSTR pszURL)
 	strPart	= strURL.Left( nSep );
 	strURL	= strURL.Mid( nSep + 1 );
 
-	if ( _stscanf( strPart, _T("%I64i"), &m_nSize ) != 1 ) return FALSE;
-	m_bSize = TRUE;
+	QWORD nSize = 0;
+	if ( _stscanf( strPart, _T("%I64u"), &nSize ) != 1 || nSize == 0 ) return FALSE;
+	m_nSize = nSize;
 
 	strPart = strURL.SpanExcluding( _T(" |/") );
 	m_oSHA1.fromString( strPart );

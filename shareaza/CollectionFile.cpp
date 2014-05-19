@@ -1,7 +1,7 @@
 //
 // ColletionFile.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2012.
+// Copyright (c) Shareaza Development Team, 2002-2014.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -706,7 +706,6 @@ BOOL CCollectionFile::File::Download()
 	pURL.m_oED2K	= m_oED2K;
 	pURL.m_oBTH		= m_oBTH;
 	pURL.m_sName	= m_sName;
-	pURL.m_bSize	= ( m_nSize != SIZE_UNKNOWN );
 	pURL.m_nSize	= m_nSize;
 
 	return PostMainWndMessage( WM_URL, (WPARAM)new CShareazaURL( pURL ) );

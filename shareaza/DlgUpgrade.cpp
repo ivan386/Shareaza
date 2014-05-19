@@ -1,7 +1,7 @@
 //
 // DlgUpgrade.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2007.
+// Copyright (c) Shareaza Development Team, 2002-2014.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -94,9 +94,8 @@ void CUpgradeDlg::OnOK()
 	if ( Settings.VersionCheck.UpgradeSize.GetLength() )
 	{
 		QWORD nSize;
-		if ( ( _stscanf( Settings.VersionCheck.UpgradeSize.GetString(), _T("%I64i"), &nSize ) == 1 ) && ( nSize > 0 ) )
+		if ( _stscanf( Settings.VersionCheck.UpgradeSize.GetString(), _T("%I64u"), &nSize ) == 1 && nSize > 0 )
 		{
-			pURL.m_bSize = TRUE;
 			pURL.m_nSize = nSize;
 		}
 	}

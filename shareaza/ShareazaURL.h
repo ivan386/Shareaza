@@ -1,7 +1,7 @@
 //
 // ShareazaURL.h
 //
-// Copyright (c) Shareaza Development Team, 2002-2013.
+// Copyright (c) Shareaza Development Team, 2002-2014.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -47,7 +47,6 @@ public:
 	WORD				m_nPort;
 	IN_ADDR				m_pServerAddress;
 	WORD				m_nServerPort;
-	BOOL				m_bSize;
 	CString				m_sLogin;
 	CString				m_sPassword;
 	Hashes::BtGuid		m_oBTC;
