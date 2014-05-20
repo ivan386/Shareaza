@@ -1,7 +1,7 @@
 //
 // CtrlBrowseTree.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2012.
+// Copyright (c) Shareaza Development Team, 2002-2014.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -873,8 +873,8 @@ void CBrowseTreeCtrl::OnTreePacket(CG2Packet* pPacket, DWORD nFinish, CBrowseTre
 		}
 		else if ( nType == G2_PACKET_METADATA && bCompound == FALSE )
 		{
-			CXMLElement* pXML = CXMLElement::FromString( pPacket->ReadString( nLength ) );
-			if ( pXML != NULL ) pItem->AddXML( pXML );
+			CAutoPtr< CXMLElement > pXML( CXMLElement::FromString( pPacket->ReadString( nLength ) ) );
+			pItem->AddXML( pXML );
 		}
 		else if ( nType == G2_PACKET_FILES && bCompound == FALSE )
 		{
@@ -1153,8 +1153,11 @@ void CBrowseTreeItem::Paint(CDC& dc, CRect& rc, BOOL bTarget, COLORREF crBack) c
 /////////////////////////////////////////////////////////////////////////////
 // CBrowseTreeItem add XML
 
-void CBrowseTreeItem::AddXML(CXMLElement* pXML)
+void CBrowseTreeItem::AddXML(const CXMLElement* pXML)
 {
+	if ( ! pXML )
+		return;
+
 	CString strURI = pXML->GetAttributeValue( CXMLAttribute::schemaName );
 
 	if ( ( m_pSchema = SchemaCache.Get( strURI ) ) != NULL )
@@ -1169,6 +1172,4 @@ void CBrowseTreeItem::AddXML(CXMLElement* pXML)
 	}
 
 	if ( m_sText.IsEmpty() ) m_sText = _T("Unnamed");
-
-	if ( pXML != NULL ) delete pXML;
 }

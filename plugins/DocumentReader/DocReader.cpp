@@ -3,7 +3,7 @@
 //
 //	Created by:		Rolandas Rudomanskis
 //
-// Copyright (c) Shareaza Development Team, 2002-2012.
+// Copyright (c) Shareaza Development Team, 2002-2014.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -266,16 +266,14 @@ STDMETHODIMP CDocReader::ProcessNewMSDocument(BSTR bsFile, ISXMLElement* pXML, L
 	// Read docProps\app.xml from the archive (Properties -> Pages, Company and AppVersion)
 	// Read docProps\core.xml from the archive 
 	//		(cp:coreProperties -> dc:title, subject, creator, keywords, description, revision, category)
-	CHAR szFirstFile[18] = "docProps/core.xml";
-	CHAR szSecondFile[17] = "docProps/app.xml";
-	CComBSTR sXML = GetMetadataXML( pFile, szFirstFile );
+	CComBSTR sXML = GetMetadataXML( pFile, "docProps/core.xml" );
 
 	ISXMLElement* pInputXML = NULL;
 	bool bSecondFile = false;
 
 	if ( FAILED( pXML->FromString( sXML, &pInputXML ) ) || pInputXML == NULL )
 	{
-		sXML = GetMetadataXML( pFile, szSecondFile );
+		sXML = GetMetadataXML( pFile, "docProps/app.xml" );
 		if ( pInputXML != NULL )
 		{
 			pInputXML->Delete();
@@ -303,7 +301,7 @@ STDMETHODIMP CDocReader::ProcessNewMSDocument(BSTR bsFile, ISXMLElement* pXML, L
 			return E_FAIL;
 		}
 
-		sXML = GetMetadataXML( pFile, szSecondFile );
+		sXML = GetMetadataXML( pFile, "docProps/app.xml" );
 
 		if ( ! sXML.Length() || FAILED( pInputXML->get_Elements( &pElements ) ) || pElements == NULL ) 
 		{
@@ -424,7 +422,7 @@ STDMETHODIMP CDocReader::ProcessNewMSDocument(BSTR bsFile, ISXMLElement* pXML, L
 
 	if ( !bSecondFile )
 	{
-		sXML = GetMetadataXML( pFile, szSecondFile );
+		sXML = GetMetadataXML( pFile, "docProps/app.xml" );
 		if ( sXML.Length() > 0 ) 
 		{
 			pInputXML->Delete();
@@ -531,8 +529,7 @@ STDMETHODIMP CDocReader::ProcessOODocument(BSTR bsFile, ISXMLElement* pXML, LPCW
 	}
 
 	// Read meta.xml from the archive
-	CHAR szFile[9] = "meta.xml";
-	CComBSTR sXML = GetMetadataXML( pFile, szFile );
+	CComBSTR sXML = GetMetadataXML( pFile, "meta.xml" );
 
 	// Close the file
 	unzClose( pFile );
@@ -733,7 +730,7 @@ STDMETHODIMP CDocReader::ProcessOODocument(BSTR bsFile, ISXMLElement* pXML, LPCW
 	return S_OK;
 }
 
-CComBSTR CDocReader::GetMetadataXML(unzFile pFile, char* pszFile)
+CComBSTR CDocReader::GetMetadataXML(unzFile pFile, const char* pszFile)
 {
 	CComBSTR sUnicode;
 
@@ -748,8 +745,7 @@ CComBSTR CDocReader::GetMetadataXML(unzFile pFile, char* pszFile)
 		if ( nError == UNZ_OK )
 		{
 			unz_file_info pInfo = {};
-			nError = unzGetCurrentFileInfo( pFile, &pInfo, pszFile,
-				sizeof pszFile, NULL, 0, NULL, 0 );
+			nError = unzGetCurrentFileInfo( pFile, &pInfo, NULL, 0, NULL, 0, NULL, 0 );
 			if ( nError == UNZ_OK )
 			{
 				// Prepare a buffer to read into
@@ -893,6 +889,7 @@ STDMETHODIMP CDocReader::GetMSThumbnail(BSTR bsFile, IMAGESERVICEDATA* pParams, 
 
 			// We will allocate pBI, do not forget to delete it
 			hBitmap = GetBitmapFromMetaFile( pds, nResolution, wColorDepth, &pBI );
+			if ( hBitmap == NULL || pBI == NULL ) return S_FALSE;
 			nWidth = pBI->bmiHeader.biWidth;
 			nHeight = pBI->bmiHeader.biHeight;
 
@@ -908,7 +905,7 @@ STDMETHODIMP CDocReader::GetMSThumbnail(BSTR bsFile, IMAGESERVICEDATA* pParams, 
 	}
 	// They say MS supports such formats. Couldn't find anywhere.
 	// NOT TESTED !!!
-	else if ( (DWORD)*pclp == CF_DIB || (DWORD)*pclp == CF_BITMAP )
+	/*else if ( (DWORD)*pclp == CF_DIB || (DWORD)*pclp == CF_BITMAP )
 	{
 		BITMAP bm;
 		BITMAPINFOHEADER* pBmH;
@@ -940,7 +937,7 @@ STDMETHODIMP CDocReader::GetMSThumbnail(BSTR bsFile, IMAGESERVICEDATA* pParams, 
 			pds.bmp.hpal = NULL;
 			pds.bmp.hbitmap = (HBITMAP)hBitmap;
 		}
-	}
+	}*/
 	// Only some MS Visio documents keep them
 	else if ( (DWORD)*pclp == CF_ENHMETAFILE )
 	{
@@ -960,6 +957,7 @@ STDMETHODIMP CDocReader::GetMSThumbnail(BSTR bsFile, IMAGESERVICEDATA* pParams, 
 
 			// We will allocate pBI, do not forget to delete it
 			hBitmap = GetBitmapFromEnhMetaFile( pds, nResolution, wColorDepth, &pBI );
+			if ( hBitmap == NULL || pBI == NULL ) return S_FALSE;
 			nWidth = pBI->bmiHeader.biWidth;
 			nHeight = pBI->bmiHeader.biHeight;
 
@@ -977,7 +975,7 @@ STDMETHODIMP CDocReader::GetMSThumbnail(BSTR bsFile, IMAGESERVICEDATA* pParams, 
 	SEH_EXCEPT_NULL
 
 	// Check if we have a bitmap
-	if ( hBitmap == NULL ) return S_FALSE;
+	if ( hBitmap == NULL || pBI == NULL ) return S_FALSE;
 
 	// Get bitmap byte buffer from the handle
 
@@ -1981,7 +1979,7 @@ HRESULT CDocReader::CDocumentProperties::
 HRESULT CDocReader::CDocumentProperties::
 	CSummaryProperties::put_Title(BSTR bstrTitle)
 {
-    TRACE1("CSummaryProperties::put_Title(%S)\n", bstrTitle);
+    TRACE1("CSummaryProperties::put_Title(%S)\n", (LPCSTR)CW2A((LPCWSTR)bstrTitle) );
 	return WriteProperty(&m_pSummPropList, PIDSI_TITLE, VT_BSTR, ((void*)bstrTitle));
 }
 
@@ -1996,7 +1994,7 @@ HRESULT CDocReader::CDocumentProperties::
 HRESULT CDocReader::CDocumentProperties::
 	CSummaryProperties::put_Subject(BSTR bstrSubject)
 {
-    TRACE1("CSummaryProperties::put_Subject(%S)\n", bstrSubject);
+    TRACE1("CSummaryProperties::put_Subject(%S)\n", (LPCSTR)CW2A((LPCWSTR)bstrSubject));
 	return WriteProperty(&m_pSummPropList, PIDSI_SUBJECT, VT_BSTR, ((void*)bstrSubject));
 }
 
@@ -2011,7 +2009,7 @@ HRESULT CDocReader::CDocumentProperties::
 HRESULT CDocReader::CDocumentProperties::
 	CSummaryProperties::put_Author(BSTR bstrAuthor)
 {
-    TRACE1("CSummaryProperties::put_Author(%S)\n", bstrAuthor);
+    TRACE1("CSummaryProperties::put_Author(%S)\n", (LPCSTR)CW2A((LPCWSTR)bstrAuthor));
 	return WriteProperty(&m_pSummPropList, PIDSI_AUTHOR, VT_BSTR, ((void*)bstrAuthor));
 }
 
@@ -2026,7 +2024,7 @@ HRESULT CDocReader::CDocumentProperties::
 HRESULT CDocReader::CDocumentProperties::
 	CSummaryProperties::put_Keywords(BSTR bstrKeywords)
 {
-    TRACE1("CSummaryProperties::put_Keywords(%S)\n", bstrKeywords);
+    TRACE1("CSummaryProperties::put_Keywords(%S)\n", (LPCSTR)CW2A((LPCWSTR)bstrKeywords));
 	return WriteProperty(&m_pSummPropList, PIDSI_KEYWORDS, VT_BSTR, ((void*)bstrKeywords));
 }
 
@@ -2041,7 +2039,7 @@ HRESULT CDocReader::CDocumentProperties::
 HRESULT CDocReader::CDocumentProperties::
 	CSummaryProperties::put_Comments(BSTR bstrComments)
 {
-    TRACE1("CSummaryProperties::put_Comments(%S)\n", bstrComments);
+    TRACE1("CSummaryProperties::put_Comments(%S)\n", (LPCSTR)CW2A((LPCWSTR)bstrComments));
 	return WriteProperty(&m_pSummPropList, PIDSI_COMMENTS, VT_BSTR, ((void*)bstrComments));
 }
 
@@ -2064,7 +2062,7 @@ HRESULT CDocReader::CDocumentProperties::
 HRESULT CDocReader::CDocumentProperties::
 	CSummaryProperties::put_LastSavedBy(BSTR bstrLastSavedBy)
 {
-    TRACE1("CSummaryProperties::put_LastSavedBy(%S)\n", bstrLastSavedBy);
+    TRACE1("CSummaryProperties::put_LastSavedBy(%S)\n", (LPCSTR)CW2A((LPCWSTR)bstrLastSavedBy));
 	return WriteProperty(&m_pSummPropList, PIDSI_LASTAUTHOR, VT_BSTR, ((void*)bstrLastSavedBy));
 }
 
@@ -2178,7 +2176,7 @@ HRESULT CDocReader::CDocumentProperties::
 HRESULT CDocReader::CDocumentProperties::
 	CSummaryProperties::put_Category(BSTR bstrCategory)
 {
-    TRACE1("CSummaryProperties::put_Category(%S)\n", bstrCategory);
+    TRACE1("CSummaryProperties::put_Category(%S)\n", (LPCSTR)CW2A((LPCWSTR)bstrCategory));
 	return WriteProperty(&m_pDocPropList, PID_CATEGORY, VT_BSTR, ((void*)bstrCategory));
 }
 
@@ -2257,7 +2255,7 @@ HRESULT CDocReader::CDocumentProperties::
 HRESULT CDocReader::CDocumentProperties::
 	CSummaryProperties::put_Manager(BSTR bstrManager)
 {
-    TRACE1("CSummaryProperties::put_Manager(%S)\n", bstrManager);
+    TRACE1("CSummaryProperties::put_Manager(%S)\n", (LPCSTR)CW2A((LPCWSTR)bstrManager));
 	return WriteProperty(&m_pDocPropList, PID_MANAGER, VT_BSTR, ((void*)bstrManager));
 }
 
@@ -2272,7 +2270,7 @@ HRESULT CDocReader::CDocumentProperties::
 HRESULT CDocReader::CDocumentProperties::
 	CSummaryProperties::put_Company(BSTR bstrCompany)
 {
-    TRACE1("CSummaryProperties::put_Company(%S)\n", bstrCompany);
+    TRACE1("CSummaryProperties::put_Company(%S)\n", (LPCSTR)CW2A((LPCWSTR)bstrCompany));
 	return WriteProperty(&m_pDocPropList, PID_COMPANY, VT_BSTR, ((void*)bstrCompany));
 }
 

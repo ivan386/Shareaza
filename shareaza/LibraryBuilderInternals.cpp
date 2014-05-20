@@ -1,7 +1,7 @@
 //
 // LibraryBuilderInternals.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2013.
+// Copyright (c) Shareaza Development Team, 2002-2014.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -342,7 +342,6 @@ bool CLibraryBuilderInternals::ReadID3v2(DWORD nIndex, HANDLE hFile)
 	}
 
 	auto_ptr< CXMLElement > pXML( new CXMLElement( NULL, _T("audio") ) );
-	bool bBugInFrameSize = false;
 
 	while ( nBuffer )
 	{
@@ -366,7 +365,7 @@ bool CLibraryBuilderInternals::ReadID3v2(DWORD nIndex, HANDLE hFile)
 
 			nFrameSize = swapEndianess( pFrame->nSize );
 
-			if ( pHeader.nMajorVersion >= 4 && !bBugInFrameSize )
+			if ( pHeader.nMajorVersion >= 4 )
 			{
 				ID3_DESYNC_SIZE( nFrameSize );
 				if ( nBuffer < nFrameSize )

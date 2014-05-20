@@ -170,7 +170,7 @@ BOOL CDCNeighbour::ProcessPackets()
 		}
 	}
 
-	CBuffer* pInput = m_pZInput ? m_pZInput : pInputLocked;
+	CBuffer* pInput = m_pZInput ? m_pZInput : (CBuffer*)pInputLocked;
 
 	return ProcessPackets( pInput );
 }

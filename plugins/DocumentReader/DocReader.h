@@ -3,7 +3,7 @@
 //
 //	Created by:		Rolandas Rudomanskis
 //
-// Copyright (c) Shareaza Development Team, 2002-2012.
+// Copyright (c) Shareaza Development Team, 2002-2014.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -198,7 +198,7 @@ private:
 	STDMETHOD(ProcessOODocument)(BSTR bsFile, ISXMLElement* pXML, LPCWSTR pszSchema, LPCWSTR pszFormat);
 	STDMETHOD(GetMSThumbnail)(BSTR bsFile, IMAGESERVICEDATA* pParams, SAFEARRAY** ppImage);
 	STDMETHOD(GetOOThumbnail)(BSTR bsFile, IMAGESERVICEDATA* pParams, SAFEARRAY** ppImage);
-	CComBSTR GetMetadataXML(unzFile pFile, char* pszFile);
+	CComBSTR GetMetadataXML(unzFile pFile, const char* pszFile);
 
 	HBITMAP GetBitmapFromMetaFile(PICTDESC pds, int nResolution, 
 		WORD wBitsPerSample, BITMAPINFO **ppBI);

@@ -81,7 +81,7 @@ CG1Neighbour::CG1Neighbour(CNeighbour* pBase)
 	m_nHopsFlow = 0xFF;
 
 	// Create a new packet buffer for sending packets, giving it the m_pZOutput buffer if we're compressing, or just m_pOutput if we're not
-	m_pOutbound = new CG1PacketBuffer( m_pZOutput ? m_pZOutput : pOutput ); // m_pZOutput is where to write data the program will compress
+	m_pOutbound = new CG1PacketBuffer( m_pZOutput ? m_pZOutput : (CBuffer*)pOutput ); // m_pZOutput is where to write data the program will compress
 
 	// Report that a Gnutella connection with the remote computer has been successfully established
 	theApp.Message( MSG_INFO, IDS_HANDSHAKE_ONLINE, (LPCTSTR)m_sAddress, 0, 6, m_sUserAgent.IsEmpty() ? _T("Unknown") : (LPCTSTR)m_sUserAgent );
@@ -153,7 +153,7 @@ BOOL CG1Neighbour::OnWrite()
 	CLockedBuffer pOutputLocked( GetOutput() );
 
 	// Point pOutput at the buffer where we should write data for the remote computer
-	CBuffer* pOutput = m_pZOutput ? m_pZOutput : pOutputLocked; // If we're sending compressed data, we'll put readable bytes in m_pZOutput and then compress them to m_pOutput
+	CBuffer* pOutput = m_pZOutput ? m_pZOutput : (CBuffer*)pOutputLocked; // If we're sending compressed data, we'll put readable bytes in m_pZOutput and then compress them to m_pOutput
 
 	// Record when OnWrite was called
 	DWORD nExpire = GetTickCount();
@@ -254,7 +254,7 @@ BOOL CG1Neighbour::ProcessPackets()
 {
 	CLockedBuffer pInputLocked( GetInput() );
 
-	CBuffer* pInput = m_pZInput ? m_pZInput : pInputLocked;
+	CBuffer* pInput = m_pZInput ? m_pZInput : (CBuffer*)pInputLocked;
 	
 	return ProcessPackets( pInput );
 }

@@ -1211,12 +1211,12 @@ void CDownloadWithSources::MergeMetadata(const CXMLElement* pXML)
 
 	if ( m_pXML )
 	{
-		CXMLAttribute* pAttr1 = m_pXML->GetAttribute( CXMLAttribute::schemaName );
-		CXMLAttribute* pAttr2 = pXML->GetAttribute( CXMLAttribute::schemaName );
-		if ( pAttr1 && pAttr2 && ! pAttr1->GetValue().CompareNoCase( pAttr1->GetValue() ) )
+		const CXMLAttribute* pAttr1 = m_pXML->GetAttribute( CXMLAttribute::schemaName );
+		const CXMLAttribute* pAttr2 = pXML->GetAttribute( CXMLAttribute::schemaName );
+		if ( pAttr1 && pAttr2 && pAttr1->GetValue().CompareNoCase( pAttr2->GetValue() ) == 0 )
 		{
 			CXMLElement* pElement1 = m_pXML->GetFirstElement();
-			CXMLElement* pElement2 = pXML->GetFirstElement();
+			const CXMLElement* pElement2 = pXML->GetFirstElement();
 			if ( pElement1 && pElement2 )
 			{
 				pElement1->Merge( pElement2 );

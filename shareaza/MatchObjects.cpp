@@ -1,7 +1,7 @@
 //
 // MatchObjects.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2012.
+// Copyright (c) Shareaza Development Team, 2002-2014.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -244,7 +244,7 @@ void CMatchList::AddHits(const CQueryHit* pHits, const CQuerySearch* pFilter)
 			// Thus, we can filter them if we get two or more the same keyword
 			// lists from one user.
 
-			if ( BOOL bName = _tcsistr( pFilter->m_sKeywords, pHit->m_sName ) == 0 )
+			if ( _tcsistr( pFilter->m_sKeywords, pHit->m_sName ) == 0 )
 				pHit->m_bExactMatch = TRUE;
 
 			pHit->m_bMatched = pFilter->Match( pHit->m_sName,
@@ -611,7 +611,7 @@ BOOL CMatchList::Select(CMatchFile* pFile, CQueryHit* pHit, BOOL bSelected)
 		else
 			m_pSelectedHits.RemoveAt( m_pSelectedHits.Find( pHit ) );
 	}
-	else
+	else if ( pFile != NULL )
 	{
 		if ( pFile->m_bSelected == bSelected ) return FALSE;
 		pFile->m_bSelected = bSelected;

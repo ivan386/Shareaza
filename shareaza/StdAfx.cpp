@@ -1,7 +1,7 @@
 //
 // StdAfx.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2012.
+// Copyright (c) Shareaza Development Team, 2002-2014.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -131,15 +131,24 @@ UINT GetBestHashTableSize(UINT nCount)
 	return * std::lower_bound( primes, last, value, std::less< UINT >() );	// + 20%
 }
 
-// Disable MFC exception if the memory allocation fails
+// Disable exceptions if the memory allocation fails
 
 class NoThrowNew
 {
 public:
-	inline NoThrowNew() throw() { AfxSetNewHandler( &NoThrowNew::OutOfMemoryHandler ); }
+	NoThrowNew() throw()
+	{
+		std::set_new_handler( &NoThrowNew::OutOfMemoryHandlerStd );
+		_set_new_handler( &NoThrowNew::OutOfMemoryHandler );
+		AfxSetNewHandler( &NoThrowNew::OutOfMemoryHandler );
+	}
 
 private:
-	static int AFX_CDECL OutOfMemoryHandler(size_t /* nSize */)
+	static void __cdecl OutOfMemoryHandlerStd() throw()
+	{
+	}
+
+	static int __cdecl OutOfMemoryHandler(size_t /* nSize */) throw()
 	{
 		return 0;
 	}

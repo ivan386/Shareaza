@@ -1415,7 +1415,7 @@ BOOL CQuerySearch::CheckValid(bool bExpression)
 				nValidCharacters = nLength * 2;
 				bExtendChar = true;	// set Extended char flag
 			}
-			else if ( 0x800 <= szChar && 0xffff >= szChar)  // check if the char is 3 byte length in UTF8 (non-char will not reach here)
+			else if ( 0x800 <= szChar )  // check if the char is 3 byte length in UTF8 (non-char will not reach here)
 			{
 				nValidCharacters = nLength * 3;
 				bExtendChar = true;	// set Extended char flag

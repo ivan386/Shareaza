@@ -1,7 +1,7 @@
 //
 // EDPacket.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2013.
+// Copyright (c) Shareaza Development Team, 2002-2014.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -602,8 +602,8 @@ CString CEDPacket::ToASCII() const
 					const Hashes::Ed2kHash oMD4( *(const Hashes::Ed2kHash::RawStorage*)( m_pBuffer ));
 					const IN_ADDR& nID = *(const IN_ADDR*)( m_pBuffer+ Hashes::Ed2kHash::byteCount );
 					const WORD& nPort = *(const WORD*)( m_pBuffer + Hashes::Ed2kHash::byteCount + 4 );
-					strOutput.AppendFormat( _T("hash: %s, id: %u, port: %u, tags: %s"), oMD4.toString(), nID, nPort,
-						CEDTag::ToString( m_pBuffer + Hashes::Ed2kHash::byteCount + 4 + 2, m_nLength - ( Hashes::Ed2kHash::byteCount + 4 + 2 ) ) );
+					strOutput.AppendFormat( _T("hash: %s, id: %u, port: %u, tags: %s"), oMD4.toString(), nID.s_addr, nPort,
+						(LPCTSTR)CEDTag::ToString( m_pBuffer + Hashes::Ed2kHash::byteCount + 4 + 2, m_nLength - ( Hashes::Ed2kHash::byteCount + 4 + 2 ) ) );
 				}
 				break;
 
@@ -640,7 +640,7 @@ CString CEDPacket::ToASCII() const
 					{
 						const IN_ADDR& nID = *(const IN_ADDR*)( m_pBuffer + Hashes::Ed2kHash::byteCount + 1 );
 						const WORD& nPort = *(const WORD*)( m_pBuffer + Hashes::Ed2kHash::byteCount + 1 + 4 );
-						strOutput.AppendFormat( _T(" -> id: %u, port: %u"), nID, nPort );
+						strOutput.AppendFormat( _T(" -> id: %u, port: %u"), nID.s_addr, nPort );
 					}
 				}
 				break;
@@ -707,7 +707,7 @@ CString CEDPacket::ToASCII() const
 					{
 						const IN_ADDR& nID = *(const IN_ADDR*)( m_pBuffer + Hashes::Ed2kHash::byteCount + 1 );
 						const WORD& nPort = *(const WORD*)( m_pBuffer + Hashes::Ed2kHash::byteCount + 1 + 4 );
-						strOutput.AppendFormat( _T(" -> id: %u, port: %u"), nID, nPort );
+						strOutput.AppendFormat( _T(" -> id: %u, port: %u"), nID.s_addr, nPort );
 					}
 				}
 				break;
@@ -763,8 +763,8 @@ CString CEDPacket::ToASCII() const
 						const Hashes::Ed2kHash oMD4( *(const Hashes::Ed2kHash::RawStorage*)( m_pBuffer + 4 ));
 						const IN_ADDR& nID = *(const IN_ADDR*)( m_pBuffer + 4 + Hashes::Ed2kHash::byteCount );
 						const WORD& nPort = *(const WORD*)( m_pBuffer + 4 + Hashes::Ed2kHash::byteCount + 4 );
-						strOutput.AppendFormat( _T(" -> hash: %s, id: %u, port: %u, tags: %s%s"), oMD4.toString(), nID, nPort,
-							CEDTag::ToString( m_pBuffer + 4 + Hashes::Ed2kHash::byteCount + 4 + 2, m_nLength - ( 4 + Hashes::Ed2kHash::byteCount + 4 + 2 ) ),
+						strOutput.AppendFormat( _T(" -> hash: %s, id: %u, port: %u, tags: %s%s"), oMD4.toString(), nID.s_addr, nPort,
+							(LPCTSTR)CEDTag::ToString( m_pBuffer + 4 + Hashes::Ed2kHash::byteCount + 4 + 2, m_nLength - ( 4 + Hashes::Ed2kHash::byteCount + 4 + 2 ) ),
 							( nCount > 1 ) ? _T("...") : _T("") );
 					}
 				}
@@ -943,7 +943,7 @@ CString CEDPacket::ToASCII() const
 						const WORD& nLen = *(const WORD*)( m_pBuffer + 16 );
 						if ( m_nLength >= Hashes::Ed2kHash::byteCount + 2 + nLen )
 						{
-							strOutput.Format( _T("hash: %s, desc: \"%s\" (%u bytes)"), (LPCTSTR)UTF8Decode( (char*)m_pBuffer + 16 + 2, nLen ), nLen );
+							strOutput.Format( _T("hash: %s, desc: \"%s\" (%u bytes)"), oMD4.toString(), (LPCTSTR)UTF8Decode( (char*)m_pBuffer + 16 + 2, nLen ), nLen );
 						}
 					}
 					break;

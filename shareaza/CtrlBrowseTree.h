@@ -1,7 +1,7 @@
 //
 // CtrlBrowseTree.h
 //
-// Copyright (c) Shareaza Development Team, 2002-2007.
+// Copyright (c) Shareaza Development Team, 2002-2014.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -146,7 +146,7 @@ public:
 	BOOL				IsVisible() const;
 	int					GetChildCount() const;
 	void				Paint(CDC& dc, CRect& rc, BOOL bTarget, COLORREF crBack = CLR_NONE) const;
-	void				AddXML(CXMLElement* pXML);
+	void				AddXML(const CXMLElement* pXML);
 
 };
 

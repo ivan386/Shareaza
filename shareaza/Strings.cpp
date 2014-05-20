@@ -308,7 +308,7 @@ CString URLEncode(LPCTSTR pszInputT)
 	for ( ; *pszInput ; pszInput++ )
 	{
 		// If the character code is 32 or less, more than 127, or in the unsafe list
-		if ( *pszInput <= 32 || *pszInput > 127 || strchr( pszUnsafe, *pszInput ) != NULL )
+		if ( *pszInput <= 32 || strchr( pszUnsafe, *pszInput ) != NULL )
 		{
 			// Write a three letter code for it like %20 in the output text
 			*pszOutput++ = _T('%');

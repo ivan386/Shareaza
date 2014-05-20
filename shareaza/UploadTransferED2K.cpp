@@ -1,7 +1,7 @@
 //
 // UploadTransferED2K.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2013.
+// Copyright (c) Shareaza Development Team, 2002-2014.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -160,7 +160,7 @@ void CUploadTransferED2K::Close(UINT nError)
 		return;
 	}
 
-	if ( m_pBaseFile != NULL && m_pClient->IsOnline() )
+	if ( m_pBaseFile != NULL && m_pClient && m_pClient->IsOnline() )
 	{
 		if ( m_nState == upsUploading || m_nState == upsQueued )
 		{

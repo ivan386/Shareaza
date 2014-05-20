@@ -1,7 +1,7 @@
 //
 // CtrlUploads.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2011.
+// Copyright (c) Shareaza Development Team, 2002-2014.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -969,7 +969,7 @@ void CUploadsCtrl::PaintFile(CDC& dc, const CRect& rcRow, CUploadQueue* /*pQueue
 	ASSUME_LOCK( Transfers.m_pSection );
 
 	CUploadTransfer* pTransfer = pFile->GetActive();
-	int nFlagImage = Flags.GetFlagIndex( pTransfer->m_sCountry );
+	int nFlagImage = pTransfer ? Flags.GetFlagIndex( pTransfer->m_sCountry ) : -1;
 	COLORREF crNatural		= CoolInterface.m_crWindow;
 	COLORREF crBack			= pFile->m_bSelected ? CoolInterface.m_crHighlight : crNatural;
 	COLORREF crLeftAligned	= crBack;

@@ -1,7 +1,7 @@
 //
 // BTClient.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2013.
+// Copyright (c) Shareaza Development Team, 2002-2014.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -652,7 +652,7 @@ CString CBTClient::GetAzureusStyleUserAgent(LPBYTE pVendor, size_t nVendor)
 		}
 		if ( sUserAgent.IsEmpty() ) 
 			// If we don't want the version, etc.
-			sUserAgent.Format( _T("BitTorrent (%c%c)"), pVendor[ 0 ], pVendor[ 1 ] );
+			sUserAgent.Format( _T("BitTorrent (%c%c)"), (TCHAR)pVendor[ 0 ], (TCHAR)pVendor[ 1 ] );
 	}
 	return sUserAgent;
 }

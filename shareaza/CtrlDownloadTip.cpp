@@ -1,7 +1,7 @@
 //
 // CtrlDownloadTip.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2012.
+// Copyright (c) Shareaza Development Team, 2002-2014.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -470,9 +470,7 @@ void CDownloadTipCtrl::OnPaint(CDC* pDC, CDownload* pDownload)
 		DrawText( pDC, &pt, strFormat, 3 );
 		DrawText( pDC, &pt, strETA, m_nStatWidth );
 		pt.y += TIP_TEXTHEIGHT;
-	}
-	if ( ! pDownload->IsSeeding() )
-	{	// Volume downloaded. Not for seeding torrents
+		// Volume downloaded. Not for seeding torrents
 		LoadString( strFormat, IDS_DLM_VOLUME_DOWNLOADED );
 		DrawText( pDC, &pt, strFormat, 3 );
 		DrawText( pDC, &pt, strVolume, m_nStatWidth );

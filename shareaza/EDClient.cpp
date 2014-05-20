@@ -1,7 +1,7 @@
 //
 // EDClient.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2013.
+// Copyright (c) Shareaza Development Team, 2002-2014.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -1366,7 +1366,7 @@ void CEDClient::DetermineUserAgent()
 			{
 				CString strVersion;
 				strVersion.Format( _T("%u"), m_nVersion );
-				m_sUserAgent.AppendFormat( _T("v%c.%c.%c"), strVersion[0], strVersion[2], strVersion[4] );
+				m_sUserAgent.AppendFormat( _T("v%c.%c.%c"), (TCHAR)strVersion[0], (TCHAR)strVersion[2], (TCHAR)strVersion[4] );
 			}
 			else if ( m_nVersion >= 1100 )	// Unknown
 				m_sUserAgent.AppendFormat( _T("%u"), m_nVersion );
