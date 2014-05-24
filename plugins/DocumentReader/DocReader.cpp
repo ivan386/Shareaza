@@ -751,7 +751,7 @@ CComBSTR CDocReader::GetMetadataXML(unzFile pFile, const char* pszFile)
 				// Prepare a buffer to read into
 				UINT nBufferSize = pInfo.uncompressed_size;
 				if ( nBufferSize > 8192 ) nBufferSize = 8192;
-				CHAR* pBuffer = new CHAR[ nBufferSize ];
+				CHAR* pBuffer = new (std::nothrow) CHAR[ nBufferSize ];
 				if ( pBuffer )
 				{
 					// Extract the file into buffer
@@ -768,7 +768,7 @@ CComBSTR CDocReader::GetMetadataXML(unzFile pFile, const char* pszFile)
 					if ( nError == UNZ_OK )
 					{
 						// Just make a buffer enough to fit string
-						WCHAR* pszUnicode = new WCHAR[ sXML.GetLength() + 1 ];
+						WCHAR* pszUnicode = new (std::nothrow) WCHAR[ sXML.GetLength() + 1 ];
 						if ( pszUnicode )
 						{
 							ConvertToUnicodeEx( sXML, (DWORD)sXML.GetLength(),
@@ -1111,7 +1111,7 @@ STDMETHODIMP CDocReader::GetOOThumbnail(BSTR bsFile, IMAGESERVICEDATA* pParams, 
 		{
 			// Prepare a buffer to read into
 			UINT nBufferSize = 8192;
-			CHAR* pBuffer = new CHAR[ nBufferSize ];
+			CHAR* pBuffer = new (std::nothrow) CHAR[ nBufferSize ];
 			if ( pBuffer )
 			{
 				CComPtr< ILockBytes > pLockBuffer;
@@ -1233,10 +1233,10 @@ HBITMAP CDocReader::GetBitmapFromMetaFile(PICTDESC pds, int nResolution, WORD wB
 	nInfoSize = sizeof( BITMAPINFOHEADER );
 	int nColorTableSize = 0;
 	if ( wBitsPerSample <= 8 )
-		nColorTableSize = sizeof(RGBQUAD) * ( 1 << wBitsPerSample && 0xffff );
+		nColorTableSize = sizeof(RGBQUAD) * ( 1 << wBitsPerSample );
 	nInfoSize += nColorTableSize;
 
-	BITMAPINFO* bmInfo = (LPBITMAPINFO) new BYTE[ nInfoSize ];
+	BITMAPINFO* bmInfo = (LPBITMAPINFO) new (std::nothrow) BYTE[ nInfoSize ];
 	
 	if ( bmInfo == NULL ) return NULL;
 	ZeroMemory( bmInfo, nInfoSize );
@@ -1332,10 +1332,10 @@ HBITMAP CDocReader::GetBitmapFromEnhMetaFile(PICTDESC pds, int nResolution, WORD
 	nInfoSize = sizeof( BITMAPINFOHEADER );
 	int nColorTableSize = 0;
 	if ( wBitsPerSample <= 8 )
-		nColorTableSize = sizeof(RGBQUAD) * ( 1 << wBitsPerSample && 0xffff );
+		nColorTableSize = sizeof(RGBQUAD) * ( 1 << wBitsPerSample );
 	nInfoSize += nColorTableSize;
 
-	BITMAPINFO* bmInfo = (LPBITMAPINFO) new BYTE[ nInfoSize ];
+	BITMAPINFO* bmInfo = (LPBITMAPINFO) new (std::nothrow) BYTE[ nInfoSize ];
 	
 	if ( bmInfo == NULL ) return NULL;
 	ZeroMemory( bmInfo, nInfoSize );
@@ -1743,7 +1743,7 @@ HRESULT CDocReader::
 
     if (m_pSummProps == NULL)
     {
-        m_pSummProps = new CSummaryProperties(m_bOnlyThumb);
+        m_pSummProps = new (std::nothrow) CSummaryProperties(m_bOnlyThumb);
         if (m_pSummProps)
             { hr = m_pSummProps->LoadProperties(m_pPropSetStg, m_fReadOnly, m_dwFlags); }
         else hr = E_OUTOFMEMORY;
@@ -2573,7 +2573,7 @@ CDocProperty* CDocReader::CDocumentProperties::
     if ( ( pitem == NULL ) && (plast) && (fAppendNew) )
     {
      // Create the item...
-        pitem = new CDocProperty();
+        pitem = new (std::nothrow) CDocProperty();
         if ( pitem )
         {
             VARIANT var; var.vt = VT_EMPTY;

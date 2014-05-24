@@ -129,6 +129,7 @@
       <SubSystem>Windows</SubSystem>
       <BaseAddress>0x1af20000</BaseAddress>
       <TargetMachine>MachineX86</TargetMachine>
+      <AdditionalOptions>nothrownew.obj %(AdditionalOptions)</AdditionalOptions>
     </Link>
     <Bscmake>
       <OutputFile>
@@ -175,6 +176,7 @@
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <SubSystem>Windows</SubSystem>
       <TargetMachine>MachineX64</TargetMachine>
+      <AdditionalOptions>nothrownew.obj %(AdditionalOptions)</AdditionalOptions>
     </Link>
     <Bscmake>
       <OutputFile>
@@ -229,6 +231,7 @@
       <SetChecksum>true</SetChecksum>
       <BaseAddress>0x1af20000</BaseAddress>
       <TargetMachine>MachineX86</TargetMachine>
+      <AdditionalOptions>nothrownew.obj %(AdditionalOptions)</AdditionalOptions>
     </Link>
     <Bscmake>
       <OutputFile>
@@ -280,6 +283,7 @@
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <SetChecksum>true</SetChecksum>
       <TargetMachine>MachineX64</TargetMachine>
+      <AdditionalOptions>nothrownew.obj %(AdditionalOptions)</AdditionalOptions>
     </Link>
     <Bscmake>
       <OutputFile>

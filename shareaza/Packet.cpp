@@ -1,7 +1,7 @@
 //
 // Packet.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2013.
+// Copyright (c) Shareaza Development Team, 2002-2014.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -323,13 +323,16 @@ BYTE* CPacket::WriteGetPointer(DWORD nLength, DWORD nOffset)
 	if ( m_nLength + nLength > m_nBuffer )
 	{
 		// Increase the size of the buffer by the needed length, or 128 bytes, whichever is bigger
-		m_nBuffer += max( nLength, PACKET_GROW ); // Packet grow is 128 bytes
-		LPBYTE pNew = new BYTE[ m_nBuffer ];             // Allocate a new buffer of that size
+		m_nBuffer += max( nLength, PACKET_GROW );		// Packet grow is 128 bytes
+		LPBYTE pNew = new BYTE[ m_nBuffer ];			// Allocate a new buffer of that size
 		if ( pNew == NULL )
 			return NULL;
-		CopyMemory( pNew, m_pBuffer, m_nLength );        // Copy all the memory of the old buffer into the new bigger one
-		if ( m_pBuffer ) delete [] m_pBuffer;            // Free the old buffer
-		m_pBuffer = pNew;                                // Point this packet object at its new, bigger buffer
+		if ( m_pBuffer )
+		{
+			CopyMemory( pNew, m_pBuffer, m_nLength );	// Copy all the memory of the old buffer into the new bigger one
+			delete [] m_pBuffer;						// Free the old buffer
+		}
+		m_pBuffer = pNew;								// Point this packet object at its new, bigger buffer
 	}
 
 	// If the offset isn't at the very end of the buffer

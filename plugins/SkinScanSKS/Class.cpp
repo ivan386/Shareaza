@@ -1,7 +1,7 @@
 //
 // Class.cpp : Implementation of CClass
 //
-// Copyright (c) Shareaza Development Team, 2007.
+// Copyright (c) Shareaza Development Team, 2007-2014.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -98,7 +98,7 @@ STDMETHODIMP CSkinScanSKS::Process (
 				return E_UNEXPECTED;
 			}
 
-			LPSTR pszXML = new CHAR[ pInfo.uncompressed_size + 1 ];
+			LPSTR pszXML = new (std::nothrow) CHAR[ pInfo.uncompressed_size + 1 ];
 			if ( ! pszXML )
 			{
 				unzCloseCurrentFile( pFile );

@@ -952,8 +952,11 @@ CBrowseTreeItem* CBrowseTreeItem::Add(LPCTSTR pszName)
 
 		CBrowseTreeItem** pList = new CBrowseTreeItem*[ m_nBuffer ];
 
-		if ( m_nCount ) CopyMemory( pList, m_pList, m_nCount * sizeof( CBrowseTreeItem* ) );
-		if ( m_pList ) delete [] m_pList;
+		if ( m_pList )
+		{
+			if ( m_nCount ) CopyMemory( pList, m_pList, m_nCount * sizeof( CBrowseTreeItem* ) );
+			delete [] m_pList;
+		}
 
 		m_pList = pList;
 	}
@@ -991,8 +994,11 @@ CBrowseTreeItem* CBrowseTreeItem::Add(CBrowseTreeItem* pNewItem)
 
 		CBrowseTreeItem** pList = new CBrowseTreeItem*[ m_nBuffer ];
 
-		if ( m_nCount ) CopyMemory( pList, m_pList, m_nCount * sizeof( CBrowseTreeItem* ) );
-		if ( m_pList ) delete [] m_pList;
+		if ( m_pList )
+		{
+			if ( m_nCount ) CopyMemory( pList, m_pList, m_nCount * sizeof( CBrowseTreeItem* ) );
+			delete [] m_pList;
+		}
 
 		m_pList = pList;
 	}

@@ -1,7 +1,7 @@
 //
 // CtrlLibraryDetailView.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2010.
+// Copyright (c) Shareaza Development Team, 2002-2014.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -344,8 +344,11 @@ void CLibraryDetailView::Update()
 			{
 				m_nBuffer += 64;
 				LDVITEM* pList = new LDVITEM[ m_nBuffer ];
-				if ( m_nList ) CopyMemory( pList, m_pList, m_nList * sizeof(LDVITEM) );
-				if ( m_pList ) delete [] m_pList;
+				if ( m_pList )
+				{
+					if ( m_nList ) CopyMemory( pList, m_pList, m_nList * sizeof(LDVITEM) );
+					delete [] m_pList;
+				}
 				ZeroMemory( pList + m_nList, ( m_nBuffer - m_nList ) * sizeof(LDVITEM) );
 				m_pList = pList;
 			}

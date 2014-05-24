@@ -127,6 +127,7 @@
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <BaseAddress>0x22000000</BaseAddress>
       <TargetMachine>MachineX86</TargetMachine>
+      <AdditionalOptions>nothrownew.obj %(AdditionalOptions)</AdditionalOptions>
     </Link>
     <Bscmake>
       <OutputFile>
@@ -172,6 +173,7 @@
       <ModuleDefinitionFile>DocumentReader.def</ModuleDefinitionFile>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <TargetMachine>MachineX64</TargetMachine>
+      <AdditionalOptions>nothrownew.obj %(AdditionalOptions)</AdditionalOptions>
     </Link>
     <Bscmake>
       <OutputFile>
@@ -228,6 +230,7 @@
       <SetChecksum>true</SetChecksum>
       <BaseAddress>0x22000000</BaseAddress>
       <TargetMachine>MachineX86</TargetMachine>
+      <AdditionalOptions>nothrownew.obj %(AdditionalOptions)</AdditionalOptions>
     </Link>
     <Bscmake>
       <OutputFile>
@@ -283,6 +286,7 @@
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <SetChecksum>true</SetChecksum>
       <TargetMachine>MachineX64</TargetMachine>
+      <AdditionalOptions>nothrownew.obj %(AdditionalOptions)</AdditionalOptions>
     </Link>
     <Bscmake>
       <OutputFile>

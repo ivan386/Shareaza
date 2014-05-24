@@ -1,7 +1,7 @@
 //
 // SWFReader.cpp : Implementation of CSWFReader
 //
-// Copyright (c) Nikolay Raspopov, 2005-2012.
+// Copyright (c) Nikolay Raspopov, 2005-2014.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // GFL Library, GFL SDK and XnView
@@ -189,7 +189,7 @@ unsigned WINAPI LoadSWF (void* filename)
 								Sleep (0);
 							}
 							hr = E_OUTOFMEMORY;
-							_Data = new MY_DATA;	
+							_Data = new (std::nothrow) MY_DATA;	
 							if (_Data) {
 								_Data->hBitmap = NULL;
 								ZeroMemory (&_Data->bmiHeader, sizeof (_Data->bmiHeader));

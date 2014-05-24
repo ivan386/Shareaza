@@ -1,7 +1,7 @@
 //
 // StdAfx.cpp
 //
-// Copyright (c) Shareaza Development Team, 2007.
+// Copyright (c) Shareaza Development Team, 2007-2014.
 // This file is part of Shareaza Torrent Wizard (shareaza.sourceforge.net).
 //
 // Shareaza Torrent Wizard is free software; you can redistribute it
@@ -20,3 +20,33 @@
 //
 
 #include "StdAfx.h"
+
+// Disable exceptions if the memory allocation fails
+
+class NoThrowNew
+{
+public:
+	NoThrowNew() throw()
+	{
+		std::set_new_handler( &NoThrowNew::OutOfMemoryHandlerStd );
+		_set_new_handler( &NoThrowNew::OutOfMemoryHandler );
+		AfxSetNewHandler( &NoThrowNew::OutOfMemoryHandlerAfx );
+	}
+
+private:
+	static void __cdecl OutOfMemoryHandlerStd() throw()
+	{
+	}
+
+	static int __cdecl OutOfMemoryHandler(size_t /* nSize */) throw()
+	{
+		return 0;
+	}
+
+	static int __cdecl OutOfMemoryHandlerAfx(size_t /* nSize */) throw()
+	{
+		return 0;
+	}
+};
+
+NoThrowNew initNoThrowNew;

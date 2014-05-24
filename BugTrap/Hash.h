@@ -143,7 +143,7 @@ void CHash<KEY_TYPE, DATA_TYPE, KEY_INSTANCE_TRAITS, DATA_INSTANCE_TRAITS, COMPA
 	m_pGarbage = NULL;
 	m_nHashSize = nHashSize;
 	m_nCount = 0;
-	m_pHash = new CHashItem*[nHashSize];
+	m_pHash = new (std::nothrow) CHashItem*[nHashSize];
 	if (! m_pHash)
 		RaiseException(STATUS_NO_MEMORY, 0, 0, NULL);
 }
@@ -335,7 +335,7 @@ DATA_TYPE& CHash<KEY_TYPE, DATA_TYPE, KEY_INSTANCE_TRAITS, DATA_INSTANCE_TRAITS,
 		}
 		else
 		{
-			pItem = (CHashItem*)new BYTE[sizeof(CHashItem)];
+			pItem = (CHashItem*)new (std::nothrow) BYTE[sizeof(CHashItem)];
 			if (! pItem)
 				RaiseException(STATUS_NO_MEMORY, 0, 0, NULL);
 		}

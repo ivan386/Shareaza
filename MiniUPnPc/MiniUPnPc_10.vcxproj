@@ -92,11 +92,12 @@
       <MinimalRebuild>false</MinimalRebuild>
       <RuntimeTypeInfo>false</RuntimeTypeInfo>
       <AdditionalIncludeDirectories>$(ProjectDir);$(ProjectDir)\miniupnpc;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
+      <ExceptionHandling>false</ExceptionHandling>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <ModuleDefinitionFile>miniupnpc\miniupnpc.def</ModuleDefinitionFile>
       <AdditionalDependencies>ws2_32.lib;IPHlpApi.Lib;%(AdditionalDependencies)</AdditionalDependencies>
       <DelayLoadDLLs>ws2_32.dll;IPHlpApi.dll;%(DelayLoadDLLs)</DelayLoadDLLs>
     </Link>
@@ -110,11 +111,12 @@
       <MinimalRebuild>false</MinimalRebuild>
       <RuntimeTypeInfo>false</RuntimeTypeInfo>
       <AdditionalIncludeDirectories>$(ProjectDir);$(ProjectDir)\miniupnpc;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
+      <ExceptionHandling>false</ExceptionHandling>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <ModuleDefinitionFile>miniupnpc\miniupnpc.def</ModuleDefinitionFile>
       <AdditionalDependencies>ws2_32.lib;IPHlpApi.Lib;%(AdditionalDependencies)</AdditionalDependencies>
       <DelayLoadDLLs>ws2_32.dll;IPHlpApi.dll;%(DelayLoadDLLs)</DelayLoadDLLs>
     </Link>
@@ -132,13 +134,14 @@
       <AdditionalIncludeDirectories>$(ProjectDir);$(ProjectDir)\miniupnpc;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <InlineFunctionExpansion>AnySuitable</InlineFunctionExpansion>
       <FavorSizeOrSpeed>Speed</FavorSizeOrSpeed>
+      <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
+      <ExceptionHandling>false</ExceptionHandling>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
-      <ModuleDefinitionFile>miniupnpc\miniupnpc.def</ModuleDefinitionFile>
       <AdditionalDependencies>ws2_32.lib;IPHlpApi.Lib;%(AdditionalDependencies)</AdditionalDependencies>
       <DelayLoadDLLs>ws2_32.dll;IPHlpApi.dll;%(DelayLoadDLLs)</DelayLoadDLLs>
       <SetChecksum>true</SetChecksum>
@@ -156,13 +159,14 @@
       <AdditionalIncludeDirectories>$(ProjectDir);$(ProjectDir)\miniupnpc;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <InlineFunctionExpansion>AnySuitable</InlineFunctionExpansion>
       <FavorSizeOrSpeed>Speed</FavorSizeOrSpeed>
+      <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
+      <ExceptionHandling>false</ExceptionHandling>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
-      <ModuleDefinitionFile>miniupnpc\miniupnpc.def</ModuleDefinitionFile>
       <AdditionalDependencies>ws2_32.lib;IPHlpApi.Lib;%(AdditionalDependencies)</AdditionalDependencies>
       <DelayLoadDLLs>ws2_32.dll;IPHlpApi.dll;%(DelayLoadDLLs)</DelayLoadDLLs>
       <SetChecksum>true</SetChecksum>

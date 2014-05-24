@@ -178,8 +178,11 @@ void CLibraryThumbView::Update()
 			{
 				m_nBuffer += 64;
 				CLibraryThumbItem** pNewList = new CLibraryThumbItem*[ m_nBuffer ];
-				if ( m_nCount ) CopyMemory( pNewList, m_pList, m_nCount * sizeof( CLibraryThumbItem* ) );
-				if ( m_pList ) delete [] m_pList;
+				if ( m_pList )
+				{
+					if ( m_nCount ) CopyMemory( pNewList, m_pList, m_nCount * sizeof( CLibraryThumbItem* ) );
+					delete [] m_pList;
+				}
 				m_pList = pNewList;
 			}
 

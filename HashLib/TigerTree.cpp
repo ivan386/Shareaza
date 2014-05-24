@@ -1,7 +1,7 @@
 //
 // TigerTree.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2011.
+// Copyright (c) Shareaza Development Team, 2002-2014.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -738,7 +738,7 @@ void CTigerTree::SetupAndAllocate(uint32 nHeight, uint64 nLength)
 	m_nBaseUsed	= (uint32)( nCount / m_nBlockCount );
 	if ( nCount % m_nBlockCount ) m_nBaseUsed++;
 
-	m_pNode		= new CTigerNode[ --m_nNodeCount ];
+	m_pNode		= new (std::nothrow) CTigerNode[ --m_nNodeCount ];
 	m_nNodePos	= 0;
 }
 
@@ -806,7 +806,7 @@ void CTigerTree::Load(const uchar* pBuf)
 
 	if ( m_nHeight )
 	{
-		CTigerNode* pNode = new CTigerNode[ m_nNodeCount ];
+		CTigerNode* pNode = new (std::nothrow) CTigerNode[ m_nNodeCount ];
 		if ( pNode )
 		{
 			m_pNode = pNode;
@@ -886,7 +886,7 @@ void CTigerTree::BeginFile(uint32 nHeight, uint64 nLength)
 
 	SetupAndAllocate( nHeight, nLength );
 
-	if ( m_pStackBase == NULL ) m_pStackBase = new CTigerNode[ STACK_SIZE ];
+	if ( m_pStackBase == NULL ) m_pStackBase = new (std::nothrow) CTigerNode[ STACK_SIZE ];
 	m_pStackTop	= m_pStackBase;
 	m_nBlockPos = 0;
 }
@@ -981,7 +981,7 @@ void CTigerTree::BeginBlockTest()
 {
 	CSectionLock oLock( &m_pSection );
 
-	if ( m_pStackBase == NULL ) m_pStackBase = new CTigerNode[ STACK_SIZE ];
+	if ( m_pStackBase == NULL ) m_pStackBase = new (std::nothrow) CTigerNode[ STACK_SIZE ];
 	m_pStackTop	= m_pStackBase;
 	m_nBlockPos = 0;
 }

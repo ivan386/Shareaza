@@ -140,7 +140,7 @@ public:
 	{
 		std::set_new_handler( &NoThrowNew::OutOfMemoryHandlerStd );
 		_set_new_handler( &NoThrowNew::OutOfMemoryHandler );
-		AfxSetNewHandler( &NoThrowNew::OutOfMemoryHandler );
+		AfxSetNewHandler( &NoThrowNew::OutOfMemoryHandlerAfx );
 	}
 
 private:
@@ -149,6 +149,11 @@ private:
 	}
 
 	static int __cdecl OutOfMemoryHandler(size_t /* nSize */) throw()
+	{
+		return 0;
+	}
+
+	static int __cdecl OutOfMemoryHandlerAfx(size_t /* nSize */) throw()
 	{
 		return 0;
 	}
