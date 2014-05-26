@@ -142,6 +142,8 @@ void CSettings::Load()
 	Add( _T("Interface"), _T("TipSearch"), &Interface.TipSearch, true );
 	Add( _T("Interface"), _T("TipUploads"), &Interface.TipUploads, true );
 	Add( _T("Interface"), _T("Snarl"), &Interface.Snarl, false );
+	Add( _T("Interface"), _T("SearchWindowsLimit"), &Interface.SearchWindowsLimit, 10, 1, 0, 50, _T(" windows") );
+	Add( _T("Interface"), _T("BrowseWindowsLimit"), &Interface.BrowseWindowsLimit, 10, 1, 0, 50, _T(" windows") );
 
 	Add( _T("Windows"), _T("RunWizard"), &Windows.RunWizard, false );
 	Add( _T("Windows"), _T("RunWarnings"), &Windows.RunWarnings, false );

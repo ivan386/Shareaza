@@ -106,6 +106,8 @@ public:
 		bool		TipNeighbours;
 		bool		TipMedia;
 		bool		Snarl;						// Use Snarl notifications - http://www.getsnarl.info/
+		DWORD		SearchWindowsLimit;			// Maximum amount of opened Search windows
+		DWORD		BrowseWindowsLimit;			// Maximum amount of opened Browse Host windows
 	} Interface;
 
 	struct sWindows
