@@ -214,15 +214,16 @@ CShareazaApp::CShareazaApp() :
 ,	m_hShlWapi				( NULL )
 ,	m_pfnAssocIsDangerous	( NULL )
 
-,	m_hShell32				( NULL )
-,	m_pfnSHGetFolderPathW	( NULL )
-,	m_pfnSHGetKnownFolderPath( NULL )
-,	m_pfnSHCreateItemFromParsingName( NULL )
+,	m_hShell32									( NULL )
+,	m_pfnSHGetFolderPathW						( NULL )
+,	m_pfnSHGetKnownFolderPath					( NULL )
+,	m_pfnSHCreateItemFromParsingName			( NULL )
+,	m_pfnSHGetPropertyStoreFromParsingName		( NULL )
 ,	m_pfnSetCurrentProcessExplicitAppUserModelID( NULL )
-,	m_pfnSHGetImageList		( NULL )
+,	m_pfnSHGetImageList							( NULL )
 
-,	m_hUser32				( NULL )
-,	m_pfnChangeWindowMessageFilter( NULL )
+,	m_hUser32									( NULL )
+,	m_pfnChangeWindowMessageFilter				( NULL )
 
 ,	m_hGeoIP				( NULL )
 ,	m_pGeoIP				( NULL )
@@ -1124,6 +1125,7 @@ void CShareazaApp::InitResources()
 		(FARPROC&)m_pfnSHGetFolderPathW = GetProcAddress( m_hShell32, "SHGetFolderPathW" );
 		(FARPROC&)m_pfnSHGetKnownFolderPath = GetProcAddress( m_hShell32, "SHGetKnownFolderPath" );
 		(FARPROC&)m_pfnSHCreateItemFromParsingName = GetProcAddress( m_hShell32, "SHCreateItemFromParsingName" );
+		(FARPROC&)m_pfnSHGetPropertyStoreFromParsingName  = GetProcAddress( m_hShell32, "SHGetPropertyStoreFromParsingName" );
 		(FARPROC&)m_pfnSetCurrentProcessExplicitAppUserModelID = GetProcAddress( m_hShell32, "SetCurrentProcessExplicitAppUserModelID" );
 		(FARPROC&)m_pfnSHGetImageList = GetProcAddress( m_hShell32, MAKEINTRESOURCEA(727) );
 	}

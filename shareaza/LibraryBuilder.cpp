@@ -439,6 +439,8 @@ void CLibraryBuilder::OnRun()
 					nAttempts = 0;
 					SetFilePointer( hFile, 0, NULL, FILE_BEGIN );
 
+					ExtractProperties( nIndex, m_sPath );
+
 					try
 					{
 						ExtractMetadata( nIndex, m_sPath, hFile );
@@ -678,22 +680,30 @@ bool CLibraryBuilder::HashFile(LPCTSTR szPath, HANDLE hFile)
 //////////////////////////////////////////////////////////////////////
 // CLibraryBuilder metadata submission (threaded)
 
-int CLibraryBuilder::SubmitMetadata(DWORD nIndex, LPCTSTR pszSchemaURI, CXMLElement* pXML)
+int CLibraryBuilder::SubmitMetadata(DWORD nIndex, LPCTSTR pszSchemaURI, CXMLElement* pXMLElement)
 {
-	CSchemaPtr pSchema = SchemaCache.Get( pszSchemaURI );
-
-	if ( pSchema == NULL )
-	{
-		delete pXML;
+	if ( ! pXMLElement )
 		return 0;
-	}
+
+	CAutoPtr< CXMLElement > pXML( pXMLElement );
+
+	if ( pXML->GetAttributeCount() == 0 && pXML->GetElementCount() == 0 )
+		return 0;
+
+	if ( pszSchemaURI == NULL )
+		return 0;
+
+	CSchemaPtr pSchema = SchemaCache.Get( pszSchemaURI );
+	if ( pSchema == NULL )
+		return 0;
 
 	// Validate schema
-	auto_ptr< CXMLElement > pBase( pSchema->Instantiate( true ) );
+	CAutoPtr< CXMLElement > pBase( pSchema->Instantiate( true ) );
 	pBase->AddElement( pXML );
-	if ( ! pSchema->Validate( pBase.get(), true ) )
-		return 0;
+	BOOL bValid = pSchema->Validate( pBase, true );
 	pXML->Detach();
+	if ( ! bValid )
+		return 0;
 
 	int nAttributeCount = pXML->GetAttributeCount();
 
@@ -701,15 +711,13 @@ int CLibraryBuilder::SubmitMetadata(DWORD nIndex, LPCTSTR pszSchemaURI, CXMLElem
 	if ( CLibraryFile* pFile = Library.LookupFile( nIndex ) )
 	{
 		BOOL bMetadataAuto = pFile->m_bMetadataAuto;
-		if ( pFile->MergeMetadata( pXML, TRUE ) )
+		if ( pFile->MergeMetadata( pXML.m_p, TRUE ) )
 		{
 			if ( bMetadataAuto )
 				pFile->m_bMetadataAuto = TRUE;
 			Library.Update();
 		}
 	}
-
-	delete pXML;
 
 	return nAttributeCount;
 }
@@ -1141,12 +1149,17 @@ bool CLibraryBuilder::RefreshMetadata(const CString& sPath)
 		if ( ! pFile )
 			return false;
 		nIndex = pFile->m_nIndex;
+
+		pFile->ClearMetadata();
 		pFile->m_bMetadataAuto = TRUE;
 	}
 
 	theApp.Message( MSG_DEBUG, _T("Refreshing: %s"), (LPCTSTR)sPath );
 
 	bool bResult = false;
+
+	bResult |= ExtractProperties( nIndex, sPath );
+
 	HANDLE hFile = CreateFile( CString( _T("\\\\?\\") ) + sPath, GENERIC_READ,
 		 FILE_SHARE_READ | FILE_SHARE_DELETE, NULL,
 		 OPEN_EXISTING, FILE_ATTRIBUTE_NORMAL | FILE_FLAG_SEQUENTIAL_SCAN, NULL );

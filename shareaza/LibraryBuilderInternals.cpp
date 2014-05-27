@@ -49,6 +49,151 @@ static char THIS_FILE[]=__FILE__;
 #define ReadValueOrFail(hFile, nID, nRead, nValue, nFile) \
 	if ( ! ReadFile( hFile, &nID, 4, &nRead, NULL ) || nRead != 4 || nID != nValue ) return false;
 
+LPCTSTR GetColorsByBits(DWORD nBits)
+{
+	switch ( nBits )
+	{
+	case 1:
+		return _T("2");
+	case 2:
+		return _T("4");
+	case 4:
+		return _T("16");
+	case 8:
+		return _T("256");
+	case 16:
+		return _T("64K");
+	case 24:
+		return _T("16.7M");
+	case 32:
+		return _T("16.7M + Alpha");
+	default:
+		return _T("");
+	}
+}
+
+bool PropGetValue(IPropertyStore* pStore, const PROPERTYKEY& key, DWORD& val)
+{
+	CComPropVariant prop;
+	if ( pStore && SUCCEEDED( pStore->GetValue( key, &prop ) ) && prop.vt == VT_UI4 )
+	{
+		val = prop.ulVal;
+		return true;
+	}
+	return false;
+}
+
+bool PropGetValue(IPropertyStore* pStore, const PROPERTYKEY& key, LONG& val)
+{
+	CComPropVariant prop;
+	if ( pStore && SUCCEEDED( pStore->GetValue( key, &prop ) ) && prop.vt == VT_I4 )
+	{
+		val = prop.lVal;
+		return true;
+	}
+	return false;
+}
+
+bool PropGetValue(IPropertyStore* pStore, const PROPERTYKEY& key, QWORD& val)
+{
+	CComPropVariant prop;
+	if ( pStore && SUCCEEDED( pStore->GetValue( key, &prop ) ) && prop.vt == VT_UI8 )
+	{
+		val = prop.uhVal.QuadPart;
+		return true;
+	}
+	return false;
+}
+
+bool PropGetValue(IPropertyStore* pStore, const PROPERTYKEY& key, bool& val)
+{
+	CComPropVariant prop;
+	if ( pStore && SUCCEEDED( pStore->GetValue( key, &prop ) ) && prop.vt == VT_BOOL )
+	{
+		val = ( prop.boolVal != VARIANT_FALSE );
+		return true;
+	}
+	return false;
+}
+
+bool PropGetValue(IPropertyStore* pStore, const PROPERTYKEY& key, CString& val)
+{
+	val.Empty();
+
+	CComPropVariant prop;
+	if ( pStore && SUCCEEDED( pStore->GetValue( key, &prop ) ) )
+	{
+		switch ( prop.vt )
+		{
+		case VT_BSTR:
+			val = CW2T( (LPCWSTR)prop.bstrVal );
+			break;
+
+		case VT_LPWSTR:
+			val = CW2T( prop.pwszVal );
+			break;
+
+		case VT_LPSTR:
+			val = CA2T( prop.pszVal );
+			break;
+
+		case VT_ARRAY | VT_BSTR:
+			{
+				CComSafeArray< BSTR > arr;
+				if ( SUCCEEDED( arr.Attach( prop.parray ) ) )
+				{
+					ULONG nCount = arr.GetCount();
+					for ( ULONG i = 0; i < nCount; ++i )
+					{
+						CString str( CW2T( (LPCWSTR)arr.GetAt( i ) ) );
+						str.Trim();
+						if ( str.IsEmpty() ) continue;
+						if ( ! val.IsEmpty() ) val += _T(", ");
+						val += str;
+					}
+					arr.Detach();
+				}
+			}
+			break;
+
+		case VT_VECTOR | VT_BSTR:
+			for ( ULONG i = 0; i < prop.cabstr.cElems; ++i )
+			{
+				CString str( CW2T( (LPCWSTR)prop.cabstr.pElems[ i ] ) );
+				str.Trim();
+				if ( str.IsEmpty() ) continue;
+				if ( ! val.IsEmpty() ) val += _T(", ");
+				val += str;
+			}
+			break;
+
+		case VT_VECTOR | VT_LPWSTR:
+			for ( ULONG i = 0; i < prop.calpwstr.cElems; ++i )
+			{
+				CString str( CW2T( prop.calpwstr.pElems[ i ] ) );
+				str.Trim();
+				if ( str.IsEmpty() ) continue;
+				if ( ! val.IsEmpty() ) val += _T(", ");
+				val += str;
+			}
+			break;
+
+		case VT_VECTOR | VT_LPSTR:
+			for ( ULONG i = 0; i < prop.calpstr.cElems; ++i )
+			{
+				CString str( CA2T( prop.calpstr.pElems[ i ] ) );
+				str.Trim();
+				if ( str.IsEmpty() ) continue;
+				if ( ! val.IsEmpty() ) val += _T(", ");
+				val += str;
+			}
+			break;
+		}
+	}
+	val.Trim();
+	return ! val.IsEmpty();
+}
+
 //////////////////////////////////////////////////////////////////////
 // CLibraryBuilderInternals extract metadata (threaded)
 
@@ -183,6 +328,213 @@ bool CLibraryBuilderInternals::ExtractMetadata(DWORD nIndex, const CString& strP
 
 	LibraryBuilder.SubmitCorrupted( nIndex );
 	return false;
+}
+
+bool CLibraryBuilderInternals::ExtractProperties(DWORD nIndex, const CString& strPath)
+{
+	bool bSuccess = false;
+
+	if ( theApp.m_pfnSHGetPropertyStoreFromParsingName )
+	{
+		CComPtr< IPropertyStore > pStore;
+		HRESULT hr = theApp.m_pfnSHGetPropertyStoreFromParsingName( CT2W( strPath ), NULL, GPS_BESTEFFORT, __uuidof( IPropertyStore ), (void**)&pStore );
+		if ( SUCCEEDED( hr ) )
+		{
+			LPCTSTR szSchema = NULL;
+			CAutoPtr< CXMLElement > pXML;
+
+			LONG nType;
+			if ( PropGetValue( pStore, PKEY_PerceivedType, nType ) )
+			{
+				switch ( nType )
+				{
+				case PERCEIVED_TYPE_DOCUMENT:
+					szSchema = CSchema::uriDocument;
+					pXML.Attach( new CXMLElement( NULL, _T("wordprocessing") ) );
+					if ( pXML )
+					{
+						LONG nPages;
+						if ( PropGetValue( pStore, PKEY_Document_PageCount, nPages ) && nPages > 0 )
+						{
+							CString strItem;
+							strItem.Format( _T("%lu"), nPages );
+							pXML->AddAttribute( _T("pages"), strItem );
+						}
+
+						CString strFormat;
+						if ( PropGetValue( pStore, PKEY_ItemTypeText, strFormat ) )
+							pXML->AddAttribute( _T("format"), strFormat );
+
+						CString strSubject;
+						if ( PropGetValue( pStore, PKEY_Subject, strSubject ) )
+							pXML->AddAttribute( _T("subject"), strSubject );
+					}
+					break;
+
+				case PERCEIVED_TYPE_IMAGE:
+					szSchema = CSchema::uriImage;
+					pXML.Attach( new CXMLElement( NULL, _T("image") ) );
+					if ( pXML )
+					{
+						DWORD nWidth;
+						if ( PropGetValue( pStore, PKEY_Image_HorizontalSize, nWidth ) && nWidth )
+						{
+							CString strItem;
+							strItem.Format( _T("%lu"), nWidth );
+							pXML->AddAttribute( _T("width"), strItem );
+						}
+
+						DWORD nHeight;
+						if ( PropGetValue( pStore, PKEY_Image_VerticalSize, nHeight ) && nHeight )
+						{
+							CString strItem;
+							strItem.Format( _T("%lu"), nHeight );
+							pXML->AddAttribute( _T("height"), strItem );
+						}
+
+						DWORD nBitDepth;
+						if ( PropGetValue( pStore, PKEY_Image_BitDepth, nBitDepth ) && nBitDepth )
+							pXML->AddAttribute( _T("colors"), GetColorsByBits( nBitDepth ) );
+
+						CString strSubject;
+						if ( PropGetValue( pStore, PKEY_Subject, strSubject ) )
+							pXML->AddAttribute( _T("subject"), strSubject );
+					}
+					break;
+
+				case PERCEIVED_TYPE_AUDIO:
+					szSchema = CSchema::uriAudio;
+					pXML.Attach( new CXMLElement( NULL, _T("audio") ) );
+					if ( pXML )
+					{
+						DWORD nSampleRate;
+						if ( PropGetValue( pStore, PKEY_Audio_SampleRate, nSampleRate ) && nSampleRate )
+						{
+							CString strItem;
+							strItem.Format( _T("%lu"), nSampleRate );
+							pXML->AddAttribute( _T("sampleRate"), strItem );
+						}
+						
+						DWORD nBitrate;
+						if ( PropGetValue( pStore, PKEY_Audio_EncodingBitrate, nBitrate ) && nBitrate )
+						{
+							bool bVariableBitRate = false;
+							PropGetValue( pStore, PKEY_Audio_IsVariableBitRate, bVariableBitRate );
+
+							CString strItem;
+							strItem.Format( _T("%lu%s"), nBitrate / 1000, ( bVariableBitRate ? _T("~") : _T("") ) );
+							pXML->AddAttribute( _T("bitrate"), strItem );
+						}
+
+						QWORD nContentLength;
+						if ( PropGetValue( pStore, PKEY_Media_Duration, nContentLength ) && nContentLength )
+						{
+							DWORD nSeconds = (DWORD)( nContentLength / 10000000ui64 );
+							CString strItem;
+							strItem.Format( _T("%lu"), nSeconds );
+							pXML->AddAttribute( _T("seconds"), strItem );
+						}
+
+						DWORD nChannelCount;
+						if ( PropGetValue( pStore, PKEY_Audio_ChannelCount, nChannelCount ) && nChannelCount )
+						{
+							CString strItem;
+							strItem.Format( _T("%lu"), nChannelCount );
+							pXML->AddAttribute( _T("channels"), strItem );
+						}
+					}
+					break;
+
+				case PERCEIVED_TYPE_VIDEO:
+					szSchema = CSchema::uriVideo;
+					pXML.Attach( new CXMLElement( NULL, _T("video") ) );
+					if ( pXML )
+					{
+						DWORD nVideoWidth;
+						if ( PropGetValue( pStore, PKEY_Video_FrameWidth, nVideoWidth ) && nVideoWidth )
+						{
+							CString strItem;
+							strItem.Format( _T("%lu"), nVideoWidth );
+							pXML->AddAttribute( _T("width"), strItem );
+						}
+
+						DWORD nVideoHeight;
+						if ( PropGetValue( pStore, PKEY_Video_FrameHeight, nVideoHeight ) && nVideoHeight )
+						{
+							CString strItem;
+							strItem.Format( _T("%lu"), nVideoHeight );
+							pXML->AddAttribute( _T("height"), strItem );
+						}
+
+						DWORD nFourCC;
+						if ( PropGetValue( pStore, PKEY_Video_FourCC, nFourCC ) )
+						{
+							CString strItem;
+							strItem.Format( _T("%c%c%c%c"),
+								LOBYTE( LOWORD( nFourCC ) ), HIBYTE( LOWORD( nFourCC ) ),
+								LOBYTE( HIWORD( nFourCC ) ), HIBYTE( HIWORD( nFourCC ) ) );
+							pXML->AddAttribute( _T("codec"), strItem );
+						}
+						
+						DWORD nFrameRate;
+						if ( PropGetValue( pStore, PKEY_Video_FrameRate, nFrameRate ) && nFrameRate )
+						{
+							CString strItem;
+							strItem.Format( _T("%.2f"), ( (double)nFrameRate / 1000 ) );
+							pXML->AddAttribute( _T("frameRate"), strItem );
+						}
+
+						QWORD nContentLength;
+						if ( PropGetValue( pStore, PKEY_Media_Duration, nContentLength ) && nContentLength )
+						{
+							DWORD nMilliSeconds = (DWORD)( nContentLength / 10000ui64 );
+							CString strItem;
+							strItem.Format( _T("%.3f"), ( (double)nMilliSeconds / 60000 ) );
+							pXML->AddAttribute( _T("minutes"), strItem );
+						}
+
+						CString strDirector;
+						if ( PropGetValue( pStore, PKEY_Video_Director, strDirector ) )
+							pXML->AddAttribute( _T("director"), strDirector );
+					}
+					break;
+				}
+			}
+
+			if ( pXML )
+			{
+				CString strTitle;
+				if ( PropGetValue( pStore, PKEY_Title, strTitle ) )
+					pXML->AddAttribute( _T("title"), strTitle );
+
+				CString strDescription;
+				if ( PropGetValue( pStore, PKEY_Comment, strDescription ) )
+					pXML->AddAttribute( ( nType == PERCEIVED_TYPE_DOCUMENT ) ? _T("comments") : _T("description"), strDescription );
+
+				CString strArtist;
+				if ( PropGetValue( pStore, PKEY_Author, strArtist ) )
+					pXML->AddAttribute( ( nType == PERCEIVED_TYPE_VIDEO || nType == PERCEIVED_TYPE_AUDIO ) ? _T("artist") : _T("author"), strArtist );
+	
+				CString strCopyright;
+				if ( PropGetValue( pStore, PKEY_Copyright, strCopyright ) )
+					pXML->AddAttribute( _T("copyright"), strCopyright );
+
+				bool bDRM;
+				if ( PropGetValue( pStore, PKEY_DRM_IsProtected, bDRM ) && bDRM )
+					pXML->AddAttribute( _T("DRM"), _T("true") );
+				
+				CString strKeywords;
+				if ( PropGetValue( pStore, PKEY_Keywords, strKeywords ) )
+					pXML->AddAttribute( _T("keywords"), strKeywords );
+
+				LibraryBuilder.SubmitMetadata( nIndex, szSchema, pXML.Detach() );
+
+				bSuccess = true;
+			}
+		}
+	}
+
+	return bSuccess;
 }
 
 //////////////////////////////////////////////////////////////////////
@@ -1466,34 +1818,7 @@ bool CLibraryBuilderInternals::ReadPNG(DWORD nIndex, HANDLE hFile)
 	pXML->AddAttribute( _T("width"), strItem );
 	strItem.Format( _T("%lu"), nHeight );
 	pXML->AddAttribute( _T("height"), strItem );
-
-	/*
-	if ( nColors == 2 || nColors == 4 )
-	{
-		pXML->AddAttribute( _T("colors"), _T("Greyscale") );
-	}
-	else
-	*/
-	{
-		switch ( nBits )
-		{
-		case 1:
-			pXML->AddAttribute( _T("colors"), _T("2") );
-			break;
-		case 2:
-			pXML->AddAttribute( _T("colors"), _T("4") );
-			break;
-		case 4:
-			pXML->AddAttribute( _T("colors"), _T("16") );
-			break;
-		case 8:
-			pXML->AddAttribute( _T("colors"), _T("256") );
-			break;
-		case 16:
-			pXML->AddAttribute( _T("colors"), _T("64K") );
-			break;
-		}
-	}
+	pXML->AddAttribute( _T("colors"),  GetColorsByBits( nBits ) );
 
 	LibraryBuilder.SubmitMetadata( nIndex, CSchema::uriImage, pXML.release() );
 	return true;
@@ -1529,19 +1854,7 @@ bool CLibraryBuilderInternals::ReadBMP(DWORD nIndex, HANDLE hFile)
 	pXML->AddAttribute( _T("width"), strItem );
 	strItem.Format( _T("%d"), pBIH.biHeight );
 	pXML->AddAttribute( _T("height"), strItem );
-
-	switch ( pBIH.biBitCount )
-	{
-	case 4:
-		pXML->AddAttribute( _T("colors"), _T("16") );
-		break;
-	case 8:
-		pXML->AddAttribute( _T("colors"), _T("256") );
-		break;
-	case 24:
-		pXML->AddAttribute( _T("colors"), _T("16.7M") );
-		break;
-	}
+	pXML->AddAttribute( _T("colors"), GetColorsByBits( pBIH.biBitCount ) );
 
 	LibraryBuilder.SubmitMetadata( nIndex, CSchema::uriImage, pXML.release() );
 	return true;

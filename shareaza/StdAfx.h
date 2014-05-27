@@ -119,6 +119,7 @@
 
 #include <atlfile.h>		// Thin file classes
 #include <atltime.h>		// Time classes
+#include <atlsafe.h>		// CComSafeArray class
 
 //
 // WIN32
@@ -623,6 +624,26 @@ private:
 	CTimeAverage(const CTimeAverage&);
 	CTimeAverage* operator&() const;
 	CTimeAverage& operator=(const CTimeAverage&);
+};
+
+// Simple PROPVARIANT wrapper
+class CComPropVariant : public PROPVARIANT
+{
+public:
+	inline CComPropVariant()
+	{
+		::PropVariantInit( this );
+	}
+
+	inline ~CComPropVariant()
+	{
+		Clear();
+	}
+
+	inline HRESULT Clear()
+	{
+		return ::PropVariantClear( this );
+	}
 };
 
 template< class T >
