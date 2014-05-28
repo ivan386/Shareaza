@@ -521,6 +521,20 @@ void CDownload::OnRun()
 			// Calculate the current downloading state
 			if ( HasActiveTransfers() )
 				m_bDownloading = true;
+			
+			// Mutate regular download to torrent download
+			if ( Settings.BitTorrent.EnablePromote && m_oBTH && ! IsTorrent() )
+			{
+				m_pTorrent.Clear();
+				m_pTorrent.m_oMD5	= m_oMD5;
+				m_pTorrent.m_oBTH	= m_oBTH;
+				m_pTorrent.m_oSHA1	= m_oSHA1;
+				m_pTorrent.m_oED2K	= m_oED2K;
+				m_pTorrent.m_oTiger	= m_oTiger;
+				m_pTorrent.m_sName	= m_sName;
+				m_pTorrent.m_nSize	= m_nSize;
+				SetTorrent();
+			}
 		}
 		else if ( ! IsCompleted() && m_bVerify != TRI_TRUE )
 		{

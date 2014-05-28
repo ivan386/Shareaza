@@ -484,6 +484,7 @@ public:
 		DWORD		QueryHostDeadline;			// Time to wait for DHT reply (sec)
 		bool		AutoMerge;					// Automatically merge download with local files on start-up
 		CString		PeerID;						// Use this peer ID for trackers in form of "CCvvvv" where "CC" - agent code ("SZ", "UT" etc,), v.v.v.v - version
+		bool		EnablePromote;				// Enable regular to torrent download promotion
 	} BitTorrent;
 
 	struct sDownloads

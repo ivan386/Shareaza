@@ -324,20 +324,7 @@ BOOL CDownloadEditPage::OnApply()
 
 	if ( bNewBTH )
 	{
-		if ( pDownload->m_oBTH && ! pDownload->IsTorrent() )
-		{
-			// Mutate regular download to torrent download
-			pDownload->m_pTorrent.Clear();
-			pDownload->m_pTorrent.m_oMD5	= pDownload->m_oMD5;
-			pDownload->m_pTorrent.m_oBTH	= pDownload->m_oBTH;
-			pDownload->m_pTorrent.m_oSHA1	= pDownload->m_oSHA1;
-			pDownload->m_pTorrent.m_oED2K	= pDownload->m_oED2K;
-			pDownload->m_pTorrent.m_oTiger	= pDownload->m_oTiger;
-			pDownload->m_pTorrent.m_sName	= pDownload->m_sName;
-			pDownload->m_pTorrent.m_nSize	= pDownload->m_nSize;
-			pDownload->SetTorrent();
-		}
-		else if ( ! pDownload->m_oBTH && pDownload->IsTorrent() )
+		if ( ! pDownload->m_oBTH && pDownload->IsTorrent() )
 		{
 			// Mutate torrent download to regular download
 			pDownload->m_pTorrent.Clear();
