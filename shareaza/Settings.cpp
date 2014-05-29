@@ -176,12 +176,14 @@ void CSettings::Load()
 	Add( _T("Library"), _T("ScanAVI"), &Library.ScanAVI, true );
 	Add( _T("Library"), _T("ScanCHM"), &Library.ScanCHM, true );
 	Add( _T("Library"), _T("ScanEXE"), &Library.ScanEXE, true );
+	Add( _T("Library"), _T("ScanFLV"), &Library.ScanFLV, true );
 	Add( _T("Library"), _T("ScanImage"), &Library.ScanImage, true );
 	Add( _T("Library"), _T("ScanMP3"), &Library.ScanMP3, true );
 	Add( _T("Library"), _T("ScanMPEG"), &Library.ScanMPEG, true );
 	Add( _T("Library"), _T("ScanMSI"), &Library.ScanMSI, true );
 	Add( _T("Library"), _T("ScanOGG"), &Library.ScanOGG, true );
 	Add( _T("Library"), _T("ScanPDF"), &Library.ScanPDF, true );
+	Add( _T("Library"), _T("ScanProperties"), &Library.ScanProperties, true );
 	Add( _T("Library"), _T("SchemaURI"), &Library.SchemaURI, CSchema::uriAudio );
 	Add( _T("Library"), _T("ShowCoverArt"), &Library.ShowCoverArt, true );
 	Add( _T("Library"), _T("ShowPanel"), &Library.ShowPanel, true );

@@ -168,12 +168,14 @@ public:
 		bool		ScanAVI;					// Enable .avi metadata extraction by internals
 		bool		ScanCHM;					// Enable .chm metadata extraction by internals
 		bool		ScanEXE;					// Enable .exe,.dll metadata extraction by internals
+		bool		ScanFLV;					// Enable .flv metadata extraction by internals
 		bool		ScanImage;					// Enable .jpg,.jpeg,.gif,.png,.bmp metadata extraction by internals
 		bool		ScanMP3;					// Enable .mp3 metadata extraction by internals
 		bool		ScanMPEG;					// Enable .mpeg,.mpg metadata extraction by internals
 		bool		ScanMSI;					// Enable .msi metadata extraction by internals
 		bool		ScanOGG;					// Enable .ogg metadata extraction by internals
 		bool		ScanPDF;					// Enable .pdf metadata extraction by internals
+		bool		ScanProperties;				// Enable Windows properties metadata extraction by internals
 		bool		SmartSeriesDetection;		// Organize video files in Library by using predefined patterns
 		CString		LastUsedView;				// Name of last used view
 		CString		URLExportFormat;			// Template for URL export
