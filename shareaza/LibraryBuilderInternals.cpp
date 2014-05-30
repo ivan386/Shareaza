@@ -2003,7 +2003,7 @@ bool CLibraryBuilderInternals::ReadFLVVariable(HANDLE hFile, DWORD& nRemaning, V
 	}
 
 	// Unknown type
-	return false;
+	return true;
 }
 
 bool CLibraryBuilderInternals::ReadFLVDouble(HANDLE hFile, DWORD& nRemaning, double& dValue)
@@ -2230,6 +2230,8 @@ bool CLibraryBuilderInternals::ReadFLV(DWORD nIndex, HANDLE hFile)
 				{
 					bMetadata = TRUE;
 				}
+				else if ( bMetadata )
+					break;
 			}
 		} 
 

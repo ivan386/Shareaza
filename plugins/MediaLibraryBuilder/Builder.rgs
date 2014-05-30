@@ -42,7 +42,6 @@ HKCU
 						ForceRemove val '.avi' = s '{570C197C-FE9C-4D1F-B6E0-EFA44D36399F}'
 						ForceRemove val '.divx' = s '{570C197C-FE9C-4D1F-B6E0-EFA44D36399F}'
 						ForceRemove val '.dv' = s '{570C197C-FE9C-4D1F-B6E0-EFA44D36399F}'
-						ForceRemove val '.flv' = s '{570C197C-FE9C-4D1F-B6E0-EFA44D36399F}'
 						ForceRemove val '.ivf' = s '{570C197C-FE9C-4D1F-B6E0-EFA44D36399F}'
 						ForceRemove val '.gvi' = s '{570C197C-FE9C-4D1F-B6E0-EFA44D36399F}'
 						ForceRemove val '.m2v' = s '{570C197C-FE9C-4D1F-B6E0-EFA44D36399F}'
