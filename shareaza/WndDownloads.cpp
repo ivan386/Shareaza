@@ -1426,6 +1426,8 @@ void CDownloadsWnd::OnTransfersConnect()
 {
 	CSingleLock pLock( &Transfers.m_pSection, TRUE );
 
+	CList< CDownloadSource* > pSelectedSources;
+
 	for ( POSITION pos = Downloads.GetIterator() ; pos ; )
 	{
 		CDownload* pDownload = Downloads.GetNext( pos );
@@ -1440,23 +1442,25 @@ void CDownloadsWnd::OnTransfersConnect()
 			ASSERT( pSource->m_pDownload == pDownload );
 
 			// Only create a new Transfer if there isn't already one
-			if ( pSource->m_bSelected && pSource->IsIdle()
-				&& pSource->m_nProtocol != PROTOCOL_ED2K )
+			if ( pSource->m_bSelected && pSource->IsIdle() )
 			{
-				if ( pDownload->IsPaused() )
-					pDownload->Resume();
-
-				pDownload->Resume();
-
-				if ( pSource->m_bPushOnly )
-					pSource->PushRequest();
-				else
-				{
-					CDownloadTransfer* pTransfer = pSource->CreateTransfer();
-					if ( pTransfer )
-						pTransfer->Initiate();
-				}
+				pSelectedSources.AddTail( pSource );
 			}
+		}
+	}
+
+	for ( POSITION posSource = pSelectedSources.GetHeadPosition(); posSource ; )
+	{
+		CDownloadSource* pSource = pSelectedSources.GetNext( posSource );
+
+		pSource->m_pDownload->Resume();
+
+		if ( pSource->m_bPushOnly )
+			pSource->PushRequest();
+		else
+		{
+			if ( CDownloadTransfer* pTransfer = pSource->CreateTransfer() )
+				pTransfer->Initiate();
 		}
 	}
 
@@ -1473,6 +1477,8 @@ void CDownloadsWnd::OnTransfersDisconnect()
 {
 	CSingleLock pLock( &Transfers.m_pSection, TRUE );
 
+	CList< CDownloadSource* > pSelectedSources;
+
 	for ( POSITION pos = Downloads.GetIterator() ; pos ; )
 	{
 		CDownload* pDownload = Downloads.GetNext( pos );
@@ -1483,9 +1489,16 @@ void CDownloadsWnd::OnTransfersDisconnect()
 
 			if ( pSource->m_bSelected && ! pSource->IsIdle() )
 			{
-				pSource->Close();
+				pSelectedSources.AddTail( pSource );
 			}
 		}
+	}
+
+	for ( POSITION posSource = pSelectedSources.GetHeadPosition(); posSource ; )
+	{
+		CDownloadSource* pSource = pSelectedSources.GetNext( posSource );
+
+		pSource->Close();
 	}
 
 	Update();
@@ -1500,6 +1513,8 @@ void CDownloadsWnd::OnUpdateTransfersForget(CCmdUI* pCmdUI)
 void CDownloadsWnd::OnTransfersForget()
 {
 	CSingleLock pLock( &Transfers.m_pSection, TRUE );
+	
+	CList< CDownloadSource* > pSelectedSources;
 
 	for ( POSITION pos = Downloads.GetIterator() ; pos ; )
 	{
@@ -1510,8 +1525,17 @@ void CDownloadsWnd::OnTransfersForget()
 			CDownloadSource* pSource = pDownload->GetNext( posSource );
 
 			if ( pSource->m_bSelected )
-				pSource->Remove( TRUE, TRUE );
+			{
+				pSelectedSources.AddTail( pSource );
+			}
 		}
+	}
+
+	for ( POSITION posSource = pSelectedSources.GetHeadPosition(); posSource ; )
+	{
+		CDownloadSource* pSource = pSelectedSources.GetNext( posSource );
+
+		pSource->Remove( TRUE, TRUE );
 	}
 
 	Update();
