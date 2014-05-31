@@ -135,11 +135,12 @@ void CDownload::Pause(BOOL bRealPause)
 
 	theApp.Message( MSG_NOTICE, IDS_DOWNLOAD_PAUSED, GetDisplayName() );
 
-	StopTrying();
 	m_bTempPaused = TRUE;
 
 	if ( bRealPause )
 		m_bPaused = TRUE;
+
+	StopTrying();
 
 	SetModified();
 }

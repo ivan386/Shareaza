@@ -657,9 +657,13 @@ DWORD CDownloadSource::CalcFailureDelay(DWORD nRetryAfter) const
 {
 	DWORD nDelay;
 
-	if ( nRetryAfter != 0 )
+	if ( nRetryAfter )
 	{
 		nDelay = nRetryAfter * 1000;
+	}
+	else if ( m_pDownload->IsPaused() )
+	{
+		nDelay = Settings.Downloads.ConnectThrottle;
 	}
 	else
 	{
