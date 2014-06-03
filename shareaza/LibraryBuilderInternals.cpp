@@ -51,25 +51,22 @@ static char THIS_FILE[]=__FILE__;
 
 LPCTSTR GetColorsByBits(DWORD nBits)
 {
-	switch ( nBits )
-	{
-	case 1:
-		return _T("2");
-	case 2:
-		return _T("4");
-	case 4:
-		return _T("16");
-	case 8:
-		return _T("256");
-	case 16:
-		return _T("64K");
-	case 24:
-		return _T("16.7M");
-	case 32:
-		return _T("16.7M + Alpha");
-	default:
+	if ( nBits == 0 )
 		return _T("");
-	}
+	else if ( nBits == 1 )
+		return _T("2");
+	else if ( nBits == 2 )
+		return _T("4");
+	else if ( nBits <= 4 )
+		return _T("16");
+	else if ( nBits <= 8)
+		return _T("256");
+	else if ( nBits <= 16 )
+		return _T("64K");
+	else if ( nBits <= 24 )
+		return _T("16.7M");
+	else
+		return _T("16.7M + Alpha");
 }
 
 bool PropGetValue(IPropertyStore* pStore, const PROPERTYKEY& key, DWORD& val)
@@ -279,34 +276,6 @@ bool CLibraryBuilderInternals::ExtractMetadata(DWORD nIndex, const CString& strP
 		if ( ReadAPE( nIndex, hFile, false ) )
 			return true;
 	}
-	else if ( strType == _T(".jpg") || strType == _T(".jpeg") )
-	{
-		if ( !Settings.Library.ScanImage )
-			return false;
-		if ( ReadJPEG( nIndex, hFile ) )
-			return true;
-	}
-	else if ( strType == _T(".gif") )
-	{
-		if ( !Settings.Library.ScanImage )
-			return false;
-		if ( ReadGIF( nIndex, hFile ) )
-			return true;
-	}
-	else if ( strType == _T(".png") )
-	{
-		if ( !Settings.Library.ScanImage )
-			return false;
-		if ( ReadPNG( nIndex, hFile ) )
-			return true;
-	}
-	else if ( strType == _T(".bmp") )
-	{
-		if ( !Settings.Library.ScanImage )
-			return false;
-		if ( ReadBMP( nIndex, hFile ) )
-			return true;
-	}
 	else if ( strType == _T(".pdf") )
 	{
 		if ( !Settings.Library.ScanPDF )
@@ -341,7 +310,7 @@ bool CLibraryBuilderInternals::ExtractProperties(DWORD nIndex, const CString& st
 {
 	bool bSuccess = false;
 
-	if ( ! Settings.Library.ScanProperties && theApp.m_pfnSHGetPropertyStoreFromParsingName )
+	if ( Settings.Library.ScanProperties && theApp.m_pfnSHGetPropertyStoreFromParsingName )
 	{
 		CComPtr< IPropertyStore > pStore;
 		HRESULT hr = theApp.m_pfnSHGetPropertyStoreFromParsingName( CT2W( strPath ), NULL, GPS_BESTEFFORT, __uuidof( IPropertyStore ), (void**)&pStore );
@@ -1598,273 +1567,6 @@ CString CLibraryBuilderInternals::GetSummaryField(MSIHANDLE hSummaryInfo, UINT n
 	}
 
 	return strValue;
-}
-
-//////////////////////////////////////////////////////////////////////
-// CLibraryBuilderInternals JPEG (threaded)
-
-bool CLibraryBuilderInternals::ReadJPEG(DWORD nIndex, HANDLE hFile)
-{
-	DWORD nRead	= 0;
-	WORD wMagic	= 0;
-	BYTE nByte	= 0;
-
-	SetFilePointer( hFile, 0, NULL, FILE_BEGIN );
-	if ( ! ReadFile( hFile, &wMagic, 2, &nRead, NULL ) )
-		return false;
-	if ( nRead != 2 || wMagic != 0xD8FF )
-		return false;
-
-	BYTE nBits = 0, nComponents = 0;
-	WORD nWidth = 0, nHeight = 0;
-	CString strComment;
-
-	for ( DWORD nSeek = 512 ; nSeek > 0 ; nSeek-- )
-	{
-		if ( ! ReadFile( hFile, &nByte, 1, &nRead, NULL ) )
-			return false;
-		if ( nRead != 1 )
-			return false;
-		if ( nByte != 0xFF )
-			continue;
-
-		while ( nByte == 0xFF )
-		{
-			if ( ! ReadFile( hFile, &nByte, 1, &nRead, NULL ) )
-				return false;
-			if ( nRead != 1 )
-				return false;
-		}
-
-		if ( ! ReadFile( hFile, &wMagic, 2, &nRead, NULL ) )
-			return false;
-		wMagic = swapEndianess( wMagic );
-		if ( nRead != 2 || wMagic < 2 )
-			return false;
-
-		switch ( nByte )
-		{
-		case 0xC0: case 0xC1: case 0xC2: case 0xC3: case 0xC5: case 0xC6: case 0xC7:
-		case 0xC9: case 0xCA: case 0xCB: case 0xCD: case 0xCE: case 0xCF:
-			if ( ! ReadFile( hFile, &nBits, 1, &nRead, NULL ) )
-				return false;
-			if ( nRead != 1 )
-				return false;
-			if ( ! ReadFile( hFile, &nHeight, 2, &nRead, NULL ) )
-				return false;
-			if ( nRead != 2 )
-				return false;
-			nHeight = swapEndianess( nHeight );
-			if ( ! ReadFile( hFile, &nWidth, 2, &nRead, NULL ) )
-				return false;
-			if ( nRead != 2 )
-				return false;
-			nWidth = swapEndianess( nWidth );
-			if ( ! ReadFile( hFile, &nComponents, 1, &nRead, NULL ) )
-				return false;
-			if ( nRead != 1 )
-				return false;
-			if ( wMagic < 8 )
-				return false;
-			SetFilePointer( hFile, wMagic - 8, NULL, FILE_CURRENT );
-			break;
-		case 0xFE: case 0xEC:
-			if ( wMagic > 2 )
-			{
-				CBuffer pComment;
-				pComment.EnsureBuffer( wMagic - 2 );
-				pComment.m_nLength = (DWORD)wMagic - 2;
-				if ( ! ReadFile( hFile, pComment.m_pBuffer, wMagic - 2, &nRead, NULL ) )
-					return false;
-				strComment = pComment.ReadString( nRead );
-			}
-			break;
-		case 0xD9: case 0xDA:
-			nSeek = 1;
-			break;
-		default:
-			SetFilePointer( hFile, wMagic - 2, NULL, FILE_CURRENT );
-			break;
-		}
-	}
-
-	if ( nWidth == 0 || nHeight == 0 )
-		return false;
-
-	strComment.TrimLeft();
-	strComment.TrimRight();
-
-	for ( int nChar = 0 ; nChar < strComment.GetLength() ; nChar++ )
-	{
-		if ( strComment[ nChar ] < 32 )
-			strComment.SetAt( nChar, '?' );
-	}
-
-	auto_ptr< CXMLElement > pXML( new CXMLElement( NULL, _T("image") ) );
-	CString strItem;
-
-	strItem.Format( _T("%lu"), nWidth );
-	pXML->AddAttribute( _T("width"), strItem );
-	strItem.Format( _T("%lu"), nHeight );
-	pXML->AddAttribute( _T("height"), strItem );
-
-	if ( nComponents == 3 )
-		pXML->AddAttribute( _T("colors"), _T("16.7M") );
-	else if ( nComponents == 1 )
-		pXML->AddAttribute( _T("colors"), _T("Greyscale") );
-
-	if ( strComment.GetLength() )
-		pXML->AddAttribute( _T("description"), strComment );
-
-	LibraryBuilder.SubmitMetadata( nIndex, CSchema::uriImage, pXML.release() );
-	return true;
-}
-
-//////////////////////////////////////////////////////////////////////
-// CLibraryBuilderInternals GIF (threaded)
-
-bool CLibraryBuilderInternals::ReadGIF(DWORD nIndex, HANDLE hFile)
-{
-	CHAR szMagic[6];
-	DWORD nRead;
-
-	SetFilePointer( hFile, 0, NULL, FILE_BEGIN );
-	if ( ! ReadFile( hFile, szMagic, 6, &nRead, NULL ) )
-		return false;
-
-	if ( nRead != 6 || ( strncmp( szMagic, "GIF87a", 6 ) && strncmp( szMagic, "GIF89a", 6 ) ) )
-		return false;
-
-	WORD nWidth, nHeight;
-
-	if ( ! ReadFile( hFile, &nWidth, 2, &nRead, NULL ) )
-		return false;
-	if ( nRead != 2 || nWidth == 0 )
-		return false;
-	if ( ! ReadFile( hFile, &nHeight, 2, &nRead, NULL ) )
-		return false;
-	if ( nRead != 2 || nHeight == 0 )
-		return false;
-
-	auto_ptr< CXMLElement > pXML( new CXMLElement( NULL, _T("image") ) );
-	CString strItem;
-
-	strItem.Format( _T("%lu"), nWidth );
-	pXML->AddAttribute( _T("width"), strItem );
-	strItem.Format( _T("%lu"), nHeight );
-	pXML->AddAttribute( _T("height"), strItem );
-
-	pXML->AddAttribute( _T("colors"), _T("256") );
-
-	LibraryBuilder.SubmitMetadata( nIndex, CSchema::uriImage, pXML.release() );
-	return true;
-}
-
-//////////////////////////////////////////////////////////////////////
-// CLibraryBuilderInternals PNG (threaded)
-
-bool CLibraryBuilderInternals::ReadPNG(DWORD nIndex, HANDLE hFile)
-{
-	BYTE nMagic[8];
-	DWORD nRead;
-
-	if ( GetFileSize( hFile, NULL ) < 33 )
-		return false;
-	SetFilePointer( hFile, 0, NULL, FILE_BEGIN );
-
-	if ( ! ReadFile( hFile, nMagic, 8, &nRead, NULL ) )
-		return false;
-	if ( nRead != 8 )
-		return false;
-	if ( nMagic[0] != 137 || nMagic[1] != 80 || nMagic[2] != 78 )
-		return false;
-	if ( nMagic[3] != 71 || nMagic[4] != 13 || nMagic[5] != 10 )
-		return false;
-	if ( nMagic[6] != 26 || nMagic[7] != 10 )
-		return false;
-
-	DWORD nLength, nIHDR;
-
-	if ( ! ReadFile( hFile, &nLength, 4, &nRead, NULL ) )
-		return false;
-	nLength = swapEndianess( nLength );
-	if ( nRead != 4 || nLength < 10 )
-		return false;
-	if ( ! ReadFile( hFile, &nIHDR, 4, &nRead, NULL ) )
-		return false;
-	if ( nRead != 4 || nIHDR != 'RDHI' )
-		return false;
-
-	DWORD nWidth, nHeight;
-	BYTE nBits, nColors;
-
-	if ( ! ReadFile( hFile, &nWidth, 4, &nRead, NULL ) )
-		return false;
-	nWidth = swapEndianess( nWidth );
-	if ( nRead != 4 || nWidth <= 0 || nWidth > 0xFFFF )
-		return false;
-	if ( ! ReadFile( hFile, &nHeight, 4, &nRead, NULL ) )
-		return false;
-	nHeight = swapEndianess( nHeight );
-	if ( nRead != 4 || nHeight <= 0 || nHeight > 0xFFFF )
-		return false;
-
-	if ( ! ReadFile( hFile, &nBits, 1, &nRead, NULL ) )
-		return false;
-	if ( nRead != 1 )
-		return false;
-	if ( ! ReadFile( hFile, &nColors, 1, &nRead, NULL ) )
-		return false;
-	if ( nRead != 1 )
-		return false;
-
-	auto_ptr< CXMLElement > pXML( new CXMLElement( NULL, _T("image") ) );
-	CString strItem;
-
-	strItem.Format( _T("%lu"), nWidth );
-	pXML->AddAttribute( _T("width"), strItem );
-	strItem.Format( _T("%lu"), nHeight );
-	pXML->AddAttribute( _T("height"), strItem );
-	pXML->AddAttribute( _T("colors"),  GetColorsByBits( nBits ) );
-
-	LibraryBuilder.SubmitMetadata( nIndex, CSchema::uriImage, pXML.release() );
-	return true;
-}
-
-//////////////////////////////////////////////////////////////////////
-// CLibraryBuilderInternals BMP (threaded)
-
-bool CLibraryBuilderInternals::ReadBMP(DWORD nIndex, HANDLE hFile)
-{
-	BITMAPFILEHEADER pBFH;
-	BITMAPINFOHEADER pBIH;
-	DWORD nRead;
-
-	if ( GetFileSize( hFile, NULL ) < sizeof(pBFH) + sizeof(pBIH) )
-		return false;
-
-	SetFilePointer( hFile, 0, NULL, FILE_BEGIN );
-	if ( ! ReadFile( hFile, &pBFH, sizeof(pBFH), &nRead, NULL ) )
-		return false;
-	if ( nRead != sizeof(pBFH) || pBFH.bfType != 'MB' )
-		return false;
-
-	if ( ! ReadFile( hFile, &pBIH, sizeof(pBIH), &nRead, NULL ) )
-		return false;
-	if ( nRead != sizeof(pBIH) || pBIH.biSize != sizeof(pBIH) )
-		return false;
-
-	auto_ptr< CXMLElement > pXML( new CXMLElement( NULL, _T("image") ) );
-	CString strItem;
-
-	strItem.Format( _T("%d"), pBIH.biWidth );
-	pXML->AddAttribute( _T("width"), strItem );
-	strItem.Format( _T("%d"), pBIH.biHeight );
-	pXML->AddAttribute( _T("height"), strItem );
-	pXML->AddAttribute( _T("colors"), GetColorsByBits( pBIH.biBitCount ) );
-
-	LibraryBuilder.SubmitMetadata( nIndex, CSchema::uriImage, pXML.release() );
-	return true;
 }
 
 //////////////////////////////////////////////////////////////////////

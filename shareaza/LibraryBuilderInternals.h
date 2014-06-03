@@ -61,12 +61,6 @@ private:
 	bool		ReadMSI(DWORD nIndex, LPCTSTR pszPath);
 	CString		GetSummaryField(MSIHANDLE hSummaryInfo, UINT nProperty);
 
-	// Image Files
-	bool		ReadJPEG(DWORD nIndex, HANDLE hFile);
-	bool		ReadGIF(DWORD nIndex, HANDLE hFile);
-	bool		ReadPNG(DWORD nIndex, HANDLE hFile);
-	bool		ReadBMP(DWORD nIndex, HANDLE hFile);
-
 	// General Media
 	bool		ReadFLV(DWORD nIndex, HANDLE hFile);
 	bool		ReadFLVVariable(HANDLE hFile, DWORD& nRemaning, VARIANT& varData, CXMLElement* pXML = NULL);

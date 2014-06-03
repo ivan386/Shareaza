@@ -1149,9 +1149,6 @@ bool CLibraryBuilder::RefreshMetadata(const CString& sPath)
 		if ( ! pFile )
 			return false;
 		nIndex = pFile->m_nIndex;
-
-		pFile->ClearMetadata();
-		pFile->m_bMetadataAuto = TRUE;
 	}
 
 	theApp.Message( MSG_DEBUG, _T("Refreshing: %s"), (LPCTSTR)sPath );
