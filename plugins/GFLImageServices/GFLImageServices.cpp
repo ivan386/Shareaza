@@ -1,7 +1,7 @@
 //
 // GFLImageServices.cpp : Implementation of DLL Exports.
 //
-// Copyright (c) Nikolay Raspopov, 2005-2013.
+// Copyright (c) Nikolay Raspopov, 2005-2014.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // GFL Library, GFL SDK and XnView
@@ -37,31 +37,39 @@ public :
 
 CGFLImageServicesModule	_AtlModule;
 HINSTANCE				_hModuleInstance = NULL;
-typedef ATL::CAtlMap <ATL::CString, ATL::CString> CAtlStrStrMap;
+typedef ATL::CAtlMap < ATL::CStringA, GFL_INT32 > CAtlStrStrMap;
 CAtlStrStrMap			_ExtMap;
 
-inline void FillExtMap ()
+inline void FillExtMap()
 {
-	CString tmp;
-	_ExtMap.RemoveAll ();
-	GFL_INT32 count = gflGetNumberOfFormat ();
+	_ExtMap.RemoveAll();
+
+	GFL_INT32 count = gflGetNumberOfFormat();
 	ATLTRACE( "Total %d formats:\n", count );
-	for (GFL_INT32 i = 0; i < count; ++i)
+	for ( GFL_INT32 i = 0; i < count; ++i )
 	{
-		GFL_FORMAT_INFORMATION info;
+		GFL_FORMAT_INFORMATION info = {};
 		GFL_ERROR err = gflGetFormatInformationByIndex (i, &info);
-		if (err == GFL_NO_ERROR && (info.Status & GFL_READ))
+		if ( err == GFL_NO_ERROR && (info.Status & GFL_READ) )
 		{
-			CString name (info.Name);
-			CString desc (info.Description);
-			ATLTRACE( "%3d. %7s %32s :", i, info.Name, info.Description );
+			ATLTRACE( "%3d. %7s %32s #%d :", i, info.Name, info.Description, info.Index );
 			for (GFL_UINT32 j = 0; j < info.NumberOfExtension; ++j)
 			{
-				CString ext (info.Extension [j]);
-				ext.MakeLower ();
-				ATLTRACE( " .%s", info.Extension [j] );
-				if (!_ExtMap.Lookup (ext, tmp))
-					_ExtMap.SetAt (ext, name);
+				CStringA ext( info.Extension [j] );
+				ext.MakeLower();
+
+				// GFL bug fix for short extensions
+				if ( ext == "pspbrus" )		// PaintShopPro Brush
+					ext = "pspbrush";
+				else if ( ext == "pspfram" )	// PaintShopPro Frame
+					ext = "pspframe";
+				else if ( ext == "pspimag" )	// PaintShopPro Image
+					ext = "pspimage";
+
+				ATLTRACE( " .%s", ext );
+				GFL_INT32 index;
+				if ( ! _ExtMap.Lookup( ext, index ) )
+					_ExtMap.SetAt( ext, info.Index );
 			}
 			ATLTRACE( "\n" );
 		}
@@ -75,7 +83,7 @@ BOOL SafeGFLInit() throw()
 		// Library initialization
 		if ( gflLibraryInit () != GFL_NO_ERROR )
 		{
-			ATLTRACE ( "gflLibraryInit failed\n" );
+			ATLTRACE ("gflLibraryInit failed\n");
 			return FALSE;
 		}
 		gflEnableLZW( GFL_TRUE );
@@ -84,7 +92,7 @@ BOOL SafeGFLInit() throw()
 	}
 	__except ( EXCEPTION_EXECUTE_HANDLER )
 	{
-		ATLTRACE ( "Exception in DLL_PROCESS_ATTACH\n" );
+		ATLTRACE ("Exception in DLL_PROCESS_ATTACH\n");
 		return FALSE;
 	}
 }
@@ -97,7 +105,7 @@ void SafeGFLExit() throw()
 	}
 	__except ( EXCEPTION_EXECUTE_HANDLER )
 	{
-		ATLTRACE ( "Exception in DLL_PROCESS_DETACH\n" );
+		ATLTRACE ("Exception in DLL_PROCESS_DETACH\n");
 	}
 }
 
@@ -119,7 +127,7 @@ extern "C" BOOL WINAPI DllMain (HINSTANCE hInstance, DWORD dwReason, LPVOID lpRe
 	}
 	else
 	{
-		ATLTRACE ( "FALSE in _AtlModule.DllMain () call\n");
+		ATLTRACE ("FALSE in _AtlModule.DllMain () call\n");
 		return FALSE;
 	}
 }
@@ -139,14 +147,16 @@ STDAPI DllRegisterServer(void)
     HRESULT hr = _AtlModule.DllRegisterServer ();
 
 	// Registering extensions using GFL
-	CString ext, tmp;
-	POSITION pos = _ExtMap.GetStartPosition ();
-	while (pos) {
-		_ExtMap.GetNextAssoc (pos, ext, tmp);
-		if ( ext == _T("vst") ) continue;
-		ext.Insert (0, _T('.'));
-		ATLTRACE ( "Add %s\n", CT2A( ext ) );
-		SHSetValue (HKEY_CURRENT_USER, REG_IMAGESERVICE_KEY, ext, REG_SZ,
+	for ( POSITION pos = _ExtMap.GetStartPosition (); pos; )
+	{
+		CStringA ext;
+		GFL_INT32 index;
+		_ExtMap.GetNextAssoc( pos, ext, index );
+		if ( ext == "vst" )
+			continue;
+		ext.Insert( 0, '.' );
+		ATLTRACE ("Add %s\n", ext );
+		SHSetValue (HKEY_CURRENT_USER, REG_IMAGESERVICE_KEY, CA2T( ext ), REG_SZ,
 			_T("{FF5FCD00-2C20-49D8-84F6-888D2E2C95DA}"),
 			38 * sizeof (TCHAR));
 	}
@@ -159,14 +169,16 @@ STDAPI DllUnregisterServer(void)
 	HRESULT hr = _AtlModule.DllUnregisterServer ();
 
 	// Unregistering extensions using GFL
-	CString ext, tmp;
-	POSITION pos = _ExtMap.GetStartPosition ();
-	while (pos) {
-		_ExtMap.GetNextAssoc (pos, ext, tmp);
-		if ( ext == _T("vst") ) continue;
-		ext.Insert (0, _T('.'));
-		ATLTRACE ( "Remove %s\n", CT2A( ext ) );
-		SHDeleteValue (HKEY_CURRENT_USER, REG_IMAGESERVICE_KEY, ext);
+	for ( POSITION pos = _ExtMap.GetStartPosition (); pos; )
+	{
+		CStringA ext;
+		GFL_INT32 index;
+		_ExtMap.GetNextAssoc( pos, ext, index );
+		if ( ext == "vst" )
+			continue;
+		ext.Insert( 0, '.' );
+		ATLTRACE ("Remove %s\n", ext );
+		SHDeleteValue( HKEY_CURRENT_USER, REG_IMAGESERVICE_KEY, CA2T( ext ) );
 	}
 
 	return hr;
@@ -265,11 +277,11 @@ HRESULT SAFEgflSaveBitmap (LPCWSTR filename, const GFL_BITMAP *bitmap, const GFL
 	return hr;
 }
 
-int GetFormatIndexByExt (LPCTSTR ext)
+int GetFormatIndexByExt (LPCSTR ext)
 {
-	CString name;
-	if (_ExtMap.Lookup (ext, name))
-		return gflGetFormatIndexByName (CT2CA (name));
+	GFL_INT32 index;
+	if ( _ExtMap.Lookup (ext, index ) )
+		return index;
 	else
 		return -1;
 }

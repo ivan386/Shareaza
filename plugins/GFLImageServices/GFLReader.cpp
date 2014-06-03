@@ -1,7 +1,7 @@
 //
 // GFLReader.cpp : Implementation of CGFLReader
 //
-// Copyright (c) Nikolay Raspopov, 2005-2013.
+// Copyright (c) Nikolay Raspopov, 2005-2014.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // GFL Library, GFL SDK and XnView
@@ -196,17 +196,14 @@ STDMETHODIMP CGFLReader::SaveToFile (
 	/* [in,out] */ IMAGESERVICEDATA* pParams,
 	/* [in] */ SAFEARRAY* pImage)
 {
-	ATLTRACE( "SaveToFile (\"%s\", 0x%08x, 0x%08x)\n", (LPCSTR)CW2A( (LPCWSTR)sFile ), pParams, pImage );
-
-	if (!pParams || !pImage) {
-		ATLTRACE( "SaveToFile error: E_POINTER\n" );
+	if (!pParams || !pImage)
 		return E_POINTER;
-	}
 
 	CString ext (sFile);
 	int dot = ext.ReverseFind ('.');
 	if (dot != -1)
 		ext = ext.Mid (dot + 1);
+	ext.MakeLower();
 
 	LONG nSource = 0;
 	HRESULT hr = SafeArrayGetUBound (pImage, 1, &nSource);
@@ -227,7 +224,7 @@ STDMETHODIMP CGFLReader::SaveToFile (
 				CopyMemory (hGflBitmap->Data, pSource, nSource);
 				GFL_SAVE_PARAMS params = {};
 				gflGetDefaultSaveParams (&params);
-				params.FormatIndex = GetFormatIndexByExt (ext);
+				params.FormatIndex = GetFormatIndexByExt( CT2A( ext ) );
 				params.Quality = (GFL_INT16) pParams->nQuality;
 				hr = SAFEgflSaveBitmap( sFile, hGflBitmap, &params );
 				gflFreeBitmap (hGflBitmap);
@@ -235,6 +232,7 @@ STDMETHODIMP CGFLReader::SaveToFile (
 			SafeArrayUnaccessData (pImage);
 		}
 	}
+	ATLTRACE( "SaveToFile (\"%s\", 0x%08x, 0x%08x) : %s\n", (LPCSTR)CW2A( (LPCWSTR)sFile ), pParams, pImage, SUCCEEDED( hr ) ? "OK" : "ERROR" );
 	return hr;
 }
 
@@ -244,12 +242,8 @@ STDMETHODIMP CGFLReader::SaveToMemory (
 	/* [in,out] */ IMAGESERVICEDATA* pParams,
 	/* [in] */ SAFEARRAY* pImage)
 {
-	ATLTRACE( "SaveToMemory (\"%s\", 0x%08x, 0x%08x, 0x%08x)\n", (LPCSTR)CW2A( (LPCWSTR)sType ), ppMemory, pParams, pImage );
-
-	if (!ppMemory || !pParams || !pImage) {
-		ATLTRACE( "CGFLReader::SaveToMemory error: E_POINTER\n" );
+	if (!ppMemory || !pParams || !pImage)
 		return E_POINTER;
-	}
 
 	*ppMemory = NULL;
 
@@ -257,6 +251,7 @@ STDMETHODIMP CGFLReader::SaveToMemory (
 	int dot = ext.ReverseFind ('.');
 	if (dot != -1)
 		ext = ext.Mid (dot + 1);
+	ext.MakeLower();
 
 	LONG nSource = 0;
 	HRESULT hr = SafeArrayGetUBound (pImage, 1, &nSource);
@@ -275,7 +270,7 @@ STDMETHODIMP CGFLReader::SaveToMemory (
 				CopyMemory (hGflBitmap->Data, pSource, nSource);
 				GFL_SAVE_PARAMS params;
 				gflGetDefaultSaveParams (&params);
-				params.FormatIndex = GetFormatIndexByExt (ext);
+				params.FormatIndex = GetFormatIndexByExt( CT2A( ext ) );
 				params.Quality = (GFL_INT16) pParams->nQuality;
 				GFL_UINT8* data = NULL;
 				GFL_UINT32 size = 0;
@@ -306,6 +301,8 @@ STDMETHODIMP CGFLReader::SaveToMemory (
 		SafeArrayDestroy (*ppMemory);
 		*ppMemory = NULL;
 	}
+	
+	ATLTRACE( "SaveToMemory (\"%s\", 0x%08x, 0x%08x, 0x%08x) : %s\n", (LPCSTR)CW2A( (LPCWSTR)sType ), ppMemory, pParams, pImage, SUCCEEDED( hr ) ? "OK" : "ERROR" );
 
 	return hr;
 }
