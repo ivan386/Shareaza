@@ -519,7 +519,7 @@ BOOL CDownloadWithSources::AddSourceURL(LPCTSTR pszURL, FILETIME* pLastSeen, int
 		return TRUE;
 	}
 
-	if ( AddSource( &pURL, FALSE ) )
+	if ( ! AddSource( &pURL, FALSE ) )
 		// Not match
 		return FALSE;
 
