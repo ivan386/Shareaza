@@ -3359,14 +3359,14 @@ bool CLibraryBuilderInternals::ReadPDF(DWORD nIndex, HANDLE hFile, LPCTSTR pszPa
 		// get total object count
 		if ( ReadPDFLine( hFile, false ).IsEmpty() )
 			strLine = ReadPDFLine( hFile, false );
-		if ( strLine != _T("endobj") )
+		if ( strLine.CompareNoCase( _T("endobj") ) != 0 )
 			return false;
 
 		nOffset = SetFilePointer( hFile, 0, NULL, FILE_CURRENT );
 		strLine = ReadPDFLine( hFile, false );
 		if ( strLine.IsEmpty() )
 			strLine = ReadPDFLine( hFile, false );
-		if ( strLine != _T("xref") )
+		if ( strLine.CompareNoCase( _T("xref") ) != 0 )
 			return false;
 
 		strLine = ReadPDFLine( hFile, false );
@@ -3383,19 +3383,24 @@ bool CLibraryBuilderInternals::ReadPDF(DWORD nIndex, HANDLE hFile, LPCTSTR pszPa
 		strLine = ReadPDFLine( hFile, true );
 		if ( strLine.IsEmpty() )
 			strLine = ReadPDFLine( hFile, true );
+		if ( strLine.IsEmpty() )
+			strLine = ReadPDFLine( hFile, true );
 
 		// TODO: %%EOF should be within the last 1024 KB by specs
-		if ( strLine != _T("%%EOF") )
+		if ( strLine.CompareNoCase( _T("%%EOF") ) != 0 )
 			return false;
 
 		strLine = ReadPDFLine( hFile, true );
-		if ( ReadPDFLine( hFile, true ) != _T("startxref") )
-			return false;
-
 		// get last reference object number
 		if ( _stscanf( strLine, _T("%lu"), &nOffset ) != 1 )
 			return false;
-		if ( ! ReadPDFLine( hFile, true, true ).IsEmpty() )
+
+		strLine = ReadPDFLine( hFile, true );
+		if ( strLine.CompareNoCase( _T("startxref") ) != 0 )
+			return false;
+
+		strLine = ReadPDFLine( hFile, true, true );
+		if ( ! strLine.IsEmpty() )
 			return false;
 
 		int nLines;
@@ -3414,9 +3419,12 @@ bool CLibraryBuilderInternals::ReadPDF(DWORD nIndex, HANDLE hFile, LPCTSTR pszPa
 
 	// read trailer dictionary
 	strLine = ReadPDFLine( hFile, false );
+	if ( strLine.IsEmpty() )
+		strLine = ReadPDFLine( hFile, false );
 	if ( strLine.CompareNoCase( _T("trailer") ) != 0 )
 		return false;
-	if ( ! ReadPDFLine( hFile, false, true ).IsEmpty() )
+	strLine = ReadPDFLine( hFile, false, true );
+	if ( ! strLine.IsEmpty() )
 		return false;
 	strLine = ReadPDFLine( hFile, false, true );
 	if ( strLine.IsEmpty() )
@@ -3477,7 +3485,7 @@ bool CLibraryBuilderInternals::ReadPDF(DWORD nIndex, HANDLE hFile, LPCTSTR pszPa
 		strLine = ReadPDFLine( hFile, false );
 		if ( strLine.IsEmpty() )
 			strLine = ReadPDFLine( hFile, false );
-		if ( strLine != _T("xref") )
+		if ( strLine.CompareNoCase( _T("xref") ) != 0 )
 			return false;
 		strLine = ReadPDFLine( hFile, false );
 		DWORD nTemp;
@@ -3505,12 +3513,16 @@ bool CLibraryBuilderInternals::ReadPDF(DWORD nIndex, HANDLE hFile, LPCTSTR pszPa
 				}
 			}
 		}
-		if ( ReadPDFLine( hFile, false ) != _T("trailer") )
+		strLine = ReadPDFLine( hFile, false );
+		if ( strLine.IsEmpty() )
+			strLine = ReadPDFLine( hFile, false );
+		if ( strLine.CompareNoCase( _T("trailer") ) != 0 )
 			return false;
 		// Only the last data from trailers are used for /Info and /Root positions
 		nOffsetPrev = 0;
 
-		if ( ! ReadPDFLine( hFile, false, true ).IsEmpty() )
+		strLine = ReadPDFLine( hFile, false, true );
+		if ( ! strLine.IsEmpty() )
 			return false;
 		strLine = ReadPDFLine( hFile, false, true );
 		if ( strLine.IsEmpty() )
@@ -3647,7 +3659,8 @@ bool CLibraryBuilderInternals::ReadPDF(DWORD nIndex, HANDLE hFile, LPCTSTR pszPa
 			if ( strLine.Find( _T("obj"), nObjPos + 1 ) != -1 )
 				continue;
 
-			if ( ReadPDFLine( hFile, false, true ).IsEmpty() )
+			strLine = ReadPDFLine( hFile, false, true );
+			if ( strLine.IsEmpty() )
 			{
 				strLine = ReadPDFLine( hFile, false, true );
 				if ( strLine.IsEmpty() )
@@ -3674,9 +3687,10 @@ bool CLibraryBuilderInternals::ReadPDF(DWORD nIndex, HANDLE hFile, LPCTSTR pszPa
 		strSeek.Format( _T("%lu 0 obj"), nOffsetInfo );
 		SetFilePointer( hFile, pOffset[ nOffsetInfo ], NULL, FILE_BEGIN );
 		strLine = ReadPDFLine( hFile, false, true, false );
-		if ( strLine == strSeek )
+		if ( strLine.CompareNoCase( strSeek ) == 0 )
 		{
-			if ( ! ReadPDFLine( hFile, false, true ).IsEmpty() )
+			strLine = ReadPDFLine( hFile, false, true );
+			if ( ! strLine.IsEmpty() )
 				return false;
 			strLine = ReadPDFLine( hFile, false, true );
 			if ( strLine.IsEmpty() )
@@ -3729,21 +3743,19 @@ bool CLibraryBuilderInternals::ReadPDF(DWORD nIndex, HANDLE hFile, LPCTSTR pszPa
 							break;
 					}
 				}
+
+				const CString strDecodedLine = DecodePDFText( strLine );
+
 				if ( strEntry.CompareNoCase( _T("title") ) == 0 )
-					pXML->AddAttribute( _T("title"), DecodePDFText( strLine ) );
+					pXML->AddAttribute( _T("title"), strDecodedLine );
 				else if ( strEntry.CompareNoCase( _T("author") ) == 0 )
-					pXML->AddAttribute( _T("author"), DecodePDFText( strLine ) );
+					pXML->AddAttribute( _T("author"), strDecodedLine );
 				else if ( strEntry.CompareNoCase( _T("subject") ) == 0 )
-					pXML->AddAttribute( _T("subject"), DecodePDFText( strLine ) );
+					pXML->AddAttribute( _T("subject"), strDecodedLine );
 				else if ( strEntry.CompareNoCase( _T("keywords") ) == 0 )
-					pXML->AddAttribute( _T("keywords"), DecodePDFText( strLine ) );
+					pXML->AddAttribute( _T("keywords"), strDecodedLine );
 				else if ( strEntry.CompareNoCase( _T("company") ) == 0 )
-				{
-					if ( bBook )
-						pXML->AddAttribute( _T("publisher"), DecodePDFText( strLine ) );
-					else
-						pXML->AddAttribute( _T("copyright"), DecodePDFText( strLine ) );
-				}
+					pXML->AddAttribute( bBook ? _T("publisher") : _T("copyright"), strDecodedLine );
 				//else if ( strEntry.CompareNoCase( _T("creator") ) == 0 )
 				//else if ( strEntry.CompareNoCase( _T("producer") ) == 0 )
 				//else if ( strEntry.CompareNoCase( _T("moddate") ) == 0 )
