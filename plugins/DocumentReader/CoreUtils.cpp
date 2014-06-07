@@ -838,7 +838,7 @@ STDAPI_(BOOL) FFindQualifiedFileName(LPCWSTR pwszFile, LPWSTR pwszPath, ULONG *p
 //
 STDAPI_(BOOL) FGetModuleFileName(HMODULE hModule, WCHAR** wzFileName)
 {
-    LPWSTR pwsz, pwsz2;
+    LPWSTR pwsz;
     DWORD dw;
 
     CHECK_NULL_RETURN(wzFileName, FALSE);

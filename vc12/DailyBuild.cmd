@@ -26,7 +26,7 @@ echo md ..\Snapshots\r$WCREV$\ >> %BUILDDIR%DailyBuild.tmp
 echo rmdir ..\r$WCREV$ >> %BUILDDIR%DailyBuild.tmp
 echo mklink /D /J ..\r$WCREV$ . >> %BUILDDIR%DailyBuild.tmp
 echo pushd ..\r$WCREV$ >> %BUILDDIR%DailyBuild.tmp
-echo call "%VS100COMNTOOLS%..\..\VC\vcvarsall.bat" x86 >> %BUILDDIR%DailyBuild.tmp
+echo call "%VS120COMNTOOLS%..\..\VC\vcvarsall.bat" x86 >> %BUILDDIR%DailyBuild.tmp
 echo set ISCCOPTIONS=/dRELEASE_BUILD=0 /dREVISION=r$WCREV$ /q >> %BUILDDIR%DailyBuild.tmp
 echo msbuild vc12\Shareaza.sln /nologo /v:m /t:Rebuild /p:ForceImportBeforeCppTargets="%CD%\vc12\DailyBuild.props" /p:Configuration=Debug /p:Platform=Win32 /fl /flp:Summary;Verbosity=normal;LogFile=%BUILDDIR%Shareaza_r$WCREV$_$WCNOW=%%Y-%%m-%%d$.log >> %BUILDDIR%DailyBuild.tmp
 echo popd >> %BUILDDIR%DailyBuild.tmp

@@ -188,7 +188,7 @@
     <ClInclude Include="stdafx.h" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\HashLib\HashLib_10.vcxproj">
+    <ProjectReference Include="..\HashLib\HashLib_12.vcxproj">
       <Project>{196c99fc-9a4e-421f-b44c-8e3fd177122f}</Project>
       <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
     </ProjectReference>

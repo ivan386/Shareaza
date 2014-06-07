@@ -109,6 +109,7 @@
       <TargetMachine>MachineX86</TargetMachine>
       <KeyFile>
       </KeyFile>
+      <SubSystem>Windows</SubSystem>
     </Link>
     <PostBuildEvent>
       <Message>Performing registration</Message>
@@ -142,6 +143,7 @@
       <IgnoreSpecificDefaultLibraries>%(IgnoreSpecificDefaultLibraries)</IgnoreSpecificDefaultLibraries>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <TargetMachine>MachineX64</TargetMachine>
+      <SubSystem>Windows</SubSystem>
     </Link>
     <PostBuildEvent>
       <Message>Performing registration</Message>

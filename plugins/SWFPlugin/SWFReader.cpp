@@ -305,7 +305,7 @@ STDMETHODIMP CSWFReader::LoadFromMemory (
 	/* [in,out] */ IMAGESERVICEDATA* /* pParams */,
 	/* [out] */ SAFEARRAY** /* ppImage */)
 {
-	ATLTRACENOTIMPL( "SWFPlugin::LoadFromMemory" );
+	return E_NOTIMPL;
 }
 
 STDMETHODIMP CSWFReader::SaveToFile (
@@ -313,7 +313,7 @@ STDMETHODIMP CSWFReader::SaveToFile (
 	/* [in,out] */ IMAGESERVICEDATA* /* pParams */,
 	/* [in] */ SAFEARRAY* /* pImage */)
 {
-	ATLTRACENOTIMPL( "SWFPlugin::SaveToFile" );
+	return E_NOTIMPL;
 }
 
 STDMETHODIMP CSWFReader::SaveToMemory (
@@ -322,5 +322,5 @@ STDMETHODIMP CSWFReader::SaveToMemory (
 	/* [in,out] */ IMAGESERVICEDATA* /* pParams */,
 	/* [in] */ SAFEARRAY* /* pImage */)
 {
-	ATLTRACENOTIMPL( "SWFPlugin::SaveToMemory" );
+	return E_NOTIMPL;
 }

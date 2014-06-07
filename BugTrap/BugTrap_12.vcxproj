@@ -29,23 +29,23 @@
     <ConfigurationType>DynamicLibrary</ConfigurationType>
     <CharacterSet>Unicode</CharacterSet>
     <WholeProgramOptimization>true</WholeProgramOptimization>
-    <PlatformToolset>v120</PlatformToolset>
+    <PlatformToolset>v120_xp</PlatformToolset>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
     <ConfigurationType>DynamicLibrary</ConfigurationType>
     <CharacterSet>Unicode</CharacterSet>
-    <PlatformToolset>v120</PlatformToolset>
+    <PlatformToolset>v120_xp</PlatformToolset>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
     <ConfigurationType>DynamicLibrary</ConfigurationType>
     <CharacterSet>Unicode</CharacterSet>
     <WholeProgramOptimization>true</WholeProgramOptimization>
-    <PlatformToolset>v120</PlatformToolset>
+    <PlatformToolset>v120_xp</PlatformToolset>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
     <ConfigurationType>DynamicLibrary</ConfigurationType>
     <CharacterSet>Unicode</CharacterSet>
-    <PlatformToolset>v120</PlatformToolset>
+    <PlatformToolset>v120_xp</PlatformToolset>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
   <ImportGroup Label="ExtensionSettings">
@@ -107,6 +107,7 @@
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <TargetMachine>MachineX86</TargetMachine>
       <SubSystem>Windows</SubSystem>
+      <AdditionalOptions>nothrownew.obj %(AdditionalOptions)</AdditionalOptions>
     </Link>
     <PreBuildEvent>
       <Command>
@@ -134,6 +135,7 @@
       <RuntimeTypeInfo>false</RuntimeTypeInfo>
       <PrecompiledHeader>Use</PrecompiledHeader>
       <WarningLevel>Level4</WarningLevel>
+      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
       <FunctionLevelLinking>true</FunctionLevelLinking>
     </ClCompile>
     <ResourceCompile>
@@ -149,6 +151,7 @@
       </MapFileName>
       <SubSystem>Windows</SubSystem>
       <TargetMachine>MachineX64</TargetMachine>
+      <AdditionalOptions>nothrownew.obj %(AdditionalOptions)</AdditionalOptions>
     </Link>
     <PreBuildEvent>
       <Command>
@@ -190,6 +193,7 @@
       <TargetMachine>MachineX86</TargetMachine>
       <DelayLoadDLLs>advapi32.dll;comctl32.dll;comdlg32.dll;ole32.dll;oleaut32.dll;shell32.dll;shlwapi.dll;version.dll;wininet.dll;ws2_32.dll;%(DelayLoadDLLs)</DelayLoadDLLs>
       <SubSystem>Windows</SubSystem>
+      <AdditionalOptions>nothrownew.obj %(AdditionalOptions)</AdditionalOptions>
     </Link>
     <PreBuildEvent>
       <Command>
@@ -220,6 +224,7 @@
       <RuntimeTypeInfo>false</RuntimeTypeInfo>
       <PrecompiledHeader>Use</PrecompiledHeader>
       <WarningLevel>Level4</WarningLevel>
+      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <OmitFramePointers>false</OmitFramePointers>
     </ClCompile>
@@ -240,6 +245,7 @@
       <SetChecksum>true</SetChecksum>
       <TargetMachine>MachineX64</TargetMachine>
       <DelayLoadDLLs>advapi32.dll;comctl32.dll;comdlg32.dll;ole32.dll;oleaut32.dll;shell32.dll;shlwapi.dll;version.dll;wininet.dll;ws2_32.dll;%(DelayLoadDLLs)</DelayLoadDLLs>
+      <AdditionalOptions>nothrownew.obj %(AdditionalOptions)</AdditionalOptions>
     </Link>
     <PreBuildEvent>
       <Command>
@@ -387,7 +393,7 @@
     <ResourceCompile Include="BugTrap.rc" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\zlib\zlibwapi_10.vcxproj">
+    <ProjectReference Include="..\zlib\zlibwapi_12.vcxproj">
       <Project>{39f34f2c-d42a-41d2-a0bc-54d7972e2bc5}</Project>
       <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
     </ProjectReference>

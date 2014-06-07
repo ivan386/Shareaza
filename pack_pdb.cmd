@@ -17,13 +17,13 @@ set src=.\vc10\Win32\Debug
 if exist %src%\Shareaza.pdb goto work
 set src=.\vc10\x64\Debug
 if exist %src%\Shareaza.pdb goto work
-set src=.\vc9\Win32\Release
+set src=.\vc12\Win32\Release
 if exist %src%\Shareaza.pdb goto work
-set src=.\vc9\x64\Release
+set src=.\vc12\x64\Release
 if exist %src%\Shareaza.pdb goto work
-set src=.\vc9\Win32\Debug
+set src=.\vc12\Win32\Debug
 if exist %src%\Shareaza.pdb goto work
-set src=.\vc9\x64\Debug
+set src=.\vc12\x64\Debug
 if exist %src%\Shareaza.pdb goto work
 echo Shareaza debug symbols are missing. Please compile Shareaza first.
 exit /b 1
