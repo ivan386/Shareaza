@@ -90,4 +90,6 @@ private:
 	bool		ReadCHM(DWORD nIndex, HANDLE hFile, LPCTSTR pszPath);
 
 	bool		ReadTorrent(DWORD nIndex, HANDLE hFile, LPCTSTR pszPath);
+
+	bool		ReadDJVU(DWORD nIndex, HANDLE hFile);
 };

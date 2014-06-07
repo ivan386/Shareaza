@@ -299,6 +299,11 @@ bool CLibraryBuilderInternals::ExtractMetadata(DWORD nIndex, const CString& strP
 	{
 		return ReadTorrent( nIndex, hFile, strPath );
 	}
+	else if ( strType == _T(".djvu") ||
+		strType == _T(".djv") )
+	{
+		return ReadDJVU( nIndex, hFile );
+	}
 	else
 		return false;
 
@@ -1928,7 +1933,7 @@ bool CLibraryBuilderInternals::ReadFLV(DWORD nIndex, HANDLE hFile)
 				if ( ! ReadFLVVariable( hFile, nRemaning, var, pXML ) )
 					return false;
 
-				if ( var.vt == VT_BSTR && wcsicmp( var.bstrVal, L"onMetaData" ) == 0 )
+				if ( var.vt == VT_BSTR && _wcsicmp( var.bstrVal, L"onMetaData" ) == 0 )
 				{
 					bMetadata = TRUE;
 				}
@@ -4432,7 +4437,6 @@ bool CLibraryBuilderInternals::ReadCHM(DWORD nIndex, HANDLE hFile, LPCTSTR pszPa
 	return true;
 }
 
-
 //////////////////////////////////////////////////////////////////////
 // CLibraryBuilderInternals TORRENT
 
@@ -4466,5 +4470,123 @@ bool CLibraryBuilderInternals::ReadTorrent(DWORD nIndex, HANDLE /*hFile*/, LPCTS
 	pXML->AddAttribute( L"privateflag", oTorrent.m_bPrivate ? L"true" : L"false" );
 
 	LibraryBuilder.SubmitMetadata( nIndex, CSchema::uriBitTorrent, pXML.release() );
+	return true;
+}
+
+//////////////////////////////////////////////////////////////////////
+// CLibraryBuilderInternals DJVU
+
+bool CLibraryBuilderInternals::ReadDJVU(DWORD nIndex, HANDLE hFile)
+{
+	DWORD nRead;
+
+	SetFilePointer( hFile, 0, NULL, FILE_BEGIN );
+
+	BYTE pMagic[ 8 ];
+	if ( ! ReadFile( hFile, pMagic, sizeof( pMagic ), &nRead, NULL ) || nRead != sizeof( pMagic ) )
+		return false;
+
+	if ( memcmp( pMagic, "AT&TFORM", sizeof( pMagic ) ) != 0 )
+		return false;
+
+	// Document size (MSB)
+	DWORD nFileSize;
+	if ( ! ReadFile( hFile, &nFileSize, sizeof( nFileSize ), &nRead, NULL ) || nRead != sizeof( nFileSize ) )
+		return false;
+	nFileSize = _byteswap_ulong( nFileSize ) + sizeof( pMagic ) + sizeof( nFileSize );
+	const DWORD nRealFileSize = GetFileSize( hFile, NULL );
+	if ( nRealFileSize < nFileSize )
+		return false;
+
+	BYTE pType[ 8 ];
+	if ( ! ReadFile( hFile, pType, sizeof( pType ), &nRead, NULL ) || nRead != sizeof( pType ) )
+		return false;
+
+	WORD nPages = 0, nWidth = 0, nHeight = 0, nDPI = 0, nVersion = 0;
+
+	if ( memcmp( pType, "DJVMDIRM", sizeof( pType ) ) == 0 )
+	{
+		// Multi-page document
+
+		// Skip size
+		SetFilePointer( hFile, 4, NULL, FILE_CURRENT );
+		
+		BYTE nFlags;
+		if ( ! ReadFile( hFile, &nFlags, sizeof( nFlags ), &nRead, NULL ) || nRead != sizeof( nFlags ) )
+			return false;
+		const bool bBundled = ( ( nFlags & 0x80 ) != 0 );
+
+		// Files count (MSB)
+		WORD nFiles;
+		if ( ! ReadFile( hFile, &nFiles, sizeof( nFiles ), &nRead, NULL ) || nRead != sizeof( nFiles ) )
+			return false;
+		nFiles = _byteswap_ushort( nFiles );
+
+		// Skip offsets array
+		if ( bBundled )
+			SetFilePointer( hFile, 4 * nFiles, NULL, FILE_CURRENT );
+
+		// BZZ-encoded
+		//for ( WORD i = 0; i < nFiles; ++i )
+		//{
+		//}
+
+		// TODO: Implement DjVU-file correct page detection
+	}
+	else if ( memcmp( pType, "DJVUINFO", sizeof( pType ) ) == 0 )
+	{
+		// Single-page document
+
+		// Skip size
+		SetFilePointer( hFile, 4, NULL, FILE_CURRENT );
+
+		// Image width (MSB)
+		if ( ! ReadFile( hFile, &nWidth, sizeof( nWidth ), &nRead, NULL ) || nRead != sizeof( nWidth ) )
+			return false;
+		nWidth = _byteswap_ushort( nWidth );
+
+		// Image height (MSB)
+		if ( ! ReadFile( hFile, &nHeight, sizeof( nHeight ), &nRead, NULL ) || nRead != sizeof( nHeight ) )
+			return false;
+		nHeight = _byteswap_ushort( nHeight );
+
+		// Version
+		if ( ! ReadFile( hFile, &nVersion, sizeof( nVersion ), &nRead, NULL ) || nRead != sizeof( nVersion ) )
+			return false;
+
+		// DPI (LSB)
+		if ( ! ReadFile( hFile, &nDPI, sizeof( nDPI ), &nRead, NULL ) || nRead != sizeof( nDPI ) )
+			return false;
+	}
+	else
+		return false;
+
+	const bool bBook = ( nWidth == 0 && nHeight == 0 );
+	CAutoPtr< CXMLElement > pXML( new CXMLElement( NULL, bBook ? _T("wordprocessing") : _T("image") ) );
+	if ( ! pXML )
+		return true;
+
+	pXML->AddAttribute( bBook ? _T("format") : _T("description"), _T("Lizardtech DjVu") );
+
+	if ( nPages > 1 )
+	{
+		CString strPages;
+		strPages.Format( _T("%u"), nPages );
+		pXML->AddAttribute( _T("pages"), strPages );
+	}
+	if ( nWidth )
+	{
+		CString strWidth;
+		strWidth.Format( _T("%u"), nWidth );
+		pXML->AddAttribute( _T("width"), strWidth );
+	}
+	if ( nHeight )
+	{
+		CString strHeight;
+		strHeight.Format( _T("%u"), nHeight );
+		pXML->AddAttribute( _T("height"), strHeight );
+	}
+
+	LibraryBuilder.SubmitMetadata( nIndex, bBook ? CSchema::uriDocument : CSchema::uriImage, pXML.Detach() );
 	return true;
 }
