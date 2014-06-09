@@ -3447,7 +3447,7 @@
 			<control caption="bits/sekund|bytes/sekund|b/s|B/s|Kb/s|KB/s|Mb/s|MB/s"/>
 			<control caption="Nedlastinger:"/>
 			<control caption="Utvid nye nedlastinger som standard"/>
-			<control caption="Vis enkel fremgangsindikator"/>
+			<control caption="Åpne et nedlastings _monitor vindu"/>
 			<control caption="_Søk:"/>
 			<control caption="Utvid filer med flere kilder som standard"/>
 			<control caption="Gå til overføringsvindu ved nedlasting"/>

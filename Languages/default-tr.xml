@@ -3420,7 +3420,7 @@
 			<control caption="bit/saniye|byte/saniye|b/s|B/s|Kb/s|KB/s|Mb/s|MB/s"/>
 			<control caption="_İndirmeler:"/>
 			<control caption="Varsayılandan yeni indirmeleri genişlet"/>
-			<control caption="Kaydırma Çubuğu Görüntüle"/>
+			<control caption="İndirme Penceresi Aç"/>
 			<control caption="_Ara:"/>
 			<control caption="Varsayılan çoklu kaynak dosyalarını genişlet"/>
 			<control caption="İndirmede transfer anahtarlarını görüntüle "/>

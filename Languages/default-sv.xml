@@ -3448,7 +3448,7 @@ Du kan undersöka varje källa för att se hur högt upp i kön du befinner dig.
 			<control caption="bitar/sekund|bytes/sekund|b/s|B/s|Kb/s|KB/s|Mb/s|MB/s"/>
 			<control caption="_Nedladdningar:"/>
 			<control caption="Expandera nya nedladdningar automatiskt"/>
-			<control caption="Visa förenklad nedladdningsindikator"/>
+			<control caption="Öppna en nedladdningsmonitor"/>
 			<control caption="_Sök:"/>
 			<control caption="Expandera filer med flera källor automatiskt"/>
 			<control caption="Växla till överföringsvyn vid nedladdning"/>

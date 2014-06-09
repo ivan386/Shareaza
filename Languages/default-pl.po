@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Shareaza\n"
 "Report-Msgid-Bugs-To: ryo-oh-ki <ryo-oh-ki@narod.ru>\n"
-"POT-Creation-Date: 2014-05-11 13:41+0000\n"
+"POT-Creation-Date: 2014-06-09 06:02+0000\n"
 "PO-Revision-Date: \n"
 "Last-Translator: ryo-oh-ki <ryo-oh-ki@narod.ru>\n"
 "Language-Team: Shareaza Development Team\n"
@@ -7525,9 +7525,9 @@ msgstr "Pobierania:"
 msgid "Expand new downloads by default"
 msgstr "Domyślnie rozszerz nowe pobierania"
 
-#: cgeneralsettingspage;control;9
-msgid "Display simple progress bar"
-msgstr "Pokaż prosty pasek postępu"
+#: cgeneralsettingspage;control;9 curlactiondlg;control;13
+msgid "Open a download _monitor window"
+msgstr "Otwórz okno monitora pobierań"
 
 #: cgeneralsettingspage;control;10
 msgid "_Search:"
@@ -9326,10 +9326,6 @@ msgstr "Szukaj tego pliku"
 msgid "_Remember my selection next time"
 msgstr "Zapamiętaj mój wybór"
 
-#: curlactiondlg;control;13
-msgid "Open a download _monitor window"
-msgstr "Otwórz okno monitora pobierań"
-
 #: curlactiondlg;control;14
 msgid "You have clicked on a Shareaza-powered URI which will add the following Discovery Service to your Discovery Services cache."
 msgstr "Kliknąłeś na Shareaza-powered URI które doda następujący serwis Discovery do twojego cache'u serwisów Discovery."
@@ -9996,6 +9992,9 @@ msgstr "TigerTree"
 #, fuzzy
 msgid "NextRun"
 msgstr "Następny"
+
+#~ msgid "Display simple progress bar"
+#~ msgstr "Pokaż prosty pasek postępu"
 
 #~ msgid "Requesting..."
 #~ msgstr "Żądanie..."

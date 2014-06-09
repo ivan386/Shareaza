@@ -3468,7 +3468,7 @@
 			<control caption="bits/second|bytes/second|b/s|B/s|Kb/s|KB/s|Mb/s|MB/s"/>
 			<control caption="_Downloads:"/>
 			<control caption="Expand new downloads by default"/>
-			<control caption="Display simple progress bar"/>
+			<control caption="Open a download _monitor window"/>
 			<control caption="_Search:"/>
 			<control caption="Expand multi-source files by default"/>
 			<control caption="Switch to Transfers view on download"/>

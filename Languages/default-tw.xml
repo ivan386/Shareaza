@@ -3389,7 +3389,7 @@
 			<control caption="bits/每秒|bytes/每秒|b/每秒|B/每秒|Kb/每秒|KB/每秒|Mb/每秒|MB/每秒"/>
 			<control caption="下載:"/>
 			<control caption="自動展開新增的下載"/>
-			<control caption="顯示簡易進度棒"/>
+			<control caption="開啟一個下載監控視窗"/>
 			<control caption="搜尋:"/>
 			<control caption="自動展開具有多重來源的檔案"/>
 			<control caption="下載時切換至傳輸視窗"/>

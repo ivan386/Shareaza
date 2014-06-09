@@ -3446,7 +3446,7 @@
 			<control caption="bitti/sekundis|baiti/sekundis|b/s|B/s|Kb/s|KB/s|Mb/s|MB/s"/>
 			<control caption="_Allalaadimised:"/>
 			<control caption="Laienda uued allalaadimised vaikimisi"/>
-			<control caption="Kuva lihtne edenemisriba"/>
+			<control caption="Ava allalaadimise _jälgimise aken"/>
 			<control caption="_Otsing:"/>
 			<control caption="Laienda mitme allikaga failid vaikimisi"/>
 			<control caption="Vaheta Ülekannete vaatesse"/>

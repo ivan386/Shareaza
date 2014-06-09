@@ -3446,7 +3446,7 @@
 			<control caption="ビット/秒|バイト/秒|b/秒|B/秒|Kb/秒|KB/秒|Mb/秒|MB/秒"/>
 			<control caption="ダウンロード(_D):"/>
 			<control caption="新しいダウンロードをデフォルトで展開する"/>
-			<control caption="簡単な進行バーを表示する"/>
+			<control caption="ﾀﾞｳﾝﾛｰﾄﾞﾓﾆﾀｳｨﾝﾄﾞｳを開く(_M)"/>
 			<control caption="検索(_S):"/>
 			<control caption="複数ソースファイルをデフォルトで展開する"/>
 			<control caption="ダウンロードで転送画面に切り替える"/>

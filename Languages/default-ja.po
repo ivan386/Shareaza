@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Shareaza\n"
 "Report-Msgid-Bugs-To: ryo-oh-ki <ryo-oh-ki@narod.ru>\n"
-"POT-Creation-Date: 2014-05-11 13:41+0000\n"
+"POT-Creation-Date: 2014-06-09 06:02+0000\n"
 "PO-Revision-Date: \n"
 "Last-Translator: ryo-oh-ki <ryo-oh-ki@narod.ru>\n"
 "Language-Team: Shareaza Development Team\n"
@@ -7516,9 +7516,9 @@ msgstr "ダウンロード(_D):"
 msgid "Expand new downloads by default"
 msgstr "新しいダウンロードをデフォルトで展開する"
 
-#: cgeneralsettingspage;control;9
-msgid "Display simple progress bar"
-msgstr "簡単な進行バーを表示する"
+#: cgeneralsettingspage;control;9 curlactiondlg;control;13
+msgid "Open a download _monitor window"
+msgstr "ﾀﾞｳﾝﾛｰﾄﾞﾓﾆﾀｳｨﾝﾄﾞｳを開く(_M)"
 
 #: cgeneralsettingspage;control;10
 msgid "_Search:"
@@ -9317,10 +9317,6 @@ msgstr "ファイルを検索(_S)"
 msgid "_Remember my selection next time"
 msgstr "この選択を記憶(_R)"
 
-#: curlactiondlg;control;13
-msgid "Open a download _monitor window"
-msgstr "ﾀﾞｳﾝﾛｰﾄﾞﾓﾆﾀｳｨﾝﾄﾞｳを開く(_M)"
-
 #: curlactiondlg;control;14
 msgid "You have clicked on a Shareaza-powered URI which will add the following Discovery Service to your Discovery Services cache."
 msgstr "ディスカバリサービスキャッシュに以下のディスカバリサービスを加えるURIをクリックしました:"
@@ -9987,6 +9983,9 @@ msgstr "TigerTree"
 #, fuzzy
 msgid "NextRun"
 msgstr "次へ"
+
+#~ msgid "Display simple progress bar"
+#~ msgstr "簡単な進行バーを表示する"
 
 #~ msgid "Requesting..."
 #~ msgstr "要求中..."

@@ -3441,7 +3441,7 @@
 			<control caption="bits/segon|bytes/segon|b/s|B/s|Kb/s|KB/s|Mb/s|MB/s"/>
 			<control caption="_Descàrregues:"/>
 			<control caption="Expansió de les noves transferències per defecte"/>
-			<control caption="Mostra la barra de progrés simplificada"/>
+			<control caption="Obre el _monitor de transferències"/>
 			<control caption="_Cerca:"/>
 			<control caption="Expansió de multiples fonts per defecte"/>
 			<control caption="Canvi a vista de transferències en descàrrega"/>

@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Shareaza\n"
 "Report-Msgid-Bugs-To: ryo-oh-ki <ryo-oh-ki@narod.ru>\n"
-"POT-Creation-Date: 2014-05-11 13:41+0000\n"
+"POT-Creation-Date: 2014-06-09 06:02+0000\n"
 "PO-Revision-Date: \n"
 "Last-Translator: ryo-oh-ki <ryo-oh-ki@narod.ru>\n"
 "Language-Team: Shareaza Development Team\n"
@@ -7445,9 +7445,9 @@ msgstr "下載:"
 msgid "Expand new downloads by default"
 msgstr "自動展開新增的下載"
 
-#: cgeneralsettingspage;control;9
-msgid "Display simple progress bar"
-msgstr "顯示簡易進度棒"
+#: cgeneralsettingspage;control;9 curlactiondlg;control;13
+msgid "Open a download _monitor window"
+msgstr "開啟一個下載監控視窗"
 
 #: cgeneralsettingspage;control;10
 msgid "_Search:"
@@ -9248,10 +9248,6 @@ msgstr "尋找檔案"
 msgid "_Remember my selection next time"
 msgstr "下次記住我的選擇"
 
-#: curlactiondlg;control;13
-msgid "Open a download _monitor window"
-msgstr "開啟一個下載監控視窗"
-
 #: curlactiondlg;control;14
 msgid "You have clicked on a Shareaza-powered URI which will add the following Discovery Service to your Discovery Services cache."
 msgstr "您點選了由 Shareaza 驅動的 URI, 將會新增以下的揭示服務至您的揭示服務快取."
@@ -9921,6 +9917,9 @@ msgstr "TigerTree"
 #, fuzzy
 msgid "NextRun"
 msgstr "下一個"
+
+#~ msgid "Display simple progress bar"
+#~ msgstr "顯示簡易進度棒"
 
 #~ msgid "Requesting..."
 #~ msgstr "要求..."

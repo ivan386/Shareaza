@@ -3446,7 +3446,7 @@
 			<control caption="bitova na sekundu|bajtova na sekundu|b/s|B/s|Kb/s|KB/s|Mb/s|MB/s"/>
 			<control caption="Ski_danje:"/>
 			<control caption="Uvjek raširi nova skidanja"/>
-			<control caption="Pokaži jednostavni pokazivač napretka"/>
+			<control caption="Otvori prozor skidanja"/>
 			<control caption="Traži:"/>
 			<control caption="Uvijek pokaži sve izvore"/>
 			<control caption="Prebaci na Razmjenu kad krenem skidati"/>

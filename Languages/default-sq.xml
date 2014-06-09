@@ -3453,7 +3453,7 @@
 			<control caption="bajt/sekondë|bajte/sekondë|b/s|B/s|Kb/s|KB/s|Mb/s|MB/s"/>
 			<control caption="_Shkarkim:"/>
 			<control caption="Zgjero automatikisht shkarkesat e reja"/>
-			<control caption="Trego brez të thjeshtë të progresit"/>
+			<control caption="_Monitoro shkarkimin"/>
 			<control caption="_Kërkim:"/>
 			<control caption="Zgjero skedat me shumë burime"/>
 			<control caption="Kalo te Transferimi kur shkarkon"/>

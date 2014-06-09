@@ -3448,7 +3448,7 @@
 			<control caption="bits/Sekunde|Bytes/Sekunde|b/s|B/s|Kb/s|KB/s|Mb/s|MB/s"/>
 			<control caption="_Downloads:"/>
 			<control caption="Neue Downloads automatisch erweitern"/>
-			<control caption="Einfache Fortschrittsanzeige verwenden"/>
+			<control caption="Ein _Monitorfenster anzeigen"/>
 			<control caption="_Suche:"/>
 			<control caption="Multi-Source-Dateien erweitern"/>
 			<control caption="Bei Download zu Transfers wechseln"/>

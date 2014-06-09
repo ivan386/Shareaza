@@ -3453,7 +3453,7 @@
 			<control caption="bity/sekundę|bajty/sekundę|b/s|B/s|Kb/s|KB/s|Mb/s|MB/s"/>
 			<control caption="Pobierania:"/>
 			<control caption="Domyślnie rozszerz nowe pobierania"/>
-			<control caption="Pokaż prosty pasek postępu"/>
+			<control caption="Otwórz okno monitora pobierań"/>
 			<control caption="Szukanie:"/>
 			<control caption="Domyślnie rozszerz wieloźródłowe pliki"/>
 			<control caption="Przełącz do widoku Transferów po rozpoczęciu pobierania"/>

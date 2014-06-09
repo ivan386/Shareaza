@@ -3457,7 +3457,7 @@ pasta dos arquivos baixados a sua biblioteca agora?"/>
 			<control caption="bits/segundo|bytes/segundo|b/s|B/s|Kb/s|KB/s|Mb/s|MB/s"/>
 			<control caption="_Downloads:"/>
 			<control caption="Expandir novos downloads por padrão"/>
-			<control caption="Exibir barra de progresso simples"/>
+			<control caption="Abrir uma janela do _monitor de downloads"/>
 			<control caption="_Busca:"/>
 			<control caption="Expandir arquivos multi-fonte por padrão"/>
 			<control caption="Trocar para Tranferências ao baixar"/>

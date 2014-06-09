@@ -3449,7 +3449,7 @@ puede comenzar a transferir en cualquier momento.</text>
 			<control caption="bits/segundo|bytes/segundo|b/s|B/s|Kb/s|KB/s|Mb/s|MB/s"/>
 			<control caption="_Descargas:"/>
 			<control caption="Expandir nuevas transferencias por defecto"/>
-			<control caption="Mostrar barra simple de progreso"/>
+			<control caption="Abrir el _Monitor de transferencias"/>
 			<control caption="_Buscar:"/>
 			<control caption="Expandir multiples fuentes por defecto"/>
 			<control caption="Mostrar la pestaña de Transferencias al iniciar la descarga"/>

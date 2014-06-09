@@ -3447,7 +3447,7 @@
 			<control caption="bits/second|bytes/second|b/s|B/s|Kb/s|KB/s|Mb/s|MB/s"/>
 			<control caption="Cuadros informativos(tooltips):"/>
 			<control caption="Expandir nuevas transferencias por defecto"/>
-			<control caption="Mostrar barra simple de proceso"/>
+			<control caption="Abrir el _Monitor de transferencias"/>
 			<control caption="_Buscar:"/>
 			<control caption="Expandir multiples fuentes por defecto"/>
 			<control caption="Cambiar a vista de transferencias en descarga"/>

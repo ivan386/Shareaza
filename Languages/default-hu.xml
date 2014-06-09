@@ -3426,7 +3426,7 @@
 			<control caption="bit/másodperc|bájt/másodperc|b/s|B/s|Kb/s|KB/s|Mb/s|MB/s"/>
 			<control caption="_Letöltések"/>
 			<control caption="Új letöltések kibontása"/>
-			<control caption="Egyszerű folyamatábra megjelenítése"/>
+			<control caption="Letöltés_monitor megnyitása"/>
 			<control caption="_Keresés"/>
 			<control caption="Többforrásos fájlok kibontása"/>
 			<control caption="Letöltésnél átkapcsol Forgalom ablakba"/>

@@ -463,7 +463,7 @@ BEGIN
     GROUPBOX        "&Downloads:",IDC_STATIC,7,93,160,38
     CONTROL         "Expand new downloads by default",IDC_EXPAND_DOWNLOAD,
                     "Button",BS_AUTOCHECKBOX | WS_TABSTOP,14,104,148,10
-    CONTROL         "Display simple progress bar",IDC_DOWNLOADS_SIMPLEBAR,
+    CONTROL         "Open a download &monitor window",IDC_NEW_WINDOW,
                     "Button",BS_AUTOCHECKBOX | WS_TABSTOP,14,117,148,10
     GROUPBOX        "&Search:",IDC_STATIC,7,134,160,75
     CONTROL         "Expand multi-source files by default",IDC_EXPAND_MATCHES,

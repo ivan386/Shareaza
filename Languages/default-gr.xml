@@ -3452,7 +3452,7 @@
 			<control caption="bits/δευτερόλεπτο|Bytes/δευτερόλεπτο|b/s|B/s|Kb/s|KB/s|Mb/s|MB/s"/>
 			<control caption="_Λήψεις:"/>
 			<control caption="Προεπιλεγμένη επέκταση νέων λήψεων"/>
-			<control caption="Εμφάνιση απλής μπάρας προόδου"/>
+			<control caption="Άνοιγμα παραθύρου _εποπτίας λήψης"/>
 			<control caption="Ανα_ζήτηση:"/>
 			<control caption="Επέκταση λήψεων πολλών πηγών"/>
 			<control caption="Με εντολή λήψης, προβολή Μεταφορών"/>

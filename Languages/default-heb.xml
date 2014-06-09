@@ -3456,7 +3456,7 @@
 			<control caption="‪bits/second|bytes/second|b/s|B/s|Kb/s|KB/s|Mb/s|MB/s"/>
 			<control caption="‪:הורדות"/>
 			<control caption="‪הרחב הורדות חדשות כברירת מחדל"/>
-			<control caption="‪הצג מד התקדמות פשוט"/>
+			<control caption="‪פתוח חלון מוניטור הורדות"/>
 			<control caption="‪:חיפוש"/>
 			<control caption="‪הרחב קבצים עם כמה מקורות אוטמטית"/>
 			<control caption="‪עבור לחלון ההעברות בתחילת הורדה"/>

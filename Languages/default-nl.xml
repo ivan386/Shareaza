@@ -3449,7 +3449,7 @@
 			<control caption="Bits/seconde|Bytes/seconde|b/s|B/s|Kb/s|KB/s|Mb/s|MB/s"/>
 			<control caption="_Downloads:"/>
 			<control caption="Vouw nieuwe downloads standaard uit"/>
-			<control caption="Toon een simpele voortgangsbalk"/>
+			<control caption="Open een _monitor venster"/>
 			<control caption="_Zoeken:"/>
 			<control caption="Multibron bestanden altijd uitbreiden"/>
 			<control caption="Ga bij download naar venster Verkeer"/>

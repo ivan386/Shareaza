@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Shareaza 2.5.3.0\n"
 "Report-Msgid-Bugs-To: ryo-oh-ki <ryo-oh-ki@narod.ru>\n"
-"POT-Creation-Date: 2014-05-11 13:41+0000\n"
+"POT-Creation-Date: 2014-06-09 06:02+0000\n"
 "PO-Revision-Date: \n"
 "Last-Translator: ryo-oh-ki <ryo-oh-ki@narod.ru>\n"
 "Language-Team: Felipe\n"
@@ -7447,9 +7447,9 @@ msgstr "_Downloads:"
 msgid "Expand new downloads by default"
 msgstr "Expandir novos downloads por padrão"
 
-#: cgeneralsettingspage;control;9
-msgid "Display simple progress bar"
-msgstr "Exibir barra de progresso simples"
+#: cgeneralsettingspage;control;9 curlactiondlg;control;13
+msgid "Open a download _monitor window"
+msgstr "Abrir uma janela do _monitor de downloads"
 
 #: cgeneralsettingspage;control;10
 msgid "_Search:"
@@ -9248,10 +9248,6 @@ msgstr "_Procurar Arquivo"
 msgid "_Remember my selection next time"
 msgstr "_Lembrar minha seleção da próxima vez"
 
-#: curlactiondlg;control;13
-msgid "Open a download _monitor window"
-msgstr "Abrir uma janela do _monitor de downloads"
-
 #: curlactiondlg;control;14
 msgid "You have clicked on a Shareaza-powered URI which will add the following Discovery Service to your Discovery Services cache."
 msgstr "Você clicou numa URI do Shareaza a qual adicionará o seguinte Serviço de Descobrimento ao seu cache de Serviços de Descobrimento."
@@ -9915,6 +9911,9 @@ msgstr "Gatilho"
 #: column;nextrun
 msgid "NextRun"
 msgstr "PróximaExecução"
+
+#~ msgid "Display simple progress bar"
+#~ msgstr "Exibir barra de progresso simples"
 
 #~ msgid "Requesting..."
 #~ msgstr "Pedindo..."

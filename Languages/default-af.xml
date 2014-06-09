@@ -3457,7 +3457,7 @@
 			<control caption="bits/sekonde|bytes/sekonde|b/s|B/s|Kb/s|KB/s|Mb/s|MB/s"/>
 			<control caption="_Aflaaie:"/>
 			<control caption="Vou nuwe aflaaie normaalweg uit"/>
-			<control caption="Gebruik eenvoudige vorderingsbalk"/>
+			<control caption="Open 'n aflaai_monitor venster"/>
 			<control caption="_Soek:"/>
 			<control caption="Vou multi-bron aflaaie normaalweg uit"/>
 			<control caption="Verander na Oordragte aansig as aflaai"/>

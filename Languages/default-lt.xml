@@ -3445,7 +3445,7 @@
 			<control caption="bitai/sek.|baitai/sek.|b/s|B/s|Kb/s|KB/s|Mb/s|MB/s"/>
 			<control caption="_Atsisiuntimai:"/>
 			<control caption="Visada rodyti naujų failų šaltinius"/>
-			<control caption="Rodyti supaprastintą eigos juostą"/>
+			<control caption="Stebėti parsisiuntimą _monitoriuje"/>
 			<control caption="_Paieška:"/>
 			<control caption="Visada išskleisti šaltinių medį"/>
 			<control caption="Eiti prie siuntimų pridėjus naują failą"/>

@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Shareaza\n"
 "Report-Msgid-Bugs-To: ryo-oh-ki <ryo-oh-ki@narod.ru>\n"
-"POT-Creation-Date: 2014-05-11 13:41+0000\n"
+"POT-Creation-Date: 2014-06-09 06:02+0000\n"
 "PO-Revision-Date: \n"
 "Last-Translator: ryo-oh-ki <ryo-oh-ki@narod.ru>\n"
 "Language-Team: Shareaza Development Team\n"
@@ -7473,9 +7473,9 @@ msgstr "_İndirmeler:"
 msgid "Expand new downloads by default"
 msgstr "Varsayılandan yeni indirmeleri genişlet"
 
-#: cgeneralsettingspage;control;9
-msgid "Display simple progress bar"
-msgstr "Kaydırma Çubuğu Görüntüle"
+#: cgeneralsettingspage;control;9 curlactiondlg;control;13
+msgid "Open a download _monitor window"
+msgstr "İndirme Penceresi Aç"
 
 #: cgeneralsettingspage;control;10
 msgid "_Search:"
@@ -9274,10 +9274,6 @@ msgstr "_Dosya Ara"
 msgid "_Remember my selection next time"
 msgstr "_Seçimimi Hatırla"
 
-#: curlactiondlg;control;13
-msgid "Open a download _monitor window"
-msgstr "İndirme Penceresi Aç"
-
 #: curlactiondlg;control;14
 msgid "You have clicked on a Shareaza-powered URI which will add the following Discovery Service to your Discovery Services cache."
 msgstr "Shareaza-Güç sağlayıcısı URI'ye tıkladınız, keşif servis belleğinize takip ettiğiniz keşif servisiniz eklenecek."
@@ -9944,6 +9940,9 @@ msgstr "TigerTree"
 #, fuzzy
 msgid "NextRun"
 msgstr "Sonraki"
+
+#~ msgid "Display simple progress bar"
+#~ msgstr "Kaydırma Çubuğu Görüntüle"
 
 #~ msgid "Requesting..."
 #~ msgstr "İsteniyor..."

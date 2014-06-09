@@ -3448,7 +3448,7 @@
 			<control caption="bitih/sekundah|bajtih-ih/sekundah|b/s|B/s|Kb/s|KB/s|Mb/s|MB/s"/>
 			<control caption="_Prenosi:"/>
 			<control caption="Širjanje novih prenosov naj bo privzeto"/>
-			<control caption="Prikaži preprosto vrstico napredka"/>
+			<control caption="Odpri _nadzorno okno za prenos"/>
 			<control caption="_Iskanje:"/>
 			<control caption="Širjanje večvirnih datotek naj bo privzeto"/>
 			<control caption="Pri prenašanju preklopi na pogled 'Prenosi'"/>

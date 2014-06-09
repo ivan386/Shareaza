@@ -3433,7 +3433,7 @@
 			<control caption="bits/s|bytes/s|b/s|B/s|Kb/s|KB/s|Mb/s|MB/s"/>
 			<control caption="下载(_D):"/>
 			<control caption="默认展开新的下载"/>
-			<control caption="显示简易的进度栏"/>
+			<control caption="记住我的选择(_R)"/>
 			<control caption="搜索(_S):"/>
 			<control caption="默认展开多个资源文件"/>
 			<control caption="下载时切换到传输视图"/>

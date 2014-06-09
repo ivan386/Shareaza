@@ -3451,7 +3451,7 @@
 			<control caption="bits/seconde|octets/seconde|b/s|B/s|Kb/s|KB/s|Mb/s|MB/s"/>
 			<control caption="_Téléchargements :"/>
 			<control caption="Développer les nouveaux téléchargements"/>
-			<control caption="Afficher la barre de progression simple"/>
+			<control caption="Nouvelle fenêtre de _moniteur de téléchargement"/>
 			<control caption="_Recherche :"/>
 			<control caption="Développer les fichiers multi-sources"/>
 			<control caption="Passage automatique à l'onglet Transferts"/>

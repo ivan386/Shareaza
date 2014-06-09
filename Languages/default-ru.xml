@@ -3450,7 +3450,7 @@
 			<control caption="бит/с|байт/с|б/с|Б/с|Кб/с|КБ/с|Мб/с|МБ/с"/>
 			<control caption="_Загрузки:"/>
 			<control caption="Раскрывать дерево новых эагрузок"/>
-			<control caption="Упрощенная полоса прогресса"/>
+			<control caption="Открыть окно _Монитора"/>
 			<control caption="_Поиск:"/>
 			<control caption="Раскрывать дерево источн. поиска"/>
 			<control caption="При загрузке перейти к пересылкам"/>

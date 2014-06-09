@@ -3454,7 +3454,7 @@
 			<control caption="bits/second|bytes/second|b/s|B/s|Kb/s|KB/s|Mb/s|MB/s"/>
 			<control caption="_Stahování:"/>
 			<control caption="Vždy rozbalit nová stahování"/>
-			<control caption="Zobrazit jednoduchou lištu přenosu"/>
+			<control caption="Otevřít okno _Monitoru stahování"/>
 			<control caption="_Hledat:"/>
 			<control caption="Rozbalit nalezené soubory s více zdroji"/>
 			<control caption="Přejít do okna Přenos a stahování"/>

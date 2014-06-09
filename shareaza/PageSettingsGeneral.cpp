@@ -1,7 +1,7 @@
 //
 // PageSettingsGeneral.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2007.
+// Copyright (c) Shareaza Development Team, 2002-2014.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -36,33 +36,30 @@ static char THIS_FILE[] = __FILE__;
 IMPLEMENT_DYNCREATE(CGeneralSettingsPage, CSettingsPage)
 
 BEGIN_MESSAGE_MAP(CGeneralSettingsPage, CSettingsPage)
-	//{{AFX_MSG_MAP(CGeneralSettingsPage)
-	ON_CBN_DROPDOWN(IDC_CLOSE_MODE, OnDropdownCloseMode)
-	ON_CBN_DROPDOWN(IDC_TRAY_MINIMISE, OnDropdownTrayMinimise)
-	//}}AFX_MSG_MAP
+	ON_CBN_DROPDOWN(IDC_CLOSE_MODE, &CGeneralSettingsPage::OnDropdownCloseMode)
+	ON_CBN_DROPDOWN(IDC_TRAY_MINIMISE, &CGeneralSettingsPage::OnDropdownTrayMinimise)
 END_MESSAGE_MAP()
 
 
 /////////////////////////////////////////////////////////////////////////////
 // CGeneralSettingsPage property page
 
-CGeneralSettingsPage::CGeneralSettingsPage() : CSettingsPage(CGeneralSettingsPage::IDD)
+CGeneralSettingsPage::CGeneralSettingsPage()
+	: CSettingsPage			( CGeneralSettingsPage::IDD )
+	, m_bRatesInBytes		( -1 )
+	, m_bExpandMatches		( FALSE )
+	, m_bAutoConnect		( FALSE )
+	, m_nCloseMode			( -1 )
+	, m_bTrayMinimise		( -1 )
+	, m_bSwitchToTransfers	( FALSE )
+	, m_bExpandDownloads	( FALSE )
+	, m_bNewWindow			( FALSE )
+	, m_bStartup			( FALSE )
+	, m_bPromptURLs			( FALSE )
+	, m_bHideSearch			( FALSE )
+	, m_bAdultFilter		( FALSE )
+	, m_nTipDelay			( 0 )
 {
-	//{{AFX_DATA_INIT(CGeneralSettingsPage)
-	m_bRatesInBytes = -1;
-	m_bExpandMatches = FALSE;
-	m_bAutoConnect = FALSE;
-	m_nCloseMode = -1;
-	m_bTrayMinimise = -1;
-	m_bSwitchToTransfers = FALSE;
-	m_bExpandDownloads = FALSE;
-	m_bSimpleBar = FALSE;
-	m_bStartup = FALSE;
-	m_bPromptURLs = FALSE;
-	m_bHideSearch = FALSE;
-	m_bAdultFilter = FALSE;
-	m_nTipDelay = 0;
-	//}}AFX_DATA_INIT
 }
 
 CGeneralSettingsPage::~CGeneralSettingsPage()
@@ -72,7 +69,7 @@ CGeneralSettingsPage::~CGeneralSettingsPage()
 void CGeneralSettingsPage::DoDataExchange(CDataExchange* pDX)
 {
 	CSettingsPage::DoDataExchange(pDX);
-	//{{AFX_DATA_MAP(CGeneralSettingsPage)
+
 	DDX_CBIndex(pDX, IDC_RATES_IN_BYTES, m_bRatesInBytes);
 	DDX_Check(pDX, IDC_EXPAND_MATCHES, m_bExpandMatches);
 	DDX_Check(pDX, IDC_AUTO_CONNECT, m_bAutoConnect);
@@ -80,7 +77,7 @@ void CGeneralSettingsPage::DoDataExchange(CDataExchange* pDX)
 	DDX_CBIndex(pDX, IDC_TRAY_MINIMISE, m_bTrayMinimise);
 	DDX_Check(pDX, IDC_SWITCH_TO_TRANSFERS, m_bSwitchToTransfers);
 	DDX_Check(pDX, IDC_EXPAND_DOWNLOAD, m_bExpandDownloads);
-	DDX_Check(pDX, IDC_DOWNLOADS_SIMPLEBAR, m_bSimpleBar);
+	DDX_Check(pDX, IDC_NEW_WINDOW, m_bNewWindow);
 	DDX_Check(pDX, IDC_AUTO_START, m_bStartup);
 	DDX_Check(pDX, IDC_PROMPT_URLS, m_bPromptURLs);
 	DDX_Check(pDX, IDC_HIDE_SEARCH, m_bHideSearch);
@@ -91,7 +88,6 @@ void CGeneralSettingsPage::DoDataExchange(CDataExchange* pDX)
 	DDX_Text(pDX, IDC_TIP_DELAY, m_nTipDelay);
 	DDX_Control(pDX, IDC_CLOSE_MODE, m_wndCloseMode);
 	DDX_Control(pDX, IDC_TRAY_MINIMISE, m_wndTrayMinimise);
-	//}}AFX_DATA_MAP
 }
 
 /////////////////////////////////////////////////////////////////////////////
@@ -108,7 +104,7 @@ BOOL CGeneralSettingsPage::OnInitDialog()
 	m_bExpandMatches		= Settings.Search.ExpandMatches;
 	m_bSwitchToTransfers	= Settings.Search.SwitchToTransfers;
 	m_bExpandDownloads		= Settings.Downloads.AutoExpand;
-	m_bSimpleBar			= Settings.Downloads.SimpleBar;
+	m_bNewWindow			= Settings.Downloads.ShowMonitorURLs;
 	m_bPromptURLs			= ! Settings.General.AlwaysOpenURLs;
 	m_bHideSearch			= Settings.Search.HideSearchPanel;
 	m_bAdultFilter			= Settings.Search.AdultFilter;
@@ -185,7 +181,7 @@ void CGeneralSettingsPage::OnOK()
 	Settings.Search.ExpandMatches		= m_bExpandMatches != FALSE;
 	Settings.Search.SwitchToTransfers	= m_bSwitchToTransfers != FALSE;
 	Settings.Downloads.AutoExpand		= m_bExpandDownloads != FALSE;
-	Settings.Downloads.SimpleBar		= m_bSimpleBar != FALSE;
+	Settings.Downloads.ShowMonitorURLs	= m_bNewWindow != FALSE;
 	Settings.General.AlwaysOpenURLs		= ! m_bPromptURLs;
 	Settings.Search.HideSearchPanel		= m_bHideSearch != FALSE;
 	Settings.Search.AdultFilter			= m_bAdultFilter != FALSE;

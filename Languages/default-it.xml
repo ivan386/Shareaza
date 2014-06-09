@@ -3452,7 +3452,7 @@
 			<control caption="bit/secondo|byte/secondo|b/s|B/s|Kb/s|KB/s|Mb/s|MB/s"/>
 			<control caption="_Download:"/>
 			<control caption="Espandi nuovi download"/>
-			<control caption="Mostra barra dei progressi semplice"/>
+			<control caption="Apri finestra _monitor del download"/>
 			<control caption="_Ricerca:"/>
 			<control caption="Espandi file con più fonti"/>
 			<control caption="Passa a Trasferimenti al download"/>

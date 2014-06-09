@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Shareaza\n"
 "Report-Msgid-Bugs-To: ryo-oh-ki <ryo-oh-ki@narod.ru>\n"
-"POT-Creation-Date: 2014-05-11 13:41+0000\n"
+"POT-Creation-Date: 2014-06-09 06:02+0000\n"
 "PO-Revision-Date: \n"
 "Last-Translator: ryo-oh-ki <ryo-oh-ki@narod.ru>\n"
 "Language-Team: Shareaza Development Team\n"
@@ -7523,9 +7523,9 @@ msgstr "‪:הורדות"
 msgid "Expand new downloads by default"
 msgstr "‪הרחב הורדות חדשות כברירת מחדל"
 
-#: cgeneralsettingspage;control;9
-msgid "Display simple progress bar"
-msgstr "‪הצג מד התקדמות פשוט"
+#: cgeneralsettingspage;control;9 curlactiondlg;control;13
+msgid "Open a download _monitor window"
+msgstr "‪פתוח חלון מוניטור הורדות"
 
 #: cgeneralsettingspage;control;10
 msgid "_Search:"
@@ -9324,10 +9324,6 @@ msgstr "‪חיפוש קובץ"
 msgid "_Remember my selection next time"
 msgstr "‪זכור את בחירתי בפעם הבאה"
 
-#: curlactiondlg;control;13
-msgid "Open a download _monitor window"
-msgstr "‪פתוח חלון מוניטור הורדות"
-
 #: curlactiondlg;control;14
 msgid "You have clicked on a Shareaza-powered URI which will add the following Discovery Service to your Discovery Services cache."
 msgstr "‪של שרזה אשר יוסיף את שירותי משאבי חיבור הבאים לזיכרון המטמון של שירותי המשאבי חיבור URI לחצתה על"
@@ -9994,6 +9990,9 @@ msgstr "‪TigerTree"
 #, fuzzy
 msgid "NextRun"
 msgstr "‪הבא"
+
+#~ msgid "Display simple progress bar"
+#~ msgstr "‪הצג מד התקדמות פשוט"
 
 #~ msgid "Requesting..."
 #~ msgstr "‪...מבקש"
