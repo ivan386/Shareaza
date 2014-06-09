@@ -362,6 +362,8 @@ void CDownloads::CloseTransfers()
 	}
 
 	m_bClosing = false;
+	m_nComplete	= 0;
+	m_nTotal	= 0;
 	m_nTransfers = 0;
 	m_nBandwidth = 0;
 }

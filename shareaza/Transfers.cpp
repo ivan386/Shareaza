@@ -1,7 +1,7 @@
 //
 // Transfers.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2011.
+// Copyright (c) Shareaza Development Team, 2002-2014.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -93,6 +93,8 @@ void CTransfers::StopThread()
 {
 	CloseThread();
 
+	Downloads.m_nComplete	= 0;
+	Downloads.m_nTotal		= 0;
 	Downloads.m_nTransfers	= 0;
 	Downloads.m_nBandwidth	= 0;
 	Uploads.m_nCount		= 0;
@@ -170,6 +172,8 @@ void CTransfers::OnRun()
 		TransferFiles.CommitDeferred();
 	}
 
+	Downloads.m_nComplete	= 0;
+	Downloads.m_nTotal		= 0;
 	Downloads.m_nTransfers	= 0;
 	Downloads.m_nBandwidth	= 0;
 	Uploads.m_nCount		= 0;
