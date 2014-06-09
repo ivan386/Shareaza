@@ -1,7 +1,7 @@
 //
 // EDPartImporter.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2013.
+// Copyright (c) Shareaza Development Team, 2002-2014.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -334,7 +334,7 @@ BOOL CEDPartImporter::ImportFile(LPCTSTR pszPath, LPCTSTR pszFile)
 
 	Message( IDS_ED2K_EPI_COPY_FINISHED );
 
-	CQuickLock oTransfersLock( Transfers.m_pSection );
+	CSingleLock pLock( &Transfers.m_pSection, TRUE );
 
 	CDownload* pDownload = Downloads.Add();
 	if ( ! pDownload )
@@ -370,6 +370,9 @@ BOOL CEDPartImporter::ImportFile(LPCTSTR pszPath, LPCTSTR pszFile)
 
 	Message( IDS_ED2K_EPI_FILE_CREATED,
 		Settings.SmartVolume( pDownload->GetVolumeRemaining() ) );
+	
+	if ( Settings.Downloads.ShowMonitorURLs )
+		pDownload->ShowMonitor();
 
 	return TRUE;
 }

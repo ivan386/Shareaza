@@ -1,7 +1,7 @@
 //
 // DownloadWithExtras.h
 //
-// Copyright (c) Shareaza Development Team, 2002-2013.
+// Copyright (c) Shareaza Development Team, 2002-2014.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -82,7 +82,7 @@ public:
 	BOOL		GotPreview() const;
 	BOOL		IsPreviewVisible() const;
 	BOOL		CanPreview(DWORD nIndex);
-	void		ShowMonitor(CSingleLock* pLock = NULL);
+	void		ShowMonitor();
 	void		AddPreviewName(LPCTSTR pszFile);
 	void		DeletePreviews();
 	BOOL		AddReview(IN_ADDR* pIP, int nUserPicture, int nRating, LPCTSTR pszUserName, LPCTSTR pszComment);

@@ -1,7 +1,7 @@
 //
 // CoolMenu.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2012.
+// Copyright (c) Shareaza Development Team, 2002-2014.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -609,12 +609,12 @@ static HRESULT SafeQueryContextMenu(IContextMenu* pContextMenu, HMENU hmenu, UIN
 	}
 }
 
-static UINT_PTR SafeTrackPopupMenu(HMENU hMenu, UINT nFlags, POINT point, HWND hWnd) throw()
+static BOOL SafeTrackPopupMenu(HMENU hMenu, UINT nFlags, POINT point, HWND hWnd) throw()
 {
 	__try
 	{
 		::SetForegroundWindow( hWnd );
-		UINT_PTR nCmd = ::TrackPopupMenu( hMenu, nFlags, point.x, point.y, 0, hWnd, NULL );
+		BOOL nCmd = ::TrackPopupMenu( hMenu, nFlags, point.x, point.y, 0, hWnd, NULL );
 		::PostMessage( hWnd, WM_NULL, 0, 0 );
 		return nCmd;
 	}
@@ -624,8 +624,9 @@ static UINT_PTR SafeTrackPopupMenu(HMENU hMenu, UINT nFlags, POINT point, HWND h
 	}
 }
 
-void CCoolMenu::DoExplorerMenu(HWND hwnd, const CStringList& oFiles, POINT point, HMENU hMenu, HMENU hSubMenu, UINT nFlags)
+BOOL CCoolMenu::DoExplorerMenu(HWND hwnd, const CStringList& oFiles, POINT point, HMENU hMenu, HMENU hSubMenu, UINT nFlags)
 {
+	BOOL nCmd = 0;
 	HRESULT hr = S_OK;
 	CComPtr< IContextMenu > pContextMenu1;
 	CShellList oItemIDListList( oFiles );
@@ -644,7 +645,7 @@ void CCoolMenu::DoExplorerMenu(HWND hwnd, const CStringList& oFiles, POINT point
 			pContextMenu1.QueryInterface( &m_pContextMenu3 );
 		}
 
-		UINT_PTR nCmd = SafeTrackPopupMenu( hMenu, TPM_RETURNCMD | nFlags, point, hwnd );
+		nCmd = SafeTrackPopupMenu( hMenu, TPM_RETURNCMD | nFlags, point, hwnd );
 
 		// If a command was selected from the shell menu, execute it.
 		if ( pContextMenu1 && nCmd >= ID_SHELL_MENU_MIN && nCmd <= ID_SHELL_MENU_MAX )
@@ -658,7 +659,7 @@ void CCoolMenu::DoExplorerMenu(HWND hwnd, const CStringList& oFiles, POINT point
 			ici.nShow = SW_SHOWNORMAL;
 			pContextMenu1->InvokeCommand( (CMINVOKECOMMANDINFO*)&ici );
 		}
-		else
+		else if ( ( nFlags & TPM_RETURNCMD ) == 0 )
 		{
 			// Emulate normal message handling
 			::PostMessage( hwnd, WM_COMMAND, nCmd, 0 );
@@ -673,6 +674,8 @@ void CCoolMenu::DoExplorerMenu(HWND hwnd, const CStringList& oFiles, POINT point
 
 	// TODO: Find why sometimes raza crashes inside Windows Shell SetSite() function
 	SafeRelease( pContextMenuCache );
+
+	return nCmd;
 }
 
 //////////////////////////////////////////////////////////////////////

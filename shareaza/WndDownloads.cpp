@@ -1349,21 +1349,13 @@ void CDownloadsWnd::OnUpdateDownloadsMonitor(CCmdUI* pCmdUI)
 void CDownloadsWnd::OnDownloadsMonitor()
 {
 	CSingleLock pLock( &Transfers.m_pSection, TRUE );
-	CList<CDownload*> pList;
 
 	for ( POSITION pos = Downloads.GetIterator() ; pos ; )
 	{
 		CDownload* pDownload = Downloads.GetNext( pos );
-		if ( pDownload->m_bSelected ) pList.AddTail( pDownload );
-	}
-
-	while ( ! pList.IsEmpty() )
-	{
-		CDownload* pDownload = pList.RemoveHead();
-
-		if ( Downloads.Check( pDownload ) && ! pDownload->IsMoving() )
+		if ( pDownload->m_bSelected  && ! pDownload->IsMoving() )
 		{
-			pDownload->ShowMonitor( &pLock );
+			pDownload->ShowMonitor();
 		}
 	}
 }

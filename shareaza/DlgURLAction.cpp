@@ -298,28 +298,18 @@ void CURLActionDlg::OnUrlDownload()
 			return;
 		}
 
-		CDownload* pDownload = Downloads.Add( *m_pURL );
-
-		if ( pDownload == NULL )
-		{
-			DestroyWindow();
-			return;
-		}
-
-		if ( ( GetAsyncKeyState( VK_SHIFT ) & 0x8000 ) == 0 &&
-			! Network.IsWellConnected() )
-		{
+		if ( ( GetAsyncKeyState( VK_SHIFT ) & 0x8000 ) == 0 && ! Network.IsWellConnected() )
 			Network.Connect( TRUE );
-		}
 
-		CMainWnd* pMainWnd = (CMainWnd*)AfxGetMainWnd();
-		pMainWnd->m_pWindows.Open( RUNTIME_CLASS(CDownloadsWnd) );
+		if ( CMainWnd* pMainWnd = (CMainWnd*)AfxGetMainWnd() )
+			pMainWnd->m_pWindows.Open( RUNTIME_CLASS(CDownloadsWnd) );
 
-		if ( Settings.Downloads.ShowMonitorURLs )
+		CSingleLock pLock( &Transfers.m_pSection, TRUE );
+
+		if ( CDownload* pDownload = Downloads.Add( *m_pURL ) )
 		{
-			CSingleLock pLock( &Transfers.m_pSection, TRUE );
-			if ( Downloads.Check( pDownload ) )
-				pDownload->ShowMonitor( &pLock );
+			if ( Settings.Downloads.ShowMonitorURLs )
+				pDownload->ShowMonitor();
 		}
 	}
 	else if ( m_pURL->m_nAction == CShareazaURL::uriHost )

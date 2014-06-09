@@ -1,7 +1,7 @@
 //
 // Skin.h
 //
-// Copyright (c) Shareaza Development Team, 2002-2010.
+// Copyright (c) Shareaza Development Team, 2002-2014.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -66,7 +66,7 @@ protected:
 // Menus
 public:
 	CMenu*	GetMenu(LPCTSTR pszName) const;
-	void	TrackPopupMenu(LPCTSTR pszMenu, const CPoint& point, UINT nDefaultID = 0, const CStringList& oFiles = CStringList(), CWnd* pWnd = AfxGetMainWnd()) const;
+	BOOL	TrackPopupMenu(LPCTSTR pszMenu, const CPoint& point, UINT nDefaultID = 0, const CStringList& oFiles = CStringList(), CWnd* pWnd = AfxGetMainWnd(), UINT nFlags = TPM_LEFTALIGN | TPM_LEFTBUTTON | TPM_RIGHTBUTTON) const;
 	CMenu*	CreatePopupMenu(LPCTSTR pszName);
 protected:
 	CMap< CString, const CString&, CMenu*, CMenu* > m_pMenus;

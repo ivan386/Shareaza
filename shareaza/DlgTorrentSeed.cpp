@@ -184,7 +184,7 @@ void CTorrentSeedDlg::OnDownload()
 					pMainWnd->m_pWindows.Open( RUNTIME_CLASS(CDownloadsWnd) );
 
 				if ( Settings.Downloads.ShowMonitorURLs )
-					pDownload->ShowMonitor( &pTransfersLock );
+					pDownload->ShowMonitor();
 			}
 		}
 	}

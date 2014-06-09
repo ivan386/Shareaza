@@ -29,6 +29,7 @@
 #include "HostCache.h"
 #include "Neighbours.h"
 #include "Transfers.h"
+#include "Download.h"
 #include "Downloads.h"
 #include "Library.h"
 #include "LibraryBuilder.h"
@@ -2513,14 +2514,17 @@ void CMainWnd::OnToolsDownload()
 			if ( pURL.m_nAction == CShareazaURL::uriDownload ||
 				 pURL.m_nAction == CShareazaURL::uriSource )
 			{
+				if ( ( GetAsyncKeyState( VK_SHIFT ) & 0x8000 ) == 0 && ! Network.IsWellConnected() )
+					Network.Connect( TRUE );
+
+				m_pWindows.Open( RUNTIME_CLASS(CDownloadsWnd) );
+
+				CSingleLock pLock( &Transfers.m_pSection, TRUE );
+
 				if ( CDownload* pDownload = Downloads.Add( pURL ) )
 				{
-					if ( ( GetAsyncKeyState( VK_SHIFT ) & 0x8000 ) == 0 &&
-						! Network.IsWellConnected() )
-					{
-						Network.Connect( TRUE );
-					}
-					m_pWindows.Open( RUNTIME_CLASS(CDownloadsWnd) );
+					if ( Settings.Downloads.ShowMonitorURLs )
+						pDownload->ShowMonitor();
 				}
 			}
 			else

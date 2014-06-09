@@ -307,37 +307,42 @@ void CBaseMatchWnd::OnDownload(BOOL bAddToHead)
 
 	if ( pFiles.IsEmpty() && pHits.IsEmpty() ) return;
 
-	CSyncObject* pSync[2] = { &Network.m_pSection, &Transfers.m_pSection };
-	CMultiLock pMultiLock( pSync, 2, TRUE );
-
-	for ( POSITION pos = pFiles.GetHeadPosition() ; pos ; )
 	{
-		CMatchFile* pFile = pFiles.GetNext( pos );
+		CSingleLock pTransfersLock( &Transfers.m_pSection, TRUE );
 
-		if ( m_pMatches->m_pSelectedFiles.Find( pFile ) != NULL )
+		for ( POSITION pos = pFiles.GetHeadPosition() ; pos ; )
 		{
-			Downloads.Add( pFile, bAddToHead );
+			CMatchFile* pFile = pFiles.GetNext( pos );
+
+			if ( m_pMatches->m_pSelectedFiles.Find( pFile ) != NULL )
+			{
+				if ( CDownload *pDownload = Downloads.Add( pFile, bAddToHead ) )
+				{
+					if ( Settings.Downloads.ShowMonitorURLs )
+						pDownload->ShowMonitor();
+				}
+			}
+
 		}
 
-	}
-
-	for ( POSITION pos = pHits.GetHeadPosition() ; pos ; )
-	{
-		CQueryHit* pHit = pHits.GetNext( pos );
-
-		if ( m_pMatches->m_pSelectedHits.Find( pHit ) != NULL )
+		for ( POSITION pos = pHits.GetHeadPosition() ; pos ; )
 		{
-			if ( CDownload *pDownload = Downloads.Add( pHit, bAddToHead ) )
+			CQueryHit* pHit = pHits.GetNext( pos );
+
+			if ( m_pMatches->m_pSelectedHits.Find( pHit ) != NULL )
 			{
-				if ( pHit->IsRated() )
+				if ( CDownload *pDownload = Downloads.Add( pHit, bAddToHead ) )
 				{
-					pDownload->AddReview( &pHit->m_pAddress, 2, pHit->m_nRating, pHit->m_sNick, pHit->m_sComments );
+					if ( pHit->IsRated() )
+					{
+						pDownload->AddReview( &pHit->m_pAddress, 2, pHit->m_nRating, pHit->m_sNick, pHit->m_sComments );
+					}
+					if ( Settings.Downloads.ShowMonitorURLs )
+						pDownload->ShowMonitor();
 				}
 			}
 		}
 	}
-
-	pMultiLock.Unlock();
 
 	m_wndList.Invalidate();
 
