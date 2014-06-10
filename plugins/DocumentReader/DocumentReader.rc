@@ -97,6 +97,15 @@ IDR_DOCREADER           REGISTRY                "DocReader.rgs"
 
 /////////////////////////////////////////////////////////////////////////////
 //
+// Icon
+//
+
+// Icon with lowest ID value placed first to ensure application icon
+// remains consistent on all systems.
+IDR_DOCUMENTREADER      ICON                    "icon.ico"
+
+/////////////////////////////////////////////////////////////////////////////
+//
 // String Table
 //
 
