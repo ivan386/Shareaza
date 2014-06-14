@@ -1,7 +1,7 @@
 //
 // BTTrackerRequest.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2013.
+// Copyright (c) Shareaza Development Team, 2002-2014.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -851,7 +851,7 @@ DWORD CBTTrackerRequests::Request(CDownload* pDownload, BTTrackerEvent nEvent, D
 {
 	CQuickLock oLock( m_pSection );
 
-	CBTTrackerRequest* pRequest = new CBTTrackerRequest( pDownload, nEvent, nNumWant, pOnTrackerEvent );
+	CAutoPtr< CBTTrackerRequest > pRequest ( new CBTTrackerRequest( pDownload, nEvent, nNumWant, pOnTrackerEvent ) );
 	if ( ! pRequest )
 		// Out of memory
 		return 0;
@@ -862,7 +862,7 @@ DWORD CBTTrackerRequests::Request(CDownload* pDownload, BTTrackerEvent nEvent, D
 		if ( m_pTrackerRequests.PLookup( nTransactionID ) == NULL )
 		{
 			pRequest->m_nTransactionID = nTransactionID;
-			m_pTrackerRequests.SetAt( nTransactionID, pRequest );
+			m_pTrackerRequests.SetAt( nTransactionID, pRequest.Detach() );
 			return nTransactionID;
 		}
 	}

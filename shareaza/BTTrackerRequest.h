@@ -1,7 +1,7 @@
 //
 // BTTrackerRequest.h
 //
-// Copyright (c) Shareaza Development Team, 2002-2013.
+// Copyright (c) Shareaza Development Team, 2002-2014.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -328,8 +328,9 @@ inline void CAutoPtr< CBTTrackerRequest >::Free() throw()
 {
 	if ( m_p )
 	{
-		m_p->Release();
+		CBTTrackerRequest* p = m_p;
 		m_p = NULL;
+		p->Release();
 	}
 }
 

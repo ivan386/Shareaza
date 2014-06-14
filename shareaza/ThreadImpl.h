@@ -1,7 +1,7 @@
 //
 // ThreadImpl.h
 //
-// Copyright (c) Shareaza Development Team, 2008-2013.
+// Copyright (c) Shareaza Development Team, 2008-2014.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -52,7 +52,6 @@ private:
 	{
 		CThreadImpl* pThis = reinterpret_cast< CThreadImpl* >( pParam );
 		pThis->OnRun();
-		pThis->m_hThread = NULL;
 		return 0;
 	}
 
