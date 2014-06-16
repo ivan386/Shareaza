@@ -133,10 +133,7 @@
       <OutputFile>
       </OutputFile>
     </Bscmake>
-    <PostBuildEvent>
-      <Message>Per User Registration...</Message>
-      <Command>"$(TargetPath)" /RegServerPerUser</Command>
-    </PostBuildEvent>
+    <PostBuildEvent />
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <Midl>
@@ -179,10 +176,7 @@
       <OutputFile>
       </OutputFile>
     </Bscmake>
-    <PostBuildEvent>
-      <Message>Per User Registration...</Message>
-      <Command>"$(TargetPath)" /RegServerPerUser</Command>
-    </PostBuildEvent>
+    <PostBuildEvent />
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <Midl>
@@ -232,10 +226,7 @@
       <OutputFile>
       </OutputFile>
     </Bscmake>
-    <PostBuildEvent>
-      <Message>Per User Registration...</Message>
-      <Command>"$(TargetPath)" /RegServerPerUser</Command>
-    </PostBuildEvent>
+    <PostBuildEvent />
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <Midl>
@@ -284,10 +275,7 @@
       <OutputFile>
       </OutputFile>
     </Bscmake>
-    <PostBuildEvent>
-      <Message>Per User Registration...</Message>
-      <Command>"$(TargetPath)" /RegServerPerUser</Command>
-    </PostBuildEvent>
+    <PostBuildEvent />
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Builder.cpp" />

@@ -111,10 +111,7 @@
       </KeyFile>
       <SubSystem>Windows</SubSystem>
     </Link>
-    <PostBuildEvent>
-      <Message>Performing registration</Message>
-      <Command>"$(TargetPath)" /installsilent</Command>
-    </PostBuildEvent>
+    <PostBuildEvent />
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <Midl>
@@ -145,10 +142,7 @@
       <TargetMachine>MachineX64</TargetMachine>
       <SubSystem>Windows</SubSystem>
     </Link>
-    <PostBuildEvent>
-      <Message>Performing registration</Message>
-      <Command>"$(TargetPath)" /installsilent</Command>
-    </PostBuildEvent>
+    <PostBuildEvent />
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <ClCompile>
@@ -184,10 +178,7 @@
       <KeyFile>
       </KeyFile>
     </Link>
-    <PostBuildEvent>
-      <Message>Performing registration</Message>
-      <Command>"$(TargetPath)" /installsilent</Command>
-    </PostBuildEvent>
+    <PostBuildEvent />
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <Midl>
@@ -223,10 +214,7 @@
       <SetChecksum>true</SetChecksum>
       <TargetMachine>MachineX64</TargetMachine>
     </Link>
-    <PostBuildEvent>
-      <Message>Performing registration</Message>
-      <Command>"$(TargetPath)" /installsilent</Command>
-    </PostBuildEvent>
+    <PostBuildEvent />
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="extract.c" />
