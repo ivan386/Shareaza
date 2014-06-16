@@ -1,7 +1,7 @@
 //
 // ShareazaThread.cpp
 //
-// Copyright (c) Shareaza Development Team, 2008-2013.
+// Copyright (c) Shareaza Development Team, 2008-2014.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -22,6 +22,35 @@
 #include "StdAfx.h"
 #include "Shareaza.h"
 #include "ShareazaThread.h"
+
+inline void SetThreadName(DWORD dwThreadID, LPCSTR szThreadName)
+{
+#ifdef _DEBUG
+	struct
+	{
+		DWORD dwType;		// must be 0x1000
+		LPCSTR szName;		// pointer to name (in user addr space)
+		DWORD dwThreadID;	// thread ID (-1=caller thread)
+		DWORD dwFlags;		// reserved for future use, must be zero
+	} info =
+	{
+		0x1000,
+		szThreadName,
+		dwThreadID,
+		0
+	};
+	__try
+	{
+		RaiseException( MS_VC_EXCEPTION, 0,
+			sizeof( info ) / sizeof( ULONG_PTR ), (ULONG_PTR*)&info );
+	}
+	__except( EXCEPTION_CONTINUE_EXECUTION )
+	{
+	}
+#endif
+	UNUSED(dwThreadID);
+	UNUSED(szThreadName);
+}
 
 
 IMPLEMENT_DYNAMIC(CRazaThread, CWinThread)
@@ -105,8 +134,7 @@ void CRazaThread::Add(CRazaThread* pThread, LPCSTR pszName)
 	CThreadTag tag = { pThread, pszName };
 	m_ThreadMap.SetAt( pThread->m_hThread, tag );
 
-	TRACE( _T("Creating '%hs' thread (0x%08x). Count: %d\n"),
-		( pszName ? pszName : "unnamed" ), pThread->m_hThread, m_ThreadMap.GetCount() );
+	TRACE( _T("Creating '%hs' thread (0x%08x). Count: %d\n"), ( pszName ? pszName : "unnamed" ), pThread->m_hThread, m_ThreadMap.GetCount() );
 }
 
 void CRazaThread::Remove(HANDLE hThread)
@@ -121,10 +149,19 @@ void CRazaThread::Remove(HANDLE hThread)
 	{
 		m_ThreadMap.RemoveKey( hThread );
 
-		TRACE( _T("Removing '%hs' thread (0x%08x). Count: %d\n"),
-			( tag.pszName ? tag.pszName : "unnamed" ),
-			hThread, m_ThreadMap.GetCount() );
+		TRACE( _T("Removing '%hs' thread (0x%08x). Count: %d\n"), ( tag.pszName ? tag.pszName : "unnamed" ), hThread, m_ThreadMap.GetCount() );
 	}
+}
+
+bool CRazaThread::IsThreadAlive(HANDLE hThread)
+{
+	if ( ! hThread )
+		return false;
+
+	CSingleLock oLock( &m_ThreadMapSection, TRUE );
+
+	CThreadTag tag = { 0 };
+	return ( m_ThreadMap.Lookup( hThread, tag ) != FALSE );
 }
 
 void CRazaThread::Terminate(HANDLE hThread)
@@ -157,38 +194,7 @@ void CRazaThread::Terminate(HANDLE hThread)
 	}
 }
 
-void SetThreadName(DWORD dwThreadID, LPCSTR szThreadName)
-{
-#ifdef _DEBUG
-	struct
-	{
-		DWORD dwType;		// must be 0x1000
-		LPCSTR szName;		// pointer to name (in user addr space)
-		DWORD dwThreadID;	// thread ID (-1=caller thread)
-		DWORD dwFlags;		// reserved for future use, must be zero
-	} info =
-	{
-		0x1000,
-		szThreadName,
-		dwThreadID,
-		0
-	};
-	__try
-	{
-		RaiseException( MS_VC_EXCEPTION, 0,
-			sizeof( info ) / sizeof( ULONG_PTR ), (ULONG_PTR*)&info );
-	}
-	__except( EXCEPTION_CONTINUE_EXECUTION )
-	{
-	}
-#endif
-	UNUSED(dwThreadID);
-	UNUSED(szThreadName);
-}
-
-HANDLE BeginThread(LPCSTR pszName, AFX_THREADPROC pfnThreadProc,
-	LPVOID pParam, int nPriority, UINT nStackSize, DWORD dwCreateFlags,
-	LPSECURITY_ATTRIBUTES lpSecurityAttrs, DWORD* pnThreadID)
+HANDLE CRazaThread::BeginThread(LPCSTR pszName, AFX_THREADPROC pfnThreadProc, LPVOID pParam, int nPriority, UINT nStackSize, DWORD dwCreateFlags, LPSECURITY_ATTRIBUTES lpSecurityAttrs, DWORD* pnThreadID)
 {
 	CRazaThread* pThread = new CRazaThread( pfnThreadProc, pParam );
 	ASSERT_VALID( pThread );
@@ -202,7 +208,7 @@ HANDLE BeginThread(LPCSTR pszName, AFX_THREADPROC pfnThreadProc,
 	return NULL;
 }
 
-void CloseThread(HANDLE hThread, DWORD dwTimeout)
+void CRazaThread::CloseThread(HANDLE hThread, DWORD dwTimeout)
 {
 	__try
 	{
@@ -211,7 +217,7 @@ void CloseThread(HANDLE hThread, DWORD dwTimeout)
 			__try
 			{
 				DWORD dwExitCode;
-				while(  GetExitCodeThread( hThread, &dwExitCode ) && dwExitCode == STILL_ACTIVE )
+				while ( GetExitCodeThread( hThread, &dwExitCode ) && dwExitCode == STILL_ACTIVE )
 				{
 					::SetThreadPriority( hThread, THREAD_PRIORITY_NORMAL );
 

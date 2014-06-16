@@ -1,7 +1,7 @@
 //
 // CtrlLibraryMetaPanel.h
 //
-// Copyright (c) Shareaza Development Team, 2002-2012.
+// Copyright (c) Shareaza Development Team, 2002-2014.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -63,6 +63,7 @@ protected:
 	BOOL			m_bForceUpdate;
 	CBitmap			m_bmThumb;
 	CString			m_sThumb;			// Loaded thumbnail file path or URL
+	BOOL			m_bRedraw;
 
 	CLibraryList*	GetViewSelection() const;
 
@@ -76,6 +77,7 @@ protected:
 	afx_msg BOOL OnSetCursor(CWnd* pWnd, UINT nHitTest, UINT message);
 	afx_msg void OnLButtonUp(UINT nFlags, CPoint point);
 	afx_msg void OnLButtonDown(UINT nFlags, CPoint point);
+	afx_msg void OnTimer(UINT_PTR nIDEvent);
 
 	DECLARE_MESSAGE_MAP()
 };

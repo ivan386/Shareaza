@@ -1,7 +1,7 @@
 //
 // ShareazaThread.h
 //
-// Copyright (c) Shareaza Development Team, 2008-2013.
+// Copyright (c) Shareaza Development Team, 2008-2014.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -47,6 +47,11 @@ public:
 	static void Add(CRazaThread* pThread, LPCSTR pszName);
 	static void Remove(HANDLE hThread);
 	static void Terminate(HANDLE hThread);
+	static bool IsThreadAlive(HANDLE hThread);
+	static HANDLE BeginThread(LPCSTR pszName, AFX_THREADPROC pfnThreadProc,
+							  LPVOID pParam, int nPriority = THREAD_PRIORITY_NORMAL, UINT nStackSize = 0,
+							  DWORD dwCreateFlags = 0, LPSECURITY_ATTRIBUTES lpSecurityAttrs = NULL, DWORD* pnThreadID = NULL);
+	static void CloseThread(HANDLE phThread, DWORD dwTimeout = ALMOST_INFINITE);
 
 protected:
 	typedef struct
@@ -65,11 +70,3 @@ private:
 	CRazaThread(const CRazaThread&);
 	CRazaThread& operator=(const CRazaThread&);
 };
-
-void SetThreadName(DWORD dwThreadID, LPCSTR szThreadName);
-
-HANDLE BeginThread(LPCSTR pszName, AFX_THREADPROC pfnThreadProc,
-				   LPVOID pParam, int nPriority = THREAD_PRIORITY_NORMAL, UINT nStackSize = 0,
-				   DWORD dwCreateFlags = 0, LPSECURITY_ATTRIBUTES lpSecurityAttrs = NULL, DWORD* pnThreadID = NULL);
-
-void CloseThread(HANDLE phThread, DWORD dwTimeout = ALMOST_INFINITE);

@@ -1,7 +1,7 @@
 //
 // CtrlSearchDetailPanel.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2013.
+// Copyright (c) Shareaza Development Team, 2002-2014.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -47,6 +47,7 @@ static char THIS_FILE[] = __FILE__;
 IMPLEMENT_DYNAMIC(CSearchDetailPanel, CPanelCtrl)
 
 BEGIN_MESSAGE_MAP(CSearchDetailPanel, CPanelCtrl)
+	ON_WM_CREATE()
 	ON_WM_DESTROY()
 	ON_WM_VSCROLL()
 	ON_WM_PAINT()
@@ -54,22 +55,24 @@ BEGIN_MESSAGE_MAP(CSearchDetailPanel, CPanelCtrl)
 	ON_WM_LBUTTONUP()
 	ON_WM_LBUTTONDOWN()
 	ON_NOTIFY(RVN_CLICK, IDC_REVIEW_VIEW, &CSearchDetailPanel::OnClickReview)
+	ON_WM_TIMER()
 END_MESSAGE_MAP()
 
 /////////////////////////////////////////////////////////////////////////////
 // CSearchDetailPanel construction
 
-CSearchDetailPanel::CSearchDetailPanel() :
-	m_pMatches( NULL ),
-	m_bValid( FALSE ),
-	m_pFile( NULL ),
-	m_nIcon48( 0 ),
-	m_nIcon32( 0 ),
-	m_nRating( 0 ),
-	m_pSchema( NULL ),
-	m_bCanPreview( FALSE ),
-	m_bRunPreview( FALSE ),
-	m_bIsPreviewing( FALSE )
+CSearchDetailPanel::CSearchDetailPanel()
+	: m_pMatches		( NULL )
+	, m_bValid			( FALSE )
+	, m_pFile			( NULL )
+	, m_nIcon48			( 0 )
+	, m_nIcon32			( 0 )
+	, m_nRating			( 0 )
+	, m_pSchema			( NULL )
+	, m_bCanPreview		( FALSE )
+	, m_bRunPreview		( FALSE )
+	, m_bIsPreviewing	( FALSE )
+	, m_bRedraw			( TRUE )
 {
 	m_rcStatus.SetRectEmpty();
 	m_rcThumb.SetRectEmpty();
@@ -205,8 +208,8 @@ void CSearchDetailPanel::Update()
 	pInfo.nPos		= max( 0, min( pInfo.nPos, pInfo.nMax - (int)pInfo.nPage + 1 ) );
 	
 	SetScrollInfo( SB_VERT, &pInfo, TRUE );
-	
-	Invalidate();
+
+	m_bRedraw = TRUE;
 }
 
 void CSearchDetailPanel::ClearReviews()
@@ -222,8 +225,19 @@ void CSearchDetailPanel::ClearReviews()
 /////////////////////////////////////////////////////////////////////////////
 // CSearchDetailPanel message handlers
 
+int CSearchDetailPanel::OnCreate(LPCREATESTRUCT lpCreateStruct)
+{
+	if ( CPanelCtrl::OnCreate( lpCreateStruct ) == -1 ) return -1;
+
+	SetTimer( 1, 500, NULL );
+
+	return 0;
+}
+
 void CSearchDetailPanel::OnDestroy() 
 {
+	KillTimer( 1 );
+
 	ClearReviews();
 
 	CancelPreview();
@@ -571,13 +585,13 @@ void CSearchDetailPanel::CancelPreview()
 	if ( m_bmThumb.m_hObject != NULL )
 	{
 		m_bmThumb.DeleteObject();
-		Invalidate();
+		m_bRedraw = TRUE;
 	}
 	
 	if ( m_bIsPreviewing )
 	{
 		m_bIsPreviewing = FALSE;
-		Invalidate();
+		m_bRedraw = TRUE;
 	}
 
 	if ( m_pRequest.IsPending() && ! m_pRequest.IsThreadEnabled() )
@@ -601,7 +615,7 @@ void CSearchDetailPanel::OnRun()
 			{
 				m_bIsPreviewing = FALSE;
 				m_bCanPreview = ! m_pPreviewURLs.IsEmpty();
-				Invalidate();
+				m_bRedraw = TRUE;
 			}
 			
 			pLock.Unlock();
@@ -617,7 +631,7 @@ void CSearchDetailPanel::OnRun()
 		if ( ! m_bIsPreviewing )
 		{
 			m_bIsPreviewing = TRUE;
-			Invalidate();
+			m_bRedraw = TRUE;
 		}
 		
 		pLock.Unlock();
@@ -719,8 +733,7 @@ void CSearchDetailPanel::OnPreviewLoaded(const Hashes::Sha1Hash& oSHA1, CImageFi
 	
 	m_bmThumb.Attach( pImage->CreateBitmap() );
 	
-	pLock.Unlock();
-	Invalidate();
+	m_bRedraw = TRUE;
 }
 
 BOOL CSearchDetailPanel::CachePreviewImage(const Hashes::Sha1Hash& /*oSHA1*/, LPBYTE pBuffer, DWORD nBuffer)
@@ -739,4 +752,19 @@ BOOL CSearchDetailPanel::CachePreviewImage(const Hashes::Sha1Hash& /*oSHA1*/, LP
 	}
 	
 	return FALSE;
+}
+
+void CSearchDetailPanel::OnTimer(UINT_PTR nIDEvent)
+{
+	CPanelCtrl::OnTimer( nIDEvent );
+
+	{
+		CQuickLock pLock( m_pSection );
+		if ( ! m_bRedraw )
+			return;
+		m_bRedraw = FALSE;
+	}
+
+	Invalidate();
+	UpdateWindow();
 }

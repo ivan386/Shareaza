@@ -38,7 +38,6 @@ public:
 
 	virtual ~CThreadImpl()
 	{
-		CloseThread();
 	}
 
 private:
@@ -66,7 +65,7 @@ protected:
 		if ( ! IsThreadAlive() )
 		{
 			m_pCancel.ResetEvent();	// Enable thread run
-			m_hThread = ::BeginThread( szName, ThreadStart, this, nPriority, 0, 0, NULL, &m_nThreadID );
+			m_hThread = CRazaThread::BeginThread( szName, ThreadStart, this, nPriority, 0, 0, NULL, &m_nThreadID );
 		}
 		return ( m_hThread != NULL );
 	}
@@ -74,13 +73,16 @@ protected:
 public:
 	inline void CloseThread(DWORD dwTimeout = ALMOST_INFINITE) throw()
 	{
+		if ( ! IsThreadAlive() )
+			return;
+
 		m_pCancel.SetEvent();	// Ask thread for exit
 		m_pWakeup.SetEvent();	// Wakeup thread if any
 		if ( ! InterlockedCompareExchange( &m_bCanceling, TRUE, FALSE ) )
 		{
 			if ( m_nThreadID != GetCurrentThreadId() )
 			{
-				::CloseThread( m_hThread, dwTimeout );
+				CRazaThread::CloseThread( m_hThread, dwTimeout );
 				m_hThread = NULL;
 			}
 			InterlockedExchange( &m_bCanceling, FALSE );
@@ -89,11 +91,14 @@ public:
 
 	inline void Wait() throw()
 	{
+		if ( ! IsThreadAlive() )
+			return;
+
 		if ( ! InterlockedCompareExchange( &m_bCanceling, TRUE, FALSE ) )
 		{
 			if ( m_nThreadID != GetCurrentThreadId() )
 			{
-				::CloseThread( m_hThread, INFINITE );
+				CRazaThread::CloseThread( m_hThread, INFINITE );
 				m_hThread = NULL;
 			}
 			InterlockedExchange( &m_bCanceling, FALSE );
@@ -129,7 +134,7 @@ public:
 
 	inline bool IsThreadAlive() const throw()
 	{
-		return m_hThread && ( WaitForSingleObject( m_hThread, 0 ) == WAIT_TIMEOUT );
+		return CRazaThread::IsThreadAlive( m_hThread );
 	}
 
 	inline void Exit() throw()
