@@ -132,8 +132,8 @@
       <AdditionalIncludeDirectories>$(IntDir)</AdditionalIncludeDirectories>
     </ResourceCompile>
     <Link>
-      <RegisterOutput>true</RegisterOutput>
-      <PerUserRedirection>true</PerUserRedirection>
+      <RegisterOutput>false</RegisterOutput>
+      <PerUserRedirection>false</PerUserRedirection>
       <AdditionalDependencies>libgfl.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <AdditionalLibraryDirectories>..\LibGFL\libW</AdditionalLibraryDirectories>
       <ModuleDefinitionFile>GFLImageServices.def</ModuleDefinitionFile>
@@ -187,8 +187,8 @@
       <AdditionalIncludeDirectories>$(IntDir)</AdditionalIncludeDirectories>
     </ResourceCompile>
     <Link>
-      <RegisterOutput>true</RegisterOutput>
-      <PerUserRedirection>true</PerUserRedirection>
+      <RegisterOutput>false</RegisterOutput>
+      <PerUserRedirection>false</PerUserRedirection>
       <AdditionalDependencies>libgfl.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <AdditionalLibraryDirectories>..\LibGFL\lib64W</AdditionalLibraryDirectories>
       <ModuleDefinitionFile>GFLImageServices.def</ModuleDefinitionFile>
@@ -245,8 +245,8 @@
       <AdditionalIncludeDirectories>$(IntDir)</AdditionalIncludeDirectories>
     </ResourceCompile>
     <Link>
-      <RegisterOutput>true</RegisterOutput>
-      <PerUserRedirection>true</PerUserRedirection>
+      <RegisterOutput>false</RegisterOutput>
+      <PerUserRedirection>false</PerUserRedirection>
       <AdditionalDependencies>libgfl.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <AdditionalLibraryDirectories>..\LibGFL\libW</AdditionalLibraryDirectories>
       <ModuleDefinitionFile>GFLImageServices.def</ModuleDefinitionFile>
@@ -306,8 +306,8 @@
       <AdditionalIncludeDirectories>$(IntDir)</AdditionalIncludeDirectories>
     </ResourceCompile>
     <Link>
-      <RegisterOutput>true</RegisterOutput>
-      <PerUserRedirection>true</PerUserRedirection>
+      <RegisterOutput>false</RegisterOutput>
+      <PerUserRedirection>false</PerUserRedirection>
       <AdditionalDependencies>libgfl.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <AdditionalLibraryDirectories>..\LibGFL\lib64W</AdditionalLibraryDirectories>
       <ModuleDefinitionFile>GFLImageServices.def</ModuleDefinitionFile>

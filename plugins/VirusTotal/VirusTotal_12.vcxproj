@@ -126,8 +126,8 @@
       <AdditionalIncludeDirectories>$(IntDir)</AdditionalIncludeDirectories>
     </ResourceCompile>
     <Link>
-      <RegisterOutput>true</RegisterOutput>
-      <PerUserRedirection>true</PerUserRedirection>
+      <RegisterOutput>false</RegisterOutput>
+      <PerUserRedirection>false</PerUserRedirection>
       <ModuleDefinitionFile>VirusTotal.def</ModuleDefinitionFile>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <SubSystem>Windows</SubSystem>
@@ -164,8 +164,8 @@
       <AdditionalIncludeDirectories>$(IntDir)</AdditionalIncludeDirectories>
     </ResourceCompile>
     <Link>
-      <RegisterOutput>true</RegisterOutput>
-      <PerUserRedirection>true</PerUserRedirection>
+      <RegisterOutput>false</RegisterOutput>
+      <PerUserRedirection>false</PerUserRedirection>
       <ModuleDefinitionFile>VirusTotal.def</ModuleDefinitionFile>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <SubSystem>Windows</SubSystem>
@@ -206,8 +206,8 @@
       <AdditionalIncludeDirectories>$(IntDir)</AdditionalIncludeDirectories>
     </ResourceCompile>
     <Link>
-      <RegisterOutput>true</RegisterOutput>
-      <PerUserRedirection>true</PerUserRedirection>
+      <RegisterOutput>false</RegisterOutput>
+      <PerUserRedirection>false</PerUserRedirection>
       <ModuleDefinitionFile>VirusTotal.def</ModuleDefinitionFile>
       <SubSystem>Windows</SubSystem>
       <OptimizeReferences>true</OptimizeReferences>
@@ -249,8 +249,8 @@
       <AdditionalIncludeDirectories>$(IntDir)</AdditionalIncludeDirectories>
     </ResourceCompile>
     <Link>
-      <RegisterOutput>true</RegisterOutput>
-      <PerUserRedirection>true</PerUserRedirection>
+      <RegisterOutput>false</RegisterOutput>
+      <PerUserRedirection>false</PerUserRedirection>
       <ModuleDefinitionFile>VirusTotal.def</ModuleDefinitionFile>
       <SubSystem>Windows</SubSystem>
       <OptimizeReferences>true</OptimizeReferences>

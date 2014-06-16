@@ -128,8 +128,8 @@
       <AdditionalIncludeDirectories>$(IntDir)</AdditionalIncludeDirectories>
     </ResourceCompile>
     <Link>
-      <RegisterOutput>true</RegisterOutput>
-      <PerUserRedirection>true</PerUserRedirection>
+      <RegisterOutput>false</RegisterOutput>
+      <PerUserRedirection>false</PerUserRedirection>
       <AdditionalLibraryDirectories>../zlib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <IgnoreSpecificDefaultLibraries>%(IgnoreSpecificDefaultLibraries)</IgnoreSpecificDefaultLibraries>
       <ModuleDefinitionFile>$(ProjectName).def</ModuleDefinitionFile>
@@ -180,8 +180,8 @@
       <AdditionalIncludeDirectories>$(IntDir)</AdditionalIncludeDirectories>
     </ResourceCompile>
     <Link>
-      <RegisterOutput>true</RegisterOutput>
-      <PerUserRedirection>true</PerUserRedirection>
+      <RegisterOutput>false</RegisterOutput>
+      <PerUserRedirection>false</PerUserRedirection>
       <AdditionalLibraryDirectories>../zlib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <IgnoreSpecificDefaultLibraries>%(IgnoreSpecificDefaultLibraries)</IgnoreSpecificDefaultLibraries>
       <ModuleDefinitionFile>$(ProjectName).def</ModuleDefinitionFile>
@@ -235,8 +235,8 @@
       <AdditionalIncludeDirectories>$(IntDir)</AdditionalIncludeDirectories>
     </ResourceCompile>
     <Link>
-      <RegisterOutput>true</RegisterOutput>
-      <PerUserRedirection>true</PerUserRedirection>
+      <RegisterOutput>false</RegisterOutput>
+      <PerUserRedirection>false</PerUserRedirection>
       <AdditionalLibraryDirectories>../zlib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <IgnoreSpecificDefaultLibraries>%(IgnoreSpecificDefaultLibraries)</IgnoreSpecificDefaultLibraries>
       <ModuleDefinitionFile>$(ProjectName).def</ModuleDefinitionFile>
@@ -292,8 +292,8 @@
       <AdditionalIncludeDirectories>$(IntDir)</AdditionalIncludeDirectories>
     </ResourceCompile>
     <Link>
-      <RegisterOutput>true</RegisterOutput>
-      <PerUserRedirection>true</PerUserRedirection>
+      <RegisterOutput>false</RegisterOutput>
+      <PerUserRedirection>false</PerUserRedirection>
       <AdditionalLibraryDirectories>../zlib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <IgnoreSpecificDefaultLibraries>%(IgnoreSpecificDefaultLibraries)</IgnoreSpecificDefaultLibraries>
       <ModuleDefinitionFile>$(ProjectName).def</ModuleDefinitionFile>

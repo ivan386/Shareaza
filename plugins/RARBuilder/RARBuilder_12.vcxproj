@@ -128,8 +128,8 @@
       <AdditionalIncludeDirectories>$(IntDir)</AdditionalIncludeDirectories>
     </ResourceCompile>
     <Link>
-      <RegisterOutput>true</RegisterOutput>
-      <PerUserRedirection>true</PerUserRedirection>
+      <RegisterOutput>false</RegisterOutput>
+      <PerUserRedirection>false</PerUserRedirection>
       <IgnoreSpecificDefaultLibraries>%(IgnoreSpecificDefaultLibraries)</IgnoreSpecificDefaultLibraries>
       <ModuleDefinitionFile>$(ProjectName).def</ModuleDefinitionFile>
       <GenerateDebugInformation>true</GenerateDebugInformation>
@@ -179,8 +179,8 @@
       <AdditionalIncludeDirectories>$(IntDir)</AdditionalIncludeDirectories>
     </ResourceCompile>
     <Link>
-      <RegisterOutput>true</RegisterOutput>
-      <PerUserRedirection>true</PerUserRedirection>
+      <RegisterOutput>false</RegisterOutput>
+      <PerUserRedirection>false</PerUserRedirection>
       <IgnoreSpecificDefaultLibraries>%(IgnoreSpecificDefaultLibraries)</IgnoreSpecificDefaultLibraries>
       <ModuleDefinitionFile>$(ProjectName).def</ModuleDefinitionFile>
       <GenerateDebugInformation>true</GenerateDebugInformation>
@@ -232,8 +232,8 @@
       <AdditionalIncludeDirectories>$(IntDir)</AdditionalIncludeDirectories>
     </ResourceCompile>
     <Link>
-      <RegisterOutput>true</RegisterOutput>
-      <PerUserRedirection>true</PerUserRedirection>
+      <RegisterOutput>false</RegisterOutput>
+      <PerUserRedirection>false</PerUserRedirection>
       <IgnoreSpecificDefaultLibraries>%(IgnoreSpecificDefaultLibraries)</IgnoreSpecificDefaultLibraries>
       <ModuleDefinitionFile>$(ProjectName).def</ModuleDefinitionFile>
       <GenerateDebugInformation>false</GenerateDebugInformation>
@@ -289,8 +289,8 @@
       <AdditionalIncludeDirectories>$(IntDir)</AdditionalIncludeDirectories>
     </ResourceCompile>
     <Link>
-      <RegisterOutput>true</RegisterOutput>
-      <PerUserRedirection>true</PerUserRedirection>
+      <RegisterOutput>false</RegisterOutput>
+      <PerUserRedirection>false</PerUserRedirection>
       <IgnoreSpecificDefaultLibraries>%(IgnoreSpecificDefaultLibraries)</IgnoreSpecificDefaultLibraries>
       <ModuleDefinitionFile>$(ProjectName).def</ModuleDefinitionFile>
       <GenerateDebugInformation>false</GenerateDebugInformation>
