@@ -58,27 +58,24 @@ IMPLEMENT_DYNAMIC(CRazaThread, CWinThread)
 CCriticalSection		CRazaThread::m_ThreadMapSection;
 CRazaThread::CThreadMap	CRazaThread::m_ThreadMap;
 
-CRazaThread::CRazaThread(AFX_THREADPROC pfnThreadProc /*= NULL*/, LPVOID pParam /*= NULL*/) :
-	CWinThread( NULL, pParam ),
-	m_pfnThreadProcExt( pfnThreadProc )
+CRazaThread::CRazaThread(AFX_THREADPROC pfnThreadProc /*= NULL*/, LPVOID pParam /*= NULL*/)
+	: CWinThread		( NULL, pParam )
+	, m_pfnThreadProcExt( pfnThreadProc )
 {
 }
 
 CRazaThread::~CRazaThread()
 {
-	Remove( m_hThread );
+	Remove( m_nThreadID );
 }
 
-HANDLE CRazaThread::CreateThread(LPCSTR pszName, int nPriority /*= THREAD_PRIORITY_NORMAL*/,
-	DWORD dwCreateFlags /*= 0*/, UINT nStackSize /*= 0*/,
-	LPSECURITY_ATTRIBUTES lpSecurityAttrs /*= NULL*/)
+HANDLE CRazaThread::CreateThread(LPCSTR pszName, int nPriority /*= THREAD_PRIORITY_NORMAL*/, DWORD dwCreateFlags /*= 0*/, UINT nStackSize /*= 0*/, LPSECURITY_ATTRIBUTES lpSecurityAttrs /*= NULL*/)
 {
-	if ( CWinThread::CreateThread( dwCreateFlags | CREATE_SUSPENDED, nStackSize,
-		lpSecurityAttrs ) )
+	if ( CWinThread::CreateThread( dwCreateFlags | CREATE_SUSPENDED, nStackSize, lpSecurityAttrs ) )
 	{
 		Add( this, pszName );
 
-		VERIFY( SetThreadPriority( nPriority ) );
+		VERIFY( ::SetThreadPriority( m_hThread, nPriority ) );
 
 		if ( ! ( dwCreateFlags & CREATE_SUSPENDED ) )
 			VERIFY( ResumeThread() != (DWORD)-1 );
@@ -126,72 +123,79 @@ void CRazaThread::Add(CRazaThread* pThread, LPCSTR pszName)
 {
 	CSingleLock oLock( &m_ThreadMapSection, TRUE );
 
+	ASSERT( pThread->m_nThreadID );
+	ASSERT( ! IsThreadAlive( pThread->m_nThreadID ) );
+
 	if ( pszName )
 	{
 		SetThreadName( pThread->m_nThreadID, pszName );
 	}
 
 	CThreadTag tag = { pThread, pszName };
-	m_ThreadMap.SetAt( pThread->m_hThread, tag );
+	m_ThreadMap.SetAt( pThread->m_nThreadID, tag );
 
-	TRACE( _T("Creating '%hs' thread (0x%08x). Count: %d\n"), ( pszName ? pszName : "unnamed" ), pThread->m_hThread, m_ThreadMap.GetCount() );
+	TRACE( _T("Creating '%hs' thread (0x%x). Count: %d\n"), ( pszName ? pszName : "unnamed" ), pThread->m_nThreadID, m_ThreadMap.GetCount() );
 }
 
-void CRazaThread::Remove(HANDLE hThread)
+void CRazaThread::Remove(DWORD nThreadID)
 {
-	if ( ! hThread )
+	if ( ! nThreadID )
 		return;
 
 	CSingleLock oLock( &m_ThreadMapSection, TRUE );
 
-	CThreadTag tag = { 0 };
-	if ( m_ThreadMap.Lookup( hThread, tag ) )
+	CThreadTag tag;
+	if ( m_ThreadMap.Lookup( nThreadID, tag ) )
 	{
-		m_ThreadMap.RemoveKey( hThread );
+		m_ThreadMap.RemoveKey( nThreadID );
 
-		TRACE( _T("Removing '%hs' thread (0x%08x). Count: %d\n"), ( tag.pszName ? tag.pszName : "unnamed" ), hThread, m_ThreadMap.GetCount() );
+		TRACE( _T("Removing '%hs' thread (0x%x). Count: %d\n"), ( tag.pszName ? tag.pszName : "unnamed" ), nThreadID, m_ThreadMap.GetCount() );
 	}
 }
 
-bool CRazaThread::IsThreadAlive(HANDLE hThread)
+bool CRazaThread::IsThreadAlive(DWORD nThreadID)
 {
-	if ( ! hThread )
+	if ( ! nThreadID )
 		return false;
 
 	CSingleLock oLock( &m_ThreadMapSection, TRUE );
 
-	CThreadTag tag = { 0 };
-	return ( m_ThreadMap.Lookup( hThread, tag ) != FALSE );
+	CThreadTag tag;
+	return ( m_ThreadMap.Lookup( nThreadID, tag ) != FALSE );
 }
 
-void CRazaThread::Terminate(HANDLE hThread)
+bool CRazaThread::SetThreadPriority(DWORD nThreadID, int nPriority)
 {
-	// Its a very dangerous function produces 100% urecoverable TLS leaks/deadlocks
-	if ( TerminateThread( hThread, 0 ) )
-	{
-		CSingleLock oLock( &m_ThreadMapSection, TRUE );
+	if ( ! nThreadID )
+		return false;
 
-		CThreadTag tag = { 0 };
-		if ( m_ThreadMap.Lookup( hThread, tag ) )
-		{
-			ASSERT( hThread == tag.pThread->m_hThread );
-			ASSERT_VALID( tag.pThread );
-			ASSERT( static_cast<CWinThread*>( tag.pThread ) != AfxGetApp() );
-			tag.pThread->Delete();
-		}
-		else
-			CloseHandle( hThread );
+	CSingleLock oLock( &m_ThreadMapSection, TRUE );
 
-		theApp.Message( MSG_DEBUG, _T("WARNING: Terminating '%hs' thread (0x%08x)."),
-			( tag.pszName ? tag.pszName : "unnamed" ), hThread );
-		TRACE( _T("WARNING: Terminating '%hs' thread (0x%08x).\n"),
-			( tag.pszName ? tag.pszName : "unnamed" ), hThread );
-	}
-	else
-	{
-		theApp.Message( MSG_DEBUG, _T("WARNING: Terminating thread (0x%08x) failed."), hThread );
-		TRACE( _T("WARNING: Terminating thread (0x%08x) failed.\n"), hThread );
-	}
+	CThreadTag tag;
+	return ( m_ThreadMap.Lookup( nThreadID, tag ) && ( ::SetThreadPriority( tag.pThread->m_hThread, nPriority ) != FALSE ) );
+}
+
+HANDLE CRazaThread::GetHandle(DWORD nThreadID)
+{
+	if ( ! nThreadID )
+		return NULL;
+
+	CSingleLock oLock( &m_ThreadMapSection, TRUE );
+
+	CThreadTag tag;
+	return ( m_ThreadMap.Lookup( nThreadID, tag ) ? tag.pThread->m_hThread : NULL );
+}
+
+void CRazaThread::DeleteThread(DWORD nThreadID)
+{
+	if ( ! nThreadID )
+		return;
+
+	CSingleLock oLock( &m_ThreadMapSection, TRUE );
+
+	CThreadTag tag;
+	if ( m_ThreadMap.Lookup( nThreadID, tag ) )
+		tag.pThread->Delete();
 }
 
 HANDLE CRazaThread::BeginThread(LPCSTR pszName, AFX_THREADPROC pfnThreadProc, LPVOID pParam, int nPriority, UINT nStackSize, DWORD dwCreateFlags, LPSECURITY_ATTRIBUTES lpSecurityAttrs, DWORD* pnThreadID)
@@ -208,46 +212,50 @@ HANDLE CRazaThread::BeginThread(LPCSTR pszName, AFX_THREADPROC pfnThreadProc, LP
 	return NULL;
 }
 
-void CRazaThread::CloseThread(HANDLE hThread, DWORD dwTimeout)
+void CRazaThread::CloseThread(DWORD nThreadID, DWORD dwTimeout)
 {
 	__try
 	{
-		if ( hThread )
+		if ( HANDLE hThread = GetHandle( nThreadID ) )
 		{
-			__try
+			DWORD dwExitCode;
+			while ( GetExitCodeThread( hThread, &dwExitCode ) && dwExitCode == STILL_ACTIVE )
 			{
-				DWORD dwExitCode;
-				while ( GetExitCodeThread( hThread, &dwExitCode ) && dwExitCode == STILL_ACTIVE )
+				if ( ! IsThreadAlive( nThreadID ) )
+					return;
+
+				::SetThreadPriority( hThread, THREAD_PRIORITY_NORMAL );
+
+				SafeMessageLoop();
+
+				DWORD res = MsgWaitForMultipleObjects( 1, &hThread, FALSE, dwTimeout, QS_ALLINPUT | QS_ALLPOSTMESSAGE );
+				if ( res == WAIT_OBJECT_0 + 1 )
+					// Handle messages
+					continue;
+				else if ( res != WAIT_TIMEOUT )
+					// Handle signaled state or errors
+					break;
+				else
 				{
-					::SetThreadPriority( hThread, THREAD_PRIORITY_NORMAL );
-
-					SafeMessageLoop();
-
-					DWORD res = MsgWaitForMultipleObjects( 1, &hThread, FALSE, dwTimeout, QS_ALLINPUT | QS_ALLPOSTMESSAGE );
-					if ( res == WAIT_OBJECT_0 + 1 )
-						// Handle messages
-						continue;
-					else if ( res != WAIT_TIMEOUT )
-						// Handle signaled state or errors
-						break;
-					else
+					// Timeout
+						
+					// It's a very dangerous function produces 100% unrecoverable TLS leaks/deadlocks
+					if ( TerminateThread( hThread, 0 ) )
 					{
-						// Timeout
-						CRazaThread::Terminate( hThread );
-						break;
+						theApp.Message( MSG_DEBUG, _T("WARNING: Terminating thread (0x%x)."), nThreadID );
+						TRACE( _T("WARNING: Terminating thread (0x%x).\n"), nThreadID );
+
+						DeleteThread( nThreadID );
 					}
+					break;
 				}
 			}
-			__except( EXCEPTION_EXECUTE_HANDLER )
-			{
-				// Thread already ended
-			}
-
-			CRazaThread::Remove( hThread );
 		}
 	}
 	__except( EXCEPTION_EXECUTE_HANDLER )
 	{
-		// Deleted thread handler
+		// Thread already ended
 	}
+
+	CRazaThread::Remove( nThreadID );
 }

@@ -45,13 +45,15 @@ public:
 	virtual int Run();
 
 	static void Add(CRazaThread* pThread, LPCSTR pszName);
-	static void Remove(HANDLE hThread);
-	static void Terminate(HANDLE hThread);
-	static bool IsThreadAlive(HANDLE hThread);
+	static void Remove(DWORD nThreadID);
+	static bool IsThreadAlive(DWORD nThreadID);
+	static bool SetThreadPriority(DWORD nThreadID, int nPriority);
+	static HANDLE GetHandle(DWORD nThreadID);
+	static void DeleteThread(DWORD nThreadID);
 	static HANDLE BeginThread(LPCSTR pszName, AFX_THREADPROC pfnThreadProc,
 							  LPVOID pParam, int nPriority = THREAD_PRIORITY_NORMAL, UINT nStackSize = 0,
 							  DWORD dwCreateFlags = 0, LPSECURITY_ATTRIBUTES lpSecurityAttrs = NULL, DWORD* pnThreadID = NULL);
-	static void CloseThread(HANDLE phThread, DWORD dwTimeout = ALMOST_INFINITE);
+	static void CloseThread(DWORD nThreadID, DWORD dwTimeout = ALMOST_INFINITE);
 
 protected:
 	typedef struct
@@ -60,7 +62,7 @@ protected:
 		LPCSTR			pszName;	// Thread name
 	} CThreadTag;
 
-	typedef CMap< HANDLE, HANDLE, CThreadTag, const CThreadTag& > CThreadMap;
+	typedef CMap< DWORD, DWORD, CThreadTag, const CThreadTag& > CThreadMap;
 
 	static CCriticalSection	m_ThreadMapSection;	// Guarding of m_ThreadMap
 	static CThreadMap		m_ThreadMap;		// Map of running threads
