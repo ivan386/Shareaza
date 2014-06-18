@@ -37,6 +37,7 @@ public:
 
 	virtual ~CThreadImpl()
 	{
+		CRazaThread::DetachThread( m_nThreadID );
 	}
 
 private:
@@ -64,7 +65,6 @@ protected:
 			return true;
 
 		m_pCancel.ResetEvent();	// Enable thread run
-		m_nThreadID = 0;
 		return ( CRazaThread::BeginThread( szName, ThreadStart, this, nPriority, 0, 0, NULL, &m_nThreadID ) != NULL );
 	}
 

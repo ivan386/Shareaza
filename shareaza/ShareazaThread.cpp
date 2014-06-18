@@ -61,6 +61,7 @@ CRazaThread::CThreadMap	CRazaThread::m_ThreadMap;
 CRazaThread::CRazaThread(AFX_THREADPROC pfnThreadProc /*= NULL*/, LPVOID pParam /*= NULL*/)
 	: CWinThread		( NULL, pParam )
 	, m_pfnThreadProcExt( pfnThreadProc )
+	, m_pnOwnerThreadID	( NULL )
 {
 }
 
@@ -69,10 +70,16 @@ CRazaThread::~CRazaThread()
 	Remove( m_nThreadID );
 }
 
-HANDLE CRazaThread::CreateThread(LPCSTR pszName, int nPriority /*= THREAD_PRIORITY_NORMAL*/, DWORD dwCreateFlags /*= 0*/, UINT nStackSize /*= 0*/, LPSECURITY_ATTRIBUTES lpSecurityAttrs /*= NULL*/)
+HANDLE CRazaThread::CreateThread(LPCSTR pszName, int nPriority, DWORD dwCreateFlags, UINT nStackSize, LPSECURITY_ATTRIBUTES lpSecurityAttrs, DWORD* pnThreadID)
 {
 	if ( CWinThread::CreateThread( dwCreateFlags | CREATE_SUSPENDED, nStackSize, lpSecurityAttrs ) )
 	{
+		if ( pnThreadID )
+		{
+			m_pnOwnerThreadID = pnThreadID;
+			*pnThreadID = m_nThreadID;
+		}
+
 		Add( this, pszName );
 
 		VERIFY( ::SetThreadPriority( m_hThread, nPriority ) );
@@ -82,6 +89,9 @@ HANDLE CRazaThread::CreateThread(LPCSTR pszName, int nPriority /*= THREAD_PRIORI
 
 		return m_hThread;
 	}
+
+	if  ( pnThreadID )
+		*pnThreadID = 0;
 
 	Delete();
 
@@ -114,6 +124,12 @@ int CRazaThread::Run()
 		__except( EXCEPTION_EXECUTE_HANDLER )
 		{
 		}
+	}
+
+	if ( m_pnOwnerThreadID )
+	{
+		*m_pnOwnerThreadID = 0;
+		m_pnOwnerThreadID = NULL;
 	}
 
 	return ret;
@@ -198,16 +214,23 @@ void CRazaThread::DeleteThread(DWORD nThreadID)
 		tag.pThread->Delete();
 }
 
+void CRazaThread::DetachThread(DWORD nThreadID)
+{
+	if ( ! nThreadID )
+		return;
+
+	CSingleLock oLock( &m_ThreadMapSection, TRUE );
+
+	CThreadTag tag;
+	if ( m_ThreadMap.Lookup( nThreadID, tag ) )
+		tag.pThread->m_pnOwnerThreadID = NULL;
+}
+
 HANDLE CRazaThread::BeginThread(LPCSTR pszName, AFX_THREADPROC pfnThreadProc, LPVOID pParam, int nPriority, UINT nStackSize, DWORD dwCreateFlags, LPSECURITY_ATTRIBUTES lpSecurityAttrs, DWORD* pnThreadID)
 {
-	CRazaThread* pThread = new CRazaThread( pfnThreadProc, pParam );
-	ASSERT_VALID( pThread );
-	if ( pThread )
+	if ( CRazaThread* pThread = new CRazaThread( pfnThreadProc, pParam ) )
 	{
-		HANDLE hThread = pThread->CreateThread( pszName, nPriority, dwCreateFlags, nStackSize, lpSecurityAttrs );
-		if ( pnThreadID )
-			*pnThreadID = pThread->m_nThreadID;
-		return hThread;
+		return pThread->CreateThread( pszName, nPriority, dwCreateFlags, nStackSize, lpSecurityAttrs, pnThreadID );
 	}
 	return NULL;
 }

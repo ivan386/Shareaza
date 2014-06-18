@@ -38,9 +38,7 @@ public:
 	CRazaThread(AFX_THREADPROC pfnThreadProc = NULL, LPVOID pParam = NULL);
 	virtual ~CRazaThread();
 
-	virtual HANDLE CreateThread(LPCSTR pszName, int nPriority = THREAD_PRIORITY_NORMAL,
-		DWORD dwCreateFlags = 0, UINT nStackSize = 0,
-		LPSECURITY_ATTRIBUTES lpSecurityAttrs = NULL);
+	virtual HANDLE CreateThread(LPCSTR pszName, int nPriority, DWORD dwCreateFlags, UINT nStackSize, LPSECURITY_ATTRIBUTES lpSecurityAttrs, DWORD* pnThreadID);
 	virtual BOOL InitInstance();
 	virtual int Run();
 
@@ -50,6 +48,7 @@ public:
 	static bool SetThreadPriority(DWORD nThreadID, int nPriority);
 	static HANDLE GetHandle(DWORD nThreadID);
 	static void DeleteThread(DWORD nThreadID);
+	static void DetachThread(DWORD nThreadID);
 	static HANDLE BeginThread(LPCSTR pszName, AFX_THREADPROC pfnThreadProc,
 							  LPVOID pParam, int nPriority = THREAD_PRIORITY_NORMAL, UINT nStackSize = 0,
 							  DWORD dwCreateFlags = 0, LPSECURITY_ATTRIBUTES lpSecurityAttrs = NULL, DWORD* pnThreadID = NULL);
@@ -67,6 +66,7 @@ protected:
 	static CCriticalSection	m_ThreadMapSection;	// Guarding of m_ThreadMap
 	static CThreadMap		m_ThreadMap;		// Map of running threads
 	AFX_THREADPROC			m_pfnThreadProcExt;
+	LPDWORD					m_pnOwnerThreadID;
 
 private:
 	CRazaThread(const CRazaThread&);
