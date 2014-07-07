@@ -1,51 +1,63 @@
+M http://cache.w3-hidden.cc/
+M http://gweb.dwbo.nl/
 M http://tenafly5k.com/gwc/skulls.php
 
+2 http://buriti2.serveftp.com:8080/skulls.php
 2 http://cache.ce3c.be/
+2 http://cache.ibel.de/
+2 http://cache.peernix.com/gwc.php
 2 http://cache.trillinux.org/g2/bazooka.php
 2 http://dkac.trillinux.org/dkac/dkac.php
-2 http://htmlhell.com/
-2 http://cache.peernix.com/gwc.php
-
-1 http://beacon.numberzero.org/gwc.php
 
 U uhc:yin.cloud.bishopston.net:33558
 
 D http://peerates.net/servers.php
-D http://www.gruk.org/server.met
 D http://upd.emule-security.org/server.met
+D http://www.gruk.org/server.met
 
-X http://gwc.dyndns.info:28960/gwc.php
-X http://silvers.zyns.com/gwc/dkac.php
-X http://midian.jayl.de/g2/bazooka.php
-X http://karma.cloud.bishopston.net:33559/
-X http://gwc2.wodi.org/skulls.php
-X http://gwc.agrocampmt.com.br/skulls.php
-X http://cache.wru.pl/skulls.php
-X http://witch.frodoslair.net/gwc/Beacon2/gwc.php
-X http://gwebcache.ns1.net/
-X http://gwc.marksieklucki.com/skulls.php
-X http://gwc.gofoxy.net:2108/gwc/cgi-bin/fc
-X http://gofoxy.net/gwc/cgi-bin/fc
-X http://cache.leite.us/
-X http://cache2.leite.us/
+# Banned:
+X http://1.gc.1e400.net/
+X http://beacon.numberzero.org/gwc.php
 X http://bootdesu.appspot.com/
+X http://cache.hxdsecurity.com/gwc/
+X http://cache.leite.us/
 X http://cache.trillinux.org.nyud.net:8090/g2/bazooka.php
+X http://cache.wru.pl/skulls.php
+X http://cache2.leite.us/
+X http://dogma.cloud.bishopston.net:33559/
 X http://fascination77.free.fr/cachechu/
 X http://fischaleck.net/cache/mcache.php
+X http://g2cache.zapto.org/skulls.php
+X http://gofoxy.net/gwc/cgi-bin/fc
+X http://gwc.agrocampmt.com.br/skulls.php
+X http://gwc.dyndns.info:28960/gwc.php
 X http://gwc.frodoslair.net/skulls/skulls
 X http://gwc.frodoslair.net/skulls/skulls.php
+X http://gwc.gofoxy.net:2108/gwc/cgi-bin/fc
+X http://gwc.marksieklucki.com/skulls.php
+X http://gwc2.wodi.org/skulls.php
+X http://gwebcache.ns1.net/
+X http://htmlhell.com/
+X http://karma.cloud.bishopston.net:33559/
+X http://mccarragher.com/cachechu/
+X http://midian.jayl.de/g2/bazooka.php
+X http://silvers.zyns.com/gwc/dkac.php
+X http://timingsolution.com/curl/
+X http://webcache.peerproject.org/
+X http://witch.frodoslair.net/gwc/Beacon2/gwc.php
 X http://www.ak-electron.eu/Beacon2/gwc.php
 X http://www.lo7.wroc.pl/~stash/old-g2-moved/bazooka.php
+X http://www.omhub.ru/mibew/view/
 
 # Duplicates:
-X http://jayl.de/gweb/g2/bazooka.php
 X http://gwc.iblinx.com:2108/gwc/cgi-bin/fc
+X http://jayl.de/gweb/g2/bazooka.php
 X http://www.gofoxy.net/gwc/cgi-bin/fc
 X http://www.myfoxy.net/gwc/cgi-bin/fc
 
 #
 # Keep these comments at the end
-# Last updated May 2011
+# Last updated Jul 2014
 #
 # Make sure the different lists are kept sorted in alphabetical order.
 #
@@ -57,9 +69,4 @@ X http://www.myfoxy.net/gwc/cgi-bin/fc
 # 2 = Gnutella 2 gwebcache, 1 = Gnutella gwebcache (obsolete)
 # X = banned, U = BootStrap(uhc, ukhl, gnutella1 host, gnutella2 host)
 #
-# Delete this file and Shareaza will use internal defaults.
-#
-# Web Cache Trackers:
-# Gnutella - Specification 1 Protocol : http://gcachescan.jonatkins.com/
-# (Gnutella / Gnutella2) - Specification 2 Protocol: http://gwebcaches.pongwar.com/
-# Get latest version at http://shareaza.svn.sourceforge.net/viewvc/*checkout*/shareaza/trunk/Data/DefaultServices.dat
+# Get latest version at https://svn.code.sf.net/p/shareaza/code/trunk/Data/DefaultServices.dat
