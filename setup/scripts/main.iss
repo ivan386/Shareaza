@@ -180,10 +180,8 @@ AppPublisherURL=http://shareaza.sourceforge.net/
 AppSupportURL=http://shareaza.sourceforge.net/?id=support
 AppUpdatesURL=http://shareaza.sourceforge.net/?id=download
 
-#if Compiler == "vc10"
-  #if ConfigurationName == "Release"
-    #include SourcePath + "..\..\vc10\vcredist\vcredist.iss"
-  #endif
+#if ConfigurationName == "Release"
+    #include SourcePath + "..\..\" + Compiler + "\vcredist\vcredist.iss"
 #endif
 
 [Tasks]
