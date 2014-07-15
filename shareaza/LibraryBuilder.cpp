@@ -370,7 +370,10 @@ DWORD CLibraryBuilder::GetNextFileToHash()
 	}
 
 	CQuickLock oLock( m_pSection );
-	m_sPath = sPath;
+	if ( nIndex )
+		m_sPath = sPath;
+	else
+		m_sPath.Empty();
 
 	return nIndex;
 }

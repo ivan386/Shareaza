@@ -162,8 +162,8 @@ ID_NETWORK_DC           ICON                    "Res\\Network_DC.ico"
 //
 
 VS_VERSION_INFO VERSIONINFO
- FILEVERSION 2,7,5,0
- PRODUCTVERSION 2,7,5,0
+ FILEVERSION 2,7,5,1
+ PRODUCTVERSION 2,7,5,1
  FILEFLAGSMASK 0x1fL
 #ifdef _DEBUG
  FILEFLAGS 0x1L
@@ -181,12 +181,12 @@ BEGIN
             VALUE "Comments", "Shareaza Ultimate File Sharing"
             VALUE "CompanyName", "Shareaza Development Team"
             VALUE "FileDescription", "Shareaza Ultimate File Sharing"
-            VALUE "FileVersion", "2.7.5.0"
+            VALUE "FileVersion", "2.7.5.1"
             VALUE "InternalName", "Shareaza"
             VALUE "LegalCopyright", "Copyright © Shareaza Development Team, 2002-2014. All rights reserved."
             VALUE "OriginalFilename", "Shareaza.exe"
             VALUE "ProductName", "Shareaza"
-            VALUE "ProductVersion", "2.7.5.0"
+            VALUE "ProductVersion", "2.7.5.1"
         END
     END
     BLOCK "VarFileInfo"
@@ -463,8 +463,7 @@ BEGIN
     GROUPBOX        "&Downloads:",IDC_STATIC,7,93,160,38
     CONTROL         "Expand new downloads by default",IDC_EXPAND_DOWNLOAD,
                     "Button",BS_AUTOCHECKBOX | WS_TABSTOP,14,104,148,10
-    CONTROL         "Open a download &monitor window",IDC_NEW_WINDOW,
-                    "Button",BS_AUTOCHECKBOX | WS_TABSTOP,14,117,148,10
+    CONTROL         "Open a download &monitor window",IDC_NEW_WINDOW,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,14,117,148,10
     GROUPBOX        "&Search:",IDC_STATIC,7,134,160,75
     CONTROL         "Expand multi-source files by default",IDC_EXPAND_MATCHES,
                     "Button",BS_AUTOCHECKBOX | WS_TABSTOP,16,150,148,10
