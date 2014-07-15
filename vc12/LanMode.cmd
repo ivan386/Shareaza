@@ -26,7 +26,7 @@ echo md ..\LAN_MODE\r$WCREV$\ >> %BUILDDIR%LanMode.tmp
 echo rmdir ..\r$WCREV$ >> %BUILDDIR%LanMode.tmp
 echo mklink /D /J ..\r$WCREV$ . >> %BUILDDIR%LanMode.tmp
 echo pushd ..\r$WCREV$ >> %BUILDDIR%LanMode.tmp
-echo call "%VS100COMNTOOLS%..\..\VC\vcvarsall.bat" x86 >> %BUILDDIR%LanMode.tmp
+echo call "%VS120COMNTOOLS%..\..\VC\vcvarsall.bat" x86 >> %BUILDDIR%LanMode.tmp
 echo set ISCCOPTIONS=/dRELEASE_BUILD=1 /dLAN_MODE /dREVISION=r$WCREV$ /q >> %BUILDDIR%LanMode.tmp
 echo msbuild vc12\Shareaza.sln /nologo /v:m /t:Rebuild /p:ForceImportBeforeCppTargets="%CD%\vc12\LanMode.props" /p:Configuration=Release /p:Platform=Win32 /fl /flp:Summary;Verbosity=normal;LogFile=%BUILDDIR%Shareaza_r$WCREV$_$WCNOW=%%Y-%%m-%%d$.log >> %BUILDDIR%LanMode.tmp
 echo popd >> %BUILDDIR%LanMode.tmp
