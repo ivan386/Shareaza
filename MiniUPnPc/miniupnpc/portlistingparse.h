@@ -1,4 +1,4 @@
-/* $Id: portlistingparse.h,v 1.5 2012/01/21 13:30:33 nanard Exp $ */
+/* $Id: portlistingparse.h,v 1.8 2014/06/10 09:44:18 nanard Exp $ */
 /* MiniUPnP project
  * http://miniupnp.free.fr/ or http://miniupnp.tuxfamily.org/
  * (c) 2011-2012 Thomas Bernard
@@ -57,11 +57,11 @@ struct PortMappingParserData {
 	portMappingElt curelt;
 };
 
-LIBSPEC void
+MINIUPNP_LIBSPEC void
 ParsePortListing(const char * buffer, int bufsize,
                  struct PortMappingParserData * pdata);
 
-LIBSPEC void
+MINIUPNP_LIBSPEC void
 FreePortListing(struct PortMappingParserData * pdata);
 
 #ifdef __cplusplus

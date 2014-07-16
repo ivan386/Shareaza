@@ -1,4 +1,4 @@
-/* $Id: miniwget.c,v 1.61 2014/02/05 17:27:48 nanard Exp $ */
+/* $Id: miniwget.c,v 1.62 2014/06/10 09:47:10 nanard Exp $ */
 /* Project : miniupnp
  * Website : http://miniupnp.free.fr/
  * Author : Thomas Bernard
@@ -42,6 +42,9 @@
 #endif /* #else _WIN32 */
 #if defined(__sun) || defined(sun)
 #define MIN(x,y) (((x)<(y))?(x):(y))
+#endif
+#ifdef __GNU__
+#define MAXHOSTNAMELEN 64
 #endif
 
 #include "miniupnpcstrings.h"
