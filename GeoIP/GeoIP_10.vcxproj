@@ -100,7 +100,6 @@
     <Link>
       <AdditionalDependencies>ws2_32.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <DelayLoadDLLs>ws2_32.dll</DelayLoadDLLs>
       <SubSystem>Windows</SubSystem>
     </Link>
     <PreBuildEvent>
@@ -135,7 +134,6 @@
       <AdditionalDependencies>ws2_32.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <TargetMachine>MachineX64</TargetMachine>
-      <DelayLoadDLLs>ws2_32.dll</DelayLoadDLLs>
       <SubSystem>Windows</SubSystem>
     </Link>
     <PreBuildEvent>
@@ -176,7 +174,6 @@
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <SetChecksum>true</SetChecksum>
       <TargetMachine>MachineX86</TargetMachine>
-      <DelayLoadDLLs>ws2_32.dll</DelayLoadDLLs>
       <SubSystem>Windows</SubSystem>
     </Link>
     <PreBuildEvent>
@@ -216,7 +213,6 @@
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <SetChecksum>true</SetChecksum>
       <TargetMachine>MachineX64</TargetMachine>
-      <DelayLoadDLLs>ws2_32.dll</DelayLoadDLLs>
       <SubSystem>Windows</SubSystem>
     </Link>
     <PreBuildEvent>

@@ -30,6 +30,7 @@
 #include <ws2tcpip.h>
 #include <io.h>
 #include <iphlpapi.h>
+#undef IF_NAMESIZE /* Windows XP fix */
 #define snprintf _snprintf
 #define strdup _strdup
 #ifndef strncasecmp
