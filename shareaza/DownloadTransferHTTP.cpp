@@ -226,8 +226,7 @@ BOOL CDownloadTransferHTTP::StartNextFragment()
 		{
 			// Converting urn containing tiger tree root to
 			// "/gnutella/thex/v1?urn:tree:tiger/:{TIGER_ROOT}&depth={TIGER_HEIGHT}&ed2k={0/1}"
-			// in case if "X-Thex-URI" and "X-TigerTree-Path" headers
-			// will be absent (perfect workaround for "silent" Shareaza 2.2.0.0)
+			// in case if "X-Thex-URI" and "X-TigerTree-Path" headers will be absent or it is a "GIV" (push) connection
 			m_sTigerTree.Format( L"/gnutella/thex/v1?%s&depth=%u&ed2k=%d", (LPCTSTR)m_pDownload->m_oTiger.toUrn(),
 				Settings.Library.TigerHeight, ( Settings.Downloads.VerifyED2K ? 1 : 0 ) );
 		}
