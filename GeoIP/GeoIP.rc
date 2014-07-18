@@ -16,10 +16,8 @@
 // Neutral resources
 
 #if !defined(AFX_RESOURCE_DLL) || defined(AFX_TARG_NEU)
-#ifdef _WIN32
 LANGUAGE LANG_NEUTRAL, SUBLANG_NEUTRAL
 #pragma code_page(1251)
-#endif //_WIN32
 
 /////////////////////////////////////////////////////////////////////////////
 //
@@ -27,8 +25,8 @@ LANGUAGE LANG_NEUTRAL, SUBLANG_NEUTRAL
 //
 
 VS_VERSION_INFO VERSIONINFO
- FILEVERSION 1,4,6,0
- PRODUCTVERSION 2,7,5,0
+ FILEVERSION 1,4,6,1
+ PRODUCTVERSION 2,7,6,0
  FILEFLAGSMASK 0x17L
 #ifdef _DEBUG
  FILEFLAGS 0x1L
@@ -46,12 +44,12 @@ BEGIN
             VALUE "Comments", "http://www.maxmind.com/"
             VALUE "CompanyName", "MaxMind LLC"
             VALUE "FileDescription", "GeoIP Dynamic Link Library"
-            VALUE "FileVersion", "1.4.6.0"
+            VALUE "FileVersion", "1.4.6.1"
             VALUE "InternalName", "GeoIP"
             VALUE "LegalCopyright", "Copyright (C) 2009 MaxMind LLC"
             VALUE "OriginalFilename", "GeoIP.dll"
             VALUE "ProductName", "Shareaza"
-            VALUE "ProductVersion", "2.7.5.0"
+            VALUE "ProductVersion", "2.7.6.0"
         END
     END
     BLOCK "VarFileInfo"
@@ -65,13 +63,11 @@ END
 
 
 /////////////////////////////////////////////////////////////////////////////
-// Russian resources
+// Russian (Russia) resources
 
 #if !defined(AFX_RESOURCE_DLL) || defined(AFX_TARG_RUS)
-#ifdef _WIN32
 LANGUAGE LANG_RUSSIAN, SUBLANG_DEFAULT
 #pragma code_page(1251)
-#endif //_WIN32
 
 #ifdef APSTUDIO_INVOKED
 /////////////////////////////////////////////////////////////////////////////
@@ -98,7 +94,7 @@ END
 
 #endif    // APSTUDIO_INVOKED
 
-#endif    // Russian resources
+#endif    // Russian (Russia) resources
 /////////////////////////////////////////////////////////////////////////////
 
 
