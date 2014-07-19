@@ -303,7 +303,7 @@ CMainWnd::CMainWnd()
 	, m_nAlpha			( 255 )
 {
 	ZeroMemory( &m_pTray, sizeof( NOTIFYICONDATA ) );
-	m_pTray.cbSize				= sizeof( NOTIFYICONDATA );
+	m_pTray.cbSize				= theApp.m_bIsVistaOrNewer ? sizeof( NOTIFYICONDATA ) : NOTIFYICONDATA_V3_SIZE;
 	m_pTray.uCallbackMessage	= WM_TRAY;
 	m_pTray.uVersion			= NOTIFYICON_VERSION; // NOTIFYICON_VERSION_4;
 }
@@ -441,13 +441,14 @@ int CMainWnd::OnCreate(LPCREATESTRUCT lpCreateStruct)
 	// Tray
 
 	m_pTray.hWnd = GetSafeHwnd();
-	m_pTray.hIcon = CoolInterface.ExtractIcon( IDR_MAINFRAME, FALSE );
+	m_pTray.hIcon = CoolInterface.ExtractIcon( IDR_MAINFRAME, FALSE, LVSIL_SMALL );
 
 	SnarlRegister();
 
 	// Icon
 
-	SetIcon( CoolInterface.ExtractIcon( IDR_MAINFRAME, FALSE ), FALSE );
+	SetIcon( CoolInterface.ExtractIcon( IDR_MAINFRAME, FALSE, LVSIL_NORMAL ), TRUE );
+	SetIcon( CoolInterface.ExtractIcon( IDR_MAINFRAME, FALSE, LVSIL_SMALL  ), FALSE );
 
 	// Status Bar
 
