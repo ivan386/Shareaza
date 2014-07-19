@@ -23,8 +23,6 @@
 
 #pragma once
 
-#include <SDKDDKVer.h>
-
 #define STRICT
 
 #ifndef _SECURE_ATL
@@ -38,6 +36,9 @@
 #define _ATL_ALL_WARNINGS
 
 #define ISOLATION_AWARE_ENABLED 1
+
+#define _WIN32_WINNT 0x0501
+#include <SDKDDKVer.h>
 
 #include "resource.h"
 

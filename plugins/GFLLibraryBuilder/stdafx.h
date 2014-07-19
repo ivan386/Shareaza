@@ -33,7 +33,8 @@
 #define _ATL_CSTRING_NO_CRT
 #define _ATL_ALL_WARNINGS
 
-#include <sdkddkver.h>
+#define _WIN32_WINNT 0x0501
+#include <SDKDDKVer.h>
 
 #include "resource.h"
 

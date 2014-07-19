@@ -1,7 +1,7 @@
 //
 // StdAfx.h
 //
-// Copyright (c) Shareaza Development Team, 2002-2012.
+// Copyright (c) Shareaza Development Team, 2002-2014.
 // This file is part of Shareaza Torrent Wizard (shareaza.sourceforge.net).
 //
 // Shareaza Torrent Wizard is free software; you can redistribute it
@@ -21,7 +21,8 @@
 
 #pragma once
 
-#include <sdkddkver.h>					// Setup versioning for windows SDK/DDK
+#define _WIN32_WINNT 0x0501
+#include <SDKDDKVer.h>
 
 #ifndef _SECURE_ATL
 #define _SECURE_ATL 1
