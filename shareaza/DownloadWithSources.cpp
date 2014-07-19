@@ -428,7 +428,7 @@ BOOL CDownloadWithSources::AddSourceHit(const CShareazaURL& oURL, BOOL bForce, i
 		sURL.Trim();
 		if ( sURL.GetLength() )
 		{
-			if ( ! AddSourceURL( sURL, NULL, nRedirectionCount, FALSE ) )
+			if ( ! AddSourceURL( sURL, NULL, nRedirectionCount, FALSE, bForce ) )
 			{
 				return FALSE;
 			}
@@ -458,7 +458,7 @@ BOOL CDownloadWithSources::AddSourceBT(const Hashes::BtGuid& oGUID, const IN_ADD
 //////////////////////////////////////////////////////////////////////
 // CDownloadWithSources add a single URL source
 
-BOOL CDownloadWithSources::AddSourceURL(LPCTSTR pszURL, FILETIME* pLastSeen, int nRedirectionCount, BOOL bFailed)
+BOOL CDownloadWithSources::AddSourceURL(LPCTSTR pszURL, FILETIME* pLastSeen, int nRedirectionCount, BOOL bFailed, BOOL bForce)
 {
 	if ( pszURL == NULL || *pszURL == 0 )
 		return FALSE;
@@ -519,7 +519,7 @@ BOOL CDownloadWithSources::AddSourceURL(LPCTSTR pszURL, FILETIME* pLastSeen, int
 		return TRUE;
 	}
 
-	if ( ! AddSource( &pURL, FALSE ) )
+	if ( ! AddSource( &pURL, bForce ) )
 		// Not match
 		return FALSE;
 
