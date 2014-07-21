@@ -70,7 +70,18 @@
 
 #include <sdkddkver.h>					// Setup versioning for windows SDK/DDK
 
+#ifndef _SECURE_ATL
+#define _SECURE_ATL 1
+#endif
+
+#ifndef VC_EXTRALEAN
 #define VC_EXTRALEAN
+#endif
+
+#ifndef WIN32_LEAN_AND_MEAN
+#define WIN32_LEAN_AND_MEAN
+#endif
+
 #define SECURITY_WIN32
 
 #define _CRT_SECURE_CPP_OVERLOAD_STANDARD_NAMES 1		// Enable secure template overloads

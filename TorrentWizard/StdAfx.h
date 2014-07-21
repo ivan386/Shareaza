@@ -32,7 +32,9 @@
 #define VC_EXTRALEAN
 #endif
 
+#ifndef WIN32_LEAN_AND_MEAN
 #define WIN32_LEAN_AND_MEAN
+#endif
 
 #define _CRT_SECURE_CPP_OVERLOAD_STANDARD_NAMES 1		// Enable secure template overloads
 #define _CRT_SECURE_CPP_OVERLOAD_STANDARD_NAMES_COUNT 1	// Enable secure template overloads
@@ -48,11 +50,6 @@
 #include <shlobj.h>			// Shell objects
 #include <shlwapi.h>
 
-#include "..\HashLib\HashLib.h"
-#include "..\Shareaza\Strings.h"
-#include "..\Shareaza\Buffer.h"
-#include "..\Shareaza\BENode.h"
-
 typedef unsigned __int64 QWORD;
 
 #ifndef BIF_NEWDIALOGSTYLE
@@ -61,6 +58,11 @@ typedef unsigned __int64 QWORD;
 #ifndef OFN_ENABLESIZING
 	#define OFN_ENABLESIZING	0x00800000
 #endif
+
+#include "..\HashLib\HashLib.h"
+#include "..\Shareaza\Strings.h"
+#include "..\Shareaza\Buffer.h"
+#include "..\Shareaza\BENode.h"
 
 #ifdef _UNICODE
 #if defined _M_IX86
