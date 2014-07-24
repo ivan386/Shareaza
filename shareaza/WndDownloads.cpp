@@ -1214,7 +1214,7 @@ void CDownloadsWnd::OnDownloadsUrl()
 				for ( POSITION pos = dlg.m_pURLs.GetHeadPosition(); pos; )
 				{
 					CShareazaURL pURL( dlg.m_pURLs.GetNext( pos ) );
-					pDownload->AddSourceHit( pURL );
+					pDownload->AddSourceHit( pURL, TRUE );
 				}
 			}
 		}
