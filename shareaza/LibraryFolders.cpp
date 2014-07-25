@@ -1,7 +1,7 @@
 //
 // LibraryFolders.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2013.
+// Copyright (c) Shareaza Development Team, 2002-2014.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -138,13 +138,13 @@ CLibraryFolder* CLibraryFolders::GetNextFolder(POSITION& pos) const
 //////////////////////////////////////////////////////////////////////
 // CLibraryFolders physical folder search
 
-CLibraryFolder* CLibraryFolders::GetFolder(LPCTSTR pszPath) const
+CLibraryFolder* CLibraryFolders::GetFolder(const CString& strPath) const
 {
 	ASSUME_LOCK( Library.m_pSection );
 
 	for ( POSITION pos = GetFolderIterator() ; pos ; )
 	{
-		CLibraryFolder* pFolder = GetNextFolder( pos )->GetFolderByPath( pszPath );
+		CLibraryFolder* pFolder = GetNextFolder( pos )->GetFolderByPath( strPath );
 		if ( pFolder != NULL )
 			return pFolder;
 	}

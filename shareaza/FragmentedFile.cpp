@@ -611,6 +611,7 @@ DWORD CFragmentedFile::Move(DWORD nIndex, LPCTSTR pszDestination, LPPROGRESS_ROU
 
 	CString strTarget( CString( pszDestination ) + _T("\\") + sName );
 	CString strTargetDir = strTarget.Left( strTarget.ReverseFind( _T('\\') ) + 1 );
+	const BOOL bIsFolder = ( sName.GetAt( sName.GetLength() - 1 ) == _T('\\') );
 
 	if ( ! strTarget.CompareNoCase( sPath ) )
 		// Already moved
@@ -630,7 +631,7 @@ DWORD CFragmentedFile::Move(DWORD nIndex, LPCTSTR pszDestination, LPPROGRESS_ROU
 	DWORD dwError = ::GetLastError();
 	if ( bSuccess )
 	{
-		if ( bSkip )
+		if ( bSkip || bIsFolder )
 			bSuccess = DeleteFileEx( sPath, FALSE, TRUE, TRUE );
 		else
 			// Move/copy file using very long filenames

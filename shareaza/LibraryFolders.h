@@ -1,7 +1,7 @@
 //
 // LibraryFolders.h
 //
-// Copyright (c) Shareaza Development Team, 2002-2012.
+// Copyright (c) Shareaza Development Team, 2002-2014.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -54,7 +54,7 @@ public:
 	POSITION		GetFolderIterator() const;
 	CLibraryFolder*	GetNextFolder(POSITION& pos) const;
 	INT_PTR			GetFolderCount() const { return m_pFolders.GetCount(); }
-	CLibraryFolder*	GetFolder(LPCTSTR pszPath) const;
+	CLibraryFolder*	GetFolder(const CString& strPath) const;
 	BOOL			CheckFolder(CLibraryFolder* pFolder, BOOL bRecursive = FALSE) const;
 	CLibraryFolder*	GetFolderByName(LPCTSTR pszName) const;
 	CLibraryFolder*	AddFolder(LPCTSTR pszPath);

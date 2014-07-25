@@ -110,44 +110,39 @@ CString	CBTInfo::CBTFile::FindFile() const
 {
 	CQuickLock oLock( Library.m_pSection );
 
-	// Try find file by hash/size
-	CString strFile;
-	const CLibraryFile* pShared = LibraryMaps.LookupFileByHash( this, FALSE, TRUE );
-	if ( pShared )
-		strFile = pShared->GetPath();
-	if ( ! pShared ||
-		 GetFileSize( CString( _T("\\\\?\\") ) + strFile ) != m_nSize )
+	// Try complete folder
+	CString strFile = Settings.Downloads.CompletePath + _T("\\") + m_sPath;
+	if ( GetFileSize( CString( _T("\\\\?\\") ) + strFile ) != m_nSize )
 	{
-		// Try complete folder
-		strFile = Settings.Downloads.CompletePath + _T("\\") + m_sPath;
+		// Try folder of original .torrent
+		CString strTorrentPath = m_pInfo->m_sPath.Left(
+			m_pInfo->m_sPath.ReverseFind( _T('\\') ) + 1 );
+		strFile = strTorrentPath + m_sPath;
 		if ( GetFileSize( CString( _T("\\\\?\\") ) + strFile ) != m_nSize )
 		{
-			// Try folder of original .torrent
-			CString strTorrentPath = m_pInfo->m_sPath.Left(
-				m_pInfo->m_sPath.ReverseFind( _T('\\') ) + 1 );
-			strFile = strTorrentPath + m_sPath;
-			if ( GetFileSize( CString( _T("\\\\?\\") ) + strFile ) != m_nSize )
+			// Try complete folder without outer file directory
+			CString strShortPath;
+			int nSlash = m_sPath.Find( _T('\\') );
+			if ( nSlash != -1 )
+				strShortPath = m_sPath.Mid( nSlash + 1 );
+			strFile = Settings.Downloads.CompletePath + _T("\\") + strShortPath;
+			if ( strShortPath.IsEmpty() || GetFileSize( CString( _T("\\\\?\\") ) + strFile ) != m_nSize )
 			{
-				// Try complete folder without outer file directory
-				CString strShortPath;
-				int nSlash = m_sPath.Find( _T('\\') );
-				if ( nSlash != -1 )
-					strShortPath = m_sPath.Mid( nSlash + 1 );
-				strFile = Settings.Downloads.CompletePath + _T("\\") + strShortPath;
-				if ( strShortPath.IsEmpty() ||
-					 GetFileSize( CString( _T("\\\\?\\") ) + strFile ) != m_nSize )
+				// Try folder of original .torrent without outer file directory
+				strFile = strTorrentPath + strShortPath;
+				if ( strShortPath.IsEmpty() || GetFileSize( CString( _T("\\\\?\\") ) + strFile ) != m_nSize )
 				{
-					// Try folder of original .torrent without outer file directory
-					strFile = strTorrentPath + strShortPath;
-					if ( strShortPath.IsEmpty() ||
-						GetFileSize( CString( _T("\\\\?\\") ) + strFile ) != m_nSize )
+					// Try find by name only
+					const CLibraryFile* pShared = LibraryMaps.LookupFileByName( m_sName, m_nSize, FALSE, TRUE );
+					if ( pShared )
+						strFile = pShared->GetPath();
+					if ( ! pShared || GetFileSize( CString( _T("\\\\?\\") ) + strFile ) != m_nSize )
 					{
-						// Try find by name only
-						pShared = LibraryMaps.LookupFileByName( m_sName, m_nSize, FALSE, TRUE );
+						// Try find file by hash/size
+						pShared = LibraryMaps.LookupFileByHash( this, FALSE, TRUE );
 						if ( pShared )
 							strFile = pShared->GetPath();
-						if ( ! pShared ||
-							 GetFileSize( CString( _T("\\\\?\\") ) + strFile ) != m_nSize )
+						if ( ! pShared || GetFileSize( CString( _T( "\\\\?\\" ) ) + strFile ) != m_nSize )
 						{
 							return m_sPath;
 						}

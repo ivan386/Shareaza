@@ -90,6 +90,16 @@ CExistingFileDlg::Action CExistingFileDlg::CheckExisting(const CShareazaFile* pF
 	if ( ! pLock.Lock( 1000 ) )
 		return Cancel;
 
+	if ( pFile->m_sPath.GetLength() )
+	{
+		const BOOL bIsFolder = ( pFile->m_sPath.GetAt( pFile->m_sPath.GetLength() - 1 ) == _T('\\') );
+		if ( bIsFolder )
+		{
+			const CLibraryFolder* pFolder =  LibraryFolders.GetFolder( pFile->m_sPath.Left( pFile->m_sPath.GetLength() - 1 ) );
+			return pFolder ? ShowInLibrary : Download;
+		}
+	}
+
 	const CLibraryFile* pLibFile = LibraryMaps.LookupFileByHash( pFile );
 	if ( pLibFile == NULL )
 		return Download;

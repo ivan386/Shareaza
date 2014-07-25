@@ -1,7 +1,7 @@
 //
 // SharedFolder.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2013.
+// Copyright (c) Shareaza Development Team, 2002-2014.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -177,13 +177,25 @@ CLibraryFolder* CLibraryFolder::GetFolderByName(LPCTSTR pszName) const
 		return pOutput->GetFolderByName( strNextName );
 }
 
-CLibraryFolder* CLibraryFolder::GetFolderByPath(LPCTSTR pszPath) const
+CLibraryFolder* CLibraryFolder::GetFolderByPath(const CString& strPath) const
 {
-	if ( m_sPath.CompareNoCase( pszPath ) == 0 ) return (CLibraryFolder*)this;
+	// Test for exact match
+	if ( m_sPath.CompareNoCase( strPath ) == 0 )
+		return const_cast< CLibraryFolder* >( this );
 
+	// Test for partial match
+	if ( m_sPath.GetLength() > strPath.GetLength() )
+	{
+		const CString strPart = m_sPath.Right( strPath.GetLength() );
+		const TCHAR cDel = m_sPath.GetAt( m_sPath.GetLength() - strPath.GetLength() - 1 );
+		if ( cDel == _T('\\') && strPart.CompareNoCase( strPath ) == 0 )
+			return const_cast< CLibraryFolder* >( this );
+	}
+
+	// Test for nested folders
 	for ( POSITION pos = GetFolderIterator() ; pos ; )
 	{
-		CLibraryFolder* pFolder = GetNextFolder( pos )->GetFolderByPath( pszPath );
+		CLibraryFolder* pFolder = GetNextFolder( pos )->GetFolderByPath( strPath );
 		if ( pFolder ) return pFolder;
 	}
 
