@@ -67,6 +67,7 @@ CDownload::CDownload() :
 ,	m_tBegan		( 0 )
 ,	m_bDownloading	( false )
 ,	m_pTask			( this )
+,	m_bStableName	( false )
 {
 }
 
@@ -74,6 +75,16 @@ CDownload::~CDownload()
 {
 	AbortTask();
 	DownloadGroups.Unlink( this );
+}
+
+bool CDownload::HasStableName() const
+{
+	return ! m_sName.IsEmpty() && ( m_bStableName || HasHash() );
+}
+
+void CDownload::SetStableName(bool bStable)
+{
+	m_bStableName = bStable;
 }
 
 float CDownload::GetProgress() const
@@ -922,6 +933,14 @@ BOOL CDownload::OnVerify(const CLibraryFile* pFile, TRISTATE bVerified)
 			m_oED2K = pFile->m_oED2K;
 		if ( ! m_oMD5 && pFile->m_oMD5 )
 			m_oMD5 = pFile->m_oMD5;
+
+		// Auto-start for certain file extensions
+		const CString strExt = PathFindExtension( pFile->GetPath() );
+		if ( strExt.CompareNoCase( _T(".torrent") ) == 0 )
+		{
+			theApp.Message( MSG_DEBUG, _T("Auto-starting torrent file: %s"), pFile->GetPath() );
+			theApp.OpenTorrent( pFile->GetPath(), TRUE );
+		}
 	}
 
 	return TRUE;
@@ -1121,10 +1140,10 @@ BOOL CDownload::Enqueue(int nIndex, CSingleLock* pLock)
 	return bResult;
 }
 
-void CDownload::Resize(QWORD nNewSize)
+bool CDownload::Resize(QWORD nNewSize)
 {
 	if ( m_nSize == nNewSize )
-		return;
+		return false;
 
 	// Check for possible change to multi-file download
 	if ( ! m_oSHA1 && ! m_oTiger && ! m_oED2K && ! m_oMD5 && ( m_oBTH || IsTorrent() ) && IsFileOpen() )
@@ -1140,4 +1159,6 @@ void CDownload::Resize(QWORD nNewSize)
 	}
 
 	SetSize( nNewSize );
+
+	return true;
 }

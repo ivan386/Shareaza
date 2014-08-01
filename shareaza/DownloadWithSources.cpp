@@ -23,6 +23,7 @@
 #include "Shareaza.h"
 #include "Settings.h"
 #include "Download.h"
+#include "DownloadGroups.h"
 #include "DownloadSource.h"
 #include "DownloadTransfer.h"
 #include "DownloadWithSources.h"
@@ -252,38 +253,38 @@ BOOL CDownloadWithSources::AddSource(const CShareazaFile* pHit, BOOL bForce)
 	ASSUME_LOCK( Transfers.m_pSection );
 
 	const bool bHasHash = HasHash();
-	const BOOL bHitHasName = ( pHit->m_sName.GetLength() != 0 );
-	const BOOL bHitHasSize = ( pHit->m_nSize != 0 && pHit->m_nSize != SIZE_UNKNOWN );
-	BOOL bHash = FALSE;
-	BOOL bUpdated = FALSE;
+	const bool bHitHasName = ( pHit->m_sName.GetLength() != 0 );
+	const bool bHitHasSize = ( pHit->m_nSize != 0 && pHit->m_nSize != SIZE_UNKNOWN );
+	bool bHash = FALSE;
+	bool bUpdated = FALSE;
 	
 	if ( ! bForce )
 	{
 		if ( m_oSHA1 && pHit->m_oSHA1 )
 		{
 			if ( m_oSHA1 != pHit->m_oSHA1 ) return FALSE;
-			bHash = TRUE;
+			bHash = true;
 		}
 		if ( m_oTiger && pHit->m_oTiger )
 		{
 			if ( m_oTiger != pHit->m_oTiger ) return FALSE;
-			bHash = TRUE;
+			bHash = true;
 		}
         if ( m_oED2K && pHit->m_oED2K )
 		{
 			if ( m_oED2K != pHit->m_oED2K ) return FALSE;
-			bHash = TRUE;
+			bHash = true;
 		}
 		if ( m_oMD5 && pHit->m_oMD5 )
 		{
 			if ( m_oMD5 != pHit->m_oMD5 ) return FALSE;
-			bHash = TRUE;
+			bHash = true;
 		}
 		// BTH check is a last chance
 		if ( ! bHash && m_oBTH && pHit->m_oBTH )
 		{
 			if ( m_oBTH != pHit->m_oBTH ) return FALSE;
-			bHash = TRUE;
+			bHash = true;
 		}
 	}
 	
@@ -302,42 +303,43 @@ BOOL CDownloadWithSources::AddSource(const CShareazaFile* pHit, BOOL bForce)
 	if ( !m_oSHA1 && pHit->m_oSHA1 )
 	{
 		m_oSHA1 = pHit->m_oSHA1;
-		bUpdated = TRUE;
+		bUpdated = true;
 	}
     if ( !m_oTiger && pHit->m_oTiger )
 	{
 		m_oTiger = pHit->m_oTiger;
-		bUpdated = TRUE;
+		bUpdated = true;
 	}
     if ( !m_oED2K && pHit->m_oED2K )
 	{
 		m_oED2K = pHit->m_oED2K;
-		bUpdated = TRUE;
+		bUpdated = true;
 	}
 	if ( !m_oBTH && pHit->m_oBTH )
 	{
 		m_oBTH = pHit->m_oBTH;
-		bUpdated = TRUE;
+		bUpdated = true;
 	}
 	if ( !m_oMD5 && pHit->m_oMD5 )
 	{
 		m_oMD5 = pHit->m_oMD5;
-		bUpdated = TRUE;
+		bUpdated = true;
 	}
 	if ( ( m_sName.IsEmpty() || ! bHasHash ) && bHitHasName )
 	{
-		Rename( pHit->m_sName );
-		bUpdated = TRUE;
+		bUpdated = Rename( pHit->m_sName );
 	}
 	if ( ( m_nSize == SIZE_UNKNOWN || ! bHasHash ) && bHitHasSize )
 	{
-		Resize( pHit->m_nSize );
-		bUpdated = TRUE;
+		bUpdated = Resize( pHit->m_nSize );
 	}
 
 	if ( bUpdated )
 	{
-		((CDownload*)this)->m_bUpdateSearch = TRUE;
+		// Re-link
+		DownloadGroups.Link( static_cast< CDownload* >( this ) );
+
+		static_cast< CDownload* >( this )->m_bUpdateSearch = TRUE;
 	
 		QueryHashMaster.Invalidate();
 	}
@@ -381,13 +383,15 @@ BOOL CDownloadWithSources::AddSourceHit(const CQueryHit* pHit, BOOL bForce)
 
 BOOL CDownloadWithSources::AddSourceHit(const CMatchFile* pMatchFile, BOOL bForce)
 {
-	BOOL bRet = FALSE;
+	CQuickLock oLock( Transfers.m_pSection );
+
+	BOOL bRet = AddSource( pMatchFile, bForce );
 
 	// Best goes first if forced
 	const CQueryHit* pBestHit = pMatchFile->GetBest();
 	if ( bForce && pBestHit )
 	{
-		bRet = AddSourceHit( pBestHit, TRUE );
+		bRet = AddSourceHit( pBestHit, TRUE ) || bRet;
 	}
 
 	for ( const CQueryHit* pHit = pMatchFile->GetHits() ; pHit; pHit = pHit->m_pNext )

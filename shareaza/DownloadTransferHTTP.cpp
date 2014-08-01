@@ -23,6 +23,7 @@
 #include "Shareaza.h"
 #include "Settings.h"
 #include "Download.h"
+#include "DownloadGroups.h"
 #include "Downloads.h"
 #include "DownloadSource.h"
 #include "DownloadTransfer.h"
@@ -1006,6 +1007,7 @@ BOOL CDownloadTransferHTTP::OnHeaderLine(CString& strHeader, CString& strValue)
 	else if ( strHeader.CompareNoCase( _T("Location") ) == 0 )
 	{
 		m_sRedirectionURL = strValue;
+		m_pDownload->SetStableName( false );
 	}
 	else if ( strHeader.CompareNoCase( _T("X-NAlt") ) == 0 ||
 			  strHeader.CompareNoCase( _T("X-PAlt") ) == 0 ||
@@ -1016,20 +1018,18 @@ BOOL CDownloadTransferHTTP::OnHeaderLine(CString& strHeader, CString& strValue)
 	}
 	else if ( strHeader.CompareNoCase( _T("Content-Disposition") ) == 0 )
 	{
-		BOOL bIsP2P = m_pSource->m_bSHA1 || m_pSource->m_bTiger || m_pSource->m_bED2K || m_pSource->m_bMD5 || m_pSource->m_bBTH;
-
-		// Accept Content-Disposition only if the current display name is empty or if it came from Web Servers and the current display name is shorter than 13 chars (Is likely to be default.html, default.asp, etc.).
-		if ( m_pDownload->m_sName.IsEmpty() || ( ! bIsP2P && m_pDownload->m_sName.GetLength() < 13 ) )
+		if ( ! m_pDownload->HasStableName() )
 		{ 
-			int nPos = strValue.Find( _T("filename=") );
+			const int nPos = strValue.Find( _T("filename=") );
 			if ( nPos >= 0 )
 			{
 				// If exactly, it should follow RFC 2184 rules
-				CString strFilename = URLDecode( strValue.Mid( nPos + 9 ).Trim( _T("\" \t\r\n") ) );
-
-				// If the filenames contain an invalid character (because web servers or P2P clients are evil or because sometimes non-ascii chars, specially Japanese chars, are encoded as "?" (%3F) by a faulty coding)
-				if ( strFilename == SafeFilename( strFilename ) || ( m_pDownload->GetSourceCount() <= 1 && ! bIsP2P ) )
-					m_pDownload->Rename( strFilename );
+				const CString strFilename = URLDecode( strValue.Mid( nPos + 9 ).Trim( _T("\" \t\r\n") ) );
+				if ( m_pDownload->Rename( strFilename ) )
+				{
+					m_pDownload->SetStableName();
+					DownloadGroups.Link( m_pDownload );
+				}
 			}		
 		}
 	}	
