@@ -52,11 +52,11 @@ END_MESSAGE_MAP()
 // CHashProgressBar construction
 
 CHashProgressBar::CHashProgressBar()
-	: m_nRemaining( 0 )
-	, m_nPercentage( 0 )
-	, m_nLastShow( 0 )
-	, m_nPerfectWidth( 0 )
-	, m_nAlpha( 0 )
+	: m_nRemaining		( 0 )
+	, m_nPercentage		( 0 )
+	, m_nLastShow		( 0 )
+	, m_nPerfectWidth	( 0 )
+	, m_nAlpha			( 0 )
 {
 }
 
@@ -169,6 +169,11 @@ void CHashProgressBar::OnDestroy()
 {
 	KillTimer( 1 );
 
+	m_sCurrent.Empty();
+	m_nRemaining = 0;
+	m_nPercentage = 0;
+	m_nLastShow = 0;
+	m_nPerfectWidth = 0;
 	m_nAlpha = 0;
 
 	CWnd::OnDestroy();
