@@ -527,7 +527,7 @@ void CSettings::Load()
 	Add( _T("Downloads"), _T("VerifyED2K"), &Downloads.VerifyED2K, true );
 	Add( _T("Downloads"), _T("VerifyFiles"), &Downloads.VerifyFiles, true );
 	Add( _T("Downloads"), _T("VerifyTiger"), &Downloads.VerifyTiger, true );
-	Add( _T("Downloads"), _T("WebHookEnable"), &Downloads.WebHookEnable, true );
+	Add( _T("Downloads"), _T("WebHookEnable"), &Downloads.WebHookEnable, false );
 	Add( _T("Downloads"), _T("WebHookExtensions"), &Downloads.WebHookExtensions, _T("|zip|7z|gz|rar|r0|tgz|ace|z|tar|arj|lzh|sit|hqx|fml|grs|mp3|iso|msi|exe|bin|") );
 
 	Add( _T("Uploads"), _T("AllowBackwards"), &Uploads.AllowBackwards, true );
