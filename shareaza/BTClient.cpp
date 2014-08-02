@@ -386,6 +386,8 @@ BOOL CBTClient::OnHandshake1()
 	Read( oFileHash );
 	oFileHash.validate();
 
+	theApp.Message( MSG_DEBUG, _T("BitTorrent coupling with %s requested file: %s"), (LPCTSTR)m_sAddress, (LPCTSTR)oFileHash.toString() );
+
 	if ( m_pDownload != NULL )	// If we initiated download (download has associated, which means we initiated download)
 	{
 		ASSERT( m_pDownloadTransfer != NULL );
