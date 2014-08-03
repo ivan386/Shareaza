@@ -194,21 +194,21 @@ BOOL CFragmentedFile::Open(LPCTSTR pszFile, QWORD nOffset, QWORD nLength, BOOL b
 	if ( GetFileAttributes( _T("\\\\?\\") + strPath ) == INVALID_FILE_ATTRIBUTES )
 	{
 		const CString strFileName = PathFindFileName( strPath );
-		if ( GetFileAttributes( _T("\\\\?\\") + Settings.Downloads.IncompletePath + _T("\\") + strFileName ) == INVALID_FILE_ATTRIBUTES )
+		const CString strIncompletePath = Settings.Downloads.IncompletePath + _T("\\") + strFileName;
+		if ( GetFileAttributes( _T("\\\\?\\") + strIncompletePath ) != INVALID_FILE_ATTRIBUTES )
 		{
-			const CString strSDPath = m_pDownload->m_sPath.Left( m_pDownload->m_sPath.ReverseFind( _T('\\') ) );
-			if ( GetFileAttributes( _T("\\\\?\\") + strSDPath + _T("\\") + strFileName ) == INVALID_FILE_ATTRIBUTES )
-			{
-				// Use as is
-			}
-			else
-			{
-				strPath = strSDPath + _T("\\") + strFileName;
-			}
+			strPath = strIncompletePath;
 		}
 		else
 		{
-			strPath = Settings.Downloads.IncompletePath + _T("\\") + strFileName;
+			if ( m_pDownload )
+			{
+				const CString strSDPath = m_pDownload->m_sPath.Left( m_pDownload->m_sPath.ReverseFind( _T('\\') ) + 1 ) + strFileName;
+				if ( GetFileAttributes( _T("\\\\?\\") + strSDPath ) != INVALID_FILE_ATTRIBUTES )
+				{
+					strPath = strSDPath;
+				}
+			}
 		}
 	}
 
