@@ -1201,14 +1201,14 @@
 			<item id="ID_LIBRARY_FOLDER_FILE_PROPERTIES" text="_Vlastnosti souboru"/>
 		</menu>
 		<menu name="CLibraryTree.Virtual.Basic">
-			<item id="ID_LIBRARY_FOLDER_ENQUEUE" text="Přehrát album"/>
+			<item id="ID_LIBRARY_FOLDER_ENQUEUE" text="Play _Album"/>
 			<item id="ID_LIBRARY_FOLDER_DELETE" text="_Vymazat"/>
 			<separator/>
 			<item id="ID_LIBRARY_FOLDER_FILE_PROPERTIES" text="_Vlastnosti souboru"/>
-			<item id="ID_LIBRARY_FOLDER_PROPERTIES" text="Vlastnosti _albumu"/>
+			<item id="ID_LIBRARY_FOLDER_PROPERTIES" text="Album _Properties"/>
 		</menu>
 		<menu name="CLibraryTree.Virtual">
-			<item id="ID_LIBRARY_FOLDER_ENQUEUE" text="Přehrát album"/>
+			<item id="ID_LIBRARY_FOLDER_ENQUEUE" text="Play _Album"/>
 			<item id="ID_LIBRARY_FOLDER_DELETE" text="_Vymazat"/>
 			<separator/>
 			<item id="ID_LIBRARY_REBUILD" text="O_bnovit"/>
@@ -1217,7 +1217,7 @@
 			<item id="ID_LIBRARY_FOLDER_NEW" text="_Nová složka..."/>
 			<separator/>
 			<item id="ID_LIBRARY_FOLDER_FILE_PROPERTIES" text="_Vlastnosti souboru"/>
-			<item id="ID_LIBRARY_FOLDER_PROPERTIES" text="Vlastnosti _albumu"/>
+			<item id="ID_LIBRARY_FOLDER_PROPERTIES" text="Album _Properties"/>
 		</menu>
 		<!-- LIBRARY VIEWS -->
 		<menu name="CLibraryTileView">
@@ -1296,7 +1296,7 @@
 		<menu name="CLibraryFileView.Virtual.Basic">
 			<item id="ID_LIBRARY_LAUNCH" text="_Otevřít nebo přehrát"/>
 			<item id="ID_LIBRARY_ENQUEUE" text="Přidat do Pla_ylistu"/>
-			<item id="ID_LIBRARY_FOLDER_ENQUEUE" text="Přehrát album"/>
+			<item id="ID_LIBRARY_FOLDER_ENQUEUE" text="Play _Album"/>
 			<separator/>
 			<item id="ID_LIBRARY_SHARED_FILE" text="_Sdílené"/>
 			<separator/>
@@ -1700,8 +1700,8 @@
 				<icon res="252" width="32" height="32"/><gap size="8"/>
 				<heading align="middle">P O Z O R   -   M Á T E   Z A P N U T Ý   F I R E W A L L</heading>
 				<newline gap="8" indent="42"/>
-				<text colour="FF0000">Shareaza zjistila ten jste za firewallem nebo NAT routerem,
-			a nemůžete proto přijmout spojení z Internetu.  </text>
+				<text colour="FF0000">Shareaza has detected that you are behind a NAT router or firewall,
+				and are unable to receive connections from the Internet.  </text>
 				<text colour="FF0000" format="b">Může to způsobit problémy při stahování.</text>
 				<newline gap="6"/>
 				<link target="raza:command:ID_HELP_ROUTER">Klikněte zde pro radu jak nastavit váš router nebo firewall</link>
@@ -1711,8 +1711,8 @@
 				<icon res="252" width="32" height="32"/><gap size="8"/>
 				<heading align="middle">P O Z O R   -   N A S T A V E N Ý   T C P   P O R T   J E   B L O K O V Á N</heading>
 				<newline gap="8" indent="42"/>
-				<text colour="FF0000">Shareaza zjistila ten jste za firewallem nebo NAT routerem,
-			a nemůžete proto přijímat TCP spojení z Internetu.  </text>
+				<text colour="FF0000">Shareaza has detected that you are behind a NAT router or firewall,
+				and are unable to receive TCP connections from the Internet.  </text>
 				<text colour="FF0000" format="b">Může to způsobit problémy při stahování.</text>
 				<newline gap="6"/>
 				<link target="raza:command:ID_HELP_ROUTER">Klikněte zde pro radu jak nastavit váš router nebo firewall</link>
@@ -1722,8 +1722,8 @@
 				<icon res="252" width="32" height="32"/><gap size="8"/>
 				<heading align="middle">P O Z O R   -   N A S T A V E N Ý   U D P   P O R T   J E   B L O K O V Á N</heading>
 				<newline gap="8" indent="42"/>
-				<text colour="FF0000">Shareaza zjistila ten jste za firewallem nebo NAT routerem,
-			a nemůžete proto přijímat UDP spojení z Internetu.  </text>
+				<text colour="FF0000">Shareaza has detected that you are behind a NAT router or firewall,
+				and are unable to receive UDP messages from the Internet.  </text>
 				<text colour="FF0000" format="b">Může to způsobit problémy při stahování.</text>
 				<newline gap="6"/>
 				<link target="raza:command:ID_HELP_ROUTER">Klikněte zde pro radu jak nastavit váš router nebo firewall</link>
@@ -1839,7 +1839,7 @@
 			<text group="11" align="middle">Nepřipojeno</text>
 			<text group="12" align="middle">Připojuji...</text>
 			<text group="13" align="middle">Připojeno</text>
-			<text group="14" align="middle" id="G1Hubs">eDonkey:</text>
+			<text group="14" align="middle" id="G1Hubs">%i ultrapeers</text>
 			<text group="15" align="middle" id="G1Leaves">%i ukončení</text>
 			<newline group="10" gap="2"/>
 			<icon group="30" command="ID_NETWORK_ED2K"/><gap group="30" size="4"/>
@@ -1912,8 +1912,8 @@
 			</styles>
 			<text format="b">Vítejte ve správci nastavení Shareazy</text>
 			<newline gap="16"/>
-			<text>Správce nastavení Shareazy dovolí pokročilým uživatelům komletně upravit
-		práci se Shareazou. Nastavení položek v záložce</text>
+			<text>The Shareaza Settings Manager allows advanced users to completely customise how
+				Shareaza works. The settings in the</text>
 			<text format="b">Hlavní</text>
 			<text>závisí na zkušenosti uživatele.</text>
 			<newline gap="16" indent="16"/>
@@ -1949,8 +1949,8 @@
 			</styles>
 			<text format="b">Vítejte ve správci nastavení Shareazy</text>
 			<newline gap="16"/>
-			<text>Správce nastavení Shareazy dovolí pokročilým uživatelům zcela komletně upravit
-		práci se Shareazou. Nastavení v sekci</text>
+			<text>The Shareaza Settings Manager allows advanced users to completely customise 
+				how Shareaza works. The settings in the</text>
 			<text format="b">Internet</text>
 			<text>zkontrolujte jak Shareaza pracuje společně s dalšími uzly uvnitř rozdělených sítí peer-to-peer.</text>
 			<newline gap="16" indent="16"/>
@@ -2069,11 +2069,11 @@
 		<document name="DownloadHelp.Select">
 			<text format="b">Oblast stahování</text>
 			<newline gap="8"/>
-			<text>Zde jsou zobrazené soubory které se právě stahují. Můžete si prohlížet
-		jednotlivé zdroje pokud je rozbalíte kliknutím vlevo u souboru na malé +.</text>
+			<text>This is where files currently being downloaded are displayed. You can view
+			individual sources by expanding each file with the small + on the left.</text>
 			<newline gap="8"/>
-			<text>Tento příkaz můžete využít k získání Nápovědy pro stahování. Jednoduše
-		vyberte stahování a znovu použijte tento příkaz.</text>
+			<text>Drag'n'Drop downloads higher in the list for priority, or onto Download Group 
+			tabs for better organisation (in Power Mode).</text>
 			<newline gap="16"/>
 			<text>You can also use this command to get help information on a specific download.
 			Simply select a download and choose this Help command again.</text>
@@ -2087,70 +2087,71 @@
 		<document name="DownloadHelp.Completed">
 			<text format="b">Toto stahování je dokončeno</text>
 			<newline gap="8"/>
-			<text>Shareaza dokončila stahování tohoto souboru, a ověřila že je
-		na 100% v pořádku. Také jej přesunula k vašim souborům do složky pro dokončená stahování.</text>
+			<text>Shareaza has finished downloading this file, and has verified that it
+			is 100% correct. It has also moved the file to your downloads folder.</text>
 		</document>
 		<document name="DownloadHelp.Moving">
 			<text format="b">Toto stahování bylo přesunuto</text>
 			<newline gap="8"/>
-			<text>Shareaza dokončila stahování tohoto souboru, a ověřila
-		že je v pořádku. Soubor je aktuálně přesunutý a rozbalený k vašim souborům do složky pro stahování.</text>
+			<text>Shareaza has finished downloading this file, and has verified that
+			it is correct. It is currently being moved and/or unpacked to your downloads folder.</text>
 		</document>
 		<document name="DownloadHelp.Paused">
 			<text format="b">Toto stahování je pozastaveno</text>
 			<newline gap="8"/>
-			<text>Pozastavili jste toto stahování. Pokud chcete znovu začít stahovat, můžete kliknout na</text><text format="b">Obnovit stahování</text><text>' command.</text>
+			<text>You have paused this download. If you want it to resume downloading, you
+			can click the '</text><text format="b">Obnovit stahování</text><text>' command.</text>
 		</document>
 		<document name="DownloadHelp.DiskFull">
 			<text format="b">Disk je plný</text>
 			<newline gap="8"/>
-			<text>Shareaza automaticky pozastavila toto stahování, protože pevný disk je
-		už nešjspíš plný, nebo má stahovaný soubor problémy se zápisem. Pokud si přejete
-		pokračovat ve stahování, prosím uvolněte nějaký prostor na vašem pevném disku a zkontrolujte,
-		zda je neúplný soubor ve složce přístupný, teprve potom začněte znovu
-		stahovat.</text>
+			<text>Shareaza has paused this download automatically because the hard disk
+			appears to be full, or the download file cannot be written to. If you wish
+			to continue downloading, please free some space on your hard disk and/or check
+			to make sure the incomplete file folder is accessible, and then resume the
+			download.</text>
 		</document>
 		<document name="DownloadHelp.Verifying">
 			<text format="b">Toto stahování bylo ověřeno</text>
 			<newline gap="8"/>
-			<text>Toto stahování je dokončeno, a je nyní Shareazou kontrolováno aby se ubezpečila
-		že je stažený soubor stejný jako původní soubor. Pokud jsou nalezeny poškozené části,
-		Shareaza je automaticky opraví.</text>
+			<text>This download has finished, and Shareaza is now checking it to ensure
+			that it is exactly the same as the original file. If any damaged parts are
+			found, Shareaza will repair them automatically.</text>
 		</document>
 		<document name="DownloadHelp.Downloading">
 			<text format="b">Toto stahování je aktivní!</text>
 			<newline gap="8"/>
-			<text>Toto stahování právě probíhá. Jestliže se stahuje příliš pomalu,
-		můžete zkusit vyhledat v síti více zdrojů viz příkaz</text><text format="b">Najít více zdrojů.</text><text>Jestli se rychlost nezlepší,
-		může to být způsobeno omezení rychlosti odesílání uživatele od kterého stahujete.
-		Rychlost stahování obvykle narůstá časem.</text>
+			<text>This download is currently in progress. If it is downloading too slowly,
+			you could try searching the network for more sources with the '</text><text format="b">Najít více zdrojů.</text><text>' command. If the speed does not 
+			improve it may be due to limited upload speeds of the users you are downloading 
+			from. Download speed usually increases over time.</text>
 		</document>
 		<document name="DownloadHelp.Pending">
 			<text format="b">Toto stahování zatím čeká</text>
 			<newline gap="8"/>
-			<text>Toto stahování čeká až někdo začne soubor posílat. Shareaza může
-		začít stahovat ihned, ale pravděpodobně čeká ve frontě u zdrojových uživatelů.
-		Stahování může začít jakmile se uvolní místo. Můžete se podívat na jednotlivé
-		zdroje stahování a zjistit na jaké pozici ve frontě čekáte. Pokud sami
-		sdílite nějaké soubory, může to zlepšit vaši šanci na rychlý
-		začátek stahování.</text>
+			<text>This download is waiting for someone to start uploading.
+			Shareaza is ready to start downloading this file, but no-one is sending it at
+			the moment. You are probably waiting in other user's queues, and the download
+			may start transferring at any time. You can examine the individual sources to 
+			see each queue you are waiting in. If you are sharing files yourself, it may
+			improve the chances of a download transfer starting quickly.</text>
 		</document>
 		<document name="DownloadHelp.Queued">
 			<text format="b">Toto stahování čeká ve frontě</text>
 			<newline gap="8"/>
-			<text>Toto stahování čeká na dokončení nějakého jiného právě stahovaného souboru .
-		Vaše nastavení pro stahování omezí počet stahovaných souborů které mohou být aktivní
-		v daném čase, zajistí aby každé stahování obdrželo dostupnou šířku pásma. Můžete změnit
-		toto nastavení přes Nástroje, Nastavení Shareazy.
-		Jinak, můžete pokračovat v tomto stahování příkazem ručně.</text>
+			<text>This download is waiting for some of your other downloads to complete.
+			Your download settings limit the number of downloads which may be active at
+			any given time, to ensure that each download gets a good share of the available
+			bandwidth. You can change these settings via Tools, Shareaza Settings.
+			Alternatively, you may manually start this download with the resume command.</text>
 		</document>
 		<document name="DownloadHelp.Searching">
 			<text format="b">Toto stahování vyhledává zdroje</text>
 			<newline gap="8"/>
-			<text>Pro toto stahování nebyly nalezeny žádné známé zdroje, proto Shareaza prohledává
-		všechny připojené sítě P2P pro nové zdroje. Jakmile budou nalezeny,
-		stahování se automaticky spustí. Shareaza automaticky pátrá po zdrojích,
-		ale můžete urychlit postup použitím příkazu</text>
+			<text>There are no known sources for this download, so Shareaza is searching
+			all connected P2P networks for new sources. Once sources are found, the
+			download will start automatically. Shareaza searches for sources automatically,
+			however you can speed up the process using the</text>
 			<text format="b">Najít více zdrojů.</text><text>Bohužel v mnoha případech nemusí být na lince žádní uživatelé zrovna
 		pro soubor který hledáte. Potom zbývá jen čekat na někoho
 		kdo se připojí, nebo stahování zrušit a hledat podobný soubor který
@@ -2164,23 +2165,23 @@
 		<document name="DownloadHelp.Creating">
 			<text format="b">Tento stahování se připravuje</text>
 			<newline gap="8"/>
-			<text>Shareaza přerozdělí soubor ve kterém uloží toto stahování,
-		ušetříte tím později čas.</text>
+			<text>Shareaza is pre-allocating a file in which to store this download, to
+			save time later.</text>
 		</document>
 		<document name="DownloadHelp.Tracker">
 			<text format="b">BitTorrent Tracker Down</text>
 			<newline gap="8"/>
-			<text>Trasováním serveru BitTorrent pro toto stahování se zdá, že úkol byl
-		dokončen nebo také mohl selhat. Shareaza se nemůže připojit a přijmout
-		seznam stahování.</text>
+			<text>The BitTorrent tracker server for this download appears to be
+			down or malfunctioning. Shareaza is unable to contact it to receive
+			a list of peers.</text>
 		</document>
 		<!-- Upload help documents -->
 		<document name="UploadHelp">
 			<text format="b">Oblast odesílání</text>
 			<newline gap="8"/>
-			<text>Toto jsou fronty kde se zobrazují odesílání. Můžete rozbalit každou frontu
-		malýnm + nalevo, a filtrovat co bude zobrazeno tlačítkem vpravo
-		v liště nástrojů.</text>
+			<text>This is where queues and uploads are displayed. You can expand each queue
+			with the small + on the left, and filter what is displayed with the button on the
+			right of the window's toolbar.</text>
 		</document>
 		<!-- General help documents -->
 		<document name="GeneralHelp.DiskSpace">
@@ -2188,47 +2189,47 @@
 			<newline gap="8"/>
 			<text>Na disku je málo místa.</text>
 			<newline gap="8"/>
-			<text>Měli by jste se vždy pokusit udržet rozumnou volnou velikost místa na disku. Programy
-		se mohou stát nestabilní pokud jsou disky příliš zaplněné, a dočasné soubory mohou být ztraceny.
-		Měli by jste spustit úklid disku, smazat nepotřebné soubory, nebo odinstalovat nepotřebné programy.</text>
+			<text>You should always attempt to keep a reasonable amount of disk space free. Programs 
+			can become unstable if the drives become full, and temporary files may be lost. You should 
+			run a disk clean-up, delete unwanted files, or uninstall software you no longer need.</text>
 		</document>
 		<document name="GeneralHelp.DiskWriteFail">
 			<text format="b">Do požadovaného adresáře nelze zapisovat</text>
 			<newline gap="8"/>
 			<text>Na disk nebo do adresáře Shareaza není možno zapisovat.</text>
 			<newline gap="8"/>
-			<text>Síťový disk byl možná odpojen, nebo nemáte povolení zapisovat
-		do zvoleného adresáře. Prosím zkontrolujte adresáře a povolení, nebo změňte
-		umístění dočasných souborů.</text>
+			<text>A network drive may have been disconnected, or you may not have write permission 
+			to a selected directory. Please check directories and permissions, or change the
+			temporary files location.</text>
 		</document>
 		<document name="GeneralHelp.ConnectionFail">
 			<text format="b">Internetové spojení bylo přerušené</text>
 			<newline gap="8"/>
 			<text>Windows oznámily že není k dispozici žádné internetové spojení.</text>
 			<newline gap="8"/>
-			<text>Je pravděpodobné, že modem nebo router nefunguje, to znamená že Internet není
-		přístupný. Musíte se opět ručně připojit nebo resetujte vaše připojení.</text>
+			<text>It is likely that a modem or router has dropped, meaning the internet cannot
+			be accessed. You may need to manually re-connect or reset your connection.</text>
 			<newline gap="8"/>
 			<text>Shareaza zastavila spojení a pokusí se zabránit ztrátám všech načtených hostitelů.</text>
 		</document>
 		<document name="GeneralHelp.AdultFilter">
 			<text format="b">Aktivace filtrování obsahu pro dospělé</text>
 			<newline gap="8"/>
-			<text>Uvědomte si prosím, že (jako u každého automatizovaného filtru) nemusí být filtrování obsahu účinné
-		na 100%. Kontrola je navržena tak, aby jednoduše odfiltrovala většinu nežádoucích výsledků.
-		Nejedná se o 100% bezpečné blokování výsledků hledání.</text>
+			<text>Please note that (as with any automated filter) it may not be 100% effective at
+			screening content. It is designed simply to filter out excess unwanted results, rather than 
+			as a 100% safe block.</text>
 			<newline gap="8"/>
 			<text>Používání Internetu dětmi (včetně P2P sdílení souborů) by by mělo být vždy pod kontrolou rodičů.</text>
 		</document>
 		<document name="GeneralHelp.BadTorrentEncoding">
 			<text format="b">Zdá se, že tento torrent má chybný kód</text>
 			<newline gap="8"/>
-			<text>Windows oznámily chybu překladu při dekódování textu v tomto torrentu. Není vyloučeno, že
-		torrent je poškozen, nebo jen nesprávně zakódovaný. Torrent může dál
-		ještě řádně stahovat, i když pak mohou být nějaká jména souborů být nesprávná.</text>
+			<text>Windows has reported a translation fault while decoding text in this torrent. It is
+			possible that the torrent is corrupt, or just incorrectly encoded. The torrent may
+			still download properly, although some file names could be incorrect.</text>
 			<newline gap="8"/>
-			<text>Většina torrentů vytvořených programy by vám měla dovolit opravit tento torrent, takže
-		po opravě bude řádně pracovat ve všech aplikacích BitTorrent.</text>
+			<text>Most torrent creation programs should allow you to repair this torrent, which
+			will ensure it works properly in all BitTorrent applications.</text>
 			<newline gap="8"/>
 			<link target="raza:command:ID_HELP_TORRENT">Klikněte sem pro další pomoc</link>
 			<text>, nebo si stáhněte software pro opravení torrentu.</text>
@@ -2236,72 +2237,72 @@
 		<document name="GeneralHelp.DonkeyServerList">
 			<text format="b">Váš seznam serveů eDonkey je prázdný</text>
 			<newline gap="8"/>
-			<text>Servery nejsou ve vašem seznamu serverů eDonkey. Potřebujete stáhnout
-		aktualizovaný seznam serverů připojením k ED2K.</text>
+			<text>There are no servers in your eDonkey server list. You need to download an
+			up to date server list (met file) to connect to ED2K.</text>
 			<newline gap="8"/>
-			<text>Můžete si stáhnout seznam serverů ze stránky ed2k, nebo vyhledat
-		v okně služeb. ( Pro otevření okna služby vyhledávání stiskněte F9)</text>
+			<text>You can download a server list from the ed2k setting page, or the discovery
+			services window. (Press F9 to open the discovery services window)</text>
 		</document>
 		<document name="GeneralHelp.UploadWarning">
 			<text format="b">Omezení uploadů může zpomalit stahování souborů</text>
 			<newline gap="8"/>
-			<text>Některé připojené sítě Shareaza prosazují procenta, limitují tím uploady ke klientům
-		kteří nesdílejí, nebo prostě upřednosťují upload známým uživatelům kteří hodně sdílí.</text>
+			<text>Several networks Shareaza connects to enforce ratios, limit uploads to
+			clients that do not share, or simply preference uploading to known sharers.</text>
 			<newline/>
-			<text>Naštěstí, širokopásmové připojení DSL jsou jako dvě široké hlavní silnice: máte
-		přidělené samostatné přenosy pro odesílání a stahování. Pokud je váš klient vhodně nastavený,
-		měl by být schopen poskytovat upload při dobré kapacitě stahování.</text>
+			<text>Fortunately, broadband DSL connections are like a two-lane highway: you have
+			separate allocations for upload and download. If your client is properly configured, 
+			you should be able to upload at a good rate while retaining full download capacity.</text>
 			<newline gap="8"/>
-			<text>Standardně by váš limit odesílání měl být nastavený na asi 85% z dostupné šířka pásma,
-		zatímco vaše stahování je bez omezení. Toto nastavení by vám mělo umožnit nejrychlejší
-		možné stahování souborů.</text>
+			<text>By default, your upload limit is set to about 85% of available upstream bandwidth,
+			while downloads are unlimited. That configuration should give you the fastest possible 
+			downloads that are available.</text>
 		</document>
 		<!-- Search help documents -->
 		<document name="SearchHelp.BadSearch1">
 			<text format="b">Prosím zadejte výraz pro hledání znovu a upřesněte jej</text>
 			<newline gap="8"/>
-			<text>Zadané hledání je špatně formulované a mohlo by dělat problémy.
-		Pokud je to možné, zadané hledání by by mělo zahrnout několik výrazů které by měly
-		blíže určit co vlastně hledáte (typ souboru). Kromě toho, hledání nesmí být omezené na čísla nebo jen záporné
-		podmínky a měli by jste se také vyhnout moc všeobecných výrazů.</text>
+			<text>This search is poorly formatted, and may not function correctly. 
+			Searches should include several terms where possible, and should specify a schema 
+			(file type). Furthermore, searches must not be limited to numbers or negative
+			terms only, and you should avoid overly general queries.</text>
 			<newline gap="8"/>
-			<text>Většina klientů na síti bude ignorovat hledání například všech souborů MP3,
-		protože hledání není upřesněno a nalezlo by se příliš mnoho výsledků.</text>
+			<text>Most clients on the network will ignore a search for all MP3 files, for example, 
+			because it is not specific enough, and would generate too many results.</text>
 		</document>
 		<document name="SearchHelp.BadSearch2">
 			<text format="b">Prosím zadejte výraz pro hledání znovu a upřesněte jej</text>
 			<newline gap="8"/>
-			<text>Toto hledání neobsahuje dost podmínek aby fungovalo pořádně. Aby mohlo začít,
-		musí mít všechna hledání minimální počet platných abecedních znaků.</text>
+			<text>This search does not contain enough terms to function properly. All searches need
+			a minimum number of valid, alphabetic characters to be able to start.</text>
 			<newline gap="8"/>
-			<text>Běžně zadané soubory (i čísla) lze vyhledávat, musíte proto zadat
-		takové podmínky také umožní hledání. Interpunkce a náhradní znaky nejsou podporované
-		při hledání, jen text který zadáte.</text>
+			<text>While common file extensions (and numbers) can be searched for, you must enter
+			other terms as well when creating the search. Punctuation and wildcards are not used 
+			in searches, just the text you enter.</text>
 		</document>
 		<document name="SearchHelp.BadSearch3">
 			<text format="b">Prosím zadejte výraz pro hledání znovu a upřesněte jej</text>
 			<newline gap="8"/>
-			<text>Zdá se že toto hledání obsahuje jen samotnou příponu souboru, nebo se nevyhledávají
-		slova.</text>
+			<text>This search seems to contain only common file extensions, or no searchable
+			words.</text>
 			<newline gap="8"/>
-			<text>Jestliže máte problém při vytváření hledání, mějte na paměti že to je docela podobné jako
-		 hledání na Webu. Přesné termíny nebo fráze jsou nejlepší - Přesný název, tituly a
-		klíčová slova.</text>
+			<text>If you are having trouble creating searches, keep in mind that it's quite similar
+			to a web search. Specific terms or phrases are best- Unique names, titles and
+			keywords.</text>
 			<newline gap="8"/>
-			<text>Všeobecná slova nemohou být vyhledávaná moc efektivně, to může mít za následek málo
-		vyhledaných výsledků, stejně jako velká šířka pásma použitá během hledání.</text>
+			<text>General terms cannot be searched for efficiently and may result in poor
+			search performance, as well as high bandwidth use during searches.</text>
 			<newline gap="8"/>
 			<text>Další pomoc je dostupná na webové stránce Shareazy.</text>
 		</document>
 		<document name="SearchHelp.AdultSearch">
 			<text format="b">Toto vyhledávání nemůže být spuštěno</text>
 			<newline gap="8"/>
-			<text>Takto zadané hledání by pravděpodobně nalezlo velké množství výsledků s erotickým
-		obsahem, toto bylo vypnuto v nastavení. Musíte jinak zadat hledání,
-		nebo musíte vyřadit filtr pro dospělé.</text>
+			<text>The specified search would probably return a large number of results with adult 
+			content, and this has been turned off in the settings. You should either re-phrase the 
+			search, or disable the filter.</text>
 			<newline gap="8"/>
-			<text>Pro vyřazení filtru, jděte do menu: Nástroje &gt; Nastavení Shareazy &gt; U hledání filtrovat
-		obsah (porno).</text>
+			<text>To disable the filter, go into Tools &gt; Settings &gt; General and uncheck the
+			adult content filter.</text>
 		</document>
 		<!-- Share help documents -->
 		<document name="ShareHelp.AlreadyShared">
@@ -2314,25 +2315,26 @@
 		<document name="ShareHelp.BadShare">
 			<text format="b">Tato složka nebude sdílená</text>
 			<newline gap="8"/>
-			<text>Tato složka je (nebo obsahuje) systémové adresáře. Sdílení této složky není
-		doporučené, většinu souborů nemusí další lidé vidět.</text>
+			<text>This folder is (or contains) a system folder. Sharing this folder is not
+			recommended, since most of the files in it are of no use to other people.</text>
 			<newline gap="8"/>
-			<text>Adrešáře jako jsou Windows, Program Files a podobné obvykle neobsahují
-		soubory vhodné pro sdílení. Do těchto adresářů byste</text><text format="i">neměli</text><text>ukládat zajímavé soubory ke sdílení. Vyberte prosím jiný adresář ke
-		sdílení.</text>
+			<text>Folders such as the Windows directory, Program Files, and similar folders
+			do not usually contain files suitable for sharing. Any files of interest would be in
+			sub-folders located</text><text format="i">neměli</text><text>these folders.
+			Please share those instead.</text>
 			<newline gap="8"/>
-			<text>Také složku Shareazy 'Incomplete'(nedokončené) by jste neměli sdílet přes
-		knihovnu, ta se pak pokouší načítat pracovní soubory, což může mít dopad na výkon.</text>
+			<text>The Shareaza 'incomplete' folder should also not be shared through the
+			library, since attempting to hash downloads in progress may impact on performance.</text>
 		</document>
 	</documents>
 	<!-- Localised Command Tip Text. The "message" is displayed in the status bar, while the "tip" is shown in a tooltip -->
 	<commandTips>
 		<tip id="AFX_IDS_APP_TITLE" message="Shareaza"/>
-		<tip id="AFX_IDS_IDLEMESSAGE" message="Připraven..."/>
+		<tip id="AFX_IDS_IDLEMESSAGE" message="Ready"/>
 		<tip id="AFX_IDS_MDICHILD" message="Activate this window"/>
-		<tip id="AFX_IDS_PREVIEW_CLOSE" message="Close print preview mode" tip="Náhled"/>
-		<tip id="AFX_IDS_SCCLOSE" message="Zvětšit aktivní okno na maximum."/>
-		<tip id="AFX_IDS_SCMAXIMIZE" message="Zvětšit aktivní okno na maximum."/>
+		<tip id="AFX_IDS_PREVIEW_CLOSE" message="Close print preview mode" tip="Cancel Preview"/>
+		<tip id="AFX_IDS_SCCLOSE" message="Close the active window and prompts to save the documents"/>
+		<tip id="AFX_IDS_SCMAXIMIZE" message="Enlarge the window to full size"/>
 		<tip id="AFX_IDS_SCMINIMIZE" message="Reduce the window to an icon"/>
 		<tip id="AFX_IDS_SCMOVE" message="Change the window position"/>
 		<tip id="AFX_IDS_SCNEXTWINDOW" message="Switch to the next document window"/>
@@ -2362,7 +2364,7 @@
 		<tip id="ID_CHILD_RESTORE" message="Otevřít označené okno."/>
 		<tip id="ID_DISCOVERY_ADD" message="Přidat novou službu vyhledávání..."/>
 		<tip id="ID_DISCOVERY_ADVERTISE" message="Prohlásit označenou službu GWebCache jako náhodně danou GWebCache."/>
-		<tip id="ID_DISCOVERY_BLOCKED" message="Zobrazit služby GWebCache v okně Vyhledávání."/>
+		<tip id="ID_DISCOVERY_BLOCKED" message="Show blocked services in the Discovery window."/>
 		<tip id="ID_DISCOVERY_BROWSE" message="Prohlížet na Webu statistiky pro označenou službu GWebCache."/>
 		<tip id="ID_DISCOVERY_EDIT" message="Prohlížet vlastnosti pro vybranou službu vyhledávání."/>
 		<tip id="ID_DISCOVERY_GNUTELLA" message="Zobrazit zaváděcí služby v okně Vyhledávání."/>
@@ -2410,7 +2412,7 @@
 		<tip id="ID_DOWNLOADS_SHOW_SOURCES" message="Zobrazit zdroje které nejsou aktuálně používané."/>
 		<tip id="ID_DOWNLOADS_SOURCES" message="Pro označené stahování vyhledat více zdrojů."/>
 		<tip id="ID_DOWNLOADS_URL" message="Přidat zdroj URL k vybranému stahování..."/>
-		<tip id="ID_DOWNLOADS_VIEW_REVIEWS" message="Prohlížet hodnocení pro vybrané stahování"/>
+		<tip id="ID_DOWNLOADS_VIEW_REVIEWS" message="View reviews for the selected download."/>
 		<tip id="ID_HELP_ABOUT" message="Zobrazit okno o Shareaze..."/>
 		<tip id="ID_HELP_CODEC" message="Všechno o kodetkách a problémech videa."/>
 		<tip id="ID_HELP_FAQ" message="Zobrazit FAQ Shareaza."/>
@@ -2431,7 +2433,7 @@
 		<tip id="ID_HITMONITOR_CLEAR" message="Vymazat paměť monitorování."/>
 		<tip id="ID_HITMONITOR_PAUSE" message="Pozastavit monitorování."/>
 		<tip id="ID_HITMONITOR_SEARCH" message="Hledání sítě v určeném termínu."/>
-		<tip id="ID_HOSTCACHE_BT_CACHE" message="Ukázat odesílání BitTorrent."/>
+		<tip id="ID_HOSTCACHE_BT_CACHE" message="Show BitTorrent cached hosts."/>
 		<tip id="ID_HOSTCACHE_CONNECT" message="Připojit k označenému hostiteli."/>
 		<tip id="ID_HOSTCACHE_DC_CACHE" message="Show DC++ cached hubs."/>
 		<tip id="ID_HOSTCACHE_DISCONNECT" message="Odpojit označené okolní počítače."/>
@@ -2441,10 +2443,10 @@
 		<tip id="ID_HOSTCACHE_G2_CACHE" message="Ukázat cache hosta Gnutelly2."/>
 		<tip id="ID_HOSTCACHE_G2_HORIZON" message="Ukázat perspektivní uzle Gnutelly2."/>
 		<tip id="ID_HOSTCACHE_IMPORT" message="Importovat seznam ze známých hostitelů, podobných jako &quot;server.met&quot; soubor..."/>
-		<tip id="ID_HOSTCACHE_KAD_CACHE" message="Ukázat cache hosta Gnutelly1."/>
+		<tip id="ID_HOSTCACHE_KAD_CACHE" message="Show Kademlia cached hosts."/>
 		<tip id="ID_HOSTCACHE_PRIORITY" message="Pokuste se nejprve připojit k toto serveru než zkusíte další servery."/>
 		<tip id="ID_HOSTCACHE_REMOVE" message="Odstranit označené hosty z cache hostů."/>
-		<tip id="ID_IMPORT_DOWNLOADS" message="_Importovat soubory z eMule..."/>
+		<tip id="ID_IMPORT_DOWNLOADS" message="Import eMule partial downloads..."/>
 		<tip id="ID_LIBRARY_ADD" message="Přidat novou složku do vaší knihovny..."/>
 		<tip id="ID_LIBRARY_ALBUM_DELETE" message="Vymazat označené album ve složce."/>
 		<tip id="ID_LIBRARY_ALBUM_OPEN" message="Otevřít označené album ve složce."/>
@@ -2474,7 +2476,7 @@
 		<tip id="ID_LIBRARY_REBUILD" message="Předělat popisky a rozdělit je pro vybrané složky nebo soubory."/>
 		<tip id="ID_LIBRARY_REBUILD_ANSI" message="Upravit popisky zhotovené v jiném jazyce."/>
 		<tip id="ID_LIBRARY_REFRESH" message="Obnovit zobrazení knihoven."/>
-		<tip id="ID_LIBRARY_REFRESH_METADATA" message="_Refresh Metadata"/>
+		<tip id="ID_LIBRARY_REFRESH_METADATA" message="Refresh file metadata"/>
 		<tip id="ID_LIBRARY_REMOVE" message="Odstranit označené sdílené složky."/>
 		<tip id="ID_LIBRARY_RENAME" message="Přejmenovat označený soubor na místě."/>
 		<tip id="ID_LIBRARY_SCAN" message="Zkontrolovat označené složky nebo změněné soubory."/>
@@ -2512,7 +2514,7 @@
 		<tip id="ID_MEDIA_PAUSE" message="Pozastavit přehrávání multimediálního souboru." tip="Pauza"/>
 		<tip id="ID_MEDIA_PLAY" message="Přehrát aktuální multimediální soubor." tip="Přehrát soubor"/>
 		<tip id="ID_MEDIA_PLAYLIST" message="Zobrazit nebo skrýt editor playlistu."/>
-		<tip id="ID_MEDIA_POSITION" message="Vyhledat pozici v přehrávání" tip="Seek"/>
+		<tip id="ID_MEDIA_POSITION" message="Seek to a position in the media file." tip="Seek"/>
 		<tip id="ID_MEDIA_PREVIOUS" message="Přeskočit zpět na předchozího soubor v aktuálním playlistu." tip="Předchozí soubor"/>
 		<tip id="ID_MEDIA_PROPERTIES" message="Zobrazit a upravit vlastnosti vybraných souborů."/>
 		<tip id="ID_MEDIA_RANDOM" message="Přepnout na náhodný (míchat) režim v aktuálním playlistu."/>
@@ -2527,15 +2529,15 @@
 		<tip id="ID_MEDIA_SIZE_ONE" message="Ukázat video v jeho původní (originální) velikosti."/>
 		<tip id="ID_MEDIA_SIZE_THREE" message="Ukázat video v jeho trojnásobné velikosti."/>
 		<tip id="ID_MEDIA_SIZE_TWO" message="Ukázat video v jeho dvojnásobné velikosti."/>
-		<tip id="ID_MEDIA_SPEED" message="Nastavit rychlost přehrávání" tip="Rychlost"/>
+		<tip id="ID_MEDIA_SPEED" message="Adjust the speed of the media file." tip="Rychlost"/>
 		<tip id="ID_MEDIA_STATUS" message="Ukázat nebo skrýt stavový řádek multimédií."/>
 		<tip id="ID_MEDIA_STOP" message="Zastavit přehrávání souboru." tip="Stop"/>
 		<tip id="ID_MEDIA_VIS" message="Vyberte pro audio vzhled..."/>
-		<tip id="ID_MEDIA_VOLUME" message="Nastavit hlasitost" tip="Volume"/>
+		<tip id="ID_MEDIA_VOLUME" message="Adjust the audio volume." tip="Volume"/>
 		<tip id="ID_MEDIA_ZOOM" message="Nastavit velikost videa a poměr zobrazení."/>
 		<tip id="ID_MONITOR_CLOSE" message="Zavřít okno monitorování."/>
 		<tip id="ID_MUSICBRAINZ_ALBUMS" message="Look at all albums for this artist."/>
-		<tip id="ID_MUSICBRAINZ_MATCHES" message="Vyhledat další kopie označeného souboru."/>
+		<tip id="ID_MUSICBRAINZ_MATCHES" message="Search for albums matching the selected file."/>
 		<tip id="ID_NEIGHBOURS_CHAT" message="Otevřít a pokecat s vybraným uživatelem."/>
 		<tip id="ID_NEIGHBOURS_COPY" message="Kopírovat URI k zpřístupnění vybraného hosta."/>
 		<tip id="ID_NEIGHBOURS_DISCONNECT" message="Odpojit označené okolní počítače."/>
@@ -2556,14 +2558,14 @@
 		<tip id="ID_NETWORK_G1" message="Připojit k původní síti Gnutella."/>
 		<tip id="ID_NETWORK_G2" message="Připojit k síti Gnutelly2 (velmi doporučeno)."/>
 		<tip id="ID_NETWORK_SEARCH" message="Začít nové hledání v síti..."/>
-		<tip id="ID_NEXT_PANE" message="Switch to the next window pane" tip="Další v pořadí"/>
+		<tip id="ID_NEXT_PANE" message="Switch to the next window pane" tip="Next Pane"/>
 		<tip id="ID_OPEN_DOWNLOADS_FOLDER" message="Open my folder of completed Downloads"/>
-		<tip id="ID_PREV_PANE" message="Přeskočit zpět na předchozího soubor v aktuálním playlistu." tip="Předchozí soubor"/>
-		<tip id="ID_SCHEDULER_ACTIVATE" message="Vymazat označené odesílání ze seznamu."/>
+		<tip id="ID_PREV_PANE" message="Switch back to the previous window pane" tip="Previous Pane"/>
+		<tip id="ID_SCHEDULER_ACTIVATE" message="Activates selected task(s) from the list."/>
 		<tip id="ID_SCHEDULER_ADD" message="Adds a new task to scheduler list."/>
-		<tip id="ID_SCHEDULER_DEACTIVATE" message="Připojit k síti."/>
-		<tip id="ID_SCHEDULER_EDIT" message="Upravit označené pravidlo zabezpečení..."/>
-		<tip id="ID_SCHEDULER_REMOVE" message="Odstranit označené stahování ze seznamu."/>
+		<tip id="ID_SCHEDULER_DEACTIVATE" message="Deactivates selected tasks."/>
+		<tip id="ID_SCHEDULER_EDIT" message="Edit the selected task..."/>
+		<tip id="ID_SCHEDULER_REMOVE" message="Removes selected task(s) from the list."/>
 		<tip id="ID_SCHEDULER_REMOVE_ALL" message="Removes all scheduled tasks."/>
 		<tip id="ID_SEARCH_CHAT" message="Otevřít a pokecat s vybraným uživatelem."/>
 		<tip id="ID_SEARCH_CLEAR" message="Vymazat výsledky hledání."/>
@@ -2600,11 +2602,11 @@
 		<tip id="ID_SYSTEM_COPY" message="Copy selected line(s) of status log."/>
 		<tip id="ID_SYSTEM_TIMESTAMP" message="Zaznamenat časovou značku pro každou linku."/>
 		<tip id="ID_SYSTEM_VERBOSE" message="Zobrazit podrobný záznam aktivit záznamu."/>
-		<tip id="ID_SYSTEM_VERBOSE_DEBUG" message="Zobrazit popisek."/>
-		<tip id="ID_SYSTEM_VERBOSE_ERROR" message="Zobrazit popisek."/>
-		<tip id="ID_SYSTEM_VERBOSE_INFO" message="Zobrazit rastrovou čáru."/>
+		<tip id="ID_SYSTEM_VERBOSE_DEBUG" message="Display all."/>
+		<tip id="ID_SYSTEM_VERBOSE_ERROR" message="Display errors only."/>
+		<tip id="ID_SYSTEM_VERBOSE_INFO" message="Display infos and above."/>
 		<tip id="ID_SYSTEM_VERBOSE_NOTICE" message="Display notices and above."/>
-		<tip id="ID_SYSTEM_VERBOSE_WARNING" message="Zobrazit rastrovou čáru."/>
+		<tip id="ID_SYSTEM_VERBOSE_WARNING" message="Display warnings and above."/>
 		<tip id="ID_TAB_CONNECT" message="Připojit nebo odpojit sítě."/>
 		<tip id="ID_TAB_HOME" message="Zpět na úvodní stránku Shareazy"/>
 		<tip id="ID_TAB_IRC" message="Show the IRC Chat window."/>
@@ -2655,7 +2657,7 @@
 		<tip id="ID_VIEW_NEIGHBOURS" message="Ukázat se nebo skrýt okno sousedních počítačů."/>
 		<tip id="ID_VIEW_PACKETS" message="Ukázat se nebo skrýt okno výpisu PACKETU."/>
 		<tip id="ID_VIEW_RESULTS_MONITOR" message="Ukázat se nebo skrýt okno MONITORU."/>
-		<tip id="ID_VIEW_SCHEDULER" message="Ukázat se nebo skrýt okno ZABEZPEČENÍ."/>
+		<tip id="ID_VIEW_SCHEDULER" message="Show or hide SCHEDULER window."/>
 		<tip id="ID_VIEW_SEARCH_MONITOR" message="Ukázat nebo skrýt okno MONITORU HLEDÁNÍ."/>
 		<tip id="ID_VIEW_SECURITY" message="Ukázat se nebo skrýt okno ZABEZPEČENÍ."/>
 		<tip id="ID_VIEW_SYSTEM" message="Ukázat nebo skrýt okno SYSTÉMU."/>
@@ -2817,7 +2819,7 @@
 		<string id="8239" value="Dokončeno"/>
 		<string id="8240" value="Shareaza přesunuje stahování:"/>
 		<string id="8241" value="Shareaza kontroluje stahování na chyby:"/>
-		<string id="8243" value="Oblast odesílání"/>
+		<string id="8243" value="Upload ratio:"/>
 		<string id="8244" value="Počet hodnocení:"/>
 		<string id="8288" value="Prozkoumávám vaši knihovnu Shareazy"/>
 		<string id="8289" value="Prozkoumávám "/>
@@ -2860,7 +2862,7 @@
 		<string id="8335" value="Zdroje pro tento soubor jsou za firewallem"/>
 		<string id="8336" value="Zdroje pro tento soubor mohou být nestabilní"/>
 		<string id="8337" value="Nedůvěryhodný"/>
-		<string id="8338" value="Vytvořit:"/>
+		<string id="8338" value="Free:"/>
 		<string id="13000" value="Checte smazat vybraná bezpoečnostní pravidla? Tato operace je nevratná."/>
 		<string id="13001" value="Soubory sdílené v Internetu"/>
 		<string id="16063" value="Mapování UPnP portu selhalo po 10 pokusech."/>
@@ -2880,7 +2882,7 @@
 		<string id="16077" value="Adresa %s je již blokovaná vašimi směrnicemi pro zabezpeční."/>
 		<string id="16078" value="Přidat pravidlo zabezpečení pro blokování %s."/>
 		<string id="16079" value="Opravdu se chcete odpojit?"/>
-		<string id="16080" value="Nejste připojeni do sítě."/>
+		<string id="16080" value="Would you like to always connect to this network?"/>
 		<string id="16081" value="Posílám dotaz na &quot;%s&quot; do %s."/>
 		<string id="16083" value="Přepnutí vašeho PC do režimu uzle může mít nepříznivé účinky na výkon. Pro síť P2P je většinou lepší umožnit Shareaze rozhodnout zda by měl být režim uzle používán.\n\nRežim uzle pro vás NEVYTVOŘÍ lepší vyhledání výsledků, nebo žádné další jiné výhody.\n\nOpravdu chcete udělat tyto změny navzdory uvedeným nevýhodám?"/>
 		<string id="16085" value="Gnutella2 je hlavní síť pro Shareazu. Vyřazení této podpory může hodně omezit počet a kvalitu vašich výsledků při vyhledávání. OPRAVDU to chcete udělat?"/>
@@ -3005,7 +3007,7 @@
 		<string id="16326" value="Hostitel odesílání %s požaduje &quot;%s&quot; s rozdílným SHA1."/>
 		<string id="16327" value="Odmítnuto odeslání &quot;%s&quot; do %s (%s), je zaneprázdněn a klient nepodporuje fronty."/>
 		<string id="16328" value="Nucené připojení k %s bylo zavedeno, čeká se na odezvu..."/>
-		<string id="16329" value="Nelze otevřít &quot;%s&quot; pro odeslání pro hosta %s, chyba na disku/souboru."/>
+		<string id="16329" value="Can't open &quot;%s&quot; to upload to host %s due to disk or file error."/>
 		<string id="16330" value="Obsah probíhajícího odesílání v rozsahu %I64i-%I64i pro &quot;%s&quot; do hosta %s (%s)."/>
 		<string id="16331" value="Dokončená část odesílání &quot;%s&quot; do %s."/>
 		<string id="16332" value="Příchozí spojení z %s je žádost HTTP o odeslání."/>
@@ -3056,7 +3058,7 @@
 		<string id="16377" value="Hlídač HTTP"/>
 		<string id="16378" value="Host &quot;%s&quot; sent a 416, without providing available ranges. Closing connection."/>
 		<string id="16379" value="Soubory v knihovně"/>
-		<string id="16380" value="eDonkey Guard"/>
+		<string id="16380" value="DC++ Guard"/>
 		<string id="16384" value="Opravdu chcete spustit soubor &quot;%s&quot; ?\n\nNěkteré soubory mohou poškodit váš počítač. Ujistěte se, že víte jaký soubor spouštíte."/>
 		<string id="16385" value="Chystáte se upravit popisky pro %i souborů, opravdu chcete pokračovat?"/>
 		<string id="16386" value="Upravuji popisky %i souborů."/>
@@ -3080,7 +3082,7 @@
 		<string id="16407" value="Chcete zabránit této sbírce v dalším upozorňování na jiné stahování?"/>
 		<string id="16408" value="Kopírovat &amp;URI"/>
 		<string id="16409" value="Export &amp;URIs..."/>
-		<string id="16410" value="Kompletní a neúplné složky by neměly být stejné"/>
+		<string id="16410" value="A subfolder of the selected folder &quot;%s&quot; is already part of your library.\nAdding this folder will cause re-hashing of some files.\n\nDo you want to continue ?"/>
 		<string id="16411" value="Nelze přesunout soubor %s. Soubor možná používá jiná aplikace..\n\Chcete zkusit tento soubor zkopírovat?"/>
 		<string id="16412" value="Soubor s popisem"/>
 		<string id="16413" value="New Group"/>
@@ -3112,8 +3114,8 @@
 		<string id="16525" value="Přesměrované pakety Gnutelly"/>
 		<string id="16526" value="Shozené pakety Gnutelly"/>
 		<string id="16527" value="Ztracené pakety Gnutelly"/>
-		<string id="16528" value="Místní dotazy Gnutelly"/>
-		<string id="16529" value="Místní dotazy Gnutelly"/>
+		<string id="16528" value="Gnutella Incoming Queries"/>
+		<string id="16529" value="Gnutella Processed Queries"/>
 		<string id="16532" value="Celková šířka pásma TCP pro příjem"/>
 		<string id="16533" value="Celková šířka pásma TCP pro přenos"/>
 		<string id="16534" value="Celková šířka pásma UDP pro příjem"/>
@@ -3173,7 +3175,7 @@
 		<string id="16941" value="Končím spojení a prohlížení uživatele %s pro nedostek provozu."/>
 		<string id="16942" value="Ukončuji připojení prohlížení uživatele %s."/>
 		<string id="16943" value="Prohlížím %s"/>
-		<string id="16944" value="Nalezeno %i sdílených souborů v knihovně."/>
+		<string id="16944" value="Found %i shared files in %s's library."/>
 		<string id="16991" value="Shareaza Media Player"/>
 		<string id="16992" value="Shareaza nemůže použít plugin pro MediaServices. Prosím nainstalujte znovu Shareazu, a zkontrolujte že máte také nainstalované potřebné kodetky a ovladače."/>
 		<string id="16994" value="Nelze načíst multimediální soubor &quot;%s&quot;"/>
@@ -3243,7 +3245,7 @@
 		<string id="17128" value="Server eDonkey"/>
 		<string id="17129" value="eDonkey (LowID)"/>
 		<string id="17130" value="eDonkey (HighID)"/>
-		<string id="17131" value="Připojení"/>
+		<string id="17131" value="DC++ Hub Connection"/>
 		<string id="17216" value="Zavádí se spojení se serverem eDonkey u %s..."/>
 		<string id="17217" value="Připojuji k serveru eDonkey server %s, komunikuji..."/>
 		<string id="17218" value="ED2K[%s] %s"/>
@@ -3284,7 +3286,7 @@
 		<string id="17477" value="Připojení BitTorrent se %s odpovědělo špatným souborem."/>
 		<string id="17478" value="Připojení BitTorrent se %s požaduje neznámý soubor."/>
 		<string id="17479" value="BitTorrent je připojen s %s ustanovený pro &quot;%s&quot;."/>
-		<string id="17480" value="Připojení BitTorrent se %s požaduje neznámý soubor."/>
+		<string id="17480" value="BitTorrent coupling with %s requested an inactive file."/>
 		<string id="17481" value="BitTorrent přijal klíčový soubor: &quot;%s&quot;"/>
 		<string id="17482" value="Nelze analyzovat soubor BitTorrent &quot;%s&quot;."/>
 		<string id="17483" value="Chyba BitTorrent trackeru pro &quot;%s&quot; : &quot;%s&quot;."/>
@@ -3298,13 +3300,13 @@
 		<string id="17491" value="Torrent &quot;%s&quot; je již na vašem seznamu stahování, a nemůže být zadán."/>
 		<string id="17492" value="Chyba načtení torrent souboru &quot;%s&quot;. Toto nemůže být platný torrent."/>
 		<string id="17493" value="Nelze vytvořit sdílení BitTorrent souboru &quot;%s&quot;."/>
-		<string id="17494" value="Tento torrent obsahuje soubor &quot;%s&quot;, ale Shareaza nemůže tento soubor najít ve vaší knihovně. Pokud možno, přesuňte soubor do stejné složky jako torrent a zkuste to znovu."/>
+		<string id="17494" value="This torrent includes the file &quot;%s&quot;, but Shareaza cannot find this file in your library. If possible, move the file to a shared folder and try again."/>
 		<string id="17495" value="Tento torrent obsahuje soubor &quot;%s&quot; který má být %s, ale vaše verze souboru je %s."/>
 		<string id="17496" value="Vyskytla se chyba během kopírování &quot;%s&quot; do sdíleného souboru BitTorrent."/>
 		<string id="17497" value="Vyskytla se neznámá chyba během pokusu o sdílení &quot;%s&quot;."/>
 		<string id="17498" value="Byla objevena chyba v souboru &quot;%s&quot;."/>
 		<string id="17501" value="Není možné komunikovat s trackerem"/>
-		<string id="17503" value="Tracker failed- Zkouším další tracker (%i z %i)"/>
+		<string id="17503" value="Trying next tracker (%i of %i)"/>
 		<string id="17505" value="BitTorrent spojení s %s bylo přerušeno."/>
 		<string id="17506" value="Počátek BitTorrent spojení byl %s byl přerušen."/>
 		<string id="17507" value="BitTorrent spojení s %s bylo přerušeno."/>
@@ -3326,16 +3328,16 @@
 		<string id="18509" value="Nemůžete označit tento souboru jako kompletní, protože ještě nemáte žádný prostředek k ověření částí souboru, jako je tiger-tree soubor, eDonkey hashset nebo BitTorrent hashset. Bez těchto ověřovacích informací není možné stažený soubor zkontrolovat."/>
 		<string id="18510" value="Checete označit tento soubor jako kompletní a ověřit jej? Celý soubor bude překontrolován a Shareaza přijme části které projdou ověřením a znovu stáhne části které neprojdou ověřením."/>
 		<string id="18511" value="Změnili jste velikost souboru. Opravdu chcete změnit velikost tohoto souboru?"/>
-		<string id="18512" value="Opravdu chcete zrušit/přerušit všechna stahování v této skupině?"/>
-		<string id="18513" value="Zadali jste eDonkey hash, který je nesprávný. Prosím překontrolujte to a zkuste znovu."/>
-		<string id="18514" value="Zadali jste hodnotu SHA1 hash která je odlišná od aktuální hodnoty. Opravdu teď chcete změnit SHA1 hash?"/>
+		<string id="18512" value="Are you sure you want to cancel this download but save incomplete file(s)?"/>
+		<string id="18513" value="You have typed an %s hash value, however it is invalid. Please check it and try again."/>
+		<string id="18514" value="You have provided an %s hash value which is different to the one currently associated with this download. Are you sure you want to change the %s hash now?"/>
 		<string id="18515" value="The selected download item currently has some Task attached, please wait and do it later."/>
 		<string id="19000" value="Vzdálený přístup je vypnutý."/>
 		<string id="19001" value="Musíte zadat uživatelské jméno a heslo."/>
 		<string id="19002" value="Nelze přijmout spojení, URL je nedostupné."/>
 		<string id="19103" value="Welcome to Shareaza Chat!"/>
 		<string id="19104" value="Please respect others while using this service"/>
-		<string id="19105" value="Pokec"/>
+		<string id="19105" value="Chat!"/>
 		<string id="20000" value="Žadné URN není dostupné"/>
 		<string id="20001" value="Zavřít"/>
 		<string id="20002" value="z"/>
@@ -3413,15 +3415,15 @@
 		<string id="20245" value="New Folder"/>
 		<string id="20246" value="Command-line options:\n\n-tray : Disable startup splash screen and send application to tray\n-nosplash : Disable startup splash screen\n-nowarn : Disable alpha (daily builds) version warning dialog\n-wait : Wait for other application instance exit\n\nInterface modes:\n\n-basic : Start application in Basic interface mode\n-tabbed : Start application in Tabbed interface mode\n-windowed : Start application in Windowed interface mode\n\nSystem options:\n\n-RegServer : Register internal components for everyone\n-UnRegServer : Un-register internal components for everyone\n-RegServerPerUser : Register internal components for current user\n-UnRegServerPerUser : Un-register internal components for current user"/>
 		<string id="20247" value="Failed to load metadata schemas. Please reinstall application."/>
-		<string id="20248" value="Nezadali jste žádné složky ke sdílení. Opravdu nechcete nic sdílet?"/>
+		<string id="20248" value="You selected %u files. Are you sure?"/>
 		<string id="20249" value="Off"/>
 		<string id="20250" value="Low"/>
-		<string id="20251" value="_Normální režim"/>
+		<string id="20251" value="Normal"/>
 		<string id="20252" value="High"/>
 		<string id="20253" value="Skin load error: %s. Element: %s"/>
 		<string id="20254" value="Loading skin: %s"/>
 		<string id="20255" value="Are you sure you want to remove all scheduled tasks? This cannot be undone."/>
-		<string id="20256" value="Hledat v Shareaze"/>
+		<string id="20256" value="System: Start Shareaza"/>
 		<string id="20257" value="Bandwidth: Full Speed"/>
 		<string id="20258" value="Bandwidth: Reduced Speed"/>
 		<string id="20259" value="Bandwidth: Stop"/>
@@ -3611,13 +3613,13 @@
 			<control/>
 		</dialog>
 		<dialog name="CDownloadsSettingsPage" cookie="BuEdBuBuStCoBuStEdmsStEdmsStEdmsBuStCoStCoBuBuEdBu" caption="Stahování">
-			<control caption="Ukládat _dokončené soubory do:"/>
+			<control caption="Save Completed Files Here"/>
 			<control/>
 			<control/>
 			<control caption="Scan every completed file with AntiVirus"/>
-			<control caption="Select preset:"/>
+			<control caption="Select AntiVirus:"/>
 			<control/>
-			<control caption="Počet _stahovaných souborů:"/>
+			<control caption="Number of Downloads"/>
 			<control caption="Maximálně souborů:"/>
 			<control/>
 			<control/>
@@ -3627,13 +3629,13 @@
 			<control caption="Přenosy na soubor:"/>
 			<control/>
 			<control/>
-			<control caption="_Limity:"/>
+			<control caption="Limits"/>
 			<control caption="Celková šířka pásma stahování:"/>
 			<control/>
 			<control caption="Maximální délka fronty:"/>
 			<control/>
 			<control caption="Stahovat a odesílat pouze ze sítí, které jsou připojené."/>
-			<control caption="Ukládat _neúplné soubory do:"/>
+			<control caption="Store Temporary Incomplete Files Here"/>
 			<control/>
 			<control/>
 		</dialog>
@@ -3691,24 +3693,24 @@
 		<dialog name="CGnutellaSettingsPage" cookie="BuBuCoBuBuCoEdmsEdmsEdmsEdmsEdmsEdmsBuBuBuBuStBuStStStBuStBuStStStBu" caption="Gnutella">
 			<control caption="Síť Gnutella2:"/>
 			<control caption="Vždy připojit ke Gnutella2"/>
-			<control caption="Připojit se teď ke Gnutella2"/>
+			<control caption="Optimal|Leaf|Hub"/>
 			<control caption="Režim:"/>
-			<control caption="Optimální|Leaf|Uzel"/>
-			<control caption="Připojení G_2:"/>
-			<control/>
-			<control/>
-			<control/>
-			<control/>
-			<control/>
-			<control/>
-			<control/>
-			<control/>
-			<control/>
-			<control/>
-			<control/>
-			<control/>
-			<control caption="Režim:"/>
+			<control caption="Connect to Gnutella1 today"/>
 			<control caption="Optimal|Leaf|Ultrapeer"/>
+			<control/>
+			<control/>
+			<control/>
+			<control/>
+			<control/>
+			<control/>
+			<control/>
+			<control/>
+			<control/>
+			<control/>
+			<control/>
+			<control/>
+			<control caption="Režim:"/>
+			<control caption="Leaf to Hub"/>
 			<control caption="Připojení G_1:"/>
 			<control caption="Síť Gnutella2:"/>
 			<control caption="Mode: "/>
@@ -3957,7 +3959,7 @@
 			<control/>
 			<control/>
 			<control caption="_Zadejte:"/>
-			<control caption="|Muž|Žena"/>
+			<control caption="Male|Female"/>
 			<control caption="Pohlaví:"/>
 			<control/>
 			<control caption="Věk:"/>
@@ -4033,8 +4035,8 @@
 		</dialog>
 		<dialog name="CLanguageDlg" cookie="" caption="Zvolte si jazyk">
 		</dialog>
-		<dialog name="CConnectToDlg" cookie="BuCoEdBuCoBuBuBu" caption="Připojit k|Prohlížet počítač">
-			<control caption="Otevřít nové připojení k uživateli nebo serveru:|Prohlížet tento počítač:"/>
+		<dialog name="CConnectToDlg" cookie="BuCoEdBuCoBuBuBu" caption="Connect To|Browse User|Chat to User">
+			<control caption="Initiate a new connection to host or server:|Browse this user:|Chat to this user:"/>
 			<control/>
 			<control/>
 			<control caption="_Protokol sítě:"/>
@@ -4101,7 +4103,7 @@
 			<control caption="_Adresa služby:"/>
 			<control/>
 			<control caption="Typ vyhledávací služby:"/>
-			<control caption="Gnutella Bootstrap|GWebCache|Server.met URL|Blocked"/>
+			<control caption="Gnutella Bootstrap|G1 GWebCache|G2 GWebCache|G1/G2 GWebCache|Server.met URL|Blocked"/>
 			<control caption="OK"/>
 			<control caption="Zrušit"/>
 		</dialog>
@@ -4291,7 +4293,7 @@
 			<control caption="Vybrali jste %lu soubory pro export Shareaza-opatřené URI odkazy. Prosím vyberte formát pro URI, a klikněte na Uložit:"/>
 			<control/>
 			<control caption="Vložte znak:"/>
-			<control caption="Tiger Root|SHA1|MD5|ED2K (CMD4)|Filename|Filename (URI)|Základní název souboru|Přípona souboru|Velikost souboru|Velikost souboru (bajtů)|Cesta ke složce|Místní hostitel|Místní port"/>
+			<control caption="Tiger Root|SHA1|MD5|ED2K (CMD4)|BitTorrent|Filename|Filename (URI)|Base Filename|File Extension|File Size|File Size (bytes)|Folder Path|Local Host|Local Port|Link|Link (URI)"/>
 			<control caption="Select preset:"/>
 			<control caption="Magnet|eDonkey|Magnet HTML|eDonkey HTML"/>
 			<control caption="_Kopírovat"/>
@@ -4461,13 +4463,13 @@
 			<control/>
 			<control/>
 			<control/>
-			<control caption="Uživatelem:"/>
+			<control caption=" As needed| When ratio over 100%| Only when requested| Never"/>
 			<control/>
 			<control caption="KOmtenáře:"/>
 			<control caption="Název:"/>
 			<control caption="Vytvořit:"/>
 			<control caption="Začít nové přenosy:"/>
-			<control caption=" Podle potřeby| Když je poměr větší něž 100%| Jen pokud požadováno| Nikdy"/>
+			<control caption="Comments:"/>
 			<control caption="Transfers:"/>
 			<control caption="Celkem odesláno:"/>
 			<control caption="Poznámky:"/>
@@ -4480,7 +4482,7 @@
 			<control/>
 			<control/>
 			<control/>
-			<control caption="Tracker:"/>
+			<control caption="Disabled|Single Tracker|Multi-tracker|Multi-tracker (locked)"/>
 			<control caption="O_bnovit"/>
 			<control/>
 			<control caption="Hotovo (Seeds):"/>
@@ -4556,7 +4558,7 @@
 			<control/>
 			<control caption="Gnutella1"/>
 			<control caption="Gnutella2"/>
-			<control caption="eDonkey"/>
+			<control caption="eDoonkey2K"/>
 			<control caption="DC++"/>
 			<control caption="BitTorrent"/>
 			<control caption="Select the event type:"/>
@@ -4706,8 +4708,8 @@
 		</list>
 		<list name="CSchedulerWnd">
 			<column from="Action" to="Akce"/>
-			<column from="Trigger" to="TigerTree"/>
-			<column from="Next Run" to="Další"/>
+			<column from="Trigger" to="Trigger"/>
+			<column from="Next Run" to="NextRun"/>
 			<column from="Active" to="Aktivní"/>
 			<column from="Status" to="Stav"/>
 			<column from="Description" to="Popis"/>

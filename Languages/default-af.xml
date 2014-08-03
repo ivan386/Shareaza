@@ -1201,14 +1201,14 @@
 			<item id="ID_LIBRARY_FOLDER_FILE_PROPERTIES" text="Lêer _Eienskappe"/>
 		</menu>
 		<menu name="CLibraryTree.Virtual.Basic">
-			<item id="ID_LIBRARY_FOLDER_ENQUEUE" text="Speel Album"/>
+			<item id="ID_LIBRARY_FOLDER_ENQUEUE" text="Play _Album"/>
 			<item id="ID_LIBRARY_FOLDER_DELETE" text="_Skrap"/>
 			<separator/>
 			<item id="ID_LIBRARY_FOLDER_FILE_PROPERTIES" text="Lêer _Eienskappe"/>
-			<item id="ID_LIBRARY_FOLDER_PROPERTIES" text="_Album Eienskappe"/>
+			<item id="ID_LIBRARY_FOLDER_PROPERTIES" text="Album _Properties"/>
 		</menu>
 		<menu name="CLibraryTree.Virtual">
-			<item id="ID_LIBRARY_FOLDER_ENQUEUE" text="Speel Album"/>
+			<item id="ID_LIBRARY_FOLDER_ENQUEUE" text="Play _Album"/>
 			<item id="ID_LIBRARY_FOLDER_DELETE" text="_Skrap"/>
 			<separator/>
 			<item id="ID_LIBRARY_REBUILD" text="_Herbou"/>
@@ -1217,7 +1217,7 @@
 			<item id="ID_LIBRARY_FOLDER_NEW" text="_Nuwe Gids..."/>
 			<separator/>
 			<item id="ID_LIBRARY_FOLDER_FILE_PROPERTIES" text="Lêer _Eienskappe"/>
-			<item id="ID_LIBRARY_FOLDER_PROPERTIES" text="_Album Eienskappe"/>
+			<item id="ID_LIBRARY_FOLDER_PROPERTIES" text="Album _Properties"/>
 		</menu>
 		<!-- LIBRARY VIEWS -->
 		<menu name="CLibraryTileView">
@@ -1296,7 +1296,7 @@
 		<menu name="CLibraryFileView.Virtual.Basic">
 			<item id="ID_LIBRARY_LAUNCH" text="_Open of Speel"/>
 			<item id="ID_LIBRARY_ENQUEUE" text="Voeg by _Medialys"/>
-			<item id="ID_LIBRARY_FOLDER_ENQUEUE" text="Speel Album"/>
+			<item id="ID_LIBRARY_FOLDER_ENQUEUE" text="Play _Album"/>
 			<separator/>
 			<item id="ID_LIBRARY_SHARED_FILE" text="_Gedeel"/>
 			<separator/>
@@ -1700,8 +1700,8 @@
 				<icon res="252" width="32" height="32"/><gap size="8"/>
 				<heading align="middle">W A A R S K U W I N G   -   A G T E R   'N   N E T S K A N S</heading>
 				<newline gap="8" indent="42"/>
-				<text colour="FF0000">Shareaza het raakgesien dat jy agter 'n NAT roeteerder of netskans is
-			en nie inkomende konneksies van die Internet kan ontvang nie.  </text>
+				<text colour="FF0000">Shareaza has detected that you are behind a NAT router or firewall,
+				and are unable to receive connections from the Internet.  </text>
 				<text colour="FF0000" format="b">Dit mag swak aflaaiprestasie veroorsaak.</text>
 				<newline gap="6"/>
 				<link target="raza:command:ID_HELP_ROUTER">Kliek hier om uit te vind hoe om jou roeteerder of netskans reg in te stel</link>
@@ -1712,7 +1712,7 @@
 				<heading align="middle">W A R N I N G   -   Y O U R   T C P   P O R T   I S   F I R E W A L L E D</heading>
 				<newline gap="8" indent="42"/>
 				<text colour="FF0000">Shareaza has detected that you are behind a NAT router or firewall,
-			and are unable to receive TCP connections from the Internet.  </text>
+				and are unable to receive TCP connections from the Internet.  </text>
 				<text colour="FF0000" format="b">This may cause poor download performance.</text>
 				<newline gap="6"/>
 				<link target="raza:command:ID_HELP_ROUTER">Kliek hier om uit te vind hoe om jou roeteerder of netskans reg in te stel</link>
@@ -1723,7 +1723,7 @@
 				<heading align="middle">W A R N I N G   -   Y O U R   U D P   P O R T   I S   F I R E W A L L E D</heading>
 				<newline gap="8" indent="42"/>
 				<text colour="FF0000">Shareaza has detected that you are behind a NAT router or firewall,
-			and are unable to receive UDP messages from the Internet.  </text>
+				and are unable to receive UDP messages from the Internet.  </text>
 				<text colour="FF0000" format="b">This may cause poor search performance.</text>
 				<newline gap="6"/>
 				<link target="raza:command:ID_HELP_ROUTER">Kliek hier om uit te vind hoe om jou roeteerder of netskans reg in te stel</link>
@@ -1839,7 +1839,7 @@
 			<text group="11" align="middle">Nie Gekonnekteer</text>
 			<text group="12" align="middle">Konnekteer nou...</text>
 			<text group="13" align="middle">Gekonnekteer</text>
-			<text group="14" align="middle" id="G1Hubs">eDonkey:</text>
+			<text group="14" align="middle" id="G1Hubs">%i ultrapeers</text>
 			<text group="15" align="middle" id="G1Leaves">%i kliënte</text>
 			<newline group="10" gap="2"/>
 			<icon group="30" command="ID_NETWORK_ED2K"/><gap group="30" size="4"/>
@@ -1912,8 +1912,8 @@
 			</styles>
 			<text format="b">Welkom by die Shareaza Verstellingsbeheerder</text>
 			<newline gap="16"/>
-			<text>Die Shareaza Verstellingsbeheerder laat gevorderde gebruikers toe om die werking van Shareaza
-			heeltemal te verander. Die verstellings in die</text>
+			<text>The Shareaza Settings Manager allows advanced users to completely customise how
+				Shareaza works. The settings in the</text>
 			<text format="b">Algemeen</text>
 			<text>afdeling hou verband met die gebruikerskoppelvlak.</text>
 			<newline gap="16" indent="16"/>
@@ -1949,8 +1949,8 @@
 			</styles>
 			<text format="b">Welkom by die Shareaza Verstellingsbeheerder</text>
 			<newline gap="16"/>
-			<text>Die Shareaza Verstellingsbeheerder laat gevorderde gebruikers toe om die werking van Shareaza
-			heeltemal te verander. Die verstellings in die</text>
+			<text>The Shareaza Settings Manager allows advanced users to completely customise 
+				how Shareaza works. The settings in the</text>
 			<text format="b">Internet</text>
 			<text>afdeling beheer hoe Shareaza met ander nodusse binne verspreide persoon-tot-persoon	netwerke kommunikeer.</text>
 			<newline gap="16" indent="16"/>
@@ -2069,11 +2069,11 @@
 		<document name="DownloadHelp.Select">
 			<text format="b">Aflaaie Area</text>
 			<newline gap="8"/>
-			<text>Lêers wat tans besig is om af te laai word in hier vertoon. Jy kan individuele
-		bronne vertoon deur elke lêer uit te brei met die klein + aan die linkerkant.</text>
+			<text>This is where files currently being downloaded are displayed. You can view
+			individual sources by expanding each file with the small + on the left.</text>
 			<newline gap="8"/>
-			<text>Jy kan ook hierdie opdrag gebruik om hulp oor 'n spesifieke aflaai te verkry.
-		Selekteer net eenvoudig 'n aflaai en kies hierdie opdrag weer.</text>
+			<text>Drag'n'Drop downloads higher in the list for priority, or onto Download Group 
+			tabs for better organisation (in Power Mode).</text>
 			<newline gap="16"/>
 			<text>You can also use this command to get help information on a specific download.
 			Simply select a download and choose this Help command again.</text>
@@ -2087,97 +2087,98 @@
 		<document name="DownloadHelp.Completed">
 			<text format="b">Hierdie Aflaai het Voltooi</text>
 			<newline gap="8"/>
-			<text>Shareaza het die aflaai van hierdie lêer voltooi en het seker gemaak dat dit
-		100% korrek is. Die lêer is ook na jou aflaaie-gids verskuif.</text>
+			<text>Shareaza has finished downloading this file, and has verified that it
+			is 100% correct. It has also moved the file to your downloads folder.</text>
 		</document>
 		<document name="DownloadHelp.Moving">
 			<text format="b">Hierdie Aflaai is besig om te Skuif</text>
 			<newline gap="8"/>
-			<text>Shareaza het die aflaai van hierdie lêer voltooi en het seker gemaak dat dit
-		korrek is.  Dit is tans besig om geskuif en/of ontpak te word na jou aflaaie-gids.</text>
+			<text>Shareaza has finished downloading this file, and has verified that
+			it is correct. It is currently being moved and/or unpacked to your downloads folder.</text>
 		</document>
 		<document name="DownloadHelp.Paused">
 			<text format="b">Hierdie Aflaai is Gevries</text>
 			<newline gap="8"/>
-			<text>Jy het hierdie aflaai gevries.  Indien jy die aflaai weer wil hervat, kan jy die</text><text format="b">Hervat Aflaai</text><text>opdrag kliek.</text>
+			<text>You have paused this download. If you want it to resume downloading, you
+			can click the '</text><text format="b">Hervat Aflaai</text><text>opdrag kliek.</text>
 		</document>
 		<document name="DownloadHelp.DiskFull">
 			<text format="b">Die Skyf is Vol</text>
 			<newline gap="8"/>
-			<text>Shareaza het hierdie aflaai outomaties gevries, omdat die hardeskyf
-		vol is, of die aflaailêer nie na geskryf kan word nie.  As jy met die aflaai wil
-		voortgaan, maak asseblief van die skyfspasie skoon en/of maak seker dat
-		die 'incomplete'-gids toeganklik is, en hervat dan die aflaai.</text>
+			<text>Shareaza has paused this download automatically because the hard disk
+			appears to be full, or the download file cannot be written to. If you wish
+			to continue downloading, please free some space on your hard disk and/or check
+			to make sure the incomplete file folder is accessible, and then resume the
+			download.</text>
 		</document>
 		<document name="DownloadHelp.Verifying">
 			<text format="b">Hierdie Aflaai word Gekontroleer</text>
 			<newline gap="8"/>
-			<text>Hierdie aflaai is voltooi en Shareaza is nou besig om te kontroleer
-		dat dit presies dieselfde as die oorspronklike lêer is.  As enige beskadigde dele
-		gevind word, sal Shareaza hulle outomaties herstel.</text>
+			<text>This download has finished, and Shareaza is now checking it to ensure
+			that it is exactly the same as the original file. If any damaged parts are
+			found, Shareaza will repair them automatically.</text>
 		</document>
 		<document name="DownloadHelp.Downloading">
 			<text format="b">Hierdie Aflaai is Aktief!</text>
 			<newline gap="8"/>
-			<text>Hierdie aflaai is tans aktief.  As dit te stadig aflaai,
-		kan jy probeer om die netwerk te deursoek vir meer bronne met die</text><text format="b">Vind Meer Bronne</text><text>opdrag.  As die spoed nie
-		verbeter nie, mag dit wees as gevolg van beperkte oplaai-badwydte van die gebruikers
-		waarvan jy aflaai.  Aflaaispoed vermeerder gewoonlik met tyd.</text>
+			<text>This download is currently in progress. If it is downloading too slowly,
+			you could try searching the network for more sources with the '</text><text format="b">Vind Meer Bronne</text><text>' command. If the speed does not 
+			improve it may be due to limited upload speeds of the users you are downloading 
+			from. Download speed usually increases over time.</text>
 		</document>
 		<document name="DownloadHelp.Pending">
 			<text format="b">Hierdie Aflaai is Hangende</text>
 			<newline gap="8"/>
-			<text>Hierdie aflaai wag vir iemand om te begin oplaai.
-		Shareaza is gereed om hierdie lêer af te laai, maar niemand is tans besig om
-		dit te stuur nie. Jy is heel moontlik op ander gebruikers se waglyste, en die aflaai
-		mag dalk enige oomblik aktief raak. Jy kan die individuele bronne nagaan om
-		elke waglys te sien waarin jy wag. As jy self lêers deel, mag dit jou kanse
-		verbeter vir 'n aflaai om vinnig te begin.</text>
+			<text>This download is waiting for someone to start uploading.
+			Shareaza is ready to start downloading this file, but no-one is sending it at
+			the moment. You are probably waiting in other user's queues, and the download
+			may start transferring at any time. You can examine the individual sources to 
+			see each queue you are waiting in. If you are sharing files yourself, it may
+			improve the chances of a download transfer starting quickly.</text>
 		</document>
 		<document name="DownloadHelp.Queued">
 			<text format="b">Hierdie Aflaai is op 'n Waglys</text>
 			<newline gap="8"/>
-			<text>Hierdie aflaai wag vir sommige van jou ander aflaaie om klaar te maak.
-		Jou aflaai instellings beperk die hoeveelheid aflaaie wat aktief mag wees op
-		enige stadium, om te verseker dat elke aflaai 'n redelike deel van die
-		beskikbare bandwydte kry. Jy kan hierdie instellings verander via Opsies,
-		Shareaza Verstellings. Alternatiewelik kan jy die aflaai met die hand begin
-		deur die hervat opdrag te gebruik.</text>
+			<text>This download is waiting for some of your other downloads to complete.
+			Your download settings limit the number of downloads which may be active at
+			any given time, to ensure that each download gets a good share of the available
+			bandwidth. You can change these settings via Tools, Shareaza Settings.
+			Alternatively, you may manually start this download with the resume command.</text>
 		</document>
 		<document name="DownloadHelp.Searching">
 			<text format="b">Hierdie Aflaai is besig om te Soek</text>
 			<newline gap="8"/>
-			<text>Daar is geen bekende bronne vir hierdie aflaai nie, so Shareaza is besig
-		om alle gekonnekteerde P2P netwerke te deursoek vir nuwe bronne.  Sodra bronne
-		gevind is, sal die aflaai outomaties begin. Alhoewel Shareaza outomaties vir bronne soek,
-		kan jy die proses versnel deur die</text>
+			<text>There are no known sources for this download, so Shareaza is searching
+			all connected P2P networks for new sources. Once sources are found, the
+			download will start automatically. Shareaza searches for sources automatically,
+			however you can speed up the process using the</text>
 			<text format="b">Vind Meer Bronne</text><text>opdrag te gebruik.</text>
 			<newline gap="8"/>
-			<text>Ongelukkig mag daar in baie gevalle geen gebruikers aanlyn wees
-		met die lêer wat jy soek nie. Die enigste opsies in so 'n geval is
-		om te wag dat iemand aanlyn kom, of om dit te kanselleer en te probeer om 'n
-		soortgelyke lêer af te laai wat meer vrylik beskikbaar is.</text>
+			<text>Unfortunately in many cases there may be no users online who have the
+			file you are looking for. The only course of action here is to wait for
+			someone to come online, or cancel it and try to find a similar file which is
+			more widely available.</text>
 		</document>
 		<document name="DownloadHelp.Creating">
 			<text format="b">Hierdie Aflaai is besig om te Skep</text>
 			<newline gap="8"/>
-			<text>Shareaza is besig om 'n lêer te skep waarin hierdie aflaai gestoor
-		gaan word, om tyd later te bespaar.</text>
+			<text>Shareaza is pre-allocating a file in which to store this download, to
+			save time later.</text>
 		</document>
 		<document name="DownloadHelp.Tracker">
 			<text format="b">BitTorrent Verwyser Van Lyn Af</text>
 			<newline gap="8"/>
-			<text>Die BitTorrent verwyser-bediener vir hierdie aflaai blyk van lyn af
-		of buite werking te wees.  Shareaza kan dit nie kontak om 'n lys van aflaai-kliënte
-		te verkry nie.</text>
+			<text>The BitTorrent tracker server for this download appears to be
+			down or malfunctioning. Shareaza is unable to contact it to receive
+			a list of peers.</text>
 		</document>
 		<!-- Upload help documents -->
 		<document name="UploadHelp">
 			<text format="b">Oplaaie Area</text>
 			<newline gap="8"/>
-			<text>Waglyste en oplaaie word in hierdie area vertoon. Jy kan elke waglys
-		uitbrei met die klein + aan die linkerkant, en filtreer wat vertoon word met die
-		knoppe aan die regterkant op die venster nutsbalk.</text>
+			<text>This is where queues and uploads are displayed. You can expand each queue
+			with the small + on the left, and filter what is displayed with the button on the
+			right of the window's toolbar.</text>
 		</document>
 		<!-- General help documents -->
 		<document name="GeneralHelp.DiskSpace">
@@ -2185,49 +2186,47 @@
 			<newline gap="8"/>
 			<text>Die hoeveelheid vrye skyfspasie op een of meer hardeskywe wat Shareaza gebruik is laag.</text>
 			<newline gap="8"/>
-			<text>Jy moet altyd probeer om 'n aanvaarbare hoeveelheid vrye skyfspasie te handhaaf.
-		Programme kan onstabiel raak as die skywe vol raak, en tydelike lêers mag dalk
-		verlore gaan. Jy kan 'n skyfskoonmaak-program hardloop, ongewenste lêers skrap,
-		of sagteware deïnstalleer wat jy nie meer nodig het nie.</text>
+			<text>You should always attempt to keep a reasonable amount of disk space free. Programs 
+			can become unstable if the drives become full, and temporary files may be lost. You should 
+			run a disk clean-up, delete unwanted files, or uninstall software you no longer need.</text>
 		</document>
 		<document name="GeneralHelp.DiskWriteFail">
 			<text format="b">'n Benodigde Gids is Nie Skryfbaar</text>
 			<newline gap="8"/>
 			<text>'n Skyf of gids wat Shareaza benodig kan nie na geskryf word nie.</text>
 			<newline gap="8"/>
-			<text>'n Netwerk skyf mag dalk gediskonnekteer wees, of jy mag dalk nie
-		skryf regte tot 'n geselekteerde gids hê nie. Kontroleer asseblief die gidse en
-		regte, of verander die tydelike lêers-gids.</text>
+			<text>A network drive may have been disconnected, or you may not have write permission 
+			to a selected directory. Please check directories and permissions, or change the
+			temporary files location.</text>
 		</document>
 		<document name="GeneralHelp.ConnectionFail">
 			<text format="b">Internet Konneksie is Verloor</text>
 			<newline gap="8"/>
 			<text>Windows rapporteer dat daar geen internet konneksie beskikbaar is nie.</text>
 			<newline gap="8"/>
-			<text>Dit is waarskynlik dat 'n modem of roeteerder gediskonnekteer het, en die
-		internet as gevolg daarvan nie bereik kan word nie. Jy sal moontlik weer met die hand
-		moet konnekteer, of jou konneksie herstel.</text>
+			<text>It is likely that a modem or router has dropped, meaning the internet cannot
+			be accessed. You may need to manually re-connect or reset your connection.</text>
 			<newline gap="8"/>
 			<text>Shareaza het alle konneksies gestaak, sodat bekende gashere nie verlore gaan nie.</text>
 		</document>
 		<document name="GeneralHelp.AdultFilter">
 			<text format="b">Volwasse inhoud filter aangeskakel</text>
 			<newline gap="8"/>
-			<text>Neem asseblief kennis dat (soos met enige outomatiese filter), dit dalk nie 100%
-		effektief mag wees met die uitken van inhoud nie. Dit is ontwerp om die meerderheid
-		ongewenste resultate uit te filtreer, en nie as 'n 100% veilige blok nie.</text>
+			<text>Please note that (as with any automated filter) it may not be 100% effective at
+			screening content. It is designed simply to filter out excess unwanted results, rather than 
+			as a 100% safe block.</text>
 			<newline gap="8"/>
 			<text>Kinders se internet gebruik (insluitend P2P lêerdeling) moet altyd onder toesig plaasvind.</text>
 		</document>
 		<document name="GeneralHelp.BadTorrentEncoding">
 			<text format="b">Hierdie torrent blyk 'n enkoderings fout te hê</text>
 			<newline gap="8"/>
-			<text>Windows het 'n vertalingsfout gerapporteer met die dekodering van teks in hierdie
-		torrent. Dit is moontlik dat die torrent korrup is, of slegs verkeerdelik ge-enkodeer.
-		Die torrent mag steeds korrek aflaai, alhoewel sommige lêername dalk foutief kan wees.</text>
+			<text>Windows has reported a translation fault while decoding text in this torrent. It is
+			possible that the torrent is corrupt, or just incorrectly encoded. The torrent may
+			still download properly, although some file names could be incorrect.</text>
 			<newline gap="8"/>
-			<text>Meeste programme wat torrents skep sal jou toelaat om hierdie torrent te
-		herstel, wat sal verseker dat dit reg werk in alle BitTorrent programme.</text>
+			<text>Most torrent creation programs should allow you to repair this torrent, which
+			will ensure it works properly in all BitTorrent applications.</text>
 			<newline gap="8"/>
 			<link target="raza:command:ID_HELP_TORRENT">Kliek hier vir addisionele hulp</link>
 			<text>, of om sagteware af te laai om die torrent mee reg te maak.</text>
@@ -2235,74 +2234,72 @@
 		<document name="GeneralHelp.DonkeyServerList">
 			<text format="b">Jou eDonkey bedienerlys is leeg</text>
 			<newline gap="8"/>
-			<text>Daar is geen bedieners in jou eDonkey2000 bedienerlys nie. Jy sal 'n
-		nuwe bedienerlys (.met lêer) moet aflaai om aan ED2K te kan konnekteer.</text>
+			<text>There are no servers in your eDonkey server list. You need to download an
+			up to date server list (met file) to connect to ED2K.</text>
 			<newline gap="8"/>
-			<text>Jy kan 'n bedienerlys van die ed2k verstellings bladsy aflaai, of vanaf die
-	ontdekkings dienste venster. (Druk F9 om die ontdekkings dienste venster oop te maak)</text>
+			<text>You can download a server list from the ed2k setting page, or the discovery
+			services window. (Press F9 to open the discovery services window)</text>
 		</document>
 		<document name="GeneralHelp.UploadWarning">
 			<text format="b">Beperkde oplaaie mag aflaaie affekteer</text>
 			<newline gap="8"/>
-			<text>Verskeie netwerke waaraan Shareaza konnekteer pas verhoudings toe,
-		beperk oplaaie na kliënte wat nie deel nie, of gee eenvoudig oplaai prioriteit aan bekende delers.</text>
+			<text>Several networks Shareaza connects to enforce ratios, limit uploads to
+			clients that do not share, or simply preference uploading to known sharers.</text>
 			<newline/>
-			<text>Gelukkig is breëband DSL konneksies soos 'n twee-baan hoofweg: jy het
-		aparte hoeveelhede vir oplaai en aflaai. As jou program reg ingestel is,
-		behoort jy teen 'n goeie tempo te kan oplaai en nogsteeds volle aflaai kapasiteit behou.</text>
+			<text>Fortunately, broadband DSL connections are like a two-lane highway: you have
+			separate allocations for upload and download. If your client is properly configured, 
+			you should be able to upload at a good rate while retaining full download capacity.</text>
 			<newline gap="8"/>
-			<text>Normaalweg is jou oplaai limiet gestel na omtrent 85% van die beskikbare oplaai
-		bandwydte, terwyl aflaaie onbeperk is. Hierdie instelling behoort jou die vinnigste moontlike
-		aflaaispoed te verseker.</text>
+			<text>By default, your upload limit is set to about 85% of available upstream bandwidth,
+			while downloads are unlimited. That configuration should give you the fastest possible 
+			downloads that are available.</text>
 		</document>
 		<!-- Search help documents -->
 		<document name="SearchHelp.BadSearch1">
 			<text format="b">Herbewoord asseblief die soektog</text>
 			<newline gap="8"/>
-			<text>Hierdie soektog is swak bewoord, en mag dalk nie korrek funksioneer nie.
-		Soektogte moet 'n paar terme insluit waar moontlik, asook 'n skema (lêertipe).
-		Verder moet soektogte nie slegs syfers of negatiewe terme bevat nie, en
-		jy moet oorveralgemeende soekterme vermy.</text>
+			<text>This search is poorly formatted, and may not function correctly. 
+			Searches should include several terms where possible, and should specify a schema 
+			(file type). Furthermore, searches must not be limited to numbers or negative
+			terms only, and you should avoid overly general queries.</text>
 			<newline gap="8"/>
-			<text>Meeste kliënte op die netwerk sal byvoorbeeld 'n soektog vir
-		alle MP3 lêers ignoreer, omdat dit nie spesifiek genoeg is nie
-		en te veel resultate sal lewer.</text>
+			<text>Most clients on the network will ignore a search for all MP3 files, for example, 
+			because it is not specific enough, and would generate too many results.</text>
 		</document>
 		<document name="SearchHelp.BadSearch2">
 			<text format="b">Herbewoord asseblief die soektog</text>
 			<newline gap="8"/>
-			<text>Hierdie soektog sluit nie genoeg terme in om korrek te funksioneer nie.
-		Alle soektogte benodig 'n minimum aantal korrekte, alfabetiese karakters om
-		te kan begin.</text>
+			<text>This search does not contain enough terms to function properly. All searches need
+			a minimum number of valid, alphabetic characters to be able to start.</text>
 			<newline gap="8"/>
-			<text>Alhoewel algemene lêeruitbreidings (en nommers) voor gesoek kan word,
-		moet jy ander terme ook intik wanneer jy die soektog begin. Punktuasie en
-		wisselkaarte word nie in soektogte gebruik nie, slegs die teks wat jy intik.</text>
+			<text>While common file extensions (and numbers) can be searched for, you must enter
+			other terms as well when creating the search. Punctuation and wildcards are not used 
+			in searches, just the text you enter.</text>
 		</document>
 		<document name="SearchHelp.BadSearch3">
 			<text format="b">Herbewoord asseblief die soektog</text>
 			<newline gap="8"/>
-			<text>Hierdie soektog bevat slegs algemene lêeruitbreidings, of geen woorde
-		waarvoor gesoek kan word nie.</text>
+			<text>This search seems to contain only common file extensions, or no searchable
+			words.</text>
 			<newline gap="8"/>
-			<text>As jy sukkel om soektogte te begin, hou in gedagte dat dit baie soos 'n
-		web soektog is. Spesifieke terme of frases werk die beste - Unieke name, titels
-		en sleutelwoorde.</text>
+			<text>If you are having trouble creating searches, keep in mind that it's quite similar
+			to a web search. Specific terms or phrases are best- Unique names, titles and
+			keywords.</text>
 			<newline gap="8"/>
-			<text>Algemene terme kan nie effektief voor gesoek word nie en mag tot
-		slegte soek werkverrigting lei, asook hoë bandwydte gebruik tydens soektogte.</text>
+			<text>General terms cannot be searched for efficiently and may result in poor
+			search performance, as well as high bandwidth use during searches.</text>
 			<newline gap="8"/>
 			<text>Verdere hulp is beskikbaar op die Shareaza webblad.</text>
 		</document>
 		<document name="SearchHelp.AdultSearch">
 			<text format="b">Hierdie soektog kan nie begin word nie</text>
 			<newline gap="8"/>
-			<text>Die gespesifiseerde soektog sal heel moontlik 'n groot aantal resultate met
-		volwasse inhoud oplewer, en dit is afgeskakel in die opsies. Jy sal die soektog
-		moet herbewoord, of die volwasse filter afskakel.</text>
+			<text>The specified search would probably return a large number of results with adult 
+			content, and this has been turned off in the settings. You should either re-phrase the 
+			search, or disable the filter.</text>
 			<newline gap="8"/>
-			<text>Om die filter af te skakel, gaan na Opsies &gt; Verstellings &gt; Algemeen
-		en deselekteer die volwasse inhoudsfilter.</text>
+			<text>To disable the filter, go into Tools &gt; Settings &gt; General and uncheck the
+			adult content filter.</text>
 		</document>
 		<!-- Share help documents -->
 		<document name="ShareHelp.AlreadyShared">
@@ -2315,27 +2312,26 @@
 		<document name="ShareHelp.BadShare">
 			<text format="b">Hierdie gids moet nie gedeel word nie</text>
 			<newline gap="8"/>
-			<text>Hierdie gids is (of bevat) 'n sisteem-gids. Die deling van hierdie gids
-		word nie aanbeveel nie, aangesien meeste van die lêers wat dit bevat nie bruikbaar
-		is vir ander mense nie.</text>
+			<text>This folder is (or contains) a system folder. Sharing this folder is not
+			recommended, since most of the files in it are of no use to other people.</text>
 			<newline gap="8"/>
-			<text>Gidse soos die Windows-gids, Program Files, en soortgelyke gidse, bevat
-		normaalweg nie lêers wat gedeel behoort te word nie. Enige lêers van belang sal in
-		subgidse aangetref word,</text><text format="i">binne</text><text>hierdie
-		gidse. Deel hulle asseblief eerder.</text>
+			<text>Folders such as the Windows directory, Program Files, and similar folders
+			do not usually contain files suitable for sharing. Any files of interest would be in
+			sub-folders located</text><text format="i">binne</text><text>these folders.
+			Please share those instead.</text>
 			<newline gap="8"/>
-			<text>Die Shareaza 'incomplete'-gids moet ook nie gedeel word deur die
-		biblioteek nie, omdat die prosessering van aktiewe aflaaie werkverrigting nadelig mag beïnvloed.</text>
+			<text>The Shareaza 'incomplete' folder should also not be shared through the
+			library, since attempting to hash downloads in progress may impact on performance.</text>
 		</document>
 	</documents>
 	<!-- Localised Command Tip Text. The "message" is displayed in the status bar, while the "tip" is shown in a tooltip -->
 	<commandTips>
 		<tip id="AFX_IDS_APP_TITLE" message="Shareaza"/>
-		<tip id="AFX_IDS_IDLEMESSAGE" message="Reg..."/>
+		<tip id="AFX_IDS_IDLEMESSAGE" message="Ready"/>
 		<tip id="AFX_IDS_MDICHILD" message="Activate this window"/>
-		<tip id="AFX_IDS_PREVIEW_CLOSE" message="Close print preview mode" tip="Save Preview"/>
-		<tip id="AFX_IDS_SCCLOSE" message="Vergroot die aktiewe venster om die venster te vul."/>
-		<tip id="AFX_IDS_SCMAXIMIZE" message="Vergroot die aktiewe venster om die venster te vul."/>
+		<tip id="AFX_IDS_PREVIEW_CLOSE" message="Close print preview mode" tip="Cancel Preview"/>
+		<tip id="AFX_IDS_SCCLOSE" message="Close the active window and prompts to save the documents"/>
+		<tip id="AFX_IDS_SCMAXIMIZE" message="Enlarge the window to full size"/>
 		<tip id="AFX_IDS_SCMINIMIZE" message="Reduce the window to an icon"/>
 		<tip id="AFX_IDS_SCMOVE" message="Change the window position"/>
 		<tip id="AFX_IDS_SCNEXTWINDOW" message="Switch to the next document window"/>
@@ -2365,7 +2361,7 @@
 		<tip id="ID_CHILD_RESTORE" message="Open die geselekteerde venster."/>
 		<tip id="ID_DISCOVERY_ADD" message="Voeg 'n nuwe ontdekkingsdiens by..."/>
 		<tip id="ID_DISCOVERY_ADVERTISE" message="Adverteer die geselekteerde GWebCache diens aan 'n willekeurige bestaande GWebCache."/>
-		<tip id="ID_DISCOVERY_BLOCKED" message="Vertoon GWebCache dienste in die Ontdekkings-venster."/>
+		<tip id="ID_DISCOVERY_BLOCKED" message="Show blocked services in the Discovery window."/>
 		<tip id="ID_DISCOVERY_BROWSE" message="Blaai deur statistieke van die geselekteerde GWebCache diens op die Web."/>
 		<tip id="ID_DISCOVERY_EDIT" message="Vertoon die eienskappe van die geselekteerde ontdekkingsdiens."/>
 		<tip id="ID_DISCOVERY_GNUTELLA" message="Vertoon bootstrap dienste in die Ontdekkings-venster."/>
@@ -2413,7 +2409,7 @@
 		<tip id="ID_DOWNLOADS_SHOW_SOURCES" message="Vertoon bronne wat nie tans gebruik word nie."/>
 		<tip id="ID_DOWNLOADS_SOURCES" message="Soek vir meer bronne vir die geselekteerde aflaai(e)."/>
 		<tip id="ID_DOWNLOADS_URL" message="Voeg 'n bron URL by die geselekteerde aflaai..."/>
-		<tip id="ID_DOWNLOADS_VIEW_REVIEWS" message="Vertoon resensies van die geselekteerde aflaai"/>
+		<tip id="ID_DOWNLOADS_VIEW_REVIEWS" message="View reviews for the selected download."/>
 		<tip id="ID_HELP_ABOUT" message="Vertoon inligting oor Shareaza..."/>
 		<tip id="ID_HELP_CODEC" message="Alles oor kodeks en video probleme."/>
 		<tip id="ID_HELP_FAQ" message="Besoek die Shareaza Algemene Vraelys."/>
@@ -2434,7 +2430,7 @@
 		<tip id="ID_HITMONITOR_CLEAR" message="Maak die trefmonitor buffer skoon."/>
 		<tip id="ID_HITMONITOR_PAUSE" message="Vries die trefmonitor."/>
 		<tip id="ID_HITMONITOR_SEARCH" message="Deursoek die netwerk vir die geselekteerde term."/>
-		<tip id="ID_HOSTCACHE_BT_CACHE" message="Vertoon BitTorrent oplaaie."/>
+		<tip id="ID_HOSTCACHE_BT_CACHE" message="Show BitTorrent cached hosts."/>
 		<tip id="ID_HOSTCACHE_CONNECT" message="Konnekteer aan die geselekteerde gashere."/>
 		<tip id="ID_HOSTCACHE_DC_CACHE" message="Show DC++ cached hubs."/>
 		<tip id="ID_HOSTCACHE_DISCONNECT" message="Diskonnekteer die geselekteerde gasheer konneksie(s)."/>
@@ -2444,10 +2440,10 @@
 		<tip id="ID_HOSTCACHE_G2_CACHE" message="Vertoon Gnutella2 gasheer kasgeheue."/>
 		<tip id="ID_HOSTCACHE_G2_HORIZON" message="Vertoon Gnutella2 horison hubs."/>
 		<tip id="ID_HOSTCACHE_IMPORT" message="Trek 'n lys van bekende bedieners in, soos 'n &quot;server.met&quot; lêer..."/>
-		<tip id="ID_HOSTCACHE_KAD_CACHE" message="Vertoon Gnutella1 gasheer kasgeheue."/>
+		<tip id="ID_HOSTCACHE_KAD_CACHE" message="Show Kademlia cached hosts."/>
 		<tip id="ID_HOSTCACHE_PRIORITY" message="Probeer aan hierdie bediener konnekteer voor ander bedieners."/>
 		<tip id="ID_HOSTCACHE_REMOVE" message="Verwyder die geselekteerde gashere van die gasheerlys."/>
-		<tip id="ID_IMPORT_DOWNLOADS" message="_Import eMule partial downloads..."/>
+		<tip id="ID_IMPORT_DOWNLOADS" message="Import eMule partial downloads..."/>
 		<tip id="ID_LIBRARY_ADD" message="Voeg 'n nuwe gids by jou biblioteek..."/>
 		<tip id="ID_LIBRARY_ALBUM_DELETE" message="Skrap die geselekteerde albumgids."/>
 		<tip id="ID_LIBRARY_ALBUM_OPEN" message="Open die geselekteerde albumgids."/>
@@ -2477,7 +2473,7 @@
 		<tip id="ID_LIBRARY_REBUILD" message="Herbou metadata en hashdata vir die geselekteerde gidse of lêers."/>
 		<tip id="ID_LIBRARY_REBUILD_ANSI" message="Herbou metadata met 'n ander taal."/>
 		<tip id="ID_LIBRARY_REFRESH" message="Verfris die biblioteek aansig."/>
-		<tip id="ID_LIBRARY_REFRESH_METADATA" message="_Refresh Metadata"/>
+		<tip id="ID_LIBRARY_REFRESH_METADATA" message="Refresh file metadata"/>
 		<tip id="ID_LIBRARY_REMOVE" message="Verwyder die geselekteerde gedeelde gidse."/>
 		<tip id="ID_LIBRARY_RENAME" message="Hernoem die geselekteerde lêer in plek."/>
 		<tip id="ID_LIBRARY_SCAN" message="Inspekteer die geselekteerde gidse of lêers vir veranderinge."/>
@@ -2515,7 +2511,7 @@
 		<tip id="ID_MEDIA_PAUSE" message="Vries terugspeel van medialêer." tip="Vries"/>
 		<tip id="ID_MEDIA_PLAY" message="Begin die huidige medialêer speel." tip="Play"/>
 		<tip id="ID_MEDIA_PLAYLIST" message="Vertoon of verwyder die medialys redigeerder."/>
-		<tip id="ID_MEDIA_POSITION" message="Soek 'n posisie in die medialêer" tip="Seek"/>
+		<tip id="ID_MEDIA_POSITION" message="Seek to a position in the media file." tip="Seek"/>
 		<tip id="ID_MEDIA_PREVIOUS" message="Gaan terug na die vorige medialêer in die huidige medialys." tip="Vorige Lêer"/>
 		<tip id="ID_MEDIA_PROPERTIES" message="View and edit the properties of the selected files."/>
 		<tip id="ID_MEDIA_RANDOM" message="Aktiveer of deaktiveer die willekeurige speelmodus (shuffle)."/>
@@ -2530,15 +2526,15 @@
 		<tip id="ID_MEDIA_SIZE_ONE" message="Vertoon die video teen sy oorspronklike (natuurlike) grootte."/>
 		<tip id="ID_MEDIA_SIZE_THREE" message="Vertoon die video teen drie keer sy oorspronklike (natuurlike) grootte."/>
 		<tip id="ID_MEDIA_SIZE_TWO" message="Vertoon die video teen dubbel sy oorspronklike (natuurlike) grootte."/>
-		<tip id="ID_MEDIA_SPEED" message="Verander die spoed van die medialêer" tip="Spoed"/>
+		<tip id="ID_MEDIA_SPEED" message="Adjust the speed of the media file." tip="Spoed"/>
 		<tip id="ID_MEDIA_STATUS" message="Vertoon of verwyder die mediastatuslyn."/>
 		<tip id="ID_MEDIA_STOP" message="Stop die huidige medialêer." tip="Stop"/>
 		<tip id="ID_MEDIA_VIS" message="Selekteer 'n klankvisualiserings-inpropprogram..."/>
-		<tip id="ID_MEDIA_VOLUME" message="Verstel die volume" tip="Volume"/>
+		<tip id="ID_MEDIA_VOLUME" message="Adjust the audio volume." tip="Volume"/>
 		<tip id="ID_MEDIA_ZOOM" message="Verstel videovergroting en beeldverhouding."/>
 		<tip id="ID_MONITOR_CLOSE" message="Maak die monitor venster toe."/>
 		<tip id="ID_MUSICBRAINZ_ALBUMS" message="Look at all albums for this artist."/>
-		<tip id="ID_MUSICBRAINZ_MATCHES" message="Soek vir ander kopieë van die geselekteerde lêer."/>
+		<tip id="ID_MUSICBRAINZ_MATCHES" message="Search for albums matching the selected file."/>
 		<tip id="ID_NEIGHBOURS_CHAT" message="Begin 'n geselskap met die geselekteerde gebruiker."/>
 		<tip id="ID_NEIGHBOURS_COPY" message="Kopieer die URI om die geselekteerde gasheer te kontak."/>
 		<tip id="ID_NEIGHBOURS_DISCONNECT" message="Diskonnekteer die geselekteerde gasheer konneksie(s)."/>
@@ -2559,14 +2555,14 @@
 		<tip id="ID_NETWORK_G1" message="Konnekteer aan die oorspronklike Gnutella netwerk."/>
 		<tip id="ID_NETWORK_G2" message="Konnekteer aan die Gnutella2 netwerk (word sterk aanbeveel)."/>
 		<tip id="ID_NETWORK_SEARCH" message="Begin 'n nuwe soektog op die netwerk..."/>
-		<tip id="ID_NEXT_PANE" message="Switch to the next window pane" tip="Volgende in Lyn"/>
+		<tip id="ID_NEXT_PANE" message="Switch to the next window pane" tip="Next Pane"/>
 		<tip id="ID_OPEN_DOWNLOADS_FOLDER" message="Open my folder of completed Downloads"/>
-		<tip id="ID_PREV_PANE" message="Gaan terug na die vorige medialêer in die huidige medialys." tip="Vorige Lêer"/>
-		<tip id="ID_SCHEDULER_ACTIVATE" message="Verwyder die geselekteerde oplaai(e) van die lys."/>
+		<tip id="ID_PREV_PANE" message="Switch back to the previous window pane" tip="Previous Pane"/>
+		<tip id="ID_SCHEDULER_ACTIVATE" message="Activates selected task(s) from the list."/>
 		<tip id="ID_SCHEDULER_ADD" message="Adds a new task to scheduler list."/>
-		<tip id="ID_SCHEDULER_DEACTIVATE" message="Konnekteer aan die netwerk."/>
-		<tip id="ID_SCHEDULER_EDIT" message="Verander die geselekteerde sekuriteitsreël..."/>
-		<tip id="ID_SCHEDULER_REMOVE" message="Verwyder die geselekteerde aflaai(e) van die lys."/>
+		<tip id="ID_SCHEDULER_DEACTIVATE" message="Deactivates selected tasks."/>
+		<tip id="ID_SCHEDULER_EDIT" message="Edit the selected task..."/>
+		<tip id="ID_SCHEDULER_REMOVE" message="Removes selected task(s) from the list."/>
 		<tip id="ID_SCHEDULER_REMOVE_ALL" message="Removes all scheduled tasks."/>
 		<tip id="ID_SEARCH_CHAT" message="Begin 'n geselskap met die geselekteerde gebruiker."/>
 		<tip id="ID_SEARCH_CLEAR" message="Verwyder die soekresultate."/>
@@ -2603,11 +2599,11 @@
 		<tip id="ID_SYSTEM_COPY" message="Copy selected line(s) of status log."/>
 		<tip id="ID_SYSTEM_TIMESTAMP" message="Hou rekord van die tyd van elke lyn."/>
 		<tip id="ID_SYSTEM_VERBOSE" message="Vertoon 'n gedetailleerde stelselaktiwiteitslog."/>
-		<tip id="ID_SYSTEM_VERBOSE_DEBUG" message="Vertoon verklarings."/>
-		<tip id="ID_SYSTEM_VERBOSE_ERROR" message="Vertoon verklarings."/>
-		<tip id="ID_SYSTEM_VERBOSE_INFO" message="Vertoon grafieklyne."/>
+		<tip id="ID_SYSTEM_VERBOSE_DEBUG" message="Display all."/>
+		<tip id="ID_SYSTEM_VERBOSE_ERROR" message="Display errors only."/>
+		<tip id="ID_SYSTEM_VERBOSE_INFO" message="Display infos and above."/>
 		<tip id="ID_SYSTEM_VERBOSE_NOTICE" message="Display notices and above."/>
-		<tip id="ID_SYSTEM_VERBOSE_WARNING" message="Vertoon grafieklyne."/>
+		<tip id="ID_SYSTEM_VERBOSE_WARNING" message="Display warnings and above."/>
 		<tip id="ID_TAB_CONNECT" message="Konnekteer aan, of diskonnekteer van die netwerk."/>
 		<tip id="ID_TAB_HOME" message="Keer terug na die Shareaza Tuisblad"/>
 		<tip id="ID_TAB_IRC" message="Show the IRC Chat window."/>
@@ -2658,7 +2654,7 @@
 		<tip id="ID_VIEW_NEIGHBOURS" message="Vertoon of verwyder die GASHEER KONNEKSIES venster."/>
 		<tip id="ID_VIEW_PACKETS" message="Vertoon of verwyder die PAKKIE STORTING venster."/>
 		<tip id="ID_VIEW_RESULTS_MONITOR" message="Vertoon of verwyder die TREFMONITOR venster."/>
-		<tip id="ID_VIEW_SCHEDULER" message="Vertoon die SEKURITEIT venster."/>
+		<tip id="ID_VIEW_SCHEDULER" message="Show or hide SCHEDULER window."/>
 		<tip id="ID_VIEW_SEARCH_MONITOR" message="Vertoon of verwyder die SOEKMONITOR venster."/>
 		<tip id="ID_VIEW_SECURITY" message="Vertoon die SEKURITEIT venster."/>
 		<tip id="ID_VIEW_SYSTEM" message="Vertoon of verwyder die STELSEL venster."/>
@@ -2667,7 +2663,7 @@
 		<tip id="ID_VIEW_UPLOADS" message="Vertoon of verwyder die OPLAAIE venster."/>
 		<tip id="ID_VIEW_WINDOWED" message="Gebruik Shareaza in  kragtige Venstermodus."/>
 		<tip id="ID_WEBSERVICES_LIST" message="Choose the web service to get more information about the selected file."/>
-		<tip id="ID_WEBSERVICES_MUSICBRAINZ" message="Search for the file infomation using ShareMonkey service."/>
+		<tip id="ID_WEBSERVICES_MUSICBRAINZ" message="Search for the same artist songs using MusicBrainz service."/>
 		<tip id="ID_WINDOW_ARRANGE" message="Arrange icons at the bottom of the window" tip="Arrange Icons"/>
 		<tip id="ID_WINDOW_CASCADE" message="Vergroot alle aktiewe vensters om die skerm te vul."/>
 		<tip id="ID_WINDOW_MONITOR" message="Vertoon of verwyder die die bandwydte-monitor."/>
@@ -2820,7 +2816,7 @@
 		<string id="8239" value="Voltooi"/>
 		<string id="8240" value="Shareaza skuif die lêer:"/>
 		<string id="8241" value="Shareaza kontroleer die aflaai vir foute:"/>
-		<string id="8243" value="Oplaaie Area"/>
+		<string id="8243" value="Upload ratio:"/>
 		<string id="8244" value="Number of reviews:"/>
 		<string id="8288" value="Blaai deur jou Shareaza Biblioteek"/>
 		<string id="8289" value="Blaai deur "/>
@@ -2863,7 +2859,7 @@
 		<string id="8335" value="Bronne vir hierdie lêer is agter 'n netskans"/>
 		<string id="8336" value="Bronne vir hierdie lêer mag onstabiel wees"/>
 		<string id="8337" value="Untrusted"/>
-		<string id="8338" value="Geskep:"/>
+		<string id="8338" value="Free:"/>
 		<string id="13000" value="Are you sure you want to delete the selected security rules? This cannot be undone."/>
 		<string id="13001" value="Files shared over the Internet"/>
 		<string id="16063" value="UPnP port mapping failed after 10 attempts."/>
@@ -2883,7 +2879,7 @@
 		<string id="16077" value="Die adres %s is alreeds geblok deur jou sekuriteitsreëls."/>
 		<string id="16078" value="'n Sekuriteitsreël is bygevoeg om %s te blok."/>
 		<string id="16079" value="Is jy seker jy wil diskonnekteer?"/>
-		<string id="16080" value="Jy is nie aan die netwerk gekonnekteer nie."/>
+		<string id="16080" value="Would you like to always connect to this network?"/>
 		<string id="16081" value="Navraag vir &quot;%s&quot; word aan %s gestuur."/>
 		<string id="16083" value="Deur jou rekenaar te forseer om in hub-modus te werk, mag 'n negatiewe impak hê op werksverrigting, asook die P2P netwerk.  Dit is normaalweg beter om Shareaza toe te laat om te besluit of hub-modus gebruik moet word of nie.\n\nHub-modus lewer NIE beter soekresultate nie en hou ook geen ander voordele vir jou in nie.\n\nIs jy seker jy wil dit nogsteeds doen, ten spyte van die nadele?"/>
 		<string id="16085" value="Gnutella2 is Shareaza se primêre netwerk.  Deur ondersteuning daarvan af te skakel mag dit die aantal en kwaliteit van jou soekresultate aansienlik benadeel.  Is jy SEKER jy wil dit doen?"/>
@@ -3008,7 +3004,7 @@
 		<string id="16326" value="Oplaaigasheer %s het &quot;%s&quot; aangevra, met 'n verskillende SHA1."/>
 		<string id="16327" value="Oplaai van &quot;%s&quot; na %s (%s) word geweier, beset en kliënt ondersteun nie waglyste nie."/>
 		<string id="16328" value="Druk konneksie na %s bewerkstellig, wag vir bladskud..."/>
-		<string id="16329" value="Kan nie &quot;%s&quot; oopmaak om na gasheer %s op te laai nie, skyf/lêer foutief."/>
+		<string id="16329" value="Can't open &quot;%s&quot; to upload to host %s due to disk or file error."/>
 		<string id="16330" value="Oplaai-inhoud areas %I64i-%I64i word van &quot;%s&quot; na gasheer %s (%s) gestuur."/>
 		<string id="16331" value="Oplaai van 'n deel van &quot;%s&quot; na %s is voltooi."/>
 		<string id="16332" value="Inkomende konneksie vanaf %s is 'n HTTP oplaai-navraag."/>
@@ -3059,7 +3055,7 @@
 		<string id="16377" value="HTTP Beskerming"/>
 		<string id="16378" value="Host &quot;%s&quot; sent a 416, without providing available ranges. Closing connection."/>
 		<string id="16379" value="Library Files"/>
-		<string id="16380" value="eDonkey Beskerming"/>
+		<string id="16380" value="DC++ Guard"/>
 		<string id="16384" value="Is jy seker jy wil die lêer &quot;%s&quot; oopmaak ?\n\nSommige lêers mag dalk skadelik wees vir jou rekenaar.  Maak seker jy weet wat die lêer is voordat jy dit oopmaak."/>
 		<string id="16385" value="Jy is op pad om die metadata te verander van %i lêers, Is jy seker jy wil voortgaan?"/>
 		<string id="16386" value="Metadata van %i lêers word verander."/>
@@ -3115,8 +3111,8 @@
 		<string id="16525" value="Gnutella Pakkies Geroeteer"/>
 		<string id="16526" value="Gnutella Pakkies Gestort"/>
 		<string id="16527" value="Gnutella Pakkies Verloor"/>
-		<string id="16528" value="Gnutella Lokale Navrae"/>
-		<string id="16529" value="Gnutella Lokale Navrae"/>
+		<string id="16528" value="Gnutella Incoming Queries"/>
+		<string id="16529" value="Gnutella Processed Queries"/>
 		<string id="16532" value="Totale TCP Ontvang Bandwydte"/>
 		<string id="16533" value="Totale TCP Stuur Bandwydte"/>
 		<string id="16534" value="Totale UDP Ontvang Bandwydte"/>
@@ -3246,7 +3242,7 @@
 		<string id="17128" value="eDonkey2000 Bediener"/>
 		<string id="17129" value="eDonkey2000 (LowID)"/>
 		<string id="17130" value="eDonkey2000 (HighID)"/>
-		<string id="17131" value="Konneksie"/>
+		<string id="17131" value="DC++ Hub Connection"/>
 		<string id="17216" value="Konneksie aan eDonkey2000 bediener by %s word geïnisieer..."/>
 		<string id="17217" value="Gekonnekteer aan eDonkey2000 bediener %s, besig om blad te skud..."/>
 		<string id="17218" value="ED2K[%s] %s"/>
@@ -3265,7 +3261,7 @@
 		<string id="17231" value="eDonkey2000 kliënt %s het die verkeerde GUID, bladskud gestaak."/>
 		<string id="17232" value="Wagtyd verstreke terwyl probeer konnekteer aan eDonkey2000 kliënt %s."/>
 		<string id="17233" value="Wagtyd verstreke terwyl probeer bladskud met eDonkey2000 kliënt %s."/>
-		<string id="17234" value="eDonkey2000 kliënt-skakeling word geweier, want eDonkey2000 is afgeskakel."/>
+		<string id="17234" value="Refusing eDonkey client link from %s because eDonkey is disabled."/>
 		<string id="17248" value="Begin eDonkey2000 gedeeltelike aflaaie intrekproses."/>
 		<string id="17249" value="Proses voltooi, %i gedeeltelike aflaaie suksesvol ingetrek."/>
 		<string id="17250" value="Ondersoek Gids: &quot;%s&quot;..."/>
@@ -3287,7 +3283,7 @@
 		<string id="17477" value="BitTorrent koppeling met %s het gereageer met die verkeerde lêer."/>
 		<string id="17478" value="BitTorrent koppeling met %s het 'n onbekende lêer versoek."/>
 		<string id="17479" value="BitTorrent koppeling met %s bewerkstellig vir &quot;%s&quot;."/>
-		<string id="17480" value="BitTorrent koppeling met %s het 'n onbekende lêer versoek."/>
+		<string id="17480" value="BitTorrent coupling with %s requested an inactive file."/>
 		<string id="17481" value="BitTorrent beskrywerlêer ontvang: &quot;%s&quot;"/>
 		<string id="17482" value="Daar is 'n probleem met BitTorrent lêer &quot;%s&quot;."/>
 		<string id="17483" value="Fout vanaf BitTorrent verwyser vir &quot;%s&quot; : &quot;%s&quot;."/>
@@ -3301,13 +3297,13 @@
 		<string id="17491" value="Die torrent-lêer &quot;%s&quot; is alreeds op jou aflaailys, en kan nie gesaai word nie."/>
 		<string id="17492" value="Daar is 'n probleem met die torrent-lêer &quot;%s&quot;. Dit mag dalk nie 'n geldige torrent wees nie."/>
 		<string id="17493" value="Kon nie die BitTorrent delingslêer &quot;%s&quot; skep nie."/>
-		<string id="17494" value="Hierdie torrent bevat die lêer &quot;%s&quot;, maar Shareaza kan nie hierdie lêer in jou biblioteek vind nie. Indien moontlik, skuif die lêer na dieselfde gids as die torrent en probeer weer."/>
+		<string id="17494" value="This torrent includes the file &quot;%s&quot;, but Shareaza cannot find this file in your library. If possible, move the file to a shared folder and try again."/>
 		<string id="17495" value="Hierdie torrent bevat die lêer &quot;%s&quot; wat veronderstel is om %s te wees, maar jou weergawe van die lêer is %s."/>
 		<string id="17496" value="Daar was 'n probleem met die kopiering van &quot;%s&quot; na 'n BitTorrent delingslêer."/>
 		<string id="17497" value="'n Onbekende probleem het plaasgevind in die saaiproses van &quot;%s&quot;."/>
 		<string id="17498" value="'n Fout is opgespoor in die lêer &quot;%s&quot;."/>
 		<string id="17501" value="Kon nie met verwyser kommunikeer nie"/>
-		<string id="17503" value="Tracker failed- Trying next tracker (%i of %i)"/>
+		<string id="17503" value="Trying next tracker (%i of %i)"/>
 		<string id="17505" value="BitTorrent connection to %s was dropped."/>
 		<string id="17506" value="BitTorrent handshake with %s was dropped."/>
 		<string id="17507" value="BitTorrent coupling with %s was dropped."/>
@@ -3329,16 +3325,16 @@
 		<string id="18509" value="Jy kan nie aaneem hierdie aflaai is voltooi en dit herkontroleer nie, aangesien jy nog geen kontrole-data, soos 'n tiger-tree waarde, eDonkey hashset of BitTorrent hashset het nie. Sonder kontrole-data kan die aflaai nie herkontroleer word nie."/>
 		<string id="18510" value="Is jy seker jy wil aanneem dat hierdie aflaai voltooi is en dit herkontroleer? Die totale lêer sal oorweeg word, en Shareaza sal net dele aanvaar wat die kontrole deurkom, en die res weer aflaai."/>
 		<string id="18511" value="You have made changes to the file size. Are you sure you want to change the file size for this download?"/>
-		<string id="18512" value="Is jy seker jy wil al die aflaaie in hierdie groep kanselleer?"/>
-		<string id="18513" value="Jy het 'n eDonkey2000 hash-waarde ingetik, maar dit is foutief. Kontroleer dit asseblief en probeer weer."/>
-		<string id="18514" value="Jy het 'n SHA1-hashwaarde verskaf wat verskil van die huidige een vir hierdie aflaai. Is jy seker jy wil die SHA1-hash verander?"/>
+		<string id="18512" value="Are you sure you want to cancel this download but save incomplete file(s)?"/>
+		<string id="18513" value="You have typed an %s hash value, however it is invalid. Please check it and try again."/>
+		<string id="18514" value="You have provided an %s hash value which is different to the one currently associated with this download. Are you sure you want to change the %s hash now?"/>
 		<string id="18515" value="The selected download item currently has some Task attached, please wait and do it later."/>
 		<string id="19000" value="Web toegang is afgeskakel."/>
 		<string id="19001" value="Jy moet 'n gebruikersnaam en wagwoord kies."/>
 		<string id="19002" value="Kan nie konneksies ontvang nie, URL nie beskikbaar."/>
 		<string id="19103" value="Welcome to Shareaza Chat!"/>
 		<string id="19104" value="Please respect others while using this service"/>
-		<string id="19105" value="Chat"/>
+		<string id="19105" value="Chat!"/>
 		<string id="20000" value="Geen URN beskikbaar"/>
 		<string id="20001" value="Close"/>
 		<string id="20002" value="van"/>
@@ -3416,15 +3412,15 @@
 		<string id="20245" value="New Folder"/>
 		<string id="20246" value="Command-line options:\n\n-tray : Disable startup splash screen and send application to tray\n-nosplash : Disable startup splash screen\n-nowarn : Disable alpha (daily builds) version warning dialog\n-wait : Wait for other application instance exit\n\nInterface modes:\n\n-basic : Start application in Basic interface mode\n-tabbed : Start application in Tabbed interface mode\n-windowed : Start application in Windowed interface mode\n\nSystem options:\n\n-RegServer : Register internal components for everyone\n-UnRegServer : Un-register internal components for everyone\n-RegServerPerUser : Register internal components for current user\n-UnRegServerPerUser : Un-register internal components for current user"/>
 		<string id="20247" value="Failed to load metadata schemas. Please reinstall application."/>
-		<string id="20248" value="Jy het nie enige gidse geselekteer om te deel nie.  Is jy seker?"/>
+		<string id="20248" value="You selected %u files. Are you sure?"/>
 		<string id="20249" value="Off"/>
 		<string id="20250" value="Low"/>
-		<string id="20251" value="_Normale Modus"/>
+		<string id="20251" value="Normal"/>
 		<string id="20252" value="High"/>
 		<string id="20253" value="Skin load error: %s. Element: %s"/>
 		<string id="20254" value="Loading skin: %s"/>
 		<string id="20255" value="Are you sure you want to remove all scheduled tasks? This cannot be undone."/>
-		<string id="20256" value="Soek Met Shareaza"/>
+		<string id="20256" value="System: Start Shareaza"/>
 		<string id="20257" value="Bandwidth: Full Speed"/>
 		<string id="20258" value="Bandwidth: Reduced Speed"/>
 		<string id="20259" value="Bandwidth: Stop"/>
@@ -3614,13 +3610,13 @@
 			<control/>
 		</dialog>
 		<dialog name="CDownloadsSettingsPage" cookie="BuEdBuBuStCoBuStEdmsStEdmsStEdmsBuStCoStCoBuBuEdBu" caption="Aflaaie">
-			<control caption="Stoor _Volledige Aflaaie Hier:"/>
+			<control caption="Save Completed Files Here"/>
 			<control/>
 			<control/>
 			<control caption="Scan every completed file with AntiVirus"/>
-			<control caption="Selekteer instellings:"/>
+			<control caption="Select AntiVirus:"/>
 			<control/>
-			<control caption="_Aantal Aflaaie:"/>
+			<control caption="Number of Downloads"/>
 			<control caption="Maksimum Lêers:"/>
 			<control/>
 			<control/>
@@ -3630,13 +3626,13 @@
 			<control caption="Oordragte per Lêer:"/>
 			<control/>
 			<control/>
-			<control caption="_Limiete:"/>
+			<control caption="Limits"/>
 			<control caption="Totale Aflaai Bandwydte:"/>
 			<control/>
 			<control caption="Maksimum Waglysposisie:"/>
 			<control/>
 			<control caption="Laai net af of op na netwerke waaraan jy gekonnekteer is."/>
-			<control caption="Stoor _Onvolledige Aflaaie Hier:"/>
+			<control caption="Store Temporary Incomplete Files Here"/>
 			<control/>
 			<control/>
 		</dialog>
@@ -3694,10 +3690,10 @@
 		<dialog name="CGnutellaSettingsPage" cookie="BuBuCoBuBuCoEdmsEdmsEdmsEdmsEdmsEdmsBuBuBuBuStBuStStStBuStBuStStStBu" caption="Gnutella">
 			<control caption="Gnutella2 Netwerk:"/>
 			<control caption="Konnekteer altyd aan Gnutella2"/>
-			<control caption="Konnekteer vandag aan Gnutella2"/>
+			<control caption="Optimal|Leaf|Hub"/>
 			<control caption="Modus:"/>
-			<control caption="Optimaal|Leaf|Hub"/>
-			<control caption="G_2 Konneksies:"/>
+			<control caption="Connect to Gnutella1 today"/>
+			<control caption="Optimal|Leaf|Ultrapeer"/>
 			<control/>
 			<control/>
 			<control/>
@@ -3711,7 +3707,7 @@
 			<control/>
 			<control/>
 			<control caption="Modus:"/>
-			<control caption="Optimaal|Leaf|Ultrapeer"/>
+			<control caption="Leaf to Hub"/>
 			<control caption="G_1 Konneksies:"/>
 			<control caption="Gnutella2 Netwerk:"/>
 			<control caption="Mode: "/>
@@ -3870,7 +3866,7 @@
 		</dialog>
 		<dialog name="CWizardConnectionPage" cookie="StStCoStCoStCoStCoStms" caption="Welkom by Shareaza (1/6)">
 			<control caption="Vir optimale werksverrigting, benodig Shareaza inligting oor jou internet konneksie."/>
-			<control caption=" ( selekteer asseblief )| Ek gebruik nou die Internet by die huis| Ek gebruik nou die Internet vanaf 'n kampus LAN| Ek gebruik nou die Internet vanaf 'n kantoor LAN| Ek gebruik nou die Internet by 'n hotel of lughawe"/>
+			<control caption="Choose the type of your Internet connection:"/>
 			<control caption="Dial up Modem|ISDN|ADSL (256K)|ADSL (512K)|ADSL (768K)|ADSL (1.5M)|ADSL (4.0M)|ADSL2 (8.0M)|ADSL2 (12.0M)|ADSL2+ (24.0M)|Cable Modem/SDSL|T1|T3|LAN|OC3"/>
 			<control caption="Or choose the download speed:"/>
 			<control/>
@@ -3960,7 +3956,7 @@
 			<control/>
 			<control/>
 			<control caption="_Persoonsbesonderhede:"/>
-			<control caption="|Manlik|Vroulik"/>
+			<control caption="Male|Female"/>
 			<control caption="Geslag:"/>
 			<control/>
 			<control caption="Ouderdom:"/>
@@ -4036,8 +4032,8 @@
 		</dialog>
 		<dialog name="CLanguageDlg" cookie="" caption="Selekteer Taal">
 		</dialog>
-		<dialog name="CConnectToDlg" cookie="BuCoEdBuCoBuBuBu" caption="Konnekteer Aan|Blaai deur Gebruikersinligting">
-			<control caption="Maak 'n nuwe konneksie na 'n gasheer of bediener:|Blaai deur hierdie kliënt se profiel en gedeelde lêers:"/>
+		<dialog name="CConnectToDlg" cookie="BuCoEdBuCoBuBuBu" caption="Connect To|Browse User|Chat to User">
+			<control caption="Initiate a new connection to host or server:|Browse this user:|Chat to this user:"/>
 			<control/>
 			<control/>
 			<control caption="Netwerk_protokol:"/>
@@ -4104,7 +4100,7 @@
 			<control caption="Diens _Adres:"/>
 			<control/>
 			<control caption="Ontdekkingsdiens Tipe:"/>
-			<control caption="Blocked"/>
+			<control caption="Gnutella Bootstrap|G1 GWebCache|G2 GWebCache|G1/G2 GWebCache|Server.met URL|Blocked"/>
 			<control caption="OK"/>
 			<control caption="Kanselleer"/>
 		</dialog>
@@ -4294,7 +4290,7 @@
 			<control caption="Jy het %lu lêers geselekteer om uit te voer as Shareaza ondersteunende URI verwysings.  Selekteer asseblief die formaat van die URIs en kliek Stoor:"/>
 			<control/>
 			<control caption="Voeg Teken By:"/>
-			<control caption="Tiger Root|SHA1|MD5|ED2K (CMD4)|Lêernaam|Lêernaam (URI)|Lêernaam Basis|Lêeruitbreiding|Lêer Grootte|Lêer Grootte (bytes)|Gids Pad|Lokale Gasheer|Lokale Poort"/>
+			<control caption="Tiger Root|SHA1|MD5|ED2K (CMD4)|BitTorrent|Filename|Filename (URI)|Base Filename|File Extension|File Size|File Size (bytes)|Folder Path|Local Host|Local Port|Link|Link (URI)"/>
 			<control caption="Selekteer instellings:"/>
 			<control caption="Magnet|eDonkey|Magnet HTML|eDonkey HTML"/>
 			<control caption="_Copy"/>
@@ -4389,14 +4385,14 @@
 			<control caption="Shareaza kan hierdie lêer onthou en jou waarsku as jy dit weer teëkom in 'n ander soektog.  Selekteer asseblief die rede waarom jy die lêer skrap:"/>
 			<control caption="Create a ghost file"/>
 			<control caption="Ek wil nie kommentaar byvoeg nie."/>
-			<control caption="Hierdie lêer is verkeerdelik genoem en kan misleidend wees."/>
+			<control caption="Just deleting, keep my comments|This file is named incorrectly, and could be misleading|This file is of very poor quality|This file is a fake, or is corrupt or somehow unusable|Replace my comments with the new ones"/>
 			<control caption="Hierdie lêer is van swak gehalte."/>
 			<control caption="(Geen Gradering)|Vals/Korrup/Misleidend|Swak|Gemiddeld|Goed|Baie Goed|Uitstekend"/>
 			<control caption="Jy kan 'n kort nota skryf om te verduidelik hoekom die lêer sleg is:"/>
 			<control/>
 		</dialog>
 		<dialog name="CCollectionExportDlg" cookie="StSyBuStStStStStEdBuBuBu" caption="Voer Gids Uit">
-			<control caption="Hierdie funksie word gebruik om die inhoud van 'n albumgids uit te voer as 'n ryk versamelingslêer."/>
+			<control caption="This feature is used to export the contents of a folder or playlist as a rich collection file.  Please select a template and press Next to continue.|Customize your collection by entering data below."/>
 			<control/>
 			<control caption="Template Information:"/>
 			<control caption="Naam:"/>
@@ -4464,13 +4460,13 @@
 			<control/>
 			<control/>
 			<control/>
-			<control caption="Deur:"/>
+			<control caption=" As needed| When ratio over 100%| Only when requested| Never"/>
 			<control/>
 			<control caption="Kommentaar:"/>
 			<control caption="Naam:"/>
 			<control caption="Geskep:"/>
 			<control caption="Begin nuwe aflaai oordragte:"/>
-			<control caption=" As needed| When ratio over 100%| Only when requested| Never"/>
+			<control caption="Comments:"/>
 			<control caption="Transfers:"/>
 			<control caption="Total Uploaded:"/>
 			<control caption="Notes:"/>
@@ -4483,7 +4479,7 @@
 			<control/>
 			<control/>
 			<control/>
-			<control caption="Tracker:"/>
+			<control caption="Disabled|Single Tracker|Multi-tracker|Multi-tracker (locked)"/>
 			<control caption="_Refresh"/>
 			<control/>
 			<control caption="Completed (Seeds):"/>
@@ -4559,7 +4555,7 @@
 			<control/>
 			<control caption="Gnutella1"/>
 			<control caption="Gnutella2"/>
-			<control caption="eDonkey2000"/>
+			<control caption="eDoonkey2K"/>
 			<control caption="DC++"/>
 			<control caption="BitTorrent"/>
 			<control caption="Select the event type:"/>
@@ -4709,8 +4705,8 @@
 		</list>
 		<list name="CSchedulerWnd">
 			<column from="Action" to="Aksie"/>
-			<column from="Trigger" to="TigerTree"/>
-			<column from="Next Run" to="Volgende"/>
+			<column from="Trigger" to="Trigger"/>
+			<column from="Next Run" to="NextRun"/>
 			<column from="Active" to="Aktief"/>
 			<column from="Status" to="Status"/>
 			<column from="Description" to="Beskrywing"/>

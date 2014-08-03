@@ -1201,14 +1201,14 @@
 			<item id="ID_LIBRARY_FOLDER_FILE_PROPERTIES" text="_Fájl tulajdonságai"/>
 		</menu>
 		<menu name="CLibraryTree.Virtual.Basic">
-			<item id="ID_LIBRARY_FOLDER_ENQUEUE" text="Album lejátszása"/>
+			<item id="ID_LIBRARY_FOLDER_ENQUEUE" text="Play _Album"/>
 			<item id="ID_LIBRARY_FOLDER_DELETE" text="Tö_rlés"/>
 			<separator/>
 			<item id="ID_LIBRARY_FOLDER_FILE_PROPERTIES" text="_Fájl tulajdonságai"/>
-			<item id="ID_LIBRARY_FOLDER_PROPERTIES" text="_Album tulajdonságai"/>
+			<item id="ID_LIBRARY_FOLDER_PROPERTIES" text="Album _Properties"/>
 		</menu>
 		<menu name="CLibraryTree.Virtual">
-			<item id="ID_LIBRARY_FOLDER_ENQUEUE" text="Album lejátszása"/>
+			<item id="ID_LIBRARY_FOLDER_ENQUEUE" text="Play _Album"/>
 			<item id="ID_LIBRARY_FOLDER_DELETE" text="Tö_rlés"/>
 			<separator/>
 			<item id="ID_LIBRARY_REBUILD" text="Ú_jraépít"/>
@@ -1217,7 +1217,7 @@
 			<item id="ID_LIBRARY_FOLDER_NEW" text="Ú_j mappa..."/>
 			<separator/>
 			<item id="ID_LIBRARY_FOLDER_FILE_PROPERTIES" text="_Fájl tulajdonságai"/>
-			<item id="ID_LIBRARY_FOLDER_PROPERTIES" text="_Album tulajdonságai"/>
+			<item id="ID_LIBRARY_FOLDER_PROPERTIES" text="Album _Properties"/>
 		</menu>
 		<!-- LIBRARY VIEWS -->
 		<menu name="CLibraryTileView">
@@ -1296,7 +1296,7 @@
 		<menu name="CLibraryFileView.Virtual.Basic">
 			<item id="ID_LIBRARY_LAUNCH" text="_Megnyitás és Lejátszás"/>
 			<item id="ID_LIBRARY_ENQUEUE" text="_Listához ad"/>
-			<item id="ID_LIBRARY_FOLDER_ENQUEUE" text="Album lejátszása"/>
+			<item id="ID_LIBRARY_FOLDER_ENQUEUE" text="Play _Album"/>
 			<separator/>
 			<item id="ID_LIBRARY_SHARED_FILE" text="_Megosztott"/>
 			<separator/>
@@ -1700,8 +1700,8 @@
 				<icon res="252" width="32" height="32"/><gap size="8"/>
 				<heading align="middle">F I G Y E L E M   -   T Ű Z F A L   M Ö G Ö T T   V A N !</heading>
 				<newline gap="8" indent="42"/>
-				<text colour="FF0000">A Shareaza észlelte, hogy egy NAT router vagy tűzfal mögött van
-				és ezért nem tud bejövő kapcsolatokat fogadni az Internetről (passzív kapcsolat).  </text>
+				<text colour="FF0000">Shareaza has detected that you are behind a NAT router or firewall,
+				and are unable to receive connections from the Internet.  </text>
 				<text colour="FF0000" format="b">Ez csökkenti az ön számára használható források számát.</text>
 				<newline gap="6"/>
 				<link target="raza:command:ID_HELP_ROUTER">Kattintson ide a router vagy tűzfal helyes beállításához.</link>
@@ -1711,8 +1711,8 @@
 				<icon res="252" width="32" height="32"/><gap size="8"/>
 				<heading align="middle">F I G Y E L E M   -   A   T C P   P O R T   T Ű Z F A L    M Ö G Ö T T   V A N!</heading>
 				<newline gap="8" indent="42"/>
-				<text colour="FF0000">A Shareaza észlelte, hogy egy NAT router vagy tűzfal mögött van
-				és ezért nem tud bejövő TCP kapcsolatokat fogadni az Internetről (passzív kapcsolat).  </text>
+				<text colour="FF0000">Shareaza has detected that you are behind a NAT router or firewall,
+				and are unable to receive TCP connections from the Internet.  </text>
 				<text colour="FF0000" format="b">Ez csökkentheti a letöltési sebességet.</text>
 				<newline gap="6"/>
 				<link target="raza:command:ID_HELP_ROUTER">Kattintson ide a router vagy tűzfal helyes beállításához.</link>
@@ -1722,8 +1722,8 @@
 				<icon res="252" width="32" height="32"/><gap size="8"/>
 				<heading align="middle">F I G Y E L E M   -   A   U D P   P O R T   T Ű Z F A L    M Ö G Ö T T   V A N!</heading>
 				<newline gap="8" indent="42"/>
-				<text colour="FF0000">A Shareaza észlelte, hogy egy NAT router vagy tűzfal mögött van
-				és ezért nem tud bejövő UDP kapcsolatokat fogadni az Internetről (passzív kapcsolat).  </text>
+				<text colour="FF0000">Shareaza has detected that you are behind a NAT router or firewall,
+				and are unable to receive UDP messages from the Internet.  </text>
 				<text colour="FF0000" format="b">Ez csökkentheti a keresés hatékonyságát.</text>
 				<newline gap="6"/>
 				<link target="raza:command:ID_HELP_ROUTER">Kattintson ide a router vagy tűzfal helyes beállításához.</link>
@@ -1839,7 +1839,7 @@
 			<text group="11" align="middle">Nincs kapcsolat</text>
 			<text group="12" align="middle">Kapcsolódás...</text>
 			<text group="13" align="middle">Kapcsolódva</text>
-			<text group="14" align="middle" id="G1Hubs">eDonkey:</text>
+			<text group="14" align="middle" id="G1Hubs">%i ultrapeers</text>
 			<text group="15" align="middle" id="G1Leaves">%i leaf</text>
 			<newline group="10" gap="2"/>
 			<icon group="30" command="ID_NETWORK_ED2K"/><gap group="30" size="4"/>
@@ -1912,8 +1912,8 @@
 			</styles>
 			<text format="b">Shareaza részletes beállítások</text>
 			<newline gap="16"/>
-			<text>Itt mindent megtalál, ami a Shareaza részletes beállításához kellhet. 
-			Az</text>
+			<text>The Shareaza Settings Manager allows advanced users to completely customise how
+				Shareaza works. The settings in the</text>
 			<text format="b">Általános</text>
 			<text>részben a felhasználói szokásaihoz igazíthatja a programot.</text>
 			<newline gap="16" indent="16"/>
@@ -1949,8 +1949,8 @@
 			</styles>
 			<text format="b">Shareaza részletes beállítások</text>
 			<newline gap="16"/>
-			<text>Itt mindent megtalál, ami a Shareaza részletes beállításához kellhet. 
-			Az</text>
+			<text>The Shareaza Settings Manager allows advanced users to completely customise 
+				how Shareaza works. The settings in the</text>
 			<text format="b">Internet</text>
 			<text>részben a különböző hálózatok beállításai	találhatók.</text>
 			<newline gap="16" indent="16"/>
@@ -2069,10 +2069,11 @@
 		<document name="DownloadHelp.Select">
 			<text format="b">Letöltések</text>
 			<newline gap="8"/>
-			<text>Itt találhatók a letöltések. A + jelre való kattintással megnézheti a fájlokhoz tartozó forrásokat.</text>
+			<text>This is where files currently being downloaded are displayed. You can view
+			individual sources by expanding each file with the small + on the left.</text>
 			<newline gap="8"/>
-			<text>Más információt is megtudhat ezzel a paranccsal.
-		Csak kattintson egy fájlra és használja ugyanezt a funkciót.</text>
+			<text>Drag'n'Drop downloads higher in the list for priority, or onto Download Group 
+			tabs for better organisation (in Power Mode).</text>
 			<newline gap="16"/>
 			<text>You can also use this command to get help information on a specific download.
 			Simply select a download and choose this Help command again.</text>
@@ -2086,85 +2087,98 @@
 		<document name="DownloadHelp.Completed">
 			<text format="b">Ez a letöltés befejeződött</text>
 			<newline gap="8"/>
-			<text>Ezt a letöltést a Shareaza már befejezte és le is ellenőrizte.
-		A fájlt megtalálhatja a beállított letöltési mappában.</text>
+			<text>Shareaza has finished downloading this file, and has verified that it
+			is 100% correct. It has also moved the file to your downloads folder.</text>
 		</document>
 		<document name="DownloadHelp.Moving">
 			<text format="b">Ez a letöltés áthelyezés alatt áll</text>
 			<newline gap="8"/>
-			<text>Ezt a letöltést a Shareaza már befejezte és le is ellenőrizte.
-		Jelenleg áthelyezés alatt áll.</text>
+			<text>Shareaza has finished downloading this file, and has verified that
+			it is correct. It is currently being moved and/or unpacked to your downloads folder.</text>
 		</document>
 		<document name="DownloadHelp.Paused">
 			<text format="b">Ez a letöltés szüneteltetve van</text>
 			<newline gap="8"/>
-			<text>Megállította ezt a letöltést.
-		A</text><text format="b">Letöltés folytatása</text><text>paranccsal folytathatja.</text>
+			<text>You have paused this download. If you want it to resume downloading, you
+			can click the '</text><text format="b">Letöltés folytatása</text><text>paranccsal folytathatja.</text>
 		</document>
 		<document name="DownloadHelp.DiskFull">
 			<text format="b">A lemez tele van</text>
 			<newline gap="8"/>
-			<text>A Shareaza szünetelteti a letöltést, mert valószínűleg megtelt a lemez vagy nem tud rá írni.
-		Ha folytatni akarja a letöltést, szabadítson fel megfelelő mennyiségű helyet és/vagy tegye írhatóvá a lemezt.</text>
+			<text>Shareaza has paused this download automatically because the hard disk
+			appears to be full, or the download file cannot be written to. If you wish
+			to continue downloading, please free some space on your hard disk and/or check
+			to make sure the incomplete file folder is accessible, and then resume the
+			download.</text>
 		</document>
 		<document name="DownloadHelp.Verifying">
 			<text format="b">A letöltés ellenőrzés alatt áll</text>
 			<newline gap="8"/>
-			<text>A letöltés befejeződött, a program összehasonlítja a letöltött fájlt az eredetivel.
-		Ha hibát talál, megpróbálja az helyrehozni.</text>
+			<text>This download has finished, and Shareaza is now checking it to ensure
+			that it is exactly the same as the original file. If any damaged parts are
+			found, Shareaza will repair them automatically.</text>
 		</document>
 		<document name="DownloadHelp.Downloading">
 			<text format="b">A letöltés aktív!</text>
 			<newline gap="8"/>
-			<text>A letöltés folyamatban van. Ha a letöltés túl lassú, akkor a</text><text format="b">Több forrás keresése</text><text>gombbal kereshet gyorsabb forrásokat.
-		Ha még mindig nem növekedne a sebesség, akkor valószínűleg korlátozva van.
-		Az idő múlásával felgyorsulhat a letöltés sebessége.</text>
+			<text>This download is currently in progress. If it is downloading too slowly,
+			you could try searching the network for more sources with the '</text><text format="b">Több forrás keresése</text><text>' command. If the speed does not 
+			improve it may be due to limited upload speeds of the users you are downloading 
+			from. Download speed usually increases over time.</text>
 		</document>
 		<document name="DownloadHelp.Pending">
 			<text format="b">A letöltés függőben van</text>
 			<newline gap="8"/>
-			<text>A fájl feltöltésre vár.
-		A Shareaza készen áll a letöltésre, de még senki nem küld adatokat.
-		Valószínűleg másoknál sorbanáll ezért a fájlért. A letöltés bármelyik percben elkezdődhet.
-		Lehetősége van megnézni, hogy hányadik helyen áll a sorban.
-		Ha ön is megoszt fájlokat, nagyobb eséllyel kerülhet sorra, mint aki nem oszt meg semmit.</text>
+			<text>This download is waiting for someone to start uploading.
+			Shareaza is ready to start downloading this file, but no-one is sending it at
+			the moment. You are probably waiting in other user's queues, and the download
+			may start transferring at any time. You can examine the individual sources to 
+			see each queue you are waiting in. If you are sharing files yourself, it may
+			improve the chances of a download transfer starting quickly.</text>
 		</document>
 		<document name="DownloadHelp.Queued">
 			<text format="b">A letöltés sorbanáll</text>
 			<newline gap="8"/>
-			<text>A letöltés más letöltések befejezésére vár.
-		A letöltési beállításokban limitálva van az egyszerre letölthető fájlok száma.
-		Így minden fájl megfelelő sebességben részesül.
-		Ezt megváltoztathatja a "Beállítások"-ban.</text>
+			<text>This download is waiting for some of your other downloads to complete.
+			Your download settings limit the number of downloads which may be active at
+			any given time, to ensure that each download gets a good share of the available
+			bandwidth. You can change these settings via Tools, Shareaza Settings.
+			Alternatively, you may manually start this download with the resume command.</text>
 		</document>
 		<document name="DownloadHelp.Searching">
 			<text format="b">Forrás keresése</text>
 			<newline gap="8"/>
-			<text>Nincs ismert forrás a letöltéshez.
-		Ezért a Shareaza automatikusan keres az elérhető hálózatokon. Felgyorsíthatja a keresést a</text>
+			<text>There are no known sources for this download, so Shareaza is searching
+			all connected P2P networks for new sources. Once sources are found, the
+			download will start automatically. Shareaza searches for sources automatically,
+			however you can speed up the process using the</text>
 			<text format="b">Több forrás keresése</text><text>gombbal.</text>
 			<newline gap="8"/>
-			<text>A legtöbb esetben nem fog találni forrásokat, mert a felhasználó, akitől tölthetne offline.
-		Marad a várakozás vagy egy hasonló, népszerűbb fájl keresése.</text>
+			<text>Unfortunately in many cases there may be no users online who have the
+			file you are looking for. The only course of action here is to wait for
+			someone to come online, or cancel it and try to find a similar file which is
+			more widely available.</text>
 		</document>
 		<document name="DownloadHelp.Creating">
 			<text format="b">Letöltés befejezése</text>
 			<newline gap="8"/>
-			<text>A Shareaza lefoglalja a megfelelő mennyiségű helyet a lemezen.</text>
+			<text>Shareaza is pre-allocating a file in which to store this download, to
+			save time later.</text>
 		</document>
 		<document name="DownloadHelp.Tracker">
 			<text format="b">BitTorrent Tracker nem elérhető</text>
 			<newline gap="8"/>
-			<text>A tracker ehhez a letöltéshez jelenleg nem elérhető.
-		A Shareaza nem kap információkat az elérhető letöltési szálakról.</text>
+			<text>The BitTorrent tracker server for this download appears to be
+			down or malfunctioning. Shareaza is unable to contact it to receive
+			a list of peers.</text>
 		</document>
 		<!-- Upload help documents -->
 		<document name="UploadHelp">
 			<text format="b">Feltöltések</text>
 			<newline gap="8"/>
-			<text>Itt találhatók a feltöltések.
-		A + jelre való kattintással
-		megnézheti a fájlokhoz tartozó forrásokat.</text>
+			<text>This is where queues and uploads are displayed. You can expand each queue
+			with the small + on the left, and filter what is displayed with the button on the
+			right of the window's toolbar.</text>
 		</document>
 		<!-- General help documents -->
 		<document name="GeneralHelp.DiskSpace">
@@ -2172,44 +2186,47 @@
 			<newline gap="8"/>
 			<text>A Shareaza által használt lemez(ek)en kevés a szabad lemezterület.</text>
 			<newline gap="8"/>
-			<text>Valamennyi szabad helynek mindig kell lenni a lemezeken. Ha megtelik a lemez, a programok instabillá válhatnak,
-		és az ideiglenes fájlok is elveszhetnek.
-		Futtasson le egy lemezkarbantartó programot, törölje le a szükségtelen fájlokat és/vagy törölje le a nem használt programokat.</text>
+			<text>You should always attempt to keep a reasonable amount of disk space free. Programs 
+			can become unstable if the drives become full, and temporary files may be lost. You should 
+			run a disk clean-up, delete unwanted files, or uninstall software you no longer need.</text>
 		</document>
 		<document name="GeneralHelp.DiskWriteFail">
 			<text format="b">Egy fontos mappába nem lehet írni</text>
 			<newline gap="8"/>
 			<text>Egy, a Shareaza által használt mappa vagy lemez nem írható.</text>
 			<newline gap="8"/>
-			<text>Lehet, hogy egy hálózati vagy cserélhető meghajtó el lett távolítva vagy nincs írási joga a megadott mappában.
-		Kérem, ellenőrizze a mappákat és a jogait vagy adjon meg egy másik mappát.</text>
+			<text>A network drive may have been disconnected, or you may not have write permission 
+			to a selected directory. Please check directories and permissions, or change the
+			temporary files location.</text>
 		</document>
 		<document name="GeneralHelp.ConnectionFail">
 			<text format="b">Az internetkapcsolat megszakadt</text>
 			<newline gap="8"/>
 			<text>A Windows szerint nincs internetkapcsolat.</text>
 			<newline gap="8"/>
-			<text>Valószínű, hogy a modem vagy a router szétkapcsolt. Kapcsolódjon újra az internethez.</text>
+			<text>It is likely that a modem or router has dropped, meaning the internet cannot
+			be accessed. You may need to manually re-connect or reset your connection.</text>
 			<newline gap="8"/>
 			<text>A Shareaza nem próbálkozik tovább a kapcsolódással, hogy meggátolja a letárolt kiszolgálók elvesztését.</text>
 		</document>
 		<document name="GeneralHelp.AdultFilter">
 			<text format="b">Felnőtt tartalom szűrése</text>
 			<newline gap="8"/>
-			<text>Ez nem egy 100%-os megoldás, mint ahogy más automata szűrők sem azok.
-		Ezt arra tervezték, hogy kiszűrje a nem kívánt találatokat, nem arra, hogy 100%-os védelmet nyújtson.</text>
+			<text>Please note that (as with any automated filter) it may not be 100% effective at
+			screening content. It is designed simply to filter out excess unwanted results, rather than 
+			as a 100% safe block.</text>
 			<newline gap="8"/>
 			<text>A gyermekek internethasználatát (a fájlmegoszó programokat) csak szülői felügyelet mellett szabad engedni.</text>
 		</document>
 		<document name="GeneralHelp.BadTorrentEncoding">
 			<text format="b">Ennek a torrentnek valószínűleg karakterkódolási hibája van</text>
 			<newline gap="8"/>
-			<text>A Windows nem tudta megfelelően értelmezni a torrentfájl karakterkódolását.
-		Lehet, hogy a torrent hibás vagy csak rosszul lett kódolva.
-		Valószínűleg működni fog bár lehet, hogy néhány fájl neve helytelenül fog megjelenni.</text>
+			<text>Windows has reported a translation fault while decoding text in this torrent. It is
+			possible that the torrent is corrupt, or just incorrectly encoded. The torrent may
+			still download properly, although some file names could be incorrect.</text>
 			<newline gap="8"/>
-			<text>A legtöbb torrentkészítő program ki tudja javítani ezt a hibát, így bármelyik BitTorrent programmal működni fog.
-		Ha segítség kell, látogassa meg a Shareaza fórumait.</text>
+			<text>Most torrent creation programs should allow you to repair this torrent, which
+			will ensure it works properly in all BitTorrent applications.</text>
 			<newline gap="8"/>
 			<link target="raza:command:ID_HELP_TORRENT">Kattintson ide, ha további segítségre van szüksége</link>
 			<text>vagy töltse le innen a megfelelő szoftvert.</text>
@@ -2217,63 +2234,72 @@
 		<document name="GeneralHelp.DonkeyServerList">
 			<text format="b">Az eDonkey szerverlista üres</text>
 			<newline gap="8"/>
-			<text>Nincs szerver az eDonkey szerverlistában. Le kell töltenis egy
-		friss listát (.met fájlt), hogy kapcsolódni tudjon az eD2k hálózathoz.</text>
+			<text>There are no servers in your eDonkey server list. You need to download an
+			up to date server list (met file) to connect to ED2K.</text>
 			<newline gap="8"/>
-			<text>Ezt megteheti az ed2k beállításoknál vagy a szerverkereső
-		ablakban. Nyomja le F9 gombot a Szerverkereső szolgáltatás megnyitásához.</text>
+			<text>You can download a server list from the ed2k setting page, or the discovery
+			services window. (Press F9 to open the discovery services window)</text>
 		</document>
 		<document name="GeneralHelp.UploadWarning">
 			<text format="b">A feltöltés korlátozása csökkentheti a letöltési sebességet!</text>
 			<newline gap="8"/>
-			<text>Egyes hálózatok korlátozzák vagy megtagadják a letöltést, ha nem megfelelő a feltöltési sebesség.</text>
+			<text>Several networks Shareaza connects to enforce ratios, limit uploads to
+			clients that do not share, or simply preference uploading to known sharers.</text>
 			<newline/>
-			<text>Szerencsére a DSL kapcsolat olyan, mint egy autópálya: a feltöltésnek és
-		a letöltésnek is külön sávja van. Ha megfelelően beállította a kliensét,
-		akkor egy jó feltöltési sebesség mellett akár maximális letöltést el tud vele érni.</text>
+			<text>Fortunately, broadband DSL connections are like a two-lane highway: you have
+			separate allocations for upload and download. If your client is properly configured, 
+			you should be able to upload at a good rate while retaining full download capacity.</text>
 			<newline gap="8"/>
-			<text>Alapbeállításként a program a feltöltési sebesség 85%-át fogja csak kihasználni,
-		míg a letöltés korlátlan marad. Ezzel a beállítással lehet a legjobb arányt elérni a fel- és a letöltés között.</text>
+			<text>By default, your upload limit is set to about 85% of available upstream bandwidth,
+			while downloads are unlimited. That configuration should give you the fastest possible 
+			downloads that are available.</text>
 		</document>
 		<!-- Search help documents -->
 		<document name="SearchHelp.BadSearch1">
 			<text format="b">Gyenge keresés</text>
 			<newline gap="8"/>
-			<text>Ez a keresés nem hatékony és nem működik megfelelően.
-		A keresések lehetőleg több kifejezést tartalmazzanak és/vagy a fájl kiterjesztését.
-		Ne csak kizárásos alapon keressünk és kerüljük az általános szavakat.</text>
+			<text>This search is poorly formatted, and may not function correctly. 
+			Searches should include several terms where possible, and should specify a schema 
+			(file type). Furthermore, searches must not be limited to numbers or negative
+			terms only, and you should avoid overly general queries.</text>
 			<newline gap="8"/>
-			<text>Például a legtöbb kliensprogram nem engedélyezi csak az MP3 szóra
-		való rákeresést, mert nem elég sajátos és ezért túl sok találatot eredményezne.</text>
+			<text>Most clients on the network will ignore a search for all MP3 files, for example, 
+			because it is not specific enough, and would generate too many results.</text>
 		</document>
 		<document name="SearchHelp.BadSearch2">
 			<text format="b">Gyenge keresés</text>
 			<newline gap="8"/>
-			<text>Ez a keresés nem hatékony és nem működik megfelelően.
-		Minden kereséshez egy minimális karakterszámból álló kifejezést kell használni a keresés elindításához.</text>
+			<text>This search does not contain enough terms to function properly. All searches need
+			a minimum number of valid, alphabetic characters to be able to start.</text>
 			<newline gap="8"/>
-			<text>Számok és kiterjesztések után is lehet keresni, de ezekhez még egyéb kifejezéseket is
-		hozzá kell venni a keresés előtt. Az írásjeleket nem veszi figyelembe a kereső.</text>
+			<text>While common file extensions (and numbers) can be searched for, you must enter
+			other terms as well when creating the search. Punctuation and wildcards are not used 
+			in searches, just the text you enter.</text>
 		</document>
 		<document name="SearchHelp.BadSearch3">
 			<text format="b">Gyenge keresés</text>
 			<newline gap="8"/>
-			<text>Ez a keresés csak fájlkiterjesztéseket vagy nem kereshető kifejezéseket tartalmaz.</text>
+			<text>This search seems to contain only common file extensions, or no searchable
+			words.</text>
 			<newline gap="8"/>
-			<text>Ha problémái vannak a kereséssel, akkor gondoljon arra, hogy ez is csak olyan, mint a	weben való keresés.</text>
+			<text>If you are having trouble creating searches, keep in mind that it's quite similar
+			to a web search. Specific terms or phrases are best- Unique names, titles and
+			keywords.</text>
 			<newline gap="8"/>
-			<text>Az általános szavak használata valószínűleg nem ad megfelelő eredményt,
-		így csökken a hatékonyság és a fölösleges eredmények csak növelik a program sávszéligényét.</text>
+			<text>General terms cannot be searched for efficiently and may result in poor
+			search performance, as well as high bandwidth use during searches.</text>
 			<newline gap="8"/>
 			<text>További segítséget a Shareaza weboldalán találhat.</text>
 		</document>
 		<document name="SearchHelp.AdultSearch">
 			<text format="b">Ezt a keresést nem lehet elkezdeni</text>
 			<newline gap="8"/>
-			<text>A keresés valószínűleg hatalmas mennyiségű felnőtt tartalommal rendelkező fájlt produkálna,
-		ezt a beépített tartalomszűrő megakadályozta. Fogalmazza át a keresést vagy	kapcsolja ki a szűrőt.</text>
+			<text>The specified search would probably return a large number of results with adult 
+			content, and this has been turned off in the settings. You should either re-phrase the 
+			search, or disable the filter.</text>
 			<newline gap="8"/>
-			<text>A szűrő kikapcsolása: Eszközök &gt; Beállítások &gt; Általános és itt szedje ki a pipát a tartalomszűrő elől.</text>
+			<text>To disable the filter, go into Tools &gt; Settings &gt; General and uncheck the
+			adult content filter.</text>
 		</document>
 		<!-- Share help documents -->
 		<document name="ShareHelp.AlreadyShared">
@@ -2286,25 +2312,26 @@
 		<document name="ShareHelp.BadShare">
 			<text format="b">Ezt a mappát nem kéne megosztani</text>
 			<newline gap="8"/>
-			<text>Ez egy rendszermappa vagy rendszerfájlokat tartalmazó mappa. Nem ajánlatos
-		megosztani, mert mások semmi hasznát sem fogják venni.</text>
+			<text>This folder is (or contains) a system folder. Sharing this folder is not
+			recommended, since most of the files in it are of no use to other people.</text>
 			<newline gap="8"/>
-			<text>A Windows, Program Files és hasonló mappák
-		általában nem tartalmaznak megosztásra alkalmas fájlokat. Esetleg a</text><text format="i">bennük</text><text>található almappák
-		lehetnek megosztásra érdemesek.</text>
+			<text>Folders such as the Windows directory, Program Files, and similar folders
+			do not usually contain files suitable for sharing. Any files of interest would be in
+			sub-folders located</text><text format="i">bennük</text><text>these folders.
+			Please share those instead.</text>
 			<newline gap="8"/>
-			<text>A Shareaza 'Félkész letöltések' mappát sem kéne megosztani,
-		mert a folyamatban lévő letöltések hashelése csökkentheti a rendszer teljesítményét.</text>
+			<text>The Shareaza 'incomplete' folder should also not be shared through the
+			library, since attempting to hash downloads in progress may impact on performance.</text>
 		</document>
 	</documents>
 	<!-- Localised Command Tip Text. The "message" is displayed in the status bar, while the "tip" is shown in a tooltip -->
 	<commandTips>
 		<tip id="AFX_IDS_APP_TITLE" message="Shareaza"/>
-		<tip id="AFX_IDS_IDLEMESSAGE" message="Folyamat"/>
+		<tip id="AFX_IDS_IDLEMESSAGE" message="Ready"/>
 		<tip id="AFX_IDS_MDICHILD" message="Activate this window"/>
-		<tip id="AFX_IDS_PREVIEW_CLOSE" message="Close print preview mode" tip="Előnézet"/>
-		<tip id="AFX_IDS_SCCLOSE" message="Ablak nagyítása."/>
-		<tip id="AFX_IDS_SCMAXIMIZE" message="Ablak nagyítása."/>
+		<tip id="AFX_IDS_PREVIEW_CLOSE" message="Close print preview mode" tip="Cancel Preview"/>
+		<tip id="AFX_IDS_SCCLOSE" message="Close the active window and prompts to save the documents"/>
+		<tip id="AFX_IDS_SCMAXIMIZE" message="Enlarge the window to full size"/>
 		<tip id="AFX_IDS_SCMINIMIZE" message="Reduce the window to an icon"/>
 		<tip id="AFX_IDS_SCMOVE" message="Change the window position"/>
 		<tip id="AFX_IDS_SCNEXTWINDOW" message="Switch to the next document window"/>
@@ -2334,7 +2361,7 @@
 		<tip id="ID_CHILD_RESTORE" message="A kiválasztott ablak megnyitása."/>
 		<tip id="ID_DISCOVERY_ADD" message="Új szolgáltatás hozzáadása..."/>
 		<tip id="ID_DISCOVERY_ADVERTISE" message="Reklámozza GWebCache szolgáltatást egy másik létező GWebCache-nek."/>
-		<tip id="ID_DISCOVERY_BLOCKED" message="GWebCache szolgáltatás megjelenítése."/>
+		<tip id="ID_DISCOVERY_BLOCKED" message="Show blocked services in the Discovery window."/>
 		<tip id="ID_DISCOVERY_BROWSE" message="Statisztika megjelenítése."/>
 		<tip id="ID_DISCOVERY_EDIT" message="A kiválasztott szolgáltatás tulajdonságai."/>
 		<tip id="ID_DISCOVERY_GNUTELLA" message="Bootstrap szolgáltatás megjelenítése."/>
@@ -2382,7 +2409,7 @@
 		<tip id="ID_DOWNLOADS_SHOW_SOURCES" message="Jelenleg nem használt források megjelenítése."/>
 		<tip id="ID_DOWNLOADS_SOURCES" message="Több forrást keres a kiválasztott letöltés(ek)hez."/>
 		<tip id="ID_DOWNLOADS_URL" message="URL hozzáadása a letöltéshez..."/>
-		<tip id="ID_DOWNLOADS_VIEW_REVIEWS" message="Vélemények megtekintése a kiválasztott letöltésről"/>
+		<tip id="ID_DOWNLOADS_VIEW_REVIEWS" message="View reviews for the selected download."/>
 		<tip id="ID_HELP_ABOUT" message="A Shareaza névjegye."/>
 		<tip id="ID_HELP_CODEC" message="Minden ami kodek és videó."/>
 		<tip id="ID_HELP_FAQ" message="A Shareaza gyakran ismételt kérdésekhez vezet el."/>
@@ -2403,7 +2430,7 @@
 		<tip id="ID_HITMONITOR_CLEAR" message="Törli az összes találati bejegyzést."/>
 		<tip id="ID_HITMONITOR_PAUSE" message="Szünetelteti a megfigyelést."/>
 		<tip id="ID_HITMONITOR_SEARCH" message="Keresés a hálózaton a megadottak alapján."/>
-		<tip id="ID_HOSTCACHE_BT_CACHE" message="BitTorrent feltöltések megjelenítése."/>
+		<tip id="ID_HOSTCACHE_BT_CACHE" message="Show BitTorrent cached hosts."/>
 		<tip id="ID_HOSTCACHE_CONNECT" message="Kapcsolódik a kiválasztott kiszolgáló(k)hoz."/>
 		<tip id="ID_HOSTCACHE_DC_CACHE" message="Show DC++ cached hubs."/>
 		<tip id="ID_HOSTCACHE_DISCONNECT" message="Lekapcsolódik a kiválasztott szomszéd(ok)ról."/>
@@ -2413,10 +2440,10 @@
 		<tip id="ID_HOSTCACHE_G2_CACHE" message="Gnutella2 kiszolgálók megjelenítése."/>
 		<tip id="ID_HOSTCACHE_G2_HORIZON" message="Gnutella2 hubok megjelenítése."/>
 		<tip id="ID_HOSTCACHE_IMPORT" message="Ismert kiszolgálók listájának importálása, mint a &quot;server.met&quot; fájl..."/>
-		<tip id="ID_HOSTCACHE_KAD_CACHE" message="Gnutella1 kiszolgálók megjelenítése."/>
+		<tip id="ID_HOSTCACHE_KAD_CACHE" message="Show Kademlia cached hosts."/>
 		<tip id="ID_HOSTCACHE_PRIORITY" message="Próbáljon előbb ehhez a szerverhez kapcsolódni."/>
 		<tip id="ID_HOSTCACHE_REMOVE" message="Eltávolítja a kiválasztott kiszolgálókat a Kiszolgálók listájából."/>
-		<tip id="ID_IMPORT_DOWNLOADS" message="_eMule félkész letöltések importálása..."/>
+		<tip id="ID_IMPORT_DOWNLOADS" message="Import eMule partial downloads..."/>
 		<tip id="ID_LIBRARY_ADD" message="Új mappa a könyvtárban..."/>
 		<tip id="ID_LIBRARY_ALBUM_DELETE" message="Törli a kiválasztott mappát."/>
 		<tip id="ID_LIBRARY_ALBUM_OPEN" message="Album megnyitása."/>
@@ -2446,7 +2473,7 @@
 		<tip id="ID_LIBRARY_REBUILD" message="Új metaadat és hash értékek megadása."/>
 		<tip id="ID_LIBRARY_REBUILD_ANSI" message="Metaadat kijavítása egy másik kódtáblára."/>
 		<tip id="ID_LIBRARY_REFRESH" message="A könyvtár frissítése."/>
-		<tip id="ID_LIBRARY_REFRESH_METADATA" message="Metaadat f_rissítése"/>
+		<tip id="ID_LIBRARY_REFRESH_METADATA" message="Refresh file metadata"/>
 		<tip id="ID_LIBRARY_REMOVE" message="Eltávolítja a kiválasztott mappákat."/>
 		<tip id="ID_LIBRARY_RENAME" message="A fájl átnevezése."/>
 		<tip id="ID_LIBRARY_SCAN" message="Átnézi a mappá(k)at változások után kutatva."/>
@@ -2484,7 +2511,7 @@
 		<tip id="ID_MEDIA_PAUSE" message="Lejátszás szüneteltetése." tip="Szünet"/>
 		<tip id="ID_MEDIA_PLAY" message="Lejátszás elkezdése." tip="Lejátszás"/>
 		<tip id="ID_MEDIA_PLAYLIST" message="Lejátszólista-szerkesztő megjelenítése, elrejtése."/>
-		<tip id="ID_MEDIA_POSITION" message="A médián belül keres" tip="Seek"/>
+		<tip id="ID_MEDIA_POSITION" message="Seek to a position in the media file." tip="Seek"/>
 		<tip id="ID_MEDIA_PREVIOUS" message="Visszamegy az előző fájlra." tip="Előző"/>
 		<tip id="ID_MEDIA_PROPERTIES" message="A kiválasztott fájl tulajdonságainak szerkesztése."/>
 		<tip id="ID_MEDIA_RANDOM" message="Véletlenszerű lejátszás kapcsolgatása."/>
@@ -2499,15 +2526,15 @@
 		<tip id="ID_MEDIA_SIZE_ONE" message="Eredeti méretben mutatja a videót."/>
 		<tip id="ID_MEDIA_SIZE_THREE" message="Háromszoros méretben mutatja a videót."/>
 		<tip id="ID_MEDIA_SIZE_TWO" message="Kétszeres méretben mutatja a videót."/>
-		<tip id="ID_MEDIA_SPEED" message="Állítsa be a lejátszás sebességét" tip="Sebesség"/>
+		<tip id="ID_MEDIA_SPEED" message="Adjust the speed of the media file." tip="Sebesség"/>
 		<tip id="ID_MEDIA_STATUS" message="Média állapotsorának megjelenítése, elrejtése."/>
 		<tip id="ID_MEDIA_STOP" message="Lejátszás leállítása." tip="Stop"/>
 		<tip id="ID_MEDIA_VIS" message="Válassz egy képi megjelenítést..."/>
-		<tip id="ID_MEDIA_VOLUME" message="Állítsa be a megfelelő hangerőt" tip="Volume"/>
+		<tip id="ID_MEDIA_VOLUME" message="Adjust the audio volume." tip="Volume"/>
 		<tip id="ID_MEDIA_ZOOM" message="Zoom és képarány beállítása."/>
 		<tip id="ID_MONITOR_CLOSE" message="Monitorablak bezárása."/>
 		<tip id="ID_MUSICBRAINZ_ALBUMS" message="Look at all albums for this artist."/>
-		<tip id="ID_MUSICBRAINZ_MATCHES" message="Más másolatok után való keresés."/>
+		<tip id="ID_MUSICBRAINZ_MATCHES" message="Search for albums matching the selected file."/>
 		<tip id="ID_NEIGHBOURS_CHAT" message="Csevegő megnyitása a kiválasztott felhasználóval."/>
 		<tip id="ID_NEIGHBOURS_COPY" message="URI másolása."/>
 		<tip id="ID_NEIGHBOURS_DISCONNECT" message="Lekapcsolódik a kiválasztott szomszéd(ok)ról."/>
@@ -2528,14 +2555,14 @@
 		<tip id="ID_NETWORK_G1" message="Kapcsolódik a Gnutella1-hez."/>
 		<tip id="ID_NETWORK_G2" message="Kapcsolódik a Gnutella2-höz (erősen ajánlott)."/>
 		<tip id="ID_NETWORK_SEARCH" message="Új keresést indít a hálózaton..."/>
-		<tip id="ID_NEXT_PANE" message="Switch to the next window pane" tip="Következő a sorban"/>
+		<tip id="ID_NEXT_PANE" message="Switch to the next window pane" tip="Next Pane"/>
 		<tip id="ID_OPEN_DOWNLOADS_FOLDER" message="Open my folder of completed Downloads"/>
-		<tip id="ID_PREV_PANE" message="Visszamegy az előző fájlra." tip="Előző"/>
-		<tip id="ID_SCHEDULER_ACTIVATE" message="A kijelölt feltöltés(ek) törlése."/>
+		<tip id="ID_PREV_PANE" message="Switch back to the previous window pane" tip="Previous Pane"/>
+		<tip id="ID_SCHEDULER_ACTIVATE" message="Activates selected task(s) from the list."/>
 		<tip id="ID_SCHEDULER_ADD" message="Adds a new task to scheduler list."/>
-		<tip id="ID_SCHEDULER_DEACTIVATE" message="Kapcsolódás a kiválasztott hálózatokhoz."/>
-		<tip id="ID_SCHEDULER_EDIT" message="A kiválasztott biztonsági szabály szerkesztése..."/>
-		<tip id="ID_SCHEDULER_REMOVE" message="A kiválasztott letöltés(ek) törlése."/>
+		<tip id="ID_SCHEDULER_DEACTIVATE" message="Deactivates selected tasks."/>
+		<tip id="ID_SCHEDULER_EDIT" message="Edit the selected task..."/>
+		<tip id="ID_SCHEDULER_REMOVE" message="Removes selected task(s) from the list."/>
 		<tip id="ID_SCHEDULER_REMOVE_ALL" message="Removes all scheduled tasks."/>
 		<tip id="ID_SEARCH_CHAT" message="Csevegő megnyitása a kiválasztott felhasználóval."/>
 		<tip id="ID_SEARCH_CLEAR" message="Keresési eredmények törlése."/>
@@ -2572,11 +2599,11 @@
 		<tip id="ID_SYSTEM_COPY" message="Copy selected line(s) of status log."/>
 		<tip id="ID_SYSTEM_TIMESTAMP" message="Minden sorhoz időbélyeget ad."/>
 		<tip id="ID_SYSTEM_VERBOSE" message="Részletes napló megjelenítése."/>
-		<tip id="ID_SYSTEM_VERBOSE_DEBUG" message="Jelmagyarázat megjelenítése."/>
-		<tip id="ID_SYSTEM_VERBOSE_ERROR" message="Jelmagyarázat megjelenítése."/>
-		<tip id="ID_SYSTEM_VERBOSE_INFO" message="Rácsvolnalak megjelenítése."/>
+		<tip id="ID_SYSTEM_VERBOSE_DEBUG" message="Display all."/>
+		<tip id="ID_SYSTEM_VERBOSE_ERROR" message="Display errors only."/>
+		<tip id="ID_SYSTEM_VERBOSE_INFO" message="Display infos and above."/>
 		<tip id="ID_SYSTEM_VERBOSE_NOTICE" message="Display notices and above."/>
-		<tip id="ID_SYSTEM_VERBOSE_WARNING" message="Rácsvolnalak megjelenítése."/>
+		<tip id="ID_SYSTEM_VERBOSE_WARNING" message="Display warnings and above."/>
 		<tip id="ID_TAB_CONNECT" message="Le- és felkapcsolódás a hálózatokra."/>
 		<tip id="ID_TAB_HOME" message="Vissza a Shareaza kezdőlapjára."/>
 		<tip id="ID_TAB_IRC" message="Show the IRC Chat window."/>
@@ -2627,7 +2654,7 @@
 		<tip id="ID_VIEW_NEIGHBOURS" message="A HÁLÓZAT ablak elrejtése, megjelenítése."/>
 		<tip id="ID_VIEW_PACKETS" message="A CSOMAGFORGALOM ablak elrejtése, megjelenítése."/>
 		<tip id="ID_VIEW_RESULTS_MONITOR" message="A TALÁLATOK FIGYELÉSE ablak elrejtése, megjelenítése."/>
-		<tip id="ID_VIEW_SCHEDULER" message="A BIZTONSÁG ablak elrejtése, megjelenítése."/>
+		<tip id="ID_VIEW_SCHEDULER" message="Show or hide SCHEDULER window."/>
 		<tip id="ID_VIEW_SEARCH_MONITOR" message="A KERESÉSEK FIGYELÉSE ablak elrejtése, megjelenítése."/>
 		<tip id="ID_VIEW_SECURITY" message="A BIZTONSÁG ablak elrejtése, megjelenítése."/>
 		<tip id="ID_VIEW_SYSTEM" message="A RENDSZER ablak elrejtése, megjelenítése."/>
@@ -2636,7 +2663,7 @@
 		<tip id="ID_VIEW_UPLOADS" message="A FELTÖLTÉSEK ablak elrejtése, megjelenítése."/>
 		<tip id="ID_VIEW_WINDOWED" message="A Shareaza használata ablakos nézetben."/>
 		<tip id="ID_WEBSERVICES_LIST" message="Kattintson a webszolgáltatásra, hogy több információt tudjon meg a fájlról."/>
-		<tip id="ID_WEBSERVICES_MUSICBRAINZ" message="A ShareMonkey segítségével több információt tudhat meg a fájlról."/>
+		<tip id="ID_WEBSERVICES_MUSICBRAINZ" message="Search for the same artist songs using MusicBrainz service."/>
 		<tip id="ID_WINDOW_ARRANGE" message="Arrange icons at the bottom of the window" tip="Arrange Icons"/>
 		<tip id="ID_WINDOW_CASCADE" message="Minden ablak teljes méretűvé alakítása."/>
 		<tip id="ID_WINDOW_MONITOR" message="A sávszélfigyelő elrejtése, megjelenítése."/>
@@ -2711,8 +2738,8 @@
 		<string id="8064" value="Kapcsolódva %lu szomszéddal.  %s a megosztás mérete."/>
 		<string id="8065" value="Kapcsolódás..."/>
 		<string id="8066" value="Nincs kapcsolat."/>
-		<string id="8067" value="Le: %s | Fel: %s  [D:%I64i/U:%I64i]"/>
-		<string id="8068" value="[H:%I64i]  Le: %s | Fel: %s  [D:%I64i/U:%I64i]"/>
+		<string id="8067" value="%s in : %s out [D:%I64i/U:%I64i]"/>
+		<string id="8068" value="[H:%I64i] %s in : %s out [D:%I64i/U:%I64i]"/>
 		<string id="8069" value="Kapcsolódás"/>
 		<string id="8070" value="Kapcsolódás..."/>
 		<string id="8071" value="Kapcsolódva"/>
@@ -2789,7 +2816,7 @@
 		<string id="8239" value="Kész"/>
 		<string id="8240" value="Letöltés áthelyezése:"/>
 		<string id="8241" value="Hibaellenőrzés:"/>
-		<string id="8243" value="Feltöltések"/>
+		<string id="8243" value="Upload ratio:"/>
 		<string id="8244" value="Megjegyzések száma:"/>
 		<string id="8288" value="Tallózás a könyvtárban"/>
 		<string id="8289" value="Tallózás "/>
@@ -2832,7 +2859,7 @@
 		<string id="8335" value="A források ehhez a fájlhoz passzívak"/>
 		<string id="8336" value="A források ehhez a fájlhoz bizonytalanok"/>
 		<string id="8337" value="Megbízhatatlan"/>
-		<string id="8338" value="Készült:"/>
+		<string id="8338" value="Free:"/>
 		<string id="13000" value="Biztosan törölni akarja a kiválasztott biztonsági szabályokat? Később már nem lehet visszavonni."/>
 		<string id="13001" value="Az interneten megosztott fájlok"/>
 		<string id="16063" value="Az UPnP port hozzárendelés a 10 próbálkozás után sem sikerült."/>
@@ -2852,7 +2879,7 @@
 		<string id="16077" value="A %s már blokkolva van a biztonsági beállításokban."/>
 		<string id="16078" value="Biztonsági szabály hozzáadása, hogy blokkolja: %s."/>
 		<string id="16079" value="Biztos le akarsz kapcsolódni?"/>
-		<string id="16080" value="Nincs kapcsolat a hálózatokkal."/>
+		<string id="16080" value="Would you like to always connect to this network?"/>
 		<string id="16081" value="Keresési kérvény elküldése: &quot;%s&quot; ide: %s."/>
 		<string id="16083" value="A PC hub módba való kényszerítése negatívan befolyásolhatja a hálózati teljesítményt. Általában a legjobb, ha a Shareaza dönti el, hogy érdemes-e átkapcsolni vagy nem.\n\nHub módban nem kapsz jobb keresési eredményt, nem teszel szert előnyre.\n\nBiztos, hogy ezt akarja tenni?"/>
 		<string id="16085" value="A Gnutella2 a Shareaza fő hálózata. Kikapcsolásával lecsökkenhet a találatok száma és minősége kereséskor. Biztos, hogy ezt akarja tenni?"/>
@@ -2977,7 +3004,7 @@
 		<string id="16326" value=" %s a feltöltési kiszolgáló a(z) &quot;%s&quot; fájlt kéte más SHA1 értékkel."/>
 		<string id="16327" value="A(z) &quot;%s&quot; feltöltésének megtagadása ide: %s (%s), a kliens nem támogatja a sorbanállást."/>
 		<string id="16328" value="Push kapcsolat létrehozva: %s, viszontválaszra várok..."/>
-		<string id="16329" value="Nem tudom megnyitni a feltöltéshez: &quot;%s&quot; ide: %s, lemez/fájlhiba."/>
+		<string id="16329" value="Can't open &quot;%s&quot; to upload to host %s due to disk or file error."/>
 		<string id="16330" value="Az adatrész %I64i-%I64i a(z) &quot;%s&quot; fájlból a %s (%s) címre való átküldése."/>
 		<string id="16331" value="A(z) &quot;%s&quot; egy része átküldve ide: %s."/>
 		<string id="16332" value="%s bejövő kapcsolat egy HTTP feltöltési kérelem."/>
@@ -3028,7 +3055,7 @@
 		<string id="16377" value="HTTP őr"/>
 		<string id="16378" value="Host &quot;%s&quot; sent a 416, without providing available ranges. Closing connection."/>
 		<string id="16379" value="Könyvtári fájlok"/>
-		<string id="16380" value="eDonkey őr"/>
+		<string id="16380" value="DC++ Guard"/>
 		<string id="16384" value="Biztos, hogy futtatni akarja: &quot;%s&quot; ?\n\nNéhány fájl káros a számítógépnek. Ha nem bízik meg a fájlban, inkább futtasson le egy vírusellenőrzét."/>
 		<string id="16385" value="%i fájl metaadat részét akarja módosítani. Biztos ezt akarja?"/>
 		<string id="16386" value="Fájl metaadatának a szerkesztése: %i"/>
@@ -3052,7 +3079,7 @@
 		<string id="16407" value="Meg akarja-e akadályozni, hogy minden fájl előtt kérdezzen?"/>
 		<string id="16408" value="URI másolása"/>
 		<string id="16409" value="URI exportálása..."/>
-		<string id="16410" value="A kész és a félkész fájlok ne legyenek azonos mappában!"/>
+		<string id="16410" value="A subfolder of the selected folder &quot;%s&quot; is already part of your library.\nAdding this folder will cause re-hashing of some files.\n\nDo you want to continue ?"/>
 		<string id="16411" value="Nem tudom mozgatni: %s. Talán egy másik program használja.\n\nInkább másolni akarja?"/>
 		<string id="16412" value="Szellemfájl"/>
 		<string id="16413" value="Új csoport"/>
@@ -3084,8 +3111,8 @@
 		<string id="16525" value="Gnutella csomagok irányítva"/>
 		<string id="16526" value="Gnutella csomagok ejtve"/>
 		<string id="16527" value="Gnutella csomagok elveszítve"/>
-		<string id="16528" value="Gnutella helyi kérvények"/>
-		<string id="16529" value="Gnutella helyi kérvények"/>
+		<string id="16528" value="Gnutella Incoming Queries"/>
+		<string id="16529" value="Gnutella Processed Queries"/>
 		<string id="16532" value="Teljes TCP letöltési sávszél"/>
 		<string id="16533" value="Teljes TCP feltöltési sávszél"/>
 		<string id="16534" value="Teljes UDP letöltési sávszél"/>
@@ -3215,7 +3242,7 @@
 		<string id="17128" value="eDonkey szerver"/>
 		<string id="17129" value="eDonkey (LowID)"/>
 		<string id="17130" value="eDonkey (HighID)"/>
-		<string id="17131" value="Kapcsolat"/>
+		<string id="17131" value="DC++ Hub Connection"/>
 		<string id="17216" value="eDonkey szerverhez való kapcsolódás: %s..."/>
 		<string id="17217" value="eDonkey szerverhez kapcsolódva: %s, viszontválasz..."/>
 		<string id="17218" value="ED2K[%s] %s"/>
@@ -3256,7 +3283,7 @@
 		<string id="17477" value="BitTorrent kapcsolódáskor rossz fájllal válaszolt: %s ."/>
 		<string id="17478" value="BitTorrent kapcsolódáskor ismeretlen fájllal válaszolt: %s ."/>
 		<string id="17479" value="BitTorrent kapcsolódás létrehozva: %s, a fájl: &quot;%s&quot;."/>
-		<string id="17480" value="BitTorrent kapcsolódáskor ismeretlen fájllal válaszolt: %s ."/>
+		<string id="17480" value="BitTorrent coupling with %s requested an inactive file."/>
 		<string id="17481" value="BitTorrent leírófájlt kaptam: &quot;%s&quot;"/>
 		<string id="17482" value="Nem tudom a BitTorrent fájlt  kielemezni: &quot;%s&quot;."/>
 		<string id="17483" value="Hiba a BitTorrent tracker válaszánál erre a fájlra: &quot;%s&quot; : &quot;%s&quot;."/>
@@ -3270,13 +3297,13 @@
 		<string id="17491" value="A(z) &quot;%s&quot; torrent már a letöltési listában van nem lehet már seedelni."/>
 		<string id="17492" value="Hiba a torrent betöltésekor: &quot;%s&quot;. Ez nem egy érvényes torrent."/>
 		<string id="17493" value="Nem lehet BitTorrent megosztást létrehozni: &quot;%s&quot;."/>
-		<string id="17494" value="A torrent tartalmazza ezt a fájlt: &quot;%s&quot;, de nem található a könyvtárban. Ha lehet, mozgassa át ezt a fájlt a torrentfájl mellé."/>
+		<string id="17494" value="This torrent includes the file &quot;%s&quot;, but Shareaza cannot find this file in your library. If possible, move the file to a shared folder and try again."/>
 		<string id="17495" value="A torrent tartalmazza ezt a fájlt: &quot;%s&quot; aminek %s a verziója, ellenben az ön verziója: %s."/>
 		<string id="17496" value="A &quot;%s&quot; fájl BitTorrent fájlba való másolása közben hiba keletkezett."/>
 		<string id="17497" value="Ismeretlen hiba a fájl seedelésekor &quot;%s&quot;."/>
 		<string id="17498" value="Hibát találtam a következő fájlban: &quot;%s&quot;."/>
 		<string id="17501" value="A tracker nem elérhető"/>
-		<string id="17503" value="Tracker nem működik, másikat próbálok. (%i / %i)"/>
+		<string id="17503" value="Trying next tracker (%i of %i)"/>
 		<string id="17505" value="BitTorrent kapcsolat ejtve: %s"/>
 		<string id="17506" value="BitTorrent viszontválasz ejtve: %s"/>
 		<string id="17507" value="BitTorrent összekapcsolódás ejtve: %s"/>
@@ -3298,16 +3325,16 @@
 		<string id="18509" value="Nem tudja a letöltést késznek tekinteni és ellenőrizni, mert nincs hozzá megfelelő hash érték."/>
 		<string id="18510" value="Késznek veszis a letöltést és úgy ellenőrzi? A fájl újra lesz hashelve, jó és rossz részek is elfogadásra kerülnek."/>
 		<string id="18511" value="BitTorrent kapcsolódás visszautasítva: %s, több kapcsolat már nem hozható létre."/>
-		<string id="18512" value="Biztos, hogy minden letöltést törölni akar a csoportból?"/>
-		<string id="18513" value="A beírt eDonkey érték érvénytelen. Ellenőrizze és próbálja meg újra."/>
-		<string id="18514" value="Egy más SHA1 hash értéket adott meg, ami különbözik a jelenlegitől.  Biztos ki akarja cserélni?"/>
+		<string id="18512" value="Are you sure you want to cancel this download but save incomplete file(s)?"/>
+		<string id="18513" value="You have typed an %s hash value, however it is invalid. Please check it and try again."/>
+		<string id="18514" value="You have provided an %s hash value which is different to the one currently associated with this download. Are you sure you want to change the %s hash now?"/>
 		<string id="18515" value="The selected download item currently has some Task attached, please wait and do it later."/>
 		<string id="19000" value="Távoli használat kikapcsolva."/>
 		<string id="19001" value="Egy felhasználónevet és egy jelszót kell választania."/>
 		<string id="19002" value="Nem tudom fogadni a kapcsolatokat, URL érvénytelen."/>
 		<string id="19103" value="Welcome to Shareaza Chat!"/>
 		<string id="19104" value="Please respect others while using this service"/>
-		<string id="19105" value="Csevegés"/>
+		<string id="19105" value="Chat!"/>
 		<string id="20000" value="Nincs elérhető URN"/>
 		<string id="20001" value="Bezárás"/>
 		<string id="20002" value="/"/>
@@ -3385,15 +3412,15 @@
 		<string id="20245" value="New Folder"/>
 		<string id="20246" value="Command-line options:\n\n-tray : Disable startup splash screen and send application to tray\n-nosplash : Disable startup splash screen\n-nowarn : Disable alpha (daily builds) version warning dialog\n-wait : Wait for other application instance exit\n\nInterface modes:\n\n-basic : Start application in Basic interface mode\n-tabbed : Start application in Tabbed interface mode\n-windowed : Start application in Windowed interface mode\n\nSystem options:\n\n-RegServer : Register internal components for everyone\n-UnRegServer : Un-register internal components for everyone\n-RegServerPerUser : Register internal components for current user\n-UnRegServerPerUser : Un-register internal components for current user"/>
 		<string id="20247" value="Failed to load metadata schemas. Please reinstall application."/>
-		<string id="20248" value="Nem választott ki megosztani való mappákat. Biztos, hogy ezt akarja?"/>
+		<string id="20248" value="You selected %u files. Are you sure?"/>
 		<string id="20249" value="Off"/>
 		<string id="20250" value="Low"/>
-		<string id="20251" value="_Egyszerű nézet"/>
+		<string id="20251" value="Normal"/>
 		<string id="20252" value="High"/>
 		<string id="20253" value="Skin load error: %s. Element: %s"/>
 		<string id="20254" value="Loading skin: %s"/>
 		<string id="20255" value="Are you sure you want to remove all scheduled tasks? This cannot be undone."/>
-		<string id="20256" value="Shareaza keresés"/>
+		<string id="20256" value="System: Start Shareaza"/>
 		<string id="20257" value="Bandwidth: Full Speed"/>
 		<string id="20258" value="Bandwidth: Reduced Speed"/>
 		<string id="20259" value="Bandwidth: Stop"/>
@@ -3583,13 +3610,13 @@
 			<control/>
 		</dialog>
 		<dialog name="CDownloadsSettingsPage" cookie="BuEdBuBuStCoBuStEdmsStEdmsStEdmsBuStCoStCoBuBuEdBu" caption="Letöltések">
-			<control caption="_Kész letöltések mappája"/>
+			<control caption="Save Completed Files Here"/>
 			<control/>
 			<control/>
 			<control caption="Scan every completed file with AntiVirus"/>
-			<control caption="Link típusa:"/>
+			<control caption="Select AntiVirus:"/>
 			<control/>
-			<control caption="Letöltések _száma"/>
+			<control caption="Number of Downloads"/>
 			<control caption="Max fájlok:"/>
 			<control/>
 			<control/>
@@ -3599,13 +3626,13 @@
 			<control caption="Fájlon belüli forgalom:"/>
 			<control/>
 			<control/>
-			<control caption="Sá_vszél"/>
+			<control caption="Limits"/>
 			<control caption="Korlátozás:"/>
 			<control/>
 			<control caption="Maximum sorbanállás:"/>
 			<control/>
 			<control caption="Csak a kapcsolatban lévő hálózatokon van forgalom"/>
-			<control caption="_Félkész letöltések mappája"/>
+			<control caption="Store Temporary Incomplete Files Here"/>
 			<control/>
 			<control/>
 		</dialog>
@@ -3663,10 +3690,10 @@
 		<dialog name="CGnutellaSettingsPage" cookie="BuBuCoBuBuCoEdmsEdmsEdmsEdmsEdmsEdmsBuBuBuBuStBuStStStBuStBuStStStBu" caption="Gnutella">
 			<control caption="Gnutella2 hálózat"/>
 			<control caption="Mindig kapcsolódjon a G2-höz"/>
-			<control caption="Kapcsolódás a G2-höz"/>
+			<control caption="Optimal|Leaf|Hub"/>
 			<control caption="Mód:"/>
-			<control caption="Optimális|Leaf|Hub"/>
-			<control caption="G_2 kapcsolódások száma"/>
+			<control caption="Connect to Gnutella1 today"/>
+			<control caption="Optimal|Leaf|Ultrapeer"/>
 			<control/>
 			<control/>
 			<control/>
@@ -3680,7 +3707,7 @@
 			<control/>
 			<control/>
 			<control caption="Mód:"/>
-			<control caption="Optimális|Leaf|Ultrapeer"/>
+			<control caption="Leaf to Hub"/>
 			<control caption="G_1 kapcsolódások száma"/>
 			<control caption="Gnutella2"/>
 			<control caption="Mode: "/>
@@ -3929,7 +3956,7 @@
 			<control/>
 			<control/>
 			<control caption="_Személyes"/>
-			<control caption="|Férfi|Nő"/>
+			<control caption="Male|Female"/>
 			<control caption="Nem:"/>
 			<control/>
 			<control caption="Kor:"/>
@@ -4005,8 +4032,8 @@
 		</dialog>
 		<dialog name="CLanguageDlg" cookie="" caption="Nyelv kiválasztása">
 		</dialog>
-		<dialog name="CConnectToDlg" cookie="BuCoEdBuCoBuBuBu" caption="Manuális kapcsolódás|Fájllista és adatlap">
-			<control caption="Kapcsolódás ehhez|Fájllista és adatlap"/>
+		<dialog name="CConnectToDlg" cookie="BuCoEdBuCoBuBuBu" caption="Connect To|Browse User|Chat to User">
+			<control caption="Initiate a new connection to host or server:|Browse this user:|Chat to this user:"/>
 			<control/>
 			<control/>
 			<control caption="Protokoll"/>
@@ -4073,7 +4100,7 @@
 			<control caption="Szolgáltatás _címe"/>
 			<control/>
 			<control caption="Típusa:"/>
-			<control caption="Gnutella Bootstrap|GWebCache|Server.met URL|Blokkolva"/>
+			<control caption="Gnutella Bootstrap|G1 GWebCache|G2 GWebCache|G1/G2 GWebCache|Server.met URL|Blocked"/>
 			<control caption="OK"/>
 			<control caption="Mégse"/>
 		</dialog>
@@ -4263,7 +4290,7 @@
 			<control caption="%lu fájlt választott ki URI exportálásra. Válasza ki a megfelelő formátumot és kattintson a Mentés gombra."/>
 			<control/>
 			<control caption="Adatok:"/>
-			<control caption="Tiger Root|SHA1|MD5|ED2K (CMD4)|Fájlnév|Fájlnév (URI)|Alap fájlnév|Fájl kiterjesztése|Fájl mérete|Fájl mérete (bájlt)|Mappa útvonal|Helyi hálózati kiszolgáló|Helyi hálózati port"/>
+			<control caption="Tiger Root|SHA1|MD5|ED2K (CMD4)|BitTorrent|Filename|Filename (URI)|Base Filename|File Extension|File Size|File Size (bytes)|Folder Path|Local Host|Local Port|Link|Link (URI)"/>
 			<control caption="Link típusa:"/>
 			<control caption="Magnet|eDonkey|Magnet HTML|eDonkey HTML"/>
 			<control caption="_Másolás"/>
@@ -4433,13 +4460,13 @@
 			<control/>
 			<control/>
 			<control/>
-			<control caption="Készítő:"/>
+			<control caption=" As needed| When ratio over 100%| Only when requested| Never"/>
 			<control/>
 			<control caption="Megjegyzés:"/>
 			<control caption="Név:"/>
 			<control caption="Készült:"/>
 			<control caption="Új letöltés indítása:"/>
-			<control caption=" Ha szükséges| Ha az arány több, mint 100%| Ha kérik| Soha"/>
+			<control caption="Comments:"/>
 			<control caption="Transfers:"/>
 			<control caption="Teljes feltöltés:"/>
 			<control caption="Megjegyzés:"/>
@@ -4452,7 +4479,7 @@
 			<control/>
 			<control/>
 			<control/>
-			<control caption="Tracker:"/>
+			<control caption="Disabled|Single Tracker|Multi-tracker|Multi-tracker (locked)"/>
 			<control caption="_Refresh"/>
 			<control/>
 			<control caption="Kész (Seedek):"/>
@@ -4528,7 +4555,7 @@
 			<control/>
 			<control caption="Gnutella1"/>
 			<control caption="Gnutella2"/>
-			<control caption="eDonkey"/>
+			<control caption="eDoonkey2K"/>
 			<control caption="DC++"/>
 			<control caption="BitTorrent"/>
 			<control caption="Select the event type:"/>
@@ -4678,8 +4705,8 @@
 		</list>
 		<list name="CSchedulerWnd">
 			<column from="Action" to="Feladat"/>
-			<column from="Trigger" to="TigerTree"/>
-			<column from="Next Run" to="Következő"/>
+			<column from="Trigger" to="Trigger"/>
+			<column from="Next Run" to="NextRun"/>
 			<column from="Active" to="Aktív"/>
 			<column from="Status" to="Helyzet"/>
 			<column from="Description" to="Leírás"/>

@@ -2839,7 +2839,7 @@
 		<string id="8335" value="此文件来源有防火墙"/>
 		<string id="8336" value="此文件来源可能不稳定"/>
 		<string id="8337" value="未受信任"/>
-		<string id="8338" value="已经创建:"/>
+		<string id="8338" value="Free:"/>
 		<string id="13000" value="您是否确定要删除选中的安全规则？该操作无法还原。"/>
 		<string id="13001" value="通过互联网分享文件"/>
 		<string id="16063" value="UPnP 端口映射失败超过10次。"/>
@@ -2856,7 +2856,7 @@
 		<string id="16074" value="不能解析 &quot;%s&quot; 主机。"/>
 		<string id="16075" value="安全管理器拒绝来自 %s 主机的连接。"/>
 		<string id="16076" value="安全管理器禁止连接 %s 主机。"/>
-		<string id="16077" value="您的安全策略已经屏蔽了该地址。"/>
+		<string id="16077" value="The address %s is already blocked by your security rules."/>
 		<string id="16078" value="添加安全策略屏蔽 %s 主机。"/>
 		<string id="16079" value="您确定要断开连接吗？"/>
 		<string id="16080" value="您正运行任务计划在 '只连接 G2 ' 的模式。您是否要关闭该模式？那样所有的活动网络将会被连接。"/>
@@ -2881,7 +2881,7 @@
 		<string id="16145" value="已和 Gnutella 中的 %s 主机成功建立连接 (G%i.%i : %s)。"/>
 		<string id="16146" value="因为传输中的错误数据导致和 %s 主机的握手失败。"/>
 		<string id="16147" value="按照主机意图，关闭到 %s 主机的剩余连接 (%s 主机的 %i 端口)。"/>
-		<string id="16148" value="到 %s 主机的连接被拒绝。"/>
+		<string id="16148" value="Connection to %s rejected (%s)."/>
 		<string id="16150" value="关闭到 %s 主机的剩余连接。"/>
 		<string id="16151" value="拒绝来自 %s 主机的连接，因为这是一个屏蔽的子端节点。"/>
 		<string id="16152" value="集端网络的 %s 主机不认可我们为集端，正在关闭连接。"/>
@@ -2930,8 +2930,8 @@
 		<string id="16272" value="目标下载主机 %s 没有要下载的 &quot;%s&quot; 文件。"/>
 		<string id="16273" value="目标下载主机 %s 的 HTTP 响应是非法的。"/>
 		<string id="16274" value="下载主机 %s 响应时伴随 %s (%s)。"/>
-		<string id="16275" value="下载主机的 &quot;%s&quot; 版本有不同的 URN，正在终止。"/>
-		<string id="16276" value="下载主机的 &quot;%s&quot; 版本有着不同的长度，正在终止。"/>
+		<string id="16275" value="Download host %s's version of &quot;%s&quot; has a different URN, aborting."/>
+		<string id="16276" value="Download host %s's version of &quot;%s&quot; has a different length, aborting."/>
 		<string id="16277" value="下载主机 %s 响应了 &quot;%s&quot; 无用的数据范围，待定。"/>
 		<string id="16278" value="到 %s 的下载连接已经丢失。"/>
 		<string id="16279" value="接收到 %s 的下载内容 (%s)。"/>
@@ -3035,7 +3035,7 @@
 		<string id="16377" value="HTTP 保护"/>
 		<string id="16378" value="主机 &quot;%s&quot; 发送了一个 416，没有提供可用的范围。关闭连接。"/>
 		<string id="16379" value="库文件"/>
-		<string id="16380" value="eDonkey 保护"/>
+		<string id="16380" value="DC++ Guard"/>
 		<string id="16384" value="确定要载入 &quot;%s&quot; 此文件吗？\n\n某些文件可能对您的电脑有害。载入文件前最好能确定文件的用途。"/>
 		<string id="16385" value="您将修改 %i 文件的元数据，确定要继续吗？"/>
 		<string id="16386" value="正在修改 %i 的元数据。"/>
@@ -3045,7 +3045,7 @@
 		<string id="16392" value="点击连接按钮开始。"/>
 		<string id="16393" value="此文件 &quot;%s&quot; 未通过 Hash 确认测试，有可能不是您计划要下载的文件。确定要打开吗？"/>
 		<string id="16394" value="确定要移除 &quot;可能不安全&quot; 的文件吗？"/>
-		<string id="16395" value="您的下载完成文件夹不在收藏中。\n\n将下载完成文件夹包括在收藏中，查看和管理将更加容易，还可以使用 Shareaza 的验证功能和自动更新。共享放在收藏中下载文件是不必要的。您可以单独选择是否共享文件。\n\n确定马上把下载文件加入收藏中吗？"/>
+		<string id="16395" value="Your downloaded files folder &quot;%s&quot; is not yet in your library.\n\nIncluding your downloaded files folder in your library makes it easier to view and organise new downloads, and lets you take advantage of advanced Shareaza features such as download verification and automatic upgrading. Placing downloaded files in your library does not necessarily require you to share them: you can choose whether or not to share files independently.\n\nWould you like to add your downloaded files folder to your library now?"/>
 		<string id="16396" value="下载文件夹已经被添加到收藏中。您想要共享吗？"/>
 		<string id="16397" value="您确定要删除 %i 个选定的专辑文件夹吗？\n\n注意: 仅仅是删除文件夹本身，并不包括专辑文件夹。"/>
 		<string id="16398" value="Shareaza 不能把 \n\n%s\n 更名为 \n%s"/>
@@ -3091,8 +3091,8 @@
 		<string id="16525" value="路由的 Gnutella 数据包"/>
 		<string id="16526" value="抛弃的 Gnutella 数据包"/>
 		<string id="16527" value="丢失的 Gnutella 数据包"/>
-		<string id="16528" value="Gnutella 本地查询"/>
-		<string id="16529" value="Gnutella 本地查询"/>
+		<string id="16528" value="Gnutella Incoming Queries"/>
+		<string id="16529" value="Gnutella Processed Queries"/>
 		<string id="16532" value="全部 TCP 接收带宽"/>
 		<string id="16533" value="全部 TCP 传送带宽"/>
 		<string id="16534" value="全部 UDP 接收带宽"/>
@@ -3222,7 +3222,7 @@
 		<string id="17128" value="edonkey 服务器"/>
 		<string id="17129" value="edonkey (LowID)"/>
 		<string id="17130" value="edonkey (HighID)"/>
-		<string id="17131" value="连接"/>
+		<string id="17131" value="DC++ Hub Connection"/>
 		<string id="17216" value="初始化连接到 edonkey 服务器 %s..."/>
 		<string id="17217" value="连接到 edonkey 服务器 %s，握手中..."/>
 		<string id="17218" value="ED2K[%s] %s"/>
@@ -3846,13 +3846,13 @@
 		</dialog>
 		<dialog name="CWizardConnectionPage" cookie="StStCoStCoStCoStCoStms" caption="欢迎使用 Shareaza [1/6]">
 			<control caption="为获得最佳效果，Shareaza 必须知道您的互联网连接。"/>
-			<control caption=" (请选择)| 我在家中使用互联网| 我通过大学的局域网连接到互联网| 我通过办公室中的局域网连接到互联网| 我在旅馆或机场使用互联网"/>
-			<control caption="您的网络是否被防火墙保护，或者使用了 NAT 路由？"/>
-			<control caption=" 是，我可以接受所有传入连接| 不，我无法从互联网上接受传入连接| 我不知道，请自动选择防火墙状态"/>
+			<control caption="Choose the type of your Internet connection:"/>
+			<control caption="Dial up Modem|ISDN|ADSL (256K)|ADSL (512K)|ADSL (768K)|ADSL (1.5M)|ADSL (4.0M)|ADSL2 (8.0M)|ADSL2 (12.0M)|ADSL2+ (24.0M)|Cable Modem/SDSL|T1|T3|LAN|OC3"/>
+			<control caption="Or choose the download speed:"/>
 			<control/>
-			<control caption=" 是，我可以完全访问互联网| 不，但我将为 Shareaza 设置端口映射| 不，所以我无法从互联网接受传入连接| 我不知道，请自动选择防火墙状态"/>
+			<control caption="and the upload speed:"/>
 			<control/>
-			<control caption="| 调制解调器拨号| ISDN| ADSL (256K)| ADSL (512K)| ADSL (768K)| ADSL (1.5M)| ADSL (4.0M)| ADSL2 (8.0M)| ADSL2 (12.0M)| ADSL2+ (24.0M)| Cable Modem/SDSL| T1| T3| LAN| OC3"/>
+			<control caption="Do you want to automatically setup port-forwarding by using UPnP?"/>
 			<control/>
 			<control caption="状态:"/>
 			<control/>
@@ -3908,7 +3908,7 @@
 		<dialog name="CDonkeyImportDlg" cookie="StBuBuEdBu" caption="导入 edonkey 下载">
 			<control caption="Shareaza 检测到您已安装了其他的电驴程序〉您是否要导入所有未完成的下载到 Shareaza ？"/>
 			<control caption="是"/>
-			<control caption="是"/>
+			<control caption="No|Cancel"/>
 			<control/>
 			<control caption="关闭"/>
 		</dialog>
@@ -3936,7 +3936,7 @@
 			<control/>
 			<control/>
 			<control caption="基本信息(_V):"/>
-			<control caption="|男|女"/>
+			<control caption="Male|Female"/>
 			<control caption="性别:"/>
 			<control/>
 			<control caption="年龄:"/>
@@ -4012,8 +4012,8 @@
 		</dialog>
 		<dialog name="CLanguageDlg" cookie="" caption="选择语言">
 		</dialog>
-		<dialog name="CConnectToDlg" cookie="BuCoEdBuCoBuBuBu" caption="连接到|浏览用户">
-			<control caption="初始化新的连接到主机或服务器:|浏览该用户:"/>
+		<dialog name="CConnectToDlg" cookie="BuCoEdBuCoBuBuBu" caption="Connect To|Browse User|Chat to User">
+			<control caption="Initiate a new connection to host or server:|Browse this user:|Chat to this user:"/>
 			<control/>
 			<control/>
 			<control caption="网络协议(_P):"/>
@@ -4270,9 +4270,9 @@
 			<control caption="您已经选择 %lu 个文件作为 Shareaza 支持的 URI 导出。请为这些 URI 选择格式，并单击保存:"/>
 			<control/>
 			<control caption="插入标记:"/>
-			<control caption="插入标记:"/>
-			<control caption="Tiger Root|SHA1|MD5|ED2K (CMD4)|BitTorrent|文件名|文件名 (URI)|基础文件名|文件扩展名|文件大小|文件大小 (字节)|文件夹路径|本地主机|本地端口"/>
-			<control caption="选择预设:"/>
+			<control caption="Tiger Root|SHA1|MD5|ED2K (CMD4)|BitTorrent|Filename|Filename (URI)|Base Filename|File Extension|File Size|File Size (bytes)|Folder Path|Local Host|Local Port|Link|Link (URI)"/>
+			<control caption="Select preset:"/>
+			<control caption="Magnet|eDonkey|Magnet HTML|eDonkey HTML"/>
 			<control caption="复制(_C)"/>
 			<control caption="复制(_C)"/>
 			<control/>
@@ -4365,7 +4365,7 @@
 			<control caption="Shareaza 能够记住此文件，当您再次搜索到它时将会给予提示。请选择删除此文件的原因:"/>
 			<control caption="我不想添加注释。"/>
 			<control caption="这个文件名不正确，可能会产生误导。"/>
-			<control caption="这个文件的质量太差。"/>
+			<control caption="Just deleting, keep my comments|This file is named incorrectly, and could be misleading|This file is of very poor quality|This file is a fake, or is corrupt or somehow unusable|Replace my comments with the new ones"/>
 			<control caption="这个文件是假的，损坏或者不可用。"/>
 			<control caption="(未评级)|假的/损坏/误导|差的|一般|不错|很好|极棒"/>
 			<control caption="您可以输入一段简短的记录来描述您为什么删除这个文件："/>

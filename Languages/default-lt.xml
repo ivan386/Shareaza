@@ -1201,14 +1201,14 @@
 			<item id="ID_LIBRARY_FOLDER_FILE_PROPERTIES" text="Failo _ypatybės"/>
 		</menu>
 		<menu name="CLibraryTree.Virtual.Basic">
-			<item id="ID_LIBRARY_FOLDER_ENQUEUE" text="Atverti albumą"/>
+			<item id="ID_LIBRARY_FOLDER_ENQUEUE" text="Play _Album"/>
 			<item id="ID_LIBRARY_FOLDER_DELETE" text="_Trinti"/>
 			<separator/>
 			<item id="ID_LIBRARY_FOLDER_FILE_PROPERTIES" text="Failo _ypatybės"/>
-			<item id="ID_LIBRARY_FOLDER_PROPERTIES" text="Alb_umo ypatybės"/>
+			<item id="ID_LIBRARY_FOLDER_PROPERTIES" text="Album _Properties"/>
 		</menu>
 		<menu name="CLibraryTree.Virtual">
-			<item id="ID_LIBRARY_FOLDER_ENQUEUE" text="Atverti albumą"/>
+			<item id="ID_LIBRARY_FOLDER_ENQUEUE" text="Play _Album"/>
 			<item id="ID_LIBRARY_FOLDER_DELETE" text="_Trinti"/>
 			<separator/>
 			<item id="ID_LIBRARY_REBUILD" text="Per_daryti"/>
@@ -1217,7 +1217,7 @@
 			<item id="ID_LIBRARY_FOLDER_NEW" text="_Naujas katalogas..."/>
 			<separator/>
 			<item id="ID_LIBRARY_FOLDER_FILE_PROPERTIES" text="Failo _ypatybės"/>
-			<item id="ID_LIBRARY_FOLDER_PROPERTIES" text="Alb_umo ypatybės"/>
+			<item id="ID_LIBRARY_FOLDER_PROPERTIES" text="Album _Properties"/>
 		</menu>
 		<!-- LIBRARY VIEWS -->
 		<menu name="CLibraryTileView">
@@ -1296,7 +1296,7 @@
 		<menu name="CLibraryFileView.Virtual.Basic">
 			<item id="ID_LIBRARY_LAUNCH" text="A_tverti ar vykdyti"/>
 			<item id="ID_LIBRARY_ENQUEUE" text="Įt_raukti į grojaraštį"/>
-			<item id="ID_LIBRARY_FOLDER_ENQUEUE" text="Atverti albumą"/>
+			<item id="ID_LIBRARY_FOLDER_ENQUEUE" text="Play _Album"/>
 			<separator/>
 			<item id="ID_LIBRARY_SHARED_FILE" text="_Bendrintas"/>
 			<separator/>
@@ -1700,8 +1700,8 @@
 				<icon res="252" width="32" height="32"/><gap size="8"/>
 				<heading align="middle">Į S P Ė J I M A S   -   J Ū S   E S A T E   U Ž   U Ž K A R D O S</heading>
 				<newline gap="8" indent="42"/>
-				<text colour="FF0000">„Shareaza“ nustatė, kad jūs esate už NAT maršrutizatoriaus ar užkardos,
-			ir negali priimti susijungimų iš Interneto.  </text>
+				<text colour="FF0000">Shareaza has detected that you are behind a NAT router or firewall,
+				and are unable to receive connections from the Internet.  </text>
 				<text colour="FF0000" format="b">Tai gali sumažinti atsisiuntimų našumą.</text>
 				<newline gap="6"/>
 				<link target="raza:command:ID_HELP_ROUTER">Paspauskite čia, jei norite sužinoti, kaip suderinti savo maršrutizatorių ar užkardą</link>
@@ -1711,8 +1711,8 @@
 				<icon res="252" width="32" height="32"/><gap size="8"/>
 				<heading align="middle">Į S P Ė J I M A S   -   J Ū S Ų   T C P   P R I E V A D A S   N E P A S I E K I A M A S</heading>
 				<newline gap="8" indent="42"/>
-				<text colour="FF0000">„Shareaza“ nustatė, kad jūs esate už NAT maršrutizatoriaus ar užkardos,
-			ir negali priimti TCP susijungimų iš Interneto.  </text>
+				<text colour="FF0000">Shareaza has detected that you are behind a NAT router or firewall,
+				and are unable to receive TCP connections from the Internet.  </text>
 				<text colour="FF0000" format="b">Tai gali sumažinti atsisiuntimų našumą.</text>
 				<newline gap="6"/>
 				<link target="raza:command:ID_HELP_ROUTER">Paspauskite čia, jei norite sužinoti, kaip suderinti savo maršrutizatorių ar užkardą</link>
@@ -1722,8 +1722,8 @@
 				<icon res="252" width="32" height="32"/><gap size="8"/>
 				<heading align="middle">Į S P Ė J I M A S   -   J Ū S Ų   U D P   P R I E V A D A S   N E P A S I E K I A M A S</heading>
 				<newline gap="8" indent="42"/>
-				<text colour="FF0000">„Shareaza“ nustatė, kad jūs esate už NAT maršrutizatoriaus ar užkardos,
-			ir negali priimti UDP susijungimų iš Interneto.  </text>
+				<text colour="FF0000">Shareaza has detected that you are behind a NAT router or firewall,
+				and are unable to receive UDP messages from the Internet.  </text>
 				<text colour="FF0000" format="b">Tai gali sumažinti atsisiuntimų našumą.</text>
 				<newline gap="6"/>
 				<link target="raza:command:ID_HELP_ROUTER">Paspauskite čia, jei norite sužinoti, kaip suderinti savo maršrutizatorių ar užkardą</link>
@@ -1791,9 +1791,9 @@
 					<text>Jūs kol kas nesate atsisiuntę jokių failų.</text>
 					<newline gap="8"/>
 				</group>
-				<text id="LibraryFiles" format="b">Viso failų:</text>
+				<text id="LibraryFiles" format="b">%lu</text>
 				<text>%lu</text>
-				<text id="LibraryVolume" format="b">,</text>
+				<text id="LibraryVolume" format="b">%s</text>
 				<newline gap="4"/>
 				<link format="bu" target="raza:command:ID_VIEW_LIBRARY">Go to My Library</link>
 				<newline gap="4"/>
@@ -1801,7 +1801,7 @@
 				<group id="1">
 					<newline gap="8"/>
 					<text>Shareaza is scanning and processing</text>
-					<text id="LibraryHashRemaining" format="b">Viso failų:</text>
+					<text id="LibraryHashRemaining" format="b">%lu</text>
 					<text>%lu</text>
 					<newline gap="8"/>
 				</group>
@@ -1912,8 +1912,8 @@
 			</styles>
 			<text format="b">Sveiki. Čia „Shareaza“ nuostatų tvarkytuvė</text>
 			<newline gap="16"/>
-			<text>„Shareaza“ nuostatų tvarkytuvė leidžia patyrusiems naudotojams pilnai priderinti
-			„Shareaza“ darbą prie savęs. Nuostatoms keisti skyriuje</text>
+			<text>The Shareaza Settings Manager allows advanced users to completely customise how
+				Shareaza works. The settings in the</text>
 			<text format="b">Bendra</text>
 			<text>tereikia turėti tik patirties.</text>
 			<newline gap="16" indent="16"/>
@@ -1949,8 +1949,8 @@
 			</styles>
 			<text format="b">Sveiki. Čia „Shareaza“ nuostatų tvarkytuvė</text>
 			<newline gap="16"/>
-			<text>„Shareaza“ nuostatų tvarkytuvė leidžia patyrusiems naudotojams pilnai priderinti
-			„Shareaza“ darbą prie savęs. Nuostatų skyrius</text>
+			<text>The Shareaza Settings Manager allows advanced users to completely customise 
+				how Shareaza works. The settings in the</text>
 			<text format="b">Internetas</text>
 			<text>leidžia kontroliuoti, kaip „Shareaza“ sąveikauja su kitais adresatais lygiaverčio susijungimo
 			tinkluose.</text>
@@ -2070,115 +2070,116 @@
 		<document name="DownloadHelp.Select">
 			<text format="b">Atsisiuntimų sritis</text>
 			<newline gap="8"/>
-			<text>Čia rodomi šiuo metu parsisiunčiami failai. Jūs galite peržiūrėti
-		atskirus šaltinius, išskleidę kiekvieno failo medį (paspaudę ant „+“ ženklelio iš kairės).</text>
+			<text>This is where files currently being downloaded are displayed. You can view
+			individual sources by expanding each file with the small + on the left.</text>
 			<newline gap="8"/>
-			<text>Tempkite failą pele aukštyn, jei norite padidinti prioritetą, arba ant atsisiuntimo grupių
-		antraščių, jei norite patogiau organizuoti failus (Eksperto veiksenoje).</text>
+			<text>Drag'n'Drop downloads higher in the list for priority, or onto Download Group 
+			tabs for better organisation (in Power Mode).</text>
 			<newline gap="16"/>
-			<text>Naudokitės šia komanda, ir kai norėsite gauti daugiau informacijos apie parsisiunčiamą failą. Tiesiog
-		pasirinkite failą ir pakartokite šią komandą dar kartą.</text>
+			<text>You can also use this command to get help information on a specific download.
+			Simply select a download and choose this Help command again.</text>
 		</document>
 		<document name="DownloadHelp.Seeding">
 			<text format="b">Šis torrent failas skleidžiamas</text>
 			<newline gap="8"/>
-			<text>„Shareaza“ yra patikrinusi pilnai atsisiųstą failą(-us) ir dalijasi turimais failais
-		su kitais BitTorrent tinklo siuntėjais. Dalinkitės mažiausiai 100% santykiu.</text>
+			<text>Shareaza has verified this complete download, and is actively sharing it
+			with other downloaders through BitTorrent. Please share at least 100%.</text>
 		</document>
 		<document name="DownloadHelp.Completed">
 			<text format="b">Failo parsisiuntimas baigtas</text>
 			<newline gap="8"/>
-			<text>„Shareaza“ baigė siųsti šį failą ir įsitikino, jog jis
-		yra 100% teisingas. Failas buvo perkeltas į Jūsų parsisiučiamų failų aplanką.</text>
+			<text>Shareaza has finished downloading this file, and has verified that it
+			is 100% correct. It has also moved the file to your downloads folder.</text>
 		</document>
 		<document name="DownloadHelp.Moving">
 			<text format="b">Šis failas yra perkeliamas</text>
 			<newline gap="8"/>
-			<text>„Shareaza“ baigė siųsti šį failą ir įsitikino, jog jis yra teisingas.
-		Jis šiuo metu yra perkeliamas ir/arba išpakuojamas į Jūsų parsisiunčiamų failų aplanką.</text>
+			<text>Shareaza has finished downloading this file, and has verified that
+			it is correct. It is currently being moved and/or unpacked to your downloads folder.</text>
 		</document>
 		<document name="DownloadHelp.Paused">
 			<text format="b">Šio failo parsisiuntimas sustabdytas</text>
 			<newline gap="8"/>
-			<text>Jūs esate sustabdę parsisiuntimą. Jei norite tęsti jos parsisiuntimą,
-		vykdykite komandą</text><text format="b">Tęsti siuntimą</text><text>.</text>
+			<text>You have paused this download. If you want it to resume downloading, you
+			can click the '</text><text format="b">Tęsti siuntimą</text><text>.</text>
 		</document>
 		<document name="DownloadHelp.DiskFull">
 			<text format="b">Diskas yra perpildytas</text>
 			<newline gap="8"/>
-			<text>„Shareaza“ automatiškai sustabdė šio failo siuntimą, nes diske neliko
-		vietos arba failo neįmanoma į jį įrašyti. Jei norite
-		tęsti parsisiuntimą, atlaisvinkite vietą diske ir/arba patikrinkite, ar
-		laikinų failų aplankas yra pasiekiamas, o tada atnaujinkite
-		siuntimą.</text>
+			<text>Shareaza has paused this download automatically because the hard disk
+			appears to be full, or the download file cannot be written to. If you wish
+			to continue downloading, please free some space on your hard disk and/or check
+			to make sure the incomplete file folder is accessible, and then resume the
+			download.</text>
 		</document>
 		<document name="DownloadHelp.Verifying">
 			<text format="b">Parsisiųsto failo patikra</text>
 			<newline gap="8"/>
-			<text>Šis failas atsiųstas, ir „Shareaza“ dabar tikrina, ar tai iš tikro
-		tas pats failas, kaip originalas. Jei bus aptikta, kad yra sugadintų dalių,
-		„Shareaza“ automatiškai pagydys jas.</text>
+			<text>This download has finished, and Shareaza is now checking it to ensure
+			that it is exactly the same as the original file. If any damaged parts are
+			found, Shareaza will repair them automatically.</text>
 		</document>
 		<document name="DownloadHelp.Downloading">
 			<text format="b">Parsisiuntimas aktyvus!</text>
 			<newline gap="8"/>
-			<text>Šiuo metu failas yra siunčiamas. Jei parsisiuntimas vyksta per lėtai,
-		galite pamėginti paieškoti tinkle daugiau šaltinių įvykdę komandą</text><text format="b">„Rasti daugiau šaltinių“</text><text>. Jei sparta nepagerės,
-		tai galėtų reikšti, jog naudotojai, iš kurių siunčiamasi, yra apriboję
-		išsiuntimo spartą. Parsisiuntimo sparta paprastai su laiku didėja.</text>
+			<text>This download is currently in progress. If it is downloading too slowly,
+			you could try searching the network for more sources with the '</text><text format="b">„Rasti daugiau šaltinių“</text><text>' command. If the speed does not 
+			improve it may be due to limited upload speeds of the users you are downloading 
+			from. Download speed usually increases over time.</text>
 		</document>
 		<document name="DownloadHelp.Pending">
 			<text format="b">Laukiama veiksmo</text>
 			<newline gap="8"/>
-			<text>Laukiama, kol kas nors pradės siųsti.
-		„Shareaza“ pasiruošusi siųstis failą, bet niekas šiuo metu jos nesiunčia.
-		Jūs tikriausiai laukiate kitų naudotojų eilėse, taigi failo siuntimas gali
-		prasidėti bet kuriuo metu. Galite panagrinėti atskirus šaltinius ir pažiūrėti,
-		kokį numerį turite kiekvieno eilėje. Jei Jūs irgi dalinatės failais, tada šansai,
-		kad failo parsisiuntimas prasidės greičiau, bus didesni.</text>
+			<text>This download is waiting for someone to start uploading.
+			Shareaza is ready to start downloading this file, but no-one is sending it at
+			the moment. You are probably waiting in other user's queues, and the download
+			may start transferring at any time. You can examine the individual sources to 
+			see each queue you are waiting in. If you are sharing files yourself, it may
+			improve the chances of a download transfer starting quickly.</text>
 		</document>
 		<document name="DownloadHelp.Queued">
 			<text format="b">Laukiama eilėje</text>
 			<newline gap="8"/>
-			<text>Laukiama, kol kitų Jūsų failų parsisiuntimas bus baigtas.
-		Parsisiuntimų, aktyvių bet kuriuo metu, skaičius yra ribojamas parsisiuntimo
-		nuostatomis, tam kad kiekvienam failui parsisiųsti būtų pilnai išnaudojama
-		greitaveika. Jūs galite pakeisti šias nuostatas per „Įrankiai“, „‚Shareaza‘ nuostatos“.
-		Dar Jūs galite rankiniu būdu pradėti siuntimą pasirinkę komandą „Tęsti“</text>
+			<text>This download is waiting for some of your other downloads to complete.
+			Your download settings limit the number of downloads which may be active at
+			any given time, to ensure that each download gets a good share of the available
+			bandwidth. You can change these settings via Tools, Shareaza Settings.
+			Alternatively, you may manually start this download with the resume command.</text>
 		</document>
 		<document name="DownloadHelp.Searching">
 			<text format="b">Ieškoma šaltinių</text>
 			<newline gap="8"/>
-			<text>Šio failai šaltiniai nežinomi, todėl „Shareaza“ ieško
-		visuose prisijungtuose P2P tinkluose naujų šaltinių. Kai šaltiniai bus rasti,
-		siuntimas bus pradėtas automatiškai. „Shareaza“ pati ieško šaltinių laikas nuo laiko,
-		tačiau Jūs galite paspartinti procesą įvykdę komandą</text>
+			<text>There are no known sources for this download, so Shareaza is searching
+			all connected P2P networks for new sources. Once sources are found, the
+			download will start automatically. Shareaza searches for sources automatically,
+			however you can speed up the process using the</text>
 			<text format="b">„Rasti daugiau šaltinių“</text><text>.</text>
 			<newline gap="8"/>
-			<text>Deja, daugeliu atvejų naudotojai, kurie turi šį failą, gali būti
-		atsijungę. Jums belieka tik laukti, kol kas nors prisijungs, arba galite atšaukti
-		parsisiuntimą ir pamėginti surasti panašų, labiau paplitusį failą.</text>
+			<text>Unfortunately in many cases there may be no users online who have the
+			file you are looking for. The only course of action here is to wait for
+			someone to come online, or cancel it and try to find a similar file which is
+			more widely available.</text>
 		</document>
 		<document name="DownloadHelp.Creating">
 			<text format="b">Kuriamas failas parsisiuntimui</text>
 			<newline gap="8"/>
-			<text>„Shareaza“ rezervuoja vietą šio failo parsisiuntimui, kad nereikėtų
-		to daryti vėliau.</text>
+			<text>Shareaza is pre-allocating a file in which to store this download, to
+			save time later.</text>
 		</document>
 		<document name="DownloadHelp.Tracker">
 			<text format="b">BitTorrent seklys yra atsijungęs</text>
 			<newline gap="8"/>
-			<text>BitTorrent serveris-seklys yra atsijungęs arba jo darbas yra sutrikęs.
-		„Shareaza“ negali susisiekti suo juo ir gauti is jo lygiaverčių susijungimo
-		partnerių sąrašo.</text>
+			<text>The BitTorrent tracker server for this download appears to be
+			down or malfunctioning. Shareaza is unable to contact it to receive
+			a list of peers.</text>
 		</document>
 		<!-- Upload help documents -->
 		<document name="UploadHelp">
 			<text format="b">Išsiuntimų sritis</text>
 			<newline gap="8"/>
-			<text>Čia rodomos eilės ir išsiuntimai. Jūs galite išskleisti kiekvienos eilės medį,
-		paspaudę „+“ ženklelį iš kairės, ir galite filtruoti sąrašą, naudodamiesi įrankių juostos
-		mygtuku, esančiu dešinėje pusėje.</text>
+			<text>This is where queues and uploads are displayed. You can expand each queue
+			with the small + on the left, and filter what is displayed with the button on the
+			right of the window's toolbar.</text>
 		</document>
 		<!-- General help documents -->
 		<document name="GeneralHelp.DiskSpace">
@@ -2186,46 +2187,47 @@
 			<newline gap="8"/>
 			<text>Viename ar keliuose diskiniuose kaupikliuose, kuriuos naudoja „Shareaza“, trūksta laisvos vietos.</text>
 			<newline gap="8"/>
-			<text>Jūs turėtumėte prižiūrėti, kad diskuose būtų pakankamai laisvos vietos.
-		Jei diskiniai kaupikliai užsipildys, programos gali imti dirbti nestabiliai, o laikinieji failai gali būti
-		prarasti. Jums reikėtų atlikti disko valymą, ištrinti nereikalingus failus ar pašalinti programinę
-		įrangą, kuri jums daugiau nereikalinga.</text>
+			<text>You should always attempt to keep a reasonable amount of disk space free. Programs 
+			can become unstable if the drives become full, and temporary files may be lost. You should 
+			run a disk clean-up, delete unwanted files, or uninstall software you no longer need.</text>
 		</document>
 		<document name="GeneralHelp.DiskWriteFail">
 			<text format="b">Reikalingas katalogas nėra įrašomas</text>
 			<newline gap="8"/>
 			<text>Į diską ar katalogą, kurį naudoja „Shareaza“, neįmanoma įrašyti.</text>
 			<newline gap="8"/>
-			<text>Tinklo diskas buvo atjungtas arba Jūs neturite rašymo į pasirinktą katalogą teisių.
-		Patikrinkite katalogus ir jų teises arba pakeiskite laikinųjų failų aplanko būvimo vietą.</text>
+			<text>A network drive may have been disconnected, or you may not have write permission 
+			to a selected directory. Please check directories and permissions, or change the
+			temporary files location.</text>
 		</document>
 		<document name="GeneralHelp.ConnectionFail">
 			<text format="b">Interneto ryšys nutrūko</text>
 			<newline gap="8"/>
 			<text>Windows pranešė, kad nėra ryšio su internetu.</text>
 			<newline gap="8"/>
-			<text>Greičiausiai Jūsų modemas ar maršrutizatorius atsijungė, ir internetas tapo nepasiekiamas.
-		Jums reikėtų susijungti rankiniu būdu arba išjungti ir įjungti įrangą iš naujo.</text>
+			<text>It is likely that a modem or router has dropped, meaning the internet cannot
+			be accessed. You may need to manually re-connect or reset your connection.</text>
 			<newline gap="8"/>
 			<text>„Shareaza“ liovėsi bandžiusi jungtis, tam kad nebūtų prarasta adresatų talpykla.</text>
 		</document>
 		<document name="GeneralHelp.AdultFilter">
 			<text format="b">Turinio suaugusiems filtras yra įgalintas</text>
 			<newline gap="8"/>
-			<text>Įsidėmėkite, kad, kaip ir visi automatiniai filtrai, šis filtras nėra 100%-inis skenuojant
-		turinį. Jis buvo sukurtas tiesiog tam, kad būtų nufiltruotas nenorimų radinių perteklius, o ne tam, kad pilnai, saugiai tokius radinius blokuotų.</text>
+			<text>Please note that (as with any automated filter) it may not be 100% effective at
+			screening content. It is designed simply to filter out excess unwanted results, rather than 
+			as a 100% safe block.</text>
 			<newline gap="8"/>
 			<text>Tėvai turėtų visada prižiūrėti, kaip vaikai naudojasi internetu (įskaitant P2P failų mainais).</text>
 		</document>
 		<document name="GeneralHelp.BadTorrentEncoding">
 			<text format="b">Šis torrent failas turi koduotės klaidų</text>
 			<newline gap="8"/>
-			<text>Windows pranešė, jog iškoduojant šio torrent failo tekstą, aptikta vertimo klaida. Gali būti, kad
-		šis failas sugadintas arba tiesiog neteisingai užkoduotas. Torrent parsisiuntimas greičiausiai nenukentės,
-		bet kai kurie failų vardai gali būti neteisingi.</text>
+			<text>Windows has reported a translation fault while decoding text in this torrent. It is
+			possible that the torrent is corrupt, or just incorrectly encoded. The torrent may
+			still download properly, although some file names could be incorrect.</text>
 			<newline gap="8"/>
-			<text>Dauguma torrent failų kūrimo programų turėtų leisti pataisyti šį torrent failą. Pataisymas garantuotų,
-		kad jis deramai dirbs visose BitTorrent programose.</text>
+			<text>Most torrent creation programs should allow you to repair this torrent, which
+			will ensure it works properly in all BitTorrent applications.</text>
 			<newline gap="8"/>
 			<link target="raza:command:ID_HELP_TORRENT">Spauskite čia, jei reikalinga pagalba</link>
 			<text> arba jei norite parsisiųsti torrent failų taisymo programų.</text>
@@ -2233,67 +2235,72 @@
 		<document name="GeneralHelp.DonkeyServerList">
 			<text format="b">eDonkey serverių sąrašas tuščias</text>
 			<newline gap="8"/>
-			<text>eDonkey serverių sąraše nėra nė vieno serverio. Jums reikėtų parsisiųsti
-		naują serverių sąrašą (met failą), kad galėtumėte prisijungti prie ED2K.</text>
+			<text>There are no servers in your eDonkey server list. You need to download an
+			up to date server list (met file) to connect to ED2K.</text>
 			<newline gap="8"/>
-			<text>Jūs galite parsisiųsti šį sąrašą iš edonkey nuostatų puslapio arba iš
-		paslaugų radimo tarnybų lango. (Paspauskite F9, jei norite atverti šį langą)</text>
+			<text>You can download a server list from the ed2k setting page, or the discovery
+			services window. (Press F9 to open the discovery services window)</text>
 		</document>
 		<document name="GeneralHelp.UploadWarning">
 			<text format="b">Išsiuntimų ribojimas gali sulėtinti atsisiuntimus</text>
 			<newline gap="8"/>
-			<text>Kai kuriuose tinkluose, prie kurių jungiasi „Shareaza“, yra naudojami iš-/atsisiuntimų santykiai,
-		ribojamas išsiuntimas tiems, kurie nieko nebendrina arba, tiesiog, teikiama išsiuntimo pirmenybė tiems, kurie dalinasi failais.</text>
+			<text>Several networks Shareaza connects to enforce ratios, limit uploads to
+			clients that do not share, or simply preference uploading to known sharers.</text>
 			<newline/>
-			<text>Laimei, plačiajuostis DSL ryšys yra kaip dviejų juostų greitkelis: išsiuntimai ir
-		atsisiuntimai turi atskirus kanalus. Jei Jūsų klientas yra deramai sukonfigūruotas,
-		Jūs išlaikysite pilną atsisiuntimo spartą, nenukenčiant išsiuntimo spartai.</text>
+			<text>Fortunately, broadband DSL connections are like a two-lane highway: you have
+			separate allocations for upload and download. If your client is properly configured, 
+			you should be able to upload at a good rate while retaining full download capacity.</text>
 			<newline gap="8"/>
-			<text>Pagal nutylėjimą išsiuntimo limitas yra nustatomas 85-iems % esamos išeinančios greitaveikos,
-		to tarpu atsisiuntimai nėra ribojami. Tokios nuostatos turėtų Jums garantuoti sparčiausią įmanomą atsisiuntimą.</text>
+			<text>By default, your upload limit is set to about 85% of available upstream bandwidth,
+			while downloads are unlimited. That configuration should give you the fastest possible 
+			downloads that are available.</text>
 		</document>
 		<!-- Search help documents -->
 		<document name="SearchHelp.BadSearch1">
 			<text format="b">Perfrazuokite ieškinį</text>
 			<newline gap="8"/>
-			<text>Šis ieškinys yra prastai suformatuotas ir gali veikti neteisingai.
-		Ieškiniuose turėtų būti keli žodžiai, jei tai įmanoma, ir turėtų būti nurodyta schema
-		(failo plėtinys). Be to, ieškiniuose neturėtų būti vien tik skaičiai arba neigimo žodžiai
-		(su minusu priekyje), taip pat jūs turėtumėte vengti per daug ilgų bendrinių užklausų.</text>
+			<text>This search is poorly formatted, and may not function correctly. 
+			Searches should include several terms where possible, and should specify a schema 
+			(file type). Furthermore, searches must not be limited to numbers or negative
+			terms only, and you should avoid overly general queries.</text>
 			<newline gap="8"/>
-			<text>Pavyzdžiui, dauguma tinklo klientų ignoruos visų MP3 failų paieškos užklausą,
-		nes ji butų nepakankamai konkreti ir grąžintų per daug radinių.</text>
+			<text>Most clients on the network will ignore a search for all MP3 files, for example, 
+			because it is not specific enough, and would generate too many results.</text>
 		</document>
 		<document name="SearchHelp.BadSearch2">
 			<text format="b">Perfrazuokite ieškinį</text>
 			<newline gap="8"/>
-			<text>Šis ieškinys yra prastai suformatuotas ir gali veikti neteisingai. Ieškiniuose turėtų būti
-		minimalus skaičius teisingų raidžių/ženklų, kad būtų galima pradėti paiešką.</text>
+			<text>This search does not contain enough terms to function properly. All searches need
+			a minimum number of valid, alphabetic characters to be able to start.</text>
 			<newline gap="8"/>
-			<text>Jei atliekate paiešką pagal failų plėtinius ar naudojate skaičius, Jūs privalote užklausoje nurodyti
-		taip pat ir papildomas sąlygas.</text>
+			<text>While common file extensions (and numbers) can be searched for, you must enter
+			other terms as well when creating the search. Punctuation and wildcards are not used 
+			in searches, just the text you enter.</text>
 		</document>
 		<document name="SearchHelp.BadSearch3">
 			<text format="b">Perfrazuokite ieškinį</text>
 			<newline gap="8"/>
-			<text>Šiame ieškinyje, rodos, yra tik bendri failų plėtiniai arba jame nėra žodžių.</text>
+			<text>This search seems to contain only common file extensions, or no searchable
+			words.</text>
 			<newline gap="8"/>
-			<text>Jei susidūriate su sunkumais formuluodami užklausą, įsidėmėkite, kad ji panaši į paiešką žiniatinklyje.
-		Geriausi yra specifiniai terminai ir frazės: unikalūs pavadinimai, vardai ir raktažodžiai.</text>
+			<text>If you are having trouble creating searches, keep in mind that it's quite similar
+			to a web search. Specific terms or phrases are best- Unique names, titles and
+			keywords.</text>
 			<newline gap="8"/>
-			<text>Bendrinių terminų paieškos būna neefektyvios, blogai ieškomos ir gali sukelti duomenų srauto padidėjimą
-		tokių paieškų metu.</text>
+			<text>General terms cannot be searched for efficiently and may result in poor
+			search performance, as well as high bandwidth use during searches.</text>
 			<newline gap="8"/>
 			<text>Išsamesnę informaciją rasite Shareaza svetainėje.</text>
 		</document>
 		<document name="SearchHelp.AdultSearch">
 			<text format="b">Šios paieškos neįmanoma pradėti</text>
 			<newline gap="8"/>
-			<text>Ši paieška greičiausiai grąžins didelį kiekį radinių su turiniu suaugusiems,
-		o toks turinys yra uždraustas nuostatose. Jums reikėtų perfrazuoti savo paiešką
-		arba atjungti filtrą.</text>
+			<text>The specified search would probably return a large number of results with adult 
+			content, and this has been turned off in the settings. You should either re-phrase the 
+			search, or disable the filter.</text>
 			<newline gap="8"/>
-			<text>Tam, kad atjungtumėte filtrą, nueikite Įrankiai &gt; Nuostatos &gt; Bendra ir atžymėkite turinio suaugusiems filtravimą.</text>
+			<text>To disable the filter, go into Tools &gt; Settings &gt; General and uncheck the
+			adult content filter.</text>
 		</document>
 		<!-- Share help documents -->
 		<document name="ShareHelp.AlreadyShared">
@@ -2301,29 +2308,31 @@
 			<newline gap="8"/>
 			<text>Aplankas, kurį Jūs pasirinkote, jau yra bendrintas kaip dalis kito bendrinto ištekliaus.</text>
 			<newline gap="8"/>
-			<text>,</text>
+			<text>%s</text>
 		</document>
 		<document name="ShareHelp.BadShare">
 			<text format="b">Šio aplanko nereikėtų bendrinti</text>
 			<newline gap="8"/>
-			<text>Šis aplankas yra sisteminis ar turi savyje tokį aplanką. Bendrinti šį aplanką
-		nepatariama, nes failai, esantys jame, daugumai žmonių bus nenaudingi.</text>
+			<text>This folder is (or contains) a system folder. Sharing this folder is not
+			recommended, since most of the files in it are of no use to other people.</text>
 			<newline gap="8"/>
-			<text>Tokie aplankai, kaip „Windows“ katalogas, „Program Files“ ir panašūs aplankai,
-		paprastai neturi tinkamų bendrinimui failų. Tik šių aplankų</text><text format="i">poaplankiuose</text><text>yra dominančių failų. Taigi, bendrinkite poaplankius.</text>
+			<text>Folders such as the Windows directory, Program Files, and similar folders
+			do not usually contain files suitable for sharing. Any files of interest would be in
+			sub-folders located</text><text format="i">poaplankiuose</text><text>these folders.
+			Please share those instead.</text>
 			<newline gap="8"/>
-			<text>„Shareaza“ programos „incomplete“ aplanko irgi nereikėtų bendrinti savo
-		kolekcijoje, nes bandymai skaičiuoti parsisiunčiamų failų maišas gali pakenkti našumui.</text>
+			<text>The Shareaza 'incomplete' folder should also not be shared through the
+			library, since attempting to hash downloads in progress may impact on performance.</text>
 		</document>
 	</documents>
 	<!-- Localised Command Tip Text. The "message" is displayed in the status bar, while the "tip" is shown in a tooltip -->
 	<commandTips>
 		<tip id="AFX_IDS_APP_TITLE" message="Shareaza"/>
-		<tip id="AFX_IDS_IDLEMESSAGE" message="Pasiruošta..."/>
+		<tip id="AFX_IDS_IDLEMESSAGE" message="Ready"/>
 		<tip id="AFX_IDS_MDICHILD" message="Activate this window"/>
-		<tip id="AFX_IDS_PREVIEW_CLOSE" message="Close print preview mode" tip="Išsaugoti paveikslą"/>
-		<tip id="AFX_IDS_SCCLOSE" message="Išdidinti aktyvų langą iki maksimalių matmenų."/>
-		<tip id="AFX_IDS_SCMAXIMIZE" message="Išdidinti aktyvų langą iki maksimalių matmenų."/>
+		<tip id="AFX_IDS_PREVIEW_CLOSE" message="Close print preview mode" tip="Cancel Preview"/>
+		<tip id="AFX_IDS_SCCLOSE" message="Close the active window and prompts to save the documents"/>
+		<tip id="AFX_IDS_SCMAXIMIZE" message="Enlarge the window to full size"/>
 		<tip id="AFX_IDS_SCMINIMIZE" message="Reduce the window to an icon"/>
 		<tip id="AFX_IDS_SCMOVE" message="Change the window position"/>
 		<tip id="AFX_IDS_SCNEXTWINDOW" message="Switch to the next document window"/>
@@ -2353,7 +2362,7 @@
 		<tip id="ID_CHILD_RESTORE" message="Atverti pasirinktą langą."/>
 		<tip id="ID_DISCOVERY_ADD" message="Pridėti naują paslaugų radimo tarnybą..."/>
 		<tip id="ID_DISCOVERY_ADVERTISE" message="Anonsuoti pasirinktą GWebCache tarnybą atsitiktinei egzistuojančiai GWebCache tarnybai."/>
-		<tip id="ID_DISCOVERY_BLOCKED" message="Rodyti GWebCache tarnybas paslaugų radimo tarnybų lange."/>
+		<tip id="ID_DISCOVERY_BLOCKED" message="Show blocked services in the Discovery window."/>
 		<tip id="ID_DISCOVERY_BROWSE" message="Peržvelgti internete pasirinktos GWebCache tarnybos statistiką."/>
 		<tip id="ID_DISCOVERY_EDIT" message="Peržiūrėti pasirinktos paslaugų radimo tarnybos ypatybes."/>
 		<tip id="ID_DISCOVERY_GNUTELLA" message="Rodyti savikėlos („bootstrap“) tarnybas paslaugų radimo tarnybų lange."/>
@@ -2401,7 +2410,7 @@
 		<tip id="ID_DOWNLOADS_SHOW_SOURCES" message="Rodyti šaltinius, kurie šiuo metu nenaudojami."/>
 		<tip id="ID_DOWNLOADS_SOURCES" message="Ieškoti daugiau šaltinių pasirinktam siunčiamam failui(-ams)."/>
 		<tip id="ID_DOWNLOADS_URL" message="Pridėti šaltinio adresą prie pasirinkto failo..."/>
-		<tip id="ID_DOWNLOADS_VIEW_REVIEWS" message="Peržvelgti pasirinkto failo įvertinimus."/>
+		<tip id="ID_DOWNLOADS_VIEW_REVIEWS" message="View reviews for the selected download."/>
 		<tip id="ID_HELP_ABOUT" message="Rodyti „Apie ‚Shareaza‘“ dialogo langą..."/>
 		<tip id="ID_HELP_CODEC" message="Viskas apie kodekus ir video problemas."/>
 		<tip id="ID_HELP_FAQ" message="Atverti naršyklėje „Shareaza“ DUK puslapį."/>
@@ -2422,7 +2431,7 @@
 		<tip id="ID_HITMONITOR_CLEAR" message="Valyti kreipinių monitoriaus buferį."/>
 		<tip id="ID_HITMONITOR_PAUSE" message="Pristabdyti kreipinių stebėjimą."/>
 		<tip id="ID_HITMONITOR_SEARCH" message="Ieškoti tinkle pasirinkto termino."/>
-		<tip id="ID_HOSTCACHE_BT_CACHE" message="Rodyti BitTorrent išsiuntimus."/>
+		<tip id="ID_HOSTCACHE_BT_CACHE" message="Show BitTorrent cached hosts."/>
 		<tip id="ID_HOSTCACHE_CONNECT" message="Jungtis prie pasirinkto adresato(-ų)."/>
 		<tip id="ID_HOSTCACHE_DC_CACHE" message="Show DC++ cached hubs."/>
 		<tip id="ID_HOSTCACHE_DISCONNECT" message="Atsijungti nuo pasirinkto kaimyno(-ų)."/>
@@ -2432,10 +2441,10 @@
 		<tip id="ID_HOSTCACHE_G2_CACHE" message="Rodyti Gnutella2 tinklo adresatus, esančius laikinoje talpykloje."/>
 		<tip id="ID_HOSTCACHE_G2_HORIZON" message="Rodyti Gnutella2 tinklo kertinius mazgus."/>
 		<tip id="ID_HOSTCACHE_IMPORT" message="Importuoti žinomų adresatų sąrašą iš tokio failo, kaip kad „server.met“ failas..."/>
-		<tip id="ID_HOSTCACHE_KAD_CACHE" message="Rodyti Gnutella1 tinklo adresatus, esančius laikinoje talpykloje."/>
+		<tip id="ID_HOSTCACHE_KAD_CACHE" message="Show Kademlia cached hosts."/>
 		<tip id="ID_HOSTCACHE_PRIORITY" message="Mėginti jungtis prie šito serverio, prieš jungiantis prie kitų."/>
 		<tip id="ID_HOSTCACHE_REMOVE" message="Šalinti pasirinktus adresatus iš adresatų talpyklos."/>
-		<tip id="ID_IMPORT_DOWNLOADS" message="_Importuoti eMule dalinius failus..."/>
+		<tip id="ID_IMPORT_DOWNLOADS" message="Import eMule partial downloads..."/>
 		<tip id="ID_LIBRARY_ADD" message="Pridėti naują aplanką prie savo kolekcijos..."/>
 		<tip id="ID_LIBRARY_ALBUM_DELETE" message="Pašalinti pasirinktą albumo katalogą."/>
 		<tip id="ID_LIBRARY_ALBUM_OPEN" message="Atverti pasirinktą albumo katalogą."/>
@@ -2465,7 +2474,7 @@
 		<tip id="ID_LIBRARY_REBUILD" message="Perdaryti iš naujo pasirinktų katalogų ar failų meta duomenis ir maišas."/>
 		<tip id="ID_LIBRARY_REBUILD_ANSI" message="Perdaryti meta duomenis kita kalba."/>
 		<tip id="ID_LIBRARY_REFRESH" message="Atnaujinti kolekcijos rodinį."/>
-		<tip id="ID_LIBRARY_REFRESH_METADATA" message="At_naujinti meta duomenis"/>
+		<tip id="ID_LIBRARY_REFRESH_METADATA" message="Refresh file metadata"/>
 		<tip id="ID_LIBRARY_REMOVE" message="Pašalinti pasirinktus bendrintus aplankus."/>
 		<tip id="ID_LIBRARY_RENAME" message="Pervardinti pasirinktą failą."/>
 		<tip id="ID_LIBRARY_SCAN" message="Skenuoti pokyčius pasirinktuose failuose ar aplankuose."/>
@@ -2503,7 +2512,7 @@
 		<tip id="ID_MEDIA_PAUSE" message="Pristabdyti grotuvo failo grojimą." tip="Pristabdyti"/>
 		<tip id="ID_MEDIA_PLAY" message="Groti pažymėtą grotuvo failą." tip="Play"/>
 		<tip id="ID_MEDIA_PLAYLIST" message="Rodyti ar paslėpti grojaraščio redaktorių."/>
-		<tip id="ID_MEDIA_POSITION" message="Nueiti į grotuvo failo tam tikrą vietą" tip="Seek"/>
+		<tip id="ID_MEDIA_POSITION" message="Seek to a position in the media file." tip="Seek"/>
 		<tip id="ID_MEDIA_PREVIOUS" message="Pereiti prie ankstesnio failo veikiančiame grojaraštyje." tip="Previous File"/>
 		<tip id="ID_MEDIA_PROPERTIES" message="Peržvelgti ir redaguoti pasirinktų failų ypatybes."/>
 		<tip id="ID_MEDIA_RANDOM" message="Į-/Išjungti atsitiktinį failų pasirinkimą iš veikiančio grojaraščio."/>
@@ -2518,15 +2527,15 @@
 		<tip id="ID_MEDIA_SIZE_ONE" message="Rodyti vaizdą tokiais matmenimis, kaip nurodyta faile."/>
 		<tip id="ID_MEDIA_SIZE_THREE" message="Rodyti vaizdą patrigubinant nurodytus faile matmenis."/>
 		<tip id="ID_MEDIA_SIZE_TWO" message="Rodyti vaizdą padvigubinant nurodytus faile matmenis."/>
-		<tip id="ID_MEDIA_SPEED" message="Derinti grotuvo failo atlikimo spartą" tip="Sparta"/>
+		<tip id="ID_MEDIA_SPEED" message="Adjust the speed of the media file." tip="Sparta"/>
 		<tip id="ID_MEDIA_STATUS" message="Rodyti ar paslėpti grotuvo būklės juostelę."/>
 		<tip id="ID_MEDIA_STOP" message="Sustabdyti grotuvo failo grojimą." tip="Stabdyti"/>
 		<tip id="ID_MEDIA_VIS" message="Pasirinkti muzikos vaizdo papildinį..."/>
-		<tip id="ID_MEDIA_VOLUME" message="Derinti garsumą" tip="Volume"/>
+		<tip id="ID_MEDIA_VOLUME" message="Adjust the audio volume." tip="Volume"/>
 		<tip id="ID_MEDIA_ZOOM" message="Derinti vaizdo mastelį ir matmenų santykį."/>
 		<tip id="ID_MONITOR_CLOSE" message="Užverti monitoriaus langą."/>
 		<tip id="ID_MUSICBRAINZ_ALBUMS" message="Look at all albums for this artist."/>
-		<tip id="ID_MUSICBRAINZ_MATCHES" message="Ieškoti kitų pasirinkto failo kopijų."/>
+		<tip id="ID_MUSICBRAINZ_MATCHES" message="Search for albums matching the selected file."/>
 		<tip id="ID_NEIGHBOURS_CHAT" message="Pradėti pokalbio sesiją su pasirinktu naudotoju."/>
 		<tip id="ID_NEIGHBOURS_COPY" message="Kopijuoti pasirinkto adresato prieigos nuorodą."/>
 		<tip id="ID_NEIGHBOURS_DISCONNECT" message="Atjungti pasirinktą kaimyną(-us)."/>
@@ -2547,14 +2556,14 @@
 		<tip id="ID_NETWORK_G1" message="Jungtis prie pirminio Gnutella tinklo."/>
 		<tip id="ID_NETWORK_G2" message="Jungtis prie Gnutella2 tinklo (labai rekomenduojama)."/>
 		<tip id="ID_NETWORK_SEARCH" message="Pradėti naują paiešką tinkle..."/>
-		<tip id="ID_NEXT_PANE" message="Switch to the next window pane" tip="Sekantis eilėje"/>
+		<tip id="ID_NEXT_PANE" message="Switch to the next window pane" tip="Next Pane"/>
 		<tip id="ID_OPEN_DOWNLOADS_FOLDER" message="Open my folder of completed Downloads"/>
-		<tip id="ID_PREV_PANE" message="Pereiti prie ankstesnio failo veikiančiame grojaraštyje." tip="Ankstesnis"/>
-		<tip id="ID_SCHEDULER_ACTIVATE" message="Pašalinti iš išsiunčiamų failų sąrašo pasirinktą failą(-us)."/>
+		<tip id="ID_PREV_PANE" message="Switch back to the previous window pane" tip="Previous Pane"/>
+		<tip id="ID_SCHEDULER_ACTIVATE" message="Activates selected task(s) from the list."/>
 		<tip id="ID_SCHEDULER_ADD" message="Adds a new task to scheduler list."/>
-		<tip id="ID_SCHEDULER_DEACTIVATE" message="Jungtis prie pasirinktų tinklų."/>
-		<tip id="ID_SCHEDULER_EDIT" message="Taisyti pasirinktą saugos taisyklę..."/>
-		<tip id="ID_SCHEDULER_REMOVE" message="Pašalinti pasirinktą failą(-us) iš sąrašo."/>
+		<tip id="ID_SCHEDULER_DEACTIVATE" message="Deactivates selected tasks."/>
+		<tip id="ID_SCHEDULER_EDIT" message="Edit the selected task..."/>
+		<tip id="ID_SCHEDULER_REMOVE" message="Removes selected task(s) from the list."/>
 		<tip id="ID_SCHEDULER_REMOVE_ALL" message="Removes all scheduled tasks."/>
 		<tip id="ID_SEARCH_CHAT" message="Pradėti pokalbio sesiją su pasirinktu naudotoju."/>
 		<tip id="ID_SEARCH_CLEAR" message="Išvalyti radinius."/>
@@ -2591,11 +2600,11 @@
 		<tip id="ID_SYSTEM_COPY" message="Copy selected line(s) of status log."/>
 		<tip id="ID_SYSTEM_TIMESTAMP" message="Registruoti laiką kiekvienoje eilutėje."/>
 		<tip id="ID_SYSTEM_VERBOSE" message="Rodyti išsamų sistemos aktyvumo žurnalą."/>
-		<tip id="ID_SYSTEM_VERBOSE_DEBUG" message="Rodyti legendą."/>
-		<tip id="ID_SYSTEM_VERBOSE_ERROR" message="Rodyti legendą."/>
-		<tip id="ID_SYSTEM_VERBOSE_INFO" message="Rodyti tinklelį."/>
+		<tip id="ID_SYSTEM_VERBOSE_DEBUG" message="Display all."/>
+		<tip id="ID_SYSTEM_VERBOSE_ERROR" message="Display errors only."/>
+		<tip id="ID_SYSTEM_VERBOSE_INFO" message="Display infos and above."/>
 		<tip id="ID_SYSTEM_VERBOSE_NOTICE" message="Display notices and above."/>
-		<tip id="ID_SYSTEM_VERBOSE_WARNING" message="Rodyti tinklelį."/>
+		<tip id="ID_SYSTEM_VERBOSE_WARNING" message="Display warnings and above."/>
 		<tip id="ID_TAB_CONNECT" message="Jungtis ar atsijungti nuo tinklo."/>
 		<tip id="ID_TAB_HOME" message="Grįžti į „Shareaza“ pradžios puslapį"/>
 		<tip id="ID_TAB_IRC" message="Rodyti IRC pokalbių langą."/>
@@ -2646,7 +2655,7 @@
 		<tip id="ID_VIEW_NEIGHBOURS" message="Rodyti arba paslėpti „KAIMYNŲ“ langą."/>
 		<tip id="ID_VIEW_PACKETS" message="Rodyti arba paslėpti „PAKETŲ IŠVESTIES“ langą."/>
 		<tip id="ID_VIEW_RESULTS_MONITOR" message="Rodyti arba paslėpti „KREIPINIŲ MONITORIAUS“ langą."/>
-		<tip id="ID_VIEW_SCHEDULER" message="Rodyti ar paslėpti „APSAUGOS“ langą."/>
+		<tip id="ID_VIEW_SCHEDULER" message="Show or hide SCHEDULER window."/>
 		<tip id="ID_VIEW_SEARCH_MONITOR" message="Rodyti arba paslėpti „PAIEŠKOS UŽKLAUSŲ MONITORIAUS“ langą."/>
 		<tip id="ID_VIEW_SECURITY" message="Rodyti ar paslėpti „APSAUGOS“ langą."/>
 		<tip id="ID_VIEW_SYSTEM" message="Rodyti arba paslėpti „SISTEMOS“ langą."/>
@@ -2655,7 +2664,7 @@
 		<tip id="ID_VIEW_UPLOADS" message="Rodyti arba paslėpti „IŠSIUNTIMŲ“ langą."/>
 		<tip id="ID_VIEW_WINDOWED" message="Perjunkite „Shareaza“ į langų veikseną, skirtą patyrusiems naudotojams."/>
 		<tip id="ID_WEBSERVICES_LIST" message="Pasirinkite paslaugą internete ir gaukite daugiau informacijos apie pasirinktą failą."/>
-		<tip id="ID_WEBSERVICES_MUSICBRAINZ" message="Ieškokite failo informacijos naudodamiesi ShareMonkey tarnyba."/>
+		<tip id="ID_WEBSERVICES_MUSICBRAINZ" message="Search for the same artist songs using MusicBrainz service."/>
 		<tip id="ID_WINDOW_ARRANGE" message="Arrange icons at the bottom of the window" tip="Arrange Icons"/>
 		<tip id="ID_WINDOW_CASCADE" message="Išdidinti visus atvertus langus, užpildant visą ekraną."/>
 		<tip id="ID_WINDOW_MONITOR" message="Rodyti ar paslėpti siuntimo srauto monitorių."/>
@@ -2808,7 +2817,7 @@
 		<string id="8239" value="Baigta"/>
 		<string id="8240" value="„Shareaza“ perkelia parsisiųstą failą:"/>
 		<string id="8241" value="„Shareaza“ ieško klaidų parsisiųstame faile:"/>
-		<string id="8243" value="Išsiuntimų sritis"/>
+		<string id="8243" value="Upload ratio:"/>
 		<string id="8244" value="Apžvalgų skaičius:"/>
 		<string id="8288" value="Naršoma Jūsų „Shareaza“ kolekcija"/>
 		<string id="8289" value="Naršomas "/>
@@ -2851,7 +2860,7 @@
 		<string id="8335" value="Šio failo šaltiniai yra už užkardos"/>
 		<string id="8336" value="Šio failo šaltiniai gali siųsti nestabiliai"/>
 		<string id="8337" value="Patikimas"/>
-		<string id="8338" value="Sukurtas:"/>
+		<string id="8338" value="Free:"/>
 		<string id="13000" value="Ar tikrai norite ištrinti pasirinktas saugos taisykles? Šio žingsnio negalėsite atšaukti."/>
 		<string id="13001" value="Failai, bendrinami internetu"/>
 		<string id="16063" value="Prievado peradresavimas naudojant UPnP buvo nesėkmingas po 10 bandymų."/>
@@ -2871,7 +2880,7 @@
 		<string id="16077" value="Adresas %s jau yra blokuojamas pagal Jūsų saugos taisykles."/>
 		<string id="16078" value="Pridėta %s adreso blokavimo saugos taisyklė."/>
 		<string id="16079" value="Ar tikrai norite atsijungti?"/>
-		<string id="16080" value="Jūsų kompiuteris nėra prijungtas prie tinklo."/>
+		<string id="16080" value="Would you like to always connect to this network?"/>
 		<string id="16081" value="Siunčiama užklausa failui „%s“ adresatui %s."/>
 		<string id="16083" value="Dirbtinis Jūsų kompiuterio veiksenos pakeitimas į mazgo veikseną gali sukelti nepageidaujamą poveikį našumui ir P2P tinklui. Geriau leisti, kad „Shareaza“ pati nuspręstų, ar tapti mazgu, ar ne.\n\nMazgo veiksena NEDUODA daugiau radinių ir nesuteikia Jums jokių pranašumų.\n\nAr tikrai norite tęsti, nežiūrint į visas kliūtis, kurias tai gali sukelti?"/>
 		<string id="16085" value="Gnutella2 - tai „Shareaza“ programos pagrindinis tinklas. Atjungus jo palaikymą, gali labai sumažėti tiek radinių skaičius, tiek ir jų kokybė. Ar TIKRAI norite tęsti?"/>
@@ -2949,7 +2958,7 @@
 		<string id="16279" value="Iš adresato %s gaunamas parsisiunčiamo failo turinys (%s)."/>
 		<string id="16280" value="Adresatas %s yra užimtas, parsisiuntimą bus bandoma kartoti už %i sekundžių."/>
 		<string id="16281" value="Ar tikrai norite ištrinti failą „%s“?\n\nJei failą pašalinsite iš atsisiuntimų lango failų sąrašo, Jūs negalėsite vėliau tęsti parsisiuntimo."/>
-		<string id="16282" value="Ar tikrai norite vykdyti atsisiųstą failą „%s“ ?\n\nKai kurie failai gali pakenkti Jūsų kompiuteriui. Įsitikinkite, kas tai per failas, prieš vykdydami jį."/>
+		<string id="16282" value="Aborting download of &quot;%s&quot; from %s (%s), network disabled."/>
 		<string id="16283" value="Failas „%s“ jau yra atsisiunčiamų failų sąraše, pridedama kaip šaltinis."/>
 		<string id="16284" value="Gauta klaidinga įstūmiančiojo susijungimo užklausa iš %s, nutraukiamas ryšys."/>
 		<string id="16285" value="Gauta nereikalinga įstūmiančiojo susijungimo užklausa iš %s."/>
@@ -2996,7 +3005,7 @@
 		<string id="16326" value="Adresatas %s užklausė išsiųsti „%s“ su skirtingu SHA1."/>
 		<string id="16327" value="Atsakyta išsiųsti „%s“ adresatui %s (%s), užimtas, o klientas nepalaiko eilių."/>
 		<string id="16328" value="Įstūmiantysis ryšys su %s užmegztas, laukiama patvirtinimo..."/>
-		<string id="16329" value="Neįmanoma atverti „%s“ išsiuntimui adresu %s, disko/failo klaida."/>
+		<string id="16329" value="Can't open &quot;%s&quot; to upload to host %s due to disk or file error."/>
 		<string id="16330" value="Išsiunčiama atkarpa %I64i-%I64i, priklausanti failui „%s“, adresatui %s (%s)."/>
 		<string id="16331" value="Baigta siųsti failo „%s“ dalis adresatui %s."/>
 		<string id="16332" value="Įeinantis ryšys su %s yra HTTP išsiuntimo užklausa."/>
@@ -3047,7 +3056,7 @@
 		<string id="16377" value="HTTP saugančioji"/>
 		<string id="16378" value="Host &quot;%s&quot; sent a 416, without providing available ranges. Closing connection."/>
 		<string id="16379" value="Kolekcijos failai"/>
-		<string id="16380" value="eDonkey saugančioji"/>
+		<string id="16380" value="DC++ Guard"/>
 		<string id="16384" value="Ar tikrai norite vykdyti failą „%s“ ?\n\nKai kurie failai gali pakenkti Jūsų kompiuteriui. Įsitikinkite, kas tai per failas, prieš vykdydami jį."/>
 		<string id="16385" value="Jūs ruošiatės pakeisti %i failų(-os) meta duomenis. Ar tikrai norite tęsti?"/>
 		<string id="16386" value="Taisomi %i failų(-os) meta duomenys."/>
@@ -3103,8 +3112,8 @@
 		<string id="16525" value="Gnutella nukreipti paketai"/>
 		<string id="16526" value="Gnutella atmesti paketai"/>
 		<string id="16527" value="Gnutella prarasti paketai"/>
-		<string id="16528" value="Gnutella vietinės užklausos"/>
-		<string id="16529" value="Gnutella vietinės užklausos"/>
+		<string id="16528" value="Gnutella Incoming Queries"/>
+		<string id="16529" value="Gnutella Processed Queries"/>
 		<string id="16532" value="Bendra TCP gavimų greitaveika"/>
 		<string id="16533" value="Bendra TCP išsiuntimų greitaveika"/>
 		<string id="16534" value="Bendra UDP gavimų greitaveika"/>
@@ -3234,7 +3243,7 @@
 		<string id="17128" value="eDonkey serveris"/>
 		<string id="17129" value="eDonkey (žemas ID)"/>
 		<string id="17130" value="eDonkey (aukštas ID)"/>
-		<string id="17131" value="Susijungimai"/>
+		<string id="17131" value="DC++ Hub Connection"/>
 		<string id="17216" value="Užmezgamas ryšys su eDonkey serveriu %s..."/>
 		<string id="17217" value="Ryšys su eDonkey serveriu %s užmegztas, patvirtinama..."/>
 		<string id="17218" value="ED2K[%s] %s"/>
@@ -3275,7 +3284,7 @@
 		<string id="17477" value="BitTorrent adresato %s atsakyme nurodytas ne tas failas."/>
 		<string id="17478" value="BitTorrent adresatas %s užklausė nežinomo failo."/>
 		<string id="17479" value="BitTorrent ryšys su adresatu %s užmegztas failui „%s“ siųstis."/>
-		<string id="17480" value="BitTorrent adresatas %s užklausė nežinomo failo."/>
+		<string id="17480" value="BitTorrent coupling with %s requested an inactive file."/>
 		<string id="17481" value="Gautas BitTorrent aprašantysis failas: „%s“"/>
 		<string id="17482" value="Neįmanoma išnagrinėti įkelto BitTorrent failo „%s“."/>
 		<string id="17483" value="Iš BitTorrent seklio gauta klaida, susijusi su „%s“ : „%s“."/>
@@ -3289,13 +3298,13 @@
 		<string id="17491" value="Torrent failas „%s“ jau yra parsisiunčiamų failų sąraše ir pradėti ją skleisti negalima."/>
 		<string id="17492" value="Klaida įkeliant torrent failą „%s“. Tikriausiai tai blogas torrent failas."/>
 		<string id="17493" value="Neįmanoma sukurti BitTorrent bendrinto failo „%s“."/>
-		<string id="17494" value="Šiam torrent failui priklauso failas „%s“, bet „Shareaza“ negali surasti šio failo Jūsų kolekcijoje. Jei įmanoma, perkelkite šį failą į bendrintus aplankus ir bandykite dar kartą."/>
+		<string id="17494" value="This torrent includes the file &quot;%s&quot;, but Shareaza cannot find this file in your library. If possible, move the file to a shared folder and try again."/>
 		<string id="17495" value="Šiam torrent failui priklauso failas „%s“, kurio versija turėtų būti %s, tačiau esamo failo versija yra %s."/>
 		<string id="17496" value="Įvyko klaida kopijuojant „%s“ į BitTorrent bendrintą failą."/>
 		<string id="17497" value="Įvyko nežinoma klaida mėginant skleisti failą „%s“."/>
 		<string id="17498" value="Faile „%s“ aptikta klaida."/>
 		<string id="17501" value="Neįmanoma susisiekti su sekliu."/>
-		<string id="17503" value="Nesėkmingas bandymas — Bandomas kitas seklys (%i iš %i)"/>
+		<string id="17503" value="Trying next tracker (%i of %i)"/>
 		<string id="17505" value="BitTorrent ryšys su adresatu %s nutrūko susijungimo metu."/>
 		<string id="17506" value="BitTorrent ryšys su adresatu %s nutrūko sveikinimosi metu."/>
 		<string id="17507" value="BitTorrent užmegztas ryšys su adresatu %s nutrūko."/>
@@ -3317,16 +3326,16 @@
 		<string id="18509" value="Negalima nustatyti, kad šio failo parsisiuntimas baigtas, ir atlikti patikrą iš naujo, nes kol kas nėra jokių dalinių patikros duomenų, tokių kaip dryžinės (tiger-tree) maišos apimtis, eDonkey ar BitTorrent maišos rinkiniai. Be patikros informacijos parsisiunčiamam failui negali būti atlikta patikra."/>
 		<string id="18510" value="Ar tikrai norite nustatyti, kad šio failo parsisiuntimas baigtas ir atlikti jos patikrą? Bus peržiūrimas visas failas, ir „Shareaza“ priims tas dalis, kurios praeis patikrą, o tas dalis, kurios nepraeis patikros, atsiųs iš naujo."/>
 		<string id="18511" value="Jūs pakeitėte failo dydį. Ar tikrai norite jį pakeisti šiam parsisiunčiamam failui?"/>
-		<string id="18512" value="Atšaukti siuntimą bet išsaugoti dalinį failą(-us)"/>
-		<string id="18513" value="Jūs įrašėte eDonkey maišos reikšmę, tačiau ji yra neteisinga. Pasitikrinkite ir mėginkite dar kartą."/>
-		<string id="18514" value="Jūs pateikėte SHA1 maišos reikšmę, kuri skiriasi nuo reikšmės, priskirtos šiam parsisiunčiamam failui. Ar tikrai įsitikinę, kad norite pakeisti SHA1 maišą?"/>
+		<string id="18512" value="Are you sure you want to cancel this download but save incomplete file(s)?"/>
+		<string id="18513" value="You have typed an %s hash value, however it is invalid. Please check it and try again."/>
+		<string id="18514" value="You have provided an %s hash value which is different to the one currently associated with this download. Are you sure you want to change the %s hash now?"/>
 		<string id="18515" value="The selected download item currently has some Task attached, please wait and do it later."/>
 		<string id="19000" value="Nuotolinė prieiga neįgalinta."/>
 		<string id="19001" value="Jūs privalote įrašyti naudotojo vardą ir slaptažodį."/>
 		<string id="19002" value="Neįmanoma priimti susijungimų, nuoroda nepasiekiama."/>
 		<string id="19103" value="Sveiki! Čia Shareaza pokalbiai!"/>
 		<string id="19104" value="Gerbkite kitus naudodamiesi šia paslauga"/>
-		<string id="19105" value="Pokalbiai"/>
+		<string id="19105" value="Chat!"/>
 		<string id="20000" value="Nėra universalių šaltinių vardų."/>
 		<string id="20001" value="Užverti"/>
 		<string id="20002" value="iš"/>
@@ -3404,15 +3413,15 @@
 		<string id="20245" value="New Folder"/>
 		<string id="20246" value="Command-line options:\n\n-tray : Disable startup splash screen and send application to tray\n-nosplash : Disable startup splash screen\n-nowarn : Disable alpha (daily builds) version warning dialog\n-wait : Wait for other application instance exit\n\nInterface modes:\n\n-basic : Start application in Basic interface mode\n-tabbed : Start application in Tabbed interface mode\n-windowed : Start application in Windowed interface mode\n\nSystem options:\n\n-RegServer : Register internal components for everyone\n-UnRegServer : Un-register internal components for everyone\n-RegServerPerUser : Register internal components for current user\n-UnRegServerPerUser : Un-register internal components for current user"/>
 		<string id="20247" value="Failed to load metadata schemas. Please reinstall application."/>
-		<string id="20248" value="Jūs nenurodėte, kokius aplankus bendrinti. Ar tikrai tęsti?"/>
+		<string id="20248" value="You selected %u files. Are you sure?"/>
 		<string id="20249" value="Off"/>
 		<string id="20250" value="Low"/>
-		<string id="20251" value="Įprastinė _veiksena"/>
+		<string id="20251" value="Normal"/>
 		<string id="20252" value="High"/>
 		<string id="20253" value="Skin load error: %s. Element: %s"/>
 		<string id="20254" value="Loading skin: %s"/>
 		<string id="20255" value="Are you sure you want to remove all scheduled tasks? This cannot be undone."/>
-		<string id="20256" value="Ieškoti P2P tinkle"/>
+		<string id="20256" value="System: Start Shareaza"/>
 		<string id="20257" value="Bandwidth: Full Speed"/>
 		<string id="20258" value="Bandwidth: Reduced Speed"/>
 		<string id="20259" value="Bandwidth: Stop"/>
@@ -3602,13 +3611,13 @@
 			<control/>
 		</dialog>
 		<dialog name="CDownloadsSettingsPage" cookie="BuEdBuBuStCoBuStEdmsStEdmsStEdmsBuStCoStCoBuBuEdBu" caption="Atsisiuntimai">
-			<control caption="Saugoti _parsiųstus failus čia:"/>
+			<control caption="Save Completed Files Here"/>
 			<control/>
 			<control/>
 			<control caption="Scan every completed file with AntiVirus"/>
-			<control caption="Šablonai:"/>
+			<control caption="Select AntiVirus:"/>
 			<control/>
-			<control caption="Parsisiuntimų _skaičius:"/>
+			<control caption="Number of Downloads"/>
 			<control caption="Daugiausiai failų:"/>
 			<control/>
 			<control/>
@@ -3618,13 +3627,13 @@
 			<control caption="Siuntimų failui:"/>
 			<control/>
 			<control/>
-			<control caption="Limitai:"/>
+			<control caption="Limits"/>
 			<control caption="Visuminė parsisiuntimų greitaveika:"/>
 			<control/>
 			<control caption="Maksimalus eilės dydis:"/>
 			<control/>
 			<control caption="Failų mainus vykdyti tik tinkluose, prie kurių prisijungta."/>
-			<control caption="Laikyti _nebaigtus siųstis failus čia:"/>
+			<control caption="Store Temporary Incomplete Files Here"/>
 			<control/>
 			<control/>
 		</dialog>
@@ -3948,7 +3957,7 @@
 			<control/>
 			<control/>
 			<control caption="_Demografiniai duomenys:"/>
-			<control caption="|Vyras|Moteris"/>
+			<control caption="Male|Female"/>
 			<control caption="Lytis:"/>
 			<control/>
 			<control caption="Amžius:"/>
@@ -4024,8 +4033,8 @@
 		</dialog>
 		<dialog name="CLanguageDlg" cookie="" caption="Pasirinkite kalbą">
 		</dialog>
-		<dialog name="CConnectToDlg" cookie="BuCoEdBuCoBuBuBu" caption="Jungtis prie|Naršyti adresatą">
-			<control caption="Užmegzti naują ryšį su kompiuteriu ar serveriu:|Naršyti šį kompiuterį:"/>
+		<dialog name="CConnectToDlg" cookie="BuCoEdBuCoBuBuBu" caption="Connect To|Browse User|Chat to User">
+			<control caption="Initiate a new connection to host or server:|Browse this user:|Chat to this user:"/>
 			<control/>
 			<control/>
 			<control caption="Tinklo _protokolas:"/>
@@ -4092,7 +4101,7 @@
 			<control caption="Tarnybos _adresas:"/>
 			<control/>
 			<control caption="Tarnybos tipas:"/>
-			<control caption="Gnutella Bootstrap|GWebCache|Server.met nuoroda|Blokuota"/>
+			<control caption="Gnutella Bootstrap|G1 GWebCache|G2 GWebCache|G1/G2 GWebCache|Server.met URL|Blocked"/>
 			<control caption="Gerai"/>
 			<control caption="Atšaukti"/>
 		</dialog>
@@ -4282,7 +4291,7 @@
 			<control caption="Jūs pasirinkote %lu failą(-ų,-us) su „Shareaza“ susietų nuorodų ekspotavimui. Pasirinkite nuorodos formatą ir paspauskite „Išsaugoti“:"/>
 			<control/>
 			<control caption="Įterpti ženklą:"/>
-			<control caption="Tiger Root|SHA1|MD5|ED2K (CMD4)|Pilnas failo vardas|Failo vardas (nuoroda)|Failo vardas|Failo plėtinys|Failo dydis|Failo dydis (baitais)|Aplanko kelias|Vietinis adresas|Vietinis prievadas"/>
+			<control caption="Tiger Root|SHA1|MD5|ED2K (CMD4)|BitTorrent|Filename|Filename (URI)|Base Filename|File Extension|File Size|File Size (bytes)|Folder Path|Local Host|Local Port|Link|Link (URI)"/>
 			<control caption="Šablonai:"/>
 			<control caption="Magnet|eDonkey|Magnet HTML|eDonkey HTML"/>
 			<control caption="_Kopijuoti"/>
@@ -4547,7 +4556,7 @@
 			<control/>
 			<control caption="Gnutella1"/>
 			<control caption="Gnutella2"/>
-			<control caption="eDonkey"/>
+			<control caption="eDoonkey2K"/>
 			<control caption="DC++"/>
 			<control caption="BitTorrent"/>
 			<control caption="Select the event type:"/>
@@ -4697,8 +4706,8 @@
 		</list>
 		<list name="CSchedulerWnd">
 			<column from="Action" to="Veiksmas"/>
-			<column from="Trigger" to="Dryžinė maiša"/>
-			<column from="Next Run" to="Tolesnis"/>
+			<column from="Trigger" to="Trigger"/>
+			<column from="Next Run" to="NextRun"/>
 			<column from="Active" to="Aktyvus"/>
 			<column from="Status" to="Būklė"/>
 			<column from="Description" to="Aprašas"/>

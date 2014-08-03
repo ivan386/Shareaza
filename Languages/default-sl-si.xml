@@ -1201,14 +1201,14 @@
 			<item id="ID_LIBRARY_FOLDER_FILE_PROPERTIES" text="Lastnosti _datoteke"/>
 		</menu>
 		<menu name="CLibraryTree.Virtual.Basic">
-			<item id="ID_LIBRARY_FOLDER_ENQUEUE" text="Predvajanje albuma"/>
+			<item id="ID_LIBRARY_FOLDER_ENQUEUE" text="Play _Album"/>
 			<item id="ID_LIBRARY_FOLDER_DELETE" text="_Briši"/>
 			<separator/>
 			<item id="ID_LIBRARY_FOLDER_FILE_PROPERTIES" text="Lastnosti _datoteke"/>
-			<item id="ID_LIBRARY_FOLDER_PROPERTIES" text="Lastnosti albuma"/>
+			<item id="ID_LIBRARY_FOLDER_PROPERTIES" text="Album _Properties"/>
 		</menu>
 		<menu name="CLibraryTree.Virtual">
-			<item id="ID_LIBRARY_FOLDER_ENQUEUE" text="Predvajanje albuma"/>
+			<item id="ID_LIBRARY_FOLDER_ENQUEUE" text="Play _Album"/>
 			<item id="ID_LIBRARY_FOLDER_DELETE" text="_Briši"/>
 			<separator/>
 			<item id="ID_LIBRARY_REBUILD" text="_Zgradi ponovno (rebuild)"/>
@@ -1217,7 +1217,7 @@
 			<item id="ID_LIBRARY_FOLDER_NEW" text="_Nova mapa..."/>
 			<separator/>
 			<item id="ID_LIBRARY_FOLDER_FILE_PROPERTIES" text="Lastnosti _datoteke"/>
-			<item id="ID_LIBRARY_FOLDER_PROPERTIES" text="Lastnosti albuma"/>
+			<item id="ID_LIBRARY_FOLDER_PROPERTIES" text="Album _Properties"/>
 		</menu>
 		<!-- LIBRARY VIEWS -->
 		<menu name="CLibraryTileView">
@@ -1296,7 +1296,7 @@
 		<menu name="CLibraryFileView.Virtual.Basic">
 			<item id="ID_LIBRARY_LAUNCH" text="_Odpri ali predvajaj"/>
 			<item id="ID_LIBRARY_ENQUEUE" text="_Dodaj predvajalnemu seznamu"/>
-			<item id="ID_LIBRARY_FOLDER_ENQUEUE" text="Predvajanje albuma"/>
+			<item id="ID_LIBRARY_FOLDER_ENQUEUE" text="Play _Album"/>
 			<separator/>
 			<item id="ID_LIBRARY_SHARED_FILE" text="_Deljeno"/>
 			<separator/>
@@ -1700,7 +1700,8 @@
 				<icon res="252" width="32" height="32"/><gap size="8"/>
 				<heading align="middle">P R I L A G O D I   S H A R E A Z O</heading>
 				<newline gap="8" indent="42"/>
-				<text colour="FF0000">Če želite odpreti mapo z vašimi prenešenimi datotekami,</text>
+				<text colour="FF0000">Shareaza has detected that you are behind a NAT router or firewall,
+				and are unable to receive connections from the Internet.  </text>
 				<text colour="FF0000" format="b"> - Spremeni izgled Shareaze</text>
 				<newline gap="6"/>
 				<link target="raza:command:ID_HELP_ROUTER">Čarovnik za nastavitve</link>
@@ -1710,7 +1711,8 @@
 				<icon res="252" width="32" height="32"/><gap size="8"/>
 				<heading align="middle">M O J I   P R E N O S I</heading>
 				<newline gap="8" indent="42"/>
-				<text colour="FF0000">Če želite odpreti mapo z vašimi prenešenimi datotekami,</text>
+				<text colour="FF0000">Shareaza has detected that you are behind a NAT router or firewall,
+				and are unable to receive TCP connections from the Internet.  </text>
 				<text colour="FF0000" format="b">This may cause poor download performance.</text>
 				<newline gap="6"/>
 				<link target="raza:command:ID_HELP_ROUTER">Čarovnik za nastavitve</link>
@@ -1720,7 +1722,8 @@
 				<icon res="252" width="32" height="32"/><gap size="8"/>
 				<heading align="middle">O D D A L J E N   D O S T O P   J E   O M O G O Č E N</heading>
 				<newline gap="8" indent="42"/>
-				<text colour="FF0000">Oddaljen dostop do Shareaze je omogočen. S Shareazo lahko uporavljate z uporabo spletnega brskalnika na naslovu:</text>
+				<text colour="FF0000">Shareaza has detected that you are behind a NAT router or firewall,
+				and are unable to receive UDP messages from the Internet.  </text>
 				<text colour="FF0000" format="b">This may cause poor search performance.</text>
 				<newline gap="6"/>
 				<link target="raza:command:ID_HELP_ROUTER">Čarovnik za nastavitve</link>
@@ -1836,7 +1839,7 @@
 			<text group="11" align="middle">Povezava prekinjena</text>
 			<text group="12" align="middle">Povezujem...</text>
 			<text group="13" align="middle">Povezan</text>
-			<text group="14" align="middle" id="G1Hubs">eDonkey:</text>
+			<text group="14" align="middle" id="G1Hubs">%i ultrapeers</text>
 			<text group="15" align="middle" id="G1Leaves">listov (leaves): %i</text>
 			<newline group="10" gap="2"/>
 			<icon group="30" command="ID_NETWORK_ED2K"/><gap group="30" size="4"/>
@@ -1909,8 +1912,8 @@
 			</styles>
 			<text format="b">Dobrodošli v Shareazinem upravljalcu z nastavitvami</text>
 			<newline gap="16"/>
-			<text>Shareazin nastavitveni upravljalec omogoča naprednim uporabnikom popolno prireditev delovanja programa.
-			Nastavitev v</text>
+			<text>The Shareaza Settings Manager allows advanced users to completely customise how
+				Shareaza works. The settings in the</text>
 			<text format="b">General</text>
 			<text>sekciji se nanaša na uporabnikovo doživljanje programa.</text>
 			<newline gap="16" indent="16"/>
@@ -1946,8 +1949,8 @@
 			</styles>
 			<text format="b">Dobrodošli v Shareazinem upravljalcu z nastavitvami</text>
 			<newline gap="16"/>
-			<text>Shareazin nastavitveni upravljalec omogoča naprednim uporabnikom popolno prilagoditev načina delovanja Shareaze. 
-			Nastavitve v</text>
+			<text>The Shareaza Settings Manager allows advanced users to completely customise 
+				how Shareaza works. The settings in the</text>
 			<text format="b">Splet</text>
 			<text>sekciji upravlja način medsebojnega delovanja med Shareazo in drugimi vozli (nodes) znotraj P2P omrežij.</text>
 			<newline gap="16" indent="16"/>
@@ -2066,11 +2069,11 @@
 		<document name="DownloadHelp.Select">
 			<text format="b">Prenosi</text>
 			<newline gap="8"/>
-			<text>Tukaj so prikazane datoteke, ki se trenutno prenašajo. Posamezne vire si lahko ogledate
-		s klikom na znak plus (+) na levi strani.</text>
+			<text>This is where files currently being downloaded are displayed. You can view
+			individual sources by expanding each file with the small + on the left.</text>
 			<newline gap="8"/>
-			<text>Ta ukaz lahko uporabljate tudi za pomoč pri določenem prenosu.
-		Kar morate storiti je, da označite željen prenos in znova izberete ta ukaz.</text>
+			<text>Drag'n'Drop downloads higher in the list for priority, or onto Download Group 
+			tabs for better organisation (in Power Mode).</text>
 			<newline gap="16"/>
 			<text>You can also use this command to get help information on a specific download.
 			Simply select a download and choose this Help command again.</text>
@@ -2084,98 +2087,98 @@
 		<document name="DownloadHelp.Completed">
 			<text format="b">Ta prenos je končan</text>
 			<newline gap="8"/>
-			<text>Shareaza je končala prenašanje te datoteke. Datoteko je tudi preverila, tako da
-		je 100% pravilna.  Datoteko je prav tako premaknila v vašo mapo s prenešenimi datotekami.</text>
+			<text>Shareaza has finished downloading this file, and has verified that it
+			is 100% correct. It has also moved the file to your downloads folder.</text>
 		</document>
 		<document name="DownloadHelp.Moving">
 			<text format="b">Ta prenos se premika</text>
 			<newline gap="8"/>
-			<text>Shareaza je končala prenašanje te datoteke. Datoteko je preverila in je pravilna.
-		Trenutno se datoteko premika in/ali se jo razarhivira v vašo mapo s prenešenimi datotekami.</text>
+			<text>Shareaza has finished downloading this file, and has verified that
+			it is correct. It is currently being moved and/or unpacked to your downloads folder.</text>
 		</document>
 		<document name="DownloadHelp.Paused">
 			<text format="b">Ta prenos je trenutno prekinjen</text>
 			<newline gap="8"/>
-			<text>Prenos te datoteke je trenutno prekinjen.  Če želite prenos nadaljevati, kliknite na
-		ukaz '</text><text format="b">Nadaljevanje prenosa</text><text>'.</text>
+			<text>You have paused this download. If you want it to resume downloading, you
+			can click the '</text><text format="b">Nadaljevanje prenosa</text><text>'.</text>
 		</document>
 		<document name="DownloadHelp.DiskFull">
 			<text format="b">Disk je poln</text>
 			<newline gap="8"/>
-			<text>Shareaza je samodejno prekinila ta prenos, ker je trdi disk na vašem računalniku
-		očitno poln ali pa datoteke na kakršenkoli način ni mogoče zapisati na disk. Če želite
-		prenos nadaljevati, boste morali sprostiti nekaj prostora na disku vašega računalnika ali
-		preverite da je zapisovanje v želejno mapo sploh mogoče in morda kakšnih omejitev glede pravic.
-		Šele potem nadaljujte s prenosom datoteke.</text>
+			<text>Shareaza has paused this download automatically because the hard disk
+			appears to be full, or the download file cannot be written to. If you wish
+			to continue downloading, please free some space on your hard disk and/or check
+			to make sure the incomplete file folder is accessible, and then resume the
+			download.</text>
 		</document>
 		<document name="DownloadHelp.Verifying">
 			<text format="b">Prenešeno datoteko se trenutno preverja</text>
 			<newline gap="8"/>
-			<text>Prenos datoteke je končan, Shareaza pa trenutno preverja, da je datoteka na
-		vašem računalniku enaka izvirniku. Če Shareaza naleti na morebitne poškodovane dele datoteke,
-		jih bo samodejno popravila.</text>
+			<text>This download has finished, and Shareaza is now checking it to ensure
+			that it is exactly the same as the original file. If any damaged parts are
+			found, Shareaza will repair them automatically.</text>
 		</document>
 		<document name="DownloadHelp.Downloading">
 			<text format="b">Ta prenos je aktiven!</text>
 			<newline gap="8"/>
-			<text>Prenos te datoteke je trenutno v teku. Če prenos poteka prepočasi,
-		vam priporočamo iskanje drugih virov na omrežju s klikom na ukaz '</text><text format="b">Najdi dodatne vire</text><text>'. Če se hitrost kljub temu ne izboljša
-    je mogoče razlog v počasnosti v omejeni hitrosti prenosa uporabnikov od koder prenašate datoteko.
-		Hitrosti prenosa se ponavadi sčasoma povišajo.</text>
+			<text>This download is currently in progress. If it is downloading too slowly,
+			you could try searching the network for more sources with the '</text><text format="b">Najdi dodatne vire</text><text>' command. If the speed does not 
+			improve it may be due to limited upload speeds of the users you are downloading 
+			from. Download speed usually increases over time.</text>
 		</document>
 		<document name="DownloadHelp.Pending">
 			<text format="b">Ta prenos je v čakanju</text>
 			<newline gap="8"/>
-			<text>Ta prenos (download) čaka na nekoga, da začne nalaganje (upload).
-		Shareaza je pripravljena na začetek prenosa te datoteke, vendar te datoteke
-		žal še nihče ni začel pošiljati v omrežje. Prav verjetno je, da ste v čakalni
-		vrsti oddaljenega uporabnika. Prenos se bo morda nadaljeval vsak trenutek.
-		Pregledate lahko posamezne vire in s tem preverite v katerih čakalnih vrstah ste.
-		Če tudi sami delite datoteke drugim bo to verjetno izboljšalo vaše možnosti
-		skorajšnjega prenosa.</text>
+			<text>This download is waiting for someone to start uploading.
+			Shareaza is ready to start downloading this file, but no-one is sending it at
+			the moment. You are probably waiting in other user's queues, and the download
+			may start transferring at any time. You can examine the individual sources to 
+			see each queue you are waiting in. If you are sharing files yourself, it may
+			improve the chances of a download transfer starting quickly.</text>
 		</document>
 		<document name="DownloadHelp.Queued">
 			<text format="b">Ta prenos je v čakalni vrsti</text>
 			<newline gap="8"/>
-			<text>Ta prenos čaka na končanje nekaterih drugih vaših prenosov.
-		Vaše nastavitve v Shareazi omejujejo število aktivnih prenosov v določenem trenutku.
-		S tem se omogoči, da ima vsak prenos na voljo zadostno količino pasovne širine.
-		Prej omenjene nastavitve lahko spremenite preko menija: Orodja - Nastavitve.
-		Druga možnost, ki jo imate na voljo, pa je da ročno začnete prenos.</text>
+			<text>This download is waiting for some of your other downloads to complete.
+			Your download settings limit the number of downloads which may be active at
+			any given time, to ensure that each download gets a good share of the available
+			bandwidth. You can change these settings via Tools, Shareaza Settings.
+			Alternatively, you may manually start this download with the resume command.</text>
 		</document>
 		<document name="DownloadHelp.Searching">
 			<text format="b">Ta prenos je v iskanju</text>
 			<newline gap="8"/>
-			<text>Ni virov za ta prenos tako da Shareaza išče druge vire po P2P omrežjih.
-		Ko bodo novi viri najdeni, se bo prenos začel samodejno. Shareaza išče vire samodejno,
-		vendar lahko postopek pohitrite z uporabo ukaza</text>
+			<text>There are no known sources for this download, so Shareaza is searching
+			all connected P2P networks for new sources. Once sources are found, the
+			download will start automatically. Shareaza searches for sources automatically,
+			however you can speed up the process using the</text>
 			<text format="b">Najdi dodatne vire</text><text>.</text>
 			<newline gap="8"/>
-			<text>Na žalost, v večini primerov, na mrežo ni priklopljenih nobenih uporabnikov, ki bi
-		imeli datoteko, ki jo iščete. Edino kar lahko naredite je, da počakate na nekoga, ki ima
-		iskano datoteko, da pride na mrežo ali pa prekličete prenos in poiščete datoteko, ki je bolj
-		razširjena.</text>
+			<text>Unfortunately in many cases there may be no users online who have the
+			file you are looking for. The only course of action here is to wait for
+			someone to come online, or cancel it and try to find a similar file which is
+			more widely available.</text>
 		</document>
 		<document name="DownloadHelp.Creating">
 			<text format="b">Ta prenos se ustvarja</text>
 			<newline gap="8"/>
-			<text>Zaradi prihranka na času Shareaza pripravlja datoteko v katero namerava shraniti vsebino datoteke, ki jo
-		želite prenesti.</text>
+			<text>Shareaza is pre-allocating a file in which to store this download, to
+			save time later.</text>
 		</document>
 		<document name="DownloadHelp.Tracker">
 			<text format="b">BitTorrent sledilnik v okvari</text>
 			<newline gap="8"/>
-			<text>BitTorrent sledilniški strežnik (tracker server) za ta prenos ne deluje oziroma
-		je v okvari. Shareaza ne dobi dostopa do sledilnika in tako ne more dobiti seznama
-		vrstnikov (peer-ov) za prenos datotek.</text>
+			<text>The BitTorrent tracker server for this download appears to be
+			down or malfunctioning. Shareaza is unable to contact it to receive
+			a list of peers.</text>
 		</document>
 		<!-- Upload help documents -->
 		<document name="UploadHelp">
 			<text format="b">Naložki (uploads)</text>
 			<newline gap="8"/>
-			<text>Na tem mestu so prikazane čakalne vrste in naložki. Podrobnosti vsake posamezne
-		čakalne vrste lahko vidite s klikom na + na levi strani. Prikazano lahko tudi filtrirate
-		s klikom na gumb na desni strani okenske orodne vrstice.</text>
+			<text>This is where queues and uploads are displayed. You can expand each queue
+			with the small + on the left, and filter what is displayed with the button on the
+			right of the window's toolbar.</text>
 		</document>
 		<!-- General help documents -->
 		<document name="GeneralHelp.DiskSpace">
@@ -2183,27 +2186,26 @@
 			<newline gap="8"/>
 			<text>Količina prostega mesta na trdem disku vašega računalnika, ki ga uporablja Shareaza, je nizka.</text>
 			<newline gap="8"/>
-			<text>Venomer poskušajte imeti dovolj prostega mesta na trdem disku računalnika. Programi
-		in operacijski sistem lahko postanejo zelo nestabilni ob pomanjkanju prostora, delovanje se lahko
-		zelo upočasni, lahko pa pride celo do izgube podatkov. Poskušajte zagnati program za čiščenje diska, pobrišite
-		stare, odvečne oz. nepotrebne datoteke in od-namestite programe, ki niso nujno potrebni.</text>
+			<text>You should always attempt to keep a reasonable amount of disk space free. Programs 
+			can become unstable if the drives become full, and temporary files may be lost. You should 
+			run a disk clean-up, delete unwanted files, or uninstall software you no longer need.</text>
 		</document>
 		<document name="GeneralHelp.DiskWriteFail">
 			<text format="b">V zahtevano mapo ni dovljeno zapisovati</text>
 			<newline gap="8"/>
 			<text>Mapa ali disk, ki ga Shareaza potrebuje, ne dovoljuje zapisovanje vanj.</text>
 			<newline gap="8"/>
-			<text>Lahko da je prišlo do prekinitve povezave kakega od mrežnih pogonov. možno pa je tudi,
-		da manjkajo ustrezne pravice, ki omogočajo zapisovanje na disk oz. določeno mapo na disku.
-		Preverite mape in zapisovalne pravice za njih ali pa spremenite mesto zapisovanja začasnih datotek.</text>
+			<text>A network drive may have been disconnected, or you may not have write permission 
+			to a selected directory. Please check directories and permissions, or change the
+			temporary files location.</text>
 		</document>
 		<document name="GeneralHelp.ConnectionFail">
 			<text format="b">Povezava v medmrežje je bila prekinjena</text>
 			<newline gap="8"/>
 			<text>Operacijski sistem Windows je sporočil, da ni na voljo povezave v medmrežje.</text>
 			<newline gap="8"/>
-			<text>Najverjetneje je prišlo do prekinitve na usmerjevalniku ali modemu, kar onemogoča
-		vzpostavitev povezave v medmrežje. Poskusite se ponovno povezati, ročno, če je to potrebno.</text>
+			<text>It is likely that a modem or router has dropped, meaning the internet cannot
+			be accessed. You may need to manually re-connect or reset your connection.</text>
 			<newline gap="8"/>
 			<text>Shareaza je prenehala s postopkom povezovanja, da bi preprečila izgubo vseh medpomnjenih
 		gostiteljev.</text>
@@ -2211,8 +2213,9 @@
 		<document name="GeneralHelp.AdultFilter">
 			<text format="b">Omogočeno je filtriranje vsebin za odrasle</text>
 			<newline gap="8"/>
-			<text>Prosimo da upoštevate dejstvo, da, tako kot noben somodejni filter, tudi ni vedno 100% učinkovit.
-		Namen delovanja je, da s filtrom izloči neželene razultate, ne pa da 100% izloči ves materjal namenjen izključno odraslim.</text>
+			<text>Please note that (as with any automated filter) it may not be 100% effective at
+			screening content. It is designed simply to filter out excess unwanted results, rather than 
+			as a 100% safe block.</text>
 			<newline gap="8"/>
 			<text>Ko otroci uporabljajo medmrežje (vključno z izmenjavo datotek preko sistema P2P), je še vedno zelo pomemben
 		nadzor staršev.</text>
@@ -2220,12 +2223,12 @@
 		<document name="GeneralHelp.BadTorrentEncoding">
 			<text format="b">Torent ima napako pri enkodiranju</text>
 			<newline gap="8"/>
-			<text>Operacijski sistem Windows je ugotovil napako pri dekodiranju tega torrenta. Po vsej
-		verjetnosti gre za pokvarjeno ali napačno enkodirano torrent datoteko. Torrent se bo morda še vedno
-		pravilno prenesel vendar lahko pride do napak pri imenih datotek.</text>
+			<text>Windows has reported a translation fault while decoding text in this torrent. It is
+			possible that the torrent is corrupt, or just incorrectly encoded. The torrent may
+			still download properly, although some file names could be incorrect.</text>
 			<newline gap="8"/>
-			<text>Večina programov za ustvarjanje torrentov vam bo omogočala popravilo tega torrenta, kar
-		vam bo na koncu zagotovilo pravilno delovanje v vseh BitTorrent programih.</text>
+			<text>Most torrent creation programs should allow you to repair this torrent, which
+			will ensure it works properly in all BitTorrent applications.</text>
 			<newline gap="8"/>
 			<link target="raza:command:ID_HELP_TORRENT">Kliknite sem za dodatno pomoč</link>
 			<text>ali za iskanje programov za popravilo torrenta.</text>
@@ -2233,70 +2236,72 @@
 		<document name="GeneralHelp.DonkeyServerList">
 			<text format="b">Vaš eDonkey strežniški seznam je prazen</text>
 			<newline gap="8"/>
-			<text>Vaš seznam eDonkey strežnikov je prazen. Prenesti boste morali najnovejši strežnikški seznam
-		(met-datoteka) za povezavo na ED2K.</text>
+			<text>There are no servers in your eDonkey server list. You need to download an
+			up to date server list (met file) to connect to ED2K.</text>
 			<newline gap="8"/>
-			<text>Ta strežniški seznam lahko prenesete z nastavitvene strani ed2k ali preko okna za
-		storitve discovery. (Pritisnite tipko F9 za odprtje okna za storitve discovery)</text>
+			<text>You can download a server list from the ed2k setting page, or the discovery
+			services window. (Press F9 to open the discovery services window)</text>
 		</document>
 		<document name="GeneralHelp.UploadWarning">
 			<text format="b">Omejevanje naložkov (uploadov) lahko upočasni prenašanje (downloadov)</text>
 			<newline gap="8"/>
-			<text>Številna omrežja na katera se priključuje Shareaza zahtevajo recipročnost. To pomeni da
-		se uporabnikom, ki ponujajo malo ali nič, omejujejo prenosne zmogljivosti.</text>
+			<text>Several networks Shareaza connects to enforce ratios, limit uploads to
+			clients that do not share, or simply preference uploading to known sharers.</text>
 			<newline/>
-			<text>K sreči so širokopasovne povezave kot avtocesta: obstajajo ločene poti za promet v eno in
-		ločene poti za promet v drugo smer. Če je vaš odjemalec pravilno nastavljen boste lahko še vedno
-		uspešno nalagali (upload) medtem ko boste obdržali polno zmogljivost prenašanja (download).</text>
+			<text>Fortunately, broadband DSL connections are like a two-lane highway: you have
+			separate allocations for upload and download. If your client is properly configured, 
+			you should be able to upload at a good rate while retaining full download capacity.</text>
 			<newline gap="8"/>
-			<text>Privzeteo je nalaganje (upload) omejeno na približno 85% pasovne širine, ki je na voljo, medtem
-		ko je prenašanje (download) neomejeno. Konfiguracija te vrste vam bo omogočala najbolj učinkovito delovanje.</text>
+			<text>By default, your upload limit is set to about 85% of available upstream bandwidth,
+			while downloads are unlimited. That configuration should give you the fastest possible 
+			downloads that are available.</text>
 		</document>
 		<!-- Search help documents -->
 		<document name="SearchHelp.BadSearch1">
 			<text format="b">Izrazite iskalni niz na drugačen način</text>
 			<newline gap="8"/>
-			<text>Iskalni niz ni pravilno izražen (formuliran) in verejtno ne bo deloval pravilno.
-		Iskalni niz mora, kjer je to mogoče, vsebovati vsaj nekaj izrazov. Določen naj bi bil tudi
-		tip datoteke (file type). Iskalni niz bi se, prav tako, ne omejeval izključno na številke,
-		negativne izraze ali pre-splošne besede.</text>
+			<text>This search is poorly formatted, and may not function correctly. 
+			Searches should include several terms where possible, and should specify a schema 
+			(file type). Furthermore, searches must not be limited to numbers or negative
+			terms only, and you should avoid overly general queries.</text>
 			<newline gap="8"/>
-			<text>Večina odjemalcev na omrežju ne bo dovoljevala iskanje po npr. vseh datotekah MP3, ker je
-		to enostavno presplošno in bi iskanje vrnilo preveč rezultatov.</text>
+			<text>Most clients on the network will ignore a search for all MP3 files, for example, 
+			because it is not specific enough, and would generate too many results.</text>
 		</document>
 		<document name="SearchHelp.BadSearch2">
 			<text format="b">Izrazite iskalni niz na drugačen način</text>
 			<newline gap="8"/>
-			<text>Iskalni niz ne vsebuje dovolj izrazov za pravilno delovanje. Vsako iskanje zahteva
-		vsaj neko najmanjše število veljavnih abecednih znakov.</text>
+			<text>This search does not contain enough terms to function properly. All searches need
+			a minimum number of valid, alphabetic characters to be able to start.</text>
 			<newline gap="8"/>
-			<text>Lahko iščete po pogosto uporabljenih datotečnih končnicah (in številkah) vendar morate
-		vnesti tudi druge izraze. Ločila in nadomestni znaki se pri iskanju ne uporabljajo temveč samo
-		besedilo, ki ga vnesete.</text>
+			<text>While common file extensions (and numbers) can be searched for, you must enter
+			other terms as well when creating the search. Punctuation and wildcards are not used 
+			in searches, just the text you enter.</text>
 		</document>
 		<document name="SearchHelp.BadSearch3">
 			<text format="b">Izrazite iskalni niz na drugačen način</text>
 			<newline gap="8"/>
-			<text>Iskanje vsebuje bodisi samo navadne datotečne podaljške ali besede, po katerih iskanje
-		ni mogoče.</text>
+			<text>This search seems to contain only common file extensions, or no searchable
+			words.</text>
 			<newline gap="8"/>
-			<text>Če imate težave pri iskanju, imejte v mislih, da je iskanje tu podobno, kot iskanje na spletu.
-		Priporoča se uporaba specifičnih in edinstvenih izrazov in ključnih besed.</text>
+			<text>If you are having trouble creating searches, keep in mind that it's quite similar
+			to a web search. Specific terms or phrases are best- Unique names, titles and
+			keywords.</text>
 			<newline gap="8"/>
-			<text>Po splošnih izrazih ni mogoče učinkovito iskati in kot posledica takšnega iskanja lahko
-		pride do slabšega delovanja ter visoke porabe pasovne širine.</text>
+			<text>General terms cannot be searched for efficiently and may result in poor
+			search performance, as well as high bandwidth use during searches.</text>
 			<newline gap="8"/>
 			<text>Dodatna pomoč je dosegljiva na spletni strani Shareaze.</text>
 		</document>
 		<document name="SearchHelp.AdultSearch">
 			<text format="b">Iskanje se ne more začeti</text>
 			<newline gap="8"/>
-			<text>Iskanje, ki ste ga želeli izvesti, bi po vsej verjetnosti vrnilo veliko zadetkov z vsebino
-		namenjeno izključno odraslim osebam, kar pa je bilo v namestitvah izklopljeno. Iskalni niz boste morali
-		ali spremeniti ali pa onemogočiti delovanje filtra.</text>
+			<text>The specified search would probably return a large number of results with adult 
+			content, and this has been turned off in the settings. You should either re-phrase the 
+			search, or disable the filter.</text>
 			<newline gap="8"/>
-			<text>Če želite onemogočiti delovanje filtra, pojdite na meniju na Ordja &gt; Nastavitve &gt; Splošno
-		in umaknite kljukico ob besedilu Filtrirajte vsebino samo za odrasle iz iskanj.</text>
+			<text>To disable the filter, go into Tools &gt; Settings &gt; General and uncheck the
+			adult content filter.</text>
 		</document>
 		<!-- Share help documents -->
 		<document name="ShareHelp.AlreadyShared">
@@ -2309,24 +2314,26 @@
 		<document name="ShareHelp.BadShare">
 			<text format="b">Ta mapa se ne bi smela deliti</text>
 			<newline gap="8"/>
-			<text>Izbrana mapa je bodisi sistemska ali pa vsebuje sistemske pod-mape. Deljenje te mape
-		ni priporočljivo saj datoteke, ki so v njej, niso drugim uporabne.</text>
+			<text>This folder is (or contains) a system folder. Sharing this folder is not
+			recommended, since most of the files in it are of no use to other people.</text>
 			<newline gap="8"/>
-			<text>Mape, kot so Windows ali Program Files ipd. ponavadi nimajo datotek, ki bi bile primerne
-		za deljenje drugim. Datoteke, ki bi bile lahko drugim zanimive bi se nahajale v pod mapah</text><text format="i">znotraj</text><text>teh map. Priporočamo vam, da raje delite te.</text>
+			<text>Folders such as the Windows directory, Program Files, and similar folders
+			do not usually contain files suitable for sharing. Any files of interest would be in
+			sub-folders located</text><text format="i">znotraj</text><text>these folders.
+			Please share those instead.</text>
 			<newline gap="8"/>
-			<text>Prav tako ne priporočamo deljenje datotek v mapi 'incomplete' saj lahko postopek zgoščevanja (hashing)
-		datotek v prenosu močno vpliva na učinkovitost delovanja Shareaze.</text>
+			<text>The Shareaza 'incomplete' folder should also not be shared through the
+			library, since attempting to hash downloads in progress may impact on performance.</text>
 		</document>
 	</documents>
 	<!-- Localised Command Tip Text. The "message" is displayed in the status bar, while the "tip" is shown in a tooltip -->
 	<commandTips>
 		<tip id="AFX_IDS_APP_TITLE" message="Shareaza"/>
-		<tip id="AFX_IDS_IDLEMESSAGE" message="Pripravljen..."/>
+		<tip id="AFX_IDS_IDLEMESSAGE" message="Ready"/>
 		<tip id="AFX_IDS_MDICHILD" message="Activate this window"/>
-		<tip id="AFX_IDS_PREVIEW_CLOSE" message="Close print preview mode" tip="Predogled"/>
-		<tip id="AFX_IDS_SCCLOSE" message="Povečajte aktivno okno na ves zaslon."/>
-		<tip id="AFX_IDS_SCMAXIMIZE" message="Povečajte aktivno okno na ves zaslon."/>
+		<tip id="AFX_IDS_PREVIEW_CLOSE" message="Close print preview mode" tip="Cancel Preview"/>
+		<tip id="AFX_IDS_SCCLOSE" message="Close the active window and prompts to save the documents"/>
+		<tip id="AFX_IDS_SCMAXIMIZE" message="Enlarge the window to full size"/>
 		<tip id="AFX_IDS_SCMINIMIZE" message="Reduce the window to an icon"/>
 		<tip id="AFX_IDS_SCMOVE" message="Change the window position"/>
 		<tip id="AFX_IDS_SCNEXTWINDOW" message="Switch to the next document window"/>
@@ -2356,7 +2363,7 @@
 		<tip id="ID_CHILD_RESTORE" message="Odprite izbrano okno."/>
 		<tip id="ID_DISCOVERY_ADD" message="Dodajte novo storitev discovery..."/>
 		<tip id="ID_DISCOVERY_ADVERTISE" message="Objavite izbrano GWebCache storitev naključnemu obstoječemu GWebCache-ju."/>
-		<tip id="ID_DISCOVERY_BLOCKED" message="Ogled storitev GWebCache v Discovery oknu."/>
+		<tip id="ID_DISCOVERY_BLOCKED" message="Show blocked services in the Discovery window."/>
 		<tip id="ID_DISCOVERY_BROWSE" message="Brskajte po statistiki po izbrani GWebCache storitvi na spletu."/>
 		<tip id="ID_DISCOVERY_EDIT" message="Ogled lastnosti izbrane storitve discovery."/>
 		<tip id="ID_DISCOVERY_GNUTELLA" message="Ogled storitev za začetno nalaganje (bootstrap) v oknu Discovery."/>
@@ -2404,7 +2411,7 @@
 		<tip id="ID_DOWNLOADS_SHOW_SOURCES" message="Ogled virov, ki trenutno niso v uporabi."/>
 		<tip id="ID_DOWNLOADS_SOURCES" message="Iskanje po dodatnih virih za izbrane datoteke."/>
 		<tip id="ID_DOWNLOADS_URL" message="Dodaj izvorni URL izbranemu prenosu..."/>
-		<tip id="ID_DOWNLOADS_VIEW_REVIEWS" message="Ogled ocen za izbran prenos"/>
+		<tip id="ID_DOWNLOADS_VIEW_REVIEWS" message="View reviews for the selected download."/>
 		<tip id="ID_HELP_ABOUT" message="Prikaz Shareaza vizitke..."/>
 		<tip id="ID_HELP_CODEC" message="Vse o kodekih in težavah z videom."/>
 		<tip id="ID_HELP_FAQ" message="Ogled Shareazinih pogosto zastavljenih vprašanj in odgovorov (FAQ)."/>
@@ -2425,7 +2432,7 @@
 		<tip id="ID_HITMONITOR_CLEAR" message="Počisti medpomnilnik nadzornika zadetkov."/>
 		<tip id="ID_HITMONITOR_PAUSE" message="Premor nadzornika zadetkov."/>
 		<tip id="ID_HITMONITOR_SEARCH" message="Iskanje po omrežju po izbranem iskalnem pojmom."/>
-		<tip id="ID_HOSTCACHE_BT_CACHE" message="Pokaži BitTorrent naložke."/>
+		<tip id="ID_HOSTCACHE_BT_CACHE" message="Show BitTorrent cached hosts."/>
 		<tip id="ID_HOSTCACHE_CONNECT" message="Povezava na izbrane gostitelje."/>
 		<tip id="ID_HOSTCACHE_DC_CACHE" message="Show DC++ cached hubs."/>
 		<tip id="ID_HOSTCACHE_DISCONNECT" message="Prekinitev povezave z izbranega gostitelja."/>
@@ -2435,10 +2442,10 @@
 		<tip id="ID_HOSTCACHE_G2_CACHE" message="Prikaz medpomnenjih gostiteljev sistema Gnutella2."/>
 		<tip id="ID_HOSTCACHE_G2_HORIZON" message="Prikaz obzornih zvezdišč (horizon hubs) sistema Gnutella2."/>
 		<tip id="ID_HOSTCACHE_IMPORT" message="Uvoz seznama znanih gostiteljev, kot npr. &quot;server.met&quot; datoteke..."/>
-		<tip id="ID_HOSTCACHE_KAD_CACHE" message="Prikaz medpomnenjih gostiteljev sistema Gnutella1."/>
+		<tip id="ID_HOSTCACHE_KAD_CACHE" message="Show Kademlia cached hosts."/>
 		<tip id="ID_HOSTCACHE_PRIORITY" message="Poskušaj se najprej povezati na ta strežnik."/>
 		<tip id="ID_HOSTCACHE_REMOVE" message="Odstranitev izbranih gostiteljev iz medpomnilnika gostiteljev.."/>
-		<tip id="ID_IMPORT_DOWNLOADS" message="Deli NOVE delne prenose"/>
+		<tip id="ID_IMPORT_DOWNLOADS" message="Import eMule partial downloads..."/>
 		<tip id="ID_LIBRARY_ADD" message="Dodaj novo mapo v svojo knjižnico..."/>
 		<tip id="ID_LIBRARY_ALBUM_DELETE" message="Zbriši izbrano albumsko mapo."/>
 		<tip id="ID_LIBRARY_ALBUM_OPEN" message="Odpri izbrano albumsko mapo."/>
@@ -2468,7 +2475,7 @@
 		<tip id="ID_LIBRARY_REBUILD" message="Ponovno sestavi metapodatke in izvlečke za izbrane mape in datoteke."/>
 		<tip id="ID_LIBRARY_REBUILD_ANSI" message="Ponovno sestavi metapodatke z uporabo drugega jezika."/>
 		<tip id="ID_LIBRARY_REFRESH" message="Osveži knjižnični pogled."/>
-		<tip id="ID_LIBRARY_REFRESH_METADATA" message="_Refresh Metadata"/>
+		<tip id="ID_LIBRARY_REFRESH_METADATA" message="Refresh file metadata"/>
 		<tip id="ID_LIBRARY_REMOVE" message="Odstrani izbrane deljene mape."/>
 		<tip id="ID_LIBRARY_RENAME" message="Preimenuj izbrane datoteke na mestu."/>
 		<tip id="ID_LIBRARY_SCAN" message="Preglej izbrane mape ali datoteke za morebitnimi spremembami."/>
@@ -2506,7 +2513,7 @@
 		<tip id="ID_MEDIA_PAUSE" message="Trenutno zaustavi predvajanje medijske datoteke." tip="Pause"/>
 		<tip id="ID_MEDIA_PLAY" message="Začni predvajanje trenutne medijske datoteke." tip="Predvajaj"/>
 		<tip id="ID_MEDIA_PLAYLIST" message="Pokaži ali skrij urejevalnik predvajalnega seznama."/>
-		<tip id="ID_MEDIA_POSITION" message="Išči določeno mesto v medijski datoteki" tip="Seek"/>
+		<tip id="ID_MEDIA_POSITION" message="Seek to a position in the media file." tip="Seek"/>
 		<tip id="ID_MEDIA_PREVIOUS" message="Preskoči na prejšnjo datoteko v trenutnem predvajalnem seznamu." tip="Prejšnja datoteka"/>
 		<tip id="ID_MEDIA_PROPERTIES" message="View and edit the properties of the selected files."/>
 		<tip id="ID_MEDIA_RANDOM" message="Preklopi naključni način v trenutnem predvajalnem seznamu."/>
@@ -2521,15 +2528,15 @@
 		<tip id="ID_MEDIA_SIZE_ONE" message="Pokaži video v izvirni velikosti."/>
 		<tip id="ID_MEDIA_SIZE_THREE" message="Pokaži trikratno velikost videa od normalne."/>
 		<tip id="ID_MEDIA_SIZE_TWO" message="Pokaži dvakratno velikost videa od normalne."/>
-		<tip id="ID_MEDIA_SPEED" message="Nastavi hitrost medijske datoteke" tip="Hitrost"/>
+		<tip id="ID_MEDIA_SPEED" message="Adjust the speed of the media file." tip="Hitrost"/>
 		<tip id="ID_MEDIA_STATUS" message="Pokaži ali skrij statusno vrstico medija."/>
 		<tip id="ID_MEDIA_STOP" message="Ustavi predvajanje medijske datoteke." tip="Končaj"/>
 		<tip id="ID_MEDIA_VIS" message="Izberi zvočni vizalizacijski vtičnik..."/>
-		<tip id="ID_MEDIA_VOLUME" message="Nastavi jakost zvoka" tip="Volume"/>
+		<tip id="ID_MEDIA_VOLUME" message="Adjust the audio volume." tip="Volume"/>
 		<tip id="ID_MEDIA_ZOOM" message="Nastavi povečavo in razmerje videa."/>
 		<tip id="ID_MONITOR_CLOSE" message="Zapri okno nadzornika."/>
 		<tip id="ID_MUSICBRAINZ_ALBUMS" message="Look at all albums for this artist."/>
-		<tip id="ID_MUSICBRAINZ_MATCHES" message="Išči po drugih kopijah izbrane datoteke."/>
+		<tip id="ID_MUSICBRAINZ_MATCHES" message="Search for albums matching the selected file."/>
 		<tip id="ID_NEIGHBOURS_CHAT" message="Odpri klepetalno sejo z izbranim uporabnikom."/>
 		<tip id="ID_NEIGHBOURS_COPY" message="Kopiraj URI za dostop do izbranega gostitelja."/>
 		<tip id="ID_NEIGHBOURS_DISCONNECT" message="Prekini povezavo do izbranega soseda."/>
@@ -2550,14 +2557,14 @@
 		<tip id="ID_NETWORK_G1" message="Poveži se z izvornim Gnutella omrežjem."/>
 		<tip id="ID_NETWORK_G2" message="Poveži se z Gnutella2 omrežjem (zelo priporočljivo)."/>
 		<tip id="ID_NETWORK_SEARCH" message="Začni novo iskanje po mreži..."/>
-		<tip id="ID_NEXT_PANE" message="Switch to the next window pane" tip="Naslednji v vrsti"/>
+		<tip id="ID_NEXT_PANE" message="Switch to the next window pane" tip="Next Pane"/>
 		<tip id="ID_OPEN_DOWNLOADS_FOLDER" message="Open my folder of completed Downloads"/>
-		<tip id="ID_PREV_PANE" message="Preskoči na prejšnjo datoteko v trenutnem predvajalnem seznamu." tip="Prejšnja datoteka"/>
-		<tip id="ID_SCHEDULER_ACTIVATE" message="Počisti iz seznama izbrane naložke (uploads)."/>
+		<tip id="ID_PREV_PANE" message="Switch back to the previous window pane" tip="Previous Pane"/>
+		<tip id="ID_SCHEDULER_ACTIVATE" message="Activates selected task(s) from the list."/>
 		<tip id="ID_SCHEDULER_ADD" message="Adds a new task to scheduler list."/>
-		<tip id="ID_SCHEDULER_DEACTIVATE" message="Poveži se na omrežje."/>
-		<tip id="ID_SCHEDULER_EDIT" message="Uredi izbrano varnostno pravilo..."/>
-		<tip id="ID_SCHEDULER_REMOVE" message="Odstranitev izbranih prenosov iz seznama."/>
+		<tip id="ID_SCHEDULER_DEACTIVATE" message="Deactivates selected tasks."/>
+		<tip id="ID_SCHEDULER_EDIT" message="Edit the selected task..."/>
+		<tip id="ID_SCHEDULER_REMOVE" message="Removes selected task(s) from the list."/>
 		<tip id="ID_SCHEDULER_REMOVE_ALL" message="Removes all scheduled tasks."/>
 		<tip id="ID_SEARCH_CHAT" message="Odpri klepetalno sejo z izbranim uporabnikom."/>
 		<tip id="ID_SEARCH_CLEAR" message="Počisti rezultate iskanja."/>
@@ -2594,11 +2601,11 @@
 		<tip id="ID_SYSTEM_COPY" message="Copy selected line(s) of status log."/>
 		<tip id="ID_SYSTEM_TIMESTAMP" message="Zapiši časovni žig za vsako vrstico."/>
 		<tip id="ID_SYSTEM_VERBOSE" message="Prikaži podroben dnevnik sistemske aktivnosti."/>
-		<tip id="ID_SYSTEM_VERBOSE_DEBUG" message="Pokaži legendo."/>
-		<tip id="ID_SYSTEM_VERBOSE_ERROR" message="Pokaži legendo."/>
-		<tip id="ID_SYSTEM_VERBOSE_INFO" message="Pokaži mrežne črte."/>
+		<tip id="ID_SYSTEM_VERBOSE_DEBUG" message="Display all."/>
+		<tip id="ID_SYSTEM_VERBOSE_ERROR" message="Display errors only."/>
+		<tip id="ID_SYSTEM_VERBOSE_INFO" message="Display infos and above."/>
 		<tip id="ID_SYSTEM_VERBOSE_NOTICE" message="Display notices and above."/>
-		<tip id="ID_SYSTEM_VERBOSE_WARNING" message="Pokaži mrežne črte."/>
+		<tip id="ID_SYSTEM_VERBOSE_WARNING" message="Display warnings and above."/>
 		<tip id="ID_TAB_CONNECT" message="Poveži ali prekini povezavo z omrežjem."/>
 		<tip id="ID_TAB_HOME" message="Vrni se na domačo stran Shareaze"/>
 		<tip id="ID_TAB_IRC" message="Show the IRC Chat window."/>
@@ -2649,7 +2656,7 @@
 		<tip id="ID_VIEW_NEIGHBOURS" message="Pokaži ali skrij okno s SOSEDI."/>
 		<tip id="ID_VIEW_PACKETS" message="Pokaži ali skrij okno za IZMET (dump) paketov."/>
 		<tip id="ID_VIEW_RESULTS_MONITOR" message="Pokaži ali skrij okno NADZORNIKA ZADETKOV."/>
-		<tip id="ID_VIEW_SCHEDULER" message="Pokaži ali skrij VARNOSTNO okno."/>
+		<tip id="ID_VIEW_SCHEDULER" message="Show or hide SCHEDULER window."/>
 		<tip id="ID_VIEW_SEARCH_MONITOR" message="Pokaži ali skrij okno za ISKALNI NADZORNIK."/>
 		<tip id="ID_VIEW_SECURITY" message="Pokaži ali skrij VARNOSTNO okno."/>
 		<tip id="ID_VIEW_SYSTEM" message="Pokaži ali skrij SISTEMSKO okno."/>
@@ -2811,7 +2818,7 @@
 		<string id="8239" value="Končano"/>
 		<string id="8240" value="Shareaza premika prenos:"/>
 		<string id="8241" value="Shareaza preverja prenos po morebitnih napakah:"/>
-		<string id="8243" value="Naložki (uploads)"/>
+		<string id="8243" value="Upload ratio:"/>
 		<string id="8244" value="Število ocen:"/>
 		<string id="8288" value="Raziskujem tvojo Shareaza knjižnico"/>
 		<string id="8289" value="Raziskujem: "/>
@@ -2854,7 +2861,7 @@
 		<string id="8335" value="Viri za to datoteko so za požarnim zidom"/>
 		<string id="8336" value="Viri za to datoteko so morda nestabilni"/>
 		<string id="8337" value="Ni vreden zaupanja"/>
-		<string id="8338" value="Ustvarjen:"/>
+		<string id="8338" value="Free:"/>
 		<string id="13000" value="Are you sure you want to delete the selected security rules? This cannot be undone."/>
 		<string id="13001" value="Files shared over the Internet"/>
 		<string id="16063" value="UPnP port mapping failed after 10 attempts."/>
@@ -2874,7 +2881,7 @@
 		<string id="16077" value="Naslov %s je že blokiran s strani vaših varnostnih pravil."/>
 		<string id="16078" value="Dodano je bilo varnostno pravilo v skupino (blok) %s."/>
 		<string id="16079" value="Ste prepričani, da želite prekiniti povezavo?"/>
-		<string id="16080" value="Niste povezani v omrežje."/>
+		<string id="16080" value="Would you like to always connect to this network?"/>
 		<string id="16081" value="Pošiljam poizvedbo za &quot;%s&quot; do %s."/>
 		<string id="16083" value="Z vsiljevanjem vašega računalnika v način zvezdišča (hub mode) ima lahko neželjene posledice na učinkovitost delovanja in na P2P omrežje. Na splošno je bolje dovoliti programu, da sam odloči o tem ali naj se uporabi način zvezdišča ali ne.\n\nNačin zvezdišča NE da boljših rezultatov pri iskanju in pri splošnem delovanju sistema.\n\nSte prepričani, da želite nadaljevati, kljub vsem slabostim?"/>
 		<string id="16085" value="Omrežje Gnutella2 je Shareazino glavno omrežje. Onemogočanje podpore za to omrežje lahko izredno omeji tako število kot kvaliteto vaših iskalnih rezultatov. Ste PREPRIČANI, da želite nadaljevati?"/>
@@ -2999,7 +3006,7 @@
 		<string id="16326" value="Naložni gostitelj %s je zaprosil po &quot;%s&quot; z drugačno SHA1."/>
 		<string id="16327" value="Zavrnjeno nalaganje (upload) za &quot;%s&quot; do %s (%s), zaseden in odjemalec ne podpira čakalnih vrst."/>
 		<string id="16328" value="Potisna povezava (push) do %s je bila vzpostavljena, čakam na rokovanje (handshake)..."/>
-		<string id="16329" value="Ne morem odpreti &quot;%s&quot; za nalaganje do gostitelja %s, napaka na disku ali datoteki."/>
+		<string id="16329" value="Can't open &quot;%s&quot; to upload to host %s due to disk or file error."/>
 		<string id="16330" value="Pošiljam nalagalni vsebinski razpon %I64i-%I64i od &quot;%s&quot; do gostitelja %s (%s)."/>
 		<string id="16331" value="Nalaganje dela &quot;%s&quot; do %s končano."/>
 		<string id="16332" value="Vhodna povezava od %s je dejansko HTTP prošnja za nalaganje (upload)."/>
@@ -3050,7 +3057,7 @@
 		<string id="16377" value="HTTP zaščitnik"/>
 		<string id="16378" value="Host &quot;%s&quot; sent a 416, without providing available ranges. Closing connection."/>
 		<string id="16379" value="Library Files"/>
-		<string id="16380" value="eDonkey zaščitnik"/>
+		<string id="16380" value="DC++ Guard"/>
 		<string id="16384" value="Ste prepričani, da želite zagnati datoteko &quot;%s&quot; ?\n\nNekatere datoteke lahko škodijo vašemu računalniku. Prepričajte se o datoteki predno jo zaženete."/>
 		<string id="16385" value="Pravkar boste spremenili metapodatke %i datotek, ste prepričani, da želite nadaljevati?"/>
 		<string id="16386" value="Urejujem metapodatke v številu datotek: %i."/>
@@ -3106,8 +3113,8 @@
 		<string id="16525" value="Preusmerjeni Gnutella paketi"/>
 		<string id="16526" value="Opuščeni Gnutella paketi"/>
 		<string id="16527" value="Izgubljeni Gnutella paketi"/>
-		<string id="16528" value="Lokalne poizvedbe sistema Gnutella"/>
-		<string id="16529" value="Lokalne poizvedbe sistema Gnutella"/>
+		<string id="16528" value="Gnutella Incoming Queries"/>
+		<string id="16529" value="Gnutella Processed Queries"/>
 		<string id="16532" value="Skupna TCP vhodna pasovna širina"/>
 		<string id="16533" value="Skupna TCP izhodna pasovna širina"/>
 		<string id="16534" value="Skupna UDP vhodna pasovna širina"/>
@@ -3237,7 +3244,7 @@
 		<string id="17128" value="eDonkey2000 strežnik"/>
 		<string id="17129" value="eDonkey2000 (LowID)"/>
 		<string id="17130" value="eDonkey2000 (HighID)"/>
-		<string id="17131" value="Povezava"/>
+		<string id="17131" value="DC++ Hub Connection"/>
 		<string id="17216" value="Začenjam povezavo do strežnika eDonkey2000 na %s..."/>
 		<string id="17217" value="Povezan s strežnikom eDonkey2000 %s, rokovanje v teku..."/>
 		<string id="17218" value="ED2K[%s] %s"/>
@@ -3278,7 +3285,7 @@
 		<string id="17477" value="BitTorrent spojnica (coupling) z %s je odgovorila z napačno datoteko."/>
 		<string id="17478" value="BitTorrent spojnica (coupling) z %s ja zaprosila po neznani datoteki."/>
 		<string id="17479" value="BitTorrent spojnica (coupling) z %s vzpostavljena za &quot;%s&quot;."/>
-		<string id="17480" value="BitTorrent spojnica (coupling) z %s ja zaprosila po neznani datoteki."/>
+		<string id="17480" value="BitTorrent coupling with %s requested an inactive file."/>
 		<string id="17481" value="Prejel BitTorrent opisno (descriptor) datoteko: &quot;%s&quot;"/>
 		<string id="17482" value="Razčlenba (parsanje) pred-pripravljene BitTorrent datoteke &quot;%s&quot; ni uspela."/>
 		<string id="17483" value="BitTorrent sledilnik je javil napako za &quot;%s&quot; : &quot;%s&quot;."/>
@@ -3292,13 +3299,13 @@
 		<string id="17491" value="Torrent &quot;%s&quot; je že na vašem prenosnem seznamu in se ne more sejati (seeded)."/>
 		<string id="17492" value="Napaka pri nalaganju (load) torrent datoteke &quot;%s&quot;. Verjetno ne gre za veljaven torrent."/>
 		<string id="17493" value="Kreiranje BitTorrent datoteke za deljenje ni uspelo &quot;%s&quot;."/>
-		<string id="17494" value="Torrent vključuje datoteko &quot;%s&quot;, vendar Shareaza ne najde te datoteke v knjižnici. Če je mogoče, premaknite datoteko v isto mapo, kot je torrent in poskusite znova."/>
+		<string id="17494" value="This torrent includes the file &quot;%s&quot;, but Shareaza cannot find this file in your library. If possible, move the file to a shared folder and try again."/>
 		<string id="17495" value="Torrent vključuje datoteko &quot;%s&quot;, ki bi morala biti %s, vendar je različica vaše datoteke %s."/>
 		<string id="17496" value="Prišlo je do napake med kopiranjem od &quot;%s&quot; v BitTorrent datoteko za deljenje."/>
 		<string id="17497" value="Prišlo je do napake med poskusom sejanja &quot;%s&quot;."/>
 		<string id="17498" value="Prišlo je do napake v datoteki &quot;%s&quot;."/>
 		<string id="17501" value="Komuniciranje s sledilnikom ni uspelo"/>
-		<string id="17503" value="Napaka na sledilniku - poskušam z uporabo naslednjega sledilnika (%i od %i)"/>
+		<string id="17503" value="Trying next tracker (%i of %i)"/>
 		<string id="17505" value="BitTorrent povezava do %s je bila opuščena."/>
 		<string id="17506" value="BitTorrent rokovanje z %s je bilo opuščeno."/>
 		<string id="17507" value="BitTorrent spajanje (coupling) z %s je bilo opuščeno."/>
@@ -3320,16 +3327,16 @@
 		<string id="18509" value="Ne smete sklepati, da je prenos zaključen in ponovno preverjen, ker še nimate na voljo katerekoli delne podatke za preverjanje (partial verification data), kot npr. 'tiger-tree' zvezek, eDonkey nabor izvlečkov (hashset) ali BitTorrent nabor izvlečkov. Brez podatkov o preverjanju se prenos ne more ponovno preveriti."/>
 		<string id="18510" value="Ste prepričani, da želite sklepati, da je prenos zaključen in ga ponovno preveriti? V poštev bo prišla celotna datoteka in Shareaza bo potrdila dele, ki opravijo preverjanje ter prenese dele, ki preverjanja ne opravijo."/>
 		<string id="18511" value="Spremenili ste velikost datoteke. Ste prepričani, da želite spremeniti velikost datoteke za ta prenos?"/>
-		<string id="18512" value="Ste prepričani, da želite preklicati/prekiniti vse prenose v tej skupini?"/>
-		<string id="18513" value="Vpisali ste eDonkey2000 zgostitveno vrednost (hash value), ki pa je žal neveljavna. Preverite vrednost in poskusite znova."/>
-		<string id="18514" value="Podali ste zgostitveno vrednost SHA1 (hash value), ki se razlikuje od tiste, ki je trenutno povezana s tem prenosom. Ste prepričani, da želite spremeniti zgostitveno vrednost SHA1?"/>
+		<string id="18512" value="Are you sure you want to cancel this download but save incomplete file(s)?"/>
+		<string id="18513" value="You have typed an %s hash value, however it is invalid. Please check it and try again."/>
+		<string id="18514" value="You have provided an %s hash value which is different to the one currently associated with this download. Are you sure you want to change the %s hash now?"/>
 		<string id="18515" value="The selected download item currently has some Task attached, please wait and do it later."/>
 		<string id="19000" value="Oddaljen dostop je onemogočen."/>
 		<string id="19001" value="Vnesti morate uporabniško ime in geslo."/>
 		<string id="19002" value="Sprejemanje povezav ni mogoče, URL ni na voljo."/>
 		<string id="19103" value="Welcome to Shareaza Chat!"/>
 		<string id="19104" value="Please respect others while using this service"/>
-		<string id="19105" value="IRC"/>
+		<string id="19105" value="Chat!"/>
 		<string id="20000" value="URN ni na voljo"/>
 		<string id="20001" value="Zapri"/>
 		<string id="20002" value="od"/>
@@ -3407,15 +3414,15 @@
 		<string id="20245" value="New Folder"/>
 		<string id="20246" value="Command-line options:\n\n-tray : Disable startup splash screen and send application to tray\n-nosplash : Disable startup splash screen\n-nowarn : Disable alpha (daily builds) version warning dialog\n-wait : Wait for other application instance exit\n\nInterface modes:\n\n-basic : Start application in Basic interface mode\n-tabbed : Start application in Tabbed interface mode\n-windowed : Start application in Windowed interface mode\n\nSystem options:\n\n-RegServer : Register internal components for everyone\n-UnRegServer : Un-register internal components for everyone\n-RegServerPerUser : Register internal components for current user\n-UnRegServerPerUser : Un-register internal components for current user"/>
 		<string id="20247" value="Failed to load metadata schemas. Please reinstall application."/>
-		<string id="20248" value="Niste izbrali map za deljenje. Ste prepričani?"/>
+		<string id="20248" value="You selected %u files. Are you sure?"/>
 		<string id="20249" value="Off"/>
 		<string id="20250" value="Low"/>
-		<string id="20251" value="_Navadni način"/>
+		<string id="20251" value="Normal"/>
 		<string id="20252" value="High"/>
 		<string id="20253" value="Skin load error: %s. Element: %s"/>
 		<string id="20254" value="Loading skin: %s"/>
 		<string id="20255" value="Are you sure you want to remove all scheduled tasks? This cannot be undone."/>
-		<string id="20256" value="Išči po Shareazi"/>
+		<string id="20256" value="System: Start Shareaza"/>
 		<string id="20257" value="Bandwidth: Full Speed"/>
 		<string id="20258" value="Bandwidth: Reduced Speed"/>
 		<string id="20259" value="Bandwidth: Stop"/>
@@ -3605,13 +3612,13 @@
 			<control/>
 		</dialog>
 		<dialog name="CDownloadsSettingsPage" cookie="BuEdBuBuStCoBuStEdmsStEdmsStEdmsBuStCoStCoBuBuEdBu" caption="Prenosi">
-			<control caption="Shrani _dokočane datoteke na tem mestu:"/>
+			<control caption="Save Completed Files Here"/>
 			<control/>
 			<control/>
 			<control caption="Scan every completed file with AntiVirus"/>
-			<control caption="Izberi predizbor:"/>
+			<control caption="Select AntiVirus:"/>
 			<control/>
-			<control caption="_Število prenosov:"/>
+			<control caption="Number of Downloads"/>
 			<control caption="Največ datotek:"/>
 			<control/>
 			<control/>
@@ -3621,13 +3628,13 @@
 			<control caption="Prenosov/datoteko:"/>
 			<control/>
 			<control/>
-			<control caption="_Omejitve:"/>
+			<control caption="Limits"/>
 			<control caption="Skupna prenosna pasovna širina:"/>
 			<control/>
 			<control caption="Največja dolžina čakalne vrste:"/>
 			<control/>
 			<control caption="Prenašaj (download) in nalagaj (upload) samo na povezana omrežja."/>
-			<control caption="Shrani _začasne nedokončane datoteke na tem mestu:"/>
+			<control caption="Store Temporary Incomplete Files Here"/>
 			<control/>
 			<control/>
 		</dialog>
@@ -3685,10 +3692,10 @@
 		<dialog name="CGnutellaSettingsPage" cookie="BuBuCoBuBuCoEdmsEdmsEdmsEdmsEdmsEdmsBuBuBuBuStBuStStStBuStBuStStStBu" caption="Gnutella">
 			<control caption="Gnutella2 omrežje:"/>
 			<control caption="Vedno se poveži v Gnutella2"/>
-			<control caption="Poveži se v Gnutello2 takoj"/>
+			<control caption="Optimal|Leaf|Hub"/>
 			<control caption="Način:"/>
-			<control caption="Optimalni|Listnati|Zvezdišče"/>
-			<control caption="G_2 povezave:"/>
+			<control caption="Connect to Gnutella1 today"/>
+			<control caption="Optimal|Leaf|Ultrapeer"/>
 			<control/>
 			<control/>
 			<control/>
@@ -3702,7 +3709,7 @@
 			<control/>
 			<control/>
 			<control caption="Način:"/>
-			<control caption="Optimalni|Listnati (leaf)|Ultravrstnik (ultrapeer)"/>
+			<control caption="Leaf to Hub"/>
 			<control caption="G_1 povezave:"/>
 			<control caption="Gnutella2 omrežje:"/>
 			<control caption="Mode: "/>
@@ -3862,7 +3869,7 @@
 		<dialog name="CWizardConnectionPage" cookie="StStCoStCoStCoStCoStms" caption="Dobrodošli v Shareazi (1/6)">
 			<control caption="For optimum performance, Shareaza needs to know a little bit about your connection to the Internet."/>
 			<control caption="Če poznate hitrost vaše povezave v medmrežje, jo izberite iz spodnjega seznama:"/>
-			<control caption="| Modemska povezava| ISDN| ADSL (256K)| ADSL (512K)| ADSL (768K)| ADSL (1.5M)| ADSL (4.0M)| ADSL2 (8.0M)| ADSL2 (12.0M)| ADSL2+ (24.0M)| Kabelski modem/SDSL| T1| T3| LAN| OC3"/>
+			<control caption="Dial up Modem|ISDN|ADSL (256K)|ADSL (512K)|ADSL (768K)|ADSL (1.5M)|ADSL (4.0M)|ADSL2 (8.0M)|ADSL2 (12.0M)|ADSL2+ (24.0M)|Cable Modem/SDSL|T1|T3|LAN|OC3"/>
 			<control caption="ALI izberite (download):"/>
 			<control/>
 			<control caption="ALI izberite (upload):"/>
@@ -3951,7 +3958,7 @@
 			<control/>
 			<control/>
 			<control caption="Osnovne informacije:"/>
-			<control caption="|Moški|Ženska"/>
+			<control caption="Male|Female"/>
 			<control caption="Spol:"/>
 			<control/>
 			<control caption="Starost:"/>
@@ -4027,8 +4034,8 @@
 		</dialog>
 		<dialog name="CLanguageDlg" cookie="" caption="Izberi jezik">
 		</dialog>
-		<dialog name="CConnectToDlg" cookie="BuCoEdBuCoBuBuBu" caption="Poveži se z|Brskalni gostitelj">
-			<control caption="Začni novo povezavo do gostitelja ali strežnika:|Brskaj po gostitelju:"/>
+		<dialog name="CConnectToDlg" cookie="BuCoEdBuCoBuBuBu" caption="Connect To|Browse User|Chat to User">
+			<control caption="Initiate a new connection to host or server:|Browse this user:|Chat to this user:"/>
 			<control/>
 			<control/>
 			<control caption="Omrežni _protokol:"/>
@@ -4095,7 +4102,7 @@
 			<control caption="Naslov _storitve:"/>
 			<control/>
 			<control caption="Storitev Discovery tipa:"/>
-			<control caption="Gnutella Bootstrap|GWebCache|Server.met URL"/>
+			<control caption="Gnutella Bootstrap|G1 GWebCache|G2 GWebCache|G1/G2 GWebCache|Server.met URL|Blocked"/>
 			<control caption="V redu"/>
 			<control caption="Prekliči"/>
 		</dialog>
@@ -4285,7 +4292,7 @@
 			<control caption="Izbrali ste %lu datotek za izvoz, kot Shareaza podprto URI referenco. Izberite format URI-ja in kliknite Shrani:"/>
 			<control/>
 			<control caption="Vstavi žeton:"/>
-			<control caption="Tiger Root|SHA1|MD5|ED2K (CMD4)|Datotečno ime|Datotečno ime (URI)|Base datotečno ime|Končnica datoteke|Velikost datoteke|Velikost datoteke (v bajtih)|Pot do mape|Lokalni gostitelj|Lokalna vrata"/>
+			<control caption="Tiger Root|SHA1|MD5|ED2K (CMD4)|BitTorrent|Filename|Filename (URI)|Base Filename|File Extension|File Size|File Size (bytes)|Folder Path|Local Host|Local Port|Link|Link (URI)"/>
 			<control caption="Izberi predizbor:"/>
 			<control caption="Magnet|eDonkey|Magnet HTML|eDonkey HTML"/>
 			<control caption="_Kopiraj"/>
@@ -4455,13 +4462,13 @@
 			<control/>
 			<control/>
 			<control/>
-			<control caption="Ustvaril:"/>
+			<control caption=" As needed| When ratio over 100%| Only when requested| Never"/>
 			<control/>
 			<control caption="Komentarji:"/>
 			<control caption="Naziv:"/>
 			<control caption="Ustvarjen:"/>
 			<control caption="Začni nov prenos:"/>
-			<control caption=" Po potrebi| Ko razmerje preseže 100%| Ob zahtevku| Nikoli"/>
+			<control caption="Comments:"/>
 			<control caption="Transfers:"/>
 			<control caption="Skupno naloženo:"/>
 			<control caption="Opombe:"/>
@@ -4474,7 +4481,7 @@
 			<control/>
 			<control/>
 			<control/>
-			<control caption="Sledilnik:"/>
+			<control caption="Disabled|Single Tracker|Multi-tracker|Multi-tracker (locked)"/>
 			<control caption="_Refresh"/>
 			<control/>
 			<control caption="Dokončani (semena):"/>
@@ -4550,7 +4557,7 @@
 			<control/>
 			<control caption="Gnutella1"/>
 			<control caption="Gnutella2"/>
-			<control caption="eDonkey2000"/>
+			<control caption="eDoonkey2K"/>
 			<control caption="DC++"/>
 			<control caption="BitTorrent"/>
 			<control caption="Select the event type:"/>
@@ -4700,8 +4707,8 @@
 		</list>
 		<list name="CSchedulerWnd">
 			<column from="Action" to="Dejanje"/>
-			<column from="Trigger" to="TigerTree"/>
-			<column from="Next Run" to="Naslednji"/>
+			<column from="Trigger" to="Trigger"/>
+			<column from="Next Run" to="NextRun"/>
 			<column from="Active" to="Aktiven"/>
 			<column from="Status" to="Status"/>
 			<column from="Description" to="Opis"/>

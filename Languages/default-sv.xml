@@ -1201,14 +1201,14 @@
 			<item id="ID_LIBRARY_FOLDER_FILE_PROPERTIES" text="_Filegenskaper"/>
 		</menu>
 		<menu name="CLibraryTree.Virtual.Basic">
-			<item id="ID_LIBRARY_FOLDER_ENQUEUE" text="Spela upp album"/>
+			<item id="ID_LIBRARY_FOLDER_ENQUEUE" text="Play _Album"/>
 			<item id="ID_LIBRARY_FOLDER_DELETE" text="_Radera"/>
 			<separator/>
 			<item id="ID_LIBRARY_FOLDER_FILE_PROPERTIES" text="_Filegenskaper"/>
-			<item id="ID_LIBRARY_FOLDER_PROPERTIES" text="_Albumegenskaper"/>
+			<item id="ID_LIBRARY_FOLDER_PROPERTIES" text="Album _Properties"/>
 		</menu>
 		<menu name="CLibraryTree.Virtual">
-			<item id="ID_LIBRARY_FOLDER_ENQUEUE" text="Spela upp album"/>
+			<item id="ID_LIBRARY_FOLDER_ENQUEUE" text="Play _Album"/>
 			<item id="ID_LIBRARY_FOLDER_DELETE" text="_Radera"/>
 			<separator/>
 			<item id="ID_LIBRARY_REBUILD" text="_Bygg upp igen"/>
@@ -1217,7 +1217,7 @@
 			<item id="ID_LIBRARY_FOLDER_NEW" text="_Ny mapp…"/>
 			<separator/>
 			<item id="ID_LIBRARY_FOLDER_FILE_PROPERTIES" text="_Filegenskaper"/>
-			<item id="ID_LIBRARY_FOLDER_PROPERTIES" text="_Albumegenskaper"/>
+			<item id="ID_LIBRARY_FOLDER_PROPERTIES" text="Album _Properties"/>
 		</menu>
 		<!-- LIBRARY VIEWS -->
 		<menu name="CLibraryTileView">
@@ -1296,7 +1296,7 @@
 		<menu name="CLibraryFileView.Virtual.Basic">
 			<item id="ID_LIBRARY_LAUNCH" text="_Öppna eller spela upp"/>
 			<item id="ID_LIBRARY_ENQUEUE" text="_Lägg till i spellista"/>
-			<item id="ID_LIBRARY_FOLDER_ENQUEUE" text="Spela upp album"/>
+			<item id="ID_LIBRARY_FOLDER_ENQUEUE" text="Play _Album"/>
 			<separator/>
 			<item id="ID_LIBRARY_SHARED_FILE" text="_Utdelad"/>
 			<separator/>
@@ -1700,8 +1700,8 @@
 				<icon res="252" width="32" height="32"/><gap size="8"/>
 				<heading align="middle">V A R N I N G   -   DU   ÄR   B A K O M   B R A N D V Ä G G</heading>
 				<newline gap="8" indent="42"/>
-				<text colour="FF0000">Shareaza har detekterat att du är bakom en NAT-router eller en brandvägg,
-				   och inte kan ta emot anslutningar från Internet.  </text>
+				<text colour="FF0000">Shareaza has detected that you are behind a NAT router or firewall,
+				and are unable to receive connections from the Internet.  </text>
 				<text colour="FF0000" format="b">Detta kan orsaka dålig nedladdningsprestanda.</text>
 				<newline gap="6"/>
 				<link target="raza:command:ID_HELP_ROUTER">Klicka här för att lära dig hur du anpassar din router eller brandvägg</link>
@@ -1711,8 +1711,8 @@
 				<icon res="252" width="32" height="32"/><gap size="8"/>
 				<heading align="middle">V A R N I N G   -   D I N   T C P   P O R T    R   B L O C K E R A D</heading>
 				<newline gap="8" indent="42"/>
-				<text colour="FF0000">Shareaza har upptäckt att du sitter bakom en NAT router eller brandvägg,
-			och kan ej ta emot TCP anslutningar från Internet.  </text>
+				<text colour="FF0000">Shareaza has detected that you are behind a NAT router or firewall,
+				and are unable to receive TCP connections from the Internet.  </text>
 				<text colour="FF0000" format="b">Detta kan leda till långsamma nedladdningar.</text>
 				<newline gap="6"/>
 				<link target="raza:command:ID_HELP_ROUTER">Klicka här för att lära dig hur du anpassar din router eller brandvägg</link>
@@ -1722,8 +1722,8 @@
 				<icon res="252" width="32" height="32"/><gap size="8"/>
 				<heading align="middle">V A R N I N G   -   D I N   U D P   P O R T   Ä R   B L O C K E R A D</heading>
 				<newline gap="8" indent="42"/>
-				<text colour="FF0000">Shareaza har upptäckt att du sitter bakom en NAT router eller brandvägg,
-			och inte kan ta emot UDP meddelanden från Internet.  </text>
+				<text colour="FF0000">Shareaza has detected that you are behind a NAT router or firewall,
+				and are unable to receive UDP messages from the Internet.  </text>
 				<text colour="FF0000" format="b">Detta kan orsaka långsamma nedladdningar.</text>
 				<newline gap="6"/>
 				<link target="raza:command:ID_HELP_ROUTER">Klicka här för att lära dig hur du anpassar din router eller brandvägg</link>
@@ -1839,7 +1839,7 @@
 			<text group="11" align="middle">Inte ansluten</text>
 			<text group="12" align="middle">Ansluter…</text>
 			<text group="13" align="middle">Ansluten</text>
-			<text group="14" align="middle" id="G1Hubs">eDonkey:</text>
+			<text group="14" align="middle" id="G1Hubs">%i ultrapeers</text>
 			<text group="15" align="middle" id="G1Leaves">%i löv</text>
 			<newline group="10" gap="2"/>
 			<icon group="30" command="ID_NETWORK_ED2K"/><gap group="30" size="4"/>
@@ -1893,7 +1893,7 @@
 				<text id="TorrentsOne" format="b">1 sådd torren</text>
 				<text id="TorrentsMany" format="b">%i sådda torrents</text>
 				<newline gap="4"/>
-				<link id="ReseedTorrent" format="bu" target="raza:command:ID_TOOLS_RESEEDTORRENT">Återså</link>
+				<link id="ReseedTorrent" format="bu" target="raza:command:ID_TOOLS_RESEEDTORRENT">Re-seed %s</link>
 				<newline gap="4"/>
 				<group id="1">
 					<link id="SeedTorrent" format="bu" target="raza:command:ID_TOOLS_SEEDTORRENT">Så en torrent</link>
@@ -1912,8 +1912,8 @@
 			</styles>
 			<text format="b">Välkommen till Shareazas inställningshanterare</text>
 			<newline gap="16"/>
-			<text>Shareazas inställningshanterare tillåter avancerade användare att fullständigt anpassa hur
-		Shareaza ska fungera. Inställningarna i</text>
+			<text>The Shareaza Settings Manager allows advanced users to completely customise how
+				Shareaza works. The settings in the</text>
 			<text format="b">Generellt</text>
 			<text>sektionen relaterar till användarens upplevelse.</text>
 			<newline gap="16" indent="16"/>
@@ -1949,8 +1949,8 @@
 			</styles>
 			<text format="b">Välkommen till Shareazas inställningshanterare</text>
 			<newline gap="16"/>
-			<text>Shareaza inställningshanterare tillåter avancerade användare att fullständigt anpassa hur
-			Shareaza fungerar. Inställningar inom</text>
+			<text>The Shareaza Settings Manager allows advanced users to completely customise 
+				how Shareaza works. The settings in the</text>
 			<text format="b">Internet</text>
 			<text>sektionen styr hur Shareaza förhåller sig till andra noder inom fildelningsnätverk.</text>
 			<newline gap="16" indent="16"/>
@@ -2069,11 +2069,11 @@
 		<document name="DownloadHelp.Select">
 			<text format="b">Välj en nedladdning</text>
 			<newline gap="8"/>
-			<text>Här visas filer som håller på att laddas ner. Du kan visa
-		källor för varje fil genom att klicka på plustecknet bredvid filens namn.</text>
+			<text>This is where files currently being downloaded are displayed. You can view
+			individual sources by expanding each file with the small + on the left.</text>
 			<newline gap="8"/>
-			<text>Du kan använda detta kommando för att få hjälp om en nedladdning. Välj helt enkelt
-	en nedladdning och klicka på detta kommando igen.</text>
+			<text>Drag'n'Drop downloads higher in the list for priority, or onto Download Group 
+			tabs for better organisation (in Power Mode).</text>
 			<newline gap="16"/>
 			<text>You can also use this command to get help information on a specific download.
 			Simply select a download and choose this Help command again.</text>
@@ -2087,93 +2087,98 @@
 		<document name="DownloadHelp.Completed">
 			<text format="b">Denna nedladdning är fullständig</text>
 			<newline gap="8"/>
-			<text>Shareaza har laddat ned denna fil fullständigt och verifierat att den är
-	100% korrekt. Den har också flyttats till din nedladdningsmapp.</text>
+			<text>Shareaza has finished downloading this file, and has verified that it
+			is 100% correct. It has also moved the file to your downloads folder.</text>
 		</document>
 		<document name="DownloadHelp.Moving">
 			<text format="b">Denna nedladdning flyttas</text>
 			<newline gap="8"/>
-			<text>Shareaza har avslutad nedladdningen av denna fil och har verifierat att den
-	är korrekt. Den flyttas för tillfället och/eller packas upp till din nedladdningsmapp.</text>
+			<text>Shareaza has finished downloading this file, and has verified that
+			it is correct. It is currently being moved and/or unpacked to your downloads folder.</text>
 		</document>
 		<document name="DownloadHelp.Paused">
 			<text format="b">Denna nedladdning är pausad</text>
 			<newline gap="8"/>
-			<text>Du har pausat denna nedladdning. Om du vill återuppta nedladdning
-	kan du klicka på</text><text format="b">Återuppta nedladdning</text><text>skommandot.</text>
+			<text>You have paused this download. If you want it to resume downloading, you
+			can click the '</text><text format="b">Återuppta nedladdning</text><text>skommandot.</text>
 		</document>
 		<document name="DownloadHelp.DiskFull">
 			<text format="b">Diskutrymmet är slut</text>
 			<newline gap="8"/>
-			<text>Shareaza har pausat nedladdningen automatiskt eftersom hårddiskutrymmet
-	verkar vara slut eller nedladdningsfilen kan inte skrivas till. Vill du fortsätta
-	nedladdningen, frigör utrymme på din hårddisk och/eller kontrollera
-	att åtkomst finns till mappen för ofullständiga filer, .</text>
+			<text>Shareaza has paused this download automatically because the hard disk
+			appears to be full, or the download file cannot be written to. If you wish
+			to continue downloading, please free some space on your hard disk and/or check
+			to make sure the incomplete file folder is accessible, and then resume the
+			download.</text>
 		</document>
 		<document name="DownloadHelp.Verifying">
 			<text format="b">Denna nedladdning verifieras</text>
 			<newline gap="8"/>
-			<text>Nedladdningen har avslutats och Shareaza kontrollerar nu innehållet för
-	att garantera att den är exakt som ursprungsfilen. Om felaktiga delar hittas
-	kommer Shareaza reparera dem automatiskt.</text>
+			<text>This download has finished, and Shareaza is now checking it to ensure
+			that it is exactly the same as the original file. If any damaged parts are
+			found, Shareaza will repair them automatically.</text>
 		</document>
 		<document name="DownloadHelp.Downloading">
 			<text format="b">Denna nedladdning är aktiv!</text>
 			<newline gap="8"/>
-			<text>Denna nedladdning är förnärvarande igång. Om den laddas ned för långsamt,
-	kan du söka på nätverket efter fler källor med</text><text format="b">Sök efter fler källor</text><text>-kommandot. Om hastigheten inte
-	ökar kan det bero på begränsning av uppladdningshastighet hos användarna du laddar ned från.
-	Nedladdningshastigheten ökar vanligtvis med tiden.</text>
+			<text>This download is currently in progress. If it is downloading too slowly,
+			you could try searching the network for more sources with the '</text><text format="b">Sök efter fler källor</text><text>' command. If the speed does not 
+			improve it may be due to limited upload speeds of the users you are downloading 
+			from. Download speed usually increases over time.</text>
 		</document>
 		<document name="DownloadHelp.Pending">
 			<text format="b">Denna nedladdning är i avvaktan</text>
 			<newline gap="8"/>
-			<text>Denna nedladdning väntar på att någon ska ladda upp filen.
-		Shareaza är redo att påbörja nedladdningen, men ingen skickar
-den just nu. Du står antagligen i kö och nedladdningen kan börja närsomhelst.
-Du kan undersöka varje källa för att se hur högt upp i kön du befinner dig.
-		Om du själv delar ut filer kan det förbättra dina chanser att starta nedladdningen snabbt.</text>
+			<text>This download is waiting for someone to start uploading.
+			Shareaza is ready to start downloading this file, but no-one is sending it at
+			the moment. You are probably waiting in other user's queues, and the download
+			may start transferring at any time. You can examine the individual sources to 
+			see each queue you are waiting in. If you are sharing files yourself, it may
+			improve the chances of a download transfer starting quickly.</text>
 		</document>
 		<document name="DownloadHelp.Queued">
 			<text format="b">Denna nedladdning är i avvaktan</text>
 			<newline gap="8"/>
-			<text>Denna nedladdning väntar på att dina andra nedladdningar ska avslutas.
-	Dina nedladdningsinställningar begränsar antalet nedladdningar som kan vara aktiva
-	samtidigt, för att försäkra att alla nedladdningar får en stor andel av den tillgängliga
-	bandbredden. Du kan ändra inställningarna via Verktyg, Shareazainställningar.</text>
+			<text>This download is waiting for some of your other downloads to complete.
+			Your download settings limit the number of downloads which may be active at
+			any given time, to ensure that each download gets a good share of the available
+			bandwidth. You can change these settings via Tools, Shareaza Settings.
+			Alternatively, you may manually start this download with the resume command.</text>
 		</document>
 		<document name="DownloadHelp.Searching">
 			<text format="b">Denna nedladdning söker</text>
 			<newline gap="8"/>
-			<text>Det finns inga kända källor för denna nedladdning, så Shareaza söker
-	på alla ansluta fildelningsnätverk efter fler källor. När källor är funna kommer
-	nedladdningen att starta automatiskt. Shareaza söker efter källor automatiskt.
-	Du kan dock öka hastigheten på processen genom</text>
+			<text>There are no known sources for this download, so Shareaza is searching
+			all connected P2P networks for new sources. Once sources are found, the
+			download will start automatically. Shareaza searches for sources automatically,
+			however you can speed up the process using the</text>
 			<text format="b">Sök efter fler källor</text><text>-kommandot.</text>
 			<newline gap="8"/>
-			<text>Tyvärr är det ofta så att det inte finns några användare anslutna som har
-	filen du letar efter. Det enda du kan göra då är att vänta på att någon
-	ska ansluta eller avbryta nedladdningen och försöka hitta en liknande fil som är
-	tillgänglig i större skala.</text>
+			<text>Unfortunately in many cases there may be no users online who have the
+			file you are looking for. The only course of action here is to wait for
+			someone to come online, or cancel it and try to find a similar file which is
+			more widely available.</text>
 		</document>
 		<document name="DownloadHelp.Creating">
 			<text format="b">Nedladdningen skapas</text>
 			<newline gap="8"/>
-			<text>Shareaza förallokerar utrymme för denna fil för att spara tid senare.</text>
+			<text>Shareaza is pre-allocating a file in which to store this download, to
+			save time later.</text>
 		</document>
 		<document name="DownloadHelp.Tracker">
 			<text format="b">BitTorrentspåraren nere</text>
 			<newline gap="8"/>
-			<text>BitTorrentspåraren verkar vara nere eller ofungerande.
-	Shareaza kan inte ansluta för att ta emot en list över nedladdningskällor.</text>
+			<text>The BitTorrent tracker server for this download appears to be
+			down or malfunctioning. Shareaza is unable to contact it to receive
+			a list of peers.</text>
 		</document>
 		<!-- Upload help documents -->
 		<document name="UploadHelp">
 			<text format="b">Upladdningar</text>
 			<newline gap="8"/>
-			<text>Här visas köer och uppladdningar. Du kan visa mer information om varje kö
-		med hjälp av plustecknet till vänster och du kan filtrera resultatet med knappen
-		till höger om fönstrets verktygsfält.</text>
+			<text>This is where queues and uploads are displayed. You can expand each queue
+			with the small + on the left, and filter what is displayed with the button on the
+			right of the window's toolbar.</text>
 		</document>
 		<!-- General help documents -->
 		<document name="GeneralHelp.DiskSpace">
@@ -2181,47 +2186,47 @@ Du kan undersöka varje källa för att se hur högt upp i kön du befinner dig.
 			<newline gap="8"/>
 			<text>Tillgänligt diskutrymme på en eller flera enheter som används av Shareaza är lågt.</text>
 			<newline gap="8"/>
-			<text>Du bör alltid försöka hålla en resonlig mängd utrymme ledigt. Program
-		   kan bli instabila om diskutrymmet tar slut och tillfälliga filer kan förloras. Du bör
-		   köra en diskrensning, radera filera du inte vill ha eller avinstallera mjukvara som du inte längre behöver.</text>
+			<text>You should always attempt to keep a reasonable amount of disk space free. Programs 
+			can become unstable if the drives become full, and temporary files may be lost. You should 
+			run a disk clean-up, delete unwanted files, or uninstall software you no longer need.</text>
 		</document>
 		<document name="GeneralHelp.DiskWriteFail">
 			<text format="b">En nödvändig mapp är skrivskyddad</text>
 			<newline gap="8"/>
 			<text>En disk eller en mapp som Shareaza behöver är skrivskyddad.</text>
 			<newline gap="8"/>
-			<text>En nätverksenhet kan ha blivit bortkopplad. Du kanske saknar skrivrättigheter 
-		till den valda mappen. Kolla att mappen finns och att du har skrivrättigheter till den 
-		eller ändra mappen för temporära filer.</text>
+			<text>A network drive may have been disconnected, or you may not have write permission 
+			to a selected directory. Please check directories and permissions, or change the
+			temporary files location.</text>
 		</document>
 		<document name="GeneralHelp.ConnectionFail">
 			<text format="b">Internetanslutningen har slutat fungera</text>
 			<newline gap="8"/>
 			<text>Windows rapportera att det saknas anslutning till Internet.</text>
 			<newline gap="8"/>
-			<text>Den troliga orsaken är att modemet eller routern har tappat anslutningen och att Internet
-		inte kan nås. Se till att alla sladdar är kopplade och återstarta anslutningen.</text>
+			<text>It is likely that a modem or router has dropped, meaning the internet cannot
+			be accessed. You may need to manually re-connect or reset your connection.</text>
 			<newline gap="8"/>
 			<text>Shareaza har avbrutit anslutningsförsök för att undvika förlust av cachade värdar.</text>
 		</document>
 		<document name="GeneralHelp.AdultFilter">
 			<text format="b">Filter för vuxeninnehåll aktiverat</text>
 			<newline gap="8"/>
-			<text>Tänk på att (som med alla automatiserade filter) kan inte filtret vara 100% tillförlitligt.
-			Det är gjort för att på ett enkelt sätt filtrera ut överflödigt och oönskat resultat snarare än att vara ett 
-100% säkert filter.</text>
+			<text>Please note that (as with any automated filter) it may not be 100% effective at
+			screening content. It is designed simply to filter out excess unwanted results, rather than 
+			as a 100% safe block.</text>
 			<newline gap="8"/>
 			<text>Barns Internetanvändande (inklusive användning av fildelningsprogram) ska alltid övervakas av en vuxen.</text>
 		</document>
 		<document name="GeneralHelp.BadTorrentEncoding">
 			<text format="b">Denna torrent verkar ha ett kodningsfel</text>
 			<newline gap="8"/>
-			<text>Windows har rapporterat ett översättningsfel under textavkodningen i denna torrent. Det är
-		möjligt att torrenten är skadad eller felaktigt kodad. Torrenten kan
-		fortfarande laddas ned korrekt, men vissa filnamn kan vara felaktiga.</text>
+			<text>Windows has reported a translation fault while decoding text in this torrent. It is
+			possible that the torrent is corrupt, or just incorrectly encoded. The torrent may
+			still download properly, although some file names could be incorrect.</text>
 			<newline gap="8"/>
-			<text>De flesta program för skapande av torrent bör tillåta en reparation av torrenten, vilket
-		säkrar korrekt funktion i alla BitTorrent applikationer.</text>
+			<text>Most torrent creation programs should allow you to repair this torrent, which
+			will ensure it works properly in all BitTorrent applications.</text>
 			<newline gap="8"/>
 			<link target="raza:command:ID_HELP_TORRENT">Klicka här för mer hjälp</link>
 			<text>eller för att ladda ner mjukvara som kan reparera torrentfilen.</text>
@@ -2229,72 +2234,72 @@ Du kan undersöka varje källa för att se hur högt upp i kön du befinner dig.
 		<document name="GeneralHelp.DonkeyServerList">
 			<text format="b">Din lista med Donkey servrar är tom</text>
 			<newline gap="8"/>
-			<text>Det finns inga servrar i din eDonkey server lista. Du behöver ladda ner
-		en uppdaterad serverlista (metfil) för att ansluta till ED2K.</text>
+			<text>There are no servers in your eDonkey server list. You need to download an
+			up to date server list (met file) to connect to ED2K.</text>
 			<newline gap="8"/>
-			<text>Du kan ladda ner en server lista från sidan med ed2k inställningar eller 
-		fönstret med upptäckstjänster. (Tryck F9 för att öppna fönstret Upptäckstjänster)</text>
+			<text>You can download a server list from the ed2k setting page, or the discovery
+			services window. (Press F9 to open the discovery services window)</text>
 		</document>
 		<document name="GeneralHelp.UploadWarning">
 			<text format="b">Att begränsa uppladdningar kan leda till långsammare nedladdningar</text>
 			<newline gap="8"/>
-			<text>Flera av de nätverk Shareaza ansluter till tillämpar proportionell nedladdning, begränsad nedladdning för 
-		klienter som inte delar med sig eller föredrar uppladdning till kända fildelare.</text>
+			<text>Several networks Shareaza connects to enforce ratios, limit uploads to
+			clients that do not share, or simply preference uploading to known sharers.</text>
 			<newline/>
-			<text>Lyckligtvis är bredbandsanslutningar som vägar med två körbanor: man har
-		separat utrymme för uppladdningar respektive nedladdningar. Om din klient är korrekt konfigurerad, 
-		bör du kunna ladda upp i god takt samtidigt som du behåller full nedladdningskapacitet.</text>
+			<text>Fortunately, broadband DSL connections are like a two-lane highway: you have
+			separate allocations for upload and download. If your client is properly configured, 
+			you should be able to upload at a good rate while retaining full download capacity.</text>
 			<newline gap="8"/>
-			<text>Standardinställningen begränsar din uppladdning till 85% av kapaciteten,
-		medan nedladdningar är obegränsade. Denna inställning bör generera optimal 
-		nedladdningshastighet.</text>
+			<text>By default, your upload limit is set to about 85% of available upstream bandwidth,
+			while downloads are unlimited. That configuration should give you the fastest possible 
+			downloads that are available.</text>
 		</document>
 		<!-- Search help documents -->
 		<document name="SearchHelp.BadSearch1">
 			<text format="b">Uttryck din sökning på ett annat sätt</text>
 			<newline gap="8"/>
-			<text>Denna sökning är dåligt genomförd och kanske inte fungerar ordentligt.
-		 Sökningar bör inkludera flera villkor när det är möjligt och bör specifiera en filtyp.
-		 Vidare kan inte sökningar begränsas till nummer eller endast negativa
-		 villkor, och du bör undvika för generella nyckelord.</text>
+			<text>This search is poorly formatted, and may not function correctly. 
+			Searches should include several terms where possible, and should specify a schema 
+			(file type). Furthermore, searches must not be limited to numbers or negative
+			terms only, and you should avoid overly general queries.</text>
 			<newline gap="8"/>
-			<text>De flesta klienter på nätverket ignorerar en sökning efter
-		 alla filer av en viss filtyp, eftersom det inte är tillräckligt specifikt och skulle generera för många resultat.</text>
+			<text>Most clients on the network will ignore a search for all MP3 files, for example, 
+			because it is not specific enough, and would generate too many results.</text>
 		</document>
 		<document name="SearchHelp.BadSearch2">
 			<text format="b">Uttryck din sökning på ett annat sätt</text>
 			<newline gap="8"/>
-			<text>Denna sökning innehåller ej tillräckligt många termer för att fungera korrekt. Alla sökningar behöver
-		ett minimum av giltiga alfanumeriska tecken för att kunna starta.</text>
+			<text>This search does not contain enough terms to function properly. All searches need
+			a minimum number of valid, alphabetic characters to be able to start.</text>
 			<newline gap="8"/>
-			<text>Medan vanliga filändelser (och nummer) kan såkas, måste du inkludera andra
-		 termer i din sökning. Skiljetecken och jokertecken används inte 
-		i sökningen, endast text du skriver.</text>
+			<text>While common file extensions (and numbers) can be searched for, you must enter
+			other terms as well when creating the search. Punctuation and wildcards are not used 
+			in searches, just the text you enter.</text>
 		</document>
 		<document name="SearchHelp.BadSearch3">
 			<text format="b">Uttryck din sökning på ett annat sätt</text>
 			<newline gap="8"/>
-			<text>Denna sökning innehåller enbart vanliga filändelser eller saknar
-		sökbara ord.</text>
+			<text>This search seems to contain only common file extensions, or no searchable
+			words.</text>
 			<newline gap="8"/>
-			<text>Om du finner det svårt att skriva bra sökningar, kom ihåg att det liknar
-		vanlig webbsökning. Specifika termer och fraser är bäst - unika namn, titlar och
-		nyckelord.</text>
+			<text>If you are having trouble creating searches, keep in mind that it's quite similar
+			to a web search. Specific terms or phrases are best- Unique names, titles and
+			keywords.</text>
 			<newline gap="8"/>
-			<text>Generella termer kan inte sökas effektivt och kan leda till dålig
-		sökprestanda och hög bandbreddsanvändning.</text>
+			<text>General terms cannot be searched for efficiently and may result in poor
+			search performance, as well as high bandwidth use during searches.</text>
 			<newline gap="8"/>
 			<text>Mer hjälp finns på Shareazas hemsida.</text>
 		</document>
 		<document name="SearchHelp.AdultSearch">
 			<text format="b">Denna sökning kan inte startas</text>
 			<newline gap="8"/>
-			<text>Den valda sökningen skulle antagligen skapa ett stort resultat med vuxeninnehåll
-	och detta har blivit avstängt i inställningarna. Du bör antingen formulera om din söktext
-	eller stänga av filtret.</text>
+			<text>The specified search would probably return a large number of results with adult 
+			content, and this has been turned off in the settings. You should either re-phrase the 
+			search, or disable the filter.</text>
 			<newline gap="8"/>
-			<text>För att stänga av filtret: Gå till Verktyg &gt; Inställningar &gt; Generellt och blocka av 
-"Filtrera vuxeninnehåll från sökningar".</text>
+			<text>To disable the filter, go into Tools &gt; Settings &gt; General and uncheck the
+			adult content filter.</text>
 		</document>
 		<!-- Share help documents -->
 		<document name="ShareHelp.AlreadyShared">
@@ -2307,26 +2312,26 @@ Du kan undersöka varje källa för att se hur högt upp i kön du befinner dig.
 		<document name="ShareHelp.BadShare">
 			<text format="b">Denna mapp bör inte delas ut</text>
 			<newline gap="8"/>
-			<text>Denna folder är en systemmapp (eller innehåller systemfiler). Utdelning av denna mapp
-		   rekommenderas inte, eftersom de flesta av filerna i den är oanvändbara för andra personer.</text>
+			<text>This folder is (or contains) a system folder. Sharing this folder is not
+			recommended, since most of the files in it are of no use to other people.</text>
 			<newline gap="8"/>
-			<text>Mappar som Windowsmappen, Program/Program Files och liknande mappar
-		   innehåller vanligtvis inte filer lämpliga för utdelning. Filer som kan vara intressanta finns i
-		  undermappar som finns</text><text format="i">innanför</text><text>dessa
-		   mappar. Dela gärna ut dem istället.</text>
+			<text>Folders such as the Windows directory, Program Files, and similar folders
+			do not usually contain files suitable for sharing. Any files of interest would be in
+			sub-folders located</text><text format="i">innanför</text><text>these folders.
+			Please share those instead.</text>
 			<newline gap="8"/>
-			<text>Shareazas mapp för ofullständiga filer ska inte heller delas ut,
-		 eftersom granskning av filer som laddas ned kan påverka prestandan.</text>
+			<text>The Shareaza 'incomplete' folder should also not be shared through the
+			library, since attempting to hash downloads in progress may impact on performance.</text>
 		</document>
 	</documents>
 	<!-- Localised Command Tip Text. The "message" is displayed in the status bar, while the "tip" is shown in a tooltip -->
 	<commandTips>
 		<tip id="AFX_IDS_APP_TITLE" message="Shareaza"/>
-		<tip id="AFX_IDS_IDLEMESSAGE" message="Redo…"/>
+		<tip id="AFX_IDS_IDLEMESSAGE" message="Ready"/>
 		<tip id="AFX_IDS_MDICHILD" message="Activate this window"/>
-		<tip id="AFX_IDS_PREVIEW_CLOSE" message="Close print preview mode" tip="Förhandsvisa"/>
-		<tip id="AFX_IDS_SCCLOSE" message="Förstora det aktiva fönstret så att det fyller hela fönstret."/>
-		<tip id="AFX_IDS_SCMAXIMIZE" message="Förstora det aktiva fönstret så att det fyller hela fönstret."/>
+		<tip id="AFX_IDS_PREVIEW_CLOSE" message="Close print preview mode" tip="Cancel Preview"/>
+		<tip id="AFX_IDS_SCCLOSE" message="Close the active window and prompts to save the documents"/>
+		<tip id="AFX_IDS_SCMAXIMIZE" message="Enlarge the window to full size"/>
 		<tip id="AFX_IDS_SCMINIMIZE" message="Reduce the window to an icon"/>
 		<tip id="AFX_IDS_SCMOVE" message="Change the window position"/>
 		<tip id="AFX_IDS_SCNEXTWINDOW" message="Switch to the next document window"/>
@@ -2356,7 +2361,7 @@ Du kan undersöka varje källa för att se hur högt upp i kön du befinner dig.
 		<tip id="ID_CHILD_RESTORE" message="Öppna de valda fönstrena."/>
 		<tip id="ID_DISCOVERY_ADD" message="Lägg till en upptäckstjänst…"/>
 		<tip id="ID_DISCOVERY_ADVERTISE" message="Annonsera de valda GWebCache-tjänsterna till en slumpvald existerande GWebCache."/>
-		<tip id="ID_DISCOVERY_BLOCKED" message="Visa GWebCachetjänster i upptäcksfönstret."/>
+		<tip id="ID_DISCOVERY_BLOCKED" message="Show blocked services in the Discovery window."/>
 		<tip id="ID_DISCOVERY_BROWSE" message="Visa statistik för GWebCache-tjänsten på webben."/>
 		<tip id="ID_DISCOVERY_EDIT" message="Visa egenskaper för den valda upptäckstjänsten."/>
 		<tip id="ID_DISCOVERY_GNUTELLA" message="Visa Bootstraptjänster i upptäcksfönstret."/>
@@ -2404,7 +2409,7 @@ Du kan undersöka varje källa för att se hur högt upp i kön du befinner dig.
 		<tip id="ID_DOWNLOADS_SHOW_SOURCES" message="Visa källor som inte används för närvarande."/>
 		<tip id="ID_DOWNLOADS_SOURCES" message="Sök efter fler källor av de valda filerna."/>
 		<tip id="ID_DOWNLOADS_URL" message="Lägg till en käll-URL till den valda nedladdningen…"/>
-		<tip id="ID_DOWNLOADS_VIEW_REVIEWS" message="Visa recensioner fr den valda nedladdningen"/>
+		<tip id="ID_DOWNLOADS_VIEW_REVIEWS" message="View reviews for the selected download."/>
 		<tip id="ID_HELP_ABOUT" message="Visar Shareazas omdialog…"/>
 		<tip id="ID_HELP_CODEC" message="Allt om codecs och videoproblem."/>
 		<tip id="ID_HELP_FAQ" message="Visa Shareazas FAQ."/>
@@ -2425,7 +2430,7 @@ Du kan undersöka varje källa för att se hur högt upp i kön du befinner dig.
 		<tip id="ID_HITMONITOR_CLEAR" message="Rensa träffmonitorns buffert."/>
 		<tip id="ID_HITMONITOR_PAUSE" message="Gör en paus i träffmontorn."/>
 		<tip id="ID_HITMONITOR_SEARCH" message="Sök på nätverket efter den valda artikeln."/>
-		<tip id="ID_HOSTCACHE_BT_CACHE" message="Visa BitTorrent-uppladdningar."/>
+		<tip id="ID_HOSTCACHE_BT_CACHE" message="Show BitTorrent cached hosts."/>
 		<tip id="ID_HOSTCACHE_CONNECT" message="Anslut till de valda värdarna."/>
 		<tip id="ID_HOSTCACHE_DC_CACHE" message="Show DC++ cached hubs."/>
 		<tip id="ID_HOSTCACHE_DISCONNECT" message="Koppla ifrån de valda grannarna."/>
@@ -2435,10 +2440,10 @@ Du kan undersöka varje källa för att se hur högt upp i kön du befinner dig.
 		<tip id="ID_HOSTCACHE_G2_CACHE" message="Visa Gnutella2s värdar i cachen."/>
 		<tip id="ID_HOSTCACHE_G2_HORIZON" message="Visa Gnutella2-horizontnaven."/>
 		<tip id="ID_HOSTCACHE_IMPORT" message="Importera en lista över kända värdar som t.ex. &quot;Server.met&quot;-fil."/>
-		<tip id="ID_HOSTCACHE_KAD_CACHE" message="Visa Gnutella1s värdar i cachen."/>
+		<tip id="ID_HOSTCACHE_KAD_CACHE" message="Show Kademlia cached hosts."/>
 		<tip id="ID_HOSTCACHE_PRIORITY" message="Försök att ansluta till denna server före andra servrar."/>
 		<tip id="ID_HOSTCACHE_REMOVE" message="Raderar de valda värdarna från värdcachen."/>
-		<tip id="ID_IMPORT_DOWNLOADS" message="_Importera oavslutade eMule nedladdningar"/>
+		<tip id="ID_IMPORT_DOWNLOADS" message="Import eMule partial downloads..."/>
 		<tip id="ID_LIBRARY_ADD" message="Lägg till en mapp till ditt bibliotek…"/>
 		<tip id="ID_LIBRARY_ALBUM_DELETE" message="Radera de valda albummapparna."/>
 		<tip id="ID_LIBRARY_ALBUM_OPEN" message="Öppna de valda albummapparna."/>
@@ -2468,7 +2473,7 @@ Du kan undersöka varje källa för att se hur högt upp i kön du befinner dig.
 		<tip id="ID_LIBRARY_REBUILD" message="Bygg om metadata och granskning av de valda mapparna eller filerna."/>
 		<tip id="ID_LIBRARY_REBUILD_ANSI" message="Skapa om metadata med annat sprk."/>
 		<tip id="ID_LIBRARY_REFRESH" message="Uppdatera biblioteksvyn."/>
-		<tip id="ID_LIBRARY_REFRESH_METADATA" message="_Uppdatera metadata"/>
+		<tip id="ID_LIBRARY_REFRESH_METADATA" message="Refresh file metadata"/>
 		<tip id="ID_LIBRARY_REMOVE" message="Radera de valda utdelade mapparna."/>
 		<tip id="ID_LIBRARY_RENAME" message="Byt namn på den valda filen på plats."/>
 		<tip id="ID_LIBRARY_SCAN" message="Granska de valda mapparna eller filerna efter förändringar."/>
@@ -2506,7 +2511,7 @@ Du kan undersöka varje källa för att se hur högt upp i kön du befinner dig.
 		<tip id="ID_MEDIA_PAUSE" message="Gör en paus i uppspelningen av mediafilen." tip="Paus"/>
 		<tip id="ID_MEDIA_PLAY" message="Starta uppspelning av den nuvarande mediafilen." tip="Spela upp"/>
 		<tip id="ID_MEDIA_PLAYLIST" message="Visa eller dölj spellistseditorn."/>
-		<tip id="ID_MEDIA_POSITION" message="Sök till en position i mediafilen" tip="Seek"/>
+		<tip id="ID_MEDIA_POSITION" message="Seek to a position in the media file." tip="Seek"/>
 		<tip id="ID_MEDIA_PREVIOUS" message="Byt till den föregående filen i spellistan." tip="Föregående fil"/>
 		<tip id="ID_MEDIA_PROPERTIES" message="Visa och redigera egenskaper fr de valda filerna."/>
 		<tip id="ID_MEDIA_RANDOM" message="Växla slumpläge för spellistan."/>
@@ -2521,15 +2526,15 @@ Du kan undersöka varje källa för att se hur högt upp i kön du befinner dig.
 		<tip id="ID_MEDIA_SIZE_ONE" message="Visa videon i sin ursprungsstorlek."/>
 		<tip id="ID_MEDIA_SIZE_THREE" message="Visa videon i tre gånger så stor storlek som dess ursprungsstorlek."/>
 		<tip id="ID_MEDIA_SIZE_TWO" message="Visa videon i dubbel så stor storlek som dess ursprungsstorlek."/>
-		<tip id="ID_MEDIA_SPEED" message="Justera uppspelningshastigheten" tip="Hastighet"/>
+		<tip id="ID_MEDIA_SPEED" message="Adjust the speed of the media file." tip="Hastighet"/>
 		<tip id="ID_MEDIA_STATUS" message="Visa eller dölj mediastatusraden."/>
 		<tip id="ID_MEDIA_STOP" message="Stoppa uppspelning av mediafilen." tip="Stopp"/>
 		<tip id="ID_MEDIA_VIS" message="Välj ett insticksprogram för ljudvisualisering."/>
-		<tip id="ID_MEDIA_VOLUME" message="Justera ljudvolymen" tip="Volume"/>
+		<tip id="ID_MEDIA_VOLUME" message="Adjust the audio volume." tip="Volume"/>
 		<tip id="ID_MEDIA_ZOOM" message="Justera videons zoomning och proportioner."/>
 		<tip id="ID_MONITOR_CLOSE" message="Stäng monitorfönstret."/>
 		<tip id="ID_MUSICBRAINZ_ALBUMS" message="Look at all albums for this artist."/>
-		<tip id="ID_MUSICBRAINZ_MATCHES" message="Sök efter andra kopior av den valda filen."/>
+		<tip id="ID_MUSICBRAINZ_MATCHES" message="Search for albums matching the selected file."/>
 		<tip id="ID_NEIGHBOURS_CHAT" message="Öppna en chattsession med den valda användaren."/>
 		<tip id="ID_NEIGHBOURS_COPY" message="Kopiera URI för åtkomst till de valda värdarna."/>
 		<tip id="ID_NEIGHBOURS_DISCONNECT" message="Koppla ifrån de valda grannen/grannarna."/>
@@ -2550,14 +2555,14 @@ Du kan undersöka varje källa för att se hur högt upp i kön du befinner dig.
 		<tip id="ID_NETWORK_G1" message="Anslut till Gnutellas ursprungsnätverk."/>
 		<tip id="ID_NETWORK_G2" message="Anslut till Gnutella2-nätverket (mycket rekommenderat)."/>
 		<tip id="ID_NETWORK_SEARCH" message="Starta en ny sökning i nätverket…"/>
-		<tip id="ID_NEXT_PANE" message="Switch to the next window pane" tip="Nästa i rad"/>
+		<tip id="ID_NEXT_PANE" message="Switch to the next window pane" tip="Next Pane"/>
 		<tip id="ID_OPEN_DOWNLOADS_FOLDER" message="Open my folder of completed Downloads"/>
-		<tip id="ID_PREV_PANE" message="Byt till den föregående filen i spellistan." tip="Föregående fil"/>
-		<tip id="ID_SCHEDULER_ACTIVATE" message="Rensa de valda uppladdningen/uppladdningarna från listan."/>
+		<tip id="ID_PREV_PANE" message="Switch back to the previous window pane" tip="Previous Pane"/>
+		<tip id="ID_SCHEDULER_ACTIVATE" message="Activates selected task(s) from the list."/>
 		<tip id="ID_SCHEDULER_ADD" message="Adds a new task to scheduler list."/>
-		<tip id="ID_SCHEDULER_DEACTIVATE" message="Anslut till nätverket."/>
-		<tip id="ID_SCHEDULER_EDIT" message="Redigera den valda säkerhetspolicyn…"/>
-		<tip id="ID_SCHEDULER_REMOVE" message="Radera de valda nedladdningarna från listan."/>
+		<tip id="ID_SCHEDULER_DEACTIVATE" message="Deactivates selected tasks."/>
+		<tip id="ID_SCHEDULER_EDIT" message="Edit the selected task..."/>
+		<tip id="ID_SCHEDULER_REMOVE" message="Removes selected task(s) from the list."/>
 		<tip id="ID_SCHEDULER_REMOVE_ALL" message="Removes all scheduled tasks."/>
 		<tip id="ID_SEARCH_CHAT" message="Öppna en chattsession med den valda användaren."/>
 		<tip id="ID_SEARCH_CLEAR" message="Rensa sökresultatet."/>
@@ -2594,11 +2599,11 @@ Du kan undersöka varje källa för att se hur högt upp i kön du befinner dig.
 		<tip id="ID_SYSTEM_COPY" message="Copy selected line(s) of status log."/>
 		<tip id="ID_SYSTEM_TIMESTAMP" message="Gör en tidsstämpel för varje rad."/>
 		<tip id="ID_SYSTEM_VERBOSE" message="Visa en detaljerad logg över systemaktiviteter."/>
-		<tip id="ID_SYSTEM_VERBOSE_DEBUG" message="Visa förklaring."/>
-		<tip id="ID_SYSTEM_VERBOSE_ERROR" message="Visa förklaring."/>
-		<tip id="ID_SYSTEM_VERBOSE_INFO" message="Visa rutnätslinjer."/>
+		<tip id="ID_SYSTEM_VERBOSE_DEBUG" message="Display all."/>
+		<tip id="ID_SYSTEM_VERBOSE_ERROR" message="Display errors only."/>
+		<tip id="ID_SYSTEM_VERBOSE_INFO" message="Display infos and above."/>
 		<tip id="ID_SYSTEM_VERBOSE_NOTICE" message="Display notices and above."/>
-		<tip id="ID_SYSTEM_VERBOSE_WARNING" message="Visa rutnätslinjer."/>
+		<tip id="ID_SYSTEM_VERBOSE_WARNING" message="Display warnings and above."/>
 		<tip id="ID_TAB_CONNECT" message="Anslut eller koppla ifrån nätverket."/>
 		<tip id="ID_TAB_HOME" message="Återvänd till Shareaza hemsida"/>
 		<tip id="ID_TAB_IRC" message="Show the IRC Chat window."/>
@@ -2649,7 +2654,7 @@ Du kan undersöka varje källa för att se hur högt upp i kön du befinner dig.
 		<tip id="ID_VIEW_NEIGHBOURS" message="Visa eller dölj fönstret GRANNAR."/>
 		<tip id="ID_VIEW_PACKETS" message="Visa eller dölj fönstret PAKTEDUMP."/>
 		<tip id="ID_VIEW_RESULTS_MONITOR" message="Visa eller dölj fönstret TRÄFFMONITOR."/>
-		<tip id="ID_VIEW_SCHEDULER" message="Visa eller dölj fönstret SÄKERHET."/>
+		<tip id="ID_VIEW_SCHEDULER" message="Show or hide SCHEDULER window."/>
 		<tip id="ID_VIEW_SEARCH_MONITOR" message="Visa eller dölj fönstret SÖKMONITOR."/>
 		<tip id="ID_VIEW_SECURITY" message="Visa eller dölj fönstret SÄKERHET."/>
 		<tip id="ID_VIEW_SYSTEM" message="Visar eller dölj fönstret SYSTEM."/>
@@ -2658,7 +2663,7 @@ Du kan undersöka varje källa för att se hur högt upp i kön du befinner dig.
 		<tip id="ID_VIEW_UPLOADS" message="Visa eller dölj fönstret UPPLADDNINGAR."/>
 		<tip id="ID_VIEW_WINDOWED" message="Använd Shareaza i expertläge."/>
 		<tip id="ID_WEBSERVICES_LIST" message="Välj webbtjänsten för att ta reda på mer information om den valda filen."/>
-		<tip id="ID_WEBSERVICES_MUSICBRAINZ" message="Sök efter filinformation med tjänsten ShareMonkey."/>
+		<tip id="ID_WEBSERVICES_MUSICBRAINZ" message="Search for the same artist songs using MusicBrainz service."/>
 		<tip id="ID_WINDOW_ARRANGE" message="Arrange icons at the bottom of the window" tip="Arrange Icons"/>
 		<tip id="ID_WINDOW_CASCADE" message="Expandera öppna fönster så att de visas på skärmen."/>
 		<tip id="ID_WINDOW_MONITOR" message="Visa eller dälj bandbreddsmonitorn"/>
@@ -2811,7 +2816,7 @@ Du kan undersöka varje källa för att se hur högt upp i kön du befinner dig.
 		<string id="8239" value="Färdig"/>
 		<string id="8240" value="Shareaza flyttar nedladdningen:"/>
 		<string id="8241" value="Shareaza kontrollerar nedladdningen efter fil:"/>
-		<string id="8243" value="Upladdningar"/>
+		<string id="8243" value="Upload ratio:"/>
 		<string id="8244" value="Antal recensioner:"/>
 		<string id="8288" value="Utforska ditt Shareazabibliotek"/>
 		<string id="8289" value="Utforskar "/>
@@ -2854,7 +2859,7 @@ Du kan undersöka varje källa för att se hur högt upp i kön du befinner dig.
 		<string id="8335" value="Källor för den här filen sitter bakom brandvägg"/>
 		<string id="8336" value="Källor för den här filen är instabila"/>
 		<string id="8337" value="Opålitlig"/>
-		<string id="8338" value="Skapad:"/>
+		<string id="8338" value="Free:"/>
 		<string id="13000" value="Är du säker p å att du vill radera de valda säkerhetsreglerna? Detta kan inte ångras."/>
 		<string id="13001" value="Filer delade över Internet"/>
 		<string id="16063" value="UPnP portmapping misslyckades efter 10 försök."/>
@@ -2874,7 +2879,7 @@ Du kan undersöka varje källa för att se hur högt upp i kön du befinner dig.
 		<string id="16077" value="Adressen %s är redan blockerad  av dina säkerhetsregler."/>
 		<string id="16078" value="Lade till säkerhetsregel för att blockera %s."/>
 		<string id="16079" value="Är du säker på att du vill koppla ifrån?"/>
-		<string id="16080" value="Du är inte ansluten till nätverket."/>
+		<string id="16080" value="Would you like to always connect to this network?"/>
 		<string id="16081" value="Skickar begäran om &quot;%s&quot; till %s."/>
 		<string id="16083" value="Att tvinga din PC till navläge kan skada prestandan på fildelningsnätverket. Det är vanligtvis bättre att låta Shareaza bestämma om navläge ska användas eller inte.\n\nNavläge ger INTE bättre sökresultat eller några andra föredelar för dig.\n\nVill du verkligen göra detta trots dessa nackdelar?"/>
 		<string id="16085" value="Gnutella2 är Shareazas primära nätverk. Avstängning av stöd för det kan drastiskt minska både mängden och kvaliteten på sökresultat. Är du SÄKER på att du vill göra detta?"/>
@@ -2999,7 +3004,7 @@ Du kan undersöka varje källa för att se hur högt upp i kön du befinner dig.
 		<string id="16326" value="Uppladdningsvärd %s begärde &quot;%s&quot; med ett annat SHA1."/>
 		<string id="16327" value="Vägrar uppladdning av &quot;%s&quot; till %s (%s), upptagen och klienten stödjer inte köläggning."/>
 		<string id="16328" value="Anslutningsbegäran till %s upprättad, väntar på handskakning…"/>
-		<string id="16329" value="Kan inte öppna &quot;%s&quot; för uppladdning till värd %s, disk- eller filfel."/>
+		<string id="16329" value="Can't open &quot;%s&quot; to upload to host %s due to disk or file error."/>
 		<string id="16330" value="Skickar uppladdningsinnehåll med omfånget %I64i-%I64i från &quot;%s&quot; till värd %s (%s)."/>
 		<string id="16331" value="Slutförde uppladdning av del av &quot;%s&quot; till %s."/>
 		<string id="16332" value="Inkommande anslutning från %s är en HTTP-uppladdningsbegäran."/>
@@ -3050,7 +3055,7 @@ Du kan undersöka varje källa för att se hur högt upp i kön du befinner dig.
 		<string id="16377" value="HTTP Guard"/>
 		<string id="16378" value="Host &quot;%s&quot; sent a 416, without providing available ranges. Closing connection."/>
 		<string id="16379" value="Biblioteksfiler"/>
-		<string id="16380" value="eDonkey-vakt"/>
+		<string id="16380" value="DC++ Guard"/>
 		<string id="16384" value="Är du säker på att du vill köra filen &quot;%s&quot;?\n\nVissa filer kan skada din dator. Försäkra dig om vad det är för fil innan du kör den."/>
 		<string id="16385" value="Du är på väg att förändra metadatan för %i filer. Är du säker på att du vill fortsätta?"/>
 		<string id="16386" value="Ändrar metadata för %i filer."/>
@@ -3106,8 +3111,8 @@ Du kan undersöka varje källa för att se hur högt upp i kön du befinner dig.
 		<string id="16525" value="Gnutellapaket routade"/>
 		<string id="16526" value="Gnutellapaket släppta"/>
 		<string id="16527" value="Gnutellapaket förlorade"/>
-		<string id="16528" value="Gnutella lokala frågor"/>
-		<string id="16529" value="Gnutella lokala frågor"/>
+		<string id="16528" value="Gnutella Incoming Queries"/>
+		<string id="16529" value="Gnutella Processed Queries"/>
 		<string id="16532" value="Total TCP-mottagningsbandbredd"/>
 		<string id="16533" value="Total TCP-sändningsbandbredd"/>
 		<string id="16534" value="Total UDP-mottagningsbandbredd"/>
@@ -3237,7 +3242,7 @@ Du kan undersöka varje källa för att se hur högt upp i kön du befinner dig.
 		<string id="17128" value="eDonkey-server"/>
 		<string id="17129" value="eDonkey (LowID)"/>
 		<string id="17130" value="eDonkey (HighID)"/>
-		<string id="17131" value="Anslutning"/>
+		<string id="17131" value="DC++ Hub Connection"/>
 		<string id="17216" value="Initierar en anslutning till eDonkey-server vid %s…"/>
 		<string id="17217" value="Ansluten till eDonkey-server %s, skakar hand…"/>
 		<string id="17218" value="ED2K[%s] %s"/>
@@ -3278,7 +3283,7 @@ Du kan undersöka varje källa för att se hur högt upp i kön du befinner dig.
 		<string id="17477" value="BitTorrentkopplingen med %s svarade med fel fil."/>
 		<string id="17478" value="BitTorrentkopplingen med %s begärde en okänd fil."/>
 		<string id="17479" value="BitTorrentkopplingen med %s upprättades för &quot;%s&quot;."/>
-		<string id="17480" value="BitTorrentkopplingen med %s begärde en okänd fil."/>
+		<string id="17480" value="BitTorrent coupling with %s requested an inactive file."/>
 		<string id="17481" value="Mottog BitTorrent beskrivningsfil: &quot;%s&quot;"/>
 		<string id="17482" value="Kan inte analysera förhämtad BitTorrentfil &quot;%s&quot;."/>
 		<string id="17483" value="Fel från BitTorrentspåraren för &quot;%s&quot; : &quot;%s&quot;."/>
@@ -3292,13 +3297,13 @@ Du kan undersöka varje källa för att se hur högt upp i kön du befinner dig.
 		<string id="17491" value="Torrenten &quot;%s&quot; är redan på din nedladdningslista och kan inte sås."/>
 		<string id="17492" value="Fel vid laddning av torrentfil &quot;%s&quot;. Detta kanske inte är en giltig torrent."/>
 		<string id="17493" value="Kan inte skapa BitTorrentutdelningsfil &quot;%s&quot;."/>
-		<string id="17494" value="Denna torrent inkluderar filen &quot;%s&quot;, men Shareaza kan inte hitta den i ditt bibliotek. Om möjligt, flytta filen till samma mapp som torrenten och försök igen."/>
+		<string id="17494" value="This torrent includes the file &quot;%s&quot;, but Shareaza cannot find this file in your library. If possible, move the file to a shared folder and try again."/>
 		<string id="17495" value="Denna torrent inkluderar filen &quot;%s&quot; som ska vara %s, men din version av filen är %s."/>
 		<string id="17496" value="Ett fel inträffade vid kopiering från &quot;%s&quot; till en BitTorrentutdelningsfil."/>
 		<string id="17497" value="Ett okänt fel uppstod vid försöka att så &quot;%s&quot;."/>
 		<string id="17498" value="Ett fel hittades i filen &quot;%s&quot;."/>
 		<string id="17501" value="Kan inte kommunicera med trackern"/>
-		<string id="17503" value="Trackern misslyckades - försöker med nästa tracker (%i av %i)"/>
+		<string id="17503" value="Trying next tracker (%i of %i)"/>
 		<string id="17505" value="BitTorrentanslutningen till %s avbröts."/>
 		<string id="17506" value="BitTorrent handskakning med %s avbröts."/>
 		<string id="17507" value="BitTorrentkopplingen med %s avbröts."/>
@@ -3320,16 +3325,16 @@ Du kan undersöka varje källa för att se hur högt upp i kön du befinner dig.
 		<string id="18509" value="Du kan inte anta att denna nedladdning är färdig och återverifiera den eftersom du inte har någon verifikationsdata, t.ex. tiger-tree-volym, eDonkey hashset eller BitTorrent hashset. Utan verifikationsinformation kan inte nedladdningen verifieras."/>
 		<string id="18510" value="Är du säker på att du vill anta att nedladdningen är färdig och återverifiera den? Hela filen kommer att granskas och Shareaza kommer att acceptera godkänta delar och ladda ned ej godkända delar igen. "/>
 		<string id="18511" value="Du har ndrat filstorleken. Är du säker på att du vill ändra filstorleken för den här nedladdningen?"/>
-		<string id="18512" value="Är du säker på att du vill avbryta alla nedladdningar i denna grupp?"/>
-		<string id="18513" value="Du har skrivit ett felaktigt eDonkey hashset-värde. Kontrollera det och försök igen."/>
-		<string id="18514" value="Du har anget ett annat SHA1-värde än det som för tillfället är associerat med denna nedladdning. Är du säker på att du vill ändra det?"/>
+		<string id="18512" value="Are you sure you want to cancel this download but save incomplete file(s)?"/>
+		<string id="18513" value="You have typed an %s hash value, however it is invalid. Please check it and try again."/>
+		<string id="18514" value="You have provided an %s hash value which is different to the one currently associated with this download. Are you sure you want to change the %s hash now?"/>
 		<string id="18515" value="The selected download item currently has some Task attached, please wait and do it later."/>
 		<string id="19000" value="Fjärråtkomst är avstängd."/>
 		<string id="19001" value="Du måste välja ett användarnamn och lösenord."/>
 		<string id="19002" value="Kan inte acceptera anslutningar. URL otillgänlig."/>
 		<string id="19103" value="Welcome to Shareaza Chat!"/>
 		<string id="19104" value="Please respect others while using this service"/>
-		<string id="19105" value="Chat"/>
+		<string id="19105" value="Chat!"/>
 		<string id="20000" value="Ingen URN tillgänglig"/>
 		<string id="20001" value="Stäng"/>
 		<string id="20002" value="av"/>
@@ -3407,15 +3412,15 @@ Du kan undersöka varje källa för att se hur högt upp i kön du befinner dig.
 		<string id="20245" value="New Folder"/>
 		<string id="20246" value="Command-line options:\n\n-tray : Disable startup splash screen and send application to tray\n-nosplash : Disable startup splash screen\n-nowarn : Disable alpha (daily builds) version warning dialog\n-wait : Wait for other application instance exit\n\nInterface modes:\n\n-basic : Start application in Basic interface mode\n-tabbed : Start application in Tabbed interface mode\n-windowed : Start application in Windowed interface mode\n\nSystem options:\n\n-RegServer : Register internal components for everyone\n-UnRegServer : Un-register internal components for everyone\n-RegServerPerUser : Register internal components for current user\n-UnRegServerPerUser : Un-register internal components for current user"/>
 		<string id="20247" value="Failed to load metadata schemas. Please reinstall application."/>
-		<string id="20248" value="Du har inte valt någon mapp att dela ut. Vill du fortsätta?"/>
+		<string id="20248" value="You selected %u files. Are you sure?"/>
 		<string id="20249" value="Off"/>
 		<string id="20250" value="Low"/>
-		<string id="20251" value="_Normalt läge"/>
+		<string id="20251" value="Normal"/>
 		<string id="20252" value="High"/>
 		<string id="20253" value="Skin load error: %s. Element: %s"/>
 		<string id="20254" value="Loading skin: %s"/>
 		<string id="20255" value="Are you sure you want to remove all scheduled tasks? This cannot be undone."/>
-		<string id="20256" value="Sök Shareaza"/>
+		<string id="20256" value="System: Start Shareaza"/>
 		<string id="20257" value="Bandwidth: Full Speed"/>
 		<string id="20258" value="Bandwidth: Reduced Speed"/>
 		<string id="20259" value="Bandwidth: Stop"/>
@@ -3605,13 +3610,13 @@ Du kan undersöka varje källa för att se hur högt upp i kön du befinner dig.
 			<control/>
 		</dialog>
 		<dialog name="CDownloadsSettingsPage" cookie="BuEdBuBuStCoBuStEdmsStEdmsStEdmsBuStCoStCoBuBuEdBu" caption="Nedladdningar">
-			<control caption="Spara _färdiga nedladdningar här:"/>
+			<control caption="Save Completed Files Here"/>
 			<control/>
 			<control/>
 			<control caption="Scan every completed file with AntiVirus"/>
-			<control caption="Välj förinställd:"/>
+			<control caption="Select AntiVirus:"/>
 			<control/>
-			<control caption="Antal _nedladdningar:"/>
+			<control caption="Number of Downloads"/>
 			<control caption="Max antal filer:"/>
 			<control/>
 			<control/>
@@ -3621,13 +3626,13 @@ Du kan undersöka varje källa för att se hur högt upp i kön du befinner dig.
 			<control caption="Överföringar per fil:"/>
 			<control/>
 			<control/>
-			<control caption="_Begränsningar:"/>
+			<control caption="Limits"/>
 			<control caption="Total nedladdningsbandbredd:"/>
 			<control/>
 			<control caption="Största köstorlek:"/>
 			<control/>
 			<control caption="Tillåt endast överföringar till och från nätverk som är /nanslutna för närvarande."/>
-			<control caption="Spara tillfälliga _ofullständiga nedladdningar här:"/>
+			<control caption="Store Temporary Incomplete Files Here"/>
 			<control/>
 			<control/>
 		</dialog>
@@ -3685,10 +3690,10 @@ Du kan undersöka varje källa för att se hur högt upp i kön du befinner dig.
 		<dialog name="CGnutellaSettingsPage" cookie="BuBuCoBuBuCoEdmsEdmsEdmsEdmsEdmsEdmsBuBuBuBuStBuStStStBuStBuStStStBu" caption="Gnutella">
 			<control caption="Gnutella2-nätverk:"/>
 			<control caption="(G2 rekommenderad)"/>
-			<control caption="Anslut till Gnutella2 idag"/>
+			<control caption="Optimal|Leaf|Hub"/>
 			<control caption="Läge:"/>
-			<control caption="Optimal|Löv|Nav"/>
-			<control caption="G_2-anslutningar:"/>
+			<control caption="Connect to Gnutella1 today"/>
+			<control caption="Optimal|Leaf|Ultrapeer"/>
 			<control/>
 			<control/>
 			<control/>
@@ -3702,7 +3707,7 @@ Du kan undersöka varje källa för att se hur högt upp i kön du befinner dig.
 			<control/>
 			<control/>
 			<control caption="Läge:"/>
-			<control caption="Optimal|Löv|Nav"/>
+			<control caption="Leaf to Hub"/>
 			<control caption="G_1-anslutningar:"/>
 			<control caption="Gnutella2-nätverk:"/>
 			<control caption="Mode: "/>
@@ -3951,7 +3956,7 @@ Du kan undersöka varje källa för att se hur högt upp i kön du befinner dig.
 			<control/>
 			<control/>
 			<control caption="_Livuppgifter:"/>
-			<control caption="|Man|Kvinna"/>
+			<control caption="Male|Female"/>
 			<control caption="Kön:"/>
 			<control/>
 			<control caption="Ålder:"/>
@@ -4027,8 +4032,8 @@ Du kan undersöka varje källa för att se hur högt upp i kön du befinner dig.
 		</dialog>
 		<dialog name="CLanguageDlg" cookie="" caption="Välj språk">
 		</dialog>
-		<dialog name="CConnectToDlg" cookie="BuCoEdBuCoBuBuBu" caption="Anslut till|Visa värdens filer">
-			<control caption="Skapa en ny anslutning till värden eller servern:|Visa värdens filer"/>
+		<dialog name="CConnectToDlg" cookie="BuCoEdBuCoBuBuBu" caption="Connect To|Browse User|Chat to User">
+			<control caption="Initiate a new connection to host or server:|Browse this user:|Chat to this user:"/>
 			<control/>
 			<control/>
 			<control caption="Nätverks_protokoll:"/>
@@ -4095,7 +4100,7 @@ Du kan undersöka varje källa för att se hur högt upp i kön du befinner dig.
 			<control caption="Tjänst_adress:"/>
 			<control/>
 			<control caption="Typ av upptäckstjänst:"/>
-			<control caption="Gnutella Bootstrap|GWebCache|Server.met URL|Blocked"/>
+			<control caption="Gnutella Bootstrap|G1 GWebCache|G2 GWebCache|G1/G2 GWebCache|Server.met URL|Blocked"/>
 			<control caption="OK"/>
 			<control caption="Avbryt"/>
 		</dialog>
@@ -4285,7 +4290,7 @@ Du kan undersöka varje källa för att se hur högt upp i kön du befinner dig.
 			<control caption="Du har valt att exportera %lu filer som Shareaza-URI-referenser. Välj formatet för dina URI och klicka på Save."/>
 			<control/>
 			<control caption="Infoga symbol:"/>
-			<control caption="Tiger Root|SHA1|MD5|ED2K (CMD4)|Filename|Filename (URI)|Base Filename|File Extension|File Size|File Size (bytes)|Folder Path|Local Host|Local Port"/>
+			<control caption="Tiger Root|SHA1|MD5|ED2K (CMD4)|BitTorrent|Filename|Filename (URI)|Base Filename|File Extension|File Size|File Size (bytes)|Folder Path|Local Host|Local Port|Link|Link (URI)"/>
 			<control caption="Välj förinställd:"/>
 			<control caption="Magnet|eDonkey|Magnet HTML|eDonkey HTML"/>
 			<control caption="_Kopiera"/>
@@ -4455,13 +4460,13 @@ Du kan undersöka varje källa för att se hur högt upp i kön du befinner dig.
 			<control/>
 			<control/>
 			<control/>
-			<control caption="Av:"/>
+			<control caption=" As needed| When ratio over 100%| Only when requested| Never"/>
 			<control/>
 			<control caption="Kommentarer:"/>
 			<control caption="Namn:"/>
 			<control caption="Skapad:"/>
 			<control caption="Påbörja ny överföring:"/>
-			<control caption=" Efter behov| När proportionen är över 100%| Enbart vid förfrågan| Aldrig"/>
+			<control caption="Comments:"/>
 			<control caption="Transfers:"/>
 			<control caption="Totalt uppladdade:"/>
 			<control caption="Anteckningar:"/>
@@ -4474,7 +4479,7 @@ Du kan undersöka varje källa för att se hur högt upp i kön du befinner dig.
 			<control/>
 			<control/>
 			<control/>
-			<control caption="Tracker:"/>
+			<control caption="Disabled|Single Tracker|Multi-tracker|Multi-tracker (locked)"/>
 			<control caption="_Refresh"/>
 			<control/>
 			<control caption="Färdiga (Seeds):"/>
@@ -4550,7 +4555,7 @@ Du kan undersöka varje källa för att se hur högt upp i kön du befinner dig.
 			<control/>
 			<control caption="Gnutella1"/>
 			<control caption="Gnutella2"/>
-			<control caption="eDonkey"/>
+			<control caption="eDoonkey2K"/>
 			<control caption="DC++"/>
 			<control caption="BitTorrent"/>
 			<control caption="Select the event type:"/>
@@ -4700,8 +4705,8 @@ Du kan undersöka varje källa för att se hur högt upp i kön du befinner dig.
 		</list>
 		<list name="CSchedulerWnd">
 			<column from="Action" to="Händelse"/>
-			<column from="Trigger" to="TigerTree"/>
-			<column from="Next Run" to="Nästa"/>
+			<column from="Trigger" to="Trigger"/>
+			<column from="Next Run" to="NextRun"/>
 			<column from="Active" to="Aktiv"/>
 			<column from="Status" to="Status"/>
 			<column from="Description" to="Beskrivning"/>

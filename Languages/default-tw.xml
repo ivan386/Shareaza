@@ -392,13 +392,13 @@
 		<toolbar name="CSchedulerWnd">
 			<button id="ID_SCHEDULER_EDIT" text="Edit Task"/>
 			<separator/>
-			<button id="ID_SCHEDULER_ACTIVATE" text="活動中"/>
-			<button id="ID_SCHEDULER_DEACTIVATE" text="不在活躍中"/>
+			<button id="ID_SCHEDULER_ACTIVATE" text="Activate"/>
+			<button id="ID_SCHEDULER_DEACTIVATE" text="Deactivate"/>
 			<separator/>
 			<button id="ID_SCHEDULER_ADD" text="Add Task"/>
-			<button id="ID_SCHEDULER_REMOVE" text="移除 &gt;"/>
+			<button id="ID_SCHEDULER_REMOVE" text="Remove Task"/>
 			<separator/>
-			<button id="ID_SCHEDULER_REMOVE_ALL" text="移除 &gt;"/>
+			<button id="ID_SCHEDULER_REMOVE_ALL" text="Remove All"/>
 		</toolbar>
 		<!-- HIT MONITOR WINDOW -->
 		<toolbar name="CHitMonitorWnd">
@@ -508,7 +508,7 @@
 					<item id="ID_VIEW_SECURITY" text="安全性"/>
 					<item id="ID_VIEW_HOSTS" text="主機快取"/>
 					<item id="ID_VIEW_DISCOVERY" text="揭示"/>
-					<item id="ID_VIEW_SCHEDULER" text="預定表"/>
+					<item id="ID_VIEW_SCHEDULER" text="Sch_eduler"/>
 				</menu>
 				<separator/>
 				<item id="ID_VIEW_BASIC" text="標準模式"/>
@@ -568,8 +568,8 @@
 				</menu>
 				<separator/>
 				<item id="ID_NETWORK_CONNECT_TO" text="連線至..." shortcut="Ctrl+T"/>
-				<item id="ID_NETWORK_BROWSE_TO" text="瀏覽使用者"/>
-				<item id="ID_NETWORK_CHAT_TO" text="與使用者聊天"/>
+				<item id="ID_NETWORK_BROWSE_TO" text="_Browse User..."/>
+				<item id="ID_NETWORK_CHAT_TO" text="Chat to _User..."/>
 				<separator/>
 				<item id="ID_NETWORK_AUTO_CLOSE" text="傳輸後離開"/>
 				<item id="ID_NETWORK_EXIT" text="離開"/>
@@ -585,7 +585,7 @@
 				<separator/>
 				<item id="ID_VIEW_SECURITY" text="安全性"/>
 				<item id="ID_VIEW_HOSTS" text="主機快取"/>
-				<item id="ID_VIEW_SCHEDULER" text="預定表"/>
+				<item id="ID_VIEW_SCHEDULER" text="Sch_eduler"/>
 				<separator/>
 				<menu text="進階">
 					<item id="ID_VIEW_SYSTEM" text="系統" shortcut="F11"/>
@@ -600,7 +600,7 @@
 					<item id="ID_VIEW_HOSTS" text="主機快取" shortcut="F8"/>
 					<item id="ID_VIEW_DISCOVERY" text="揭示" shortcut="F9"/>
 					<item id="ID_VIEW_TRAFFIC" text="圖表" shortcut="F10"/>
-					<item id="ID_VIEW_SCHEDULER" text="預定表" shortcut="Ctrl+Shift+F11"/>
+					<item id="ID_VIEW_SCHEDULER" text="Sch_eduler" shortcut="Ctrl+Shift+F11"/>
 					<separator/>
 					<item id="ID_VIEW_PACKETS" text="封包傾印" shortcut="Ctrl+F1"/>
 					<item id="ID_VIEW_SEARCH_MONITOR" text="Search Monitor" shortcut="Ctrl+F2"/>
@@ -669,8 +669,8 @@
 				<item id="ID_NETWORK_DISCONNECT" text="中斷連線"/>
 				<separator/>
 				<item id="ID_NETWORK_CONNECT_TO" text="連線至..." shortcut="Ctrl+T"/>
-				<item id="ID_NETWORK_BROWSE_TO" text="瀏覽使用者"/>
-				<item id="ID_NETWORK_CHAT_TO" text="與使用者聊天"/>
+				<item id="ID_NETWORK_BROWSE_TO" text="_Browse User..."/>
+				<item id="ID_NETWORK_CHAT_TO" text="Chat to _User..."/>
 				<separator/>
 				<menu text="選擇網路">
 					<item id="ID_NETWORK_G2" text="連線至 Gnutella2"/>
@@ -696,7 +696,7 @@
 				<item id="ID_VIEW_HOSTS" text="主機快取" shortcut="F8"/>
 				<item id="ID_VIEW_DISCOVERY" text="揭示" shortcut="F9"/>
 				<item id="ID_VIEW_TRAFFIC" text="圖表" shortcut="F10"/>
-				<item id="ID_VIEW_SCHEDULER" text="預定表" shortcut="Ctrl+Shift+F11"/>
+				<item id="ID_VIEW_SCHEDULER" text="Sch_eduler" shortcut="Ctrl+Shift+F11"/>
 				<separator/>
 				<item id="ID_VIEW_PACKETS" text="封包傾印" shortcut="Ctrl+F1"/>
 				<item id="ID_VIEW_SEARCH_MONITOR" text="Search Monitor" shortcut="Ctrl+F2"/>
@@ -773,7 +773,7 @@
 				<item id="ID_VIEW_UPLOADS" text="上傳"/>
 				<item id="ID_VIEW_SECURITY" text="安全性"/>
 				<item id="ID_VIEW_HOSTS" text="主機快取"/>
-				<item id="ID_VIEW_SCHEDULER" text="預定表"/>
+				<item id="ID_VIEW_SCHEDULER" text="Sch_eduler"/>
 			</menu>
 		</menu>
 		<menu name="CMainWnd.View.Tabbed">
@@ -789,7 +789,7 @@
 			<item id="ID_VIEW_HOSTS" text="主機快取"/>
 			<item id="ID_VIEW_DISCOVERY" text="揭示"/>
 			<item id="ID_VIEW_TRAFFIC" text="圖表"/>
-			<item id="ID_VIEW_SCHEDULER" text="預定表"/>
+			<item id="ID_VIEW_SCHEDULER" text="Sch_eduler"/>
 			<separator/>
 			<item id="ID_VIEW_PACKETS" text="封包傾印"/>
 			<item id="ID_VIEW_SEARCH_MONITOR" text="Search Monitor"/>
@@ -809,7 +809,7 @@
 			<item id="ID_VIEW_HOSTS" text="主機快取"/>
 			<item id="ID_VIEW_DISCOVERY" text="揭示"/>
 			<item id="ID_VIEW_TRAFFIC" text="圖表"/>
-			<item id="ID_VIEW_SCHEDULER" text="預定表"/>
+			<item id="ID_VIEW_SCHEDULER" text="Sch_eduler"/>
 			<separator/>
 			<item id="ID_VIEW_PACKETS" text="封包傾印"/>
 			<item id="ID_VIEW_SEARCH_MONITOR" text="Search Monitor"/>
@@ -862,7 +862,7 @@
 				<item id="ID_VIEW_UPLOADS" text="上傳"/>
 				<item id="ID_VIEW_SECURITY" text="安全性"/>
 				<item id="ID_VIEW_HOSTS" text="主機快取"/>
-				<item id="ID_VIEW_SCHEDULER" text="預定表"/>
+				<item id="ID_VIEW_SCHEDULER" text="Sch_eduler"/>
 			</menu>
 		</menu>
 		<menu name="CHomeWnd.Tabbed">
@@ -878,7 +878,7 @@
 			<item id="ID_VIEW_HOSTS" text="主機快取"/>
 			<item id="ID_VIEW_DISCOVERY" text="揭示"/>
 			<item id="ID_VIEW_TRAFFIC" text="圖表"/>
-			<item id="ID_VIEW_SCHEDULER" text="預定表"/>
+			<item id="ID_VIEW_SCHEDULER" text="Sch_eduler"/>
 			<separator/>
 			<item id="ID_VIEW_PACKETS" text="封包傾印"/>
 			<item id="ID_VIEW_SEARCH_MONITOR" text="Search Monitor"/>
@@ -1201,14 +1201,14 @@
 			<item id="ID_LIBRARY_FOLDER_FILE_PROPERTIES" text="檔案屬性"/>
 		</menu>
 		<menu name="CLibraryTree.Virtual.Basic">
-			<item id="ID_LIBRARY_FOLDER_ENQUEUE" text="播放專輯"/>
+			<item id="ID_LIBRARY_FOLDER_ENQUEUE" text="Play _Album"/>
 			<item id="ID_LIBRARY_FOLDER_DELETE" text="刪除"/>
 			<separator/>
 			<item id="ID_LIBRARY_FOLDER_FILE_PROPERTIES" text="檔案屬性"/>
-			<item id="ID_LIBRARY_FOLDER_PROPERTIES" text="專輯屬性"/>
+			<item id="ID_LIBRARY_FOLDER_PROPERTIES" text="Album _Properties"/>
 		</menu>
 		<menu name="CLibraryTree.Virtual">
-			<item id="ID_LIBRARY_FOLDER_ENQUEUE" text="播放專輯"/>
+			<item id="ID_LIBRARY_FOLDER_ENQUEUE" text="Play _Album"/>
 			<item id="ID_LIBRARY_FOLDER_DELETE" text="刪除"/>
 			<separator/>
 			<item id="ID_LIBRARY_REBUILD" text="重建"/>
@@ -1217,7 +1217,7 @@
 			<item id="ID_LIBRARY_FOLDER_NEW" text="新增資料夾..."/>
 			<separator/>
 			<item id="ID_LIBRARY_FOLDER_FILE_PROPERTIES" text="檔案屬性"/>
-			<item id="ID_LIBRARY_FOLDER_PROPERTIES" text="專輯屬性"/>
+			<item id="ID_LIBRARY_FOLDER_PROPERTIES" text="Album _Properties"/>
 		</menu>
 		<!-- LIBRARY VIEWS -->
 		<menu name="CLibraryTileView">
@@ -1296,7 +1296,7 @@
 		<menu name="CLibraryFileView.Virtual.Basic">
 			<item id="ID_LIBRARY_LAUNCH" text="開啟或播放"/>
 			<item id="ID_LIBRARY_ENQUEUE" text="新增至播放清單"/>
-			<item id="ID_LIBRARY_FOLDER_ENQUEUE" text="播放專輯"/>
+			<item id="ID_LIBRARY_FOLDER_ENQUEUE" text="Play _Album"/>
 			<separator/>
 			<item id="ID_LIBRARY_SHARED_FILE" text="分享的"/>
 			<separator/>
@@ -1565,13 +1565,13 @@
 		<menu name="CSchedulerWnd">
 			<item id="ID_SCHEDULER_ADD" text="_Add Scheduled Task"/>
 			<separator/>
-			<item id="ID_SCHEDULER_ACTIVATE" text="活動中"/>
-			<item id="ID_SCHEDULER_DEACTIVATE" text="不在活躍中"/>
+			<item id="ID_SCHEDULER_ACTIVATE" text="A_ctivate"/>
+			<item id="ID_SCHEDULER_DEACTIVATE" text="_Deactivate"/>
 			<separator/>
 			<item id="ID_SCHEDULER_REMOVE" text="移除"/>
-			<item id="ID_SCHEDULER_EDIT" text="編輯:"/>
+			<item id="ID_SCHEDULER_EDIT" text="_Edit"/>
 			<separator/>
-			<item id="ID_SCHEDULER_REMOVE_ALL" text="移除擋案"/>
+			<item id="ID_SCHEDULER_REMOVE_ALL" text="Remove Al_l"/>
 		</menu>
 		<!-- DISCOVERY SERVICES WINDOW -->
 		<menu name="CDiscoveryWnd">
@@ -1628,7 +1628,7 @@
 			<menu text="Actions">
 				<item id="ID_IRC_TIME" text="_Time"/>
 				<item id="ID_IRC_VERSION" text="_Version"/>
-				<item id="ID_IRC_BROWSE" text="瀏覽"/>
+				<item id="ID_IRC_BROWSE" text="_Browse"/>
 			</menu>
 			<separator/>
 			<menu text="Control">
@@ -1700,7 +1700,8 @@
 				<icon res="252" width="32" height="32"/><gap size="8"/>
 				<heading align="middle">自訂 SHAREAZA</heading>
 				<newline gap="8" indent="42"/>
-				<text colour="FF0000">查看我的下載資料夾︰</text>
+				<text colour="FF0000">Shareaza has detected that you are behind a NAT router or firewall,
+				and are unable to receive connections from the Internet.  </text>
 				<text colour="FF0000" format="b"> ︰改變 Shareaza 的外觀</text>
 				<newline gap="6"/>
 				<link target="raza:command:ID_HELP_ROUTER">設定精靈</link>
@@ -1710,7 +1711,8 @@
 				<icon res="252" width="32" height="32"/><gap size="8"/>
 				<heading align="middle">我的下載</heading>
 				<newline gap="8" indent="42"/>
-				<text colour="FF0000">查看我的下載資料夾︰</text>
+				<text colour="FF0000">Shareaza has detected that you are behind a NAT router or firewall,
+				and are unable to receive TCP connections from the Internet.  </text>
 				<text colour="FF0000" format="b">This may cause poor download performance.</text>
 				<newline gap="6"/>
 				<link target="raza:command:ID_HELP_ROUTER">設定精靈</link>
@@ -1720,7 +1722,8 @@
 				<icon res="252" width="32" height="32"/><gap size="8"/>
 				<heading align="middle">遠端   監控   已啟用</heading>
 				<newline gap="8" indent="42"/>
-				<text colour="FF0000">Shareaza 遠端監控已啟用. 在這裡使用您的瀏覽器操控 Shareaza:</text>
+				<text colour="FF0000">Shareaza has detected that you are behind a NAT router or firewall,
+				and are unable to receive UDP messages from the Internet.  </text>
 				<text colour="FF0000" format="b">This may cause poor search performance.</text>
 				<newline gap="6"/>
 				<link target="raza:command:ID_HELP_ROUTER">設定精靈</link>
@@ -1836,7 +1839,7 @@
 			<text group="11" align="middle">已中斷連線</text>
 			<text group="12" align="middle">連線中...</text>
 			<text group="13" align="middle">已連線</text>
-			<text group="14" align="middle" id="G1Hubs">eDonkey:</text>
+			<text group="14" align="middle" id="G1Hubs">%i ultrapeers</text>
 			<text group="15" align="middle" id="G1Leaves">%i 葉結點</text>
 			<newline group="10" gap="2"/>
 			<icon group="30" command="ID_NETWORK_ED2K"/><gap group="30" size="4"/>
@@ -1909,8 +1912,8 @@
 			</styles>
 			<text format="b">歡迎使用 Shareaza 的設定管理員</text>
 			<newline gap="16"/>
-			<text>Shareaza 設定管理員讓進階使用者完全地自訂 Shareaza 的運作方式
-			以下的部分是用來自訂</text>
+			<text>The Shareaza Settings Manager allows advanced users to completely customise how
+				Shareaza works. The settings in the</text>
 			<text format="b">General</text>
 			<text>使用者的習慣.</text>
 			<newline gap="16" indent="16"/>
@@ -1946,8 +1949,8 @@
 			</styles>
 			<text format="b">歡迎使用 Shareaza 的設定管理員</text>
 			<newline gap="16"/>
-			<text>Shareaza 設定管理員讓使用者完全地自訂 Shareaza 的運作方式.
-			這個設定讓您</text>
+			<text>The Shareaza Settings Manager allows advanced users to completely customise 
+				how Shareaza works. The settings in the</text>
 			<text format="b">Internet</text>
 			<text>在分散式 P2P 網路中 Shareaza 如何與其他結點互動.</text>
 			<newline gap="16" indent="16"/>
@@ -2066,10 +2069,11 @@
 		<document name="DownloadHelp.Select">
 			<text format="b">下載區域</text>
 			<newline gap="8"/>
-			<text>這裡顯示目前正在下載的檔案. 想要檢視來源的話, 點選任何一個檔案左側的 + 就可展開來源.</text>
+			<text>This is where files currently being downloaded are displayed. You can view
+			individual sources by expanding each file with the small + on the left.</text>
 			<newline gap="8"/>
-			<text>You can also use this command to get help information on a specific download.
-		Simply select a download and choose this command again.</text>
+			<text>Drag'n'Drop downloads higher in the list for priority, or onto Download Group 
+			tabs for better organisation (in Power Mode).</text>
 			<newline gap="16"/>
 			<text>You can also use this command to get help information on a specific download.
 			Simply select a download and choose this Help command again.</text>
@@ -2083,71 +2087,98 @@
 		<document name="DownloadHelp.Completed">
 			<text format="b">這個下載已經完成</text>
 			<newline gap="8"/>
-			<text>Shareaza 已經完成下載這個檔案並確認檔案完整無誤. 檔案已經移至下載資料夾.</text>
+			<text>Shareaza has finished downloading this file, and has verified that it
+			is 100% correct. It has also moved the file to your downloads folder.</text>
 		</document>
 		<document name="DownloadHelp.Moving">
 			<text format="b">正在移動這個下載</text>
 			<newline gap="8"/>
-			<text>Shareaza 已經完成下載這個檔案, 而且驗證結果無誤. 正在移動檔案/解壓縮檔案至下載資料夾.</text>
+			<text>Shareaza has finished downloading this file, and has verified that
+			it is correct. It is currently being moved and/or unpacked to your downloads folder.</text>
 		</document>
 		<document name="DownloadHelp.Paused">
 			<text format="b">已暫停這個下載</text>
 			<newline gap="8"/>
-			<text>您已經暫停這個下載了. 如果您要繼續下載, 請點選 '</text><text format="b">繼續下載</text><text>'.</text>
+			<text>You have paused this download. If you want it to resume downloading, you
+			can click the '</text><text format="b">繼續下載</text><text>'.</text>
 		</document>
 		<document name="DownloadHelp.DiskFull">
 			<text format="b">磁碟空間已滿</text>
 			<newline gap="8"/>
-			<text>Shareaza 已經自動暫停這個下載, 因為硬碟空間已滿, 或是下載檔案不能寫入. 如果您要繼續下載, 請空出硬碟空間以及確認未完成檔案資料夾不是唯讀, 然後繼續下載.</text>
+			<text>Shareaza has paused this download automatically because the hard disk
+			appears to be full, or the download file cannot be written to. If you wish
+			to continue downloading, please free some space on your hard disk and/or check
+			to make sure the incomplete file folder is accessible, and then resume the
+			download.</text>
 		</document>
 		<document name="DownloadHelp.Verifying">
 			<text format="b">正在驗證這個下載</text>
 			<newline gap="8"/>
-			<text>這個下載已完成; Shareaza 正在檢查檔案的完整性. 如果找到任何損壞的部分, Shareaza 會自動修復它.</text>
+			<text>This download has finished, and Shareaza is now checking it to ensure
+			that it is exactly the same as the original file. If any damaged parts are
+			found, Shareaza will repair them automatically.</text>
 		</document>
 		<document name="DownloadHelp.Downloading">
 			<text format="b">這個下載正在活躍中!</text>
 			<newline gap="8"/>
-			<text>下載進行中. 下載太慢的話, 可以嘗試這個命令 '</text><text format="b">尋找更多來源</text><text>'. 如果速度沒有任何改善, 可能是因為您嘗試下載的用戶限制上傳速度. 下載速度通常隨著時間流逝而增加.</text>
+			<text>This download is currently in progress. If it is downloading too slowly,
+			you could try searching the network for more sources with the '</text><text format="b">尋找更多來源</text><text>' command. If the speed does not 
+			improve it may be due to limited upload speeds of the users you are downloading 
+			from. Download speed usually increases over time.</text>
 		</document>
 		<document name="DownloadHelp.Pending">
 			<text format="b">正在等待這個下載</text>
 			<newline gap="8"/>
-			<text>這個下載這正等待其他人開始上傳.
-		Shareaza 已經準備好下載這個檔案, 但是目前沒有人正在傳送它. 您可能排隊排在其他使用者的後面; 下載可能隨時開始傳輸. 您可以查看每一個來源, 看看您目前排在第幾個位子. 如果您也在分享檔案, 可能可以更快地開始下載.</text>
+			<text>This download is waiting for someone to start uploading.
+			Shareaza is ready to start downloading this file, but no-one is sending it at
+			the moment. You are probably waiting in other user's queues, and the download
+			may start transferring at any time. You can examine the individual sources to 
+			see each queue you are waiting in. If you are sharing files yourself, it may
+			improve the chances of a download transfer starting quickly.</text>
 		</document>
 		<document name="DownloadHelp.Queued">
 			<text format="b">這個下載正在排隊中</text>
 			<newline gap="8"/>
-			<text>這個下載正在等待其他的下載完成.
-		您的下載設定限制同一個時間的最大活躍中的下載數量, 以確保每一個下載擁有足夠的頻寬. 您可以在設定頁面改變設定值.
-		或是您可以使用'繼續" 命令 手動開始這個下載.</text>
+			<text>This download is waiting for some of your other downloads to complete.
+			Your download settings limit the number of downloads which may be active at
+			any given time, to ensure that each download gets a good share of the available
+			bandwidth. You can change these settings via Tools, Shareaza Settings.
+			Alternatively, you may manually start this download with the resume command.</text>
 		</document>
 		<document name="DownloadHelp.Searching">
 			<text format="b">正在搜尋這個下載</text>
 			<newline gap="8"/>
-			<text>這個下載目前沒有已知的來源, 所以 Shareaza 正在搜尋所有已連線的 P2P 網路看看是否有可用的來源. 找到來源後, 下載會自動開始. Shareaza 自動地搜尋來源, 不過,
-		您可以加速這個程序, 只要使用</text>
+			<text>There are no known sources for this download, so Shareaza is searching
+			all connected P2P networks for new sources. Once sources are found, the
+			download will start automatically. Shareaza searches for sources automatically,
+			however you can speed up the process using the</text>
 			<text format="b">尋找更多來源</text><text>命令.</text>
 			<newline gap="8"/>
-			<text>天不如人意. 大部份的情況下, 可能沒有任何上線的使用者擁有你正在尋找的檔案. 您只能等待使用者上線, 或是取消它並另覓較為熱門的類似檔案.</text>
+			<text>Unfortunately in many cases there may be no users online who have the
+			file you are looking for. The only course of action here is to wait for
+			someone to come online, or cancel it and try to find a similar file which is
+			more widely available.</text>
 		</document>
 		<document name="DownloadHelp.Creating">
 			<text format="b">正在製作這個下載</text>
 			<newline gap="8"/>
-			<text>Shareaza 正在預先分配用來儲存下載的檔案以在稍後節省時間.</text>
+			<text>Shareaza is pre-allocating a file in which to store this download, to
+			save time later.</text>
 		</document>
 		<document name="DownloadHelp.Tracker">
 			<text format="b">BitTorrent 伺服器故障</text>
 			<newline gap="8"/>
-			<text>這個下載的 BitTorrent 伺服器可能故障或是離線. Shareaza 無法聯絡它取得下載用戶的清單.</text>
+			<text>The BitTorrent tracker server for this download appears to be
+			down or malfunctioning. Shareaza is unable to contact it to receive
+			a list of peers.</text>
 		</document>
 		<!-- Upload help documents -->
 		<document name="UploadHelp">
 			<text format="b">上傳區域</text>
 			<newline gap="8"/>
-			<text>這裡顯示上傳與排隊的情況. 您可以使用每一個排隊隊伍左側的 + 來展開; and filter what is displayed with the button on the
-		right of the window's toolbar.</text>
+			<text>This is where queues and uploads are displayed. You can expand each queue
+			with the small + on the left, and filter what is displayed with the button on the
+			right of the window's toolbar.</text>
 		</document>
 		<!-- General help documents -->
 		<document name="GeneralHelp.DiskSpace">
@@ -2155,38 +2186,47 @@
 			<newline gap="8"/>
 			<text>在其中一個磁碟分區的空間已經即將用盡.</text>
 			<newline gap="8"/>
-			<text>您應該總是保留適當的儲存空間. 如果空間已滿, 程式可能開始不穩定, 而且暫存檔案可能遺失. 請重組磁碟, 刪除不需要的檔案, 或是解除安裝不再需要的軟體.</text>
+			<text>You should always attempt to keep a reasonable amount of disk space free. Programs 
+			can become unstable if the drives become full, and temporary files may be lost. You should 
+			run a disk clean-up, delete unwanted files, or uninstall software you no longer need.</text>
 		</document>
 		<document name="GeneralHelp.DiskWriteFail">
 			<text format="b">需要的資料夾為唯讀屬性</text>
 			<newline gap="8"/>
 			<text>Shareaza 無法寫入至磁碟分區或是目錄.</text>
 			<newline gap="8"/>
-			<text>網路磁碟可能已經斷線, 或是你沒有權限寫入至選擇的目錄. 請檢查目錄與權限, 或改變暫存檔的位置.</text>
+			<text>A network drive may have been disconnected, or you may not have write permission 
+			to a selected directory. Please check directories and permissions, or change the
+			temporary files location.</text>
 		</document>
 		<document name="GeneralHelp.ConnectionFail">
 			<text format="b">網路連線已丟失</text>
 			<newline gap="8"/>
 			<text>Windows 回報沒有可用的網際網路連線.</text>
 			<newline gap="8"/>
-			<text>數據機 (modem) 或路由器 (router) 可能已經中斷, 意指不能連上網際網路. 您可能要手動重新連線或重設連線.</text>
+			<text>It is likely that a modem or router has dropped, meaning the internet cannot
+			be accessed. You may need to manually re-connect or reset your connection.</text>
 			<newline gap="8"/>
 			<text>Shareaza 已停止嘗試連線以避免失去所有已快取主機.</text>
 		</document>
 		<document name="GeneralHelp.AdultFilter">
 			<text format="b">已啟用成人內容過濾</text>
 			<newline gap="8"/>
-			<text>請注意: 如同任何一種自動過濾程式, 這個過濾程式無法百分之百有效地過濾所有的內容. 這只是設計為過濾掉過多不想要的搜尋結果, 而不是百分之百的安全避難所.</text>
+			<text>Please note that (as with any automated filter) it may not be 100% effective at
+			screening content. It is designed simply to filter out excess unwanted results, rather than 
+			as a 100% safe block.</text>
 			<newline gap="8"/>
 			<text>請家長時時監控小孩的上網活動(包括 P2P 檔案分享).</text>
 		</document>
 		<document name="GeneralHelp.BadTorrentEncoding">
 			<text format="b">這個 torrent 可能編碼錯誤</text>
 			<newline gap="8"/>
-			<text>Windows 回報, 在解碼這個 torrent 的內含文字時發生轉譯錯誤. 這個 torrent 可能損壞, 或是錯誤地編碼了.
-                您仍然可以正確下載 torrent, 不過有些檔案名稱可能不正確.</text>
+			<text>Windows has reported a translation fault while decoding text in this torrent. It is
+			possible that the torrent is corrupt, or just incorrectly encoded. The torrent may
+			still download properly, although some file names could be incorrect.</text>
 			<newline gap="8"/>
-			<text>大部分的 torrent 製作程式允許您修復這個 torrent, 讓它能夠正確地在所有的 BT 程式運作.</text>
+			<text>Most torrent creation programs should allow you to repair this torrent, which
+			will ensure it works properly in all BitTorrent applications.</text>
 			<newline gap="8"/>
 			<link target="raza:command:ID_HELP_TORRENT">點選這裡取得更多說明</link>
 			<text>, 或是下載軟體修復 torrent.</text>
@@ -2194,52 +2234,72 @@
 		<document name="GeneralHelp.DonkeyServerList">
 			<text format="b">您的 eDonkey 伺服器清單是空的</text>
 			<newline gap="8"/>
-			<text>您的 eDonkey2000 伺服器清單沒有任何包含任何伺服器. 您需要下載最新的伺服器清單(met 檔)才能連線至 ED2K.</text>
+			<text>There are no servers in your eDonkey server list. You need to download an
+			up to date server list (met file) to connect to ED2K.</text>
 			<newline gap="8"/>
-			<text>您可以到 ed2k 設定頁面下載伺服器清單, 或是揭示服務視窗. (請按 F9 開啟揭示服務視窗)</text>
+			<text>You can download a server list from the ed2k setting page, or the discovery
+			services window. (Press F9 to open the discovery services window)</text>
 		</document>
 		<document name="GeneralHelp.UploadWarning">
 			<text format="b">限制上傳速度有可能減低下載速度</text>
 			<newline gap="8"/>
-			<text>與 Shareaza 連線的網路, 很多強制使用者維持一定的分享率, 限制上傳至不分享的使用者, 或是僅僅偏好上傳至已知的分享者.</text>
+			<text>Several networks Shareaza connects to enforce ratios, limit uploads to
+			clients that do not share, or simply preference uploading to known sharers.</text>
 			<newline/>
-			<text>幸好, 寬頻 DSL 連線如同兩線道高速高路: 上傳與下載各自有自己的分配量. 如果您正確設定客戶端, 您能夠以不錯的速度上傳, 並且同時保持全速下載的能力.</text>
+			<text>Fortunately, broadband DSL connections are like a two-lane highway: you have
+			separate allocations for upload and download. If your client is properly configured, 
+			you should be able to upload at a good rate while retaining full download capacity.</text>
 			<newline gap="8"/>
-			<text>您的上傳上限速度預設為 85% 的可用上傳頻寬, 並且不對下載速度做任何限制. 這樣的設定方式應該可以讓您以最高可用下載速度下載.</text>
+			<text>By default, your upload limit is set to about 85% of available upstream bandwidth,
+			while downloads are unlimited. That configuration should give you the fastest possible 
+			downloads that are available.</text>
 		</document>
 		<!-- Search help documents -->
 		<document name="SearchHelp.BadSearch1">
 			<text format="b">請重新修改搜尋字眼(1)</text>
 			<newline gap="8"/>
-			<text>這個搜尋的格式不佳, 可能無法正常進行.
-	        搜尋時, 盡可能使用多個詞, 並且指定一個檔案類型. 還有, 絕不要只打入數字或是負面語, 以及避免過於普通的詢問.</text>
+			<text>This search is poorly formatted, and may not function correctly. 
+			Searches should include several terms where possible, and should specify a schema 
+			(file type). Furthermore, searches must not be limited to numbers or negative
+			terms only, and you should avoid overly general queries.</text>
 			<newline gap="8"/>
-			<text>幾乎所有在網路上的客戶端會忽略來自於其他人搜尋所有的 MP3 檔, 因為這樣子不夠明確, 而且會產生太多搜尋結果.</text>
+			<text>Most clients on the network will ignore a search for all MP3 files, for example, 
+			because it is not specific enough, and would generate too many results.</text>
 		</document>
 		<document name="SearchHelp.BadSearch2">
 			<text format="b">請重新修改搜尋字眼(1)</text>
 			<newline gap="8"/>
-			<text>這個搜尋無法正確進行, 因為沒有包含足夠的關鍵字. 想要開始搜尋, 您最少需要輸入一些有效的字母或是文字.</text>
+			<text>This search does not contain enough terms to function properly. All searches need
+			a minimum number of valid, alphabetic characters to be able to start.</text>
 			<newline gap="8"/>
-			<text>雖然您可以搜尋通用的檔案副檔名/延伸檔名(以及數字), 但是您也要一併輸入其他的關鍵字. Shareaza 在搜尋時忽略標點符號與萬用字元, 只使用您鍵入的文字.</text>
+			<text>While common file extensions (and numbers) can be searched for, you must enter
+			other terms as well when creating the search. Punctuation and wildcards are not used 
+			in searches, just the text you enter.</text>
 		</document>
 		<document name="SearchHelp.BadSearch3">
 			<text format="b">請重新修改搜尋字眼(1)</text>
 			<newline gap="8"/>
-			<text>這個搜尋僅僅包含通用檔案延伸 (副檔名), 或是不可用來搜尋的字眼.</text>
+			<text>This search seems to contain only common file extensions, or no searchable
+			words.</text>
 			<newline gap="8"/>
-			<text>如果您進行搜尋時發生困難, 請記得網際網路搜尋也是這樣運作的. 最好使用特定單字或詞語, 像是獨一無二的名稱, 標題, 或是關鍵字.</text>
+			<text>If you are having trouble creating searches, keep in mind that it's quite similar
+			to a web search. Specific terms or phrases are best- Unique names, titles and
+			keywords.</text>
 			<newline gap="8"/>
-			<text>過於一般性的單字可能無法有效率地搜尋, 加上可能降低搜尋效能, 引起搜尋時大量頻寬的消耗.</text>
+			<text>General terms cannot be searched for efficiently and may result in poor
+			search performance, as well as high bandwidth use during searches.</text>
 			<newline gap="8"/>
 			<text>在 Shareaza 官方網站可以找到相關說明.</text>
 		</document>
 		<document name="SearchHelp.AdultSearch">
 			<text format="b">無法開始進行這個搜尋動作</text>
 			<newline gap="8"/>
-			<text>您指定的搜尋字眼可能找到大量的成人內容, 而且在設定裡已經被停用了. 您應該重新修改字眼, 或是停用這個過濾.</text>
+			<text>The specified search would probably return a large number of results with adult 
+			content, and this has been turned off in the settings. You should either re-phrase the 
+			search, or disable the filter.</text>
 			<newline gap="8"/>
-			<text>想要停用過濾的話, 請到工具 &gt; 設定 &gt; 一般, 然後取消勾選成人內容過濾.</text>
+			<text>To disable the filter, go into Tools &gt; Settings &gt; General and uncheck the
+			adult content filter.</text>
 		</document>
 		<!-- Share help documents -->
 		<document name="ShareHelp.AlreadyShared">
@@ -2252,9 +2312,13 @@
 		<document name="ShareHelp.BadShare">
 			<text format="b">您不應該分享這個資料夾</text>
 			<newline gap="8"/>
-			<text>這個資料夾本身是(或是含有) 系統資料夾. 不建議您分享這個資料夾, 因為大部份的檔案對其他人來說毫無用處.</text>
+			<text>This folder is (or contains) a system folder. Sharing this folder is not
+			recommended, since most of the files in it are of no use to other people.</text>
 			<newline gap="8"/>
-			<text>Windows, Program Files, 或是其他類似的資料夾都不含任何適合分享的檔案. 所有您想要分享的檔案應該置於這些資料夾的子資料夾的</text><text format="i">裡面</text><text>Shareaza '未完成' 資料夾不應該放在收藏裡與其他人分享, 因為為正在進行的下載切細可能影響效能.</text>
+			<text>Folders such as the Windows directory, Program Files, and similar folders
+			do not usually contain files suitable for sharing. Any files of interest would be in
+			sub-folders located</text><text format="i">裡面</text><text>these folders.
+			Please share those instead.</text>
 			<newline gap="8"/>
 			<text>The Shareaza 'incomplete' folder should also not be shared through the
 			library, since attempting to hash downloads in progress may impact on performance.</text>
@@ -2263,18 +2327,18 @@
 	<!-- Localised Command Tip Text. The "message" is displayed in the status bar, while the "tip" is shown in a tooltip -->
 	<commandTips>
 		<tip id="AFX_IDS_APP_TITLE" message="Shareaza"/>
-		<tip id="AFX_IDS_IDLEMESSAGE" message="就緒..."/>
+		<tip id="AFX_IDS_IDLEMESSAGE" message="Ready"/>
 		<tip id="AFX_IDS_MDICHILD" message="Activate this window"/>
-		<tip id="AFX_IDS_PREVIEW_CLOSE" message="Close print preview mode" tip="預覽"/>
-		<tip id="AFX_IDS_SCCLOSE" message="放大活躍中的視窗填滿這個視窗."/>
-		<tip id="AFX_IDS_SCMAXIMIZE" message="放大活躍中的視窗填滿這個視窗."/>
+		<tip id="AFX_IDS_PREVIEW_CLOSE" message="Close print preview mode" tip="Cancel Preview"/>
+		<tip id="AFX_IDS_SCCLOSE" message="Close the active window and prompts to save the documents"/>
+		<tip id="AFX_IDS_SCMAXIMIZE" message="Enlarge the window to full size"/>
 		<tip id="AFX_IDS_SCMINIMIZE" message="Reduce the window to an icon"/>
 		<tip id="AFX_IDS_SCMOVE" message="Change the window position"/>
 		<tip id="AFX_IDS_SCNEXTWINDOW" message="Switch to the next document window"/>
 		<tip id="AFX_IDS_SCPREVWINDOW" message="Switch to the previous document window"/>
 		<tip id="AFX_IDS_SCRESTORE" message="Restore the window to normal size"/>
 		<tip id="AFX_IDS_SCSIZE" message="Change the window size"/>
-		<tip id="AFX_IDS_SCTASKLIST" message="活動中"/>
+		<tip id="AFX_IDS_SCTASKLIST" message="Activate Task List"/>
 		<tip id="ID_BROWSE_FILES" message="檢視使用者分享的檔案"/>
 		<tip id="ID_BROWSE_LAUNCH" message="瀏覽選擇的使用者的個人檔案與分享的檔案."/>
 		<tip id="ID_BROWSE_PROFILE" message="瀏覽使用者的個人檔案"/>
@@ -2297,7 +2361,7 @@
 		<tip id="ID_CHILD_RESTORE" message="開啟選擇的視窗."/>
 		<tip id="ID_DISCOVERY_ADD" message="新增一個新的揭示服務..."/>
 		<tip id="ID_DISCOVERY_ADVERTISE" message="Advertise the selected GWebCache service to a random existing GWebCache."/>
-		<tip id="ID_DISCOVERY_BLOCKED" message="在揭示視窗顯示 Gweb 快取服務."/>
+		<tip id="ID_DISCOVERY_BLOCKED" message="Show blocked services in the Discovery window."/>
 		<tip id="ID_DISCOVERY_BROWSE" message="Browse statistics for the selected GWebCache service on the Web."/>
 		<tip id="ID_DISCOVERY_EDIT" message="檢視選擇的揭示服務的屬性."/>
 		<tip id="ID_DISCOVERY_GNUTELLA" message="在揭示視窗顯示 bootstrap 服務."/>
@@ -2345,7 +2409,7 @@
 		<tip id="ID_DOWNLOADS_SHOW_SOURCES" message="顯示目前沒有用到的來源."/>
 		<tip id="ID_DOWNLOADS_SOURCES" message="為選擇的下載搜尋更多的來源."/>
 		<tip id="ID_DOWNLOADS_URL" message="將來源的 URL 新增至選擇的下載..."/>
-		<tip id="ID_DOWNLOADS_VIEW_REVIEWS" message="檢視選擇的下載的評論"/>
+		<tip id="ID_DOWNLOADS_VIEW_REVIEWS" message="View reviews for the selected download."/>
 		<tip id="ID_HELP_ABOUT" message="顯示 Shareaza 關於對話框..."/>
 		<tip id="ID_HELP_CODEC" message="各行各樣的 codec 與視訊問題."/>
 		<tip id="ID_HELP_FAQ" message="檢視 Shareaza 常見答客問."/>
@@ -2356,7 +2420,7 @@
 		<tip id="ID_HELP_SECURITY" message="幫助您保護系統, 抵擋惡意程式."/>
 		<tip id="ID_HELP_TEST" message="Run the connection test."/>
 		<tip id="ID_HELP_UPDATE" message="查看最新消息與更新檔."/>
-		<tip id="ID_HELP_VERSION_CHECK" message="最新消息"/>
+		<tip id="ID_HELP_VERSION_CHECK" message="Check for new version"/>
 		<tip id="ID_HELP_WEB_1" message="瀏覽這個網站"/>
 		<tip id="ID_HELP_WEB_2" message="瀏覽這個網站"/>
 		<tip id="ID_HELP_WEB_3" message="瀏覽這個網站"/>
@@ -2366,7 +2430,7 @@
 		<tip id="ID_HITMONITOR_CLEAR" message="清除 搜尋回應監視器 的緩衝."/>
 		<tip id="ID_HITMONITOR_PAUSE" message="暫停 搜尋回應監視器."/>
 		<tip id="ID_HITMONITOR_SEARCH" message="以選擇的詞句搜尋網路"/>
-		<tip id="ID_HOSTCACHE_BT_CACHE" message="顯示 BitTorrent 上傳."/>
+		<tip id="ID_HOSTCACHE_BT_CACHE" message="Show BitTorrent cached hosts."/>
 		<tip id="ID_HOSTCACHE_CONNECT" message="連線至選擇的主機."/>
 		<tip id="ID_HOSTCACHE_DC_CACHE" message="Show DC++ cached hubs."/>
 		<tip id="ID_HOSTCACHE_DISCONNECT" message="與選擇的鄰居中斷連線."/>
@@ -2376,10 +2440,10 @@
 		<tip id="ID_HOSTCACHE_G2_CACHE" message="顯示 Gnutella2 已快取的主機."/>
 		<tip id="ID_HOSTCACHE_G2_HORIZON" message="顯示 Gnutella2 horizon hubs."/>
 		<tip id="ID_HOSTCACHE_IMPORT" message="匯入已知主機清單, 像是 &quot;server.met&quot; 檔..."/>
-		<tip id="ID_HOSTCACHE_KAD_CACHE" message="顯示 Gnutella1 已快取的主機."/>
+		<tip id="ID_HOSTCACHE_KAD_CACHE" message="Show Kademlia cached hosts."/>
 		<tip id="ID_HOSTCACHE_PRIORITY" message="請優先連線至這個伺服器."/>
 		<tip id="ID_HOSTCACHE_REMOVE" message="從主機快取移除選擇的主機."/>
-		<tip id="ID_IMPORT_DOWNLOADS" message="分享新進的部份檔下載"/>
+		<tip id="ID_IMPORT_DOWNLOADS" message="Import eMule partial downloads..."/>
 		<tip id="ID_LIBRARY_ADD" message="新增一個資料夾至您的收藏..."/>
 		<tip id="ID_LIBRARY_ALBUM_DELETE" message="刪除選擇的專輯資料夾."/>
 		<tip id="ID_LIBRARY_ALBUM_OPEN" message="開啟選擇的專輯資料夾."/>
@@ -2409,7 +2473,7 @@
 		<tip id="ID_LIBRARY_REBUILD" message="為選擇的資料夾或是檔案重建解釋資料."/>
 		<tip id="ID_LIBRARY_REBUILD_ANSI" message="使用其他語言重建解釋資料."/>
 		<tip id="ID_LIBRARY_REFRESH" message="重新整理我的收藏."/>
-		<tip id="ID_LIBRARY_REFRESH_METADATA" message="_Refresh Metadata"/>
+		<tip id="ID_LIBRARY_REFRESH_METADATA" message="Refresh file metadata"/>
 		<tip id="ID_LIBRARY_REMOVE" message="移除選擇的分享的資料夾."/>
 		<tip id="ID_LIBRARY_RENAME" message="重新命名選擇的檔案 in-place."/>
 		<tip id="ID_LIBRARY_SCAN" message="掃瞄選擇的資料夾或檔案, 偵測變動的地方."/>
@@ -2447,7 +2511,7 @@
 		<tip id="ID_MEDIA_PAUSE" message="暫停播放多媒體檔案." tip="暫停"/>
 		<tip id="ID_MEDIA_PLAY" message="停止播放目前的多媒體檔案." tip="播放"/>
 		<tip id="ID_MEDIA_PLAYLIST" message="顯示或隱藏播放清單編輯器."/>
-		<tip id="ID_MEDIA_POSITION" message="跳躍至這個多媒體檔案的一處" tip="跳躍:"/>
+		<tip id="ID_MEDIA_POSITION" message="Seek to a position in the media file." tip="Seek"/>
 		<tip id="ID_MEDIA_PREVIOUS" message="回到這個播放清單的上一個檔案." tip="上一個檔案"/>
 		<tip id="ID_MEDIA_PROPERTIES" message="View and edit the properties of the selected files."/>
 		<tip id="ID_MEDIA_RANDOM" message="開關目前的播放清單的隨機模式."/>
@@ -2462,15 +2526,15 @@
 		<tip id="ID_MEDIA_SIZE_ONE" message="以原始大小顯示這個視訊."/>
 		<tip id="ID_MEDIA_SIZE_THREE" message="以兩倍的原始大小的顯示這個視訊."/>
 		<tip id="ID_MEDIA_SIZE_TWO" message="以三倍的原始大小顯示這個視訊."/>
-		<tip id="ID_MEDIA_SPEED" message="調整多媒體檔案的播放速度" tip="速度"/>
+		<tip id="ID_MEDIA_SPEED" message="Adjust the speed of the media file." tip="速度"/>
 		<tip id="ID_MEDIA_STATUS" message="顯示或隱藏多媒體狀態列."/>
 		<tip id="ID_MEDIA_STOP" message="停止播放多媒體檔案." tip="停止"/>
 		<tip id="ID_MEDIA_VIS" message="選擇一個音訊視覺效果外掛..."/>
-		<tip id="ID_MEDIA_VOLUME" message="調整音訊音量" tip="音量:"/>
+		<tip id="ID_MEDIA_VOLUME" message="Adjust the audio volume." tip="Volume"/>
 		<tip id="ID_MEDIA_ZOOM" message="調整視訊縮放與比例設定."/>
 		<tip id="ID_MONITOR_CLOSE" message="關閉監控視窗."/>
 		<tip id="ID_MUSICBRAINZ_ALBUMS" message="Look at all albums for this artist."/>
-		<tip id="ID_MUSICBRAINZ_MATCHES" message="搜尋選擇的檔案的複製件."/>
+		<tip id="ID_MUSICBRAINZ_MATCHES" message="Search for albums matching the selected file."/>
 		<tip id="ID_NEIGHBOURS_CHAT" message="與選擇的使用者開啟聊天會期."/>
 		<tip id="ID_NEIGHBOURS_COPY" message="Copy a URI to access the selected host."/>
 		<tip id="ID_NEIGHBOURS_DISCONNECT" message="與選擇的鄰居中斷連線."/>
@@ -2481,7 +2545,7 @@
 		<tip id="ID_NETWORK_AUTO_CLOSE" message="在傳輸完成後自動關閉 Shareaza."/>
 		<tip id="ID_NETWORK_BROWSE_TO" message="瀏覽一位使用者, 顯示他們的個人檔案與分享的檔案..."/>
 		<tip id="ID_NETWORK_BT" message="Connect to the BitTorrent network."/>
-		<tip id="ID_NETWORK_CHAT_TO" message="與選擇的使用者開啟聊天會期."/>
+		<tip id="ID_NETWORK_CHAT_TO" message="Open a chat session with a user..."/>
 		<tip id="ID_NETWORK_CONNECT" message="連線至網路."/>
 		<tip id="ID_NETWORK_CONNECT_TO" message="手動連線至主機..."/>
 		<tip id="ID_NETWORK_DC" message="Connect to the DC++ network."/>
@@ -2491,14 +2555,14 @@
 		<tip id="ID_NETWORK_G1" message="連線至原始的 Gnutella 網路."/>
 		<tip id="ID_NETWORK_G2" message="連縣至 Gnutella2 網路 (強烈建議)."/>
 		<tip id="ID_NETWORK_SEARCH" message="在這個網路上開始新的搜尋..."/>
-		<tip id="ID_NEXT_PANE" message="Switch to the next window pane" tip="下一位"/>
+		<tip id="ID_NEXT_PANE" message="Switch to the next window pane" tip="Next Pane"/>
 		<tip id="ID_OPEN_DOWNLOADS_FOLDER" message="Open my folder of completed Downloads"/>
-		<tip id="ID_PREV_PANE" message="回到這個播放清單的上一個檔案." tip="上一個檔案"/>
-		<tip id="ID_SCHEDULER_ACTIVATE" message="從清單清除選擇的上傳."/>
+		<tip id="ID_PREV_PANE" message="Switch back to the previous window pane" tip="Previous Pane"/>
+		<tip id="ID_SCHEDULER_ACTIVATE" message="Activates selected task(s) from the list."/>
 		<tip id="ID_SCHEDULER_ADD" message="Adds a new task to scheduler list."/>
-		<tip id="ID_SCHEDULER_DEACTIVATE" message="請選擇使用者介面:"/>
-		<tip id="ID_SCHEDULER_EDIT" message="編輯選擇的安全性規則..."/>
-		<tip id="ID_SCHEDULER_REMOVE" message="由清單移除選擇的下載."/>
+		<tip id="ID_SCHEDULER_DEACTIVATE" message="Deactivates selected tasks."/>
+		<tip id="ID_SCHEDULER_EDIT" message="Edit the selected task..."/>
+		<tip id="ID_SCHEDULER_REMOVE" message="Removes selected task(s) from the list."/>
 		<tip id="ID_SCHEDULER_REMOVE_ALL" message="Removes all scheduled tasks."/>
 		<tip id="ID_SEARCH_CHAT" message="與選擇的使用者開啟聊天會期."/>
 		<tip id="ID_SEARCH_CLEAR" message="清除搜尋結果."/>
@@ -2535,11 +2599,11 @@
 		<tip id="ID_SYSTEM_COPY" message="Copy selected line(s) of status log."/>
 		<tip id="ID_SYSTEM_TIMESTAMP" message="為每一列附上時間郵戳."/>
 		<tip id="ID_SYSTEM_VERBOSE" message="顯示詳細系統活動記錄."/>
-		<tip id="ID_SYSTEM_VERBOSE_DEBUG" message="顯示圖解."/>
-		<tip id="ID_SYSTEM_VERBOSE_ERROR" message="顯示圖解."/>
-		<tip id="ID_SYSTEM_VERBOSE_INFO" message="顯示格線."/>
+		<tip id="ID_SYSTEM_VERBOSE_DEBUG" message="Display all."/>
+		<tip id="ID_SYSTEM_VERBOSE_ERROR" message="Display errors only."/>
+		<tip id="ID_SYSTEM_VERBOSE_INFO" message="Display infos and above."/>
 		<tip id="ID_SYSTEM_VERBOSE_NOTICE" message="Display notices and above."/>
-		<tip id="ID_SYSTEM_VERBOSE_WARNING" message="顯示格線."/>
+		<tip id="ID_SYSTEM_VERBOSE_WARNING" message="Display warnings and above."/>
 		<tip id="ID_TAB_CONNECT" message="由網路連線或是中斷連線."/>
 		<tip id="ID_TAB_HOME" message="回到 Shareaza 主頁"/>
 		<tip id="ID_TAB_IRC" message="Show the IRC Chat window."/>
@@ -2590,7 +2654,7 @@
 		<tip id="ID_VIEW_NEIGHBOURS" message="顯示或隱藏 我的鄰居視窗."/>
 		<tip id="ID_VIEW_PACKETS" message="顯示或隱藏封包傾印視窗."/>
 		<tip id="ID_VIEW_RESULTS_MONITOR" message="顯示或隱藏 搜尋回應監視器 視窗."/>
-		<tip id="ID_VIEW_SCHEDULER" message="顯示或隱藏安全性視窗."/>
+		<tip id="ID_VIEW_SCHEDULER" message="Show or hide SCHEDULER window."/>
 		<tip id="ID_VIEW_SEARCH_MONITOR" message="顯示或隱藏 SEARCH MONITOR 視窗."/>
 		<tip id="ID_VIEW_SECURITY" message="顯示或隱藏安全性視窗."/>
 		<tip id="ID_VIEW_SYSTEM" message="顯示或隱藏系統視窗."/>
@@ -2752,7 +2816,7 @@
 		<string id="8239" value="完成"/>
 		<string id="8240" value="Shareaza 正在移動下載:"/>
 		<string id="8241" value="Shareaza 正在檢查檔案是否有錯誤:"/>
-		<string id="8243" value="上傳區域"/>
+		<string id="8243" value="Upload ratio:"/>
 		<string id="8244" value="評論的數量:"/>
 		<string id="8288" value="探勘你的 Shareaza 收藏中?"/>
 		<string id="8289" value="探勘中 "/>
@@ -2795,7 +2859,7 @@
 		<string id="8335" value="這個檔案的來源受到防火牆保護"/>
 		<string id="8336" value="這個檔案的來源可能不穩定"/>
 		<string id="8337" value="不可靠的"/>
-		<string id="8338" value="Created:"/>
+		<string id="8338" value="Free:"/>
 		<string id="13000" value="Are you sure you want to delete the selected security rules? This cannot be undone."/>
 		<string id="13001" value="Files shared over the Internet"/>
 		<string id="16063" value="UPnP port mapping failed after 10 attempts."/>
@@ -2815,7 +2879,7 @@
 		<string id="16077" value="位址 %s 已經被您設定的安全性規則封鎖了."/>
 		<string id="16078" value="已新增一個安全性規則用來封鎖 %s."/>
 		<string id="16079" value="您要中斷連線嗎?"/>
-		<string id="16080" value="您還尚未連線至網路."/>
+		<string id="16080" value="Would you like to always connect to this network?"/>
 		<string id="16081" value="正在傳送 &quot;%s&quot; 的詢問至 %s."/>
 		<string id="16083" value="強迫您的電腦進入結點模式可能對 P2P 網路與效能有害. 讓Shareaza 自行決定是否進入結點模式為上上之策.\n\n 結點模式不會產生更好的搜尋結果, 或是給您任何優勢.\n\n您要不顧這些不利的條件, 繼續此動作嗎?"/>
 		<string id="16085" value="Gnutella2 是 Shareaza's 首次推出的網路. 停用對它的支援將可能嚴重影響搜尋結果的數量與品質. 您確定要這樣做嗎?"/>
@@ -2940,7 +3004,7 @@
 		<string id="16326" value="上傳主機 %s 要求了 &quot;%s&quot; 有著不同的SHA1."/>
 		<string id="16327" value="正在拒絕上傳 &quot;%s&quot; 至 %s (%s), 因為忙錄, 以及客戶端不支援排隊."/>
 		<string id="16328" value="與 %s 的推播連線已建立, 等待信號交換中..."/>
-		<string id="16329" value="無法開啟 &quot;%s&quot; 以上傳至主機 %s, 磁碟/檔案錯誤."/>
+		<string id="16329" value="Can't open &quot;%s&quot; to upload to host %s due to disk or file error."/>
 		<string id="16330" value="正在傳送上傳內容, 範圍 %I64i-%I64i 從 &quot;%s&quot; 至主機 %s (%s)."/>
 		<string id="16331" value="已完成上傳 &quot;%s&quot; 的 part 至 %s."/>
 		<string id="16332" value="來自於 %s 的輸入連線是 HTTP 上傳要求."/>
@@ -2991,7 +3055,7 @@
 		<string id="16377" value="HTTP Guard"/>
 		<string id="16378" value="Host &quot;%s&quot; sent a 416, without providing available ranges. Closing connection."/>
 		<string id="16379" value="Library Files"/>
-		<string id="16380" value="eDonkey Guard"/>
+		<string id="16380" value="DC++ Guard"/>
 		<string id="16384" value="您確定要執行檔案: &quot;%s&quot; ?\n\n 有些檔案可能對您的檔案造成損害.  執行本檔案前請確定其內容為何."/>
 		<string id="16385" value="您即將修改這個檔案的解釋資料: %i , 您要繼續嗎?"/>
 		<string id="16386" value="正在編輯檔案 %i 的解釋資料."/>
@@ -3047,8 +3111,8 @@
 		<string id="16525" value="Gnutella 封包 Routed"/>
 		<string id="16526" value="Gnutella 封包已忽略"/>
 		<string id="16527" value="Gnutella 封包已丟失"/>
-		<string id="16528" value="Gnutella 本地詢問"/>
-		<string id="16529" value="Gnutella 本地詢問"/>
+		<string id="16528" value="Gnutella Incoming Queries"/>
+		<string id="16529" value="Gnutella Processed Queries"/>
 		<string id="16532" value="總計 TCP 接收頻寬"/>
 		<string id="16533" value="總計 TCP 傳送頻寬"/>
 		<string id="16534" value="總計 UDP 接收頻寬"/>
@@ -3178,7 +3242,7 @@
 		<string id="17128" value="eDonkey2000 伺服器"/>
 		<string id="17129" value="eDonkey2000 (低 ID)"/>
 		<string id="17130" value="eDonkey2000 (高 ID)"/>
-		<string id="17131" value="Connection"/>
+		<string id="17131" value="DC++ Hub Connection"/>
 		<string id="17216" value="正在啟始連線至 eDonkey2000 伺服器於 %s..."/>
 		<string id="17217" value="已連線至 eDonkey2000 伺服器 %s, 信號交換中..."/>
 		<string id="17218" value="ED2K[%s] %s"/>
@@ -3219,7 +3283,7 @@
 		<string id="17477" value="與 %s 的 BitTorrent 耦合 回應了錯誤的檔案."/>
 		<string id="17478" value="與 %s 的BitTorrent 耦合 要求了一個未知的檔案."/>
 		<string id="17479" value="與 %s 的BitTorrent 耦合 已經為 &quot;%s&quot; 建立."/>
-		<string id="17480" value="與 %s 的BitTorrent 耦合 要求了一個未知的檔案."/>
+		<string id="17480" value="BitTorrent coupling with %s requested an inactive file."/>
 		<string id="17481" value="已收到 BitTorrent descriptor 檔: &quot;%s&quot;"/>
 		<string id="17482" value="無法解析預先取得的 BitTorrent 檔 &quot;%s&quot;."/>
 		<string id="17483" value="BitTorrent 伺服器 (Tracker) 傳回錯誤: &quot;%s&quot; : &quot;%s&quot;."/>
@@ -3233,13 +3297,13 @@
 		<string id="17491" value="Torrent &quot;%s&quot; 已存在你的下載清單, 而且不能被做種."/>
 		<string id="17492" value="載入此 torrent 檔時發生錯誤: &quot;%s&quot;. 這個 torrent 檔可能是無效的."/>
 		<string id="17493" value="無法製作 BitTorrent 分享檔 &quot;%s&quot;."/>
-		<string id="17494" value="這個 torrent 內含檔案 &quot;%s&quot;, 不過 Shareaza 在收藏中找不到這個檔案.  可能的話, 將這個檔案與 torrent 檔置於同一個資料夾並重試."/>
+		<string id="17494" value="This torrent includes the file &quot;%s&quot;, but Shareaza cannot find this file in your library. If possible, move the file to a shared folder and try again."/>
 		<string id="17495" value="這個 torrent 包含檔案 &quot;%s&quot; 但是應該為 %s, 不過您的檔案版本應為 %s."/>
 		<string id="17496" value="在複製 &quot;%s&quot; 至一個 BitTorrent 的分享檔時發生錯誤."/>
 		<string id="17497" value="嘗試做種 &quot;%s&quot; 時, 發生未知的錯誤."/>
 		<string id="17498" value="在這個檔案發現錯誤: &quot;%s&quot;."/>
 		<string id="17501" value="無法與伺服器(Tracker)通訊"/>
-		<string id="17503" value="伺服器 (Tracker) 連線失敗- 正在嘗試下一個伺服器(Tracker) (%i of %i)"/>
+		<string id="17503" value="Trying next tracker (%i of %i)"/>
 		<string id="17505" value="至 %s 的 BitTorrent 連線已忽略."/>
 		<string id="17506" value="與 %s 的 BitTorrent 信號交換已忽略."/>
 		<string id="17507" value="與 %s 的 BitTorrent 耦合已忽略."/>
@@ -3261,16 +3325,16 @@
 		<string id="18509" value="您無法假定這個下載已完成並且重新驗證, 因為你還沒有持有任何部分驗證資料, 像是 tiger-tree volume, eDonkey hashset 或 BitTorrent hashset. 在沒有驗證資訊的情況下將不能重新驗證下載."/>
 		<string id="18510" value="您要假設這個下載是完整的並重新驗證嗎? 我們會檢視整個檔案; Shareaza 會接受通過驗證的部分並重新下載驗證失敗的部分."/>
 		<string id="18511" value="您已經改變檔案大小. 確定要改變這個下載的檔案大小嗎?"/>
-		<string id="18512" value="您確定取消/放棄這個群組裡所有的下載嗎?"/>
-		<string id="18513" value="您鍵入的 eDonkey2000 切細值無效. 請檢查後再試一次."/>
-		<string id="18514" value="您提供的 SHA1 切細值不同於這個下載的切細值. 您現在確定要更改 SHA1 切細嗎?"/>
+		<string id="18512" value="Are you sure you want to cancel this download but save incomplete file(s)?"/>
+		<string id="18513" value="You have typed an %s hash value, however it is invalid. Please check it and try again."/>
+		<string id="18514" value="You have provided an %s hash value which is different to the one currently associated with this download. Are you sure you want to change the %s hash now?"/>
 		<string id="18515" value="The selected download item currently has some Task attached, please wait and do it later."/>
 		<string id="19000" value="遠端操控已經停用"/>
 		<string id="19001" value="您必須選擇一個使用者名稱與密碼"/>
 		<string id="19002" value="無法接受連線, 沒有可用的URL."/>
 		<string id="19103" value="Welcome to Shareaza Chat!"/>
 		<string id="19104" value="Please respect others while using this service"/>
-		<string id="19105" value="IRC"/>
+		<string id="19105" value="Chat!"/>
 		<string id="20000" value="沒有可用的 URN"/>
 		<string id="20001" value="关闭"/>
 		<string id="20002" value="之"/>
@@ -3345,28 +3409,28 @@
 		<string id="20242" value="Try Again"/>
 		<string id="20243" value="Continue"/>
 		<string id="20244" value="&amp;Remember my selection next time"/>
-		<string id="20245" value="新增資料夾..."/>
+		<string id="20245" value="New Folder"/>
 		<string id="20246" value="Command-line options:\n\n-tray : Disable startup splash screen and send application to tray\n-nosplash : Disable startup splash screen\n-nowarn : Disable alpha (daily builds) version warning dialog\n-wait : Wait for other application instance exit\n\nInterface modes:\n\n-basic : Start application in Basic interface mode\n-tabbed : Start application in Tabbed interface mode\n-windowed : Start application in Windowed interface mode\n\nSystem options:\n\n-RegServer : Register internal components for everyone\n-UnRegServer : Un-register internal components for everyone\n-RegServerPerUser : Register internal components for current user\n-UnRegServerPerUser : Un-register internal components for current user"/>
 		<string id="20247" value="Failed to load metadata schemas. Please reinstall application."/>
-		<string id="20248" value="您還沒有具體指定任何要分享的資料夾. 您確定要這樣做嗎?"/>
+		<string id="20248" value="You selected %u files. Are you sure?"/>
 		<string id="20249" value="Off"/>
 		<string id="20250" value="Low"/>
-		<string id="20251" value="標準模式"/>
+		<string id="20251" value="Normal"/>
 		<string id="20252" value="High"/>
 		<string id="20253" value="Skin load error: %s. Element: %s"/>
 		<string id="20254" value="Loading skin: %s"/>
-		<string id="20255" value="您確定要刪除 &quot;%s&quot; 外觀嗎?  這個動作將不能回復."/>
-		<string id="20256" value="離開 Shareaza"/>
-		<string id="20257" value="頻寬:"/>
+		<string id="20255" value="Are you sure you want to remove all scheduled tasks? This cannot be undone."/>
+		<string id="20256" value="System: Start Shareaza"/>
+		<string id="20257" value="Bandwidth: Full Speed"/>
 		<string id="20258" value="Bandwidth: Reduced Speed"/>
-		<string id="20259" value="頻寬:"/>
-		<string id="20260" value="離開 Shareaza"/>
+		<string id="20259" value="Bandwidth: Stop"/>
+		<string id="20260" value="System: Exit Shareaza"/>
 		<string id="20261" value="System: Disconnect Dial-up Connection"/>
 		<string id="20262" value="System: Turn Off the Computer"/>
 		<string id="20263" value="活動中"/>
 		<string id="20264" value="不在活躍中"/>
-		<string id="20265" value="無"/>
-		<string id="20266" value="評分"/>
+		<string id="20265" value="Done"/>
+		<string id="20266" value="Waiting..."/>
 		<string id="20267" value="No Tasks Currently Scheduled"/>
 	</strings>
 	<!-- Localised Dialog Text, the "cookie" verifies that the dialog matches the skin -->
@@ -3546,13 +3610,13 @@
 			<control/>
 		</dialog>
 		<dialog name="CDownloadsSettingsPage" cookie="BuEdBuBuStCoBuStEdmsStEdmsStEdmsBuStCoStCoBuBuEdBu" caption="下載">
-			<control caption="請將下載完成的檔案存放在這裡:"/>
+			<control caption="Save Completed Files Here"/>
 			<control/>
 			<control/>
 			<control caption="Scan every completed file with AntiVirus"/>
-			<control caption="選擇 preset:"/>
+			<control caption="Select AntiVirus:"/>
 			<control/>
-			<control caption="下載數量:"/>
+			<control caption="Number of Downloads"/>
 			<control caption="最多同時下載的檔案數:"/>
 			<control/>
 			<control/>
@@ -3562,13 +3626,13 @@
 			<control caption="每個檔案的下載連線數:"/>
 			<control/>
 			<control/>
-			<control caption="限制:"/>
+			<control caption="Limits"/>
 			<control caption="總計下載頻寬:"/>
 			<control/>
 			<control caption="最大排隊長度:"/>
 			<control/>
 			<control caption="只與您連線的網路下載與上傳."/>
-			<control caption="請將暫存的未完成檔案放在這裡:"/>
+			<control caption="Store Temporary Incomplete Files Here"/>
 			<control/>
 			<control/>
 		</dialog>
@@ -3626,10 +3690,10 @@
 		<dialog name="CGnutellaSettingsPage" cookie="BuBuCoBuBuCoEdmsEdmsEdmsEdmsEdmsEdmsBuBuBuBuStBuStStStBuStBuStStStBu" caption="Gnutella">
 			<control caption="Gnutella2 網路:"/>
 			<control caption="總是連線至 Gnutella2"/>
-			<control caption="這次連線至 Gnutella2"/>
+			<control caption="Optimal|Leaf|Hub"/>
 			<control caption="模式:"/>
-			<control caption="自動偵測|葉節點|結點"/>
-			<control caption="G2 連線:"/>
+			<control caption="Connect to Gnutella1 today"/>
+			<control caption="Optimal|Leaf|Ultrapeer"/>
 			<control/>
 			<control/>
 			<control/>
@@ -3643,7 +3707,7 @@
 			<control/>
 			<control/>
 			<control caption="模式:"/>
-			<control caption="自動|葉節點|超級用戶"/>
+			<control caption="Leaf to Hub"/>
 			<control caption="G1 連線:"/>
 			<control caption="Gnutella2 網路:"/>
 			<control caption="Mode: "/>
@@ -3892,7 +3956,7 @@
 			<control/>
 			<control/>
 			<control caption="_Vitals:"/>
-			<control caption="|男性|女性"/>
+			<control caption="Male|Female"/>
 			<control caption="性別:"/>
 			<control/>
 			<control caption="年齡:"/>
@@ -3968,8 +4032,8 @@
 		</dialog>
 		<dialog name="CLanguageDlg" cookie="" caption="選擇語言">
 		</dialog>
-		<dialog name="CConnectToDlg" cookie="BuCoEdBuCoBuBuBu" caption="連線至|瀏覽主機">
-			<control caption="起始新連線至主機或伺服器:|瀏覽這個主機:"/>
+		<dialog name="CConnectToDlg" cookie="BuCoEdBuCoBuBuBu" caption="Connect To|Browse User|Chat to User">
+			<control caption="Initiate a new connection to host or server:|Browse this user:|Chat to this user:"/>
 			<control/>
 			<control/>
 			<control caption="網路協定:"/>
@@ -4036,7 +4100,7 @@
 			<control caption="服務位址:"/>
 			<control/>
 			<control caption="揭示服務類型:"/>
-			<control caption="Gnutella Bootstrap|GWeb 快取|Server.met URL"/>
+			<control caption="Gnutella Bootstrap|G1 GWebCache|G2 GWebCache|G1/G2 GWebCache|Server.met URL|Blocked"/>
 			<control caption="確定"/>
 			<control caption="取消"/>
 		</dialog>
@@ -4226,7 +4290,7 @@
 			<control caption="您已經選擇將 %lu 檔案匯出至 Shareaza 驅動的 URI references.  請選擇 URI 的格式, 然後按下儲存:"/>
 			<control/>
 			<control caption="放入 Token:"/>
-			<control caption="Tiger Root|SHA1|MD5|ED2K (CMD4)|檔案名稱|檔案名稱 (URI)|Base Filename|File Extension|檔案大小|檔案大小 (位元組)|資料夾路徑|本地主機|本地連接埠"/>
+			<control caption="Tiger Root|SHA1|MD5|ED2K (CMD4)|BitTorrent|Filename|Filename (URI)|Base Filename|File Extension|File Size|File Size (bytes)|Folder Path|Local Host|Local Port|Link|Link (URI)"/>
 			<control caption="選擇 preset:"/>
 			<control caption="Magnet|eDonkey|Magnet HTML|eDonkey HTML"/>
 			<control caption="複製"/>
@@ -4396,13 +4460,13 @@
 			<control/>
 			<control/>
 			<control/>
-			<control caption="By:"/>
+			<control caption=" As needed| When ratio over 100%| Only when requested| Never"/>
 			<control/>
 			<control caption="備註:"/>
 			<control caption="名稱:"/>
 			<control caption="Created:"/>
 			<control caption="開始新的下載傳輸:"/>
-			<control caption=" 需要時| 比率達到 100% 時| 只有被要求時| 絕不"/>
+			<control caption="Comments:"/>
 			<control caption="Transfers:"/>
 			<control caption="總計上傳了:"/>
 			<control caption="備註:"/>
@@ -4415,7 +4479,7 @@
 			<control/>
 			<control/>
 			<control/>
-			<control caption="伺服器:"/>
+			<control caption="Disabled|Single Tracker|Multi-tracker|Multi-tracker (locked)"/>
 			<control caption="_Refresh"/>
 			<control/>
 			<control caption="已完成 (種子):"/>
@@ -4491,12 +4555,12 @@
 			<control/>
 			<control caption="Gnutella1"/>
 			<control caption="Gnutella2"/>
-			<control caption="eDonkey2000"/>
+			<control caption="eDoonkey2K"/>
 			<control caption="DC++"/>
 			<control caption="BitTorrent"/>
-			<control caption="選擇 preset:"/>
-			<control caption="在限制之下 幾 % 的頻寬"/>
-			<control caption="在限制之下 幾 % 的頻寬"/>
+			<control caption="Select the event type:"/>
+			<control caption="% of _download under limit"/>
+			<control caption="% of _upload under limit"/>
 			<control caption="網路"/>
 			<control caption="頻寬"/>
 		</dialog>
@@ -4641,8 +4705,8 @@
 		</list>
 		<list name="CSchedulerWnd">
 			<column from="Action" to="動作"/>
-			<column from="Trigger" to="TigerTree"/>
-			<column from="Next Run" to="下一個"/>
+			<column from="Trigger" to="Trigger"/>
+			<column from="Next Run" to="NextRun"/>
 			<column from="Active" to="活動中"/>
 			<column from="Status" to="狀態"/>
 			<column from="Description" to="敘述"/>

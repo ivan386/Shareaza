@@ -1201,14 +1201,14 @@
 			<item id="ID_LIBRARY_FOLDER_FILE_PROPERTIES" text="Egenskaper"/>
 		</menu>
 		<menu name="CLibraryTree.Virtual.Basic">
-			<item id="ID_LIBRARY_FOLDER_ENQUEUE" text="Spill av..."/>
+			<item id="ID_LIBRARY_FOLDER_ENQUEUE" text="Play _Album"/>
 			<item id="ID_LIBRARY_FOLDER_DELETE" text="Slett"/>
 			<separator/>
 			<item id="ID_LIBRARY_FOLDER_FILE_PROPERTIES" text="Egenskaper"/>
-			<item id="ID_LIBRARY_FOLDER_PROPERTIES" text="Egenskaper"/>
+			<item id="ID_LIBRARY_FOLDER_PROPERTIES" text="Album _Properties"/>
 		</menu>
 		<menu name="CLibraryTree.Virtual">
-			<item id="ID_LIBRARY_FOLDER_ENQUEUE" text="Spill av..."/>
+			<item id="ID_LIBRARY_FOLDER_ENQUEUE" text="Play _Album"/>
 			<item id="ID_LIBRARY_FOLDER_DELETE" text="Slett"/>
 			<separator/>
 			<item id="ID_LIBRARY_REBUILD" text="Oppdater"/>
@@ -1217,7 +1217,7 @@
 			<item id="ID_LIBRARY_FOLDER_NEW" text="Ny mappe..."/>
 			<separator/>
 			<item id="ID_LIBRARY_FOLDER_FILE_PROPERTIES" text="Egenskaper"/>
-			<item id="ID_LIBRARY_FOLDER_PROPERTIES" text="Egenskaper"/>
+			<item id="ID_LIBRARY_FOLDER_PROPERTIES" text="Album _Properties"/>
 		</menu>
 		<!-- LIBRARY VIEWS -->
 		<menu name="CLibraryTileView">
@@ -1296,7 +1296,7 @@
 		<menu name="CLibraryFileView.Virtual.Basic">
 			<item id="ID_LIBRARY_LAUNCH" text="Åpne eller spill av"/>
 			<item id="ID_LIBRARY_ENQUEUE" text="Legg til spilleliste"/>
-			<item id="ID_LIBRARY_FOLDER_ENQUEUE" text="Spill av..."/>
+			<item id="ID_LIBRARY_FOLDER_ENQUEUE" text="Play _Album"/>
 			<separator/>
 			<item id="ID_LIBRARY_SHARED_FILE" text="Delt"/>
 			<separator/>
@@ -1700,7 +1700,8 @@
 				<icon res="252" width="32" height="32"/><gap size="8"/>
 				<heading align="middle">M O D I F I S E R   S H A R E A Z A</heading>
 				<newline gap="8" indent="42"/>
-				<text colour="FF0000">To open the folder with your downloads</text>
+				<text colour="FF0000">Shareaza has detected that you are behind a NAT router or firewall,
+				and are unable to receive connections from the Internet.  </text>
 				<text colour="FF0000" format="b"> - Endre Shareaza's utseende</text>
 				<newline gap="6"/>
 				<link target="raza:command:ID_HELP_ROUTER">Innstillingsveiviser</link>
@@ -1710,7 +1711,8 @@
 				<icon res="252" width="32" height="32"/><gap size="8"/>
 				<heading align="middle">M I N E   N E D L A S T I N G E R</heading>
 				<newline gap="8" indent="42"/>
-				<text colour="FF0000">To open the folder with your downloads</text>
+				<text colour="FF0000">Shareaza has detected that you are behind a NAT router or firewall,
+				and are unable to receive TCP connections from the Internet.  </text>
 				<text colour="FF0000" format="b">This may cause poor download performance.</text>
 				<newline gap="6"/>
 				<link target="raza:command:ID_HELP_ROUTER">Innstillingsveiviser</link>
@@ -1720,7 +1722,8 @@
 				<icon res="252" width="32" height="32"/><gap size="8"/>
 				<heading align="middle">F J E R N K O N S O L L E N   E R   P Å</heading>
 				<newline gap="8" indent="42"/>
-				<text colour="FF0000">Shareaza Fjernkonsoll er skrudd på. Kjør og kontroller Shareaza med internettleseren din her:</text>
+				<text colour="FF0000">Shareaza has detected that you are behind a NAT router or firewall,
+				and are unable to receive UDP messages from the Internet.  </text>
 				<text colour="FF0000" format="b">This may cause poor search performance.</text>
 				<newline gap="6"/>
 				<link target="raza:command:ID_HELP_ROUTER">Innstillingsveiviser</link>
@@ -1836,7 +1839,7 @@
 			<text group="11" align="middle">Ikke koblet til</text>
 			<text group="12" align="middle">Kobler til...</text>
 			<text group="13" align="middle">Koblet til</text>
-			<text group="14" align="middle" id="G1Hubs">eDonkey:</text>
+			<text group="14" align="middle" id="G1Hubs">%i ultrapeers</text>
 			<text group="15" align="middle" id="G1Leaves">%i leaves</text>
 			<newline group="10" gap="2"/>
 			<icon group="30" command="ID_NETWORK_ED2K"/><gap group="30" size="4"/>
@@ -1909,8 +1912,8 @@
 			</styles>
 			<text format="b">Velkommen til Shareaza's innstillinger</text>
 			<newline gap="16"/>
-			<text>Her kan brukere med erfaring endre Shareaza og hvordan det virker
-			på nettverket.  Innstillingene i</text>
+			<text>The Shareaza Settings Manager allows advanced users to completely customise how
+				Shareaza works. The settings in the</text>
 			<text format="b">Generelt</text>
 			<text>-vinduet er relatert til brukeropplevelsen.</text>
 			<newline gap="16" indent="16"/>
@@ -1946,8 +1949,8 @@
 			</styles>
 			<text format="b">Velkommen til Shareaza's innstillinger</text>
 			<newline gap="16"/>
-			<text>Her kan brukere med erfaring endre Shareaza og hvordan det virker
-			på nettverket. Innstillingene i</text>
+			<text>The Shareaza Settings Manager allows advanced users to completely customise 
+				how Shareaza works. The settings in the</text>
 			<text format="b">Tilkobling</text>
 			<text>-viduet bestemmer hvordan Shareaza arbeider med andre noder på nettverket</text>
 			<newline gap="16" indent="16"/>
@@ -2066,11 +2069,11 @@
 		<document name="DownloadHelp.Select">
 			<text format="b">Velg en nedlasting</text>
 			<newline gap="8"/>
-			<text>Her vises de filene som blir lastet ned. Du kan se
-		individuelle kilder ved å utvide hver fil med den lille pluss'en til venstre.</text>
+			<text>This is where files currently being downloaded are displayed. You can view
+			individual sources by expanding each file with the small + on the left.</text>
 			<newline gap="8"/>
-			<text>Du kan også bruke denne kommandoen for å få informasjon om nedlastingen.
-		Velg en nedlasting og denne kommandoen en gang til.</text>
+			<text>Drag'n'Drop downloads higher in the list for priority, or onto Download Group 
+			tabs for better organisation (in Power Mode).</text>
 			<newline gap="16"/>
 			<text>You can also use this command to get help information on a specific download.
 			Simply select a download and choose this Help command again.</text>
@@ -2084,96 +2087,98 @@
 		<document name="DownloadHelp.Completed">
 			<text format="b">Denne nedlastingen er ferdig.</text>
 			<newline gap="8"/>
-			<text>Shareaza er ferdig med denne filen og har kontollert at den
-		er 100% korrekt. Den er også flyttet til din nedlastingsmappe.</text>
+			<text>Shareaza has finished downloading this file, and has verified that it
+			is 100% correct. It has also moved the file to your downloads folder.</text>
 		</document>
 		<document name="DownloadHelp.Moving">
 			<text format="b">Denne filen flyttes</text>
 			<newline gap="8"/>
-			<text>Shareaza er ferdig med denne filen og har kontrollert at den er
-		korrekt. Den blir nå flyttet og/eller pakket ut i din nedlastingsmappe.</text>
+			<text>Shareaza has finished downloading this file, and has verified that
+			it is correct. It is currently being moved and/or unpacked to your downloads folder.</text>
 		</document>
 		<document name="DownloadHelp.Paused">
 			<text format="b">Denne filen er satt på pause</text>
 			<newline gap="8"/>
-			<text>Du har pauset denne filen. Hvis du ønsker å fortsette den kan du klikke på</text><text format="b">Fortsett nedlasting</text><text>-kommandoen.</text>
+			<text>You have paused this download. If you want it to resume downloading, you
+			can click the '</text><text format="b">Fortsett nedlasting</text><text>-kommandoen.</text>
 		</document>
 		<document name="DownloadHelp.DiskFull">
 			<text format="b">Harddisken er full</text>
 			<newline gap="8"/>
-			<text>Shareaza har pauset denne filen automatisk fordi det ser ut som at
-		harddisken er full, eller at filen ikke kan skrives til. Hvis du vil fortsette,
-		lag mer plass ved å rydde harddisken og/eller sjekk at Incomplete-mappen ikke
-		er skrivebeskyttet. Deretter kan du prøve å fortsette nedlastingen.</text>
+			<text>Shareaza has paused this download automatically because the hard disk
+			appears to be full, or the download file cannot be written to. If you wish
+			to continue downloading, please free some space on your hard disk and/or check
+			to make sure the incomplete file folder is accessible, and then resume the
+			download.</text>
 		</document>
 		<document name="DownloadHelp.Verifying">
 			<text format="b">Denne filen blir kontrollert</text>
 			<newline gap="8"/>
-			<text>Denne filen er ferdig, den blir nå kontrollert for å sjekke at den er
-		eksakt lik den orginale filen. Hvis det finnes noen ødelagte deler vil
-		Shareaza fikse det automatisk.</text>
+			<text>This download has finished, and Shareaza is now checking it to ensure
+			that it is exactly the same as the original file. If any damaged parts are
+			found, Shareaza will repair them automatically.</text>
 		</document>
 		<document name="DownloadHelp.Downloading">
 			<text format="b">Denne filen er aktiv!</text>
 			<newline gap="8"/>
-			<text>Denne filen lastes ned. Hvis den har lav hastighet kan du søke etter
-		flere kilder med</text><text format="b">Finn flere kilder</text><text>-kommandoen. Hvis ikke dette
-		hjelper kan det komme av begrensninger hos brukeren du laster ned fra.
-		Hastigheten øker vanligvis etter hvert.</text>
+			<text>This download is currently in progress. If it is downloading too slowly,
+			you could try searching the network for more sources with the '</text><text format="b">Finn flere kilder</text><text>' command. If the speed does not 
+			improve it may be due to limited upload speeds of the users you are downloading 
+			from. Download speed usually increases over time.</text>
 		</document>
 		<document name="DownloadHelp.Pending">
 			<text format="b">Denne filen venter</text>
 			<newline gap="8"/>
-			<text>Denne nedlastingen venter på at noen skal starte å laste opp.
-		Shareaza er klar til å laste ned denne filen, men ingen sender den
-		i øyeblikket. Du står trolig i andres køer, og nedlastingen
-		kan starte når som helst. Du kan undersøke de individuelle kildene for å
-		se de køene du venter i. Hvis du deler filer selv  kan det
-		øke mulighetene for at nedlasting starter raskere.</text>
+			<text>This download is waiting for someone to start uploading.
+			Shareaza is ready to start downloading this file, but no-one is sending it at
+			the moment. You are probably waiting in other user's queues, and the download
+			may start transferring at any time. You can examine the individual sources to 
+			see each queue you are waiting in. If you are sharing files yourself, it may
+			improve the chances of a download transfer starting quickly.</text>
 		</document>
 		<document name="DownloadHelp.Queued">
 			<text format="b">Denne nedlastingen er i kø</text>
 			<newline gap="8"/>
-			<text>Denne filen venter på at en av dine andre filer skal bli ferdig.
-		Dine innstillinger begrenser antall aktive nedlastinger,
-		for å gi dine aktive filer mest mulig nytte av båndredden.
-		Du kan endre innstillingene via Verktøy, Innstillinger.
-		Alternativt kan du starte denne nedlastingen manuelt med fortsett-kommandoen.</text>
+			<text>This download is waiting for some of your other downloads to complete.
+			Your download settings limit the number of downloads which may be active at
+			any given time, to ensure that each download gets a good share of the available
+			bandwidth. You can change these settings via Tools, Shareaza Settings.
+			Alternatively, you may manually start this download with the resume command.</text>
 		</document>
 		<document name="DownloadHelp.Searching">
 			<text format="b">Denne nedlastingen søker</text>
 			<newline gap="8"/>
-			<text>Det er ingen kjente kilder til denne filen, så Shareaza søker alle
-		nettverkene etter nye kilder. Når en kilde blir funnet vil nedlastingen
-		automatisk starte.  Shareaza søker automatisk etter nye kilder.
-		Men du kan hjelpe prosessen ved å bruke</text>
+			<text>There are no known sources for this download, so Shareaza is searching
+			all connected P2P networks for new sources. Once sources are found, the
+			download will start automatically. Shareaza searches for sources automatically,
+			however you can speed up the process using the</text>
 			<text format="b">Finn flere kilder</text><text>-kommandoen.</text>
 			<newline gap="8"/>
-			<text>Uheldigvis kan det noen ganger være at ingen andre brukere
-		med filen du leter etter er online. Det eneste du da kan gjøre er å vente
-		til noen kommer online. Eller du kan avbryte filen for å finne en liknende
-		fil med flere kilder.</text>
+			<text>Unfortunately in many cases there may be no users online who have the
+			file you are looking for. The only course of action here is to wait for
+			someone to come online, or cancel it and try to find a similar file which is
+			more widely available.</text>
 		</document>
 		<document name="DownloadHelp.Creating">
 			<text format="b">Denne filen forarbeides</text>
 			<newline gap="8"/>
-			<text>Shareaza arbeider med å lage lagringsplass til denne filen, dette
-		gjøres for å spare tid senere.</text>
+			<text>Shareaza is pre-allocating a file in which to store this download, to
+			save time later.</text>
 		</document>
 		<document name="DownloadHelp.Tracker">
 			<text format="b">BitTorrent tracker nede</text>
 			<newline gap="8"/>
-			<text>BitTorrent-serveren for denne filen ser ut til å være
-		offline eller ødelagt. Shareaza klarer ikke å kontakte serveren
-		for å få en liste over kjente kilder.</text>
+			<text>The BitTorrent tracker server for this download appears to be
+			down or malfunctioning. Shareaza is unable to contact it to receive
+			a list of peers.</text>
 		</document>
 		<!-- Upload help documents -->
 		<document name="UploadHelp">
 			<text format="b">Opplastingsområde</text>
 			<newline gap="8"/>
-			<text>Her vises køer og opplastinger. Du kan utvide hver kø
-		med den lille pluss'en til venstre, og filtrere visningen med knappen til
-		høyre på verktøylinjen.</text>
+			<text>This is where queues and uploads are displayed. You can expand each queue
+			with the small + on the left, and filter what is displayed with the button on the
+			right of the window's toolbar.</text>
 		</document>
 		<!-- General help documents -->
 		<document name="GeneralHelp.DiskSpace">
@@ -2181,47 +2186,47 @@
 			<newline gap="8"/>
 			<text>Det begynner å bli lite plass på harddisken.</text>
 			<newline gap="8"/>
-			<text>Du br alltid ha en del ledig plass p harddisken.
-		Programmer kan bli ustabile hvis disken blir full, og man kan miste midlertidige filer
-		Du br kjre Diskopprydding, slette unskede filer, eller fjerne programmer du ikke bruker.</text>
+			<text>You should always attempt to keep a reasonable amount of disk space free. Programs 
+			can become unstable if the drives become full, and temporary files may be lost. You should 
+			run a disk clean-up, delete unwanted files, or uninstall software you no longer need.</text>
 		</document>
 		<document name="GeneralHelp.DiskWriteFail">
 			<text format="b">Et nødvendig område er ikke skrivbart</text>
 			<newline gap="8"/>
 			<text>En stasjon eller et område Shareaza trenger, kan ikke skrives til.</text>
 			<newline gap="8"/>
-			<text>En nettverksstasjon kan være frakoblet, eller du har kanskje ikke skrivetillatelse
-		i det angitte området. Vennligst sjekk mapper og tillatelser, eller forandres
-		sted for midlertidige filer.</text>
+			<text>A network drive may have been disconnected, or you may not have write permission 
+			to a selected directory. Please check directories and permissions, or change the
+			temporary files location.</text>
 		</document>
 		<document name="GeneralHelp.ConnectionFail">
 			<text format="b">Internettforbindelsen er mistet</text>
 			<newline gap="8"/>
 			<text>Windows rapporterer at det ikke er noen internettforbindelse tilgjengelig.</text>
 			<newline gap="8"/>
-			<text>Det er sannsynlig at et modem eller en router har koblet fra, noe som innebærer at
-		internett ikke kan nås. Det er mulig du må koble til manuelt, eller nullstille din forbindelse.</text>
+			<text>It is likely that a modem or router has dropped, meaning the internet cannot
+			be accessed. You may need to manually re-connect or reset your connection.</text>
 			<newline gap="8"/>
 			<text>Shareaza has ceased connection attempts to avoid losing all cached hosts.</text>
 		</document>
 		<document name="GeneralHelp.AdultFilter">
 			<text format="b">Filter for voksent innhold skrudd på</text>
 			<newline gap="8"/>
-			<text>Som med alle automatiserte filtre, vil ikke dette filteret være 100% effektivt
-		mot alt uønsket innhold. Filteret er designet for å luke ut mesteparten av uønsket
-		innhold, men ikke for å være 100% sikkert.</text>
+			<text>Please note that (as with any automated filter) it may not be 100% effective at
+			screening content. It is designed simply to filter out excess unwanted results, rather than 
+			as a 100% safe block.</text>
 			<newline gap="8"/>
 			<text>Barns bruk av internett (inkludert P2P fildeling)  bør alltid være under foresattes oppsyn.</text>
 		</document>
 		<document name="GeneralHelp.BadTorrentEncoding">
 			<text format="b">Denne torrenten ser ut til å ha en kodingsfeil</text>
 			<newline gap="8"/>
-			<text>Windows har rapportert oversettelsesfeil under dekoding av tekst i denne torrenten. Det er
-		mulig at torrenten er korrupt, eller bare uriktig kodet. Torrenten kan muligens likevel lastes ned,
-		men noen filnavn kan være uriktige.</text>
+			<text>Windows has reported a translation fault while decoding text in this torrent. It is
+			possible that the torrent is corrupt, or just incorrectly encoded. The torrent may
+			still download properly, although some file names could be incorrect.</text>
 			<newline gap="8"/>
-			<text>De fleste programmer for å lage torrenter vil la deg reparere denne torrenten, noe som vil
-		sørge for at den fungerer korrekt i alle BitTorrent-programmer.</text>
+			<text>Most torrent creation programs should allow you to repair this torrent, which
+			will ensure it works properly in all BitTorrent applications.</text>
 			<newline gap="8"/>
 			<link target="raza:command:ID_HELP_TORRENT">Klikk her for mer hjelp</link>
 			<text>, eller for å laste ned programvare for å reparere torrenten.</text>
@@ -2229,72 +2234,72 @@
 		<document name="GeneralHelp.DonkeyServerList">
 			<text format="b">Din eDonkey serverliste er tom</text>
 			<newline gap="8"/>
-			<text>Det er ingen servere i din eDonkey2000 serverliste. Du må laste ned en
-		oppdatert serverliste (met-fil) for å koble til ED2K.</text>
+			<text>There are no servers in your eDonkey server list. You need to download an
+			up to date server list (met file) to connect to ED2K.</text>
 			<newline gap="8"/>
-			<text>Du kan laste ned en serverliste i instillingene for ed2k, eller vinduet for
-		opppdagelsestjenester. (Trykk F9 for å åpne vinduet for oppdagelsestjenester)</text>
+			<text>You can download a server list from the ed2k setting page, or the discovery
+			services window. (Press F9 to open the discovery services window)</text>
 		</document>
 		<document name="GeneralHelp.UploadWarning">
 			<text format="b">Begrensning av opplastinger kan sinke nedlastinger</text>
 			<newline gap="8"/>
-			<text>Flere nettverk Shareaza kobler til benytter ratesystemer, som begrenser opplastinger til
-		klienter som ikke deler, eller prioriterer opplasting til kjente delere.</text>
+			<text>Several networks Shareaza connects to enforce ratios, limit uploads to
+			clients that do not share, or simply preference uploading to known sharers.</text>
 			<newline/>
-			<text>Heldigvis er bredbåndskoblinger som en to felts vei: du har
-		separate kanaler for opp og nedlasting. Hvis din klient er riktig konfigurert,
-		skal du kunne laste opp med en god hastighet samtidig som du har full nedlastingskapasitet.</text>
+			<text>Fortunately, broadband DSL connections are like a two-lane highway: you have
+			separate allocations for upload and download. If your client is properly configured, 
+			you should be able to upload at a good rate while retaining full download capacity.</text>
 			<newline gap="8"/>
-			<text>Som standard er din opplastingshastighet begrenset til omtrent 85% av tilgjengelig opplastingsbåndbredde,
-		mens nedlastinger er ubegrenset. Den konfigurasjonen burde gi deg så høy nedlastingshastighet
-		som mulig.</text>
+			<text>By default, your upload limit is set to about 85% of available upstream bandwidth,
+			while downloads are unlimited. That configuration should give you the fastest possible 
+			downloads that are available.</text>
 		</document>
 		<!-- Search help documents -->
 		<document name="SearchHelp.BadSearch1">
 			<text format="b">Vennligst omformuler søket</text>
 			<newline gap="8"/>
-			<text>Dette er et dårlig formulert søk, og vil muligens ikke gi noe bra resultat.
-		Søk bør inneholde flere uttrykk hvis mulig, og bør spesifiseres til en filtype
-		Søk bør ikke begrenses til kun tall eller negative uttrykk,
-		man bør også unngå generelle søk.</text>
+			<text>This search is poorly formatted, and may not function correctly. 
+			Searches should include several terms where possible, and should specify a schema 
+			(file type). Furthermore, searches must not be limited to numbers or negative
+			terms only, and you should avoid overly general queries.</text>
 			<newline gap="8"/>
-			<text>De fleste programmene på nettverket vil ignorere søk etter alle MP3 filer, for eksempel,
-		fordi det ikke er spesifisert godt nok og man ville fått alt for mange resultat.</text>
+			<text>Most clients on the network will ignore a search for all MP3 files, for example, 
+			because it is not specific enough, and would generate too many results.</text>
 		</document>
 		<document name="SearchHelp.BadSearch2">
 			<text format="b">Vennligst omformuler søket</text>
 			<newline gap="8"/>
-			<text>Dette søket inneholder ikke nok kriterier for å fungere skikkelig. Alle søk trenger
-		et minimum av gyldige, alfabetiske tegn for å kunne starte.</text>
+			<text>This search does not contain enough terms to function properly. All searches need
+			a minimum number of valid, alphabetic characters to be able to start.</text>
 			<newline gap="8"/>
-			<text>Selv om vanlige filetternavn (og nummere) kan søkes etter, må du angi
-		andre kriterier også, når du foretar et søk. Tegnsetting og jokertegn blir ikke brukt
-		i søk, kun teksten du skriver inn.</text>
+			<text>While common file extensions (and numbers) can be searched for, you must enter
+			other terms as well when creating the search. Punctuation and wildcards are not used 
+			in searches, just the text you enter.</text>
 		</document>
 		<document name="SearchHelp.BadSearch3">
 			<text format="b">Vennligst omformuler søket</text>
 			<newline gap="8"/>
-			<text>Dette søket ser ut til å kun inneholde vanlige filetternavn, eller ikke-søkbare
-		ord.</text>
+			<text>This search seems to contain only common file extensions, or no searchable
+			words.</text>
 			<newline gap="8"/>
-			<text>Hvis du har problemer med å foreta søk, husk at det er nokså likt som
-		et nettsøk. Spesifikke uttrykk og kriterier er best- Unike navn, titler og
-		nøkkelord.</text>
+			<text>If you are having trouble creating searches, keep in mind that it's quite similar
+			to a web search. Specific terms or phrases are best- Unique names, titles and
+			keywords.</text>
 			<newline gap="8"/>
-			<text>Generelle uttrykk kan ikke bli søkt etter på en effektiv måte, og kan resultere
-		i dårlig søkeytelse og høyt bruk av båndbredde under søk.</text>
+			<text>General terms cannot be searched for efficiently and may result in poor
+			search performance, as well as high bandwidth use during searches.</text>
 			<newline gap="8"/>
 			<text>Mer hjelp er tilgjengelig på Shareaza sin nettside.</text>
 		</document>
 		<document name="SearchHelp.AdultSearch">
 			<text format="b">Dette søket kan ikke startes</text>
 			<newline gap="8"/>
-			<text>Det spesifiserte søket vil sannsynligvis gi et stort antall resultater med innhold
-		ment kun for voksne. Dette forhindres av et filter for voksent innhold, som finnes under Innstilinger.
-		Forandre søketeksten eller skru av filteret for voksent innhold.</text>
+			<text>The specified search would probably return a large number of results with adult 
+			content, and this has been turned off in the settings. You should either re-phrase the 
+			search, or disable the filter.</text>
 			<newline gap="8"/>
-			<text>For å skru av filteret, gå til Verktøy &gt; Innstillinger &gt; Generelt og fjern
-		haken for filteret.</text>
+			<text>To disable the filter, go into Tools &gt; Settings &gt; General and uncheck the
+			adult content filter.</text>
 		</document>
 		<!-- Share help documents -->
 		<document name="ShareHelp.AlreadyShared">
@@ -2307,25 +2312,26 @@
 		<document name="ShareHelp.BadShare">
 			<text format="b">Dene mappen bør ikke deles.</text>
 			<newline gap="8"/>
-			<text>Denne mappen er (eller inneholder) en systemmappe. Det anbeafales ikke
-		å dele systemmapper siden filene ikke kan brukes av andre personer.</text>
+			<text>This folder is (or contains) a system folder. Sharing this folder is not
+			recommended, since most of the files in it are of no use to other people.</text>
 			<newline gap="8"/>
-			<text>Mapper som Windows, Programfiler, og lignende mapper
-		inneholder ikke filer som passer for å bli delt. Filer av interesse vil være i
-		undermapper lagret</text><text format="i">i</text><text>disse mappene. Vennligst del disse i stedet.</text>
+			<text>Folders such as the Windows directory, Program Files, and similar folders
+			do not usually contain files suitable for sharing. Any files of interest would be in
+			sub-folders located</text><text format="i">i</text><text>these folders.
+			Please share those instead.</text>
 			<newline gap="8"/>
-			<text>Mappen 'incomplete' bør ikke deles,
-		da det vil få store konsekvenser for programmets ytelse.</text>
+			<text>The Shareaza 'incomplete' folder should also not be shared through the
+			library, since attempting to hash downloads in progress may impact on performance.</text>
 		</document>
 	</documents>
 	<!-- Localised Command Tip Text. The "message" is displayed in the status bar, while the "tip" is shown in a tooltip -->
 	<commandTips>
 		<tip id="AFX_IDS_APP_TITLE" message="Shareaza"/>
-		<tip id="AFX_IDS_IDLEMESSAGE" message="Klar..."/>
+		<tip id="AFX_IDS_IDLEMESSAGE" message="Ready"/>
 		<tip id="AFX_IDS_MDICHILD" message="Activate this window"/>
-		<tip id="AFX_IDS_PREVIEW_CLOSE" message="Close print preview mode" tip="Forhåndsvis"/>
-		<tip id="AFX_IDS_SCCLOSE" message="Maksimer det aktive vinduet."/>
-		<tip id="AFX_IDS_SCMAXIMIZE" message="Maksimer det aktive vinduet."/>
+		<tip id="AFX_IDS_PREVIEW_CLOSE" message="Close print preview mode" tip="Cancel Preview"/>
+		<tip id="AFX_IDS_SCCLOSE" message="Close the active window and prompts to save the documents"/>
+		<tip id="AFX_IDS_SCMAXIMIZE" message="Enlarge the window to full size"/>
 		<tip id="AFX_IDS_SCMINIMIZE" message="Reduce the window to an icon"/>
 		<tip id="AFX_IDS_SCMOVE" message="Change the window position"/>
 		<tip id="AFX_IDS_SCNEXTWINDOW" message="Switch to the next document window"/>
@@ -2355,7 +2361,7 @@
 		<tip id="ID_CHILD_RESTORE" message="Åpne valgte vindu."/>
 		<tip id="ID_DISCOVERY_ADD" message="Legg til ny oppdagelsestjeneste..."/>
 		<tip id="ID_DISCOVERY_ADVERTISE" message="Kjør valgte GWebCache-tjeneste mot en tilfeldig eksisterende GWebCache."/>
-		<tip id="ID_DISCOVERY_BLOCKED" message="Vis GWebCache-tjeneste i oppdagelsesvinduet."/>
+		<tip id="ID_DISCOVERY_BLOCKED" message="Show blocked services in the Discovery window."/>
 		<tip id="ID_DISCOVERY_BROWSE" message="Utforsk statistikken til valgte GWebCache-tjeneste på nettet."/>
 		<tip id="ID_DISCOVERY_EDIT" message="Vis egenskapene til valgte oppdagelsestjeneste."/>
 		<tip id="ID_DISCOVERY_GNUTELLA" message="Vis bootstrap-tjeneste i oppdagelsesvinduet."/>
@@ -2403,7 +2409,7 @@
 		<tip id="ID_DOWNLOADS_SHOW_SOURCES" message="Vis kilder som for tiden ikke er i bruk."/>
 		<tip id="ID_DOWNLOADS_SOURCES" message="Søk etter flere kilder til valgte nedlasting."/>
 		<tip id="ID_DOWNLOADS_URL" message="Legg til en kilde URL til valgte nedlasting..."/>
-		<tip id="ID_DOWNLOADS_VIEW_REVIEWS" message="Se omtalene for den valgte nedlastingen"/>
+		<tip id="ID_DOWNLOADS_VIEW_REVIEWS" message="View reviews for the selected download."/>
 		<tip id="ID_HELP_ABOUT" message="Viser Shareazas om-dialog..."/>
 		<tip id="ID_HELP_CODEC" message="Alt om codec'er og videoproblemer."/>
 		<tip id="ID_HELP_FAQ" message="Besøk Shareazas FAQ."/>
@@ -2424,7 +2430,7 @@
 		<tip id="ID_HITMONITOR_CLEAR" message="Oppdater treffmonitor-bufferen."/>
 		<tip id="ID_HITMONITOR_PAUSE" message="Sett treffmonitoren på pause."/>
 		<tip id="ID_HITMONITOR_SEARCH" message="Søk på nettverket etter valgte uttrykk."/>
-		<tip id="ID_HOSTCACHE_BT_CACHE" message="Vis BitTorrent opplastninger."/>
+		<tip id="ID_HOSTCACHE_BT_CACHE" message="Show BitTorrent cached hosts."/>
 		<tip id="ID_HOSTCACHE_CONNECT" message="Koble til valgte vert."/>
 		<tip id="ID_HOSTCACHE_DC_CACHE" message="Show DC++ cached hubs."/>
 		<tip id="ID_HOSTCACHE_DISCONNECT" message="Koble fra valgte nabo."/>
@@ -2434,10 +2440,10 @@
 		<tip id="ID_HOSTCACHE_G2_CACHE" message="Vis Gnutella2-vertene."/>
 		<tip id="ID_HOSTCACHE_G2_HORIZON" message="Vis Gnutella2 horizon-hubene."/>
 		<tip id="ID_HOSTCACHE_IMPORT" message="Åpne en liste med kjente verter, som en &quot;server.met&quot; fil..."/>
-		<tip id="ID_HOSTCACHE_KAD_CACHE" message="Vis Gnutella1-vertene."/>
+		<tip id="ID_HOSTCACHE_KAD_CACHE" message="Show Kademlia cached hosts."/>
 		<tip id="ID_HOSTCACHE_PRIORITY" message="Prøv å koble til denne serveren før de andre tjenerne."/>
 		<tip id="ID_HOSTCACHE_REMOVE" message="Fjern valgte vert fra vert-cache-listen."/>
-		<tip id="ID_IMPORT_DOWNLOADS" message="Del NYE delvise nedlastinger"/>
+		<tip id="ID_IMPORT_DOWNLOADS" message="Import eMule partial downloads..."/>
 		<tip id="ID_LIBRARY_ADD" message="Legg til ny mappe i mine filer..."/>
 		<tip id="ID_LIBRARY_ALBUM_DELETE" message="Slett valgte mappe."/>
 		<tip id="ID_LIBRARY_ALBUM_OPEN" message="Åpne valgte mappe."/>
@@ -2467,7 +2473,7 @@
 		<tip id="ID_LIBRARY_REBUILD" message="Oppdater metadata og hash, til valgte mapper eller filer."/>
 		<tip id="ID_LIBRARY_REBUILD_ANSI" message="Gjenoppbygg metadata ved hjelp av et annet språk."/>
 		<tip id="ID_LIBRARY_REFRESH" message="Oppdater biblioteket."/>
-		<tip id="ID_LIBRARY_REFRESH_METADATA" message="_Refresh Metadata"/>
+		<tip id="ID_LIBRARY_REFRESH_METADATA" message="Refresh file metadata"/>
 		<tip id="ID_LIBRARY_REMOVE" message="Fjern de valgte mappene."/>
 		<tip id="ID_LIBRARY_RENAME" message="Gi den valgte filen nytt navn."/>
 		<tip id="ID_LIBRARY_SCAN" message="Skann valgte mappe eller filer etter forandringer."/>
@@ -2505,7 +2511,7 @@
 		<tip id="ID_MEDIA_PAUSE" message="Sett denne filen på pause." tip="Pause"/>
 		<tip id="ID_MEDIA_PLAY" message="Spill av denne filen." tip="Spill av"/>
 		<tip id="ID_MEDIA_PLAYLIST" message="Vis eller skjul spilleliste-vinduet."/>
-		<tip id="ID_MEDIA_POSITION" message="Søk til bestemt posisjon" tip="Seek"/>
+		<tip id="ID_MEDIA_POSITION" message="Seek to a position in the media file." tip="Seek"/>
 		<tip id="ID_MEDIA_PREVIOUS" message="Gå tilbake til forrige fil i denne spillelisten." tip="Tilbake"/>
 		<tip id="ID_MEDIA_PROPERTIES" message="View and edit the properties of the selected files."/>
 		<tip id="ID_MEDIA_RANDOM" message="Bruk tilfeldig (shuffle) modus i denne spillelisten."/>
@@ -2520,15 +2526,15 @@
 		<tip id="ID_MEDIA_SIZE_ONE" message="Vis videoen i dens orginale størrelse."/>
 		<tip id="ID_MEDIA_SIZE_THREE" message="Vis videoen i trippel størrelse av orginal."/>
 		<tip id="ID_MEDIA_SIZE_TWO" message="Vis videoen i dobbel størrelse av orginal."/>
-		<tip id="ID_MEDIA_SPEED" message="Juster hastighet" tip="Hastighet"/>
+		<tip id="ID_MEDIA_SPEED" message="Adjust the speed of the media file." tip="Hastighet"/>
 		<tip id="ID_MEDIA_STATUS" message="Vis eller skjul mediastatus linjen."/>
 		<tip id="ID_MEDIA_STOP" message="Stopp avspillingen. " tip="Stopp"/>
 		<tip id="ID_MEDIA_VIS" message="Velg hvilke effekter som skal vises."/>
-		<tip id="ID_MEDIA_VOLUME" message="Juster volum" tip="Volume"/>
+		<tip id="ID_MEDIA_VOLUME" message="Adjust the audio volume." tip="Volume"/>
 		<tip id="ID_MEDIA_ZOOM" message="Juster zoom- og aspektinnstillinger."/>
 		<tip id="ID_MONITOR_CLOSE" message="Lukk monitorvinduet."/>
 		<tip id="ID_MUSICBRAINZ_ALBUMS" message="Look at all albums for this artist."/>
-		<tip id="ID_MUSICBRAINZ_MATCHES" message="Søk etter andre kopier av valgte fil."/>
+		<tip id="ID_MUSICBRAINZ_MATCHES" message="Search for albums matching the selected file."/>
 		<tip id="ID_NEIGHBOURS_CHAT" message="Start en samtale med valgte bruker."/>
 		<tip id="ID_NEIGHBOURS_COPY" message="Kopier URI for å koble til valgte vert."/>
 		<tip id="ID_NEIGHBOURS_DISCONNECT" message="Koble fra valgte nabo(er)."/>
@@ -2549,14 +2555,14 @@
 		<tip id="ID_NETWORK_G1" message="Koble til det originale Gnutella-nettverket."/>
 		<tip id="ID_NETWORK_G2" message="Koble til Gnutella2-nettverket (Høyst anbefalt)."/>
 		<tip id="ID_NETWORK_SEARCH" message="Start et nytt søk på nettverket..."/>
-		<tip id="ID_NEXT_PANE" message="Switch to the next window pane" tip="Neste..."/>
+		<tip id="ID_NEXT_PANE" message="Switch to the next window pane" tip="Next Pane"/>
 		<tip id="ID_OPEN_DOWNLOADS_FOLDER" message="Open my folder of completed Downloads"/>
-		<tip id="ID_PREV_PANE" message="Gå tilbake til forrige fil i denne spillelisten." tip="Tilbake"/>
-		<tip id="ID_SCHEDULER_ACTIVATE" message="Fjern valgte opplasting(er) fra listen."/>
+		<tip id="ID_PREV_PANE" message="Switch back to the previous window pane" tip="Previous Pane"/>
+		<tip id="ID_SCHEDULER_ACTIVATE" message="Activates selected task(s) from the list."/>
 		<tip id="ID_SCHEDULER_ADD" message="Adds a new task to scheduler list."/>
-		<tip id="ID_SCHEDULER_DEACTIVATE" message="Koble til nettverket."/>
-		<tip id="ID_SCHEDULER_EDIT" message="Endre valgte sikkerhetsregel."/>
-		<tip id="ID_SCHEDULER_REMOVE" message="Fjern valgte nedlasting(er) fra listen."/>
+		<tip id="ID_SCHEDULER_DEACTIVATE" message="Deactivates selected tasks."/>
+		<tip id="ID_SCHEDULER_EDIT" message="Edit the selected task..."/>
+		<tip id="ID_SCHEDULER_REMOVE" message="Removes selected task(s) from the list."/>
 		<tip id="ID_SCHEDULER_REMOVE_ALL" message="Removes all scheduled tasks."/>
 		<tip id="ID_SEARCH_CHAT" message="Start en samtale med valgte bruker."/>
 		<tip id="ID_SEARCH_CLEAR" message="Fjern søkeresultatene."/>
@@ -2593,11 +2599,11 @@
 		<tip id="ID_SYSTEM_COPY" message="Copy selected line(s) of status log."/>
 		<tip id="ID_SYSTEM_TIMESTAMP" message="Lag tidsstempel for hver linje."/>
 		<tip id="ID_SYSTEM_VERBOSE" message="Vis en detaljert systemlogg."/>
-		<tip id="ID_SYSTEM_VERBOSE_DEBUG" message="Vis beskrivelse."/>
-		<tip id="ID_SYSTEM_VERBOSE_ERROR" message="Vis beskrivelse."/>
-		<tip id="ID_SYSTEM_VERBOSE_INFO" message="Vis graf-linjer."/>
+		<tip id="ID_SYSTEM_VERBOSE_DEBUG" message="Display all."/>
+		<tip id="ID_SYSTEM_VERBOSE_ERROR" message="Display errors only."/>
+		<tip id="ID_SYSTEM_VERBOSE_INFO" message="Display infos and above."/>
 		<tip id="ID_SYSTEM_VERBOSE_NOTICE" message="Display notices and above."/>
-		<tip id="ID_SYSTEM_VERBOSE_WARNING" message="Vis graf-linjer."/>
+		<tip id="ID_SYSTEM_VERBOSE_WARNING" message="Display warnings and above."/>
 		<tip id="ID_TAB_CONNECT" message="Koble til eller koble fra nettverket."/>
 		<tip id="ID_TAB_HOME" message="Gå tilbake til hjem-vinduet."/>
 		<tip id="ID_TAB_IRC" message="Show the IRC Chat window."/>
@@ -2648,7 +2654,7 @@
 		<tip id="ID_VIEW_NEIGHBOURS" message="Vis eller skjul naboer-vinduet."/>
 		<tip id="ID_VIEW_PACKETS" message="Vis eller skjul pakkedump-vindu."/>
 		<tip id="ID_VIEW_RESULTS_MONITOR" message="Vis eller skjul treffmonitor-vinduet."/>
-		<tip id="ID_VIEW_SCHEDULER" message="Vis eller skjul sikkerhetsvinduet."/>
+		<tip id="ID_VIEW_SCHEDULER" message="Show or hide SCHEDULER window."/>
 		<tip id="ID_VIEW_SEARCH_MONITOR" message="Vis eller skjul søkemonitor-vinduet."/>
 		<tip id="ID_VIEW_SECURITY" message="Vis eller skjul sikkerhetsvinduet."/>
 		<tip id="ID_VIEW_SYSTEM" message="Vis eller skjul system-vinduet."/>
@@ -2810,7 +2816,7 @@
 		<string id="8239" value="Ferdig"/>
 		<string id="8240" value="Shareaza flytter filen."/>
 		<string id="8241" value="Shareaza sjekker om det finnes feil på filen: "/>
-		<string id="8243" value="Opplastingsområde"/>
+		<string id="8243" value="Upload ratio:"/>
 		<string id="8244" value="Number of reviews:"/>
 		<string id="8288" value="Utforsker mine filer."/>
 		<string id="8289" value="Utforsker "/>
@@ -2853,7 +2859,7 @@
 		<string id="8335" value="Kilder til denne filen er bak brannmurer"/>
 		<string id="8336" value="Kilder til denne filen kan være ustabile"/>
 		<string id="8337" value="Untrusted"/>
-		<string id="8338" value="Laget:"/>
+		<string id="8338" value="Free:"/>
 		<string id="13000" value="Are you sure you want to delete the selected security rules? This cannot be undone."/>
 		<string id="13001" value="Files shared over the Internet"/>
 		<string id="16063" value="UPnP port mapping failed after 10 attempts."/>
@@ -2873,7 +2879,7 @@
 		<string id="16077" value="Adressen %s er allerede blokert i sikkerhetsreglene."/>
 		<string id="16078" value="La til ny sikkerhetsregel for å blokkere %s."/>
 		<string id="16079" value="Er du sikker på at du vil koble fra?"/>
-		<string id="16080" value="Du er ikke koblet til nettverket."/>
+		<string id="16080" value="Would you like to always connect to this network?"/>
 		<string id="16081" value="Sender forespørsel for &quot;%s&quot; til %s."/>
 		<string id="16083" value="Å tvinge pc-en til å være hub kan påvirke evnen til å utnytte nettverket. Det er generelt bedre å la Shareaza velge. \n\nHub modus gir IKKE bedre søkeresultat, det hjelper heller ikke på noen annen måte.\n\nEr du helt sikker på at du vil gjøre dette?"/>
 		<string id="16085" value="Gnutella2 er hovednettverket til Shareaza. Hvis du skrur det av kan det være at du får både lavere antall søkeresultat og lavere kvalitet på filene. Er du sikker på at du vil gjøre dette?"/>
@@ -2998,7 +3004,7 @@
 		<string id="16326" value="Opplastingsvert %s sendte forespørsel etter &quot;%s&quot; med ulik SHA1."/>
 		<string id="16327" value="Avviser opplasting av &quot;%s&quot; til %s (%s), opptatt og klienten støtter ikke kø."/>
 		<string id="16328" value="Push kobling til %s startet, venter på håndtrykk..."/>
-		<string id="16329" value="Kan ikke åpne &quot;%s&quot; for å laste opp til vert %s, disk/fil feil."/>
+		<string id="16329" value="Can't open &quot;%s&quot; to upload to host %s due to disk or file error."/>
 		<string id="16330" value="Sender innhold %I64i-%I64fra &quot;%s&quot; til vert %s (%s)."/>
 		<string id="16331" value="Ferdig med å laste opp del av &quot;%s&quot; til %s."/>
 		<string id="16332" value="Innkommende kobling fra %s er en HTTP opplastings forespørsel."/>
@@ -3049,7 +3055,7 @@
 		<string id="16377" value="HTTP Guard"/>
 		<string id="16378" value="Host &quot;%s&quot; sent a 416, without providing available ranges. Closing connection."/>
 		<string id="16379" value="Library Files"/>
-		<string id="16380" value="eDonkey Guard"/>
+		<string id="16380" value="DC++ Guard"/>
 		<string id="16384" value="Er du sikker på at du vil åpne denne filen &quot;%s&quot; ?\n\nNoen filer kan være skadelige for pc-en. Forsikre deg om at du vet hva filen er før du åpner den."/>
 		<string id="16385" value="Du prøver å endre metadataene til %i filer, er du sikker på at du vil fortsette?"/>
 		<string id="16386" value="Endrer metadata til %i filer."/>
@@ -3073,7 +3079,7 @@
 		<string id="16407" value="Vil du sette en stopp på denne samlingen slik at du slipper flere spørsmål om å laste ned mer"/>
 		<string id="16408" value="Kopier &amp;URI"/>
 		<string id="16409" value="Eksporter &amp;URI'er..."/>
-		<string id="16410" value="Mappen for fullstendige filer og mappen for ufullstendige filer bør ikke være den samme"/>
+		<string id="16410" value="A subfolder of the selected folder &quot;%s&quot; is already part of your library.\nAdding this folder will cause re-hashing of some files.\n\nDo you want to continue ?"/>
 		<string id="16411" value="Kan ikke flytte filen %s. Filen kan være i bruk av et annet program.\n\nVil du forsøke å kopiere filen i stedet?"/>
 		<string id="16412" value="Ghost File"/>
 		<string id="16413" value="New Group"/>
@@ -3105,8 +3111,8 @@
 		<string id="16525" value="Gnutella-pakker routed"/>
 		<string id="16526" value="Gnutella-pakker dropped"/>
 		<string id="16527" value="Gnutella-pakker mistet"/>
-		<string id="16528" value="Gnutella lokale forespørsler"/>
-		<string id="16529" value="Gnutella lokale forespørsler"/>
+		<string id="16528" value="Gnutella Incoming Queries"/>
+		<string id="16529" value="Gnutella Processed Queries"/>
 		<string id="16532" value="Total TCP mottatt båndbredde"/>
 		<string id="16533" value="Total TCP overført bånbredde"/>
 		<string id="16534" value="Total UDP mottatt båndbredde"/>
@@ -3236,7 +3242,7 @@
 		<string id="17128" value="eDonkey2000 Server"/>
 		<string id="17129" value="eDonkey2000 (LowID)"/>
 		<string id="17130" value="eDonkey2000 (HighID)"/>
-		<string id="17131" value="Tilkobling"/>
+		<string id="17131" value="DC++ Hub Connection"/>
 		<string id="17216" value="Starter kobling til eDonkey2000-tjener ved %s..."/>
 		<string id="17217" value="Koblet til eDonkey2000 tjener %s, starter håndtrykk..."/>
 		<string id="17218" value="ED2K[%s] %s"/>
@@ -3277,7 +3283,7 @@
 		<string id="17477" value="BitTorrent koblingen med %s svarte med feil fil."/>
 		<string id="17478" value="BitTorrent koblingen med %s forespurte en ukjent fil."/>
 		<string id="17479" value="BitTorrent kobling med %s startet for &quot;%s&quot;."/>
-		<string id="17480" value="BitTorrent koblingen med %s forespurte en ukjent fil."/>
+		<string id="17480" value="BitTorrent coupling with %s requested an inactive file."/>
 		<string id="17481" value="Mottok BitTorrent beskrivelsesfil: &quot;%s&quot;"/>
 		<string id="17482" value="Klarer ikke å dele prefetched BitTorrent fil &quot;%s&quot;."/>
 		<string id="17483" value="Feil fra BitTorrent trackeren for &quot;%s&quot; : &quot;%s&quot;."/>
@@ -3291,7 +3297,7 @@
 		<string id="17491" value="Denne torrenten &quot;%s&quot; er allerede i din nedlastings-liste, og kan ikke spres."/>
 		<string id="17492" value="Feil ved åpning av torrent-filen &quot;%s&quot;. Dette kan være en ugyldig torrent."/>
 		<string id="17493" value="Klarte ikke å dele BitTorrent-fil &quot;%s&quot;."/>
-		<string id="17494" value="Denne torrenten inneholder filen &quot;%s&quot;, men Shareaza klarer ikke å finne filen i mine filer. Hvis mulig flytt filen til samme mappe som torrenten og prøv på nytt."/>
+		<string id="17494" value="This torrent includes the file &quot;%s&quot;, but Shareaza cannot find this file in your library. If possible, move the file to a shared folder and try again."/>
 		<string id="17495" value="Denne torrenten inneholder filen &quot;%s&quot; som skulle vært %s, men versjonen av din fil er %s."/>
 		<string id="17496" value="Det skjedde en feil ved kopieringen fra &quot;%s&quot; til en BitTorrent delings-fil."/>
 		<string id="17497" value="Det skjedde en feil ved forsøk på å spre &quot;%s&quot;."/>
@@ -3319,16 +3325,16 @@
 		<string id="18509" value="Du kan ikke gå ut i fra at denne filen er ferdig og reverifisere den fordi du har ennå ingen partielle verifikasjons data, slik som tiger-tree innhold, eDonkey hashset eller BitTorrent hashset. Uten verifikasjons-data kan ikke filen reverifiseres."/>
 		<string id="18510" value="Er du sikker på at du vil gå ut i fra at denne filen er ferdig og reverifisere den? Hele filen vil betraktes, Shareaza vil godta deler som blit verifiserte og laste ned nye deler for de som feilet verifiseringen."/>
 		<string id="18511" value="You have made changes to the file size. Are you sure you want to change the file size for this download?"/>
-		<string id="18512" value="Er du sikker p at du vil avbryte alle nedlastningene i denne gruppen?"/>
-		<string id="18513" value="Du har skrevet inn en ugyldig eDonkey2000 hash-verdi. Vennligst sjekk verdien og prøv på nytt."/>
-		<string id="18514" value="Du har gitt en SHA1 hash-verdi som er forskjellig fra den som er asossiert med denne nedlastingen. Er du sikker på at du vil endre SHA1 hashen nå?"/>
+		<string id="18512" value="Are you sure you want to cancel this download but save incomplete file(s)?"/>
+		<string id="18513" value="You have typed an %s hash value, however it is invalid. Please check it and try again."/>
+		<string id="18514" value="You have provided an %s hash value which is different to the one currently associated with this download. Are you sure you want to change the %s hash now?"/>
 		<string id="18515" value="The selected download item currently has some Task attached, please wait and do it later."/>
 		<string id="19000" value="Fjern konsoll er AV."/>
 		<string id="19001" value="Du må velge et brukernavn og et passord."/>
 		<string id="19002" value="Klarte ikke  motta tilkoblinger, URL ikke tilgjengelig."/>
 		<string id="19103" value="Welcome to Shareaza Chat!"/>
 		<string id="19104" value="Please respect others while using this service"/>
-		<string id="19105" value="IRC"/>
+		<string id="19105" value="Chat!"/>
 		<string id="20000" value="URN ikke tilgjengelig"/>
 		<string id="20001" value="Lukk"/>
 		<string id="20002" value="av"/>
@@ -3406,15 +3412,15 @@
 		<string id="20245" value="New Folder"/>
 		<string id="20246" value="Command-line options:\n\n-tray : Disable startup splash screen and send application to tray\n-nosplash : Disable startup splash screen\n-nowarn : Disable alpha (daily builds) version warning dialog\n-wait : Wait for other application instance exit\n\nInterface modes:\n\n-basic : Start application in Basic interface mode\n-tabbed : Start application in Tabbed interface mode\n-windowed : Start application in Windowed interface mode\n\nSystem options:\n\n-RegServer : Register internal components for everyone\n-UnRegServer : Un-register internal components for everyone\n-RegServerPerUser : Register internal components for current user\n-UnRegServerPerUser : Un-register internal components for current user"/>
 		<string id="20247" value="Failed to load metadata schemas. Please reinstall application."/>
-		<string id="20248" value="Du har ikke spesifisert hvilke mapper du vil dele. Er du sikker?"/>
+		<string id="20248" value="You selected %u files. Are you sure?"/>
 		<string id="20249" value="Off"/>
 		<string id="20250" value="Low"/>
-		<string id="20251" value="Normalmodus"/>
+		<string id="20251" value="Normal"/>
 		<string id="20252" value="High"/>
 		<string id="20253" value="Skin load error: %s. Element: %s"/>
 		<string id="20254" value="Loading skin: %s"/>
 		<string id="20255" value="Are you sure you want to remove all scheduled tasks? This cannot be undone."/>
-		<string id="20256" value="Søk med Shareaza"/>
+		<string id="20256" value="System: Start Shareaza"/>
 		<string id="20257" value="Bandwidth: Full Speed"/>
 		<string id="20258" value="Bandwidth: Reduced Speed"/>
 		<string id="20259" value="Bandwidth: Stop"/>
@@ -3604,13 +3610,13 @@
 			<control/>
 		</dialog>
 		<dialog name="CDownloadsSettingsPage" cookie="BuEdBuBuStCoBuStEdmsStEdmsStEdmsBuStCoStCoBuBuEdBu" caption="Nedlasting">
-			<control caption="Lagre _ferdige filer her:"/>
+			<control caption="Save Completed Files Here"/>
 			<control/>
 			<control/>
 			<control caption="Scan every completed file with AntiVirus"/>
-			<control caption="Velg forhåndsinstilling:"/>
+			<control caption="Select AntiVirus:"/>
 			<control/>
-			<control caption="_Antall nedlastinger:"/>
+			<control caption="Number of Downloads"/>
 			<control caption="Maks filer:"/>
 			<control/>
 			<control/>
@@ -3620,13 +3626,13 @@
 			<control caption="Overføringer per fil:"/>
 			<control/>
 			<control/>
-			<control caption="Grenser:"/>
+			<control caption="Limits"/>
 			<control caption="Nedlastingsbåndbredde:"/>
 			<control/>
 			<control caption="Maksimalt antall i kø:"/>
 			<control/>
 			<control caption="Last bare opp og ned til nettverk som er tilkoblet."/>
-			<control caption="Lagre _midlertidige filer her:"/>
+			<control caption="Store Temporary Incomplete Files Here"/>
 			<control/>
 			<control/>
 		</dialog>
@@ -3684,10 +3690,10 @@
 		<dialog name="CGnutellaSettingsPage" cookie="BuBuCoBuBuCoEdmsEdmsEdmsEdmsEdmsEdmsBuBuBuBuStBuStStStBuStBuStStStBu" caption="Gnutella">
 			<control caption="Gnutella2-nettverket:"/>
 			<control caption="Koble alltid til Gnutella2"/>
-			<control caption="Koble til Gnutella2 i dag"/>
-			<control caption="Modus:"/>
 			<control caption="Optimal|Leaf|Hub"/>
-			<control caption="G_2-tilkoblinger:"/>
+			<control caption="Modus:"/>
+			<control caption="Connect to Gnutella1 today"/>
+			<control caption="Optimal|Leaf|Ultrapeer"/>
 			<control/>
 			<control/>
 			<control/>
@@ -3701,7 +3707,7 @@
 			<control/>
 			<control/>
 			<control caption="Modus:"/>
-			<control caption="Optimal|Leaf|Ultrapeer"/>
+			<control caption="Leaf to Hub"/>
 			<control caption="G_1-tilkoblinger:"/>
 			<control caption="Gnutella2-nettverket:"/>
 			<control caption="Mode: "/>
@@ -3861,7 +3867,7 @@
 		<dialog name="CWizardConnectionPage" cookie="StStCoStCoStCoStCoStms" caption="Velkommen til Shareaza (1/6)">
 			<control caption="For optimal utnyttelse, trenger Shareaza å vite litt om tilkoblingen din."/>
 			<control caption="Hvis du kjenner hastigheten på tilkoblingen din, velg den som passer best nedenfor."/>
-			<control caption="| Oppringt modem| ISDN| ADSL (256K)| ADSL (512K)| ADSL (768K)| ADSL (1.5M)| ADSL (4.0M)| ADSL2 (8.0M)| ADSL2 (12.0M)| ADSL2+ (24.0M)| Kabelmodem/SDSL| T1| T3| LAN| OC3"/>
+			<control caption="Dial up Modem|ISDN|ADSL (256K)|ADSL (512K)|ADSL (768K)|ADSL (1.5M)|ADSL (4.0M)|ADSL2 (8.0M)|ADSL2 (12.0M)|ADSL2+ (24.0M)|Cable Modem/SDSL|T1|T3|LAN|OC3"/>
 			<control caption="Or choose the download speed:"/>
 			<control/>
 			<control caption="and the upload speed:"/>
@@ -3950,7 +3956,7 @@
 			<control/>
 			<control/>
 			<control caption="_Info:"/>
-			<control caption="|Mann|Kvinne"/>
+			<control caption="Male|Female"/>
 			<control caption="Kjønn:"/>
 			<control/>
 			<control caption="Alder:"/>
@@ -4026,8 +4032,8 @@
 		</dialog>
 		<dialog name="CLanguageDlg" cookie="" caption="Velg språk">
 		</dialog>
-		<dialog name="CConnectToDlg" cookie="BuCoEdBuCoBuBuBu" caption="Koble Til|Utforsk vert">
-			<control caption="Start en ny kobling til vert eller tjener:|Utforsk denne verten:"/>
+		<dialog name="CConnectToDlg" cookie="BuCoEdBuCoBuBuBu" caption="Connect To|Browse User|Chat to User">
+			<control caption="Initiate a new connection to host or server:|Browse this user:|Chat to this user:"/>
 			<control/>
 			<control/>
 			<control caption="Nettverks_protokoll:"/>
@@ -4094,7 +4100,7 @@
 			<control caption="Tjenesteadresse:"/>
 			<control/>
 			<control caption="Oppdagelsestjeneste-type:"/>
-			<control caption="Gnutella Bootstrap|GWebCache|Server.met URL"/>
+			<control caption="Gnutella Bootstrap|G1 GWebCache|G2 GWebCache|G1/G2 GWebCache|Server.met URL|Blocked"/>
 			<control caption="OK"/>
 			<control caption="Avbryt"/>
 		</dialog>
@@ -4251,9 +4257,9 @@
 			<control caption="Match alle"/>
 			<control caption="Reg. Exp."/>
 			<control caption="_Egenskaper:"/>
-			<control caption="Ingen|Aksepter|Nekt"/>
-			<control caption="Går ut:"/>
-			<control caption="Aldri (ubestemt)|Ved avslutning av økten|Etter:"/>
+			<control caption="Action:"/>
+			<control caption="None|Accept|Deny"/>
+			<control caption="Expire:"/>
 			<control caption="Never (Indefinite)|At End of Session|After:"/>
 			<control/>
 			<control caption="d"/>
@@ -4284,7 +4290,7 @@
 			<control caption="Du har valgt %lu filer som skal eksporteres ved hjelp av Shareazas URI-referanse.  Vennligst velg hvilket format URI, og klikk Lagre:"/>
 			<control/>
 			<control caption="Sett inn merke:"/>
-			<control caption="Tiger Root|SHA1|MD5|ED2K (CMD4)|Filnavn|Filnavn (URI)|Base filnavn|Filetternavn|Filstørrelse|Filstørrelse (byte)|Katalog|Lokal vert|Lokal port"/>
+			<control caption="Tiger Root|SHA1|MD5|ED2K (CMD4)|BitTorrent|Filename|Filename (URI)|Base Filename|File Extension|File Size|File Size (bytes)|Folder Path|Local Host|Local Port|Link|Link (URI)"/>
 			<control caption="Velg forhåndsinstilling:"/>
 			<control caption="Magnet|eDonkey|Magnet HTML|eDonkey HTML"/>
 			<control caption="_Kopier"/>
@@ -4379,14 +4385,14 @@
 			<control caption="Shareaza kan huske denne filen og varsle deg om du skulle komme over den p nytt i et annet søk.  Vennligst velg hvorfor du vil slette denne filen:"/>
 			<control caption="Ingen kommentar."/>
 			<control caption="Denne filen har feil navn, og kan være misvisende."/>
-			<control caption="Denne filen har veldig lav kvalitet."/>
+			<control caption="Just deleting, keep my comments|This file is named incorrectly, and could be misleading|This file is of very poor quality|This file is a fake, or is corrupt or somehow unusable|Replace my comments with the new ones"/>
 			<control caption="Denne filen er falsk, ødelagt eller ubrukelig."/>
 			<control caption="(Ingen karakter)|Falsk/Korrupt/Missvisende|Dårlig|Moddels|God|Veldig god|Utmerket"/>
 			<control caption="You can type a short note describing why you are deleting the file:"/>
 			<control/>
 		</dialog>
 		<dialog name="CCollectionExportDlg" cookie="StSyBuStStStStStEdBuBuBu" caption="Eksporter mappe">
-			<control caption="Dette verktøyet kan eksportere hele album mapper som en collection-fil."/>
+			<control caption="This feature is used to export the contents of a folder or playlist as a rich collection file.  Please select a template and press Next to continue.|Customize your collection by entering data below."/>
 			<control/>
 			<control caption="Template Information:"/>
 			<control caption="Navn:"/>
@@ -4454,13 +4460,13 @@
 			<control/>
 			<control/>
 			<control/>
-			<control caption="Av:"/>
+			<control caption=" As needed| When ratio over 100%| Only when requested| Never"/>
 			<control/>
 			<control caption="Kommentar:"/>
 			<control caption="Navn:"/>
 			<control caption="Laget:"/>
 			<control caption="Start nye nedlastinger:"/>
-			<control caption="Etter behov|Når delingsrate er over 100%|Kun ved forespørsel|Aldri"/>
+			<control caption="Comments:"/>
 			<control caption="Transfers:"/>
 			<control caption="Oppdater"/>
 			<control caption="Notes:"/>
@@ -4473,7 +4479,7 @@
 			<control/>
 			<control/>
 			<control/>
-			<control caption="Tracker:"/>
+			<control caption="Disabled|Single Tracker|Multi-tracker|Multi-tracker (locked)"/>
 			<control caption="_Refresh"/>
 			<control/>
 			<control caption="Komplette (delere):"/>
@@ -4549,7 +4555,7 @@
 			<control/>
 			<control caption="Gnutella1"/>
 			<control caption="Gnutella2"/>
-			<control caption="eDonkey2000"/>
+			<control caption="eDoonkey2K"/>
 			<control caption="DC++"/>
 			<control caption="BitTorrent"/>
 			<control caption="Select the event type:"/>
@@ -4699,8 +4705,8 @@
 		</list>
 		<list name="CSchedulerWnd">
 			<column from="Action" to="Tiltak"/>
-			<column from="Trigger" to="TigerTree"/>
-			<column from="Next Run" to="Neste"/>
+			<column from="Trigger" to="Trigger"/>
+			<column from="Next Run" to="NextRun"/>
 			<column from="Active" to="Aktiv"/>
 			<column from="Status" to="Status"/>
 			<column from="Description" to="Beskrivelse"/>

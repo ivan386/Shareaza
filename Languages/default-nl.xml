@@ -3323,7 +3323,7 @@
 		<string id="18511" value="Je hebt de bestandsgrootte gewijzigd. Weet je zeker dat je dit wilt doen voor deze download? "/>
 		<string id="18512" value="Weet je zeker dat je de download wilt annuleren, maar de incomplete bestand(en) wilt bewaren?"/>
 		<string id="18513" value="Je hebt een %s hashwaarde ingevoerd, maar die is ongeldig. Controleer het en probeer het nog een keer."/>
-		<string id="18514" value="Je hebt een SHA1 hashwaarde ingegeven die anders is als die nu met deze download is geassocieerd. Weet je zeker dat je de SHA1 hash wilt veranderen?"/>
+		<string id="18514" value="You have provided an %s hash value which is different to the one currently associated with this download. Are you sure you want to change the %s hash now?"/>
 		<string id="18515" value="Er is een taak bezig met het geselecteerde bestand, probeer het later opnieuw."/>
 		<string id="19000" value="Toegang met afstandsbediening is uitgeschakeld."/>
 		<string id="19001" value="Je moet een gebruikersnaam en wachtwoord kiezen."/>
@@ -3952,7 +3952,7 @@
 			<control/>
 			<control/>
 			<control caption="_Persoonlijke informatie:"/>
-			<control caption="|Man|Vrouw"/>
+			<control caption="Male|Female"/>
 			<control caption="Geslacht:"/>
 			<control/>
 			<control caption="Leeftijd:"/>
@@ -4096,7 +4096,7 @@
 			<control caption="Service _adres:"/>
 			<control/>
 			<control caption="Discovery service type:"/>
-			<control caption="Gnutella Bootstrap|GWebCache|Server.met URL|Blocked"/>
+			<control caption="Gnutella Bootstrap|G1 GWebCache|G2 GWebCache|G1/G2 GWebCache|Server.met URL|Blocked"/>
 			<control caption="OK"/>
 			<control caption="Annuleren"/>
 		</dialog>
@@ -4286,7 +4286,7 @@
 			<control caption="Je hebt %lu bestanden geselecteerd om te exporteren als Shareaza-gestuurde URI referenties. Selecteer het formaat voor de URIs, en klik op Opslaan:"/>
 			<control/>
 			<control caption="Importeer:"/>
-			<control caption="Tiger Root|SHA1|MD5|ED2K (CMD4)|Bestandsnaam|Bestandsnaam (URI)|Basis bestandsnaam|Bestandsextensie|Bestandsgrootte|Bestandsgrootte (bytes)|Pad naar map|Lokale gastheer (localhost)|Lokale poort"/>
+			<control caption="Tiger Root|SHA1|MD5|ED2K (CMD4)|BitTorrent|Filename|Filename (URI)|Base Filename|File Extension|File Size|File Size (bytes)|Folder Path|Local Host|Local Port|Link|Link (URI)"/>
 			<control caption="Selecteer voorinstelling:"/>
 			<control caption="Magnet|eDonkey|Magnet HTML|eDonkey HTML"/>
 			<control caption="_Kopieer"/>
@@ -4456,7 +4456,7 @@
 			<control/>
 			<control/>
 			<control/>
-			<control caption="Door:"/>
+			<control caption=" As needed| When ratio over 100%| Only when requested| Never"/>
 			<control/>
 			<control caption="_Commentaar:"/>
 			<control caption="Naam:"/>

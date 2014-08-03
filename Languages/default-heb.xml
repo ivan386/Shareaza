@@ -1201,14 +1201,14 @@
 			<item id="ID_LIBRARY_FOLDER_FILE_PROPERTIES" text="‪מאפייני הקובץ"/>
 		</menu>
 		<menu name="CLibraryTree.Virtual.Basic">
-			<item id="ID_LIBRARY_FOLDER_ENQUEUE" text="‪נגן אלבום"/>
+			<item id="ID_LIBRARY_FOLDER_ENQUEUE" text="Play _Album"/>
 			<item id="ID_LIBRARY_FOLDER_DELETE" text="‪_מחק"/>
 			<separator/>
 			<item id="ID_LIBRARY_FOLDER_FILE_PROPERTIES" text="‪מאפייני הקובץ"/>
-			<item id="ID_LIBRARY_FOLDER_PROPERTIES" text="‪מאפייני אלבום"/>
+			<item id="ID_LIBRARY_FOLDER_PROPERTIES" text="Album _Properties"/>
 		</menu>
 		<menu name="CLibraryTree.Virtual">
-			<item id="ID_LIBRARY_FOLDER_ENQUEUE" text="‪נגן אלבום"/>
+			<item id="ID_LIBRARY_FOLDER_ENQUEUE" text="Play _Album"/>
 			<item id="ID_LIBRARY_FOLDER_DELETE" text="‪_מחק"/>
 			<separator/>
 			<item id="ID_LIBRARY_REBUILD" text="‪בנה מחדש"/>
@@ -1217,7 +1217,7 @@
 			<item id="ID_LIBRARY_FOLDER_NEW" text="‪...ספריה חדשה"/>
 			<separator/>
 			<item id="ID_LIBRARY_FOLDER_FILE_PROPERTIES" text="‪מאפייני הקובץ"/>
-			<item id="ID_LIBRARY_FOLDER_PROPERTIES" text="‪מאפייני אלבום"/>
+			<item id="ID_LIBRARY_FOLDER_PROPERTIES" text="Album _Properties"/>
 		</menu>
 		<!-- LIBRARY VIEWS -->
 		<menu name="CLibraryTileView">
@@ -1296,7 +1296,7 @@
 		<menu name="CLibraryFileView.Virtual.Basic">
 			<item id="ID_LIBRARY_LAUNCH" text="‪_פתח או הפעל"/>
 			<item id="ID_LIBRARY_ENQUEUE" text="‪הוסף לרשימת השמעה"/>
-			<item id="ID_LIBRARY_FOLDER_ENQUEUE" text="‪נגן אלבום"/>
+			<item id="ID_LIBRARY_FOLDER_ENQUEUE" text="Play _Album"/>
 			<separator/>
 			<item id="ID_LIBRARY_SHARED_FILE" text="‪_משותף"/>
 			<separator/>
@@ -1700,8 +1700,8 @@
 				<icon res="252" width="32" height="32"/><gap size="8"/>
 				<heading align="middle">א ז ה ר ה   -   א ת ה   ח ס ו ם   ב ח ו מ ת  א ש</heading>
 				<newline gap="8" indent="42"/>
-				<text colour="FF0000">(NAT) שרזה זיהה שאתה מאחורי חומת-אש או ראוטר,	
-			ואינך מצליח לקבל חיבורי UDP מהאינטרנט.  </text>
+				<text colour="FF0000">Shareaza has detected that you are behind a NAT router or firewall,
+				and are unable to receive connections from the Internet.  </text>
 				<text colour="FF0000" format="b">זה עלול לגרום לביצועי הורדה נמוכים</text>
 				<newline gap="6"/>
 				<link target="raza:command:ID_HELP_ROUTER">לחץ כאן כדי ללמוד איך להגדיר את הראוטר וחומת האש</link>
@@ -1711,8 +1711,8 @@
 				<icon res="252" width="32" height="32"/><gap size="8"/>
 				<heading align="middle">א ז ה ר ה  -   פ ת ח ת  ( פ ו ר ט )   ה - T C P   ש ל ך   ח ס ו מ ה   ע ` י  ח ו מ ת - ש א</heading>
 				<newline gap="8" indent="42"/>
-				<text colour="FF0000">(NAT) שרזה זיהה שאתה מאחורי חומת-אש או ראוטר,	
-			ואינך מצליח לקבל חיבורי UDP מהאינטרנט.  </text>
+				<text colour="FF0000">Shareaza has detected that you are behind a NAT router or firewall,
+				and are unable to receive TCP connections from the Internet.  </text>
 				<text colour="FF0000" format="b">זה עלול לגרום לביצועי הורדה נמוכים</text>
 				<newline gap="6"/>
 				<link target="raza:command:ID_HELP_ROUTER">לחץ כאן כדי ללמוד איך להגדיר את הראוטר וחומת האש</link>
@@ -1722,8 +1722,8 @@
 				<icon res="252" width="32" height="32"/><gap size="8"/>
 				<heading align="middle">א ז ה ר ה   -   א ת ה   ח ס ו ם   ב ח ו מ ת  א ש</heading>
 				<newline gap="8" indent="42"/>
-				<text colour="FF0000">(NAT) שרזה זיהה שאתה מאחורי חומת-אש או ראוטר,
-			ואינך מצליח לקבל חיבורי UDP מהאינטרנט.  </text>
+				<text colour="FF0000">Shareaza has detected that you are behind a NAT router or firewall,
+				and are unable to receive UDP messages from the Internet.  </text>
 				<text colour="FF0000" format="b">זה עלול לגרום לביצועי הורדה נמוכים.</text>
 				<newline gap="6"/>
 				<link target="raza:command:ID_HELP_ROUTER">לחץ כאן כדי ללמוד איך להגדיר את הראוטר וחומת האש</link>
@@ -1839,7 +1839,7 @@
 			<text group="11" align="middle">מנותק.</text>
 			<text group="12" align="middle">מתחבר...</text>
 			<text group="13" align="middle">מחובר.</text>
-			<text group="14" align="middle" id="G1Hubs">אידונקי:</text>
+			<text group="14" align="middle" id="G1Hubs">%i ultrapeers</text>
 			<text group="15" align="middle" id="G1Leaves">‪  ענפי קו‎ %i.</text>
 			<newline group="10" gap="2"/>
 			<icon group="30" command="ID_NETWORK_ED2K"/><gap group="30" size="4"/>
@@ -1912,8 +1912,8 @@
 			</styles>
 			<text format="b">‫‮‫‮ ברוכים הבאים למנהל ההגדרות של שרזה</text>
 			<newline gap="16"/>
-			<text>אשף ההגדרות של שרזה מאפשר למשתמשים מתקדמים להתאים באופן
-			מלא איך שרזה תפעל.</text>
+			<text>The Shareaza Settings Manager allows advanced users to completely customise how
+				Shareaza works. The settings in the</text>
 			<text format="b">כללי</text>
 			<text>נועד להגדרת העדפות המשתמש:</text>
 			<newline gap="16" indent="16"/>
@@ -1949,8 +1949,8 @@
 			</styles>
 			<text format="b">‫‮‫‮ ברוכים הבאים למנהל ההגדרות של שרזה</text>
 			<newline gap="16"/>
-			<text>‪אשף ההגדרות של שרזה מאפשר למשתמשים מתקדמים להתאים באופן
-			מלא את האופן שבו שרזה פועלת.</text>
+			<text>The Shareaza Settings Manager allows advanced users to completely customise 
+				how Shareaza works. The settings in the</text>
 			<text format="b">אינטרנט</text>
 			<text>חלק זה מגדיר את האופן שבה
 			שרזה מתקשרת עם נקודות אחרות ברשתות שיתוף:</text>
@@ -2070,11 +2070,11 @@
 		<document name="DownloadHelp.Select">
 			<text format="b">אזור הורדות</text>
 			<newline gap="8"/>
-			<text>כאן יוצגו הקבצים שכרגע בהורדה. תוכל/י לראות
-		כל מקור בנפרד ע`י הרחבת כל קובץ בעזרת ה-'+' שמימינו.</text>
+			<text>This is where files currently being downloaded are displayed. You can view
+			individual sources by expanding each file with the small + on the left.</text>
 			<newline gap="8"/>
-			<text>תוכל להשתמש בפקודה זו לקבלת עזרה לגבי הורדה ספציפית
-		פשוט לחץ על ההורדה ובחר את פקודה זו שנית.</text>
+			<text>Drag'n'Drop downloads higher in the list for priority, or onto Download Group 
+			tabs for better organisation (in Power Mode).</text>
 			<newline gap="16"/>
 			<text>You can also use this command to get help information on a specific download.
 			Simply select a download and choose this Help command again.</text>
@@ -2088,101 +2088,98 @@
 		<document name="DownloadHelp.Completed">
 			<text format="b">הורדה זו הושלמה</text>
 			<newline gap="8"/>
-			<text>שרזה סיים להוריד את קובץ זה ווידא שהוא
-	  	.</text>
+			<text>Shareaza has finished downloading this file, and has verified that it
+			is 100% correct. It has also moved the file to your downloads folder.</text>
 		</document>
 		<document name="DownloadHelp.Moving">
 			<text format="b">הורדה זו מועברת</text>
 			<newline gap="8"/>
-			<text>שרזה סיים להוריד את קובץ זה ווידא שהוא
-		‪‏שלך‎. ‏ההורדות‎ ‏לספריית‎ ‏הקובץ‎ ‏את‎ ‏העביר‎ ‏גם‎ ‏שרזה‎ ‏ב‎-100%, ‏תקין.</text>
+			<text>Shareaza has finished downloading this file, and has verified that
+			it is correct. It is currently being moved and/or unpacked to your downloads folder.</text>
 		</document>
 		<document name="DownloadHelp.Paused">
 			<text format="b">הורדה זו מושהת</text>
 			<newline gap="8"/>
-			<text>השהת את ההורדה. אם אתה מעוניין שזה ימשיך הוריד אתה
-		פקודת</text><text format="b">‪המשך הורדה</text><text>יכול ללחוץ על.</text>
+			<text>You have paused this download. If you want it to resume downloading, you
+			can click the '</text><text format="b">‪המשך הורדה</text><text>יכול ללחוץ על.</text>
 		</document>
 		<document name="DownloadHelp.DiskFull">
 			<text format="b">הדיסק מלא</text>
 			<newline gap="8"/>
-			<text>שרזה השהה את ההורדה אוטמטית כי הכונן נראה מלא
-		או שלא ניתן לכתוב לתוך קובץ ההורדה. אם אתה מעוניין להמשיך
-		להוריד, אנא פנה קצת מקום בכון קשיח ו/או בדוק שספריית
-		הקבצים החלקיים לא מגבילה גישה, ואז המשך את ההורדה
-		.</text>
+			<text>Shareaza has paused this download automatically because the hard disk
+			appears to be full, or the download file cannot be written to. If you wish
+			to continue downloading, please free some space on your hard disk and/or check
+			to make sure the incomplete file folder is accessible, and then resume the
+			download.</text>
 		</document>
 		<document name="DownloadHelp.Verifying">
 			<text format="b">ההורדה מאומתת</text>
 			<newline gap="8"/>
-			<text>ההורדה הסתיימה, שרזה כרגע בודק אותה בכדי להבטיח
-		שהיא בדיוק כמו הקובץ המקורי. אם חלק כלשהו נמצא פגום
-		שרזה יתקנו באופן אוטמטי.</text>
+			<text>This download has finished, and Shareaza is now checking it to ensure
+			that it is exactly the same as the original file. If any damaged parts are
+			found, Shareaza will repair them automatically.</text>
 		</document>
 		<document name="DownloadHelp.Downloading">
 			<text format="b">!ההורדה פעילה</text>
 			<newline gap="8"/>
-			<text>.ההורדה בתהליכי השלמה, אם ההורדה מתקדמת לאט מדי
-		.תוכל לנסות לחפש את הרשת עבור עוד מקורות בעזרת פקודת
-		'מצא עוד מקורות'
-		.אם המהירות לא משתפרת, ייתכן שזה נובע ממהירות העלאה מוגבלת
-		של המשתמשים מהם אתה מוריד, מהירות ההורדה בד'כ משתפרת עם הזמן.</text><text format="b">Find More Sources</text><text>' command. If the speed does not 
+			<text>This download is currently in progress. If it is downloading too slowly,
+			you could try searching the network for more sources with the '</text><text format="b">Find More Sources</text><text>' command. If the speed does not 
 			improve it may be due to limited upload speeds of the users you are downloading 
 			from. Download speed usually increases over time.</text>
 		</document>
 		<document name="DownloadHelp.Pending">
 			<text format="b">ההורדה בהמתנה לתשובה</text>
 			<newline gap="8"/>
-			<text>הורדה זו נמצאת בהמתנה עד שמשתמש כלשהו יציע את הקובץ
-		.שרזה מוכנה להורדת הקובץ, אך עדיין לא נמצא משתמש עם קובץ זה זמין
-		.אם הינך בהמתנה בתורים של משתמשים אחרים, ההורדה יכולה להתחיל בכל רגע
-		.באפשרותך לבחון מקורות בודדים בכדי לבחון את התורות בהן אתה ממתין
-		.אם תשתף קבצים בעצמך, יגדל הסיכוי שההורדה תחל מהר יותר
-		.</text>
+			<text>This download is waiting for someone to start uploading.
+			Shareaza is ready to start downloading this file, but no-one is sending it at
+			the moment. You are probably waiting in other user's queues, and the download
+			may start transferring at any time. You can examine the individual sources to 
+			see each queue you are waiting in. If you are sharing files yourself, it may
+			improve the chances of a download transfer starting quickly.</text>
 		</document>
 		<document name="DownloadHelp.Queued">
 			<text format="b">הורדה בהמתנה לסיום הורדות</text>
 			<newline gap="8"/>
-			<text>.הורדה זו ממתינה לסיום אחת ההורדות האחרות שלך
-		.הגדרות ההורדה מגבילות את כמות ההורדות שניתן לבצע בו זמנית
-		.זאת בכדי לוודא שכל הורדה תקבל כמות סבירה של רוחב-פס
-		.תוכל לשנות את ההגדרות הללו דרך כלים, הגדרות שרזה
-		.'לחילופין אתה יכול להתחיל ידנית את ההורדה על ידי פקודת 'המשך.</text>
+			<text>This download is waiting for some of your other downloads to complete.
+			Your download settings limit the number of downloads which may be active at
+			any given time, to ensure that each download gets a good share of the available
+			bandwidth. You can change these settings via Tools, Shareaza Settings.
+			Alternatively, you may manually start this download with the resume command.</text>
 		</document>
 		<document name="DownloadHelp.Searching">
 			<text format="b">This Download is Searching</text>
 			<newline gap="8"/>
 			<text>There are no known sources for this download, so Shareaza is searching
-		all connected P2P networks for new sources. Once sources are found, the
-		download will start automatically.  Shareaza searches for sources automatically,
-		however you can speed up the process using the</text>
+			all connected P2P networks for new sources. Once sources are found, the
+			download will start automatically. Shareaza searches for sources automatically,
+			however you can speed up the process using the</text>
 			<text format="b">Find More Sources</text><text>command.</text>
 			<newline gap="8"/>
 			<text>Unfortunately in many cases there may be no users online who have the
-		file you are looking for.  The only course of action here is to wait for
-		someone to come online, or cancel it and try to find a similar file which is
-		more widely available.</text>
+			file you are looking for. The only course of action here is to wait for
+			someone to come online, or cancel it and try to find a similar file which is
+			more widely available.</text>
 		</document>
 		<document name="DownloadHelp.Creating">
 			<text format="b">ההורדה נוצרת</text>
 			<newline gap="8"/>
 			<text>Shareaza is pre-allocating a file in which to store this download, to
-		save time later.</text>
+			save time later.</text>
 		</document>
 		<document name="DownloadHelp.Tracker">
 			<text format="b">BitTorrent Tracker Down</text>
 			<newline gap="8"/>
 			<text>The BitTorrent tracker server for this download appears to be
-		down or malfunctioning.  Shareaza is unable to contact it to receive
-		a list of downloader peers.</text>
+			down or malfunctioning. Shareaza is unable to contact it to receive
+			a list of peers.</text>
 		</document>
 		<!-- Upload help documents -->
 		<document name="UploadHelp">
 			<text format="b">אזור העלאות</text>
 			<newline gap="8"/>
-			<text>זהו המקום בו מוצגות ההעלאות ותורות ההמתנה להעלאה. תוכל להרחיב כל תור
-		עם ה-'+' הקטן שמימין, ולסנן את מה שמוצג עם הלחצן משמאל לסרגל הכלים
-		.</text>
+			<text>This is where queues and uploads are displayed. You can expand each queue
+			with the small + on the left, and filter what is displayed with the button on the
+			right of the window's toolbar.</text>
 		</document>
 		<!-- General help documents -->
 		<document name="GeneralHelp.DiskSpace">
@@ -2190,18 +2187,18 @@
 			<newline gap="8"/>
 			<text>The amount of free space on one or more drives used by Shareaza is low.</text>
 			<newline gap="8"/>
-			<text>You should always attempt to keep a reasonable amount of disk space free. Programs
-		can become unstable if the drives become full, and temporary files may be lost. You should
-		run a disk clean-up, delete unwanted files, or un-install software you no longer need.</text>
+			<text>You should always attempt to keep a reasonable amount of disk space free. Programs 
+			can become unstable if the drives become full, and temporary files may be lost. You should 
+			run a disk clean-up, delete unwanted files, or uninstall software you no longer need.</text>
 		</document>
 		<document name="GeneralHelp.DiskWriteFail">
 			<text format="b">A Required Directory is Non-writable</text>
 			<newline gap="8"/>
 			<text>A disk or directory Shareaza needs cannot be written to.</text>
 			<newline gap="8"/>
-			<text>A network drive may have been disconnected, or you may not have write permission
-		to a selected directory. Please check directories and permissions, or change the
-		temporary files location.</text>
+			<text>A network drive may have been disconnected, or you may not have write permission 
+			to a selected directory. Please check directories and permissions, or change the
+			temporary files location.</text>
 		</document>
 		<document name="GeneralHelp.ConnectionFail">
 			<text format="b">Internet Connection Has Been Lost</text>
@@ -2209,7 +2206,7 @@
 			<text>Windows reports that there is no internet connection is available.</text>
 			<newline gap="8"/>
 			<text>It is likely that a modem or router has dropped, meaning the internet cannot
-		be accessed. You may need to manually re-connect or reset your connection.</text>
+			be accessed. You may need to manually re-connect or reset your connection.</text>
 			<newline gap="8"/>
 			<text>Shareaza has ceased connection attempts to avoid losing all cached hosts.</text>
 		</document>
@@ -2217,8 +2214,8 @@
 			<text format="b">Adult content filter enabled</text>
 			<newline gap="8"/>
 			<text>Please note that (as with any automated filter) it may not be 100% effective at
-		screening content. It is designed simply to filter out excess unwanted results, rather than
-		as a 100% safe block.</text>
+			screening content. It is designed simply to filter out excess unwanted results, rather than 
+			as a 100% safe block.</text>
 			<newline gap="8"/>
 			<text>Children's Internet use (including P2P file sharing)  should always be under parental supervision.</text>
 		</document>
@@ -2226,11 +2223,11 @@
 			<text format="b">This torrent appears to have an encoding error</text>
 			<newline gap="8"/>
 			<text>Windows has reported a translation fault while decoding text in this torrent. It is
-		possible that the torrent is corrupt, or just incorrectly encoded. The torrent may
-		still download properly, although some file names could be incorrect.</text>
+			possible that the torrent is corrupt, or just incorrectly encoded. The torrent may
+			still download properly, although some file names could be incorrect.</text>
 			<newline gap="8"/>
 			<text>Most torrent creation programs should allow you to repair this torrent, which
-		will ensure it works properly in all BitTorrent applications.</text>
+			will ensure it works properly in all BitTorrent applications.</text>
 			<newline gap="8"/>
 			<link target="raza:command:ID_HELP_TORRENT">Click here for additional help</link>
 			<text>, or to download software to repair the torrent.</text>
@@ -2238,72 +2235,72 @@
 		<document name="GeneralHelp.DonkeyServerList">
 			<text format="b">Your eDonkey server list is empty</text>
 			<newline gap="8"/>
-			<text>אין שרתים חדשים ברשימת השרתים של אידונקי שלך. יתכן ותצטרך להוריד רשימת שרתים מעודכנת
-		(קובץ met) כדי להתחבר לאידונקי.</text>
+			<text>There are no servers in your eDonkey server list. You need to download an
+			up to date server list (met file) to connect to ED2K.</text>
 			<newline gap="8"/>
 			<text>You can download a server list from the ed2k setting page, or the discovery
-		services window. (Press F9 to open the discovery services window)</text>
+			services window. (Press F9 to open the discovery services window)</text>
 		</document>
 		<document name="GeneralHelp.UploadWarning">
 			<text format="b">Limiting uploads may slow downloads</text>
 			<newline gap="8"/>
 			<text>Several networks Shareaza connects to enforce ratios, limit uploads to
-		clients that do not share, or simply preference uploading to known sharers.</text>
+			clients that do not share, or simply preference uploading to known sharers.</text>
 			<newline/>
 			<text>Fortunately, broadband DSL connections are like a two-lane highway: you have
-		separate allocations for upload and download. If your client is properly configured,
-		you should be able to upload at a good rate while retaining full download capacity.</text>
+			separate allocations for upload and download. If your client is properly configured, 
+			you should be able to upload at a good rate while retaining full download capacity.</text>
 			<newline gap="8"/>
 			<text>By default, your upload limit is set to about 85% of available upstream bandwidth,
-		while downloads are unlimited. That configuration should give you the fastest possible
-		downloads that are available.</text>
+			while downloads are unlimited. That configuration should give you the fastest possible 
+			downloads that are available.</text>
 		</document>
 		<!-- Search help documents -->
 		<document name="SearchHelp.BadSearch1">
 			<text format="b">Please re-phrase the search</text>
 			<newline gap="8"/>
-			<text>This search is poorly formatted, and may not function correctly.
-		Searches should include several terms where possible, and should specify a schema
-		(file type). Furthermore, searches must not be limited to numbers or negative
-		terms only, and you should avoid overly general queries.</text>
+			<text>This search is poorly formatted, and may not function correctly. 
+			Searches should include several terms where possible, and should specify a schema 
+			(file type). Furthermore, searches must not be limited to numbers or negative
+			terms only, and you should avoid overly general queries.</text>
 			<newline gap="8"/>
-			<text>Most clients on the network will ignore a search for all MP3 files, for example,
-		because it is not specific enough, and would generate too many results.</text>
+			<text>Most clients on the network will ignore a search for all MP3 files, for example, 
+			because it is not specific enough, and would generate too many results.</text>
 		</document>
 		<document name="SearchHelp.BadSearch2">
 			<text format="b">Please re-phrase the search</text>
 			<newline gap="8"/>
 			<text>This search does not contain enough terms to function properly. All searches need
-		a minimum number of valid, alphabetic characters to be able to start.</text>
+			a minimum number of valid, alphabetic characters to be able to start.</text>
 			<newline gap="8"/>
-			<text>While common file extentions (and numbers) can be searched for, you must enter
-		other terms as well when creating the search. Punctuation and wildcards are not used
-		in searches, just the text you enter.</text>
+			<text>While common file extensions (and numbers) can be searched for, you must enter
+			other terms as well when creating the search. Punctuation and wildcards are not used 
+			in searches, just the text you enter.</text>
 		</document>
 		<document name="SearchHelp.BadSearch3">
 			<text format="b">Please re-phrase the search</text>
 			<newline gap="8"/>
-			<text>This search seems to contain only common file extentions, or no searchable
-		words.</text>
+			<text>This search seems to contain only common file extensions, or no searchable
+			words.</text>
 			<newline gap="8"/>
 			<text>If you are having trouble creating searches, keep in mind that it's quite similar
-		to a web search. Specific terms or phrases are best- Unique names, titles and
-		keywords.</text>
+			to a web search. Specific terms or phrases are best- Unique names, titles and
+			keywords.</text>
 			<newline gap="8"/>
 			<text>General terms cannot be searched for efficiently and may result in poor
-		search performance, as well as high bandwidth use during searches.</text>
+			search performance, as well as high bandwidth use during searches.</text>
 			<newline gap="8"/>
 			<text>Further help is available on the Shareaza web site.</text>
 		</document>
 		<document name="SearchHelp.AdultSearch">
 			<text format="b">This search cannot be started</text>
 			<newline gap="8"/>
-			<text>The specified search would probably return a large number of results with adult
-		content, and this has been turned off in the settings. You should either re-phrase the
-		search, or disable the filter.</text>
+			<text>The specified search would probably return a large number of results with adult 
+			content, and this has been turned off in the settings. You should either re-phrase the 
+			search, or disable the filter.</text>
 			<newline gap="8"/>
-			<text>To disable the filter, go into Tools &gt; Settings &gt; General and un-check the
-		adult content filter.</text>
+			<text>To disable the filter, go into Tools &gt; Settings &gt; General and uncheck the
+			adult content filter.</text>
 		</document>
 		<!-- Share help documents -->
 		<document name="ShareHelp.AlreadyShared">
@@ -2317,24 +2314,25 @@
 			<text format="b">This folder should not be shared</text>
 			<newline gap="8"/>
 			<text>This folder is (or contains) a system folder. Sharing this folder is not
-		recommended, since most of the files in it are of no use to other people.</text>
+			recommended, since most of the files in it are of no use to other people.</text>
 			<newline gap="8"/>
 			<text>Folders such as the Windows directory, Program Files, and similar folders
-		do not usually contain files suitable for sharing. Any files of interest would be in
-		sub-folders located</text><text format="i">inside</text><text>these folders. Please share those instead.</text>
+			do not usually contain files suitable for sharing. Any files of interest would be in
+			sub-folders located</text><text format="i">inside</text><text>these folders.
+			Please share those instead.</text>
 			<newline gap="8"/>
 			<text>The Shareaza 'incomplete' folder should also not be shared through the
-		library, since attempting to hash downloads in progress may impact on performance.</text>
+			library, since attempting to hash downloads in progress may impact on performance.</text>
 		</document>
 	</documents>
 	<!-- Localised Command Tip Text. The "message" is displayed in the status bar, while the "tip" is shown in a tooltip -->
 	<commandTips>
 		<tip id="AFX_IDS_APP_TITLE" message="‪‪שרזה"/>
-		<tip id="AFX_IDS_IDLEMESSAGE" message="...מוכן"/>
+		<tip id="AFX_IDS_IDLEMESSAGE" message="Ready"/>
 		<tip id="AFX_IDS_MDICHILD" message="Activate this window"/>
-		<tip id="AFX_IDS_PREVIEW_CLOSE" message="Close print preview mode" tip="‪תצוגה מקדימה"/>
-		<tip id="AFX_IDS_SCCLOSE" message="הגדל את החלון הפעיל בכדי למלא את החלון"/>
-		<tip id="AFX_IDS_SCMAXIMIZE" message="הגדל את החלון הפעיל בכדי למלא את החלון"/>
+		<tip id="AFX_IDS_PREVIEW_CLOSE" message="Close print preview mode" tip="Cancel Preview"/>
+		<tip id="AFX_IDS_SCCLOSE" message="Close the active window and prompts to save the documents"/>
+		<tip id="AFX_IDS_SCMAXIMIZE" message="Enlarge the window to full size"/>
 		<tip id="AFX_IDS_SCMINIMIZE" message="Reduce the window to an icon"/>
 		<tip id="AFX_IDS_SCMOVE" message="Change the window position"/>
 		<tip id="AFX_IDS_SCNEXTWINDOW" message="Switch to the next document window"/>
@@ -2364,7 +2362,7 @@
 		<tip id="ID_CHILD_RESTORE" message="פתח את החלון הנבחר"/>
 		<tip id="ID_DISCOVERY_ADD" message="הוסף שירות משאבי חיבור"/>
 		<tip id="ID_DISCOVERY_ADVERTISE" message=".GWebCache לשירות רנדומלי קיים של GWebCache פירסום שירות"/>
-		<tip id="ID_DISCOVERY_BLOCKED" message="Show GWebCache services in the Discovery window."/>
+		<tip id="ID_DISCOVERY_BLOCKED" message="Show blocked services in the Discovery window."/>
 		<tip id="ID_DISCOVERY_BROWSE" message="באינטרנט GWebCache סייר סטטיסטיקות לשירות"/>
 		<tip id="ID_DISCOVERY_EDIT" message="הצגת ההגדרות לשירות המשאבי חיבור הנבחר"/>
 		<tip id="ID_DISCOVERY_GNUTELLA" message="בחלון שירות המשאבי חיבור bootstrap הראה שירותי"/>
@@ -2412,7 +2410,7 @@
 		<tip id="ID_DOWNLOADS_SHOW_SOURCES" message="הצג מקורות שכרגע לא בשימוש"/>
 		<tip id="ID_DOWNLOADS_SOURCES" message="חפש מקורות נוספים עבור ההורדה הנבחרת"/>
 		<tip id="ID_DOWNLOADS_URL" message="להורדה הנבחרת URL הוסף כתובת"/>
-		<tip id="ID_DOWNLOADS_VIEW_REVIEWS" message="הצג ביקורות להורדה הנבחרת"/>
+		<tip id="ID_DOWNLOADS_VIEW_REVIEWS" message="View reviews for the selected download."/>
 		<tip id="ID_HELP_ABOUT" message="הצג מידע אודות שרזה"/>
 		<tip id="ID_HELP_CODEC" message="הכל אודות מקודדים ובעיות וידאו"/>
 		<tip id="ID_HELP_FAQ" message="הצג שאלות נפוצות של שרזה"/>
@@ -2433,7 +2431,7 @@
 		<tip id="ID_HITMONITOR_CLEAR" message="נקה את זיכרון התוצאות של המוניטור"/>
 		<tip id="ID_HITMONITOR_PAUSE" message="השהה את זיכרון התוצאות של המוניטור"/>
 		<tip id="ID_HITMONITOR_SEARCH" message="חפש את הרשת עבור המונח הנבחר"/>
-		<tip id="ID_HOSTCACHE_BT_CACHE" message="הצג העלאות של ביט-טורנט"/>
+		<tip id="ID_HOSTCACHE_BT_CACHE" message="Show BitTorrent cached hosts."/>
 		<tip id="ID_HOSTCACHE_CONNECT" message="התחבר לכתובות הנבחרות"/>
 		<tip id="ID_HOSTCACHE_DC_CACHE" message="Show DC++ cached hubs."/>
 		<tip id="ID_HOSTCACHE_DISCONNECT" message="התנתק מהשכנים הנבחרים"/>
@@ -2443,10 +2441,10 @@
 		<tip id="ID_HOSTCACHE_G2_CACHE" message="הצג כתובות של גנוטלה2"/>
 		<tip id="ID_HOSTCACHE_G2_HORIZON" message="של גנוטלה2 horizon hubs הצג"/>
 		<tip id="ID_HOSTCACHE_IMPORT" message="&quot;server.met&quot; ייבא רשימה של כתובות ידועות כמו"/>
-		<tip id="ID_HOSTCACHE_KAD_CACHE" message="הצג כתובות של גנוטלה1"/>
+		<tip id="ID_HOSTCACHE_KAD_CACHE" message="Show Kademlia cached hosts."/>
 		<tip id="ID_HOSTCACHE_PRIORITY" message="נסה להתחבר לשרת זה לפני שרתים אחרים"/>
 		<tip id="ID_HOSTCACHE_REMOVE" message="הסר את הכתובות הנבחרות מהרשימה"/>
-		<tip id="ID_IMPORT_DOWNLOADS" message="_ייבא קבצים חלקיים של אי-מיול..."/>
+		<tip id="ID_IMPORT_DOWNLOADS" message="Import eMule partial downloads..."/>
 		<tip id="ID_LIBRARY_ADD" message="הוסף תיקייה חדשה לספריה שלך"/>
 		<tip id="ID_LIBRARY_ALBUM_DELETE" message="מחק את תיקיית האלבום הנבחרת"/>
 		<tip id="ID_LIBRARY_ALBUM_OPEN" message="פתח את תיקיית האלבום הנבחרת"/>
@@ -2476,7 +2474,7 @@
 		<tip id="ID_LIBRARY_REBUILD" message="בנה מחדש metadeta ו-hash לתקיות או הקבצים הנבחרים."/>
 		<tip id="ID_LIBRARY_REBUILD_ANSI" message="בנה מחדש metadeta בשמוש בשפה אחרת."/>
 		<tip id="ID_LIBRARY_REFRESH" message="רענן את תצוגת הספריה"/>
-		<tip id="ID_LIBRARY_REFRESH_METADATA" message="_Refresh Metadata"/>
+		<tip id="ID_LIBRARY_REFRESH_METADATA" message="Refresh file metadata"/>
 		<tip id="ID_LIBRARY_REMOVE" message="הסר את התיקיות המשותפות הנבחרות"/>
 		<tip id="ID_LIBRARY_RENAME" message="שנה שם של הקובץ הנבחר"/>
 		<tip id="ID_LIBRARY_SCAN" message="סורק את הקבצים והתיקיות הנבחרים לשינויים"/>
@@ -2514,7 +2512,7 @@
 		<tip id="ID_MEDIA_PAUSE" message="השהה ניכון של קובץ המדיה" tip="‪השהה"/>
 		<tip id="ID_MEDIA_PLAY" message="התחל לנגן את קובץ המדיה הנוכחי" tip="נגן"/>
 		<tip id="ID_MEDIA_PLAYLIST" message="הצג או הסתר את עורך רשימת ההשמעה"/>
-		<tip id="ID_MEDIA_POSITION" message="עבור למיקום אחר בקובץ המדיה" tip="Seek"/>
+		<tip id="ID_MEDIA_POSITION" message="Seek to a position in the media file." tip="Seek"/>
 		<tip id="ID_MEDIA_PREVIOUS" message="דלג לקובץ הקודם ברשימת ההשמעה הנוכחית" tip="הקובץ הקודם"/>
 		<tip id="ID_MEDIA_PROPERTIES" message="הצג וערוך את המאפיינים של הקבצים שנבחרו."/>
 		<tip id="ID_MEDIA_RANDOM" message="קבע מצב בחירה רנדומלית ברשימת ההשמעה הנוכחית"/>
@@ -2529,15 +2527,15 @@
 		<tip id="ID_MEDIA_SIZE_ONE" message="הצג את הוידאו בגודלו המקורי"/>
 		<tip id="ID_MEDIA_SIZE_THREE" message="הצג את הוידאו בגודל משולש מגודלו המקורי"/>
 		<tip id="ID_MEDIA_SIZE_TWO" message="הצג את הוידאו בגודל כפול מגודלו המקורי"/>
-		<tip id="ID_MEDIA_SPEED" message="כוונן את מהירות השמעת קובץ המדיה" tip="מהירות"/>
+		<tip id="ID_MEDIA_SPEED" message="Adjust the speed of the media file." tip="מהירות"/>
 		<tip id="ID_MEDIA_STATUS" message="הצג או הסתר את שורת מצב המדיה"/>
 		<tip id="ID_MEDIA_STOP" message="הפסק השמעת קובץ המדיה" tip="‪הפסק"/>
 		<tip id="ID_MEDIA_VIS" message="בחר תוסף לאפקט אודיו ויזואלי"/>
-		<tip id="ID_MEDIA_VOLUME" message="כוונן את עוצמת הקול" tip="Volume"/>
+		<tip id="ID_MEDIA_VOLUME" message="Adjust the audio volume." tip="Volume"/>
 		<tip id="ID_MEDIA_ZOOM" message="שנה את הגדרות הזום ויחס התמונה"/>
 		<tip id="ID_MONITOR_CLOSE" message="סגור את חלון המוניטור"/>
 		<tip id="ID_MUSICBRAINZ_ALBUMS" message="Look at all albums for this artist."/>
-		<tip id="ID_MUSICBRAINZ_MATCHES" message="חפש עבור עותקים אחרים של הקובץ הנבחר"/>
+		<tip id="ID_MUSICBRAINZ_MATCHES" message="Search for albums matching the selected file."/>
 		<tip id="ID_NEIGHBOURS_CHAT" message="פתח חלון צ'אט עם המשתמש הנבחר"/>
 		<tip id="ID_NEIGHBOURS_COPY" message="בכדי לגשת לכתובת הנבחרת URI התנתק מ"/>
 		<tip id="ID_NEIGHBOURS_DISCONNECT" message="התנתק מהשכנים הנבחרים"/>
@@ -2558,14 +2556,14 @@
 		<tip id="ID_NETWORK_G1" message="התחבר לרשת גנוטלה המקורית"/>
 		<tip id="ID_NETWORK_G2" message="התחבר לגנוטלה2 - מומלץ מאוד"/>
 		<tip id="ID_NETWORK_SEARCH" message="התחל חיפוש חדש ברשת"/>
-		<tip id="ID_NEXT_PANE" message="Switch to the next window pane" tip="‪הבא בתור"/>
+		<tip id="ID_NEXT_PANE" message="Switch to the next window pane" tip="Next Pane"/>
 		<tip id="ID_OPEN_DOWNLOADS_FOLDER" message="Open my folder of completed Downloads"/>
-		<tip id="ID_PREV_PANE" message="דלג לקובץ הקודם ברשימת ההשמעה הנוכחית" tip="הקובץ הקודם"/>
-		<tip id="ID_SCHEDULER_ACTIVATE" message="נקה את העלאות הנבחרות מהרשימה"/>
+		<tip id="ID_PREV_PANE" message="Switch back to the previous window pane" tip="Previous Pane"/>
+		<tip id="ID_SCHEDULER_ACTIVATE" message="Activates selected task(s) from the list."/>
 		<tip id="ID_SCHEDULER_ADD" message="Adds a new task to scheduler list."/>
-		<tip id="ID_SCHEDULER_DEACTIVATE" message="התחבר לרשת"/>
-		<tip id="ID_SCHEDULER_EDIT" message="ערוך את חוק האבטחה הנבחר"/>
-		<tip id="ID_SCHEDULER_REMOVE" message="הסר את ההורדה הנבחרת מהרשימה"/>
+		<tip id="ID_SCHEDULER_DEACTIVATE" message="Deactivates selected tasks."/>
+		<tip id="ID_SCHEDULER_EDIT" message="Edit the selected task..."/>
+		<tip id="ID_SCHEDULER_REMOVE" message="Removes selected task(s) from the list."/>
 		<tip id="ID_SCHEDULER_REMOVE_ALL" message="Removes all scheduled tasks."/>
 		<tip id="ID_SEARCH_CHAT" message="פתח חלון צ'אט עם המשתמש הנבחר"/>
 		<tip id="ID_SEARCH_CLEAR" message="נקה את תוצאות החיפוש"/>
@@ -2602,11 +2600,11 @@
 		<tip id="ID_SYSTEM_COPY" message="Copy selected line(s) of status log."/>
 		<tip id="ID_SYSTEM_TIMESTAMP" message="הצג זמן/שעה לכל שורה"/>
 		<tip id="ID_SYSTEM_VERBOSE" message="הצג רישום מפורט על פעילות המערכת"/>
-		<tip id="ID_SYSTEM_VERBOSE_DEBUG" message="הצג מקרא"/>
-		<tip id="ID_SYSTEM_VERBOSE_ERROR" message="הצג מקרא"/>
-		<tip id="ID_SYSTEM_VERBOSE_INFO" message="Display grid lines."/>
+		<tip id="ID_SYSTEM_VERBOSE_DEBUG" message="Display all."/>
+		<tip id="ID_SYSTEM_VERBOSE_ERROR" message="Display errors only."/>
+		<tip id="ID_SYSTEM_VERBOSE_INFO" message="Display infos and above."/>
 		<tip id="ID_SYSTEM_VERBOSE_NOTICE" message="Display notices and above."/>
-		<tip id="ID_SYSTEM_VERBOSE_WARNING" message="Display grid lines."/>
+		<tip id="ID_SYSTEM_VERBOSE_WARNING" message="Display warnings and above."/>
 		<tip id="ID_TAB_CONNECT" message="התחבר או התנתק לרשת"/>
 		<tip id="ID_TAB_HOME" message="חזור לעמוד הבית של שרזה"/>
 		<tip id="ID_TAB_IRC" message="Show the IRC Chat window."/>
@@ -2657,7 +2655,7 @@
 		<tip id="ID_VIEW_NEIGHBOURS" message="הצג או הסתר את חלון השכנים"/>
 		<tip id="ID_VIEW_PACKETS" message="הצג או הסתר את חלון הפקטים"/>
 		<tip id="ID_VIEW_RESULTS_MONITOR" message="הצג או הסתר את מוניטור התוצאות"/>
-		<tip id="ID_VIEW_SCHEDULER" message="הראה או הסתר את חלון האבטחה"/>
+		<tip id="ID_VIEW_SCHEDULER" message="Show or hide SCHEDULER window."/>
 		<tip id="ID_VIEW_SEARCH_MONITOR" message="הראה או הסתר את חלון החיפוש"/>
 		<tip id="ID_VIEW_SECURITY" message="הראה או הסתר את חלון האבטחה"/>
 		<tip id="ID_VIEW_SYSTEM" message="הראה או הסתר את חלון המערכת"/>
@@ -2666,7 +2664,7 @@
 		<tip id="ID_VIEW_UPLOADS" message="הראה או הסתר את חלון העלאות"/>
 		<tip id="ID_VIEW_WINDOWED" message="התשמש בשרזה במצב מתקדם של חלונות"/>
 		<tip id="ID_WEBSERVICES_LIST" message="Choose the web service to get more information about the selected file."/>
-		<tip id="ID_WEBSERVICES_MUSICBRAINZ" message="Search for the file infomation using ShareMonkey service."/>
+		<tip id="ID_WEBSERVICES_MUSICBRAINZ" message="Search for the same artist songs using MusicBrainz service."/>
 		<tip id="ID_WINDOW_ARRANGE" message="Arrange icons at the bottom of the window" tip="Arrange Icons"/>
 		<tip id="ID_WINDOW_CASCADE" message="הרחב את כל החלונות בכדי להתאים למסך"/>
 		<tip id="ID_WINDOW_MONITOR" message="הראה או הסתר את מוניטור רוחב הפס"/>
@@ -2819,7 +2817,7 @@
 		<string id="8239" value="‪הושלם"/>
 		<string id="8240" value="‪:שרזה מעביר את ההורדה"/>
 		<string id="8241" value="‪:שרזה בודקת אם יש שגיאות בהורדה"/>
-		<string id="8243" value="אזור העלאות"/>
+		<string id="8243" value="Upload ratio:"/>
 		<string id="8244" value="Number of reviews:"/>
 		<string id="8288" value="‪סייר בספריית השיתוף שלך בשרזה"/>
 		<string id="8289" value="‪סיור"/>
@@ -2862,7 +2860,7 @@
 		<string id="8335" value="‪המקורות לקובץ כרגע מוגנים בחומת אש"/>
 		<string id="8336" value="‪המקורות לקובץ כרגע במצב לא יציב"/>
 		<string id="8337" value="Untrusted"/>
-		<string id="8338" value=":נוצר"/>
+		<string id="8338" value="Free:"/>
 		<string id="13000" value="Are you sure you want to delete the selected security rules? This cannot be undone."/>
 		<string id="13001" value="Files shared over the Internet"/>
 		<string id="16063" value="UPnP port mapping failed after 10 attempts."/>
@@ -2882,7 +2880,7 @@
 		<string id="16077" value="‪‪.כבר חסומה על ידי חוקי האבטחה שלך %s הכתובת"/>
 		<string id="16078" value="‪‪‪.%s הוסף חוק אבטחה לחסימת"/>
 		<string id="16079" value="‪?האם אתה בטוח שברצונך להתנתק"/>
-		<string id="16080" value="‪אתה לא מחובר לרשת"/>
+		<string id="16080" value="Would you like to always connect to this network?"/>
 		<string id="16081" value="‪Sending query for &quot;%s&quot; to %s."/>
 		<string id="16083" value="‪Forcing your PC into hub mode may have adverse effects on performance and the P2P network  It is generally better to allow Shareaza to decide whether or not hub mode should be used.\n\nHub mode does NOT produce better search results, or have any other advantages for you.\n\nDo you really want to do this, despite these disadvantages?"/>
 		<string id="16085" value="‪G2 is Shareaza's premiere network.  Disabling support for it may severely limit both the number and quality of your search results.  Are you SURE you want to do this?"/>
@@ -2951,7 +2949,7 @@
 		<string id="16270" value="‪Download request to %s timed out, closing connection."/>
 		<string id="16271" value="‪Closing download connection %s due to lack of traffic."/>
 		<string id="16272" value="‪Download host %s does not have the file &quot;%s&quot;."/>
-		<string id="16273" value="‪Download host % responded with an invalid HTTP response."/>
+		<string id="16273" value="Download host %s responded with an invalid HTTP response."/>
 		<string id="16274" value="‪Download host %s responded with %s (%s)."/>
 		<string id="16275" value="‪Download host %s's version of &quot;%s&quot; has a different URN, aborting."/>
 		<string id="16276" value="‪Download host %s's version of &quot;%s&quot; has a different length, aborting."/>
@@ -3007,7 +3005,7 @@
 		<string id="16326" value="‪upload host %s requested &quot;%s&quot; with different SHA1."/>
 		<string id="16327" value="‪Refusing upload of &quot;%s&quot; to %s (%s), busy and client does not support queues."/>
 		<string id="16328" value="‪Push connection to %s established, waiting for handshake..."/>
-		<string id="16329" value="‪Can't open &quot;%s&quot; to upload to host %s, disk/file error."/>
+		<string id="16329" value="Can't open &quot;%s&quot; to upload to host %s due to disk or file error."/>
 		<string id="16330" value="‪Sending upload content range %I64i-%I64i from &quot;%s&quot; to host %s (%s)."/>
 		<string id="16331" value="‪Finished uploading part of &quot;%s&quot; to %s."/>
 		<string id="16332" value="‪Incoming connection from %s is a HTTP upload request."/>
@@ -3058,7 +3056,7 @@
 		<string id="16377" value="‪HTTP שומר"/>
 		<string id="16378" value="Host &quot;%s&quot; sent a 416, without providing available ranges. Closing connection."/>
 		<string id="16379" value="Library Files"/>
-		<string id="16380" value="‪השומר של אידונקי"/>
+		<string id="16380" value="DC++ Guard"/>
 		<string id="16384" value="‪? &quot;%s&quot; הם הינך בטוח/ה שברצונך להפעיל את הקובץ\n\n.קבצים מסויימים יכולים לפגוע במחשב שלך, אנא וודא איזה קובץ אתה מפעיל"/>
 		<string id="16385" value="‪?קבצים, האם הינך מעוניינ/ת להמשיך %i-ל Meta את/ה עומד/ת לשנות את המידע"/>
 		<string id="16386" value="‪.ל- %i קבצים Meta עורך מידע "/>
@@ -3114,8 +3112,8 @@
 		<string id="16525" value="‪פקטים של גנוטלה הועברו בראוטר"/>
 		<string id="16526" value="‪פקטים של גנוטלה נפלו"/>
 		<string id="16527" value="‪פקטים של גנוטלה אבדו"/>
-		<string id="16528" value="‪Gnutella Local Queries"/>
-		<string id="16529" value="‪Gnutella Local Queries"/>
+		<string id="16528" value="Gnutella Incoming Queries"/>
+		<string id="16529" value="Gnutella Processed Queries"/>
 		<string id="16532" value="‪כולל לקבלה TCP רוחב פס"/>
 		<string id="16533" value="‪כולל לשליחה TCP רוחב פס"/>
 		<string id="16534" value="‪כולל לקבלה UDP רוחב פס"/>
@@ -3245,7 +3243,7 @@
 		<string id="17128" value="‪אי-דונקי 2000 Server"/>
 		<string id="17129" value="‪אי-דונקי 2000 (LowID)"/>
 		<string id="17130" value="‪אי-דונקי 2000 (HighID)"/>
-		<string id="17131" value="חיבור"/>
+		<string id="17131" value="DC++ Hub Connection"/>
 		<string id="17216" value="‪Initiating connection to eDonkey2000 server at %s..."/>
 		<string id="17217" value="‪Connected to eDonkey2000 server %s, handshaking..."/>
 		<string id="17218" value="‪ED2K[%s] %s"/>
@@ -3286,7 +3284,7 @@
 		<string id="17477" value="‪BitTorrent coupling with %s responded with the wrong file."/>
 		<string id="17478" value="‪BitTorrent coupling with %s requested an unknown file."/>
 		<string id="17479" value="‪BitTorrent coupling with %s established for &quot;%s&quot;."/>
-		<string id="17480" value="‪BitTorrent coupling with %s requested an unknown file."/>
+		<string id="17480" value="BitTorrent coupling with %s requested an inactive file."/>
 		<string id="17481" value="‪Received BitTorrent descriptor file: &quot;%s&quot;"/>
 		<string id="17482" value="‪Unable to parse prefetched BitTorrent file &quot;%s&quot;."/>
 		<string id="17483" value="‪Error from BitTorrent tracker for &quot;%s&quot; : &quot;%s&quot;."/>
@@ -3300,13 +3298,13 @@
 		<string id="17491" value="‪The torrent &quot;%s&quot; is already on your download list, and cannot be seeded."/>
 		<string id="17492" value="‪Error loading the torrent file &quot;%s&quot;.  This may not be a valid torrent."/>
 		<string id="17493" value="‪Unable to create BitTorrent share file &quot;%s&quot;."/>
-		<string id="17494" value="‪This torrent includes the file &quot;%s&quot;, but Shareaza cannot find this file in your library.  If possible, move the file to the same folder as the torrent and try again."/>
+		<string id="17494" value="This torrent includes the file &quot;%s&quot;, but Shareaza cannot find this file in your library. If possible, move the file to a shared folder and try again."/>
 		<string id="17495" value="‪This torrent includes the file &quot;%s&quot; which should be %s, however your version of the file is %s."/>
 		<string id="17496" value="‪An error occurred while copying from &quot;%s&quot; to a BitTorrent share file."/>
 		<string id="17497" value="‪An unknown error occurred while trying to seed &quot;%s&quot;."/>
 		<string id="17498" value="‪An error was detected in the file &quot;%s&quot;."/>
 		<string id="17501" value="Unable to communicate with tracker"/>
-		<string id="17503" value="Tracker failed- Trying next tracker (%i of %i)"/>
+		<string id="17503" value="Trying next tracker (%i of %i)"/>
 		<string id="17505" value="BitTorrent connection to %s was dropped."/>
 		<string id="17506" value="BitTorrent handshake with %s was dropped."/>
 		<string id="17507" value="BitTorrent coupling with %s was dropped."/>
@@ -3328,16 +3326,16 @@
 		<string id="18509" value="‪You cannot assume this download is complete and reverify it because you do not yet have any partial verification data, such as tiger-tree volume, eDonkey hashset or BitTorrent hashset.  Without verification information the download cannot be reverified."/>
 		<string id="18510" value="‪.האם אתה בטוח שברצונך ששרזה תניח שההורדה הושלמה,  ולאמת את ההורדה מחדש? כל הקובץ ייחשב, ושרזה תאשר את החלקים שיעברו את האימות בהצלחה ותוריד מחדש את החלקים שיכשלו בשלב האימות"/>
 		<string id="18511" value="You have made changes to the file size. Are you sure you want to change the file size for this download?"/>
-		<string id="18512" value="‪?האם אתה בטוח שברצונך לבטל או להפסיק את כל ההורדות בקבוצה"/>
-		<string id="18513" value="‪You have typed an eDonkey2000 hash value, however it is invalid.  Please check it and try again."/>
-		<string id="18514" value="‪You have provided a SHA1 hash value which is different to the one currently associated with this download.  Are you sure you want to change the SHA1 hash now?"/>
+		<string id="18512" value="Are you sure you want to cancel this download but save incomplete file(s)?"/>
+		<string id="18513" value="You have typed an %s hash value, however it is invalid. Please check it and try again."/>
+		<string id="18514" value="You have provided an %s hash value which is different to the one currently associated with this download. Are you sure you want to change the %s hash now?"/>
 		<string id="18515" value="The selected download item currently has some Task attached, please wait and do it later."/>
 		<string id="19000" value="‪גישה מרחוק לא מאופשרת"/>
 		<string id="19001" value="‪.אתה חייב לבחור שם משתמש וסיסמא"/>
 		<string id="19002" value="‪לא מצליח לקבל התקשרויות, כתובת האינטרנט לא זמינה"/>
 		<string id="19103" value="Welcome to Shareaza Chat!"/>
 		<string id="19104" value="Please respect others while using this service"/>
-		<string id="19105" value="חדר שיחה"/>
+		<string id="19105" value="Chat!"/>
 		<string id="20000" value="‪זמין URN אין"/>
 		<string id="20001" value="סגור"/>
 		<string id="20002" value="מתוך"/>
@@ -3415,15 +3413,15 @@
 		<string id="20245" value="New Folder"/>
 		<string id="20246" value="Command-line options:\n\n-tray : Disable startup splash screen and send application to tray\n-nosplash : Disable startup splash screen\n-nowarn : Disable alpha (daily builds) version warning dialog\n-wait : Wait for other application instance exit\n\nInterface modes:\n\n-basic : Start application in Basic interface mode\n-tabbed : Start application in Tabbed interface mode\n-windowed : Start application in Windowed interface mode\n\nSystem options:\n\n-RegServer : Register internal components for everyone\n-UnRegServer : Un-register internal components for everyone\n-RegServerPerUser : Register internal components for current user\n-UnRegServerPerUser : Un-register internal components for current user"/>
 		<string id="20247" value="Failed to load metadata schemas. Please reinstall application."/>
-		<string id="20248" value="‪?לא בחרת אף תיקייה לשיתוף, האם הינך מעוניין להמשיך"/>
+		<string id="20248" value="You selected %u files. Are you sure?"/>
 		<string id="20249" value="Off"/>
 		<string id="20250" value="Low"/>
-		<string id="20251" value="‪מצב _רגיל"/>
+		<string id="20251" value="Normal"/>
 		<string id="20252" value="High"/>
 		<string id="20253" value="Skin load error: %s. Element: %s"/>
 		<string id="20254" value="Loading skin: %s"/>
 		<string id="20255" value="Are you sure you want to remove all scheduled tasks? This cannot be undone."/>
-		<string id="20256" value="‪חפש בשרזה"/>
+		<string id="20256" value="System: Start Shareaza"/>
 		<string id="20257" value="Bandwidth: Full Speed"/>
 		<string id="20258" value="Bandwidth: Reduced Speed"/>
 		<string id="20259" value="Bandwidth: Stop"/>
@@ -3613,13 +3611,13 @@
 			<control/>
 		</dialog>
 		<dialog name="CDownloadsSettingsPage" cookie="BuEdBuBuStCoBuStEdmsStEdmsStEdmsBuStCoStCoBuBuEdBu" caption="‪הורדות">
-			<control caption=":אכסן קבצים שהושלמה הורדתם בתיקייה"/>
+			<control caption="Save Completed Files Here"/>
 			<control/>
 			<control/>
 			<control caption="Scan every completed file with AntiVirus"/>
-			<control caption=":בחר מוצג"/>
+			<control caption="Select AntiVirus:"/>
 			<control/>
-			<control caption=":מספר הורדות"/>
+			<control caption="Number of Downloads"/>
 			<control caption=":מקסימום העברות"/>
 			<control/>
 			<control/>
@@ -3629,13 +3627,13 @@
 			<control caption=":מקס' העברות לקובץ"/>
 			<control/>
 			<control/>
-			<control caption=":הגבלות"/>
+			<control caption="Limits"/>
 			<control caption=":רוחב פס להורדות"/>
 			<control/>
 			<control caption=":אורך תורות מקסימלי"/>
 			<control/>
 			<control caption="‪‏מחובר‎ ‏אליהן אני‎ ‏ברשתות‎ ‏ורק‎ ‏אך‎ ‏והורד‎ ‏העלה"/>
-			<control caption=":אכסן קבצים זמניים כאן"/>
+			<control caption="Store Temporary Incomplete Files Here"/>
 			<control/>
 			<control/>
 		</dialog>
@@ -3693,10 +3691,10 @@
 		<dialog name="CGnutellaSettingsPage" cookie="BuBuCoBuBuCoEdmsEdmsEdmsEdmsEdmsEdmsBuBuBuBuStBuStStStBuStBuStStStBu" caption="גונטלה">
 			<control caption=":רשת גנוטלה2"/>
 			<control caption="תמיד התחבר לגנוטלה2"/>
-			<control caption="התחבר אל גנוטלה2 היום"/>
+			<control caption="Optimal|Leaf|Hub"/>
 			<control caption=":מצב"/>
-			<control caption="אופטימלי|קו ענף|מוקד"/>
-			<control caption=":חיבורי גנוטלה2"/>
+			<control caption="Connect to Gnutella1 today"/>
+			<control caption="Optimal|Leaf|Ultrapeer"/>
 			<control/>
 			<control/>
 			<control/>
@@ -3710,7 +3708,7 @@
 			<control/>
 			<control/>
 			<control caption=":מצב"/>
-			<control caption="אופימלי|קו ענף|Ultrapeer"/>
+			<control caption="Leaf to Hub"/>
 			<control caption=":חיבורי גנוטלה1"/>
 			<control caption=":רשת גנוטלה2"/>
 			<control caption="Mode: "/>
@@ -3869,8 +3867,8 @@
 		</dialog>
 		<dialog name="CWizardConnectionPage" cookie="StStCoStCoStCoStCoStms" caption="(1/6) ברוכים הבאים לשרזה">
 			<control caption="לביצועים מירביים, שרזה צריכה לדעת קצת יותר על החיבור שלך לאינטרנט"/>
-			<control caption=" אנא בחר|אני משתמש באינטרנט בביתי|אני משתמש באינטרנט בקו קבוע במכללה|אני משתמש באינטרנט בקו קבוע במשרד|אני משתמש באינטרנט במלון או בשדה תעופה"/>
-			<control caption="| Dial up Modem| ISDN| ADSL (256K)| ADSL (512K)| ADSL (768K)| ADSL (1.5M)| Cable Modem/SDSL| T1| T3| LAN| OC3"/>
+			<control caption="Choose the type of your Internet connection:"/>
+			<control caption="Dial up Modem|ISDN|ADSL (256K)|ADSL (512K)|ADSL (768K)|ADSL (1.5M)|ADSL (4.0M)|ADSL2 (8.0M)|ADSL2 (12.0M)|ADSL2+ (24.0M)|Cable Modem/SDSL|T1|T3|LAN|OC3"/>
 			<control caption="או בחר:"/>
 			<control/>
 			<control caption="ומהירות ההעלאה:"/>
@@ -3959,7 +3957,7 @@
 			<control/>
 			<control/>
 			<control caption=":מין וגיל"/>
-			<control caption="|זכר|נקבה"/>
+			<control caption="Male|Female"/>
 			<control caption=":מין"/>
 			<control/>
 			<control caption=":גיל"/>
@@ -4035,8 +4033,8 @@
 		</dialog>
 		<dialog name="CLanguageDlg" cookie="" caption="בחר שפה">
 		</dialog>
-		<dialog name="CConnectToDlg" cookie="BuCoEdBuCoBuBuBu" caption="התחבר אל|סייר במידע משתמש">
-			<control caption=":צור חיבור חדש עם כתובת המשתמש או השרת|סייר במידע המשתמש"/>
+		<dialog name="CConnectToDlg" cookie="BuCoEdBuCoBuBuBu" caption="Connect To|Browse User|Chat to User">
+			<control caption="Initiate a new connection to host or server:|Browse this user:|Chat to this user:"/>
 			<control/>
 			<control/>
 			<control caption=":פרוטוקול רשת"/>
@@ -4103,7 +4101,7 @@
 			<control caption=":כתובת השירות"/>
 			<control/>
 			<control caption=":סוג שירות המשאבי חיבור"/>
-			<control caption="Gnutella Bootstrap|GWebCache|Server.met URL|Blocked"/>
+			<control caption="Gnutella Bootstrap|G1 GWebCache|G2 GWebCache|G1/G2 GWebCache|Server.met URL|Blocked"/>
 			<control caption="אישור"/>
 			<control caption="ביטול"/>
 		</dialog>
@@ -4152,7 +4150,7 @@
 		<dialog name="CFileCommentsPage" cookie="StStCoStEdEd" caption="הביקורת שלי">
 			<control caption="הדירוג שלי"/>
 			<control caption="הדירוג שלי לקובץ - "/>
-			<control caption="ללא דירוג|זיוף|שגוי|מטעה|גרוע|ממוצע|טוב|טוב מאוד|מעולה"/>
+			<control caption="(No Rating)|Fake/Corrupt/Misleading|Poor|Average|Good|Very Good|Excellent"/>
 			<control caption="הביקורת והתגובות שלי"/>
 			<control/>
 			<control/>
@@ -4293,7 +4291,7 @@
 			<control caption="אנא בחר את הצורה לקישורים ולחץ על כפתור שמור URI קבצים לייצא להפניות של קישורי %lu בחרת"/>
 			<control/>
 			<control caption="Token הכנס:"/>
-			<control caption="Tiger Root|SHA1|MD5|ED2K (CMD4)|Filename|Filename (URI)|Base Filename|File Extension|File Size|File Size (bytes)|Folder Path|Local Host|Local Port"/>
+			<control caption="Tiger Root|SHA1|MD5|ED2K (CMD4)|BitTorrent|Filename|Filename (URI)|Base Filename|File Extension|File Size|File Size (bytes)|Folder Path|Local Host|Local Port|Link|Link (URI)"/>
 			<control caption=":בחר מוצג"/>
 			<control caption="Magnet|eDonkey|Magnet HTML|eDonkey HTML"/>
 			<control caption="_העתק"/>
@@ -4390,7 +4388,7 @@
 			<control caption="The reason for deleting:"/>
 			<control caption="Just deleting, keep my comments|This file is named incorrectly, and could be misleading|This file is of very poor quality|This file is a fake, or is corrupt or somehow unusable|Replace my comments with the new ones"/>
 			<control caption="File rating:"/>
-			<control caption="ללא דירוג|זיוף|שגוי|מטעה|גרוע|ממוצע|טוב|טוב מאוד|מעולה"/>
+			<control caption="(No Rating)|Fake/Corrupt/Misleading|Poor|Average|Good|Very Good|Excellent"/>
 			<control caption=":הינך יכול לכתוב הערה קצרה המתארת מדוע הקובץ לא טוב"/>
 			<control/>
 		</dialog>
@@ -4463,13 +4461,13 @@
 			<control/>
 			<control/>
 			<control/>
-			<control caption=":לפי"/>
+			<control caption=" As needed| When ratio over 100%| Only when requested| Never"/>
 			<control/>
 			<control caption=":הערות"/>
 			<control caption=" - תוסף"/>
 			<control caption=":נוצר"/>
 			<control caption=":התחל העברות של הורדה חדשה"/>
-			<control caption="לפי הצורך|כשהיחס העברות מעל 100%|רק כשמתבקש|אף פעם"/>
+			<control caption="Comments:"/>
 			<control caption="Transfers:"/>
 			<control caption="Total Uploaded:"/>
 			<control caption="Notes:"/>
@@ -4482,7 +4480,7 @@
 			<control/>
 			<control/>
 			<control/>
-			<control caption=":גשש"/>
+			<control caption="Disabled|Single Tracker|Multi-tracker|Multi-tracker (locked)"/>
 			<control caption="_Refresh"/>
 			<control/>
 			<control caption="Completed (Seeds):"/>
@@ -4558,7 +4556,7 @@
 			<control/>
 			<control caption="‪גנוטלה 1"/>
 			<control caption="‪גנוטלה 2"/>
-			<control caption="‪אי-דונקי 2000"/>
+			<control caption="eDoonkey2K"/>
 			<control caption="DC++"/>
 			<control caption="ביט-טורנט"/>
 			<control caption="Select the event type:"/>
@@ -4708,8 +4706,8 @@
 		</list>
 		<list name="CSchedulerWnd">
 			<column from="Action" to="פעולה"/>
-			<column from="Trigger" to="‪TigerTree"/>
-			<column from="Next Run" to="‪הבא"/>
+			<column from="Trigger" to="Trigger"/>
+			<column from="Next Run" to="NextRun"/>
 			<column from="Active" to="‪פעיל"/>
 			<column from="Status" to="מצב"/>
 			<column from="Description" to="תיאור"/>

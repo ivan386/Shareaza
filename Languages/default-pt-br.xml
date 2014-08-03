@@ -2859,7 +2859,7 @@ t		Alternativamente, você pode manualmente iniciar este download com o comando 
 		<string id="8335" value="As fontes para este arquivo estão atrás de um firewall"/>
 		<string id="8336" value="As fontes para este arquivo podem ser instáveis"/>
 		<string id="8337" value="Não confiável"/>
-		<string id="8338" value="Criado:"/>
+		<string id="8338" value="Free:"/>
 		<string id="13000" value="Você tem certeza de que você quer apagar as regras de segurança selecionadas?  Isto não pode ser desfeito."/>
 		<string id="13001" value="Arquivos compartilhados pela Internet"/>
 		<string id="16063" value="O mapamento de portas UPnP falhou após 10 tentativas."/>
@@ -3055,7 +3055,7 @@ t		Alternativamente, você pode manualmente iniciar este download com o comando 
 		<string id="16377" value="Proteção HTTP"/>
 		<string id="16378" value="Host &quot;%s&quot; enviou um 416, sem fornecer alcances disponíveis. Fechando conexão."/>
 		<string id="16379" value="Arquivos da Biblioteca"/>
-		<string id="16380" value="Proteção eDonkey"/>
+		<string id="16380" value="DC++ Guard"/>
 		<string id="16384" value="Você tem certeza que você quer abrir o arquivo &quot;%s&quot; ?\n\nAlguns arquivos podem danificar seu computador. Certifique-se que você saiba o que o arquivo é antes de executá-lo."/>
 		<string id="16385" value="Você está prestes a modificar a metadata de %i arquivos. Você tem certeza que você quer continuar?"/>
 		<string id="16386" value="Editando metadata de %i arquivos."/>
@@ -3115,8 +3115,8 @@ pasta dos arquivos baixados a sua biblioteca agora?"/>
 		<string id="16525" value="Pacotes Gnutella Roteados"/>
 		<string id="16526" value="Pacotes Gnutella Descartados"/>
 		<string id="16527" value="Pacotes Gnutella Perdidos"/>
-		<string id="16528" value="Pesquisas Locais Gnutella"/>
-		<string id="16529" value="Pesquisas Locais Gnutella"/>
+		<string id="16528" value="Gnutella Incoming Queries"/>
+		<string id="16529" value="Gnutella Processed Queries"/>
 		<string id="16532" value="Total de Banda TCP Recebida"/>
 		<string id="16533" value="Total de Banda TCP Transmitida"/>
 		<string id="16534" value="Total de Banda UDP Recebida"/>
@@ -3246,7 +3246,7 @@ pasta dos arquivos baixados a sua biblioteca agora?"/>
 		<string id="17128" value="Servidor eDonkey"/>
 		<string id="17129" value="eDonkey (ID Baixa)"/>
 		<string id="17130" value="eDonkey (ID Alta)"/>
-		<string id="17131" value="Conexão"/>
+		<string id="17131" value="DC++ Hub Connection"/>
 		<string id="17216" value="Iniciando conexão com o servidor eDonkey em %s..."/>
 		<string id="17217" value="Conectado no servidor eDonkey %s, inicializando..."/>
 		<string id="17218" value="ED2K[%s] %s"/>
@@ -3614,13 +3614,13 @@ pasta dos arquivos baixados a sua biblioteca agora?"/>
 			<control/>
 		</dialog>
 		<dialog name="CDownloadsSettingsPage" cookie="BuEdBuBuStCoBuStEdmsStEdmsStEdmsBuStCoStCoBuBuEdBu" caption="Downloads">
-			<control caption="Salvar _Arquivos Completados Aqui:"/>
+			<control caption="Save Completed Files Here"/>
 			<control/>
 			<control/>
 			<control caption="Scan every completed file with AntiVirus"/>
-			<control caption="Selecionar a config salva:"/>
+			<control caption="Select AntiVirus:"/>
 			<control/>
-			<control caption="_Número de Downloads:"/>
+			<control caption="Number of Downloads"/>
 			<control caption="Máximo de Arquivos:"/>
 			<control/>
 			<control/>
@@ -3630,13 +3630,13 @@ pasta dos arquivos baixados a sua biblioteca agora?"/>
 			<control caption="Transfers por Arq:"/>
 			<control/>
 			<control/>
-			<control caption="_Limites:"/>
+			<control caption="Limits"/>
 			<control caption="Total da Banda de Download:"/>
 			<control/>
 			<control caption="Tamanho Máximo da Fila:"/>
 			<control/>
 			<control caption="Só baixar e enviar para redes nas quais está conectado."/>
-			<control caption="Armazenar Arquivos _Incompletos Temporários Aqui:"/>
+			<control caption="Store Temporary Incomplete Files Here"/>
 			<control/>
 			<control/>
 		</dialog>
@@ -3694,10 +3694,10 @@ pasta dos arquivos baixados a sua biblioteca agora?"/>
 		<dialog name="CGnutellaSettingsPage" cookie="BuBuCoBuBuCoEdmsEdmsEdmsEdmsEdmsEdmsBuBuBuBuStBuStStStBuStBuStStStBu" caption="Gnutella">
 			<control caption="Sempre conectar a Gnutella2"/>
 			<control caption="Conectar a Gnutella2 hoje"/>
-			<control caption="Modo:"/>
-			<control caption="Otimizado|Leaf|Hub"/>
+			<control caption="Optimal|Leaf|Hub"/>
+			<control caption="Always connect to Gnutella1"/>
 			<control caption="C_onexões G2:"/>
-			<control caption="Leaf para Hub:"/>
+			<control caption="Optimal|Leaf|Ultrapeer"/>
 			<control/>
 			<control/>
 			<control/>
@@ -4241,7 +4241,7 @@ pasta dos arquivos baixados a sua biblioteca agora?"/>
 		<dialog name="CSecureRuleDlg" cookie="BuStCoStEdBuStEdEdEdEdStEdEdEdEdBuEdBuBuBuBuStCoStCoEdStEdStEdStBuBu" caption="Regra de Segurança">
 			<control caption="_Regra:"/>
 			<control caption="Tipo:"/>
-			<control caption="Rede (IP) Filtro de Endereço/Conteúdo"/>
+			<control caption="Network (IP) Address|Content Filter"/>
 			<control caption="Comentário:"/>
 			<control/>
 			<control caption="_Endereço da Rede:"/>
@@ -4710,7 +4710,7 @@ pasta dos arquivos baixados a sua biblioteca agora?"/>
 		<list name="CSchedulerWnd">
 			<column from="Action" to="Ação"/>
 			<column from="Trigger" to="Gatilho"/>
-			<column from="Next Run" to="PróximaExecução"/>
+			<column from="Next Run" to="NextRun"/>
 			<column from="Active" to="Ativ(o)a"/>
 			<column from="Status" to="Status"/>
 			<column from="Description" to="Descrição"/>

@@ -1201,14 +1201,14 @@
 			<item id="ID_LIBRARY_FOLDER_FILE_PROPERTIES" text="_Ιδιότητες Αρχείου"/>
 		</menu>
 		<menu name="CLibraryTree.Virtual.Basic">
-			<item id="ID_LIBRARY_FOLDER_ENQUEUE" text="Αναπαραγωγή Album"/>
+			<item id="ID_LIBRARY_FOLDER_ENQUEUE" text="Play _Album"/>
 			<item id="ID_LIBRARY_FOLDER_DELETE" text="_Διαγραφή"/>
 			<separator/>
 			<item id="ID_LIBRARY_FOLDER_FILE_PROPERTIES" text="_Ιδιότητες Αρχείου"/>
-			<item id="ID_LIBRARY_FOLDER_PROPERTIES" text="Ιδιότητες _Φακέλου"/>
+			<item id="ID_LIBRARY_FOLDER_PROPERTIES" text="Album _Properties"/>
 		</menu>
 		<menu name="CLibraryTree.Virtual">
-			<item id="ID_LIBRARY_FOLDER_ENQUEUE" text="Αναπαραγωγή Album"/>
+			<item id="ID_LIBRARY_FOLDER_ENQUEUE" text="Play _Album"/>
 			<item id="ID_LIBRARY_FOLDER_DELETE" text="_Διαγραφή"/>
 			<separator/>
 			<item id="ID_LIBRARY_REBUILD" text="Ανα_δόμηση"/>
@@ -1217,7 +1217,7 @@
 			<item id="ID_LIBRARY_FOLDER_NEW" text="_Νέο Album..."/>
 			<separator/>
 			<item id="ID_LIBRARY_FOLDER_FILE_PROPERTIES" text="_Ιδιότητες Αρχείου"/>
-			<item id="ID_LIBRARY_FOLDER_PROPERTIES" text="Ιδιότητες _Φακέλου"/>
+			<item id="ID_LIBRARY_FOLDER_PROPERTIES" text="Album _Properties"/>
 		</menu>
 		<!-- LIBRARY VIEWS -->
 		<menu name="CLibraryTileView">
@@ -1296,7 +1296,7 @@
 		<menu name="CLibraryFileView.Virtual.Basic">
 			<item id="ID_LIBRARY_LAUNCH" text="_Άνοιγμα"/>
 			<item id="ID_LIBRARY_ENQUEUE" text="Προσθήκη στη _Λίστα Αναπαραγωγής"/>
-			<item id="ID_LIBRARY_FOLDER_ENQUEUE" text="Αναπαραγωγή Album"/>
+			<item id="ID_LIBRARY_FOLDER_ENQUEUE" text="Play _Album"/>
 			<separator/>
 			<item id="ID_LIBRARY_SHARED_FILE" text="_Κοινοποιημένο"/>
 			<separator/>
@@ -1700,8 +1700,8 @@
 				<icon res="252" width="32" height="32"/><gap size="8"/>
 				<heading align="middle">Π Ρ Ο Ε Ι Δ Ο Π Ο Ι Η Σ Η   -   Ε Ν Ο Χ Λ Η Τ Ι Κ Ο   F I R E W A L L</heading>
 				<newline gap="8" indent="42"/>
-				<text colour="FF0000">Το Shareaza εντόπισε ότι είστε πίσω από NAT router ή firewall,
-			και δεν είστε σε θέση να λάβετε συνδέσεις από το Διαδίκτυο.  </text>
+				<text colour="FF0000">Shareaza has detected that you are behind a NAT router or firewall,
+				and are unable to receive connections from the Internet.  </text>
 				<text colour="FF0000" format="b">Αυτό ίσως προκαλέσει χαμηλές επιδόσεις αναζήτησης και λήψης.</text>
 				<newline gap="6"/>
 				<link target="raza:command:ID_HELP_ROUTER">Κλικ εδώ για να μάθετε πώς να ρυθμίσετε τον router ή firewall σας</link>
@@ -1711,8 +1711,8 @@
 				<icon res="252" width="32" height="32"/><gap size="8"/>
 				<heading align="middle">Π Ρ Ο Ε Ι Δ Ο Π Ο Ι Η Σ Η   -   Η   T C P   Θ Υ Ρ Α   Σ Α Σ   Κ Ο Β Ε Τ Α Ι   Α Π Ο   F I R E W A L L</heading>
 				<newline gap="8" indent="42"/>
-				<text colour="FF0000">Το Shareaza εντόπισε ότι είστε πίσω από NAT router ή firewall,
-			και δεν είστε σε θέση να λάβετε TCP συνδέσεις από το Διαδίκτυο.  </text>
+				<text colour="FF0000">Shareaza has detected that you are behind a NAT router or firewall,
+				and are unable to receive TCP connections from the Internet.  </text>
 				<text colour="FF0000" format="b">Αυτό ίσως προκαλέσει χαμηλές επιδόσεις λήψης.</text>
 				<newline gap="6"/>
 				<link target="raza:command:ID_HELP_ROUTER">Κλικ εδώ για να μάθετε πώς να ρυθμίσετε τον router ή firewall σας</link>
@@ -1722,8 +1722,8 @@
 				<icon res="252" width="32" height="32"/><gap size="8"/>
 				<heading align="middle">Π Ρ Ο Ε Ι Δ Ο Π Ο Ι Η Σ Η   -   Η   U D P   Θ Υ Ρ Α   Σ Α Σ   Κ Ο Β Ε Τ Α Ι   Α Π Ο   F I R E W A L L</heading>
 				<newline gap="8" indent="42"/>
-				<text colour="FF0000">Το Shareaza εντόπισε ότι είστε πίσω από NAT router ή firewall,
-			και δεν είστε σε θέση να λάβετε UDP συνδέσεις από το Διαδίκτυο.  </text>
+				<text colour="FF0000">Shareaza has detected that you are behind a NAT router or firewall,
+				and are unable to receive UDP messages from the Internet.  </text>
 				<text colour="FF0000" format="b">Αυτό ίσως προκαλέσει χαμηλές επιδόσεις αναζήτησης.</text>
 				<newline gap="6"/>
 				<link target="raza:command:ID_HELP_ROUTER">Κλικ εδώ για να μάθετε πώς να ρυθμίσετε τον router ή firewall σας</link>
@@ -1839,7 +1839,7 @@
 			<text group="11" align="middle">Αποσυνδεμένο</text>
 			<text group="12" align="middle">Σύνδεση...</text>
 			<text group="13" align="middle">Ενωμένο</text>
-			<text group="14" align="middle" id="G1Hubs">ED2K:</text>
+			<text group="14" align="middle" id="G1Hubs">%i ultrapeers</text>
 			<text group="15" align="middle" id="G1Leaves">%i φύλλα</text>
 			<newline group="10" gap="2"/>
 			<icon group="30" command="ID_NETWORK_ED2K"/><gap group="30" size="4"/>
@@ -1912,8 +1912,8 @@
 			</styles>
 			<text format="b">Καλώς ήρθατε στον Διαχειριστή Ρυθμίσεων του Shareaza</text>
 			<newline gap="16"/>
-			<text>Ο Διαχειριστής Ρυθμίσεων επιτρέπει στους προχωρημένους χρήστες να προσαρμόσουν ολοκληρωτικά το πώς
-		δουλεύει το Shareaza. Οι ρυθμίσεις στον τομέα</text>
+			<text>The Shareaza Settings Manager allows advanced users to completely customise how
+				Shareaza works. The settings in the</text>
 			<text format="b">Γενικά</text>
 			<text>αφορούν την εμπειρία του χρήστη.</text>
 			<newline gap="16" indent="16"/>
@@ -1949,8 +1949,8 @@
 			</styles>
 			<text format="b">Καλώς ήρθατε στον Διαχειριστή Ρυθμίσεων του Shareaza</text>
 			<newline gap="16"/>
-			<text>Ο Διαχειριστής Ρυθμίσεων επιτρέπει στους προχωρημένους χρήστες να προσαρμόσουν ολοκληρωτικά το πώς
-		δουλεύει το Shareaza. Οι ρυθμίσεις στον τομέα</text>
+			<text>The Shareaza Settings Manager allows advanced users to completely customise 
+				how Shareaza works. The settings in the</text>
 			<text format="b">Διαδίκτυο</text>
 			<text>ελέγχουν το πώς το Shareaza αλληλεπιδρά με τα άλλα peers μέσα στα peer-to-peer δίκτυα.</text>
 			<newline gap="16" indent="16"/>
@@ -2069,116 +2069,116 @@
 		<document name="DownloadHelp.Select">
 			<text format="b">Περιοχή Ληφθέντων</text>
 			<newline gap="8"/>
-			<text>Εδώ εμφανίζονται τα τρέχοντα λαμβανόμενα αρχεία. Μπορείτε να δείτε
-		ξεχωριστές πηγές επεκτείνοντας κάθε αρχείο με το μικρό + στα αριστερά.</text>
+			<text>This is where files currently being downloaded are displayed. You can view
+			individual sources by expanding each file with the small + on the left.</text>
 			<newline gap="8"/>
-			<text>Σύρετε τις λήψεις άνω ή κάτω στη λίστα για αλλαγή της προτεραιότητάς τους ή στις Καρτέλες Ομάδων
-		για καλύτερη οργάνωση (στην Ενισχυμένη Μορφή).</text>
+			<text>Drag'n'Drop downloads higher in the list for priority, or onto Download Group 
+			tabs for better organisation (in Power Mode).</text>
 			<newline gap="16"/>
-			<text>Μπορείτε επίσης να χρησιμοποιήσετε αυτήν την εντολή για να λάβετε βοηθητική πληροφόρηση πάνω σε ένα συγκεκριμένο αρχείο.
-		Απλά επιλέξτε ένα αρχείο και διαλέξτε αυτήν την επιλογή ξανά.</text>
+			<text>You can also use this command to get help information on a specific download.
+			Simply select a download and choose this Help command again.</text>
 		</document>
 		<document name="DownloadHelp.Seeding">
 			<text format="b">This Torrent is Seeding</text>
 			<newline gap="8"/>
 			<text>Shareaza has verified this complete download, and is actively sharing it
-		with other downloaders through BitTorrent. Please share at least 100%.</text>
+			with other downloaders through BitTorrent. Please share at least 100%.</text>
 		</document>
 		<document name="DownloadHelp.Completed">
 			<text format="b">Αυτή η Λήψη Ολοκληρώθηκε</text>
 			<newline gap="8"/>
-			<text>Το Shareaza ολοκλήρωσε τη λήψη αυτού του αρχείου και επαλήθευσε ότι
-		είναι 100% σωστό. Έχει επίσης μετακινήσει το αρχείο στον φάκελο των ληφθέντων.</text>
+			<text>Shareaza has finished downloading this file, and has verified that it
+			is 100% correct. It has also moved the file to your downloads folder.</text>
 		</document>
 		<document name="DownloadHelp.Moving">
 			<text format="b">Αυτό το Αρχείο Μετακινείται</text>
 			<newline gap="8"/>
-			<text>Το Shareaza ολοκλήρωσε τη λήψη αυτού του αρχείου και επαλήθευσε ότι
-		είναι σωστό. Αυτήν τη στιγμη μετακινήται ή/και αποσυμπιέζεται στον φάκελο ων ληφθέντων.</text>
+			<text>Shareaza has finished downloading this file, and has verified that
+			it is correct. It is currently being moved and/or unpacked to your downloads folder.</text>
 		</document>
 		<document name="DownloadHelp.Paused">
 			<text format="b">Αυτή η Λήψη έχει Διακοπεί</text>
 			<newline gap="8"/>
-			<text>Έχετε διακόψει αυτήν τη λήψη. Αν θέλετε να συνεχίσετε τη λήψη, μπορείτε να
-		κάνετε κλικ στην εντολή '</text><text format="b">Συνέχιση Λήψης</text><text>'.</text>
+			<text>You have paused this download. If you want it to resume downloading, you
+			can click the '</text><text format="b">Συνέχιση Λήψης</text><text>'.</text>
 		</document>
 		<document name="DownloadHelp.DiskFull">
 			<text format="b">Ο Δίσκος είναι Γεμάτος</text>
 			<newline gap="8"/>
-			<text>Το Shareaza έχει διακόψει αυτόματα αυτήν τη λήψη, επειδή ο σκληρός δίσκος
-		φαίνετε να είναι γεμάτος ή το υπό λήψη αρχείο δεν μπορεί να γραφτεί σε αυτόν.  Αν θέλετε
-		να συνεχίσετε τη λήψη, παρακαλώ ελευθερώστε κάποιο χώρο απο τον σκληρό δίσκο σας ή/και βεβαιωθείτε
-		ότι ο φάκελος του ημιτελούς αρχείου είναι προσπελάσιμος και μετά συνεχίστε τη
-		λήψη.</text>
+			<text>Shareaza has paused this download automatically because the hard disk
+			appears to be full, or the download file cannot be written to. If you wish
+			to continue downloading, please free some space on your hard disk and/or check
+			to make sure the incomplete file folder is accessible, and then resume the
+			download.</text>
 		</document>
 		<document name="DownloadHelp.Verifying">
 			<text format="b">Αυτή η Λήψη Επαληθεύεται</text>
 			<newline gap="8"/>
-			<text>Αυτό η λήψη έχει ολοκληρωθεί και τώρα το Shareaza την ελέγχει για να βεβαιωθεί
-		ότι είναι ακριβώς ίδια με το πρωτότυπο αρχείο.  Αν βρεθούν φθαρμένα τμήματα,
-		το Shareaza θα τα επιδιορθώσει αυτόματα.</text>
+			<text>This download has finished, and Shareaza is now checking it to ensure
+			that it is exactly the same as the original file. If any damaged parts are
+			found, Shareaza will repair them automatically.</text>
 		</document>
 		<document name="DownloadHelp.Downloading">
 			<text format="b">Αυτή η Λήψη είναι Ενεργή!</text>
 			<newline gap="8"/>
-			<text>Αυτή η λήψη αυτήν τη στιγμή εξελίσσεται. Αν λαμβάνει πολύ αργά,
-		μπορείτε να δοκιμάσετε να ψάξετε το δίκτυο για περισσότερες πηγές με την εντολή '</text><text format="b">Εύρεση Επιπλέον Πηγών</text><text>'. Αν η ταχύτητα δεν
-		βελτιωθεί μπορεί να οφείλεται σε περιορισμένες ταχύτητες αποστολής των χρηστών από τους οποίους λαμβάνετε.
-		Η ταχύτητα λήψης συνήθως αυξάνει με την πάροδο του χρόνου.</text>
+			<text>This download is currently in progress. If it is downloading too slowly,
+			you could try searching the network for more sources with the '</text><text format="b">Εύρεση Επιπλέον Πηγών</text><text>' command. If the speed does not 
+			improve it may be due to limited upload speeds of the users you are downloading 
+			from. Download speed usually increases over time.</text>
 		</document>
 		<document name="DownloadHelp.Pending">
 			<text format="b">Αυτή η Λήψη Εκκρεμεί</text>
 			<newline gap="8"/>
-			<text>Αυτή η λήψη περιμένει από κάποιον να αρχίσει να στέλνει.
-		Το Shareaza είναι έτοιμο να αρχίσει να λαμβάνει αυτό το αρχείο, αλλά κανένας δεν το αποστέλει
-		αυτήν τη στιγμή. Λογικά περιμένετε στις ουρές άλλων χρηστών και η λήψη
-		μπορεί να αρχίσει οποιαδήποτε στιγμή. Μπορείτε να εξετάσετε τις ξεχωριστές πηγές για να
-		δειτε κάθε ουρά στην οποία περιμένετε. Αν και εσείς κοινοποιείτε αρχεία, αυτό μπορεί
-		να βελτιώσει τις πιθανότητες μιας λήψης να αρχίσει γρήγορα.</text>
+			<text>This download is waiting for someone to start uploading.
+			Shareaza is ready to start downloading this file, but no-one is sending it at
+			the moment. You are probably waiting in other user's queues, and the download
+			may start transferring at any time. You can examine the individual sources to 
+			see each queue you are waiting in. If you are sharing files yourself, it may
+			improve the chances of a download transfer starting quickly.</text>
 		</document>
 		<document name="DownloadHelp.Queued">
 			<text format="b">Αυτή η Λήψη βρίσκεται στην Ουρά</text>
 			<newline gap="8"/>
-			<text>Αυτή η λήψη περιμένει από κάποια από τις υπόλοιπες λήψεις σας να ολοκληρωθεί.
-		Οι ρυθμίσεις λήψης σας περιορίζουν τον αριθμό των λήψεων που μπορούν να είναι ενεργές ανά
-		πάσα στιγμή, για να εγγυηθεί βεβαιωθεί ότι κάθε λήψη παίρνει ένα καλό μερίδιο του διαθέσιμου
-		εύρους ζώνης.  Μπορείτε να αλλάξετε αυτές τις ρυθμίσεις από τα Εργαλεία &gt; Ρυθμίσεις Shareaza.
-		Εναλλακτικά, μπορείτε να αρχίσετε αυτήν τη λήψη χειροκίνητα με την εντολή συνέχισης.</text>
+			<text>This download is waiting for some of your other downloads to complete.
+			Your download settings limit the number of downloads which may be active at
+			any given time, to ensure that each download gets a good share of the available
+			bandwidth. You can change these settings via Tools, Shareaza Settings.
+			Alternatively, you may manually start this download with the resume command.</text>
 		</document>
 		<document name="DownloadHelp.Searching">
 			<text format="b">Αυτή η Λήψη Αναζητά</text>
 			<newline gap="8"/>
-			<text>Δεν υπάρχουν γνωστές πηγές για αυτήν τη λήψη, ώστε το Shareaza ψάχνει
-		όλα τα ενωμένα P2P δίκτυα για νέες πηγές.  Όταν βρεθούν νέες πηγές, η
-		λήψη θα αρχίσει αυτόματα. Το Shareaza ψάχνει για πηγές αυτόματα,
-		παρόλα αυτά μπορείτε να επιταχύνετε τη διαδικασία χρησιμοποιώντας την εντολή</text>
+			<text>There are no known sources for this download, so Shareaza is searching
+			all connected P2P networks for new sources. Once sources are found, the
+			download will start automatically. Shareaza searches for sources automatically,
+			however you can speed up the process using the</text>
 			<text format="b">Εύρεση Επιπλέον Πηγών</text><text>.</text>
 			<newline gap="8"/>
-			<text>Δυστυχώς σε πολλές περιπτώσεις μπορεί οι χρήστες που έχουν το αρχείο που ψάχνετε
-		να μην είναι ενωμένοι. Η μόνη επιλογή τότε είναι να περιμένετε κάποιον
-		να συνδεθεί ή να ματαιώσετε τη λήψη και να προσπαθήσετε να βρείτε ένα παρόμοιο αρχείο που
-		να είναι πιο ευρέως διαθέσιμο.</text>
+			<text>Unfortunately in many cases there may be no users online who have the
+			file you are looking for. The only course of action here is to wait for
+			someone to come online, or cancel it and try to find a similar file which is
+			more widely available.</text>
 		</document>
 		<document name="DownloadHelp.Creating">
 			<text format="b">Αυτή η Λήψη Δεσμεύει</text>
 			<newline gap="8"/>
-			<text>Το Shareaza δεσμεύει ένα αρχείο στο οποίο θα αποθηκεύσει αυτήν τη λήψη, ώστε να
-		να εξοικονομήσει χρόνο αργότερα.</text>
+			<text>Shareaza is pre-allocating a file in which to store this download, to
+			save time later.</text>
 		</document>
 		<document name="DownloadHelp.Tracker">
 			<text format="b">Πεσμένος BitTorrent Tracker</text>
 			<newline gap="8"/>
-			<text>Ο BitTorrent tracker server για αυτήν τη λήψη φαίνετε να είναι
-		πεσμένος ή να υπολειτουργεί. Το Shareaza αδυνατεί να επικοινωνήσει για να λάβει
-		μια λίστα με peers.</text>
+			<text>The BitTorrent tracker server for this download appears to be
+			down or malfunctioning. Shareaza is unable to contact it to receive
+			a list of peers.</text>
 		</document>
 		<!-- Upload help documents -->
 		<document name="UploadHelp">
 			<text format="b">Χώρος Αποστολών</text>
 			<newline gap="8"/>
-			<text>Εδώ είναι όπου εμφανίζονται οι ουρές και οι αποστολές. Μπορείτε να επεκτείνετε κάθε ουρά
-		με το μικρό + στα αριστερά και να φιλτράρετε τα εμφανιζόμενα με το κουμπί
-		δεξιά στην μπάρα εργαλείων του παραθύρου.</text>
+			<text>This is where queues and uploads are displayed. You can expand each queue
+			with the small + on the left, and filter what is displayed with the button on the
+			right of the window's toolbar.</text>
 		</document>
 		<!-- General help documents -->
 		<document name="GeneralHelp.DiskSpace">
@@ -2186,47 +2186,47 @@
 			<newline gap="8"/>
 			<text>Το ποσοστό του ελεύθερου χώρου σε έναν ή περισσότερους δίσκους που χρησιμοποιούνται από το Shareaza είναι λίγος.</text>
 			<newline gap="8"/>
-			<text>Πρέπει πάντα να προσπαθήτε να κρατάτε στον δίσκο ένα λογίκο ποσοστό ελεύθερου χώρου. Τα προγράμματα
-		μπορεί να γίνουν ασταθεί αν οι δίσκοι γεμίσουν και τα προσωρινά αρχεία μπορεί να χαθούν. Πρέπει
-		να εκτελέσετε έναν καθαρισμό του δίσκου, να διαγράψετε ανεπιθύμητα αρχεία ή να απεγκαταστήσετε εφαρμογές που δεν χρειάζεστε πια.</text>
+			<text>You should always attempt to keep a reasonable amount of disk space free. Programs 
+			can become unstable if the drives become full, and temporary files may be lost. You should 
+			run a disk clean-up, delete unwanted files, or uninstall software you no longer need.</text>
 		</document>
 		<document name="GeneralHelp.DiskWriteFail">
 			<text format="b">Ένας Αναγκαίος Κατάλογος είναι Μη-εγγράψιμος</text>
 			<newline gap="8"/>
 			<text>Ένας δίσκος ή κατάλογος αναγκαίος στο Shareaza δεν μπορεί να γραφτεί.</text>
 			<newline gap="8"/>
-			<text>Ένας δίσκος δικτύου μπορεί να έχει αποσυνδεθεί ή μπορεί να μην έχετε δικαίωμα εγγραφής
-		σε έναν επιλεγμένο κατάλογο. Παρακαλώ εξετάστε τους καταλόγους και τα δικαιώματα ή αλλάξτε την
-		τοποθεσία των προσωρινών αρχείων.</text>
+			<text>A network drive may have been disconnected, or you may not have write permission 
+			to a selected directory. Please check directories and permissions, or change the
+			temporary files location.</text>
 		</document>
 		<document name="GeneralHelp.ConnectionFail">
 			<text format="b">Η Σύνδεση με το Διαδίκτυο έχει Χαθεί</text>
 			<newline gap="8"/>
 			<text>Τα Windows αναφέρουν ότι δεν υπάρχει σύνδεση με το Διαδίκτυο.</text>
 			<newline gap="8"/>
-			<text>Είναι πιθανόν ότι ένα modem ή router έχει πέσει, δηλαδή έχει χαθεί η πρόσβαση
-		στο Διαδίκτυο. Ίσως χρειάζεται να επανεκκινήσετε τη σύνδεσή σας χειροκίνητα.</text>
+			<text>It is likely that a modem or router has dropped, meaning the internet cannot
+			be accessed. You may need to manually re-connect or reset your connection.</text>
 			<newline gap="8"/>
 			<text>Το Shareaza έχει σταματήσει τις προσπάθειες σύνδεσης, ώστε να αποφευχθεί η απώλεια όλων των cached hosts.</text>
 		</document>
 		<document name="GeneralHelp.AdultFilter">
 			<text format="b">Ενεργό φίλτρο περιεχομένου για ενήλικες</text>
 			<newline gap="8"/>
-			<text>Παρακαλώ σημειώστε ότι (όπως με κάθε αυτοματοποιημένο φίλτρο) ίσως να μην είναι 100% αποτελεσματικό στην
-		απόκρυψη περιεχομένου. Είναι σχεδιασμένο απλά για να φιλτράρει υπερβολικά ανεπιθύμητα αποτελέσματα, παρά
-		ως ένα 100% ασφαλές εμπόδιο.</text>
+			<text>Please note that (as with any automated filter) it may not be 100% effective at
+			screening content. It is designed simply to filter out excess unwanted results, rather than 
+			as a 100% safe block.</text>
 			<newline gap="8"/>
 			<text>Η χρήση του Διαδικτύου (συμπεριλαμβανομένου και του P2P) από παιδιά θα πρέπει να γίνετε πάντα υπό γονική επίβλεψη.</text>
 		</document>
 		<document name="GeneralHelp.BadTorrentEncoding">
 			<text format="b">Αυτό το torrent φαίνεται να έχει ένα σφάλμα κωδικοποίησης</text>
 			<newline gap="8"/>
-			<text>Τα Windows αναφέρουν ένα σφάλμα μετάφρασης κατά την αποκωδικοποίηση κειμένου σε αυτό το torrent. Είναι
-		πιθανό ότι αυτό το torrent είναι φθαρμένο ή έστω εσφαλμένα κωδικοποιημένο. Το torrent ίσως
-		εντούτοις ληφθεί φυσιολογικά, παρόλο που κάποια ονόματα αρχέιων μπορεί να είναι εσφαλμένα.</text>
+			<text>Windows has reported a translation fault while decoding text in this torrent. It is
+			possible that the torrent is corrupt, or just incorrectly encoded. The torrent may
+			still download properly, although some file names could be incorrect.</text>
 			<newline gap="8"/>
-			<text>Τα περισσότερα προγράμματα για δημιουργία torrent σας επιτρέπουν να διορθώσετε αυτό το torrent, ώστε
-		να εγγυηθούν ότι θα δουλέψει κατάλληλα σε όλες τις εφαρμογές BitTorrent.</text>
+			<text>Most torrent creation programs should allow you to repair this torrent, which
+			will ensure it works properly in all BitTorrent applications.</text>
 			<newline gap="8"/>
 			<link target="raza:command:ID_HELP_TORRENT">Κλικ εδώ για επιπλέον βοήθεια</link>
 			<text>ή για να λάβεται λογισμικό για να επιδιορθώσετε το torrent.</text>
@@ -2234,72 +2234,72 @@
 		<document name="GeneralHelp.DonkeyServerList">
 			<text format="b">Η λίστα των ED2K servers σας είναι άδεια</text>
 			<newline gap="8"/>
-			<text>Δεν υπάρχουν servers στη λίστα των ED2K servers σας. Χρειάζεστε μια
-		ενημερωμένη λίστα servers (αρχείο met) για να συνδεθείτε στο ED2K.</text>
+			<text>There are no servers in your eDonkey server list. You need to download an
+			up to date server list (met file) to connect to ED2K.</text>
 			<newline gap="8"/>
-			<text>Μπορείτε να λάβετε μια λίστα με servers από τη σελίδα ρυθμίσεων του ED2K ή το παράθυρο
-		υπηρεσιών ανακάλυψης. (Πιέστε F9 για να ανοίξετε το παράθυρο υπηρεσιών ανακάλυψης)</text>
+			<text>You can download a server list from the ed2k setting page, or the discovery
+			services window. (Press F9 to open the discovery services window)</text>
 		</document>
 		<document name="GeneralHelp.UploadWarning">
 			<text format="b">Ο περιορισμός των αποστολών ίσως επιβραδύνει τις λήψεις</text>
 			<newline gap="8"/>
-			<text>Ορισμένα δίκτυα όπου συνδέεται το Shareaza επιβάλουν αναλογίες, περιορίζουν τις αποστολές προς
-		χρήστες που δεν μοιράζουν ή απλά προτιμούν να αποστέλουν σε γνωστούς κοινοποιητές.</text>
+			<text>Several networks Shareaza connects to enforce ratios, limit uploads to
+			clients that do not share, or simply preference uploading to known sharers.</text>
 			<newline/>
-			<text>Ευτυχώς, οι συνδέσεις DSL είναι σαν ένας αυτοκινητόδρομος με δύο λωρίδες: έχετε
-		ξεχωριστές λωρίδες για αποστολή και λήψη. Αν το πρόγραμμά σας είναι σωστά ρυθμισμένο,
-		θα μπορείτε να αποστέλετε με έναν καλό ρυθμό, ενώ διατηρείτε πλήρη χωρητικότητα λήψης.</text>
+			<text>Fortunately, broadband DSL connections are like a two-lane highway: you have
+			separate allocations for upload and download. If your client is properly configured, 
+			you should be able to upload at a good rate while retaining full download capacity.</text>
 			<newline gap="8"/>
-			<text>Οι αποστολές σας έχουν περιοριστεί γύρω στο προεπιλεγμένο 85% του διαθέσιμου ανωδικού εύρους ζώνης,
-		ενώ οι λήψεις σας δεν είναι περιορισμένες. Αυτή η παραμετροποίηση θα σας δώσει τις γρηγορότερες δυνατές
-		λήψεις που είναι διαθέσιμες.</text>
+			<text>By default, your upload limit is set to about 85% of available upstream bandwidth,
+			while downloads are unlimited. That configuration should give you the fastest possible 
+			downloads that are available.</text>
 		</document>
 		<!-- Search help documents -->
 		<document name="SearchHelp.BadSearch1">
 			<text format="b">Παρακαλώ επαναδιατυπώστε την αναζήτηση</text>
 			<newline gap="8"/>
-			<text>Αυτή η αναζήτηση είναι φτωχά διατυπωμένη και μπορεί να μην λειτουργήσει σωστά.
-		Οι αναζητήσεις πρέπει να μην είναι πολύ γενικές, δηλαδή
-		να περιλαμβάνουν αρκετούς μη αρνητικούς όρους, όχι αποκλειστικά αριθμούς
-		και, αν είναι δυνατόν, να καθορίζουν τον τύπο του αρχείου.</text>
+			<text>This search is poorly formatted, and may not function correctly. 
+			Searches should include several terms where possible, and should specify a schema 
+			(file type). Furthermore, searches must not be limited to numbers or negative
+			terms only, and you should avoid overly general queries.</text>
 			<newline gap="8"/>
-			<text>Για παράδειγμα, τα περισσότερα peers στο δίκτυο θα αγνοήσουν μια αναζήτηση για όλα τα MP3 αρχεία,
-		επειδή δεν είναι αρκετά ειδική και θα δημιουργούσε πάρα πολλά αποτελέσματα.</text>
+			<text>Most clients on the network will ignore a search for all MP3 files, for example, 
+			because it is not specific enough, and would generate too many results.</text>
 		</document>
 		<document name="SearchHelp.BadSearch2">
 			<text format="b">Παρακαλώ επαναδιατυπώστε την αναζήτηση</text>
 			<newline gap="8"/>
-			<text>Αυτή η έρευνα δεν περιέχει αρκετούς όρους για να λειτουργήσει κανονικά. Όλες οι αναζητήσεις χρειάζονται
-		έναν ελάχιστο αριθμό έγκυρων αλφαβητικών χαρακτήρων, για να μπορέσουν να ξεκινήσουν.</text>
+			<text>This search does not contain enough terms to function properly. All searches need
+			a minimum number of valid, alphabetic characters to be able to start.</text>
 			<newline gap="8"/>
-			<text>Ενώ γίνεται να αναζητηθούν τύποι αρχείων και αριθμοί, πρέπει να εισάγετε
-		και άλλους όρους όταν δημιουργείτε μια έρευνα. Τα σημεία στίξης και οι μπαλαντέρ
-		δεν χρησιμοποιούνται στις αναζητήσεις. Μόνο το κείμενο που εισάγετε.</text>
+			<text>While common file extensions (and numbers) can be searched for, you must enter
+			other terms as well when creating the search. Punctuation and wildcards are not used 
+			in searches, just the text you enter.</text>
 		</document>
 		<document name="SearchHelp.BadSearch3">
 			<text format="b">Παρακαλώ επαναδιατυπώστε την αναζήτηση</text>
 			<newline gap="8"/>
-			<text>Αυτή η έρευνα φαίνετε να περιέχει μόνο τύπους αρχείων ή μη ερευνήσιμες
-		λέξεις.</text>
+			<text>This search seems to contain only common file extensions, or no searchable
+			words.</text>
 			<newline gap="8"/>
-			<text>Εάν δυσκολεύεστε να δημιουργήσετε αναζητήσεις, θυμηθείτε ότι είναι παρόμοιες
-		με μια αναζήτηση στον ιστό. Συγκεκριμένοι όροι ή φράσεις είναι καλύτερα
-		(μοναδικά ονόματα, τίτλοι και λέξεις κλειδιά).</text>
+			<text>If you are having trouble creating searches, keep in mind that it's quite similar
+			to a web search. Specific terms or phrases are best- Unique names, titles and
+			keywords.</text>
 			<newline gap="8"/>
-			<text>Οι γενικευμένοι όροι δεν μπορούν να αναζητηθούν αποτελεσματικά και
-		ίσως προκαλέσουν φτωχές επιδόσεις αναζήτησης με βαριά χρήση του εύρους ζώνης.</text>
+			<text>General terms cannot be searched for efficiently and may result in poor
+			search performance, as well as high bandwidth use during searches.</text>
 			<newline gap="8"/>
 			<text>Επιπλέον βοήθεια είναι διαθέσιμη στον ιστοχώρο του Shareaza.</text>
 		</document>
 		<document name="SearchHelp.AdultSearch">
 			<text format="b">Αυτή η αναζήτηση δεν μπορεί να ξεκινήσει</text>
 			<newline gap="8"/>
-			<text>Η συγκεκριμένη αναζήτηση πιθανότατα θα επέστρεφε έναν μεγάλο αριθμό αποτελεσμάτων με περιεχόμενο
-		για ενήλικες και αυτό έχει αποκλειστεί απο τις ρυθμίσεις. Θα πρέπει να επαναδιατυπώσετε την
-		αναζήτηση ή να απενεργοποιήσετε το φίλτρο.</text>
+			<text>The specified search would probably return a large number of results with adult 
+			content, and this has been turned off in the settings. You should either re-phrase the 
+			search, or disable the filter.</text>
 			<newline gap="8"/>
-			<text>Για να απενεργοποιήσετε το φίλτρο, πηγαίντε στα Εργαλεία &gt; Ρυθμίσεις Shareaza &gt; Γενικά
-		και αφαιρέστε το τικ από το φίλτρο περιεχομένων για ενήλικες.</text>
+			<text>To disable the filter, go into Tools &gt; Settings &gt; General and uncheck the
+			adult content filter.</text>
 		</document>
 		<!-- Share help documents -->
 		<document name="ShareHelp.AlreadyShared">
@@ -2312,25 +2312,26 @@
 		<document name="ShareHelp.BadShare">
 			<text format="b">Αυτός ο φάκελος δεν θα έπρεπε να κοινοποιηθεί</text>
 			<newline gap="8"/>
-			<text>Αυτός ο φάκελος είναι (ή περιέχει) έναν φάκελο του συστήματος. Η κοινοποίηση αυτού του φακέλου δεν
-		συνίσταται, επειδή τα περισσότερα αρχεία εκεί είναι άχρηστα στους άλλους χρήστες.</text>
+			<text>This folder is (or contains) a system folder. Sharing this folder is not
+			recommended, since most of the files in it are of no use to other people.</text>
 			<newline gap="8"/>
-			<text>Φάκελοι όπως οι Windows, Program Files και παρόμοιοι,
-		συνήθως δεν περιέχουν αρχεία πρόσφορα για κοινοποίηση. Ενδιαφέροντα αρχεία
-		θα βρίσκονται μεσα σε υποφακέλους</text><text format="i">εντός</text><text>αυτών των φακέλων. Παρακαλώ κοινοποιείστε μάλλον αυτούς τους υποφακέλους.</text>
+			<text>Folders such as the Windows directory, Program Files, and similar folders
+			do not usually contain files suitable for sharing. Any files of interest would be in
+			sub-folders located</text><text format="i">εντός</text><text>these folders.
+			Please share those instead.</text>
 			<newline gap="8"/>
-			<text>Ο φάκελος 'incomplete' (ημιτελών) του Shareaza επίσης δεν πρέπει να κοινοποιείται μέσω της
-		Βιβλιοθήκης, επειδή η επαναλαμβανόμενη σάρωση των λήψεων σε εξέλιξη θα μειώσει τις επιδόσεις του συστήματος.</text>
+			<text>The Shareaza 'incomplete' folder should also not be shared through the
+			library, since attempting to hash downloads in progress may impact on performance.</text>
 		</document>
 	</documents>
 	<!-- Localised Command Tip Text. The "message" is displayed in the status bar, while the "tip" is shown in a tooltip -->
 	<commandTips>
 		<tip id="AFX_IDS_APP_TITLE" message="Shareaza"/>
-		<tip id="AFX_IDS_IDLEMESSAGE" message="Έτοιμο"/>
+		<tip id="AFX_IDS_IDLEMESSAGE" message="Ready"/>
 		<tip id="AFX_IDS_MDICHILD" message="Activate this window"/>
-		<tip id="AFX_IDS_PREVIEW_CLOSE" message="Close print preview mode" tip="Αποθήκευση Προεπισκόπησης"/>
-		<tip id="AFX_IDS_SCCLOSE" message="Μεγιστοποίηση ενεργού παραθύρου."/>
-		<tip id="AFX_IDS_SCMAXIMIZE" message="Μεγιστοποίηση ενεργού παραθύρου."/>
+		<tip id="AFX_IDS_PREVIEW_CLOSE" message="Close print preview mode" tip="Cancel Preview"/>
+		<tip id="AFX_IDS_SCCLOSE" message="Close the active window and prompts to save the documents"/>
+		<tip id="AFX_IDS_SCMAXIMIZE" message="Enlarge the window to full size"/>
 		<tip id="AFX_IDS_SCMINIMIZE" message="Reduce the window to an icon"/>
 		<tip id="AFX_IDS_SCMOVE" message="Change the window position"/>
 		<tip id="AFX_IDS_SCNEXTWINDOW" message="Switch to the next document window"/>
@@ -2360,7 +2361,7 @@
 		<tip id="ID_CHILD_RESTORE" message="Επαναφορά επιλεγμένου παραθύρου."/>
 		<tip id="ID_DISCOVERY_ADD" message="Προσθήκη νέας υπηρεσίας ανακάλυψης..."/>
 		<tip id="ID_DISCOVERY_ADVERTISE" message="Διαφήμιση επιλεγμένης υπηρεσίας GWebCache σε ένα τυχαίο ήδη υπάρχον GWebCache."/>
-		<tip id="ID_DISCOVERY_BLOCKED" message="Προβολή υπηρεσιών GWebCache στο παράθυρο ανακάλυψης."/>
+		<tip id="ID_DISCOVERY_BLOCKED" message="Show blocked services in the Discovery window."/>
 		<tip id="ID_DISCOVERY_BROWSE" message="Εμφάνιση στατιστικών για την επιλεγμένη υπηρεσία GWebCache στον Ιστό."/>
 		<tip id="ID_DISCOVERY_EDIT" message="Προβολή ιδιοτήτων επιλεγμένης υπηρεσίας ανακάλυψης."/>
 		<tip id="ID_DISCOVERY_GNUTELLA" message="Προβολή υπηρεσιών bootstrap στο παράθυρο ανακάλυψης."/>
@@ -2408,7 +2409,7 @@
 		<tip id="ID_DOWNLOADS_SHOW_SOURCES" message="Προβολή πηγών που δεν χρησιμοποιούντε αυτήν τη στιγμή."/>
 		<tip id="ID_DOWNLOADS_SOURCES" message="Αναζήτηση περισσότερων πηγών για τις επιλεγμένες λήψεις."/>
 		<tip id="ID_DOWNLOADS_URL" message="Προσθήκη URL πηγής στην επιλεγμένη λήψη..."/>
-		<tip id="ID_DOWNLOADS_VIEW_REVIEWS" message="Προβολή κριτικών για την επιλεγμένη λήψη."/>
+		<tip id="ID_DOWNLOADS_VIEW_REVIEWS" message="View reviews for the selected download."/>
 		<tip id="ID_HELP_ABOUT" message="Εμφάνιση του παραθύρου περί του Shareaza..."/>
 		<tip id="ID_HELP_CODEC" message="Όλα γύρω από codecs και προβλήματα video."/>
 		<tip id="ID_HELP_FAQ" message="Προβολή Συχνών Ερωτήσεων."/>
@@ -2429,7 +2430,7 @@
 		<tip id="ID_HITMONITOR_CLEAR" message="Καθαρισμός buffer εποπτείας ευρέσεων."/>
 		<tip id="ID_HITMONITOR_PAUSE" message="Παύση εποπτείας ευρέσεων."/>
 		<tip id="ID_HITMONITOR_SEARCH" message="Αναζήτηση στο δίκτυο για τον επιλεγμένο όρο."/>
-		<tip id="ID_HOSTCACHE_BT_CACHE" message="Προβολή αποστολών τύπου torrent."/>
+		<tip id="ID_HOSTCACHE_BT_CACHE" message="Show BitTorrent cached hosts."/>
 		<tip id="ID_HOSTCACHE_CONNECT" message="Σύνδεση στους επιλεγμένους hosts."/>
 		<tip id="ID_HOSTCACHE_DC_CACHE" message="Show DC++ cached hubs."/>
 		<tip id="ID_HOSTCACHE_DISCONNECT" message="Αποσύνδεση από τους επιλεγμένους γείτονες."/>
@@ -2439,10 +2440,10 @@
 		<tip id="ID_HOSTCACHE_G2_CACHE" message="Προβολή cached hosts του Gnutella2."/>
 		<tip id="ID_HOSTCACHE_G2_HORIZON" message="Προβολή κόμβων horizon του Gnutella2."/>
 		<tip id="ID_HOSTCACHE_IMPORT" message="Εισαγωγή μιας λίστας γνωστών hosts, όπως ένα &quot;server.met&quot; αρχείο..."/>
-		<tip id="ID_HOSTCACHE_KAD_CACHE" message="Προβολή cached hosts του Gnutella."/>
+		<tip id="ID_HOSTCACHE_KAD_CACHE" message="Show Kademlia cached hosts."/>
 		<tip id="ID_HOSTCACHE_PRIORITY" message="Προσπάθεια σύνδεσης σε αυτόν το server προτού στους άλλους."/>
 		<tip id="ID_HOSTCACHE_REMOVE" message="Αφαίρεση επιλεγμένων hosts από τη host cache."/>
-		<tip id="ID_IMPORT_DOWNLOADS" message="Εισαγωγή _ημιτελών αρχείων του eMule..."/>
+		<tip id="ID_IMPORT_DOWNLOADS" message="Import eMule partial downloads..."/>
 		<tip id="ID_LIBRARY_ADD" message="Προσθήκη νέου φακέλου στη Βιβλιοθήκη..."/>
 		<tip id="ID_LIBRARY_ALBUM_DELETE" message="Διαγραφή επιλεγμένου album."/>
 		<tip id="ID_LIBRARY_ALBUM_OPEN" message="Άνοιγμα επιλεγμένου album."/>
@@ -2472,7 +2473,7 @@
 		<tip id="ID_LIBRARY_REBUILD" message="Αναδόμηση των metadata και των hashes των επιλεγμένων φακέλων και αρχείων."/>
 		<tip id="ID_LIBRARY_REBUILD_ANSI" message="Αναδόμηση metadata με χρήση άλλης γλώσσας."/>
 		<tip id="ID_LIBRARY_REFRESH" message="Ανανέωση προβολής Βιβλιοθήκης."/>
-		<tip id="ID_LIBRARY_REFRESH_METADATA" message="_Ανανέωση Metadata"/>
+		<tip id="ID_LIBRARY_REFRESH_METADATA" message="Refresh file metadata"/>
 		<tip id="ID_LIBRARY_REMOVE" message="Αφαίρεση επιλεγμένων κοινοποιημένων φακέλων."/>
 		<tip id="ID_LIBRARY_RENAME" message="Μετονομασία επιλεγμένου αρχείου επιτόπου."/>
 		<tip id="ID_LIBRARY_SCAN" message="Σάρωση επιλεγμένων φακέλων ή αρχείων για αλλαγές."/>
@@ -2510,7 +2511,7 @@
 		<tip id="ID_MEDIA_PAUSE" message="Παύση αναπαραγωγής αρχείου." tip="Παύση"/>
 		<tip id="ID_MEDIA_PLAY" message="Εκκίνηση αναπαραγωγής τρέχοντος αρχείου." tip="Αναπαραγωγή"/>
 		<tip id="ID_MEDIA_PLAYLIST" message="Εναλλαγή προβολής Λίστας Αναπαραγωγής."/>
-		<tip id="ID_MEDIA_POSITION" message="Επιλογή σημείου αναπαραγωγής" tip="Seek"/>
+		<tip id="ID_MEDIA_POSITION" message="Seek to a position in the media file." tip="Seek"/>
 		<tip id="ID_MEDIA_PREVIOUS" message="Μετάβαση στο προηγούμενο αρχείο στη Λίστα Αναπαραγωγής." tip="Προηγούμενο Αρχείο"/>
 		<tip id="ID_MEDIA_PROPERTIES" message="Προβολή και διόρθωση ιδιοτήτων επιλεγμένων αρχείων."/>
 		<tip id="ID_MEDIA_RANDOM" message="Εναλλαγή τυχαίας σειράς στη Λίστα Αναπαραγωγής."/>
@@ -2525,15 +2526,15 @@
 		<tip id="ID_MEDIA_SIZE_ONE" message="Προβολή video στο αρχικό του μέγεθος."/>
 		<tip id="ID_MEDIA_SIZE_THREE" message="Προβολή video σε μέγεθος τριπλάσιο του αρχικού."/>
 		<tip id="ID_MEDIA_SIZE_TWO" message="Προβολή video σε μέγεθος διπλάσιο του αρχικού."/>
-		<tip id="ID_MEDIA_SPEED" message="Αυξομείωση της ταχύτητας αναπαραγωγής" tip="Ταχύτητα"/>
+		<tip id="ID_MEDIA_SPEED" message="Adjust the speed of the media file." tip="Ταχύτητα"/>
 		<tip id="ID_MEDIA_STATUS" message="Εναλλαγή προβολής γραμμής κατάστασης πολυμέσων."/>
 		<tip id="ID_MEDIA_STOP" message="Διακοπή αναπαραγωγής αρχείου." tip="Ματαίωση"/>
 		<tip id="ID_MEDIA_VIS" message="Επιλογή plugin ηχητικής απεικόνισης..."/>
-		<tip id="ID_MEDIA_VOLUME" message="Αυξομείωση έντασης ήχου" tip="Volume"/>
+		<tip id="ID_MEDIA_VOLUME" message="Adjust the audio volume." tip="Volume"/>
 		<tip id="ID_MEDIA_ZOOM" message="Επιλογή μεγέθυνσης και αναλογιών video."/>
 		<tip id="ID_MONITOR_CLOSE" message="Κλείσιμο παραθύρου εποπτείας."/>
 		<tip id="ID_MUSICBRAINZ_ALBUMS" message="Look at all albums for this artist."/>
-		<tip id="ID_MUSICBRAINZ_MATCHES" message="Αναζήτηση επιλεγμένου αρχείου."/>
+		<tip id="ID_MUSICBRAINZ_MATCHES" message="Search for albums matching the selected file."/>
 		<tip id="ID_NEIGHBOURS_CHAT" message="Έναρξη συνομιλίας με τον επιλεγμένο χρήστη."/>
 		<tip id="ID_NEIGHBOURS_COPY" message="Αντιγραφή ενός URI για πρόσβαση στον επιλεγμένο host."/>
 		<tip id="ID_NEIGHBOURS_DISCONNECT" message="Αποσύνδεση επιλεγμένων γειτόνων."/>
@@ -2554,14 +2555,14 @@
 		<tip id="ID_NETWORK_G1" message="Σύνδεση στο δίκτυο Gnutella."/>
 		<tip id="ID_NETWORK_G2" message="Σύνδεση στο δίκτυο Gnutella2 (συνιστώμενη)."/>
 		<tip id="ID_NETWORK_SEARCH" message="Έναρξη νέας αναζήτησης στο δίκτυο..."/>
-		<tip id="ID_NEXT_PANE" message="Switch to the next window pane" tip="Επόμενο στη Σειρά"/>
+		<tip id="ID_NEXT_PANE" message="Switch to the next window pane" tip="Next Pane"/>
 		<tip id="ID_OPEN_DOWNLOADS_FOLDER" message="Open my folder of completed Downloads"/>
-		<tip id="ID_PREV_PANE" message="Μετάβαση στο προηγούμενο αρχείο στη Λίστα Αναπαραγωγής." tip="Προηγούμενο Αρχείο"/>
-		<tip id="ID_SCHEDULER_ACTIVATE" message="Αφαίρεση των επιλεγμένων αποστολών από τη λίστα."/>
+		<tip id="ID_PREV_PANE" message="Switch back to the previous window pane" tip="Previous Pane"/>
+		<tip id="ID_SCHEDULER_ACTIVATE" message="Activates selected task(s) from the list."/>
 		<tip id="ID_SCHEDULER_ADD" message="Adds a new task to scheduler list."/>
-		<tip id="ID_SCHEDULER_DEACTIVATE" message="Σύνδεση στα επιλεγμένα δίκτυα."/>
-		<tip id="ID_SCHEDULER_EDIT" message="Επεξεργασία επιλεγμένου κανόνα ασφαλείας..."/>
-		<tip id="ID_SCHEDULER_REMOVE" message="Απόσυρση επιλεγμένων λήψεων."/>
+		<tip id="ID_SCHEDULER_DEACTIVATE" message="Deactivates selected tasks."/>
+		<tip id="ID_SCHEDULER_EDIT" message="Edit the selected task..."/>
+		<tip id="ID_SCHEDULER_REMOVE" message="Removes selected task(s) from the list."/>
 		<tip id="ID_SCHEDULER_REMOVE_ALL" message="Removes all scheduled tasks."/>
 		<tip id="ID_SEARCH_CHAT" message="Έναρξη συνομιλίας με τον επιλεγμένο χρήστη."/>
 		<tip id="ID_SEARCH_CLEAR" message="Καθαρισμός αποτελεσμάτων αναζήτησης."/>
@@ -2598,11 +2599,11 @@
 		<tip id="ID_SYSTEM_COPY" message="Copy selected line(s) of status log."/>
 		<tip id="ID_SYSTEM_TIMESTAMP" message="Καταγραφή χρονικής επισήμανσης σε κάθε γραμμή."/>
 		<tip id="ID_SYSTEM_VERBOSE" message="Εμφάνιση λεπτομερούς ιστορικού δραστηριότητας συστήματος."/>
-		<tip id="ID_SYSTEM_VERBOSE_DEBUG" message="Εμφάνιση λεζάντας."/>
-		<tip id="ID_SYSTEM_VERBOSE_ERROR" message="Εμφάνιση λεζάντας."/>
-		<tip id="ID_SYSTEM_VERBOSE_INFO" message="Εμφάνιση γραμμών πλέγματος."/>
+		<tip id="ID_SYSTEM_VERBOSE_DEBUG" message="Display all."/>
+		<tip id="ID_SYSTEM_VERBOSE_ERROR" message="Display errors only."/>
+		<tip id="ID_SYSTEM_VERBOSE_INFO" message="Display infos and above."/>
 		<tip id="ID_SYSTEM_VERBOSE_NOTICE" message="Display notices and above."/>
-		<tip id="ID_SYSTEM_VERBOSE_WARNING" message="Εμφάνιση γραμμών πλέγματος."/>
+		<tip id="ID_SYSTEM_VERBOSE_WARNING" message="Display warnings and above."/>
 		<tip id="ID_TAB_CONNECT" message="Σύνδεση ή αποσύνδεση από το δίκτυο."/>
 		<tip id="ID_TAB_HOME" message="Μετάβαση στην οθόνη υποδοχής του Shareaza."/>
 		<tip id="ID_TAB_IRC" message="Παράθυρο συνομιλιών IRC."/>
@@ -2653,7 +2654,7 @@
 		<tip id="ID_VIEW_NEIGHBOURS" message="Εναλλαγή παραθύρου Γειτόνων."/>
 		<tip id="ID_VIEW_PACKETS" message="Εναλλαγή παραθύρου Εποπτείας Πακέτων."/>
 		<tip id="ID_VIEW_RESULTS_MONITOR" message="Εναλλαγή παραθύρου Εποπτείας Ευρέσεων."/>
-		<tip id="ID_VIEW_SCHEDULER" message="Εναλλαγή παραθύρου Ασφαλείας."/>
+		<tip id="ID_VIEW_SCHEDULER" message="Show or hide SCHEDULER window."/>
 		<tip id="ID_VIEW_SEARCH_MONITOR" message="Εναλλαγή παραθύρου Εποπτείας Αναζητήσεων."/>
 		<tip id="ID_VIEW_SECURITY" message="Εναλλαγή παραθύρου Ασφαλείας."/>
 		<tip id="ID_VIEW_SYSTEM" message="Εναλλαγή παραθύρου Συστήματος."/>
@@ -2662,7 +2663,7 @@
 		<tip id="ID_VIEW_UPLOADS" message="Εναλλαγή παραθύρου Αποστολών."/>
 		<tip id="ID_VIEW_WINDOWED" message="Εμφάνιση του Shareaza σε μορφή Παραθύρων."/>
 		<tip id="ID_WEBSERVICES_LIST" message="Επιλέξτε μια υπηρεσία ιστού από την οποία να λάβετε πληροφορίες για το επιλεγμένο αρχείο."/>
-		<tip id="ID_WEBSERVICES_MUSICBRAINZ" message="Αναζήτηση πληροφοριών για το αρχείο χρησιμοποιώντας την υπηρεσία ShareMonkey."/>
+		<tip id="ID_WEBSERVICES_MUSICBRAINZ" message="Search for the same artist songs using MusicBrainz service."/>
 		<tip id="ID_WINDOW_ARRANGE" message="Arrange icons at the bottom of the window" tip="Arrange Icons"/>
 		<tip id="ID_WINDOW_CASCADE" message="Παράθεση όλων τα ανοικτών παραθύρων αλληλοεπικαλυπτόμενων, το ένα ελαφρώς κάτω και δεξιά από το άλλο."/>
 		<tip id="ID_WINDOW_MONITOR" message="Εναλλαγή παραθύρου εποπτείας εύρους ζώνης."/>
@@ -2815,7 +2816,7 @@
 		<string id="8239" value="Ολοκληρωμένο"/>
 		<string id="8240" value="Το Shareaza μετακινεί το αρχείο:"/>
 		<string id="8241" value="Το Shareaza ελέγχει το αρχείο για σφάλματα:"/>
-		<string id="8243" value="Χώρος Αποστολών"/>
+		<string id="8243" value="Upload ratio:"/>
 		<string id="8244" value="Αριθμός κριτικών:"/>
 		<string id="8288" value="Εξερεύνηση της Βιβλιοθήκης"/>
 		<string id="8289" value="Θέση: "/>
@@ -2858,7 +2859,7 @@
 		<string id="8335" value="Οι πηγές αυτού του αρχείου είναι πίσω απο firewall"/>
 		<string id="8336" value="Οι πηγές αυτού του αρχείου δείχνουν ασταθείς"/>
 		<string id="8337" value="Αφερέγγυο"/>
-		<string id="8338" value="Δημιουργημένο:"/>
+		<string id="8338" value="Free:"/>
 		<string id="13000" value="Θέλετε σίγουρα να διαγράψετε τους επιλεγμένους κανόνες ασφαλείας; Αυτό δεν μπορεί να αναιρεθεί!"/>
 		<string id="13001" value="Αρχεία κοινοποιημένα στο Διαδίκτυο"/>
 		<string id="16063" value="Η αντιστοίχηση θυρών UPnP εγκαταλήφθηκε μετά από 10 προσπάθειες."/>
@@ -2878,7 +2879,7 @@
 		<string id="16077" value="Η διεύθυνση %s είναι ήδη φραγμένη από τους κανόνες ασφαλείας."/>
 		<string id="16078" value="Προσθήκη κανόνα ασφαλείας για φραγή του %s."/>
 		<string id="16079" value="Θέλετε σίγουρα να αποσυνδεθείτε;"/>
-		<string id="16080" value="Δεν είστε ενωμένοι στο δίκτυο."/>
+		<string id="16080" value="Would you like to always connect to this network?"/>
 		<string id="16081" value="Αποστολή αίτησης για &quot;%s&quot; προς %s."/>
 		<string id="16083" value="Η επιβολή στον υπολογιστή σας της λειτουργία κόμβου, ίσως προκαλέσει δυσμενείς επιδράσεις στις επιδόσεις και το δίκτυο P2P. Γενικά είναι καλύτερο να αφήσετε το Shareaza να αποφασίζει το πότε θα χρησιμοποιεί τη λειτουργία κόμβου.\n\nΗ λειτουργία κόμβου ΔΕΝ παράγει καλύτερα αποτελέσματα, ούτε έχει άλλα πλεονεκτήματα για σας!\n\nΘέλετε σίγουρα να το κάνετε, παρά αυτά τα μειονεκτήματα;"/>
 		<string id="16085" value="Το Gnutella2 είναι το πρωτεύον δίκτυο του Shareaza. Η απενεργοποίηση της υποστήριξής του ίσως περιορίσει σοβαρά τόσο τον αριθμό όσο και την ποιότητα των αποτελεσμάτων των αναζητήσεών σας. Είστε ΣΙΓΟΥΡΟΙ ότι θέλετε να το κάνετε;"/>
@@ -3003,7 +3004,7 @@
 		<string id="16326" value="Αίτηση από τον host %s του &quot;%s&quot; με διαφορετικό SHA1."/>
 		<string id="16327" value="Άρνηση αποστολής του &quot;%s&quot; προς %s (%s), λόγω φόρτου και αφού δεν υποστηρίζει ουρές."/>
 		<string id="16328" value="Σύναψη σύνδεσης προώθησης με %s, αναμονή για χειραψία..."/>
-		<string id="16329" value="Αδυναμία ανοίγματος του &quot;%s&quot; για αποστολή στον host %s, λόγω σφάλματος δίσκου/αρχείου."/>
+		<string id="16329" value="Can't open &quot;%s&quot; to upload to host %s due to disk or file error."/>
 		<string id="16330" value="Αποστολή σειράς %I64i-%I64i από το &quot;%s&quot; στον host %s (%s)."/>
 		<string id="16331" value="Ολοκλήρωση αποστολής τμήματος του &quot;%s&quot; προς %s."/>
 		<string id="16332" value="Αναγνώριση εισερχόμενης σύνδεσης από %s ως HTTP αίτηση αποστολής."/>
@@ -3054,7 +3055,7 @@
 		<string id="16377" value="HTTP Φρουρός"/>
 		<string id="16378" value="Host &quot;%s&quot; sent a 416, without providing available ranges. Closing connection."/>
 		<string id="16379" value="Αρχεία Βιβλιοθήκης"/>
-		<string id="16380" value="ED2K Φρουρός"/>
+		<string id="16380" value="DC++ Guard"/>
 		<string id="16384" value="Θέλετε σίγουρα να ανοίξετε το αρχείο &quot;%s&quot; ;\n\nΜερικά αρχεία μπορεί να είναι βλαβερά για τον υπολογιστή σας! Βεβαιωθείτε ότι ξέρετε τι είναι το αρχείο πριν το ανοίξετε."/>
 		<string id="16385" value="Θέλετε σίγουρα να τροποποιήσετε τα metadata του αρχείου %i;"/>
 		<string id="16386" value="Επεξεργασία των metadata των αρχείων %i."/>
@@ -3110,8 +3111,8 @@
 		<string id="16525" value="Δρομολογηθέντα Πακέτα Gnutella"/>
 		<string id="16526" value="Απρριφθέντα Πακέτα Gnutella"/>
 		<string id="16527" value="Χαμένα Πακέτα Gnutella"/>
-		<string id="16528" value="Τοπικές Ερωτήσεις Gnutella"/>
-		<string id="16529" value="Τοπικές Ερωτήσεις Gnutella"/>
+		<string id="16528" value="Gnutella Incoming Queries"/>
+		<string id="16529" value="Gnutella Processed Queries"/>
 		<string id="16532" value="Συνολικό εύρος ζώνης Παραλαβής TCP"/>
 		<string id="16533" value="Συνολικό εύρος ζώνης Αποστολής TCP"/>
 		<string id="16534" value="Συνολικό εύρος ζώνης Παραλαβής UDP"/>
@@ -3241,7 +3242,7 @@
 		<string id="17128" value="Server του ED2K"/>
 		<string id="17129" value="ED2K (LowID)"/>
 		<string id="17130" value="ED2K (HighID)"/>
-		<string id="17131" value="Σύνδεση"/>
+		<string id="17131" value="DC++ Hub Connection"/>
 		<string id="17216" value="Εγκαινίαση σύνδεσης με server του ED2K στο %s..."/>
 		<string id="17217" value="Ενωμένο στον server %s του ED2K, χειραψία..."/>
 		<string id="17218" value="ED2K[%s] %s"/>
@@ -3282,7 +3283,7 @@
 		<string id="17477" value="Απάντηση με λάθος αρχείο από σύζευξη BitTorrent με %s."/>
 		<string id="17478" value="Αίτηση άγνωστου αρχείου από σύζευξη BitTorrent με %s."/>
 		<string id="17479" value="Σύναψη σύζευξης BitTorrent με %s για &quot;%s&quot;."/>
-		<string id="17480" value="Αίτηση άγνωστου αρχείου από σύζευξη BitTorrent με %s."/>
+		<string id="17480" value="BitTorrent coupling with %s requested an inactive file."/>
 		<string id="17481" value="Παραλαβή περιγραφικού αρχείου BitTorrent: &quot;%s&quot;"/>
 		<string id="17482" value="Αδυναμία ανάλυσης prefetched αρχείου BitTorrent &quot;%s&quot;."/>
 		<string id="17483" value="Σφάλμα από BitTorrent tracker για &quot;%s&quot; : &quot;%s&quot;."/>
@@ -3296,13 +3297,13 @@
 		<string id="17491" value="Το torrent &quot;%s&quot; βρίσκεται ήδη στη λίστα λήψεων και δεν μπορεί να γίνει seed."/>
 		<string id="17492" value="Σφάλμα κατά τη φόρτωση του torrent &quot;%s&quot;. Ίσως δεν είναι έγκυρο."/>
 		<string id="17493" value="Αδυναμία δημιουργίας BitTorrent share αρχείου &quot;%s&quot;."/>
-		<string id="17494" value="Αδυναμία εύρεσης στη Βιβλιοθήκη του αρχείο &quot;%s&quot; που περιλαμβάνεται σε αυτό το torrent. Μετακινήστε το αρχείο στον ίδιο φάκελο με το torrent και ξαναπροσπαθείστε."/>
+		<string id="17494" value="This torrent includes the file &quot;%s&quot;, but Shareaza cannot find this file in your library. If possible, move the file to a shared folder and try again."/>
 		<string id="17495" value="Ασυμφωνία του αρχείου &quot;%s&quot; που αναφέρεται σε αυτό το torrent ως %s, ενώ το ίδιο δηλώνεται ως %s."/>
 		<string id="17496" value="Σφάλμα κατά την αντιγραφή από &quot;%s&quot; σε ένα BitTorrent share αρχείο."/>
 		<string id="17497" value="Άγνωστο σφάλμα κατά την προσπάθεια seeding του &quot;%s&quot;."/>
 		<string id="17498" value="Εντοπισμός σφάλματος στο αρχείο &quot;%s&quot;."/>
 		<string id="17501" value="Αδυναμία επικοινωνίας με τον tracker"/>
-		<string id="17503" value="Αποτυχία tracker, προσπάθεια με τον επόμενο (%i από %i)"/>
+		<string id="17503" value="Trying next tracker (%i of %i)"/>
 		<string id="17505" value="Απόρριψη σύνδεσης BitTorrent με %s."/>
 		<string id="17506" value="Απόρριψη χειραψίας BitTorrent με %s."/>
 		<string id="17507" value="Απόρριψη σύζευξης BitTorrent με %s."/>
@@ -3324,16 +3325,16 @@
 		<string id="18509" value="Αδυναμία θεώρησης της λήψης ως ολοκληρωμένης και επαναεπαλήθευσής της, λόγω έλλειψης δεδομένων μερικής επαλήθευσης, όπως tiger-tree volume, ED2K hashset ή BitTorrent hashset. Χωρίς πληροφορία επαλήθευσης, η λήψη δεν μπορεί να επαναεπαληθευθεί."/>
 		<string id="18510" value="Θέλετε σίγουρα να θεωρηθεί αυτή η λήψη ως ολοκληρωμένη και να επαναεπαληθευθεί; Το σύνολο του αρχείου θα σαρωθεί, όσα τμήματα επαληθευθούν θα κρατηθούν και τα υπόλοιπα θα ξαναληφθούν."/>
 		<string id="18511" value="Αλλάξατε το μέγεθος του αρχείου. Είστε σίγουροι;"/>
-		<string id="18512" value="Θέλετε σίγουρα να διαγράψετε όλες τις λήψεις σε αυτήν την ομάδα;"/>
-		<string id="18513" value="Εισάγατε μη έγκυρο ED2K hash. Παρακαλώ ελέγξτε το και ξαναπροσπαθήστε."/>
-		<string id="18514" value="Εισάγατε ένα SHA1 διαφορετικό από το τρέχον της λήψης! Θέλετε σίγουρα να το αλλάξετε τώρα;"/>
+		<string id="18512" value="Are you sure you want to cancel this download but save incomplete file(s)?"/>
+		<string id="18513" value="You have typed an %s hash value, however it is invalid. Please check it and try again."/>
+		<string id="18514" value="You have provided an %s hash value which is different to the one currently associated with this download. Are you sure you want to change the %s hash now?"/>
 		<string id="18515" value="The selected download item currently has some Task attached, please wait and do it later."/>
 		<string id="19000" value="Η απομακρυσμένη πρόσβαση είναι απενεργοποιημένη."/>
 		<string id="19001" value="Πρέπει να διαλέξετε ένα όνομα και έναν κωδικό."/>
 		<string id="19002" value="Αδυναμία υποδοχής συνδέσεων, μη διαθέσιμο URL."/>
 		<string id="19103" value="Καλώς ήρθατε στη συνομιλία του Shareaza!"/>
 		<string id="19104" value="Παρακαλώ, σεβαστείτε τους άλλους που χρησιμοποιούν την ίδια υπηρεσία."/>
-		<string id="19105" value="Συνομιλία"/>
+		<string id="19105" value="Chat!"/>
 		<string id="20000" value="Μη διαθέσιμο URN"/>
 		<string id="20001" value="Κλείσιμο"/>
 		<string id="20002" value="από"/>
@@ -3411,15 +3412,15 @@
 		<string id="20245" value="New Folder"/>
 		<string id="20246" value="Command-line options:\n\n-tray : Disable startup splash screen and send application to tray\n-nosplash : Disable startup splash screen\n-nowarn : Disable alpha (daily builds) version warning dialog\n-wait : Wait for other application instance exit\n\nInterface modes:\n\n-basic : Start application in Basic interface mode\n-tabbed : Start application in Tabbed interface mode\n-windowed : Start application in Windowed interface mode\n\nSystem options:\n\n-RegServer : Register internal components for everyone\n-UnRegServer : Un-register internal components for everyone\n-RegServerPerUser : Register internal components for current user\n-UnRegServerPerUser : Un-register internal components for current user"/>
 		<string id="20247" value="Failed to load metadata schemas. Please reinstall application."/>
-		<string id="20248" value="Δεν καθορίσατε φακέλους για κοινοποίηση. Είστε σίγουροι;"/>
+		<string id="20248" value="You selected %u files. Are you sure?"/>
 		<string id="20249" value="Off"/>
 		<string id="20250" value="Low"/>
-		<string id="20251" value="_Βασική Προβολή"/>
+		<string id="20251" value="Normal"/>
 		<string id="20252" value="High"/>
 		<string id="20253" value="Skin load error: %s. Element: %s"/>
 		<string id="20254" value="Loading skin: %s"/>
 		<string id="20255" value="Are you sure you want to remove all scheduled tasks? This cannot be undone."/>
-		<string id="20256" value="Αναζήτηση στο Shareaza"/>
+		<string id="20256" value="System: Start Shareaza"/>
 		<string id="20257" value="Bandwidth: Full Speed"/>
 		<string id="20258" value="Bandwidth: Reduced Speed"/>
 		<string id="20259" value="Bandwidth: Stop"/>
@@ -3609,13 +3610,13 @@
 			<control/>
 		</dialog>
 		<dialog name="CDownloadsSettingsPage" cookie="BuEdBuBuStCoBuStEdmsStEdmsStEdmsBuStCoStCoBuBuEdBu" caption="Μεταφορές">
-			<control caption="Αποθήκευση _Ολοκληρωμένων Αρχείων Σε:"/>
+			<control caption="Save Completed Files Here"/>
 			<control/>
 			<control/>
 			<control caption="Scan every completed file with AntiVirus"/>
-			<control caption="Επιλογή preset:"/>
+			<control caption="Select AntiVirus:"/>
 			<control/>
-			<control caption="_Μέγιστοι Αριθμοί Παράλληλων Λήψεων:"/>
+			<control caption="Number of Downloads"/>
 			<control caption="Ημιτελή Αρχεία:"/>
 			<control/>
 			<control/>
@@ -3625,13 +3626,13 @@
 			<control caption="Πηγές ανά αρχείο:"/>
 			<control/>
 			<control/>
-			<control caption="_Όρια:"/>
+			<control caption="Limits"/>
 			<control caption="Συνολικό Εύρος Ζώνης Λήψης:"/>
 			<control/>
 			<control caption="Μέγιστη Θέση Αναμονής σε Ουρά:"/>
 			<control/>
 			<control caption="Λήψεις και αποστολές μόνο σε ενωμένα δίκτυα."/>
-			<control caption="Αποθήκευση Προσωρινών _Ημιτελών Αρχείων Σε:"/>
+			<control caption="Store Temporary Incomplete Files Here"/>
 			<control/>
 			<control/>
 		</dialog>
@@ -3689,10 +3690,10 @@
 		<dialog name="CGnutellaSettingsPage" cookie="BuBuCoBuBuCoEdmsEdmsEdmsEdmsEdmsEdmsBuBuBuBuStBuStStStBuStBuStStStBu" caption="G2 &amp; G1">
 			<control caption="Δίκτυο Gnutella2:"/>
 			<control caption="Πάντα σύνδεση στο Gnutella2"/>
-			<control caption="Σύνδεση στο Gnutella2 σήμερα"/>
+			<control caption="Optimal|Leaf|Hub"/>
 			<control caption="Λειτουργία:"/>
-			<control caption="Βέλτιστη|Φύλλου|Κόμβου"/>
-			<control caption="Όριο αριθμού συνδέσεων G_2:"/>
+			<control caption="Connect to Gnutella1 today"/>
+			<control caption="Optimal|Leaf|Ultrapeer"/>
 			<control/>
 			<control/>
 			<control/>
@@ -3706,7 +3707,7 @@
 			<control/>
 			<control/>
 			<control caption="Λειτουργία:"/>
-			<control caption="Βέλτιστη|Φύλλου|Ultrapeer"/>
+			<control caption="Leaf to Hub"/>
 			<control caption="Όριο αριθμού συνδέσεων G_1:"/>
 			<control caption="Δίκτυο Gnutella2:"/>
 			<control caption="Mode: "/>
@@ -3955,7 +3956,7 @@
 			<control/>
 			<control/>
 			<control caption="_Δημογραφικά:"/>
-			<control caption="|Άνδρας|Γυναίκα"/>
+			<control caption="Male|Female"/>
 			<control caption="Φύλλο:"/>
 			<control/>
 			<control caption="Ηλικία:"/>
@@ -4031,8 +4032,8 @@
 		</dialog>
 		<dialog name="CLanguageDlg" cookie="" caption="Επιλογή Γλώσσας">
 		</dialog>
-		<dialog name="CConnectToDlg" cookie="BuCoEdBuCoBuBuBu" caption="Σύνδεση με|Περιήγηση Host">
-			<control caption="Εγκαινίαση νέας σύνδεσης με host ή server:|Περιήγηση του εξής host:"/>
+		<dialog name="CConnectToDlg" cookie="BuCoEdBuCoBuBuBu" caption="Connect To|Browse User|Chat to User">
+			<control caption="Initiate a new connection to host or server:|Browse this user:|Chat to this user:"/>
 			<control/>
 			<control/>
 			<control caption="_Πρωτόκολλο Δικτύου:"/>
@@ -4099,7 +4100,7 @@
 			<control caption="_Διεύθυνση Υπηρεσίας:"/>
 			<control/>
 			<control caption="Τύπος Υπηρεσίας:"/>
-			<control caption="Gnutella Bootstrap|GWebCache|Server.met URL|Φραγμένη"/>
+			<control caption="Gnutella Bootstrap|G1 GWebCache|G2 GWebCache|G1/G2 GWebCache|Server.met URL|Blocked"/>
 			<control caption="OK"/>
 			<control caption="Άκυρο"/>
 		</dialog>
@@ -4289,7 +4290,7 @@
 			<control caption="Επιλέξατε %lu αρχεία για εξαγωγή ως αναφορές URI. Παρακαλώ επιλέξτε τη μορφή των URIs και κάντε κλικ στο Αποθήκευση:"/>
 			<control/>
 			<control caption="Εισαγωγή Κουπονιού:"/>
-			<control caption="Ρίζα Tiger|SHA1|MD5|ED2K (CMD4)|Όνομα Αρχείου|Όνομα Αρχείου (URI)|Βασικό Όνομα Αρχείου|Τύπος Αρχείου|Μέγεθος Αρχείου|Μέγεθος Αρχείου (bytes)|Path Φακέλου|Τοπικός Host|Τοπική Θύρα"/>
+			<control caption="Tiger Root|SHA1|MD5|ED2K (CMD4)|BitTorrent|Filename|Filename (URI)|Base Filename|File Extension|File Size|File Size (bytes)|Folder Path|Local Host|Local Port|Link|Link (URI)"/>
 			<control caption="Επιλογή preset:"/>
 			<control caption="Magnet|eDonkey|Magnet HTML|eDonkey HTML"/>
 			<control caption="_Αντιγραφή"/>
@@ -4401,7 +4402,7 @@
 			<control caption="Περιγραφή:"/>
 			<control/>
 			<control caption="Διαγραφή|_Πίσω"/>
-			<control caption="Εξαγωγή..."/>
+			<control caption="_Next|_Export..."/>
 			<control caption="_Άκυρο"/>
 		</dialog>
 		<dialog name="CDownloadEditPage" cookie="EdEdEdEdBuEdBuEdBuEdBuEdBuStBuStStBuStStStStStSt" caption="Προχωρημένη Διόρθωση Λήψης">
@@ -4459,13 +4460,13 @@
 			<control/>
 			<control/>
 			<control/>
-			<control caption="Από:"/>
+			<control caption=" As needed| When ratio over 100%| Only when requested| Never"/>
 			<control/>
 			<control caption="Σχόλια:"/>
 			<control caption="Όνομα:"/>
 			<control caption="Δημιουργημένο:"/>
 			<control caption="Έναρξη νέων μεταφορών:"/>
-			<control caption=" Βάσει αναγκών| Όταν η αναλογία υπερβαίνει το 100%| Μόνο κατά απαίτηση| Ποτέ"/>
+			<control caption="Comments:"/>
 			<control caption="Transfers:"/>
 			<control caption="Σύνολο Απεσταλμένων:"/>
 			<control caption="Σημειώσεις:"/>
@@ -4478,7 +4479,7 @@
 			<control/>
 			<control/>
 			<control/>
-			<control caption="Tracker:"/>
+			<control caption="Disabled|Single Tracker|Multi-tracker|Multi-tracker (locked)"/>
 			<control caption="_Ανανέωση"/>
 			<control/>
 			<control caption="Ολοκληρωμένο (Seeds):"/>
@@ -4554,7 +4555,7 @@
 			<control/>
 			<control caption="Gnutella"/>
 			<control caption="Gnutella2"/>
-			<control caption="ED2K"/>
+			<control caption="eDoonkey2K"/>
 			<control caption="DC++"/>
 			<control caption="BitTorrent"/>
 			<control caption="Select the event type:"/>
@@ -4704,8 +4705,8 @@
 		</list>
 		<list name="CSchedulerWnd">
 			<column from="Action" to="Ενέργεια"/>
-			<column from="Trigger" to="TigerTree"/>
-			<column from="Next Run" to="Επόμενο"/>
+			<column from="Trigger" to="Trigger"/>
+			<column from="Next Run" to="NextRun"/>
 			<column from="Active" to="Ενεργό"/>
 			<column from="Status" to="Κατάσταση"/>
 			<column from="Description" to="Περιγραφή"/>

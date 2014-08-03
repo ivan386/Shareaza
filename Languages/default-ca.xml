@@ -1201,14 +1201,14 @@
 			<item id="ID_LIBRARY_FOLDER_FILE_PROPERTIES" text="Propietats d'_arxiu"/>
 		</menu>
 		<menu name="CLibraryTree.Virtual.Basic">
-			<item id="ID_LIBRARY_FOLDER_ENQUEUE" text="Reprodueix àlbum"/>
+			<item id="ID_LIBRARY_FOLDER_ENQUEUE" text="Play _Album"/>
 			<item id="ID_LIBRARY_FOLDER_DELETE" text="_Esborra"/>
 			<separator/>
 			<item id="ID_LIBRARY_FOLDER_FILE_PROPERTIES" text="Propietats d'_arxiu"/>
-			<item id="ID_LIBRARY_FOLDER_PROPERTIES" text="_Propietats de l'àlbum"/>
+			<item id="ID_LIBRARY_FOLDER_PROPERTIES" text="Album _Properties"/>
 		</menu>
 		<menu name="CLibraryTree.Virtual">
-			<item id="ID_LIBRARY_FOLDER_ENQUEUE" text="Reprodueix àlbum"/>
+			<item id="ID_LIBRARY_FOLDER_ENQUEUE" text="Play _Album"/>
 			<item id="ID_LIBRARY_FOLDER_DELETE" text="_Esborra"/>
 			<separator/>
 			<item id="ID_LIBRARY_REBUILD" text="Re_fés"/>
@@ -1217,7 +1217,7 @@
 			<item id="ID_LIBRARY_FOLDER_NEW" text="_Nova carpeta..."/>
 			<separator/>
 			<item id="ID_LIBRARY_FOLDER_FILE_PROPERTIES" text="Propietats d'_arxiu"/>
-			<item id="ID_LIBRARY_FOLDER_PROPERTIES" text="_Propietats de l'àlbum"/>
+			<item id="ID_LIBRARY_FOLDER_PROPERTIES" text="Album _Properties"/>
 		</menu>
 		<!-- LIBRARY VIEWS -->
 		<menu name="CLibraryTileView">
@@ -1296,7 +1296,7 @@
 		<menu name="CLibraryFileView.Virtual.Basic">
 			<item id="ID_LIBRARY_LAUNCH" text="_Obre o reprodueix"/>
 			<item id="ID_LIBRARY_ENQUEUE" text="Afegeix a  la llista de reproducció"/>
-			<item id="ID_LIBRARY_FOLDER_ENQUEUE" text="Reprodueix àlbum"/>
+			<item id="ID_LIBRARY_FOLDER_ENQUEUE" text="Play _Album"/>
 			<separator/>
 			<item id="ID_LIBRARY_SHARED_FILE" text="_Compartit"/>
 			<separator/>
@@ -1700,8 +1700,8 @@
 				<icon res="252" width="32" height="32"/><gap size="8"/>
 				<heading align="middle">A D V E R T I M E N T   -   P R O B L E M A   A M B   C O N N E X I O N S   E N T R A N T S</heading>
 				<newline gap="8" indent="42"/>
-				<text colour="FF0000">Shareaza ha detectat que estàs sota un NAT, router o un tallafocs,
-			i no pots rebre connexions entrants d'Internet.  </text>
+				<text colour="FF0000">Shareaza has detected that you are behind a NAT router or firewall,
+				and are unable to receive connections from the Internet.  </text>
 				<text colour="FF0000" format="b">Això provocarà un rendiment baix a les descàrregues.</text>
 				<newline gap="6"/>
 				<link target="raza:command:ID_HELP_ROUTER">Clica aquí per a aprendre com configurar el teu router o tallafocs</link>
@@ -1711,8 +1711,8 @@
 				<icon res="252" width="32" height="32"/><gap size="8"/>
 				<heading align="middle">A D V E R T I M E N T   -   E L   T E U   P O R T   T C P   E S T À   T A L L A T</heading>
 				<newline gap="8" indent="42"/>
-				<text colour="FF0000">Shareaza ha detectat que estàs sota un NAT, router o un tallafocs,
-			i no pots rebre connexions entrants d'Internet.  </text>
+				<text colour="FF0000">Shareaza has detected that you are behind a NAT router or firewall,
+				and are unable to receive TCP connections from the Internet.  </text>
 				<text colour="FF0000" format="b">Això provocarà un rendiment baix a les descàrregues.</text>
 				<newline gap="6"/>
 				<link target="raza:command:ID_HELP_ROUTER">Clica aquí per a aprendre com configurar el teu router o tallafocs</link>
@@ -1722,8 +1722,8 @@
 				<icon res="252" width="32" height="32"/><gap size="8"/>
 				<heading align="middle">A D V E R T I M E N T   -   E L   T E U   P O R T   U D P   E S T À   T A L L A T</heading>
 				<newline gap="8" indent="42"/>
-				<text colour="FF0000">Shareaza ha detectat que estàs sota un NAT, router o un tallafocs,
-			i no pots rebre connexions entrants d'Internet.  </text>
+				<text colour="FF0000">Shareaza has detected that you are behind a NAT router or firewall,
+				and are unable to receive UDP messages from the Internet.  </text>
 				<text colour="FF0000" format="b">Això provocarà un rendiment baix a les descàrregues.</text>
 				<newline gap="6"/>
 				<link target="raza:command:ID_HELP_ROUTER">Clica aquí per a aprendre com configurar el teu router o tallafocs</link>
@@ -1839,7 +1839,7 @@
 			<text group="11" align="middle">Desconnectat</text>
 			<text group="12" align="middle">Connectant...</text>
 			<text group="13" align="middle">Connectat</text>
-			<text group="14" align="middle" id="G1Hubs">e2dk:</text>
+			<text group="14" align="middle" id="G1Hubs">%i ultrapeers</text>
 			<text group="15" align="middle" id="G1Leaves">%i leaves</text>
 			<newline group="10" gap="2"/>
 			<icon group="30" command="ID_NETWORK_ED2K"/><gap group="30" size="4"/>
@@ -1912,8 +1912,8 @@
 			</styles>
 			<text format="b">Configuració de Shareaza</text>
 			<newline gap="16"/>
-			<text>Aquesta pantalla permet configurar una gran quantitat de paràmetres del funcionament
-			de Shareaza.  La configuració</text>
+			<text>The Shareaza Settings Manager allows advanced users to completely customise how
+				Shareaza works. The settings in the</text>
 			<text format="b">General</text>
 			<text>està relacionada amb l'experiència de l'usuari.</text>
 			<newline gap="16" indent="16"/>
@@ -1949,8 +1949,8 @@
 			</styles>
 			<text format="b">Configuració de Shareaza</text>
 			<newline gap="16"/>
-			<text>Aquesta pantalla permet configurar una gran quantitat de paràmetres del funcionament de Shareaza.
-		La configuració de</text>
+			<text>The Shareaza Settings Manager allows advanced users to completely customise 
+				how Shareaza works. The settings in the</text>
 			<text format="b">Internet</text>
 			<text>permet configurar la interacció de Shareaza amb les xarxes peer-to-peer.</text>
 			<newline gap="16" indent="16"/>
@@ -2069,108 +2069,116 @@
 		<document name="DownloadHelp.Select">
 			<text format="b">Àrea de descàrregues</text>
 			<newline gap="8"/>
-			<text>Aquí és on pots veure els arxius que s'estan descarregant. Pots veure
-		fonts individuals expandint cada arxiu amb el petit + a l'esquerra.</text>
+			<text>This is where files currently being downloaded are displayed. You can view
+			individual sources by expanding each file with the small + on the left.</text>
 			<newline gap="8"/>
-			<text>Drag'n'Drop downloads higher in the list for priority, or onto Download Group
-		tabs for better organisation (in Power Mode).</text>
+			<text>Drag'n'Drop downloads higher in the list for priority, or onto Download Group 
+			tabs for better organisation (in Power Mode).</text>
 			<newline gap="16"/>
-			<text>També pots aconseguir informació d'ajuda amb una descàrrega especifica.
-		Simplement selecciona una descàrrega i escull aquesta comanda altra vegada.</text>
+			<text>You can also use this command to get help information on a specific download.
+			Simply select a download and choose this Help command again.</text>
 		</document>
 		<document name="DownloadHelp.Seeding">
 			<text format="b">This Torrent is Seeding</text>
 			<newline gap="8"/>
 			<text>Shareaza has verified this complete download, and is actively sharing it
-		with other downloaders through BitTorrent. Please share at least 100%.</text>
+			with other downloaders through BitTorrent. Please share at least 100%.</text>
 		</document>
 		<document name="DownloadHelp.Completed">
 			<text format="b">Transferència completada</text>
 			<newline gap="8"/>
-			<text>Shareaza ha acabat de descarregar l'arxiu, i l'ha verificat i és
-		100% correcte.  També ha mogut aquesta descàrrega a la carpeta de descàrregues.</text>
+			<text>Shareaza has finished downloading this file, and has verified that it
+			is 100% correct. It has also moved the file to your downloads folder.</text>
 		</document>
 		<document name="DownloadHelp.Moving">
 			<text format="b">Movent l'arxiu transferit</text>
 			<newline gap="8"/>
-			<text>Shareaza ha acabat de descarregar i verificar aquest arxiu.
-		Actualment està essent transferit a la carpeta d'arxius compartits.</text>
+			<text>Shareaza has finished downloading this file, and has verified that
+			it is correct. It is currently being moved and/or unpacked to your downloads folder.</text>
 		</document>
 		<document name="DownloadHelp.Paused">
 			<text format="b">Descàrrega pausada</text>
 			<newline gap="8"/>
-			<text>La transferència d'aquest arxiu està actualment detinguda. Pots reanudar-la
-		fent clic en '</text><text format="b">Continua la descàrrega</text><text>'.</text>
+			<text>You have paused this download. If you want it to resume downloading, you
+			can click the '</text><text format="b">Continua la descàrrega</text><text>'.</text>
 		</document>
 		<document name="DownloadHelp.DiskFull">
 			<text format="b">El disc està ple</text>
 			<newline gap="8"/>
-			<text>Shareaza ha posat aquesta transferència en pausa, perquè no hi ha prou espai al
-		disc dur per a continuar o no es pot escriure al disc.  Per favor, fes espai al disc per a poder descarregant l'arxiu, o assegura't que l'arxiu no estigui
-		sent utilitzat per altra aplicació. Després, reinicia la transferència.</text>
+			<text>Shareaza has paused this download automatically because the hard disk
+			appears to be full, or the download file cannot be written to. If you wish
+			to continue downloading, please free some space on your hard disk and/or check
+			to make sure the incomplete file folder is accessible, and then resume the
+			download.</text>
 		</document>
 		<document name="DownloadHelp.Verifying">
 			<text format="b">Verificant l'arxiu</text>
 			<newline gap="8"/>
-			<text>Shareaza ha acabat de descarregar l'arxiu i està verificant per a
-		assegurar-se que l'arxiu descarregat sigui idèntic a l'original.  Si alguna part ha estat
-		transferida incorrectament, Shareaza s'encarregarà de restaurar-la de forma automàtica.</text>
+			<text>This download has finished, and Shareaza is now checking it to ensure
+			that it is exactly the same as the original file. If any damaged parts are
+			found, Shareaza will repair them automatically.</text>
 		</document>
 		<document name="DownloadHelp.Downloading">
 			<text format="b">Transferència activa</text>
 			<newline gap="8"/>
-			<text>Aquesta descàrrega està en progrès. Si està baixant massa lent,
-		pots tractar de cercar a la Xarxa més fonts usant la comanda '</text><text format="b">cerca més fonts.</text><text>'  Si la velocitat no s'incrementa i no millora pot ser que els usuaris
-		dels que estàs descarregant l'arxiu tinguin una velocitat de pujada molt baixa. La velocitat de descàrrega millora amb el temps.</text>
+			<text>This download is currently in progress. If it is downloading too slowly,
+			you could try searching the network for more sources with the '</text><text format="b">cerca més fonts.</text><text>' command. If the speed does not 
+			improve it may be due to limited upload speeds of the users you are downloading 
+			from. Download speed usually increases over time.</text>
 		</document>
 		<document name="DownloadHelp.Pending">
 			<text format="b">Transferència pendent</text>
 			<newline gap="8"/>
-			<text>Aquesta transferència està esperant a que algú comence a carregar-la.
-		Shareaza està llest per a descarregar l'arxiu, però ningú l'està compartint
-		en aquest moment. Estàs probablement esperant en cua de descàrrega. Pots examinar les fonts individuals per a
-		veure en quin lloc de la cua hi estàs esperant.</text>
+			<text>This download is waiting for someone to start uploading.
+			Shareaza is ready to start downloading this file, but no-one is sending it at
+			the moment. You are probably waiting in other user's queues, and the download
+			may start transferring at any time. You can examine the individual sources to 
+			see each queue you are waiting in. If you are sharing files yourself, it may
+			improve the chances of a download transfer starting quickly.</text>
 		</document>
 		<document name="DownloadHelp.Queued">
 			<text format="b">Aquesta descàrrega està en cua</text>
 			<newline gap="8"/>
-			<text>Aquesta descàrrega està esperant a que una de les teves descàrregues es complete.
-		La teva configuració limita el nombre de descàrregues que poden estar actives
-		al mateix temps, per a assegurar-se de que cada descàrrega tingui una quantitat bona de banda
-		ampla. Pots canviar aquesta configuració en Eines, Configuració de Shareaza.
-		També pots continuar la descàrraga amb la comanda 'Continua'.</text>
+			<text>This download is waiting for some of your other downloads to complete.
+			Your download settings limit the number of downloads which may be active at
+			any given time, to ensure that each download gets a good share of the available
+			bandwidth. You can change these settings via Tools, Shareaza Settings.
+			Alternatively, you may manually start this download with the resume command.</text>
 		</document>
 		<document name="DownloadHelp.Searching">
 			<text format="b">Buscant més fonts</text>
 			<newline gap="8"/>
-			<text>No hi ha fonts conegudes per a descarregar aquest arxiu. Shareaza està cercant
-		més fonts en les xarxes connectades. Quan s'aconsegueixin noves fonts, la
-		transferència començarà automaticament. Shareaza cerca fonts automàticament,
-		però pots fer més ràpid el procès emprant:</text>
+			<text>There are no known sources for this download, so Shareaza is searching
+			all connected P2P networks for new sources. Once sources are found, the
+			download will start automatically. Shareaza searches for sources automatically,
+			however you can speed up the process using the</text>
 			<text format="b">cerca més fonts.</text><text>.</text>
 			<newline gap="8"/>
-			<text>Desafortunadament hi ha cassos en que la persona que té l'arxiu que vols no està connectada. L'única cosa que pots fer és
-		esperar o cancel·lar la transferència i descarregar un arxiu similar que sí estigui disponible.</text>
+			<text>Unfortunately in many cases there may be no users online who have the
+			file you are looking for. The only course of action here is to wait for
+			someone to come online, or cancel it and try to find a similar file which is
+			more widely available.</text>
 		</document>
 		<document name="DownloadHelp.Creating">
 			<text format="b">Creant l'arxiu de descàrrega</text>
 			<newline gap="8"/>
-			<text>Aquest és un arxiu gran i Shareaza ha de fer-li lloc al disc dur.</text>
+			<text>Shareaza is pre-allocating a file in which to store this download, to
+			save time later.</text>
 		</document>
 		<document name="DownloadHelp.Tracker">
 			<text format="b">Tracker de BitTorrent fora de servei</text>
 			<newline gap="8"/>
-			<text>El tracker de BitTorrent per a aquesta transferència sembla estar
-		desconnectat o té problemes.  Shareaza no ha pogut contactar per a
-		rebre la informació de la transferència.</text>
+			<text>The BitTorrent tracker server for this download appears to be
+			down or malfunctioning. Shareaza is unable to contact it to receive
+			a list of peers.</text>
 		</document>
 		<!-- Upload help documents -->
 		<document name="UploadHelp">
 			<text format="b">Àrea de pujades</text>
 			<newline gap="8"/>
-			<text>Aqui és on es mostren les cues i les pujades. Pots expandir cada cua
-		amb el petit + de l'esquerra, i el filtre que es mostra amb el botó de la
-		dreta a la finestra d'eines.</text>
+			<text>This is where queues and uploads are displayed. You can expand each queue
+			with the small + on the left, and filter what is displayed with the button on the
+			right of the window's toolbar.</text>
 		</document>
 		<!-- General help documents -->
 		<document name="GeneralHelp.DiskSpace">
@@ -2178,46 +2186,47 @@
 			<newline gap="8"/>
 			<text>La quantitat de espai disponible en un o varis discos és baix.</text>
 			<newline gap="8"/>
-			<text>Sempre n'has de tenir una quantitat considerable al disc dur.
-		Els programes es poden fer inestables quant els discos estan plens i els arxius temporals poden ser
-		perduts. Fes neteja de disc, elimina arxius que ja no usis, o desinstal·la programari que ja no necessitis.</text>
+			<text>You should always attempt to keep a reasonable amount of disk space free. Programs 
+			can become unstable if the drives become full, and temporary files may be lost. You should 
+			run a disk clean-up, delete unwanted files, or uninstall software you no longer need.</text>
 		</document>
 		<document name="GeneralHelp.DiskWriteFail">
 			<text format="b">No s'ha pogut escriure a un directori requerit</text>
 			<newline gap="8"/>
 			<text>Un disc o directori que Shareaza necessita no poden ser escrits.</text>
 			<newline gap="8"/>
-			<text>Un disc de Xarxa pot estar desconnectat, o no tens permís d'escripteura
-		a un directori seleccionat. Si us plau, revisa els directoris i els permissos, o canvia la
-		localització d'arxius temporals.</text>
+			<text>A network drive may have been disconnected, or you may not have write permission 
+			to a selected directory. Please check directories and permissions, or change the
+			temporary files location.</text>
 		</document>
 		<document name="GeneralHelp.ConnectionFail">
 			<text format="b">La connexió a internet ha estat perduda</text>
 			<newline gap="8"/>
 			<text>Windows diu que no hi ha cap connexió d'internet disponible.</text>
 			<newline gap="8"/>
-			<text>És molt posible que un mòdem o un router s'hagin caigut, de manera que no es pot accedir a internet.
-		Pots necessitar reconnectar-te manualment o reiniciar la teva connexió.</text>
+			<text>It is likely that a modem or router has dropped, meaning the internet cannot
+			be accessed. You may need to manually re-connect or reset your connection.</text>
 			<newline gap="8"/>
 			<text>Shareaza ha aturat els intents de connexió per a no perdre els servidors que estan al caxè.</text>
 		</document>
 		<document name="GeneralHelp.AdultFilter">
 			<text format="b">Filtre de contingut sols apte per a adults actiu</text>
 			<newline gap="8"/>
-			<text>Si us plau, recorda que, com qualsevol filtre automàtic, potser no sigui 100% efectiu.
-		Està disenyat simplement per aliminar resultats no desitjats, no un bloqueig 100% segur.</text>
+			<text>Please note that (as with any automated filter) it may not be 100% effective at
+			screening content. It is designed simply to filter out excess unwanted results, rather than 
+			as a 100% safe block.</text>
 			<newline gap="8"/>
 			<text>Si un menor/a està utilitzant Internet (incloent-ne el P2P) sempre ha de tenir supervisió dels pares.</text>
 		</document>
 		<document name="GeneralHelp.BadTorrentEncoding">
 			<text format="b">Sembla que aquest torrent té un error de codificació</text>
 			<newline gap="8"/>
-			<text>Windows ha avisat d'un problema al tractar de decodificar el text d'aquest torrent. És
-		possible que el torrent sigui corrupte, o simplement mal codificat. El torrent pot
-		encara baixar-se correctament, tot i que alguns arxius poden tenir noms incorrectes.</text>
+			<text>Windows has reported a translation fault while decoding text in this torrent. It is
+			possible that the torrent is corrupt, or just incorrectly encoded. The torrent may
+			still download properly, although some file names could be incorrect.</text>
 			<newline gap="8"/>
-			<text>Quasi tots els programes de creació del torrent han de deixar-te reparar aquest torrent i
-		assegurar que funcionarà en més aplicacions torrent. Fes clic aquí per a obtenir ajuda addicional</text>
+			<text>Most torrent creation programs should allow you to repair this torrent, which
+			will ensure it works properly in all BitTorrent applications.</text>
 			<newline gap="8"/>
 			<link target="raza:command:ID_HELP_TORRENT">Click here for additional help</link>
 			<text>, or to download software to repair the torrent.</text>
@@ -2225,70 +2234,72 @@
 		<document name="GeneralHelp.DonkeyServerList">
 			<text format="b">La teva llista de servidors eDonkey està buida</text>
 			<newline gap="8"/>
-			<text>No hi ha servidors eDonkey a la teva llista. Necessites descarregar
-		una llista actualitzada (arxiu .met) per a connectar-te a ED2K.</text>
+			<text>There are no servers in your eDonkey server list. You need to download an
+			up to date server list (met file) to connect to ED2K.</text>
 			<newline gap="8"/>
-			<text>Te la pots baixar des de la configuració de ed2k, o de la llista
-		de descobriments (accés directe F9).</text>
+			<text>You can download a server list from the ed2k setting page, or the discovery
+			services window. (Press F9 to open the discovery services window)</text>
 		</document>
 		<document name="GeneralHelp.UploadWarning">
 			<text format="b">Limitar les pujades pot derivar en una baixa velocitat de descàrrega</text>
 			<newline gap="8"/>
-			<text>Algunes xarxes a què Shareaza es connecta recolcen igualtats, limitant pujades
-		a clients que no comparteixen, o simplement preferència a pujar a clients que comparteixen.</text>
+			<text>Several networks Shareaza connects to enforce ratios, limit uploads to
+			clients that do not share, or simply preference uploading to known sharers.</text>
 			<newline/>
-			<text>Afortunadament, les connexions DSL són com una carretera de 2 vies. Has de configurar un
-		ample de banda per a la pujada i altre per a la baixada. Si el teu client està pròpiament configurat,
-		has de poder pujar a una bona velocitat i al mateix temps estar descarregant al màxim.</text>
+			<text>Fortunately, broadband DSL connections are like a two-lane highway: you have
+			separate allocations for upload and download. If your client is properly configured, 
+			you should be able to upload at a good rate while retaining full download capacity.</text>
 			<newline gap="8"/>
-			<text>Per defecte, el teu límit de descàrrega està configurat com el 85% de la teua pujada disponible.
-		Aqueixa configuració t'hauria de donar la velocitat més ràpida.</text>
+			<text>By default, your upload limit is set to about 85% of available upstream bandwidth,
+			while downloads are unlimited. That configuration should give you the fastest possible 
+			downloads that are available.</text>
 		</document>
 		<!-- Search help documents -->
 		<document name="SearchHelp.BadSearch1">
 			<text format="b">Si us plau, torni a reformular la cerca</text>
 			<newline gap="8"/>
-			<text>Aquesta cerca està mal formada, i no funcionarà correctament.
-		Las cerques han de tenir varis termes com sigui possible, i han d'especificar un esquema
-		(tipus d'arxiu). Les cerques no han d'estar limitades a nombres o termes negatius,
-		i has d'evitar fer-ne moltes.</text>
+			<text>This search is poorly formatted, and may not function correctly. 
+			Searches should include several terms where possible, and should specify a schema 
+			(file type). Furthermore, searches must not be limited to numbers or negative
+			terms only, and you should avoid overly general queries.</text>
 			<newline gap="8"/>
-			<text>Quasi tots els clients de la xarxa ignoraran una cerca de tots els arxius MP3, per exemple,
-		perquè no és sufientment específic i pot generar massa resultats.</text>
+			<text>Most clients on the network will ignore a search for all MP3 files, for example, 
+			because it is not specific enough, and would generate too many results.</text>
 		</document>
 		<document name="SearchHelp.BadSearch2">
 			<text format="b">Si us plau, torni a reformular la cerca</text>
 			<newline gap="8"/>
-			<text>Aquesta cerca no conté suficients termes per a funcionar correctament. Totes les recerques necessiten
-		un nombre minim de lletres alfabètiques vàlides per a poder començar.</text>
+			<text>This search does not contain enough terms to function properly. All searches need
+			a minimum number of valid, alphabetic characters to be able to start.</text>
 			<newline gap="8"/>
-			<text>Cercar únicament les extensions més comuns (i números) no està permès. Has de posar
-		altres paraules quan estàs fent la cerca. La puntuació i els caracters comodí no seran processats
-		en la cerca, solament el text que tu posis.</text>
+			<text>While common file extensions (and numbers) can be searched for, you must enter
+			other terms as well when creating the search. Punctuation and wildcards are not used 
+			in searches, just the text you enter.</text>
 		</document>
 		<document name="SearchHelp.BadSearch3">
 			<text format="b">Si us plau, torni a reformular la cerca</text>
 			<newline gap="8"/>
-			<text>Sembla que la cerca solament conté extensions d'arxius comuns, o paraules
-		que no poden ser utilitzades.</text>
+			<text>This search seems to contain only common file extensions, or no searchable
+			words.</text>
 			<newline gap="8"/>
-			<text>Si estas tenint problemes al crear cerques, recorda que és molt similar a una cerca
-		d'Internet. Termes específics i frases són el millor - Nombres únics, títols
-		i paraules clau.</text>
+			<text>If you are having trouble creating searches, keep in mind that it's quite similar
+			to a web search. Specific terms or phrases are best- Unique names, titles and
+			keywords.</text>
 			<newline gap="8"/>
-			<text>Els termes generals no poden ser buscats amb eficièncía i pot resultar
-		una cerca pobra, i també fer servir massa banda ampla utilitzada en la cerca.</text>
+			<text>General terms cannot be searched for efficiently and may result in poor
+			search performance, as well as high bandwidth use during searches.</text>
 			<newline gap="8"/>
 			<text>Pots trobar més ajuda a la web de Shareaza</text>
 		</document>
 		<document name="SearchHelp.AdultSearch">
 			<text format="b">Aquesta cerca no pot començar</text>
 			<newline gap="8"/>
-			<text>Aquesta cerca conté resultats amb contingut per a adults.
-		Has de tornar a donar un altre nom a la cerca, o bé deshabilitar el filtre.</text>
+			<text>The specified search would probably return a large number of results with adult 
+			content, and this has been turned off in the settings. You should either re-phrase the 
+			search, or disable the filter.</text>
 			<newline gap="8"/>
-			<text>Per a deshabilitar el filtre, ves a Eines &gt; Configuració &gt;
-		General i deshabilita el filtre de contingut per a adults.</text>
+			<text>To disable the filter, go into Tools &gt; Settings &gt; General and uncheck the
+			adult content filter.</text>
 		</document>
 		<!-- Share help documents -->
 		<document name="ShareHelp.AlreadyShared">
@@ -2301,25 +2312,26 @@
 		<document name="ShareHelp.BadShare">
 			<text format="b">Aquesta carpeta no ha de ser compartida</text>
 			<newline gap="8"/>
-			<text>Aquesta carpeta és (o conté) una carpeta del sistema. Compartir aquesta carpeta no està
-		recomanat, perquè la majoria dels arxius que són aquí no són usats per altres persones.</text>
+			<text>This folder is (or contains) a system folder. Sharing this folder is not
+			recommended, since most of the files in it are of no use to other people.</text>
 			<newline gap="8"/>
-			<text>Carpetes com la carpeta de Windows, arxius dels programes, i carpetes similars
-		no contenen arxius per a compartir. Qualsevol arxiu d'interés hauria d'estar localitzat a un
-		subdirectori</text><text format="i">dins</text><text>d'aquestes carpetes. Per favor, comparteix altres arxius.</text>
+			<text>Folders such as the Windows directory, Program Files, and similar folders
+			do not usually contain files suitable for sharing. Any files of interest would be in
+			sub-folders located</text><text format="i">dins</text><text>these folders.
+			Please share those instead.</text>
 			<newline gap="8"/>
-			<text>Els arxius de Shareaza de la carpeta 'incomplete' no han de ser compartits en la col·lecció,
-		perquè quan toqui fer el hashing tindràs problemes de rendiment.</text>
+			<text>The Shareaza 'incomplete' folder should also not be shared through the
+			library, since attempting to hash downloads in progress may impact on performance.</text>
 		</document>
 	</documents>
 	<!-- Localised Command Tip Text. The "message" is displayed in the status bar, while the "tip" is shown in a tooltip -->
 	<commandTips>
 		<tip id="AFX_IDS_APP_TITLE" message="Shareaza"/>
-		<tip id="AFX_IDS_IDLEMESSAGE" message="Copia..."/>
+		<tip id="AFX_IDS_IDLEMESSAGE" message="Ready"/>
 		<tip id="AFX_IDS_MDICHILD" message="Activate this window"/>
-		<tip id="AFX_IDS_PREVIEW_CLOSE" message="Close print preview mode" tip="Save Preview"/>
-		<tip id="AFX_IDS_SCCLOSE" message="Canvia la mida de la finestra a tota la pantalla (Maximitza)."/>
-		<tip id="AFX_IDS_SCMAXIMIZE" message="Canvia la mida de la finestra a tota la pantalla (Maximitza)."/>
+		<tip id="AFX_IDS_PREVIEW_CLOSE" message="Close print preview mode" tip="Cancel Preview"/>
+		<tip id="AFX_IDS_SCCLOSE" message="Close the active window and prompts to save the documents"/>
+		<tip id="AFX_IDS_SCMAXIMIZE" message="Enlarge the window to full size"/>
 		<tip id="AFX_IDS_SCMINIMIZE" message="Reduce the window to an icon"/>
 		<tip id="AFX_IDS_SCMOVE" message="Change the window position"/>
 		<tip id="AFX_IDS_SCNEXTWINDOW" message="Switch to the next document window"/>
@@ -2349,7 +2361,7 @@
 		<tip id="ID_CHILD_RESTORE" message="Obre la finestra seleccionada."/>
 		<tip id="ID_DISCOVERY_ADD" message="Afegeix un nou servei de descobriment"/>
 		<tip id="ID_DISCOVERY_ADVERTISE" message="Fes conèixer aquest servei de descobriment a un GWebCache aleatori."/>
-		<tip id="ID_DISCOVERY_BLOCKED" message="Mostra els GWebCaches a la finestra de serveis de descobriment."/>
+		<tip id="ID_DISCOVERY_BLOCKED" message="Show blocked services in the Discovery window."/>
 		<tip id="ID_DISCOVERY_BROWSE" message="Mostra les estadístiques d'aquest servei de descobriment."/>
 		<tip id="ID_DISCOVERY_EDIT" message="Mostra les propietats del servei de descobriment."/>
 		<tip id="ID_DISCOVERY_GNUTELLA" message="Mostra els bootstraps a la finestra de serveis de descobriment."/>
@@ -2397,7 +2409,7 @@
 		<tip id="ID_DOWNLOADS_SHOW_SOURCES" message="Mostra totes les fonts."/>
 		<tip id="ID_DOWNLOADS_SOURCES" message="Cerca més fonts per a aquest(s) arxiu(s)."/>
 		<tip id="ID_DOWNLOADS_URL" message="Afegeix font (URI) a la descàrrega seleccionada..."/>
-		<tip id="ID_DOWNLOADS_VIEW_REVIEWS" message="Mostra ressenyes per a la descàrrega seleccionada"/>
+		<tip id="ID_DOWNLOADS_VIEW_REVIEWS" message="View reviews for the selected download."/>
 		<tip id="ID_HELP_ABOUT" message="Informació sobre el programa Shareaza..."/>
 		<tip id="ID_HELP_CODEC" message="Tot sobre còdecs i problemes de vídeo."/>
 		<tip id="ID_HELP_FAQ" message="Visita les preguntes freqüents (F.A.Q.) de Shareaza"/>
@@ -2418,7 +2430,7 @@
 		<tip id="ID_HITMONITOR_CLEAR" message="Esborra l'historial del monitor de hits."/>
 		<tip id="ID_HITMONITOR_PAUSE" message="Posa en pausa el monitor de hits."/>
 		<tip id="ID_HITMONITOR_SEARCH" message="Cerca a la xarxa el resultat seleccionat."/>
-		<tip id="ID_HOSTCACHE_BT_CACHE" message="Mostra les pujades BitTorrent."/>
+		<tip id="ID_HOSTCACHE_BT_CACHE" message="Show BitTorrent cached hosts."/>
 		<tip id="ID_HOSTCACHE_CONNECT" message="Connecta als servidors seleccionats."/>
 		<tip id="ID_HOSTCACHE_DC_CACHE" message="Show DC++ cached hubs."/>
 		<tip id="ID_HOSTCACHE_DISCONNECT" message="Desconnecta dels servidors seleccionats."/>
@@ -2428,10 +2440,10 @@
 		<tip id="ID_HOSTCACHE_G2_CACHE" message="Mostra servidors al caxè de Gnutella2."/>
 		<tip id="ID_HOSTCACHE_G2_HORIZON" message="Mostra el límit de servidors per cerca de la xarxa Gnutella2."/>
 		<tip id="ID_HOSTCACHE_IMPORT" message="Importa una llista de servidors coneguts d'un arxiu &quot;server.met&quot;..."/>
-		<tip id="ID_HOSTCACHE_KAD_CACHE" message="Mostra servidors al caxè de Gnutella1."/>
+		<tip id="ID_HOSTCACHE_KAD_CACHE" message="Show Kademlia cached hosts."/>
 		<tip id="ID_HOSTCACHE_PRIORITY" message="Connecta primer a aquest servidor."/>
 		<tip id="ID_HOSTCACHE_REMOVE" message="Elimina els usuaris seleccionats del caxè."/>
-		<tip id="ID_IMPORT_DOWNLOADS" message="_Importa descàrregues parcials de l'eMule"/>
+		<tip id="ID_IMPORT_DOWNLOADS" message="Import eMule partial downloads..."/>
 		<tip id="ID_LIBRARY_ADD" message="Afegeix una nova carpeta a la col·lecció..."/>
 		<tip id="ID_LIBRARY_ALBUM_DELETE" message="Esborra l'àlbum seleccionat."/>
 		<tip id="ID_LIBRARY_ALBUM_OPEN" message="Obre l'àlbum seleccionat."/>
@@ -2461,7 +2473,7 @@
 		<tip id="ID_LIBRARY_REBUILD" message="Reconstrueix la col·lecció, escanejant-la i adquirint la metainformació de nou."/>
 		<tip id="ID_LIBRARY_REBUILD_ANSI" message="Reconstrueix la metainformació utilitzant altre idioma."/>
 		<tip id="ID_LIBRARY_REFRESH" message="Actualitza la vista de la col·lecció."/>
-		<tip id="ID_LIBRARY_REFRESH_METADATA" message="_Refresh Metadata"/>
+		<tip id="ID_LIBRARY_REFRESH_METADATA" message="Refresh file metadata"/>
 		<tip id="ID_LIBRARY_REMOVE" message="Esborra aquesta carpeta de la col·lecció."/>
 		<tip id="ID_LIBRARY_RENAME" message="Canvia el nom a l'arxiu seleccionat."/>
 		<tip id="ID_LIBRARY_SCAN" message="Escaneja els canvis dels arxius a les carpetes seleccionades."/>
@@ -2499,7 +2511,7 @@
 		<tip id="ID_MEDIA_PAUSE" message="Posa en pausa la reproducció." tip="Pausa"/>
 		<tip id="ID_MEDIA_PLAY" message="Inicia la reproducció del fitxer actual." tip="Reprodueix"/>
 		<tip id="ID_MEDIA_PLAYLIST" message="Mostra la llista de reproducció."/>
-		<tip id="ID_MEDIA_POSITION" message="Vés a una posició en l'arxiu" tip="Seek"/>
+		<tip id="ID_MEDIA_POSITION" message="Seek to a position in the media file." tip="Seek"/>
 		<tip id="ID_MEDIA_PREVIOUS" message="Va a l'arxiu anterior de la llista de reproducció." tip="Anterior arxiu"/>
 		<tip id="ID_MEDIA_PROPERTIES" message="Mostra i edita les propietats dels fitxers seleccionats."/>
 		<tip id="ID_MEDIA_RANDOM" message="Activa o desactiva la reproducció a l'atzar a l'actual llista de reproducció."/>
@@ -2514,15 +2526,15 @@
 		<tip id="ID_MEDIA_SIZE_ONE" message="Mostra el vídeo en sa mida original."/>
 		<tip id="ID_MEDIA_SIZE_THREE" message="Mostra el vídeo en mida triple."/>
 		<tip id="ID_MEDIA_SIZE_TWO" message="Mostra el vídeo en mida doble."/>
-		<tip id="ID_MEDIA_SPEED" message="Ajusta la velocitat de reproducció" tip="Velocitat"/>
+		<tip id="ID_MEDIA_SPEED" message="Adjust the speed of the media file." tip="Velocitat"/>
 		<tip id="ID_MEDIA_STATUS" message="Mostra o amaga la línia d'estat de multimèdia."/>
 		<tip id="ID_MEDIA_STOP" message="Atura la reproducció de l'arxiu actual." tip="Atura"/>
 		<tip id="ID_MEDIA_VIS" message="Selecciona un component de visualització d'audio."/>
-		<tip id="ID_MEDIA_VOLUME" message="Ajusta el volum" tip="Volume"/>
+		<tip id="ID_MEDIA_VOLUME" message="Adjust the audio volume." tip="Volume"/>
 		<tip id="ID_MEDIA_ZOOM" message="Ajust de la proporció del vídeo."/>
 		<tip id="ID_MONITOR_CLOSE" message="Tanca la finestra del monitor."/>
 		<tip id="ID_MUSICBRAINZ_ALBUMS" message="Look at all albums for this artist."/>
-		<tip id="ID_MUSICBRAINZ_MATCHES" message="Cerca per altres còpies de l'arxiu seleccionat."/>
+		<tip id="ID_MUSICBRAINZ_MATCHES" message="Search for albums matching the selected file."/>
 		<tip id="ID_NEIGHBOURS_CHAT" message="Obre una sessió de xat amb l'usuari seleccionat."/>
 		<tip id="ID_NEIGHBOURS_COPY" message="Copia l'enllaç (URI) de l'usuari."/>
 		<tip id="ID_NEIGHBOURS_DISCONNECT" message="Desconnecta dels usuaris seleccionats."/>
@@ -2543,14 +2555,14 @@
 		<tip id="ID_NETWORK_G1" message="Connectar a la xarxa original de Gnutella."/>
 		<tip id="ID_NETWORK_G2" message="Connectar a la xarxa Gnutella2 (molt recomanada)."/>
 		<tip id="ID_NETWORK_SEARCH" message="Comença una nova cerca de la xarxa"/>
-		<tip id="ID_NEXT_PANE" message="Switch to the next window pane" tip="Següent a la línia"/>
+		<tip id="ID_NEXT_PANE" message="Switch to the next window pane" tip="Next Pane"/>
 		<tip id="ID_OPEN_DOWNLOADS_FOLDER" message="Open my folder of completed Downloads"/>
-		<tip id="ID_PREV_PANE" message="Va a l'arxiu anterior de la llista de reproducció." tip="Anterior arxiu"/>
-		<tip id="ID_SCHEDULER_ACTIVATE" message="Esborra les pujades seleccionades de la llista."/>
+		<tip id="ID_PREV_PANE" message="Switch back to the previous window pane" tip="Previous Pane"/>
+		<tip id="ID_SCHEDULER_ACTIVATE" message="Activates selected task(s) from the list."/>
 		<tip id="ID_SCHEDULER_ADD" message="Adds a new task to scheduler list."/>
-		<tip id="ID_SCHEDULER_DEACTIVATE" message="Connecta a les xarxes seleccionades."/>
-		<tip id="ID_SCHEDULER_EDIT" message="Edita la norma de seguretat."/>
-		<tip id="ID_SCHEDULER_REMOVE" message="Esborra les descàrregues seleccionades de la llista."/>
+		<tip id="ID_SCHEDULER_DEACTIVATE" message="Deactivates selected tasks."/>
+		<tip id="ID_SCHEDULER_EDIT" message="Edit the selected task..."/>
+		<tip id="ID_SCHEDULER_REMOVE" message="Removes selected task(s) from the list."/>
 		<tip id="ID_SCHEDULER_REMOVE_ALL" message="Removes all scheduled tasks."/>
 		<tip id="ID_SEARCH_CHAT" message="Obre una sessió de xat amb l'usuari seleccionat."/>
 		<tip id="ID_SEARCH_CLEAR" message="Esborra els resultats de la cerca."/>
@@ -2587,11 +2599,11 @@
 		<tip id="ID_SYSTEM_COPY" message="Copy selected line(s) of status log."/>
 		<tip id="ID_SYSTEM_TIMESTAMP" message="Enregistra el temps a cada línia."/>
 		<tip id="ID_SYSTEM_VERBOSE" message="Mostra informació detallada de l'activitat del sistema."/>
-		<tip id="ID_SYSTEM_VERBOSE_DEBUG" message="Mostra la llegenda."/>
-		<tip id="ID_SYSTEM_VERBOSE_ERROR" message="Mostra la llegenda."/>
-		<tip id="ID_SYSTEM_VERBOSE_INFO" message="Móstra les línies de guia."/>
+		<tip id="ID_SYSTEM_VERBOSE_DEBUG" message="Display all."/>
+		<tip id="ID_SYSTEM_VERBOSE_ERROR" message="Display errors only."/>
+		<tip id="ID_SYSTEM_VERBOSE_INFO" message="Display infos and above."/>
 		<tip id="ID_SYSTEM_VERBOSE_NOTICE" message="Display notices and above."/>
-		<tip id="ID_SYSTEM_VERBOSE_WARNING" message="Móstra les línies de guia."/>
+		<tip id="ID_SYSTEM_VERBOSE_WARNING" message="Display warnings and above."/>
 		<tip id="ID_TAB_CONNECT" message="Connecta o desconnecta de la xarxa."/>
 		<tip id="ID_TAB_HOME" message="Pàgina inicial de la web de Shareaza"/>
 		<tip id="ID_TAB_IRC" message="Show the IRC Chat window."/>
@@ -2642,7 +2654,7 @@
 		<tip id="ID_VIEW_NEIGHBOURS" message="Mostra o oculta la finestra de veïns als que estàs connectat."/>
 		<tip id="ID_VIEW_PACKETS" message="Mostra o oculta la finestra del registre de paquets."/>
 		<tip id="ID_VIEW_RESULTS_MONITOR" message="Mostra o oculta la finestra del monitor de resultats."/>
-		<tip id="ID_VIEW_SCHEDULER" message="Mostra o oculta la finestra de seguretat."/>
+		<tip id="ID_VIEW_SCHEDULER" message="Show or hide SCHEDULER window."/>
 		<tip id="ID_VIEW_SEARCH_MONITOR" message="Mostra o oculta la finestra del monitor de cerques."/>
 		<tip id="ID_VIEW_SECURITY" message="Mostra o oculta la finestra de seguretat."/>
 		<tip id="ID_VIEW_SYSTEM" message="Mostra o oculta la finestra del sistema."/>
@@ -2651,7 +2663,7 @@
 		<tip id="ID_VIEW_UPLOADS" message="Mostra o oculta la finestra de pujades."/>
 		<tip id="ID_VIEW_WINDOWED" message="Usa el mode en finestres."/>
 		<tip id="ID_WEBSERVICES_LIST" message="Choose the web service to get more information about the selected file."/>
-		<tip id="ID_WEBSERVICES_MUSICBRAINZ" message="Search for the file infomation using ShareMonkey service."/>
+		<tip id="ID_WEBSERVICES_MUSICBRAINZ" message="Search for the same artist songs using MusicBrainz service."/>
 		<tip id="ID_WINDOW_ARRANGE" message="Arrange icons at the bottom of the window" tip="Arrange Icons"/>
 		<tip id="ID_WINDOW_CASCADE" message="Mostra totes les finestres en forma de cascada a la pantalla."/>
 		<tip id="ID_WINDOW_MONITOR" message="Mostra o oculta el monitor d'ample de banda."/>
@@ -2804,7 +2816,7 @@
 		<string id="8239" value="Completat"/>
 		<string id="8240" value="Shareaza està movent l'arxiu descarregat:"/>
 		<string id="8241" value="Shareaza està verificant l'arxiu descarregat:"/>
-		<string id="8243" value="Àrea de pujades"/>
+		<string id="8243" value="Upload ratio:"/>
 		<string id="8244" value="Nombre de comentaris:"/>
 		<string id="8288" value="Explorant La meva col·lecció de Shareaza"/>
 		<string id="8289" value="Explorant "/>
@@ -2847,7 +2859,7 @@
 		<string id="8335" value="Les fonts estan sota tallafocs"/>
 		<string id="8336" value="Les fonts poden ser inestables"/>
 		<string id="8337" value="Amb desconfiança"/>
-		<string id="8338" value="Creat:"/>
+		<string id="8338" value="Free:"/>
 		<string id="13000" value="Estàs segur de esborrar les normes de seguretat seleccionades? Aquesta operació no pot ser desfeta."/>
 		<string id="13001" value="Arxius compartits a Internet"/>
 		<string id="16063" value="El mapegi de ports UPnP ha fallat després de 10 intents."/>
@@ -2867,7 +2879,7 @@
 		<string id="16077" value="L'adreça %s ja està bloqueada en les teves normes de seguretat."/>
 		<string id="16078" value="Afegeix una norma de seguretat %s."/>
 		<string id="16079" value="Estàs segur que vols desconnectar-te?"/>
-		<string id="16080" value="Shareaza no està connectat a cap xarxa."/>
+		<string id="16080" value="Would you like to always connect to this network?"/>
 		<string id="16081" value="Enviant petició per a &quot;%s&quot; a %s."/>
 		<string id="16083" value="Forçant el teu PC en mode hub pots obtenir conseqüències en el rendiment i a la Xarxa P2P. És millor deixar a Shareaza escollir entre els modes hub o leaf.\n\nEl mode Hub no dóna millors resultats de cerques ni cap altre avantatge per a tu.\n\nEstàs segur que vols fer això?"/>
 		<string id="16085" value="Gnutella2 és la xarxa predeterminada de Shareaza.  Deshabilitant el suport a aquesta la teva cerca empitjorarà notablement. Estàs segur que vols fer això?"/>
@@ -2913,7 +2925,7 @@
 		<string id="16201" value="%s ha enviat un paquet de cerca incorrecta."/>
 		<string id="16202" value="%s ha enviat un paquet de resposta a cerca incorrecta."/>
 		<string id="16203" value="El veí %s ha enviat un push incorrecte."/>
-		<string id="16208" value="El veí %s ha enviat un QRT incorrecte. %s."/>
+		<string id="16208" value="Receiving an unexpected query routing table update from neighbour %s."/>
 		<string id="16209" value="El veí %s ha enviat un QRT invàlid."/>
 		<string id="16210" value="El veí %s actualitzà el QRT (%i bit = %lu[%i], %i%% full)."/>
 		<string id="16211" value="El veí %s ha enviat un push a una adreça sota tallafocs, ignorant..."/>
@@ -2992,7 +3004,7 @@
 		<string id="16326" value="El servidor de pujada %s ha demanat &quot;%s&quot; amb SHA1 diferent."/>
 		<string id="16327" value="Actualitzant pujada de &quot;%s&quot; a %s (%s), ocupat o el client no suporta cues."/>
 		<string id="16328" value="Connexió push a %s establerta, esperant per a la negociació..."/>
-		<string id="16329" value="No s'ha pogut obrir &quot;%s&quot; per a pujar al servidor %s, error d'arxiu o disc."/>
+		<string id="16329" value="Can't open &quot;%s&quot; to upload to host %s due to disk or file error."/>
 		<string id="16330" value="Enviant rang %I64i-%I64i de l'arxiu &quot;%s&quot; a  %s (%s)."/>
 		<string id="16331" value="Acabada la pujada de la part part &quot;%s&quot; a %s."/>
 		<string id="16332" value="La connexió entrant de %s és una petició de pujada HTTP."/>
@@ -3043,7 +3055,7 @@
 		<string id="16377" value="Guàrdia HTTP"/>
 		<string id="16378" value="Host &quot;%s&quot; sent a 416, without providing available ranges. Closing connection."/>
 		<string id="16379" value="Fitxers de col·lecció"/>
-		<string id="16380" value="Guàrdia eDonkey"/>
+		<string id="16380" value="DC++ Guard"/>
 		<string id="16384" value="Estàs segur(a) que vols executar l'arxiu &quot;%s&quot;?\n\nAlguns arxius poden ser perillosos per a l'ordinador, i es recomana tenir l'antivirus actiu i actualitzat."/>
 		<string id="16385" value="Estàs a punt de modificar la metainformació de %i arxius. Estàs segur(a) en continuar?"/>
 		<string id="16386" value="Editant la metainformació de %i arxius."/>
@@ -3099,8 +3111,8 @@
 		<string id="16525" value="Paquets de Gnutella marcats"/>
 		<string id="16526" value="Paquets de Gnutella que no han arribat"/>
 		<string id="16527" value="Paquets de Gnutella perduts"/>
-		<string id="16528" value="Cerques locals de Gnutella"/>
-		<string id="16529" value="Cerques locals de Gnutella"/>
+		<string id="16528" value="Gnutella Incoming Queries"/>
+		<string id="16529" value="Gnutella Processed Queries"/>
 		<string id="16532" value="Ample de banda total de recepció TCP"/>
 		<string id="16533" value="Ample de banda total de transmició TCP"/>
 		<string id="16534" value="Ample de banda total de recepció UDP"/>
@@ -3230,7 +3242,7 @@
 		<string id="17128" value="Servidor eDonkey"/>
 		<string id="17129" value="eDonkey (LowID)"/>
 		<string id="17130" value="eDonkey (HighID)"/>
-		<string id="17131" value="Connexió"/>
+		<string id="17131" value="DC++ Hub Connection"/>
 		<string id="17216" value="Iniciant connexió amb el servidor eDonkey en %s..."/>
 		<string id="17217" value="Connectat al servidor eDonkey %s, negociant..."/>
 		<string id="17218" value="ED2K[%s] %s"/>
@@ -3271,27 +3283,27 @@
 		<string id="17477" value="L'acoblador BitTorrent %s ha respost amb un arxiu incorrecte."/>
 		<string id="17478" value="L'acoblador BitTorrent %s ha demanat un arxiu desconegut."/>
 		<string id="17479" value="L'acoblador BitTorrent %s ha establert per a &quot;%s&quot;."/>
-		<string id="17480" value="L'acoblador BitTorrent %s ha demanat un arxiu desconegut."/>
+		<string id="17480" value="BitTorrent coupling with %s requested an inactive file."/>
 		<string id="17481" value="L'arxiu de descripció de BitTorrent &quot;%s&quot; ha estat rebut"/>
 		<string id="17482" value="Ha estat imposible entendre l'arxiu &quot;%s&quot; de BitTorrent."/>
 		<string id="17483" value="Ha hagut un error consultant el servei de BitTorrent &quot;%s&quot; : &quot;%s&quot;."/>
 		<string id="17484" value="Ha hagut un error analitzant la informació del servei de BitTorrent."/>
 		<string id="17485" value="El servei de BitTorrent per a &quot;%s&quot;, ha afegit %i fonts noves."/>
 		<string id="17486" value="Iniciant la connexió de BitTorrent amb %s..."/>
-		<string id="17487" value="La connexió BitTorrent amb %s ha estat establerta %s, negociant..."/>
+		<string id="17487" value="Established BitTorrent coupling with %s, handshaking..."/>
 		<string id="17488" value="Ha canviat l'adreça del rastrejador d'aquest torrent. Estàs segur/a?\n\nIndicant un rastrejador invàlid pots fer que aquest arxiu no sigui descarregat."/>
 		<string id="17489" value="L'acoplament BitTorrent amb %s és un protocol extès, identificat &quot;%s&quot;."/>
 		<string id="17490" value="%i fonts de BitTorrent han estat rebudes de %s."/>
 		<string id="17491" value="El torrent &quot;%s&quot; ja està en la llista de descàrregues, i no pots tornar a ser Seed."/>
 		<string id="17492" value="Error al carregar el torrent &quot;%s&quot;.  Potser no és vàlid."/>
 		<string id="17493" value="No s'ha pogut crear l'arxiu per a compartir el torrent &quot;%s&quot;."/>
-		<string id="17494" value="Aquest torrent inclou l'arxiu &quot;%s&quot;, però Shareaza no ho ha pogut aconsegueix a La meva Col·lecció.  Muou tots els arxius corresponents al torrent a la mateixa carpeta compartida."/>
+		<string id="17494" value="This torrent includes the file &quot;%s&quot;, but Shareaza cannot find this file in your library. If possible, move the file to a shared folder and try again."/>
 		<string id="17495" value="Aquest torrent inclou l'arxiu &quot;%s&quot; que hauria de ser %s, però tu versió de l'arxiu és %s."/>
 		<string id="17496" value="Ha hagut un error copiant de &quot;%s&quot; a l'arxiu de compartir torrents."/>
 		<string id="17497" value="Ha hagut un error inesperat compartint l'arxiu &quot;%s&quot;."/>
 		<string id="17498" value="Ha hagut un error amb l'arxiu &quot;%s&quot;."/>
 		<string id="17501" value="Ha estat impossible comunicar-se amb el tracker"/>
-		<string id="17503" value="El traquer ha fallat. Provant el següent tracker (%i de %i)"/>
+		<string id="17503" value="Trying next tracker (%i of %i)"/>
 		<string id="17505" value="La connexió BitTorrent a %s s'ha trencat."/>
 		<string id="17506" value="L'acord de transferència BitTorrent amb %s s'ha trencat."/>
 		<string id="17507" value="L'acoblador BitTorrent amb %s ha fallat."/>
@@ -3313,16 +3325,16 @@
 		<string id="18509" value="Aquesta descàrrega no es pot asumir completa, perquè falta informació sobre el hash, que és necessària per a verificar-la."/>
 		<string id="18510" value="Estàs segur/a d'asumir aquesta descàrrega com completa i reverificar-la? Shareaza reverificarà l'arxiu, i acceptarà les parts correctes, i descarregarà de nou aquelles incorrectes."/>
 		<string id="18511" value="Has fet canvis a la mida de l'arxiu.  Estàs segur de que vols canviar la mida d'aquesta descàrrega?"/>
-		<string id="18512" value="Cancel·la download but save incomplete file"/>
-		<string id="18513" value="El valor del hash de eDonkey asignat no és vàlid."/>
-		<string id="18514" value="Estàs canviant el SHA1 a un diferent a l'associat amb aquesta descàrrega. Vols continuar?"/>
+		<string id="18512" value="Are you sure you want to cancel this download but save incomplete file(s)?"/>
+		<string id="18513" value="You have typed an %s hash value, however it is invalid. Please check it and try again."/>
+		<string id="18514" value="You have provided an %s hash value which is different to the one currently associated with this download. Are you sure you want to change the %s hash now?"/>
 		<string id="18515" value="The selected download item currently has some Task attached, please wait and do it later."/>
 		<string id="19000" value="L'accès remot està deshabilitat."/>
 		<string id="19001" value="Has d'escollir un nom d'usuari i contrasenya."/>
 		<string id="19002" value="No es poden acceptar connexions, URL no disponible."/>
 		<string id="19103" value="Welcome to Shareaza Chat!"/>
 		<string id="19104" value="Please respect others while using this service"/>
-		<string id="19105" value="Chat"/>
+		<string id="19105" value="Chat!"/>
 		<string id="20000" value="No hi ha URN disponible"/>
 		<string id="20001" value="Close"/>
 		<string id="20002" value="de"/>
@@ -3400,15 +3412,15 @@
 		<string id="20245" value="New Folder"/>
 		<string id="20246" value="Command-line options:\n\n-tray : Disable startup splash screen and send application to tray\n-nosplash : Disable startup splash screen\n-nowarn : Disable alpha (daily builds) version warning dialog\n-wait : Wait for other application instance exit\n\nInterface modes:\n\n-basic : Start application in Basic interface mode\n-tabbed : Start application in Tabbed interface mode\n-windowed : Start application in Windowed interface mode\n\nSystem options:\n\n-RegServer : Register internal components for everyone\n-UnRegServer : Un-register internal components for everyone\n-RegServerPerUser : Register internal components for current user\n-UnRegServerPerUser : Un-register internal components for current user"/>
 		<string id="20247" value="Failed to load metadata schemas. Please reinstall application."/>
-		<string id="20248" value="No has especificat cap carpeta per a compartir. Recorda que la qualitat de la Xarxa està basada a la quantitat d'arxius que els demés comparteixen, per tant si comparteixes les teves carpetes, la Xarxa tindrà més contingut.  ¿Estàs segur(a) de no compartir les teves carpetes?"/>
+		<string id="20248" value="You selected %u files. Are you sure?"/>
 		<string id="20249" value="Off"/>
 		<string id="20250" value="Low"/>
-		<string id="20251" value="_Mode normal"/>
+		<string id="20251" value="Normal"/>
 		<string id="20252" value="High"/>
 		<string id="20253" value="Skin load error: %s. Element: %s"/>
 		<string id="20254" value="Loading skin: %s"/>
 		<string id="20255" value="Are you sure you want to remove all scheduled tasks? This cannot be undone."/>
-		<string id="20256" value="Cerca en Shareaza"/>
+		<string id="20256" value="System: Start Shareaza"/>
 		<string id="20257" value="Bandwidth: Full Speed"/>
 		<string id="20258" value="Bandwidth: Reduced Speed"/>
 		<string id="20259" value="Bandwidth: Stop"/>
@@ -3598,13 +3610,13 @@
 			<control/>
 		</dialog>
 		<dialog name="CDownloadsSettingsPage" cookie="BuEdBuBuStCoBuStEdmsStEdmsStEdmsBuStCoStCoBuBuEdBu" caption="Descàrregues">
-			<control caption="_Carpeta d'arxius completats:"/>
+			<control caption="Save Completed Files Here"/>
 			<control/>
 			<control/>
 			<control caption="Scan every completed file with AntiVirus"/>
-			<control caption="Predefinits:"/>
+			<control caption="Select AntiVirus:"/>
 			<control/>
-			<control caption="_Nombre de descàrregues:"/>
+			<control caption="Number of Downloads"/>
 			<control caption="Arxius màx:"/>
 			<control/>
 			<control/>
@@ -3614,13 +3626,13 @@
 			<control caption="Fonts per arxiu:"/>
 			<control/>
 			<control/>
-			<control caption="Límit:"/>
+			<control caption="Limits"/>
 			<control caption="Ample de banda:"/>
 			<control/>
 			<control caption="Mida màxima de les cues:"/>
 			<control/>
 			<control caption="Sols puja i descarrega per les xarxes connectades."/>
-			<control caption="Carpeta d'arxius _incomplets: (temporal)"/>
+			<control caption="Store Temporary Incomplete Files Here"/>
 			<control/>
 			<control/>
 		</dialog>
@@ -3678,10 +3690,10 @@
 		<dialog name="CGnutellaSettingsPage" cookie="BuBuCoBuBuCoEdmsEdmsEdmsEdmsEdmsEdmsBuBuBuBuStBuStStStBuStBuStStStBu" caption="Gnutella">
 			<control caption="Xarxa Gnutella2:"/>
 			<control caption="Connecta sempre a Gnutella2"/>
-			<control caption="Connecta a Gnutella 2 en aquesta sessió"/>
+			<control caption="Optimal|Leaf|Hub"/>
 			<control caption="Mode:"/>
-			<control caption="Óptim|Leaf|Concentrador"/>
-			<control caption="Connexions G_2:"/>
+			<control caption="Connect to Gnutella1 today"/>
+			<control caption="Optimal|Leaf|Ultrapeer"/>
 			<control/>
 			<control/>
 			<control/>
@@ -3695,7 +3707,7 @@
 			<control/>
 			<control/>
 			<control caption="Mode:"/>
-			<control caption="Óptim|Leaf|Ultrapeer"/>
+			<control caption="Leaf to Hub"/>
 			<control caption="Connexions G_1:"/>
 			<control caption="Xarxa Gnutella2:"/>
 			<control caption="Mode: "/>
@@ -3944,7 +3956,7 @@
 			<control/>
 			<control/>
 			<control caption="_Informació vital:"/>
-			<control caption="|Home|Dona"/>
+			<control caption="Male|Female"/>
 			<control caption="Gènere:"/>
 			<control/>
 			<control caption="Edat:"/>
@@ -4020,8 +4032,8 @@
 		</dialog>
 		<dialog name="CLanguageDlg" cookie="" caption="Selecciona idioma">
 		</dialog>
-		<dialog name="CConnectToDlg" cookie="BuCoEdBuCoBuBuBu" caption="Connecta a|Explora servidor">
-			<control caption="Inicia una nova connexió al servidor:|Explora aquest servidor:"/>
+		<dialog name="CConnectToDlg" cookie="BuCoEdBuCoBuBuBu" caption="Connect To|Browse User|Chat to User">
+			<control caption="Initiate a new connection to host or server:|Browse this user:|Chat to this user:"/>
 			<control/>
 			<control/>
 			<control caption="Protocol de xarxa."/>
@@ -4088,7 +4100,7 @@
 			<control caption="Adreça _del servei:"/>
 			<control/>
 			<control caption="Tipus de servei de descobriment:"/>
-			<control caption="Nus Gnutella|GWebCache|Server.met URL"/>
+			<control caption="Gnutella Bootstrap|G1 GWebCache|G2 GWebCache|G1/G2 GWebCache|Server.met URL|Blocked"/>
 			<control caption="Accepta"/>
 			<control caption="Cancel·la"/>
 		</dialog>
@@ -4278,7 +4290,7 @@
 			<control caption="Has seleccionat %lu arxius per a exportar com a referències d'URI per a Shareaza. Si us plau, selecciona el format i fes clic a &quot;Desa&quot;:"/>
 			<control/>
 			<control caption="Inserir camp:"/>
-			<control caption="Tiger Root|SHA1|MD5|ED2K (CMD4)|Nom d'arxiu|Arxiu (URI)|Nom d'arxiu base|Extensió|Mida d'arxiu|Mida d'arxiu (bytes)|Ruta de la carpeta|Adreça local|Port local"/>
+			<control caption="Tiger Root|SHA1|MD5|ED2K (CMD4)|BitTorrent|Filename|Filename (URI)|Base Filename|File Extension|File Size|File Size (bytes)|Folder Path|Local Host|Local Port|Link|Link (URI)"/>
 			<control caption="Predefinits:"/>
 			<control caption="Magnet|eDonkey|Magnet HTML|eDonkey HTML"/>
 			<control caption="_Copy"/>
@@ -4543,7 +4555,7 @@
 			<control/>
 			<control caption="Gnutella1"/>
 			<control caption="Gnutella2"/>
-			<control caption="eDonkey"/>
+			<control caption="eDoonkey2K"/>
 			<control caption="DC++"/>
 			<control caption="BitTorrent"/>
 			<control caption="Select the event type:"/>
@@ -4693,8 +4705,8 @@
 		</list>
 		<list name="CSchedulerWnd">
 			<column from="Action" to="Acció"/>
-			<column from="Trigger" to="TigerTree"/>
-			<column from="Next Run" to="Següent"/>
+			<column from="Trigger" to="Trigger"/>
+			<column from="Next Run" to="NextRun"/>
 			<column from="Active" to="Actiu"/>
 			<column from="Status" to="Estat"/>
 			<column from="Description" to="Descripció"/>

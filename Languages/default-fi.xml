@@ -1201,14 +1201,14 @@
 			<item id="ID_LIBRARY_FOLDER_FILE_PROPERTIES" text="Tiedoston _Ominaisuudet"/>
 		</menu>
 		<menu name="CLibraryTree.Virtual.Basic">
-			<item id="ID_LIBRARY_FOLDER_ENQUEUE" text="Toista Albumi"/>
+			<item id="ID_LIBRARY_FOLDER_ENQUEUE" text="Play _Album"/>
 			<item id="ID_LIBRARY_FOLDER_DELETE" text="_Poista"/>
 			<separator/>
 			<item id="ID_LIBRARY_FOLDER_FILE_PROPERTIES" text="Tiedoston _Ominaisuudet"/>
-			<item id="ID_LIBRARY_FOLDER_PROPERTIES" text="_Albumin Asetukset"/>
+			<item id="ID_LIBRARY_FOLDER_PROPERTIES" text="Album _Properties"/>
 		</menu>
 		<menu name="CLibraryTree.Virtual">
-			<item id="ID_LIBRARY_FOLDER_ENQUEUE" text="Toista Albumi"/>
+			<item id="ID_LIBRARY_FOLDER_ENQUEUE" text="Play _Album"/>
 			<item id="ID_LIBRARY_FOLDER_DELETE" text="_Poista"/>
 			<separator/>
 			<item id="ID_LIBRARY_REBUILD" text="Ra_kenna Uudelleen"/>
@@ -1217,7 +1217,7 @@
 			<item id="ID_LIBRARY_FOLDER_NEW" text="_Uusi Kansio..."/>
 			<separator/>
 			<item id="ID_LIBRARY_FOLDER_FILE_PROPERTIES" text="Tiedoston _Ominaisuudet"/>
-			<item id="ID_LIBRARY_FOLDER_PROPERTIES" text="_Albumin Asetukset"/>
+			<item id="ID_LIBRARY_FOLDER_PROPERTIES" text="Album _Properties"/>
 		</menu>
 		<!-- LIBRARY VIEWS -->
 		<menu name="CLibraryTileView">
@@ -1296,7 +1296,7 @@
 		<menu name="CLibraryFileView.Virtual.Basic">
 			<item id="ID_LIBRARY_LAUNCH" text="_Avaa tai Toista"/>
 			<item id="ID_LIBRARY_ENQUEUE" text="Lisää Soi_ttolistaan"/>
-			<item id="ID_LIBRARY_FOLDER_ENQUEUE" text="Toista Albumi"/>
+			<item id="ID_LIBRARY_FOLDER_ENQUEUE" text="Play _Album"/>
 			<separator/>
 			<item id="ID_LIBRARY_SHARED_FILE" text="_Jaettu"/>
 			<separator/>
@@ -1700,7 +1700,8 @@
 				<icon res="252" width="32" height="32"/><gap size="8"/>
 				<heading align="middle">K U S T O M O I   S H A R E A Z A A</heading>
 				<newline gap="8" indent="42"/>
-				<text colour="FF0000">To open the folder with your downloads</text>
+				<text colour="FF0000">Shareaza has detected that you are behind a NAT router or firewall,
+				and are unable to receive connections from the Internet.  </text>
 				<text colour="FF0000" format="b"> - Muuta Shareazan ulkonäköä</text>
 				<newline gap="6"/>
 				<link target="raza:command:ID_HELP_ROUTER">Asetus Velho</link>
@@ -1710,7 +1711,8 @@
 				<icon res="252" width="32" height="32"/><gap size="8"/>
 				<heading align="middle">O M A T   L A T A U K S E T</heading>
 				<newline gap="8" indent="42"/>
-				<text colour="FF0000">To open the folder with your downloads</text>
+				<text colour="FF0000">Shareaza has detected that you are behind a NAT router or firewall,
+				and are unable to receive TCP connections from the Internet.  </text>
 				<text colour="FF0000" format="b">This may cause poor download performance.</text>
 				<newline gap="6"/>
 				<link target="raza:command:ID_HELP_ROUTER">Asetus Velho</link>
@@ -1720,7 +1722,8 @@
 				<icon res="252" width="32" height="32"/><gap size="8"/>
 				<heading align="middle">K A U K O   O H J A U S   O N   K Ä Y T Ö S S Ä</heading>
 				<newline gap="8" indent="42"/>
-				<text colour="FF0000">Shareazan Kauko Ohjaus on päällä. Voit kontrolloida Shareazaa nettiselaimellasi osoitteessa:</text>
+				<text colour="FF0000">Shareaza has detected that you are behind a NAT router or firewall,
+				and are unable to receive UDP messages from the Internet.  </text>
 				<text colour="FF0000" format="b">This may cause poor search performance.</text>
 				<newline gap="6"/>
 				<link target="raza:command:ID_HELP_ROUTER">Asetus Velho</link>
@@ -1836,7 +1839,7 @@
 			<text group="11" align="middle">Ei Yhdistetty</text>
 			<text group="12" align="middle">Yhdistetään...</text>
 			<text group="13" align="middle">Yhdistetty</text>
-			<text group="14" align="middle" id="G1Hubs">eDonkey:</text>
+			<text group="14" align="middle" id="G1Hubs">%i ultrapeers</text>
 			<text group="15" align="middle" id="G1Leaves">%i lehteä</text>
 			<newline group="10" gap="2"/>
 			<icon group="30" command="ID_NETWORK_ED2K"/><gap group="30" size="4"/>
@@ -1909,8 +1912,8 @@
 			</styles>
 			<text format="b">Tervetuloa Shareazan Asetus Manageriin</text>
 			<newline gap="16"/>
-			<text>Shareaza Asetus Manageri antaa  käyttäjien kustomoida täysin kuinka
-			Shareaza toimii.  Asetukset</text>
+			<text>The Shareaza Settings Manager allows advanced users to completely customise how
+				Shareaza works. The settings in the</text>
 			<text format="b">Yleiset</text>
 			<text>alue joka liittyy käyttö kokemukseen.</text>
 			<newline gap="16" indent="16"/>
@@ -1946,8 +1949,8 @@
 			</styles>
 			<text format="b">Tervetuloa Shareazan Asetus Manageriin</text>
 			<newline gap="16"/>
-			<text>Shareaza Asetus Manageri antaa  käyttäjien kustomoida täysin kuinka
-			Shareaza toimii.  Asetukset</text>
+			<text>The Shareaza Settings Manager allows advanced users to completely customise 
+				how Shareaza works. The settings in the</text>
 			<text format="b">Internet</text>
 			<text>alue joka kontrolloi kuinka Shareaza käyttäytyy toisien koneiden kanssa jaetuissa p2p	verkoissa.</text>
 			<newline gap="16" indent="16"/>
@@ -2066,11 +2069,11 @@
 		<document name="DownloadHelp.Select">
 			<text format="b">Lataus Alue</text>
 			<newline gap="8"/>
-			<text>Tämä on missä tällä hetkellä latauksessa olevat tiedostot vat näytillä. Sinä voit katsoa
-		yksittäisiä lähteitä laajentamalla jokaisen tiedoston missä on vasemmalla puolella + merkki.</text>
+			<text>This is where files currently being downloaded are displayed. You can view
+			individual sources by expanding each file with the small + on the left.</text>
 			<newline gap="8"/>
-			<text>Sinä voit käyttää tätä komentoa saadaksesi tietoa tietystä latauksesta.
-		Valitse vain lataus ja valitse tämä komento uudelleen.</text>
+			<text>Drag'n'Drop downloads higher in the list for priority, or onto Download Group 
+			tabs for better organisation (in Power Mode).</text>
 			<newline gap="16"/>
 			<text>You can also use this command to get help information on a specific download.
 			Simply select a download and choose this Help command again.</text>
@@ -2084,98 +2087,98 @@
 		<document name="DownloadHelp.Completed">
 			<text format="b">Tämä lataus on valmis</text>
 			<newline gap="8"/>
-			<text>Shareaza on lopettanut tämän tiedoston lataamisen ja varmistanut, että
-		se 100% ladattu.  Se on myös siirtänyt tiedoston sinun lataukset kansioon.</text>
+			<text>Shareaza has finished downloading this file, and has verified that it
+			is 100% correct. It has also moved the file to your downloads folder.</text>
 		</document>
 		<document name="DownloadHelp.Moving">
 			<text format="b">Tätä latausta siirretään</text>
 			<newline gap="8"/>
-			<text>Shareaza on lopettanut tämän tiedoston lataamisen ja varmistanut, että
-		se on ladattu kokonaan.  Sitä ollaan nyt siirtämässä ja/tai purkamassa lataukset kansioosi.</text>
+			<text>Shareaza has finished downloading this file, and has verified that
+			it is correct. It is currently being moved and/or unpacked to your downloads folder.</text>
 		</document>
 		<document name="DownloadHelp.Paused">
 			<text format="b">Tämä lataus on pysäytetty</text>
 			<newline gap="8"/>
-			<text>Sinä olet pysäyttänyt tämän latauksen. Jos haluat, että sitä aletaan taas lataamaan sinun
-		klikata</text><text format="b">Palaa Lataukseen</text><text>komentoa.</text>
+			<text>You have paused this download. If you want it to resume downloading, you
+			can click the '</text><text format="b">Palaa Lataukseen</text><text>komentoa.</text>
 		</document>
 		<document name="DownloadHelp.DiskFull">
 			<text format="b">Levy on täynnä</text>
 			<newline gap="8"/>
-			<text>Shareaza on pysäyttänyt latauksen automaattisesti koska kovalevy
-		näyttää olevan täynnä, tai lataus tiedostoa ei voida kirjoittaa. Jos haluat
-		jatkaa latausta, ole hyvä ja vapauta tilaa kovalevyltäsi ja/tai tarkista
-		että keskeneräiset kansion on luettavissa, sitten jatka
-		latausta.</text>
+			<text>Shareaza has paused this download automatically because the hard disk
+			appears to be full, or the download file cannot be written to. If you wish
+			to continue downloading, please free some space on your hard disk and/or check
+			to make sure the incomplete file folder is accessible, and then resume the
+			download.</text>
 		</document>
 		<document name="DownloadHelp.Verifying">
 			<text format="b">Tätä latausta ollaan varmistamassa</text>
 			<newline gap="8"/>
-			<text>Tämä lataus on valmis ja Shareaza tarkistaa varmistaakseen
-		että se on sama kuin alkuperäinen tiedosto. Jos vahingoittuneita osia
-		löydetään, Shareaza korjaa ne automaattisesti.</text>
+			<text>This download has finished, and Shareaza is now checking it to ensure
+			that it is exactly the same as the original file. If any damaged parts are
+			found, Shareaza will repair them automatically.</text>
 		</document>
 		<document name="DownloadHelp.Downloading">
 			<text format="b">Tämä lataus on aktiivinen!</text>
 			<newline gap="8"/>
-			<text>Tämä tiedosto on nyt latauksessa.  Jos tiedosto latautuu liian hitaasti,
-		sinä voit yrittää etsiä verkosta lisää lähteitä</text><text format="b">Etsi Lisää Lähteitä</text><text>komennolla.  Jos nopeus ei
-		parannu se voi johtua rajoitetusta lähetys nopeudesta jota käyttäjä jolta lataat käyttää.
-		Lataus nopeus yleensä nopeentuu ajan kuluessa.</text>
+			<text>This download is currently in progress. If it is downloading too slowly,
+			you could try searching the network for more sources with the '</text><text format="b">Etsi Lisää Lähteitä</text><text>' command. If the speed does not 
+			improve it may be due to limited upload speeds of the users you are downloading 
+			from. Download speed usually increases over time.</text>
 		</document>
 		<document name="DownloadHelp.Pending">
 			<text format="b">Tämä lataus on Pyynnössä</text>
 			<newline gap="8"/>
-			<text>Tämä lataus odottaa jotakuta alkamaan lähettämään sitä.
-		Shareaza on valmis aloittamaan latauksen, mutta kukaan ei ole lähettämässä sitä
-		tällä hetkellä. Sinä olet varmaan odottamassa käyttäjän jonoissa, ja lataus
-		voi alkaa miloin tahansa. Sinä voit tarkastella yksittäisiä lähteitä
-		nähdäksesi jokaisen jonossa olevan. Jos jaat tiedostoja itse, se saattaa
-		parantaa mahdollisuuksia aloittaa lataus nopeasti.</text>
+			<text>This download is waiting for someone to start uploading.
+			Shareaza is ready to start downloading this file, but no-one is sending it at
+			the moment. You are probably waiting in other user's queues, and the download
+			may start transferring at any time. You can examine the individual sources to 
+			see each queue you are waiting in. If you are sharing files yourself, it may
+			improve the chances of a download transfer starting quickly.</text>
 		</document>
 		<document name="DownloadHelp.Queued">
 			<text format="b">Tämä lataus on jonossa</text>
 			<newline gap="8"/>
-			<text>Tämä lataus odottaa, että joku muu sinun latauksistasi valmistuisi.
-		Sinu lataus rajoituksesi määrittävät kuinka monta latausta sinulla voi olla aktiivisena
-		mihinkä annettuna aikana tahansa, varmistakseen että jokaine lataus saa hyvän nopeuden saatavasta
-		lataus nopeudesta.  Voit muuttaa näitä asetuksia Työkalu, Shareazan Asetukset.
-		Kuitenkin voit manuaalisesti aloittaa latauksen jatka komennolla.</text>
+			<text>This download is waiting for some of your other downloads to complete.
+			Your download settings limit the number of downloads which may be active at
+			any given time, to ensure that each download gets a good share of the available
+			bandwidth. You can change these settings via Tools, Shareaza Settings.
+			Alternatively, you may manually start this download with the resume command.</text>
 		</document>
 		<document name="DownloadHelp.Searching">
 			<text format="b">Tämä lataus on Hakee</text>
 			<newline gap="8"/>
-			<text>Tälle lataukselle ei ole olemassa tunnettuja lähteitä, joten Shareaza etsii
-		kaikista yhdistetyistä P2P verkoista uusia lähteitä. Kun lähteet on löydetty
-		lataus alkaa automaattisesti.  Shareaza etsii lähteitä automaattisesti,
-		kuitenkin voit nopeuttaa prosessia käyttämällä</text>
+			<text>There are no known sources for this download, so Shareaza is searching
+			all connected P2P networks for new sources. Once sources are found, the
+			download will start automatically. Shareaza searches for sources automatically,
+			however you can speed up the process using the</text>
 			<text format="b">Etsi Lisää Lähteitä</text><text>komennolla.</text>
 			<newline gap="8"/>
-			<text>Valitettavasti monissa tapauksissa kukaan käyttjäj ei ole online tilassa jolla olisi
-		tiedosto jota etsit. Ainut toiminta on odottaa
-		jonkun tulevan online tilaan, tai peruuttaa sen ja yrittää löytää smanlaisen tiedoston mikä on
-		paremmin saatavilla.</text>
+			<text>Unfortunately in many cases there may be no users online who have the
+			file you are looking for. The only course of action here is to wait for
+			someone to come online, or cancel it and try to find a similar file which is
+			more widely available.</text>
 		</document>
 		<document name="DownloadHelp.Creating">
 			<text format="b">Tätä latausta luodaan</text>
 			<newline gap="8"/>
-			<text>Shareaza on luomassa väliaikais tiedostoa mihinkä tallentaa lataus
-		säästääkseen aikaa myöhemmin.</text>
+			<text>Shareaza is pre-allocating a file in which to store this download, to
+			save time later.</text>
 		</document>
 		<document name="DownloadHelp.Tracker">
 			<text format="b">BitTorrent Jäjitin Alhaalla</text>
 			<newline gap="8"/>
-			<text>The BitTorrent jäljitys palvelin tälle lataukselle näyttää olevan
-		suljettu tai epäkunnossa.  Shareaza ei voi ottaa siihen yhteyttä saadakseen
-		listan peereistä.</text>
+			<text>The BitTorrent tracker server for this download appears to be
+			down or malfunctioning. Shareaza is unable to contact it to receive
+			a list of peers.</text>
 		</document>
 		<!-- Upload help documents -->
 		<document name="UploadHelp">
 			<text format="b">Lähetykset Alue</text>
 			<newline gap="8"/>
-			<text>Tämä on missä konot jalähetykset näkyvät. Sinä voit laajentaa jokaisen jonon
-		missä on pieni + vasemmalla puolella ja voit myös suodattaa mitä näytetään painikkeella
-		oikealla ikkunan työkalu palkissa.</text>
+			<text>This is where queues and uploads are displayed. You can expand each queue
+			with the small + on the left, and filter what is displayed with the button on the
+			right of the window's toolbar.</text>
 		</document>
 		<!-- General help documents -->
 		<document name="GeneralHelp.DiskSpace">
@@ -2183,47 +2186,47 @@
 			<newline gap="8"/>
 			<text>Vapaa kovalevy tila yhdellä tai monella kovalevyllä joita Shareaza käyttää on vähissä.</text>
 			<newline gap="8"/>
-			<text>You should always attempt to keep a reasonable amount of disk space free. Ohjelmat
-		voivat tulla epävakaiksi jos kovalevy tulee täyteen ja väliaikais tiedostot voivat hävitä. Sinun tulisi
-		ajaa levyn puhdistus, poistaa tiedostoja tai poistaa ohjelmat joita et tarvitse.</text>
+			<text>You should always attempt to keep a reasonable amount of disk space free. Programs 
+			can become unstable if the drives become full, and temporary files may be lost. You should 
+			run a disk clean-up, delete unwanted files, or uninstall software you no longer need.</text>
 		</document>
 		<document name="GeneralHelp.DiskWriteFail">
 			<text format="b">Tarvittava kansio ei ole kirjoitettavissa</text>
 			<newline gap="8"/>
 			<text>Levy tai kansio mitä Shareaza käyttää ei voida kirjoittaa.</text>
 			<newline gap="8"/>
-			<text>Verkko kovalevy voi olla offline tilassa, tai sinulla ei ole kirjoitus lupaa
-		hakemistoon. Ole hyvä ja tarkista hakemistot ja luvat, tai vaihda
-		väliaikais tiedostojen sijaintia.</text>
+			<text>A network drive may have been disconnected, or you may not have write permission 
+			to a selected directory. Please check directories and permissions, or change the
+			temporary files location.</text>
 		</document>
 		<document name="GeneralHelp.ConnectionFail">
 			<text format="b">Internet yhteys on hvitetty</text>
 			<newline gap="8"/>
 			<text>Windows raportoi ett internet yhteytt ei ole saatavilla.</text>
 			<newline gap="8"/>
-			<text>On todennkist ett modeemi tai reititin on pudonnut, tarkoittaen ett webi ei
-		voida kytt. Sinun tytyy manuaalisesti yhdist uudelleen tai resetoida yhteys.</text>
+			<text>It is likely that a modem or router has dropped, meaning the internet cannot
+			be accessed. You may need to manually re-connect or reset your connection.</text>
 			<newline gap="8"/>
 			<text>Shareaza on pysyttnyt yhdistys yritykset jotta kaikkia kyttji jotka ovat vlimuistissa ei hukattaisi.</text>
 		</document>
 		<document name="GeneralHelp.AdultFilter">
 			<text format="b">Aikuisviihde suodatus on pll</text>
 			<newline gap="8"/>
-			<text>Ota huomioon ett (kuin kaikissa muissa automatisoiduissa suodattimissa) varmaa 100% tehoa
-		sislln suodatukseen. Se on vain tehty suodattamaan ei halutut tulokset kuin
-		100% tysi blokkaus.</text>
+			<text>Please note that (as with any automated filter) it may not be 100% effective at
+			screening content. It is designed simply to filter out excess unwanted results, rather than 
+			as a 100% safe block.</text>
 			<newline gap="8"/>
 			<text>Lasten internetin kytt (mukaan lukien P2P tiedoston jako)  tulisi aina olla vanhemman valvonnassa.</text>
 		</document>
 		<document name="GeneralHelp.BadTorrentEncoding">
 			<text format="b">Tm torrentti nytt sisltv koodaus virheen</text>
 			<newline gap="8"/>
-			<text>Windows on raportoinut kntvirheen koodattaessa teksti tss torrentissa. Se on
-		mahdollista ett torrentti on virheelinen tai vain vrin koodattu. Tm torrentti voi
-		kuitenkin latautua kunnolla mutta jotkut tiedosto nimet voivat olla vrin.</text>
+			<text>Windows has reported a translation fault while decoding text in this torrent. It is
+			possible that the torrent is corrupt, or just incorrectly encoded. The torrent may
+			still download properly, although some file names could be incorrect.</text>
 			<newline gap="8"/>
-			<text>Suurin osa torrent teko ohjelmista antaa mahdollisuuden korjata tm torrentti, mik
-		varmistaa ett se toimii oikein kaikissa BitTorrent ohjemissa.</text>
+			<text>Most torrent creation programs should allow you to repair this torrent, which
+			will ensure it works properly in all BitTorrent applications.</text>
 			<newline gap="8"/>
 			<link target="raza:command:ID_HELP_TORRENT">Klikkaa thn saadaksesi lis apua (en)</link>
 			<text>, tai lataa ohjelma jolla voit korjata torrentin.</text>
@@ -2231,47 +2234,47 @@
 		<document name="GeneralHelp.DonkeyServerList">
 			<text format="b">Sinun eDonkey palvelin lista on tyhj</text>
 			<newline gap="8"/>
-			<text>Sinulla ei ole yhtn palvelinta eDonkey2000 palvelin listassa. Sinun tulee ladata
-		pivitetty palvelin lista (met tiedosto) yhdistksesi ED2K.</text>
+			<text>There are no servers in your eDonkey server list. You need to download an
+			up to date server list (met file) to connect to ED2K.</text>
 			<newline gap="8"/>
-			<text>Sin voit ladata palvelin listan ed2k asetukset sivulla tai discovery
-		palvelu ikkunassa. (Paina F9 avataksesi discovery palvelut ikkunan)</text>
+			<text>You can download a server list from the ed2k setting page, or the discovery
+			services window. (Press F9 to open the discovery services window)</text>
 		</document>
 		<document name="GeneralHelp.UploadWarning">
 			<text format="b">Rajoitetut letys paikat saattavat hidastaa latauksia</text>
 			<newline gap="8"/>
-			<text>Moni verkko mihink Shareaza yhdist vaati tietyt lhetys paikat
-		kyttjille jotka eivtjaa tai eivt vain halua ladata tunnetuille jakajille.</text>
+			<text>Several networks Shareaza connects to enforce ratios, limit uploads to
+			clients that do not share, or simply preference uploading to known sharers.</text>
 			<newline/>
-			<text>Valitettavasti laajakaista DSL yhteydet ovat kuin kaksi kaistainen moottorite: sinulla tytyy olla
-		eri rajoitukse lhetyksile ja latauksille. Jos sinun ohjelmasi on oikein konfiguroitu
-		sinun tulisi lhett hyvll nopeudella samalla piten tyden lataus tehon.</text>
+			<text>Fortunately, broadband DSL connections are like a two-lane highway: you have
+			separate allocations for upload and download. If your client is properly configured, 
+			you should be able to upload at a good rate while retaining full download capacity.</text>
 			<newline gap="8"/>
-			<text>Oletuksena sinun lhetys rajoitukset ovat noin 85% lhetys kaistasta
-		kun lataukset ovat rajoittamattomat. Tuon konfiguraation  tulisi antaa sinulle mahdollisimman nopean
-		lataus nopuden kuin mahdollista.</text>
+			<text>By default, your upload limit is set to about 85% of available upstream bandwidth,
+			while downloads are unlimited. That configuration should give you the fastest possible 
+			downloads that are available.</text>
 		</document>
 		<!-- Search help documents -->
 		<document name="SearchHelp.BadSearch1">
 			<text format="b">Ole hyv ja jrjest hakusi uudelleen</text>
 			<newline gap="8"/>
-			<text>Tm haku on huonosti formatoitu ja ei saata tomia oikein
-		Haut tulisivat sislt niin monta termi kuin mahdollista ja sinun tulisi aina valita
-		tiedosto tyyppi. Haut eivt saa olla rajoitettu vain numeroihin tai negatiivisiin
-		termeihein ja sinun tulisi vltt erittin yleisi hakuja.</text>
+			<text>This search is poorly formatted, and may not function correctly. 
+			Searches should include several terms where possible, and should specify a schema 
+			(file type). Furthermore, searches must not be limited to numbers or negative
+			terms only, and you should avoid overly general queries.</text>
 			<newline gap="8"/>
-			<text>Suurin osa p2p ohjelmista hylk MP3 tiedosto haun esimerkiksi
-		koska se ei ole liian tarkka ja tuottaisi liian monta tulosta.</text>
+			<text>Most clients on the network will ignore a search for all MP3 files, for example, 
+			because it is not specific enough, and would generate too many results.</text>
 		</document>
 		<document name="SearchHelp.BadSearch2">
 			<text format="b">Ole hyv ja jrjest hakusi uudelleen</text>
 			<newline gap="8"/>
-			<text>Tm haku ei sisll tarpeeksi termej toimiakseen kunnollisesti. Kaikki haut tarvitsevat
-		vhimmis mrn numeroita tai aakkosellisia kirjaimia aloittaakseen.</text>
+			<text>This search does not contain enough terms to function properly. All searches need
+			a minimum number of valid, alphabetic characters to be able to start.</text>
 			<newline gap="8"/>
-			<text>Kun taas yleisi tiedosto ptteit (ja numeroita) voi etsi, sinun tulee laittaa
-		toisia termej aloittaessasi hakua. Pilkutuksia ja jokerimerkkej ei kytet
-		hauissa joten vain se teksti mink annat.</text>
+			<text>While common file extensions (and numbers) can be searched for, you must enter
+			other terms as well when creating the search. Punctuation and wildcards are not used 
+			in searches, just the text you enter.</text>
 		</document>
 		<document name="SearchHelp.BadSearch3">
 			<text format="b">Ole hyv ja jrjest hakusi uudelleen</text>
@@ -2326,7 +2329,7 @@
 		<tip id="AFX_IDS_APP_TITLE" message="Shareaza"/>
 		<tip id="AFX_IDS_IDLEMESSAGE" message="Ready"/>
 		<tip id="AFX_IDS_MDICHILD" message="Activate this window"/>
-		<tip id="AFX_IDS_PREVIEW_CLOSE" message="Close print preview mode" tip="R_emote Preview"/>
+		<tip id="AFX_IDS_PREVIEW_CLOSE" message="Close print preview mode" tip="Cancel Preview"/>
 		<tip id="AFX_IDS_SCCLOSE" message="Close the active window and prompts to save the documents"/>
 		<tip id="AFX_IDS_SCMAXIMIZE" message="Enlarge the window to full size"/>
 		<tip id="AFX_IDS_SCMINIMIZE" message="Reduce the window to an icon"/>
@@ -2427,7 +2430,7 @@
 		<tip id="ID_HITMONITOR_CLEAR" message="Clear the hit monitor buffer."/>
 		<tip id="ID_HITMONITOR_PAUSE" message="Pause hit monitoring."/>
 		<tip id="ID_HITMONITOR_SEARCH" message="Search the network for the selected term."/>
-		<tip id="ID_HOSTCACHE_BT_CACHE" message="Näytä BitTorrent"/>
+		<tip id="ID_HOSTCACHE_BT_CACHE" message="Show BitTorrent cached hosts."/>
 		<tip id="ID_HOSTCACHE_CONNECT" message="Connect to the selected host(s)."/>
 		<tip id="ID_HOSTCACHE_DC_CACHE" message="Show DC++ cached hubs."/>
 		<tip id="ID_HOSTCACHE_DISCONNECT" message="Disconnect from the selected neighbour(s)."/>
@@ -2470,7 +2473,7 @@
 		<tip id="ID_LIBRARY_REBUILD" message="Rebuild metadata and hashes for the selected folders or files."/>
 		<tip id="ID_LIBRARY_REBUILD_ANSI" message="Rebuild metadata using other language."/>
 		<tip id="ID_LIBRARY_REFRESH" message="Refresh the library view."/>
-		<tip id="ID_LIBRARY_REFRESH_METADATA" message="_Refresh Metadata"/>
+		<tip id="ID_LIBRARY_REFRESH_METADATA" message="Refresh file metadata"/>
 		<tip id="ID_LIBRARY_REMOVE" message="Remove the selected shared folders."/>
 		<tip id="ID_LIBRARY_RENAME" message="Rename the selected file in-place."/>
 		<tip id="ID_LIBRARY_SCAN" message="Scan the selected folders or files for changes."/>
@@ -2508,7 +2511,7 @@
 		<tip id="ID_MEDIA_PAUSE" message="Pause playback of the media file." tip="Keskeytä"/>
 		<tip id="ID_MEDIA_PLAY" message="Start playing the current media file." tip="Play"/>
 		<tip id="ID_MEDIA_PLAYLIST" message="Show or hide the playlist editor."/>
-		<tip id="ID_MEDIA_POSITION" message="Hae kohtaan media tiedostossa" tip="Seek"/>
+		<tip id="ID_MEDIA_POSITION" message="Seek to a position in the media file." tip="Seek"/>
 		<tip id="ID_MEDIA_PREVIOUS" message="Skip back to the previous file in the current playlist." tip="Previous File"/>
 		<tip id="ID_MEDIA_PROPERTIES" message="View and edit the properties of the selected files."/>
 		<tip id="ID_MEDIA_RANDOM" message="Toggle random (shuffle) mode in the current playlist."/>
@@ -2523,11 +2526,11 @@
 		<tip id="ID_MEDIA_SIZE_ONE" message="Show the video at its original (natural) size."/>
 		<tip id="ID_MEDIA_SIZE_THREE" message="Show the video at triple its original (natural) size."/>
 		<tip id="ID_MEDIA_SIZE_TWO" message="Show the video at double its original (natural) size."/>
-		<tip id="ID_MEDIA_SPEED" message="Säädä mediatiedoston toisto nopeutta" tip="Speed"/>
+		<tip id="ID_MEDIA_SPEED" message="Adjust the speed of the media file." tip="Speed"/>
 		<tip id="ID_MEDIA_STATUS" message="Show or hide the media status line."/>
 		<tip id="ID_MEDIA_STOP" message="Stop playing the media file." tip="Pysäytä"/>
 		<tip id="ID_MEDIA_VIS" message="Select an audio visualisation plugin..."/>
-		<tip id="ID_MEDIA_VOLUME" message="Säädä äänen voimakkuuta" tip="Volume"/>
+		<tip id="ID_MEDIA_VOLUME" message="Adjust the audio volume." tip="Volume"/>
 		<tip id="ID_MEDIA_ZOOM" message="Adjust video zoom and aspect ratio settings."/>
 		<tip id="ID_MONITOR_CLOSE" message="Close the monitor window."/>
 		<tip id="ID_MUSICBRAINZ_ALBUMS" message="Look at all albums for this artist."/>
@@ -2552,9 +2555,9 @@
 		<tip id="ID_NETWORK_G1" message="Connect to the original Gnutella network."/>
 		<tip id="ID_NETWORK_G2" message="Connect to the Gnutella2 network (highly recommended)."/>
 		<tip id="ID_NETWORK_SEARCH" message="Start a new search of the network..."/>
-		<tip id="ID_NEXT_PANE" message="Switch to the next window pane" tip="Seuraava"/>
+		<tip id="ID_NEXT_PANE" message="Switch to the next window pane" tip="Next Pane"/>
 		<tip id="ID_OPEN_DOWNLOADS_FOLDER" message="Open my folder of completed Downloads"/>
-		<tip id="ID_PREV_PANE" message="Switch back to the previous window pane" tip="Edellinen"/>
+		<tip id="ID_PREV_PANE" message="Switch back to the previous window pane" tip="Previous Pane"/>
 		<tip id="ID_SCHEDULER_ACTIVATE" message="Activates selected task(s) from the list."/>
 		<tip id="ID_SCHEDULER_ADD" message="Adds a new task to scheduler list."/>
 		<tip id="ID_SCHEDULER_DEACTIVATE" message="Deactivates selected tasks."/>
@@ -2813,7 +2816,7 @@
 		<string id="8239" value="Completed"/>
 		<string id="8240" value="Shareaza is moving the download:"/>
 		<string id="8241" value="Shareaza is checking the download for errors:"/>
-		<string id="8243" value="Lähetykset Alue"/>
+		<string id="8243" value="Upload ratio:"/>
 		<string id="8244" value="Number of reviews:"/>
 		<string id="8288" value="Exploring Your Shareaza Library"/>
 		<string id="8289" value="Exploring "/>
@@ -2856,7 +2859,7 @@
 		<string id="8335" value="Sources for this file are firewalled"/>
 		<string id="8336" value="Sources for this file may be unstable"/>
 		<string id="8337" value="Untrusted"/>
-		<string id="8338" value="Hae:"/>
+		<string id="8338" value="Free:"/>
 		<string id="13000" value="Are you sure you want to delete the selected security rules? This cannot be undone."/>
 		<string id="13001" value="Files shared over the Internet"/>
 		<string id="16063" value="UPnP port mapping failed after 10 attempts."/>
@@ -3052,7 +3055,7 @@
 		<string id="16377" value="HTTP Guard"/>
 		<string id="16378" value="Host &quot;%s&quot; sent a 416, without providing available ranges. Closing connection."/>
 		<string id="16379" value="Library Files"/>
-		<string id="16380" value="DC++ Cache"/>
+		<string id="16380" value="DC++ Guard"/>
 		<string id="16384" value="Are you sure you want to launch the file &quot;%s&quot; ?\n\nSome files can be harmful to your computer. Ensure you know what the file is before launching it."/>
 		<string id="16385" value="You are about to modify the metadata of %i files, are you sure you want to continue?"/>
 		<string id="16386" value="Editing metadata of %i files."/>
@@ -3239,7 +3242,7 @@
 		<string id="17128" value="eDonkey Server"/>
 		<string id="17129" value="eDonkey (LowID)"/>
 		<string id="17130" value="eDonkey (HighID)"/>
-		<string id="17131" value="Yhteys"/>
+		<string id="17131" value="DC++ Hub Connection"/>
 		<string id="17216" value="Initiating connection to eDonkey server at %s..."/>
 		<string id="17217" value="Connected to eDonkey server %s, handshaking..."/>
 		<string id="17218" value="ED2K[%s] %s"/>
@@ -3331,7 +3334,7 @@
 		<string id="19002" value="Unable to accept connections, URL unavailable."/>
 		<string id="19103" value="Welcome to Shareaza Chat!"/>
 		<string id="19104" value="Please respect others while using this service"/>
-		<string id="19105" value="IRC:"/>
+		<string id="19105" value="Chat!"/>
 		<string id="20000" value="No URN available"/>
 		<string id="20001" value="Close"/>
 		<string id="20002" value="of (e.g. 1 of 10)"/>
@@ -3412,12 +3415,12 @@
 		<string id="20248" value="You selected %u files. Are you sure?"/>
 		<string id="20249" value="Off"/>
 		<string id="20250" value="Low"/>
-		<string id="20251" value="_Normaali Tila"/>
+		<string id="20251" value="Normal"/>
 		<string id="20252" value="High"/>
 		<string id="20253" value="Skin load error: %s. Element: %s"/>
 		<string id="20254" value="Loading skin: %s"/>
 		<string id="20255" value="Are you sure you want to remove all scheduled tasks? This cannot be undone."/>
-		<string id="20256" value="Tervetuloa Shareazaan!  Sinä et ole tällä hetkellä yhteydessä mihinkään p2p verkkoon.  "/>
+		<string id="20256" value="System: Start Shareaza"/>
 		<string id="20257" value="Bandwidth: Full Speed"/>
 		<string id="20258" value="Bandwidth: Reduced Speed"/>
 		<string id="20259" value="Bandwidth: Stop"/>
@@ -3613,7 +3616,7 @@
 			<control caption="Scan every completed file with AntiVirus"/>
 			<control caption="Select AntiVirus:"/>
 			<control/>
-			<control caption="Palaa Lataukseen"/>
+			<control caption="Number of Downloads"/>
 			<control caption="Maximum Files:"/>
 			<control/>
 			<control/>
@@ -4552,7 +4555,7 @@
 			<control/>
 			<control caption="Gnutella1"/>
 			<control caption="Gnutella2"/>
-			<control caption="eDonkey"/>
+			<control caption="eDoonkey2K"/>
 			<control caption="DC++"/>
 			<control caption="BitTorrent"/>
 			<control caption="Select the event type:"/>
@@ -4703,7 +4706,7 @@
 		<list name="CSchedulerWnd">
 			<column from="Action" to="Action"/>
 			<column from="Trigger" to="Trigger"/>
-			<column from="Next Run" to="Seuraava"/>
+			<column from="Next Run" to="NextRun"/>
 			<column from="Active" to="Active"/>
 			<column from="Status" to="Status"/>
 			<column from="Description" to="Description"/>

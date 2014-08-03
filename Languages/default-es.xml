@@ -1839,7 +1839,7 @@
 			<text group="11" align="middle">Desconectado</text>
 			<text group="12" align="middle">Conectando...</text>
 			<text group="13" align="middle">Conectado</text>
-			<text group="14" align="middle" id="G1Hubs">eDonkey:</text>
+			<text group="14" align="middle" id="G1Hubs">%i ultrapeers</text>
 			<text group="15" align="middle" id="G1Leaves">%i leaves</text>
 			<newline group="10" gap="2"/>
 			<icon group="30" command="ID_NETWORK_ED2K"/><gap group="30" size="4"/>
@@ -2871,7 +2871,7 @@ puede comenzar a transferir en cualquier momento.</text>
 		<string id="16073" value="Resolviendo la ruta de &quot;%s&quot;..."/>
 		<string id="16074" value="No se pudo resolver host &quot;%s&quot;."/>
 		<string id="16075" value="Security manager denegó la conexión de %s."/>
-		<string id="16076" value="Security manager bloqueo conectarse a %s."/>
+		<string id="16076" value="Security manager barred a connection to %s."/>
 		<string id="16077" value="La dirección %s ya esta bloqueada en tus reglas de seguridad."/>
 		<string id="16078" value="Agregar una regla de seguridad %s."/>
 		<string id="16079" value="Estas seguro que deseas desconectarte?"/>
@@ -3322,8 +3322,8 @@ puede comenzar a transferir en cualquier momento.</text>
 		<string id="18510" value="¿Estás seguro de asumir esta descarga como completa y reverificarla? Shareaza reverificará el archivo, y aceptará las partes correctas, y descarga de nuevo aquellas incorrectas."/>
 		<string id="18511" value="Has hecho cambios en el tamaño del archivo.  Estas seguro que quieres cambiar el tamaño de esta descarga?"/>
 		<string id="18512" value="¿Estás seguro que deseas cancelar/abortar todas las descargas en este grupo?"/>
-		<string id="18513" value="El valor del hash de eDonkey asignado no es válido. Por favor, revíselo e intentelo de nuevo."/>
-		<string id="18514" value="¿Estás seguro de cambiar el SHA1?"/>
+		<string id="18513" value="You have typed an %s hash value, however it is invalid. Please check it and try again."/>
+		<string id="18514" value="You have provided an %s hash value which is different to the one currently associated with this download. Are you sure you want to change the %s hash now?"/>
 		<string id="18515" value="El elemento de descarga seleccionado tiene alguna tarea adjunta. Por favor, espera e intentalo mas tarde."/>
 		<string id="19000" value="El Acceso Remoto esta deshabilitado."/>
 		<string id="19001" value="Debes Seleccionar un nombre de usuario y contraseña."/>
@@ -3952,7 +3952,7 @@ puede comenzar a transferir en cualquier momento.</text>
 			<control/>
 			<control/>
 			<control caption="_Acerca de ti:"/>
-			<control caption="|Hombre|Mujer"/>
+			<control caption="Male|Female"/>
 			<control caption="Sexo:"/>
 			<control/>
 			<control caption="Edad:"/>
