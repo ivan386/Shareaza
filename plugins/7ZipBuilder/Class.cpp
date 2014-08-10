@@ -1,7 +1,7 @@
 //
 // Class.cpp : Implementation of CClass
 //
-// Copyright (c) Shareaza Development Team, 2007.
+// Copyright (c) Shareaza Development Team, 2007-2014.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -22,7 +22,7 @@
 #include "StdAfx.h"
 #include "Class.h"
 #include <InitGuid.h>
-#include "7zxr/7zip/Archive/IArchive.h"
+#include "7zxr\CPP\7zip\Archive\IArchive.h"
 
 #define MAX_SIZE_FILES		80
 #define MAX_SIZE_FOLDERS	80
