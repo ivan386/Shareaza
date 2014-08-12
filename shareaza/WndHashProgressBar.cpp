@@ -57,6 +57,7 @@ CHashProgressBar::CHashProgressBar()
 	, m_nLastShow		( 0 )
 	, m_nPerfectWidth	( 0 )
 	, m_nAlpha			( 0 )
+	, m_nIcon			( SHI_FILE )
 {
 }
 
@@ -65,15 +66,23 @@ CHashProgressBar::CHashProgressBar()
 
 void CHashProgressBar::Run()
 {
-	size_t nRemaining = LibraryBuilder.GetRemaining();
-	BOOL bFullscreen = IsUserUsingFullscreen();
-	BOOL bShow = Settings.Library.HashWindow && nRemaining && ! bFullscreen;
+	const size_t nRemaining = LibraryBuilder.GetRemaining();
+	const BOOL bFullscreen = IsUserUsingFullscreen();
+	const BOOL bShow = Settings.Library.HashWindow && nRemaining && ! bFullscreen;
 
 	if ( bShow )
 	{
-		CString sCurrent = LibraryBuilder.GetCurrent();
+		const CString sCurrent = LibraryBuilder.GetCurrent();
 		if ( ! sCurrent.IsEmpty() )
-			m_sCurrent = sCurrent;
+		{
+			m_sCurrent = PathFindFileName( sCurrent );
+			m_nIcon = ShellIcons.Get( sCurrent, 32 );
+		}
+		else if ( m_sCurrent.IsEmpty() && nRemaining )
+		{
+			m_sCurrent = _T("File cooling...");
+			m_nIcon = SHI_FILE;
+		}
 		m_nRemaining = nRemaining;
 		m_nPercentage = min( LibraryBuilder.GetProgress(), 100ul );
 		m_nLastShow = GetTickCount();
@@ -139,7 +148,7 @@ void CHashProgressBar::Run()
 			GetCursorPos( &ptMouse );
 			bAlpha = rcWindow.PtInRect( ptMouse );
 		}
-		BYTE nNewAlpha = (BYTE)( bAlpha ? max( m_nAlpha - 20, 0 ) : min( m_nAlpha + 20, 240 ) );
+		const BYTE nNewAlpha = (BYTE)( bAlpha ? max( m_nAlpha - 20, 0 ) : min( m_nAlpha + 20, 240 ) );
 		if ( m_nAlpha != nNewAlpha )
 		{
 			m_nAlpha = nNewAlpha;
@@ -175,6 +184,7 @@ void CHashProgressBar::OnDestroy()
 	m_nLastShow = 0;
 	m_nPerfectWidth = 0;
 	m_nAlpha = 0;
+	m_nIcon = SHI_FILE;
 
 	CWnd::OnDestroy();
 }
@@ -220,7 +230,7 @@ void CHashProgressBar::Draw(CDC* pDC)
 	dc.SetTextColor( CoolInterface.m_crTipText );
 
 	// Icon
-	ShellIcons.Draw( &dc, ShellIcons.Get( m_sCurrent, 32 ), 32,
+	ShellIcons.Draw( &dc, m_nIcon, 32,
 		rcClient.left + 4, rcClient.top + 4, CoolInterface.m_crTipBack );
 
 	// Text
@@ -236,14 +246,13 @@ void CHashProgressBar::Draw(CDC* pDC)
 
 	dc.SelectObject( &CoolInterface.m_fntCaption );
 
-	CString sFilename = PathFindFileName( m_sCurrent );
 	CRect rcFilename( rcClient.left + 4 + 32 + 8, rcClient.top + 4 + 12 + 4,
 		rcClient.right - 8, rcClient.top + 4 + 12 + 4 + 18 );
-	dc.DrawText( sFilename, rcFilename,
+	dc.DrawText( m_sCurrent, rcFilename,
 		DT_LEFT | DT_VCENTER | DT_SINGLELINE | DT_END_ELLIPSIS );
 
 	// Calculate perfect width
-	dc.DrawText( sFilename, rcFilename,
+	dc.DrawText( m_sCurrent, rcFilename,
 		DT_LEFT | DT_VCENTER | DT_SINGLELINE | DT_CALCRECT );
 	m_nPerfectWidth = min( max( 1 + 4 + 32 + 8 + rcFilename.Width() + 8 + 1, WINDOW_WIDTH ),
 		GetSystemMetrics( SM_CXSCREEN ) / 2 );

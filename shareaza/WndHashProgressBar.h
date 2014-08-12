@@ -38,6 +38,7 @@ protected:
 	DWORD		m_nLastShow;			// Time of last update
 	int			m_nPerfectWidth;		// Window perfect width for text fitting
 	BYTE		m_nAlpha;
+	int			m_nIcon;
 
 	void		Draw(CDC* pDC);			// Redraw window and calculate perfect width
 
