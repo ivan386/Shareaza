@@ -201,31 +201,9 @@ BOOL CURLActionDlg::OnInitDialog()
 			LoadString(m_sNameValue, IDS_URL_UNSPECIFIED );
 		}
 
-		if ( m_pURL->m_oTiger && m_pURL->m_oSHA1 )
+		if ( m_pURL->HasHash() )
 		{
-			m_sHashValue = _T("bitprint:")
-						 + m_pURL->m_oSHA1.toString() + _T(".")
-						 + m_pURL->m_oTiger.toString();
-		}
-		else if ( m_pURL->m_oTiger )
-		{
-			m_sHashValue = m_pURL->m_oTiger.toShortUrn();
-		}
-		else if ( m_pURL->m_oSHA1 )
-		{
-			m_sHashValue = m_pURL->m_oSHA1.toShortUrn();
-		}
-		else if ( m_pURL->m_oED2K )
-		{
-			m_sHashValue = m_pURL->m_oED2K.toShortUrn();
-		}
-		else if ( m_pURL->m_oMD5 )
-		{
-			m_sHashValue = m_pURL->m_oMD5.toShortUrn();
-		}
-		else if ( m_pURL->m_oBTH )
-		{
-			m_sHashValue = m_pURL->m_oBTH.toShortUrn();
+			m_sHashValue = m_pURL->GetShortURN();
 		}
 		else
 		{

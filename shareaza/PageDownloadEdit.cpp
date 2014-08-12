@@ -129,11 +129,11 @@ BOOL CDownloadEditPage::OnApply()
 	Hashes::Md5Hash oMD5;
 	Hashes::BtHash oBTH;
 
-    oSHA1.fromString( m_sSHA1 );
-    oTiger.fromString( m_sTiger );
+    oSHA1.fromString( m_sSHA1 ) || oSHA1.fromString< Hashes::base16Encoding >( m_sSHA1 );
+    oTiger.fromString( m_sTiger ) || oTiger.fromString< Hashes::base16Encoding >( m_sTiger );
     oED2K.fromString( m_sED2K );
     oMD5.fromString( m_sMD5 );
-    oBTH.fromString( m_sBTH );
+    oBTH.fromString( m_sBTH ) || oBTH.fromString< Hashes::base16Encoding >( m_sBTH );
 	
 	if ( m_sSHA1.GetLength() > 0 && !oSHA1 )
 	{
@@ -230,11 +230,11 @@ BOOL CDownloadEditPage::OnApply()
 		pLock.Lock();
 		pDownload = pSheet->GetDownload();
 		if ( ! pDownload ) return CPropertyPageAdv::OnApply();
+		bCriticalChange = bCriticalChange || validAndUnequal( pDownload->m_oSHA1, oSHA1 );
 		pDownload->m_oSHA1 = oSHA1;
 		if ( oSHA1 ) pDownload->m_bSHA1Trusted = true;
 		pDownload->CloseTransfers();
 		pDownload->ClearVerification();
-		bCriticalChange = true;
 	}
 	
 	if ( pDownload->m_oTiger.isValid() != oTiger.isValid()
@@ -247,11 +247,11 @@ BOOL CDownloadEditPage::OnApply()
 		pLock.Lock();
 		pDownload = pSheet->GetDownload();
 		if ( ! pDownload ) return CPropertyPageAdv::OnApply();
+		bCriticalChange = bCriticalChange || validAndUnequal( pDownload->m_oTiger, oTiger );
 		pDownload->m_oTiger = oTiger;
 		if ( oTiger ) pDownload->m_bTigerTrusted = true;
 		pDownload->CloseTransfers();
 		pDownload->ClearVerification();
-		bCriticalChange = true;
 	}
 	
 	if ( pDownload->m_oED2K.isValid() != oED2K.isValid()
@@ -264,11 +264,11 @@ BOOL CDownloadEditPage::OnApply()
 		pLock.Lock();
 		pDownload = pSheet->GetDownload();
 		if ( ! pDownload ) return CPropertyPageAdv::OnApply();
+		bCriticalChange = bCriticalChange || validAndUnequal( pDownload->m_oED2K, oED2K );
 		pDownload->m_oED2K = oED2K;
 		if ( oED2K ) pDownload->m_bED2KTrusted = true;
 		pDownload->CloseTransfers();
 		pDownload->ClearVerification();
-		bCriticalChange = true;
 	}
 
 	if ( pDownload->m_oMD5.isValid() != oMD5.isValid()
@@ -281,11 +281,11 @@ BOOL CDownloadEditPage::OnApply()
 		pLock.Lock();
 		pDownload = pSheet->GetDownload();
 		if ( ! pDownload ) return CPropertyPageAdv::OnApply();
+		bCriticalChange = bCriticalChange || validAndUnequal( pDownload->m_oMD5, oMD5 );
 		pDownload->m_oMD5 = oMD5;
 		if ( oMD5 ) pDownload->m_bMD5Trusted = true;
 		pDownload->CloseTransfers();
 		pDownload->ClearVerification();
-		bCriticalChange = true;
 	}
 
 	BOOL bNewBTH = FALSE;
@@ -299,11 +299,11 @@ BOOL CDownloadEditPage::OnApply()
 		pLock.Lock();
 		pDownload = pSheet->GetDownload();
 		if ( ! pDownload ) return CPropertyPageAdv::OnApply();
+		bCriticalChange = bCriticalChange || validAndUnequal( pDownload->m_oBTH, oBTH );
 		pDownload->m_oBTH = oBTH;
 		if ( oBTH ) pDownload->m_bBTHTrusted = true;
 		pDownload->CloseTransfers();
 		pDownload->ClearVerification();
-		bCriticalChange = true;
 		bNewBTH = TRUE;
 	}
 

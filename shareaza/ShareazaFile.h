@@ -57,6 +57,7 @@ public:
 
 	// Returns any available URNs
 	CString GetURN() const;
+	CString GetShortURN() const;
 
 	// Returns "sha1_SHA1", "ttr_TIGER" etc.
 	CString GetFilename() const;

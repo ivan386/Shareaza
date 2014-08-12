@@ -200,7 +200,7 @@ CString CShareazaFile::GetBitprint() const
 CString CShareazaFile::GetURN() const
 {
 	if ( m_oSHA1 && m_oTiger )
-		return _T("urn:bitprint:") + m_oSHA1.toString() + _T('.') + m_oTiger.toString();
+		return Hashes::TigerHash::urns[ 2 ].signature + m_oSHA1.toString() + _T('.') + m_oTiger.toString();
 	else if ( m_oSHA1 )
 		return m_oSHA1.toUrn();
 	else if ( m_oTiger )
@@ -211,6 +211,24 @@ CString CShareazaFile::GetURN() const
 		return m_oMD5.toUrn();
 	else if ( m_oBTH )
 		return m_oBTH.toUrn();
+	else
+		return CString();
+}
+
+CString CShareazaFile::GetShortURN() const
+{
+	if ( m_oSHA1 && m_oTiger )
+		return Hashes::TigerHash::urns[ 3 ].signature + m_oSHA1.toString() + _T( '.' ) + m_oTiger.toString();
+	else if ( m_oSHA1 )
+		return m_oSHA1.toShortUrn();
+	else if ( m_oTiger )
+		return m_oTiger.toShortUrn();
+	else if ( m_oED2K )
+		return m_oED2K.toShortUrn();
+	else if ( m_oMD5 )
+		return m_oMD5.toShortUrn();
+	else if ( m_oBTH )
+		return m_oBTH.toShortUrn();
 	else
 		return CString();
 }
