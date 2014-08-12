@@ -578,7 +578,6 @@
     <ClCompile Include="DlgExistingFile.cpp" />
     <ClCompile Include="DlgFileCopy.cpp" />
     <ClCompile Include="DlgFilePreview.cpp" />
-    <ClCompile Include="DlgFileProperties.cpp" />
     <ClCompile Include="DlgFilePropertiesPage.cpp" />
     <ClCompile Include="DlgFilePropertiesSheet.cpp" />
     <ClCompile Include="DlgFilterSearch.cpp" />
@@ -1003,7 +1002,6 @@
     <ClInclude Include="DlgExistingFile.h" />
     <ClInclude Include="DlgFileCopy.h" />
     <ClInclude Include="DlgFilePreview.h" />
-    <ClInclude Include="DlgFileProperties.h" />
     <ClInclude Include="DlgFilePropertiesPage.h" />
     <ClInclude Include="DlgFilePropertiesSheet.h" />
     <ClInclude Include="DlgFilterSearch.h" />
