@@ -735,7 +735,7 @@ void CSearchWnd::UpdateMessages()
 
 			if ( pSearch->HasHash() )
 			{
-				strCaption += _T( "Hash: " ) + pSearch->GetURN();
+				strCaption += _T( "Hash " ) + pSearch->GetURN();
 			}
 			else if ( pSearch->m_sSearch.GetLength() )
 			{
