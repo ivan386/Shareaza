@@ -80,17 +80,6 @@ THE SOFTWARE.
 #ifndef EAFNOSUPPORT
 #define EAFNOSUPPORT WSAEAFNOSUPPORT
 #endif
-static int
-set_nonblocking(int fd, int nonblocking)
-{
-    int rc;
-
-    unsigned long mode = !!nonblocking;
-    rc = ioctlsocket(fd, FIONBIO, &mode);
-    if(rc != 0)
-        errno = WSAGetLastError();
-    return (rc == 0 ? 0 : -1);
-}
 
 static int
 random(void)
@@ -158,23 +147,6 @@ gettimeofday(struct timeval64 *tv, struct timezone *tz)
 }
 
 #endif
-
-#else
-
-static int
-set_nonblocking(int fd, int nonblocking)
-{
-    int rc;
-    rc = fcntl(fd, F_GETFL, 0);
-    if(rc < 0)
-        return -1;
-
-    rc = fcntl(fd, F_SETFL, nonblocking?(rc | O_NONBLOCK):(rc & ~O_NONBLOCK));
-    if(rc < 0)
-        return -1;
-
-    return 0;
-}
 
 #endif
 
@@ -493,6 +465,8 @@ lowbit(const unsigned char *id)
     return 8 * i + j;
 }
 
+#ifdef DHT_DEBUG
+
 /* Find how many bits two ids have in common. */
 static int
 common_bits(const unsigned char *id1, const unsigned char *id2)
@@ -517,6 +491,8 @@ common_bits(const unsigned char *id1, const unsigned char *id2)
 
     return 8 * i + j;
 }
+
+#endif // DHT_DEBUG
 
 /* Determine whether id1 or id2 is closer to ref */
 static int
@@ -1556,7 +1532,6 @@ make_token(const struct sockaddr *sa, int old, unsigned char *token_return)
         port = htons(sin6->sin6_port);
     } else {
         abort();
-		return;
     }
 
     dht_hash(token_return, TOKEN_SIZE,
@@ -1759,10 +1734,6 @@ dht_init(int s, int s6, const unsigned char *id, const unsigned char *v)
         if(buckets == NULL)
             return -1;
         buckets->af = AF_INET;
-
-        //rc = set_nonblocking(s, 1);
-        //if(rc < 0)
-        //    goto fail;
     }
 
     if(s6 >= 0) {
@@ -1770,10 +1741,6 @@ dht_init(int s, int s6, const unsigned char *id, const unsigned char *v)
         if(buckets6 == NULL)
             return -1;
         buckets6->af = AF_INET6;
-
-        //rc = set_nonblocking(s6, 1);
-        //if(rc < 0)
-        //    goto fail;
     }
 
     memcpy(myid, id, 20);
@@ -2629,7 +2596,6 @@ insert_closest_node(unsigned char *nodes, int numnodes,
     else
 	{
         abort();
-		return -1;
 	}
 
     for(i = 0; i< numnodes; i++) {
@@ -2661,7 +2627,6 @@ insert_closest_node(unsigned char *nodes, int numnodes,
         memcpy(nodes + size * i + 36, &sin6->sin6_port, 2);
     } else {
         abort();
- 		return -1;
    }
 
     return numnodes;
