@@ -56,7 +56,7 @@ CDownloadTransferBT::CDownloadTransferBT(CDownloadSource* pSource, CBTClient* pC
 	ASSUME_LOCK( Transfers.m_pSection );
 
 	m_nState			= pClient ? dtsConnecting : dtsNull;
-	m_sUserAgent		= _T("BitTorrent");	
+	m_sUserAgent		= protocolNames[ PROTOCOL_BT ];	
 }
 
 CDownloadTransferBT::~CDownloadTransferBT()

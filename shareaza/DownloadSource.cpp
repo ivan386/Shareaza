@@ -182,7 +182,7 @@ CDownloadSource::CDownloadSource(const CDownload* pDownload,
 
 	m_bBTH		= TRUE;
 	m_oGUID		= transformGuid( oGUID );
-	m_sServer	= _T("BitTorrent");
+	m_sServer	= protocolNames[ PROTOCOL_BT ];
 
 	ResolveURL();
 }

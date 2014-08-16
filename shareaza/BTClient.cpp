@@ -71,7 +71,7 @@ CBTClient::CBTClient()
 	, m_nLtTexID			( 0 )	// 0 or BT_EXTENSION_LT_TEX
 	, m_nSrcExchangeID		( 0 )	// 0 or BT_HANDSHAKE_SOURCE
 {
-	m_sUserAgent = _T("BitTorrent");
+	m_sUserAgent = protocolNames[ PROTOCOL_BT ];
 	m_mInput.pLimit = m_mOutput.pLimit = &Settings.Bandwidth.Request;
 
 	if ( Settings.General.DebugBTSources )
@@ -560,101 +560,222 @@ BOOL CBTClient::OnHandshake2()
 //////////////////////////////////////////////////////////////////////
 // CBTClient online handler
 
+int charint( BYTE ch )
+{
+	if ( '0' <= ch && ch <= '9' )
+		return ch - '0';
+	if ( 'A' <= ch && ch <= 'Z' )
+		return 10 + ch - 'A';
+	if ( 'a' <= ch && ch <= 'z' )
+		return 36 + ch - 'a';
+	return 0;
+}
+
+int strint( LPCBYTE pch, int span )
+{
+	char tmp[ 64 ];
+	memcpy( tmp, pch, span );
+	tmp[ span ] = '\0';
+	return (int)strtol( tmp, NULL, 0 );
+}
+
+LPCTSTR getMnemonicEnd( BYTE ch )
+{
+	switch ( ch )
+	{
+	case 'b':
+	case 'B':
+	return _T( " (Beta)" );
+	case 'd':
+	return _T( " (Debug)" );
+	case 'x':
+	case 'X':
+	case 'Z':
+	return _T( " (Dev)" );
+	default:
+	return _T( "" );
+	}
+}
+
+enum
+{
+	STYLE_2_DIGITS,	// 2 digits
+	STYLE_3_DIGITS,	// 3 digits
+	STYLE_4_DIGITS,	// 4 digits
+	STYLE_2_INTS  ,	// 2 digits (2 chars each)
+	STYLE_AZUREUS ,	// Azureus/Vuze style (same as 4 digits)
+	STYLE_BUDDY   ,	// BitBuddy style
+	STYLE_CTORRENT,	// CTorrent style
+	STYLE_ROCKET  ,	// BitRocket style
+	STYLE_UTORRENT,	// uTorrent style
+	STYLE_XTORRENT,	// xTorrent style
+	STYLE_NO_VERS	// no version
+};
+
+// Azureus style "-SSVVVV-" http://bittorrent.org/beps/bep_0020.html
 CString CBTClient::GetAzureusStyleUserAgent(LPBYTE pVendor, size_t nVendor)
 {
-	// Azureus style "-SSVVVV-" http://bittorrent.org/beps/bep_0020.html
 	struct azureusStyleEntry
 	{
-		uchar signature[ 2 ];
+		int style;
+		BYTE signature[ 2 ];
 		LPCTSTR client;
 	};
 	static const azureusStyleEntry azureusStyleClients[] =
 	{
-		{ 'A', 'G', L"Ares" },
-		{ 'A', 'R', L"Arctic" },
-		{ 'A', 'V', L"Avicora" },
-		{ 'A', 'X', L"BitPump" },
-		{ 'A', 'Z', L"Azureus" },
-		{ 'A', '~', L"Ares" },
-		{ 'B', 'B', L"BitBuddy" },
-		{ 'B', 'C', L"BitComet" },
-		{ 'B', 'F', L"Bitflu" },
-		{ 'B', 'G', L"BTG" },
-		{ 'b', 'k', L"BitKitten" },
-		{ 'B', 'O', L"BO" },
-		{ 'B', 'R', L"BitRocket" },
-		{ 'B', 'S', L"BitSlave" },
-		{ 'B', 'X', L"Bittorrent X" },
-		{ 'C', 'B', L"ShareazaPlus" },		// RazaCB Core
-		{ 'C', 'D', L"Enhanced CTorrent" },
-		{ 'C', 'T', L"CTorrent" },
-		{ 'D', 'E', L"DelugeTorrent" },
-		{ 'E', 'B', L"EBit" },
-		{ 'E', 'S', L"Electric Sheep" },
-		{ 'F', 'C', L"FileCroc" },
-		{ 'G', 'R', L"GetRight" },
-		{ 'H', 'L', L"Halite" },
-		{ 'H', 'N', L"Hydranode" },
-		{ 'K', 'T', L"KTorrent" },
-		{ 'L', 'H', L"LH-ABC" },
-		{ 'L', 'K', L"Linkage" },
-		{ 'L', 'P', L"Lphant" },
-		{ 'L', 'T', L"libtorrent" },
-		{ 'l', 't', L"rTorrent" },
-		{ 'L', 'W', L"LimeWire" },
-		{ 'M', 'O', L"Mono Torrent" },
-		{ 'M', 'P', L"MooPolice" },
-		{ 'M', 'T', L"MoonlightTorrent" },
-		{ 'P', 'C', L"CacheLogic" },
-		{ 'P', 'D', L"Pando" },
-		{ 'P', 'E', L"PeerProject" },
-		{ 'p', 'X', L"pHoeniX" },
-		{ 'q', 'B', L"qBittorrent" },
-		{ 'Q', 'T', L"QT4" },
-		{ 'R', 'T', L"Retriever" },
-		{ 'S', 'B', L"SwiftBit" },
-		{ 'S', 'N', L"ShareNet" },
-		{ 'S', 'S', L"Swarmscope" },
-		{ 's', 't', L"Sharktorrent" },
-		{ 'S', 'T', L"SymTorrent" },
-		{ 'S', 'Z', L"Shareaza" },
-		{ 'S', '~', L"ShareazaBeta" },
-		{ 'T', 'N', L"Torrent.NET" },
-		{ 'T', 'R', L"Transmission" },
-		{ 'T', 'S', L"TorrentStorm" },
-		{ 'T', 'T', L"TuoTu" },
-		{ 'U', 'L', L"uLeecher!" },
-		{ 'U', 'T', L"\x00B5Torrent" },
-		{ 'X', 'L', L"Xunlei" },
-		{ 'X', 'T', L"XanTorrent" },
-		{ 'X', 'X', L"xTorrent" },
-		{ 'Z', 'T', L"ZipTorrent" }
+		{ STYLE_3_DIGITS, 'A', 'G', L"Ares" },
+		{ STYLE_4_DIGITS, 'A', 'R', L"Arctic" },
+		{ STYLE_4_DIGITS, 'A', 'T', L"Artemis" },
+		{ STYLE_4_DIGITS, 'A', 'V', L"Avicora" },
+		{ STYLE_2_INTS  , 'A', 'X', L"BitPump" },
+		{ STYLE_AZUREUS , 'A', 'Z', L"Azureus" },	// Vuze
+		{ STYLE_3_DIGITS, 'A', '~', L"Ares" },
+		{ STYLE_BUDDY   , 'B', 'B', L"BitBuddy" },
+		{ STYLE_2_INTS  , 'B', 'C', L"BitComet" },
+		{ STYLE_4_DIGITS, 'B', 'E', L"BitTorrent SDK" },
+		{ STYLE_NO_VERS , 'B', 'F', L"Bitflu" },
+		{ STYLE_4_DIGITS, 'B', 'G', L"BTGetit" },
+		{ STYLE_4_DIGITS, 'B', 'H', L"BitZilla" },
+		{ STYLE_4_DIGITS, 'b', 'k', L"BitKitten" },
+		{ STYLE_4_DIGITS, 'B', 'M', L"BitMagnet" },
+		{ STYLE_4_DIGITS, 'B', 'O', L"Bits on Wheels" },
+		{ STYLE_4_DIGITS, 'B', 'P', L"BitTorrent Pro (Azureus + Spyware)" },
+		{ STYLE_ROCKET  , 'B', 'R', L"BitRocket" },
+		{ STYLE_4_DIGITS, 'B', 'S', L"BitSlave" },
+		{ STYLE_UTORRENT, 'B', 'T', L"BitTorrent" },
+		{ STYLE_4_DIGITS, 'B', 'W', L"BitWombat" },
+		{ STYLE_4_DIGITS, 'B', 'X', L"BitTorrent X" },
+		{ STYLE_4_DIGITS, 'C', 'B', L"ShareazaPlus" },		// RazaCB Core
+		{ STYLE_2_INTS  , 'C', 'D', L"Enhanced CTorrent" },
+		{ STYLE_CTORRENT, 'C', 'T', L"CTorrent" },
+		{ STYLE_4_DIGITS, 'D', 'E', L"DelugeTorrent" },
+		{ STYLE_4_DIGITS, 'D', 'P', L"Propogate Data Client" },
+		{ STYLE_4_DIGITS, 'E', 'B', L"EBit" },
+		{ STYLE_3_DIGITS, 'E', 'S', L"Electric Sheep" },
+		{ STYLE_4_DIGITS, 'F', 'C', L"FileCroc" },
+		{ STYLE_4_DIGITS, 'F', 'T', L"FoxTorrent/RedSwoosh" },
+		{ STYLE_4_DIGITS, 'G', 'R', L"GetRight" },
+		{ STYLE_4_DIGITS, 'G', 'S', L"GSTorrent" },
+		{ STYLE_4_DIGITS, 'H', 'K', L"Hekate" },
+		{ STYLE_3_DIGITS, 'H', 'L', L"Halite" },
+		{ STYLE_4_DIGITS, 'H', 'N', L"Hydranode" },
+		{ STYLE_4_DIGITS, 'K', 'G', L"KGet" },
+		{ STYLE_3_DIGITS, 'K', 'T', L"KTorrent" },
+		{ STYLE_4_DIGITS, 'L', 'C', L"LeechCraft" },
+		{ STYLE_4_DIGITS, 'L', 'H', L"LH-ABC" },
+		{ STYLE_4_DIGITS, 'L', 'K', L"Linkage" },
+		{ STYLE_2_INTS  , 'L', 'P', L"Lphant" },
+		{ STYLE_3_DIGITS, 'L', 'T', L"libtorrent" },
+		{ STYLE_3_DIGITS, 'l', 't', L"rTorrent" },
+		{ STYLE_NO_VERS , 'L', 'W', L"LimeWire" },
+		{ STYLE_2_DIGITS, 'M', 'G', L"MediaGet" },
+		{ STYLE_4_DIGITS, 'M', 'K', L"Meerkat" },
+		{ STYLE_4_DIGITS, 'M', 'O', L"MonoTorrent" },
+		{ STYLE_3_DIGITS, 'M', 'P', L"MooPolice" },
+		{ STYLE_4_DIGITS, 'M', 'R', L"Miro" },
+		{ STYLE_4_DIGITS, 'M', 'T', L"MoonlightTorrent" },
+		{ STYLE_4_DIGITS, 'N', 'X', L"Net Transport" },
+		{ STYLE_4_DIGITS, 'O', 'S', L"OneSwarm" },
+		{ STYLE_4_DIGITS, 'O', 'T', L"OmegaTorrent" },
+		{ STYLE_3_DIGITS, 'p', 'b', L"pbTorrent" },
+		{ STYLE_4_DIGITS, 'P', 'C', L"CacheLogic" },
+		{ STYLE_4_DIGITS, 'P', 'D', L"Pando" },
+		{ STYLE_4_DIGITS, 'P', 'E', L"PeerProject" },
+		{ STYLE_4_DIGITS, 'p', 'X', L"pHoeniX" },
+		{ STYLE_3_DIGITS, 'q', 'B', L"qBittorrent" },
+		{ STYLE_4_DIGITS, 'Q', 'D', L"QQDownload" },
+		{ STYLE_4_DIGITS, 'Q', 'T', L"QT4" },
+		{ STYLE_4_DIGITS, 'R', 'S', L"Rufus" },
+		{ STYLE_4_DIGITS, 'R', 'T', L"Retriever" },
+		{ STYLE_4_DIGITS, 'R', 'Z', L"RezTorrent" },
+		{ STYLE_4_DIGITS, 'S', 'B', L"SwiftBit" },
+		{ STYLE_4_DIGITS, 'S', 'D', L"Thunder" },
+		{ STYLE_4_DIGITS, 'S', 'M', L"SoMud" },
+		{ STYLE_4_DIGITS, 'S', 'N', L"ShareNet" },
+		{ STYLE_4_DIGITS, 'S', 'S', L"SwarmScope" },
+		{ STYLE_4_DIGITS, 's', 't', L"SharkTorrent" },
+		{ STYLE_4_DIGITS, 'S', 'T', L"SymTorrent" },
+		{ STYLE_4_DIGITS, 'S', 'Z', L"Shareaza" },
+		{ STYLE_4_DIGITS, 'S', '~', L"Shareaza (Beta)" },
+		{ STYLE_4_DIGITS, 'T', 'N', L"Torrent.NET" },
+		{ STYLE_4_DIGITS, 'T', 'R', L"Transmission" },
+		{ STYLE_4_DIGITS, 'T', 'S', L"TorrentStorm" },
+		{ STYLE_3_DIGITS, 'T', 'T', L"TuoTu" },
+		{ STYLE_UTORRENT, 'U', 'E', L"\x03bcTorrent Embedded" },
+		{ STYLE_4_DIGITS, 'U', 'L', L"uLeecher!" },
+		{ STYLE_UTORRENT, 'U', 'M', L"\x03bcTorrent Mac" },
+		{ STYLE_UTORRENT, 'U', 'T', L"\x03bcTorrent" },
+		{ STYLE_4_DIGITS, 'V', 'G', L"Vagaa" },
+		{ STYLE_4_DIGITS, 'W', 'T', L"BitLet" },
+		{ STYLE_4_DIGITS, 'W', 'Y', L"FireTorrent" },
+		{ STYLE_XTORRENT, 'X', 'C', L"xTorrent" },
+		{ STYLE_4_DIGITS, 'X', 'L', L"Xunlei" },
+		{ STYLE_4_DIGITS, 'X', 'S', L"XSwifter" },
+		{ STYLE_4_DIGITS, 'X', 'T', L"XanTorrent" },
+		{ STYLE_XTORRENT, 'X', 'X', L"xTorrent" },
+		{ STYLE_4_DIGITS, 'Z', 'O', L"Zona" },
+		{ STYLE_4_DIGITS, 'Z', 'T', L"ZipTorrent" }
 	};
-	static const size_t azureusClients =
-		sizeof azureusStyleClients / sizeof azureusStyleEntry;
 
 	CString sUserAgent;
 	if ( pVendor )
 	{
-		for ( size_t i = 0; i < azureusClients; ++i )
+		for ( size_t i = 0; i < _countof( azureusStyleClients ); ++i )
 		{
 			if ( pVendor[ 0 ] == azureusStyleClients[ i ].signature[ 0 ] &&
 				 pVendor[ 1 ] == azureusStyleClients[ i ].signature[ 1 ] )
 			{
+				sUserAgent = azureusStyleClients[ i ].client;
+				/* TODO: Decode this version
 				if ( nVendor == 4 )
-					sUserAgent.Format( _T( "%s %i.%i" ),
-						azureusStyleClients[ i ].client, pVendor[ 2 ], pVendor[ 3 ] );
-				else if ( nVendor == 6 )
-					sUserAgent.Format( _T( "%s %i.%i.%i.%i" ),
-						azureusStyleClients[ i ].client,
-						( pVendor[ 2 ] - '0' ), ( pVendor[ 3 ] - '0' ),
-						( pVendor[ 4 ] - '0' ), ( pVendor[ 5 ] - '0' ) );
+					sUserAgent.AppendFormat( _T( "(%u)" ), ntohs( *(WORD*)&pVendor[ 2 ] ) );
+				else*/ if ( nVendor == 6 )
+				{
+					sUserAgent += _T(" ");
+					switch ( azureusStyleClients[ i ].style )
+					{
+					case STYLE_AZUREUS:
+						if ( pVendor[ 2 ] > '3' || ( pVendor[ 2 ] == '3' && pVendor[ 3 ] >= '1' ) )
+							// Vuze starts at version 3.1.0.0
+							sUserAgent = L"Vuze";
+						// and use STYLE_4_DIGITS
+					case STYLE_4_DIGITS:
+						sUserAgent.AppendFormat( _T( "%d.%d.%d.%d" ), charint( pVendor[ 2 ] ), charint( pVendor[ 3 ] ), charint( pVendor[ 4 ] ), charint( pVendor[ 5 ] ) );
+						break;
+					case STYLE_3_DIGITS:
+						sUserAgent.AppendFormat( _T( "%d.%d.%d" ), charint( pVendor[ 2 ] ), charint( pVendor[ 3 ] ), charint( pVendor[ 4 ] ) );
+						break;
+					case STYLE_UTORRENT:
+						sUserAgent.AppendFormat( _T( "%d.%d.%d%s" ), strint( &pVendor[ 2 ], 1 ), strint( &pVendor[ 3 ], 1 ), strint( &pVendor[ 4 ], 1 ), getMnemonicEnd( pVendor[ 5 ] ) );
+						break;
+					case STYLE_2_DIGITS:
+						sUserAgent.AppendFormat( _T( "%d.%02d" ), charint( pVendor[ 2 ] ), charint( pVendor[ 3 ] ) );
+						break;
+					case STYLE_2_INTS:
+						sUserAgent.AppendFormat( _T( "%d.%02d" ), strint( &pVendor[ 2 ], 2 ), strint( &pVendor[ 4 ], 2 ) );
+						break;
+					case STYLE_BUDDY:
+						sUserAgent.AppendFormat( _T( "%c.%c%c%c" ), pVendor[ 2 ], pVendor[ 3 ], pVendor[ 4 ], pVendor[ 5 ] );
+						break;
+					case STYLE_ROCKET:
+						sUserAgent.AppendFormat( _T( "%c.%c (%c%c)" ), pVendor[ 2 ], pVendor[ 3 ], pVendor[ 4 ], pVendor[ 5 ] );
+						break;
+					case STYLE_CTORRENT:
+						sUserAgent.AppendFormat( _T( "%d.%d.%02d" ), charint( pVendor[ 2 ] ), charint( pVendor[ 3 ] ), strint( &pVendor[ 4 ], 2 ) );
+						break;
+					case STYLE_XTORRENT:
+						sUserAgent.AppendFormat( _T( "%d.%d (%d)" ), charint( pVendor[ 2 ] ), charint( pVendor[ 3 ] ), strint( &pVendor[ 4 ], 2 ) );
+						break;
+					case STYLE_NO_VERS:
+						break;
+					}
+				}
 				break;
 			}
 		}
 		if ( sUserAgent.IsEmpty() ) 
 			// If we don't want the version, etc.
-			sUserAgent.Format( _T("BitTorrent (%c%c)"), (TCHAR)pVendor[ 0 ], (TCHAR)pVendor[ 1 ] );
+			sUserAgent.Format( _T("BitTorrent (%c%c)"), (TCHAR)pVendor[ 1 ], (TCHAR)pVendor[ 2 ] );
 	}
 	return sUserAgent;
 }
@@ -670,7 +791,7 @@ void CBTClient::DetermineUserAgent()
 	m_bClientExtended = isExtendedBtGuid( m_oGUID );
 
 	if ( m_oGUID[ 0 ] == '-' && m_oGUID[ 7 ] == '-' )
-	{
+	{	// Azureus-style
 		m_sUserAgent = GetAzureusStyleUserAgent( &(m_oGUID[ 1 ]), 6 );
 	}
 	else if ( m_oGUID[4] == '-' && m_oGUID[5] == '-' && m_oGUID[6] == '-' && m_oGUID[7] == '-' )
@@ -699,18 +820,16 @@ void CBTClient::DetermineUserAgent()
 			m_sUserAgent.Format(_T("%c"), m_oGUID[0]);
 		}
 		
-		strVer.Format( _T(" %i.%i.%i"),
-			( m_oGUID[1] - '0' ), ( m_oGUID[2] - '0' ),
-			( m_oGUID[3] - '0' ) );
+		strVer.Format( _T(" %i.%i.%i"), charint( m_oGUID[1] ), charint( m_oGUID[2] ), charint( m_oGUID[3] ) );
 		m_sUserAgent += strVer;
 	}
 	else if  ( m_oGUID[0] == 'M' && m_oGUID[2] == '-' && m_oGUID[4] == '-' && m_oGUID[6] == '-' )
 	{	// BitTorrent (Standard client, newer version)
-		m_sUserAgent.Format( _T("BitTorrent %i.%i.%i"), m_oGUID[1] - '0' , m_oGUID[3] - '0' , m_oGUID[5]- '0' );
+		m_sUserAgent.Format( _T("BitTorrent %i.%i.%i"), charint( m_oGUID[1] ) , charint( m_oGUID[3] ), charint( m_oGUID[5] ) );
 	}
 	else if  ( m_oGUID[0] == 'P' && m_oGUID[1] == 'l' && m_oGUID[2] == 'u' && m_oGUID[3] == 's' )
 	{	// BitTorrent Plus
-		m_sUserAgent.Format( _T("BitTorrent Plus %i.%i%i%c"), m_oGUID[4] - '0', m_oGUID[5] - '0', m_oGUID[6] - '0', m_oGUID[7] );
+		m_sUserAgent.Format( _T("BitTorrent Plus %i.%i%i%c"), charint( m_oGUID[4] ), charint( m_oGUID[5] ), charint( m_oGUID[6] ), m_oGUID[7] );
 	}
 	else if  ( m_oGUID[0] == 'e' && m_oGUID[1] == 'x' && m_oGUID[2] == 'b' && m_oGUID[3] == 'c' )
 	{	
@@ -727,16 +846,17 @@ void CBTClient::DetermineUserAgent()
 	}
 	else if  ( m_oGUID[0] == 'B' && m_oGUID[1] == 'T' && m_oGUID[2] == 'M' )
 	{	// BTuga Revolution
-		m_sUserAgent.Format( _T("BTuga Rv %i.%i"), m_oGUID[3] - '0', m_oGUID[4] - '0' );
+		m_sUserAgent.Format( _T("BTuga Rv %i.%i"), charint( m_oGUID[3] ), charint( m_oGUID[4] ) );
 		nNickStart = 5;
 	}
-	else if  ( ( m_oGUID[0] == 'b' && m_oGUID[1] == 't' && m_oGUID[2] == 'u' && m_oGUID[3] == 'g' && m_oGUID[4] == 'a' ) || ( m_oGUID[0] == 'o' && m_oGUID[1] == 'e' && m_oGUID[2] == 'r' && m_oGUID[3] == 'n' && m_oGUID[4] == 'u' ) )
+	else if  ( ( m_oGUID[0] == 'b' && m_oGUID[1] == 't' && m_oGUID[2] == 'u' && m_oGUID[3] == 'g' && m_oGUID[4] == 'a' ) ||
+		       ( m_oGUID[0] == 'o' && m_oGUID[1] == 'e' && m_oGUID[2] == 'r' && m_oGUID[3] == 'n' && m_oGUID[4] == 'u' ) )
 	{	// BTugaXP
 		m_sUserAgent.Format( _T("BTugaXP") );
 	}
 	else if  ( m_oGUID[0] == 'M' && m_oGUID[1] == 'b' && m_oGUID[2] == 'r' && m_oGUID[3] == 's' && m_oGUID[4] == 't' )
 	{	// Burst
-		m_sUserAgent.Format( _T("Burst %i.%i.%i"), m_oGUID[5] - '0', m_oGUID[7] - '0', m_oGUID[9] - '0' );
+		m_sUserAgent.Format( _T("Burst %i.%i.%i"), charint( m_oGUID[5] ), charint( m_oGUID[7] ), charint( m_oGUID[9] ) );
 	}
 	else if  ( m_oGUID[0] == 'e' && m_oGUID[1] == 'X' )
 	{	// eXeem
@@ -745,7 +865,7 @@ void CBTClient::DetermineUserAgent()
 	}
 	else if ( m_oGUID[0] == '-' && m_oGUID[1] == 'F' && m_oGUID[2] == 'G' )
 	{
-		m_sUserAgent.Format( _T("FlashGet %i.%i%i"), ( ( m_oGUID[3] - '0' ) * 10 + ( m_oGUID[4] - '0' ) ), m_oGUID[5] - '0', m_oGUID[6] - '0' );
+		m_sUserAgent.Format( _T("FlashGet %i.%i%i"), ( charint( m_oGUID[3] ) * 10 + charint( m_oGUID[4] ) ), charint( m_oGUID[5] ), charint( m_oGUID[6] ) );
 	}
 	else if  ( m_oGUID[0] == '-' && m_oGUID[1] == 'G' && m_oGUID[2] == '3' )
 	{	// G3 Torrent
@@ -777,7 +897,7 @@ void CBTClient::DetermineUserAgent()
 	}
 	else if  ( m_oGUID[0] == '-' && m_oGUID[1] == 'M' && m_oGUID[2] == 'L' )
 	{	// MLdonkey
-		m_sUserAgent.Format( _T("MLdonkey %i.%i.%i"), m_oGUID[3] - '0' , m_oGUID[5] - '0' , m_oGUID[7] - '0' );
+		m_sUserAgent.Format( _T("MLdonkey %i.%i.%i"), charint( m_oGUID[3] ) , charint( m_oGUID[5] ) , charint( m_oGUID[7] ) );
 	}
 	else if  ( m_oGUID[0] == 'O' && m_oGUID[1] == 'P' )
 	{	// Opera
@@ -793,7 +913,7 @@ void CBTClient::DetermineUserAgent()
 	}
 	else if  ( m_oGUID[0] == 'X' && m_oGUID[1] == 'B' && m_oGUID[2] == 'T' )
 	{	// XBT
-		m_sUserAgent.Format( _T("XBT %i.%i.%i"), m_oGUID[3] - '0', m_oGUID[4] - '0', m_oGUID[5] - '0' );
+		m_sUserAgent.Format( _T("XBT %i.%i.%i"), charint( m_oGUID[3] ), charint( m_oGUID[4] ), charint( m_oGUID[5] ) );
 	}
 	else if  ( !m_oGUID[0] && !m_oGUID[1] && !m_oGUID[2] && !m_oGUID[3] && !m_oGUID[4] && !m_oGUID[5] && !m_oGUID[6] && !m_oGUID[7] && m_oGUID[8] && m_oGUID[9] && m_oGUID[10] && m_oGUID[11] && m_oGUID[12] && m_oGUID[13] && m_oGUID[14] && m_oGUID[15] && m_oGUID[16] == 'U' && m_oGUID[17] == 'D' && m_oGUID[18] == 'P' && m_oGUID[19] == '0' )
 	{	// BitSpirit	(Spoofed Client ID)	// GUID 0 - 7: 0	GUID 8 - 15: !0	GUID 16 -19: UDP0	// ToDO: Check that other clients don't use this method
@@ -807,7 +927,7 @@ void CBTClient::DetermineUserAgent()
 
 	if ( m_sUserAgent.IsEmpty() )
 	{	// Unknown peer ID string
-		m_sUserAgent = m_bClientExtended ? _T("Shareaza") : _T("BitTorrent");
+		m_sUserAgent = m_bClientExtended ? _T("Shareaza") : protocolNames[ PROTOCOL_BT ];
 		theApp.Message( MSG_DEBUG, _T("[BT] Unknown client: %.20hs"), (LPCSTR)&m_oGUID[0] );
 	}
 
@@ -1127,20 +1247,36 @@ void CBTClient::SendExtendedHandshake()
 BOOL CBTClient::OnExtendedHandshake(CBTPacket* pPacket)
 {
 	const CBENode* pRoot = pPacket->m_pNode.get();
-	
-	CBENode* pYourIP = pRoot->GetNode( BT_DICT_YOURIP );
+
+	const CBENode* pVendor = pRoot->GetNode( BT_DICT_VENDOR );
+	if ( pVendor && pVendor->IsType( CBENode::beString ) )
+	{
+		m_sUserAgent = pVendor->GetString();
+
+		if ( m_pDownloadTransfer )
+		{
+			m_pDownloadTransfer->m_sUserAgent = m_sUserAgent;
+			if ( CDownloadSource* pSource = GetSource() )
+				pSource->m_sServer = m_sUserAgent;
+		}
+
+		if ( m_pUploadTransfer )
+			m_pUploadTransfer->m_sUserAgent = m_sUserAgent;
+	}
+
+	const CBENode* pYourIP = pRoot->GetNode( BT_DICT_YOURIP );
 	if ( pYourIP && pYourIP->IsType( CBENode::beString ) )
 	{
 		if ( pYourIP->m_nValue == 4 )
 		{
 			// IPv4
-			Network.AcquireLocalAddress( *(IN_ADDR*)pYourIP->m_pValue );
+			Network.AcquireLocalAddress( *(const IN_ADDR*)pYourIP->m_pValue );
 		}
 	}
 
-	if ( CBENode* pMetadata = pRoot->GetNode( BT_DICT_EXT_MSG ) )
+	if ( const CBENode* pMetadata = pRoot->GetNode( BT_DICT_EXT_MSG ) )
 	{
-		if ( CBENode* pUtMetadata = pMetadata->GetNode( BT_DICT_UT_METADATA ) )
+		if ( const CBENode* pUtMetadata = pMetadata->GetNode( BT_DICT_UT_METADATA ) )
 		{
 			m_nUtMetadataID = (QWORD)pUtMetadata->GetInt();
 			if ( m_nUtMetadataID && ! m_pDownload->m_pTorrent.m_pBlockBTH ) // Send first info request
@@ -1150,12 +1286,12 @@ BOOL CBTClient::OnExtendedHandshake(CBTPacket* pPacket)
 					SendInfoRequest( nNextPiece );
 			}
 		}
-		if ( CBENode* pUtMetadataSize = pRoot->GetNode( BT_DICT_METADATA_SIZE ) )
+		if ( const CBENode* pUtMetadataSize = pRoot->GetNode( BT_DICT_METADATA_SIZE ) )
 		{
 			m_nUtMetadataSize = (QWORD)pUtMetadataSize->GetInt();
 		}
 
-		if ( CBENode* pUtPex = pMetadata->GetNode( BT_DICT_UT_PEX ) )
+		if ( const CBENode* pUtPex = pMetadata->GetNode( BT_DICT_UT_PEX ) )
 		{
 			QWORD nOldUtPexID = m_nUtPexID;
 			m_nUtPexID = (QWORD)pUtPex->GetInt();
@@ -1166,11 +1302,11 @@ BOOL CBTClient::OnExtendedHandshake(CBTPacket* pPacket)
 			}
 		}
 
-		if ( CBENode* pLtTex = pMetadata->GetNode( BT_DICT_LT_TEX ) )
+		if ( const CBENode* pLtTex = pMetadata->GetNode( BT_DICT_LT_TEX ) )
 		{
 			m_nLtTexID = (QWORD)pLtTex->GetInt();
 		}
-		if ( CBENode* pLtTexTrackers = pRoot->GetNode( BT_DICT_TRACKERS ) )
+		if ( const CBENode* pLtTexTrackers = pRoot->GetNode( BT_DICT_TRACKERS ) )
 		{
 			CString sRemoteHash = pLtTexTrackers->GetString();
 			CString sLocalHash = m_pDownload->m_pTorrent.GetTrackerHash();
