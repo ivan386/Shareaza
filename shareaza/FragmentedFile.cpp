@@ -924,7 +924,7 @@ BOOL CFragmentedFile::Read(QWORD nOffset, LPVOID pData, QWORD nLength, QWORD* pn
 BOOL CFragmentedFile::VirtualRead(QWORD nOffset, char* pBuffer, QWORD nBuffer, QWORD* pnRead)
 {
 	ASSERT( nBuffer != 0 && nBuffer != SIZE_UNKNOWN );
-	ASSERT( pBuffer != NULL && AfxIsValidAddress( pBuffer, nBuffer ) );
+	ASSERT( pBuffer != NULL && AfxIsValidAddress( pBuffer, (UINT_PTR)nBuffer ) );
 
 	// Find first file
 	CVirtualFile::const_iterator i = std::find_if( m_oFile.begin(), m_oFile.end(),
@@ -976,7 +976,7 @@ BOOL CFragmentedFile::VirtualRead(QWORD nOffset, char* pBuffer, QWORD nBuffer, Q
 BOOL CFragmentedFile::VirtualWrite(QWORD nOffset, const char* pBuffer, QWORD nBuffer, QWORD* pnWritten)
 {
 	ASSERT( nBuffer != 0 && nBuffer != SIZE_UNKNOWN );
-	ASSERT( pBuffer != NULL && AfxIsValidAddress( pBuffer, nBuffer ) );
+	ASSERT( pBuffer != NULL && AfxIsValidAddress( pBuffer, (UINT_PTR)nBuffer ) );
 
 	// Find first file
 	CVirtualFile::const_iterator i = std::find_if( m_oFile.begin(), m_oFile.end(),

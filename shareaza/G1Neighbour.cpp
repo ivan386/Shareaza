@@ -504,7 +504,7 @@ BOOL CG1Neighbour::OnPing(CG1Packet* pPacket)
 	if ( CGGEPItem* pItem = pGGEP.Add( GGEP_HEADER_VENDOR_INFO ) )
 	{
 		pItem->Write( VENDOR_CODE, 4 );
-		pItem->WriteByte( ( theApp.m_nVersion[ 0 ] << 4 ) | theApp.m_nVersion[ 1 ] );
+		pItem->WriteByte( (BYTE)( ( theApp.m_nVersion[ 0 ] << 4 ) | theApp.m_nVersion[ 1 ] ) );
 	}
 
 	if ( bSCP )

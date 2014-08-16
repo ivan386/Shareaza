@@ -1226,7 +1226,7 @@ BOOL CUploadTransferHTTP::OnWrite()
 		}
 		
 		QWORD nPacket = min( m_nLength - m_nPosition, 1024000ull ); // 1000 KB
-		auto_array< BYTE > pBuffer( new BYTE[ nPacket ] );
+		auto_array< BYTE > pBuffer( new BYTE[ (size_t)nPacket ] );
 		
 		if ( m_bBackwards )
 		{

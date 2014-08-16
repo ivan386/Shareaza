@@ -40,8 +40,6 @@
 #pragma warning ( disable : 4350 )	// (Level 1)	behavior change: 'member1' called instead of 'member2'
 #pragma warning ( disable : 4351 )	// (Level 1)	new behavior: elements of array 'array' will be default initialized
 
-#pragma warning ( disable : 4244 )	// (Level 2)	'argument' : conversion from 'type1' to 'type2', possible loss of data
-
 #pragma warning ( disable : 4347 )	// (Level 4)	behavior change: 'function template' is called instead of 'function'
 #pragma warning ( disable : 4512 )	// (Level 4)	'class' : assignment operator could not be generated
 
@@ -49,7 +47,6 @@
 #pragma warning ( disable : 4264 )	// (Level 1)	'virtual_function' : no override available for virtual member function from base 'class'; function is hidden
 #pragma warning ( disable : 4555 )	// (Level 1)	expression has no effect; expected expression with side-effect
 #pragma warning ( disable : 4711 )	// (Level 1)	function 'function' selected for inline expansion
-#pragma warning ( disable : 4548 )	// (Level 1)	expression before comma has no effect; expected expression with side-effect
 
 #pragma warning ( disable : 4191 )	// (Level 3)	'operator/operation' : unsafe conversion from 'type of expression' to 'type required'
 #pragma warning ( disable : 4640 )	// (Level 3)	'instance' : construction of local static object is not thread-safe

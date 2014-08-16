@@ -647,14 +647,14 @@ BOOL CBTInfo::CheckInfoData()
 	{
 		Hashes::BtHash oBTH;
 		CSHA pBTH;
-		pBTH.Add( &m_pSource.m_pBuffer[pInfo->m_nPosition], pInfo->m_nSize );
+		pBTH.Add( &m_pSource.m_pBuffer[pInfo->m_nPosition], (DWORD)pInfo->m_nSize );
 		pBTH.Finish();
 		pBTH.GetHash( &oBTH[0] );
 		
 		if ( oBTH == m_oBTH )
 		{
-			m_nInfoStart = pInfo->m_nPosition;
-			m_nInfoSize	 = pInfo->m_nSize;
+			m_nInfoStart = (DWORD)pInfo->m_nPosition;
+			m_nInfoSize	 = (DWORD)pInfo->m_nSize;
 			return TRUE;
 		}
 	}
@@ -1248,14 +1248,14 @@ BOOL CBTInfo::LoadTorrentTree(const CBENode* pRoot)
 	{
 		Hashes::BtHash oBTH;
 		CSHA pBTH;
-		pBTH.Add( &m_pSource.m_pBuffer[pInfo->m_nPosition], pInfo->m_nSize );
+		pBTH.Add( &m_pSource.m_pBuffer[pInfo->m_nPosition], (DWORD)pInfo->m_nSize );
 		pBTH.Finish();
 		pBTH.GetHash( &oBTH[0] );
 		
 		if ( oBTH == m_oBTH )
 		{
-			m_nInfoStart = pInfo->m_nPosition;
-			m_nInfoSize	 = pInfo->m_nSize;
+			m_nInfoStart = (DWORD)pInfo->m_nPosition;
+			m_nInfoSize	 = (DWORD)pInfo->m_nSize;
 		}
 	}
 

@@ -1110,7 +1110,7 @@ BOOL CBTClient::OnBeHandshake(CBTPacket* pPacket)
 
 	if ( const CBENode* pExchange = pRoot->GetNode( BT_DICT_SRC_EXCHANGE ) )
 	{
-		m_nSrcExchangeID = (QWORD)pExchange->GetInt();
+		m_nSrcExchangeID = (BYTE)pExchange->GetInt();
 	}
 
 	theApp.Message( MSG_INFO, IDS_BT_CLIENT_EXTENDED, (LPCTSTR)m_sAddress, (LPCTSTR)m_sUserAgent );
@@ -1278,7 +1278,7 @@ BOOL CBTClient::OnExtendedHandshake(CBTPacket* pPacket)
 	{
 		if ( const CBENode* pUtMetadata = pMetadata->GetNode( BT_DICT_UT_METADATA ) )
 		{
-			m_nUtMetadataID = (QWORD)pUtMetadata->GetInt();
+			m_nUtMetadataID = (BYTE)pUtMetadata->GetInt();
 			if ( m_nUtMetadataID && ! m_pDownload->m_pTorrent.m_pBlockBTH ) // Send first info request
 			{
 				int nNextPiece = m_pDownload->m_pTorrent.NextInfoPiece();
@@ -1293,8 +1293,8 @@ BOOL CBTClient::OnExtendedHandshake(CBTPacket* pPacket)
 
 		if ( const CBENode* pUtPex = pMetadata->GetNode( BT_DICT_UT_PEX ) )
 		{
-			QWORD nOldUtPexID = m_nUtPexID;
-			m_nUtPexID = (QWORD)pUtPex->GetInt();
+			BYTE nOldUtPexID = m_nUtPexID;
+			m_nUtPexID = (BYTE)pUtPex->GetInt();
 			if ( ! nOldUtPexID && m_nUtPexID )
 			{
 				SendUtPex();
@@ -1304,7 +1304,7 @@ BOOL CBTClient::OnExtendedHandshake(CBTPacket* pPacket)
 
 		if ( const CBENode* pLtTex = pMetadata->GetNode( BT_DICT_LT_TEX ) )
 		{
-			m_nLtTexID = (QWORD)pLtTex->GetInt();
+			m_nLtTexID = (BYTE)pLtTex->GetInt();
 		}
 		if ( const CBENode* pLtTexTrackers = pRoot->GetNode( BT_DICT_TRACKERS ) )
 		{
@@ -1333,7 +1333,7 @@ void CBTClient::SendMetadataRequest(QWORD nPiece)
 	CBuffer pOutput;
 
 	BYTE* pInfoPiece = NULL;
-	DWORD InfoLen = m_pDownload->m_pTorrent.GetInfoPiece( nPiece, &pInfoPiece );
+	DWORD InfoLen = m_pDownload->m_pTorrent.GetInfoPiece( (DWORD)nPiece, &pInfoPiece );
 	if ( InfoLen == 0 || m_pDownload->m_pTorrent.m_bPrivate )
 	{
 		pRoot->Add( BT_DICT_MSG_TYPE )->SetInt( UT_METADATA_REJECT );
@@ -1392,8 +1392,7 @@ BOOL CBTClient::OnMetadataRequest(CBTPacket* pPacket)
 
 				if ( m_nUtMetadataSize && ! m_pDownload->m_pTorrent.m_pBlockBTH )
 				{
-					if ( m_pDownload->m_pTorrent.LoadInfoPiece( pPacket->m_pBuffer, pPacket->m_nLength,
-						 m_nUtMetadataSize, nPiece ) ) // If full info loaded
+					if ( m_pDownload->m_pTorrent.LoadInfoPiece( pPacket->m_pBuffer, (DWORD)pPacket->m_nLength, (DWORD)m_nUtMetadataSize, (DWORD)nPiece ) ) // If full info loaded
 					{
 						 m_pDownload->SetTorrent();
 					}

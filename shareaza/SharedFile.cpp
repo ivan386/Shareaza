@@ -346,7 +346,7 @@ DWORD CLibraryFile::GetCreationTime()
 	if ( ! bResult )
 		return 0;
 
-	return m_tCreateTime = ( ( MAKEQWORD( ftLastWriteTime.dwLowDateTime,
+	return m_tCreateTime = (DWORD)( ( MAKEQWORD( ftLastWriteTime.dwLowDateTime,
 		ftLastWriteTime.dwHighDateTime ) ) / 10000000ui64 - 11644473600ui64 );
 }
 

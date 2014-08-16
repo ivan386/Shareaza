@@ -635,10 +635,10 @@ BOOL CUploadTransferED2K::DispatchNextChunk()
 				return FALSE;
 
 			pPacket->Write( m_oED2K );
-			pPacket->WriteLongLE( nOffset );
-			pPacket->WriteLongLE( nOffset + nChunk );
+			pPacket->WriteLongLE( (DWORD)nOffset );
+			pPacket->WriteLongLE( (DWORD)( nOffset + nChunk ) );
 		}
-		if ( ! ReadFile( m_nFileBase + nOffset, pPacket->WriteGetPointer( nChunk ), nChunk, &nChunk ) || nChunk == 0 )
+		if ( ! ReadFile( m_nFileBase + nOffset, pPacket->WriteGetPointer( (DWORD)nChunk ), nChunk, &nChunk ) || nChunk == 0 )
 		{
 			// File error
 			pPacket->Release();

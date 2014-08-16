@@ -1930,10 +1930,10 @@ int CIRCFrame::ParseMessageID()
 		else if ( command == "PRIVMSG" )
 		{
 			CString str = m_pWords.GetAt( 8 );
-			char pszFirst = str.GetAt( 0 );
+			TCHAR pszFirst = str.GetAt( 0 );
 			str = str.Mid( 1, str.GetLength() - 2 ).MakeLower();
 			// 0x01 indicates a CTCP message, which includes '/me'
-			if ( pszFirst == char('\x01') )
+			if ( pszFirst == _T('\x01') )
 			{
 				if( m_pWords.GetAt( 6 ).CompareNoCase( m_sNickname ) == 0 )
 				{

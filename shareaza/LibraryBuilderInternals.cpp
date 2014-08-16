@@ -3798,11 +3798,11 @@ bool CLibraryBuilderInternals::ReadPDF(DWORD nIndex, HANDLE hFile, LPCTSTR pszPa
 inline char unhex(TCHAR c)
 {
 	if ( c >= _T('0') && c <= _T('9') )
-		return ( c - _T('0') );
+		return (char)( c - _T('0') );
 	else if ( c >= _T('A') && c <= _T('F') )
-		return ( c - _T('A') + 10 );
+		return (char)( c - _T('A') + 10 );
 	else if ( c >= _T('a') && c <= _T('f') )
-		return ( c - _T('a') + 10 );
+		return (char)( c - _T('a') + 10 );
 	else
 		return 0;
 }

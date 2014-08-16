@@ -1,7 +1,7 @@
 //
 // UploadTransferDC.cpp 
 //
-// Copyright (c) Shareaza Development Team, 2010-2012.
+// Copyright (c) Shareaza Development Team, 2010-2014.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -208,7 +208,7 @@ BOOL CUploadTransferDC::OnWrite()
 			// Reading next data chunk of file
 			QWORD nToRead = min( m_nLength - m_nPosition, 1024000ull ); // 1000 KB
 			QWORD nRead = 0;
-			auto_array< BYTE > pBuffer( new BYTE[ nToRead ] );
+			auto_array< BYTE > pBuffer( new BYTE[ (size_t)nToRead ] );
 			if ( ! ReadFile( m_nFileBase + m_nOffset + m_nPosition,
 				pBuffer.get(), nToRead, &nRead ) || nToRead != nRead )
 			{
@@ -561,7 +561,7 @@ BOOL CUploadTransferDC::RequestTigerTree(CLibraryFile* pFile, QWORD nOffset, QWO
 
 	m_pClient->SendCommand( sAnswer );
 	
-	m_pClient->Write( pSerialTree + nOffset, nLength );
+	m_pClient->Write( pSerialTree + nOffset, (size_t)nLength );
 
 	// Start uploading
 	m_nOffset = nOffset;

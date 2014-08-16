@@ -1,7 +1,7 @@
 //
 // UploadTransferBT.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2013.
+// Copyright (c) Shareaza Development Team, 2002-2014.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -339,7 +339,7 @@ BOOL CUploadTransferBT::ServeRequests()
 			(LPCTSTR)m_sName, (LPCTSTR)m_sAddress, _T("BT") );
 		
 		CBuffer pBuffer;
-		pBuffer.EnsureBuffer( m_nLength );
+		pBuffer.EnsureBuffer( (size_t)m_nLength );
 
 		QWORD nRead = 0;
 		if ( ! ReadFile( m_nOffset + m_nPosition, pBuffer.m_pBuffer, m_nLength, &nRead ) )

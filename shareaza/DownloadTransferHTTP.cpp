@@ -1386,14 +1386,14 @@ BOOL CDownloadTransferHTTP::ReadContent()
 
 		if ( m_bRecvBackwards )
 		{
-			CAutoVectorPtr< BYTE >pBuffer( new BYTE[ nLength ] );
+			CAutoVectorPtr< BYTE >pBuffer( new BYTE[ (size_t)nLength ] );
 			if ( ! pBuffer )
 			{
 				// Out of memory
 				Close( TRI_TRUE );
 				return FALSE;
 			}
-			CBuffer::ReverseBuffer( pInput->m_pBuffer, pBuffer, nLength );
+			CBuffer::ReverseBuffer( pInput->m_pBuffer, pBuffer, (size_t)nLength );
 			bSubmit = m_pDownload->SubmitData( m_nOffset + m_nLength - m_nPosition - nLength, pBuffer, nLength );
 		}
 		else
@@ -1403,7 +1403,7 @@ BOOL CDownloadTransferHTTP::ReadContent()
 		}
 
 		if ( m_bChunked )
-			pInput->Remove( nLength );
+			pInput->Remove( (size_t)nLength );
 		else
 			pInput->Clear();
 
@@ -1563,7 +1563,7 @@ BOOL CDownloadTransferHTTP::ReadFlush()
 	QWORD nRemove = min( (QWORD)pInput->m_nLength, m_nContentLength );
 	m_nContentLength -= nRemove;
 	
-	pInput->Remove( nRemove );
+	pInput->Remove( (size_t)nRemove );
 	
 	if ( m_nContentLength == 0 )
 	{
