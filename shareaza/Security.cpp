@@ -1,7 +1,7 @@
 //
 // Security.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2013.
+// Copyright (c) Shareaza Development Team, 2002-2014.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -338,7 +338,7 @@ void CSecurity::Ban(const CShareazaFile* pFile, int nBanLength, BOOL bMessage, L
 	Add( pRule );
 
 	if ( bMessage && pFile )
-		theApp.Message( MSG_NOTICE, IDS_NETWORK_SECURITY_BLOCKED, (LPCTSTR)pFile->m_sName );
+		theApp.Message( MSG_NOTICE, IDS_SECURITY_BLOCKED, (LPCTSTR)pFile->m_sName );
 }
 
 void CSecurity::Ban(const IN_ADDR* pAddress, int nBanLength, BOOL bMessage, LPCTSTR szComment)
@@ -410,7 +410,7 @@ void CSecurity::Ban(const IN_ADDR* pAddress, int nBanLength, BOOL bMessage, LPCT
 
 	if ( bMessage )
 	{
-		theApp.Message( MSG_NOTICE, IDS_NETWORK_SECURITY_BLOCKED,
+		theApp.Message( MSG_NOTICE, IDS_SECURITY_BLOCKED,
 			(LPCTSTR)CString( inet_ntoa( *pAddress ) ) );
 	}
 }

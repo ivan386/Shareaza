@@ -72,7 +72,7 @@ public:
 		return m_bOnline;
 	}
 
-	static CString	GetAzureusStyleUserAgent(LPBYTE pVendor, size_t nVendor);
+	static CString	GetAzureusStyleUserAgent(const BYTE* pVendor, size_t nVendor);
 
 	BOOL			OnPacket(CBTPacket* pPacket);
 	void			SendExtendedHandshake();
@@ -101,7 +101,9 @@ public:
 	void			Cancel(DWORD nBlock, DWORD nOffset, DWORD nLength);
 	void			Have(DWORD nBlock);
 	void			Piece(DWORD nBlock, DWORD nOffset, DWORD nLength, LPCVOID pBuffer);
-	void			DetermineUserAgent();						// Figure out the other client name/version from the peer ID
+	void			DetermineUserAgent( const Hashes::BtGuid& oGUID );	// Figure out the other client name/version from the peer ID
+	void			SetUserAgent( const CString& sUserAgent, BOOL bClientExtended = FALSE, const CString& sNick = CString() );
+
 	CDownloadSource* GetSource() const;							// Get download transfer source
 
 protected:

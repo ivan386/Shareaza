@@ -64,7 +64,7 @@ CShakeNeighbour::CShakeNeighbour() : CNeighbour( PROTOCOL_NULL ), // Call the CN
 	m_bCanDeflate( Neighbours.IsG2Leaf() ?
 		( Settings.Gnutella.DeflateHub2Hub || Settings.Gnutella.DeflateLeaf2Hub ) :
 		( Settings.Gnutella.DeflateHub2Hub || Settings.Gnutella.DeflateHub2Leaf ) ),
-	m_bDelayClose(FALSE)
+	m_bDelayClose( 0 )
 {
 }
 
@@ -616,7 +616,7 @@ BOOL CShakeNeighbour::ReadResponse()
 			m_nState = nrsRejected; // Set the neighbour state in this CShakeNeighbour object to rejected
 			if ( strLine == _T("503") )
 			{
-				m_bDelayClose = TRUE;
+				m_bDelayClose = IDS_HANDSHAKE_REJECTED;
 			}
 		} // It does say "200 OK", and the remote computer contacted us
 		else if ( ! m_bInitiated )
@@ -689,8 +689,7 @@ BOOL CShakeNeighbour::OnHeaderLine(CString& strHeader, CString& strValue)
 		{
 			m_nState = nrsRejected;
 			m_bBadClient = TRUE;
-			m_bDelayClose = TRUE;
-			Security.Ban( &m_pHost.sin_addr, ban2Hours );
+			m_bDelayClose = IDS_SECURITY_BANNED_USERAGENT;
 		}
 
 		// If the remote computer is running a client the user has blocked
@@ -698,7 +697,7 @@ BOOL CShakeNeighbour::OnHeaderLine(CString& strHeader, CString& strValue)
 		{
 			m_nState = nrsRejected;
 			m_bBadClient = TRUE;
-			m_bDelayClose = TRUE;
+			m_bDelayClose = IDS_HANDSHAKE_REJECTED;
 		}
 	} // The remote computer is telling us our IP address
 	else if ( strHeader.CompareNoCase( _T("Remote-IP") ) == 0 )
@@ -973,7 +972,7 @@ BOOL CShakeNeighbour::OnHeadersComplete()
 
 	if ( m_bDelayClose )
 	{
-		DelayClose( IDS_HANDSHAKE_REJECTED );
+		DelayClose( m_bDelayClose );
 	}
 	else if ( ( ( ! m_bInitiated && m_bG2Accept ) || ( m_bInitiated && m_bG2Send ) ) &&
 			Settings.Gnutella2.EnableToday && m_nProtocol != PROTOCOL_G1 )

@@ -3219,6 +3219,8 @@ BEGIN
     IDR_HELPFRAME           "Shareaza Help"
     IDR_IRCFRAME            "Shareaza Chat"
     IDR_SCHEDULERFRAME      "Scheduler"
+    IDS_SECURITY_BANNED_USERAGENT 
+                            "Client %s has a prohibited user agent ""%s"", banning."
 END
 
 STRINGTABLE
@@ -3545,12 +3547,12 @@ BEGIN
     IDS_NETWORK_LISTENING_UDP "Listening for UDP datagrams on %s port %i."
     IDS_NETWORK_RESOLVING   "Resolving host ""%s""..."
     IDS_NETWORK_RESOLVE_FAIL "Unable to resolve host ""%s""."
-    IDS_NETWORK_SECURITY_DENIED "Security manager denied connection from %s."
-    IDS_NETWORK_SECURITY_OUTGOING 
+    IDS_SECURITY_DENIED      "Security manager denied connection from %s."
+    IDS_SECURITY_OUTGOING 
                             "Security manager barred a connection to %s."
-    IDS_NETWORK_SECURITY_ALREADY_BLOCKED 
+    IDS_SECURITY_ALREADY_BLOCKED 
                             "The address %s is already blocked by your security rules."
-    IDS_NETWORK_SECURITY_BLOCKED "Added a security rule to block %s."
+    IDS_SECURITY_BLOCKED    "Added a security rule to block %s."
     IDS_NETWORK_DISCONNECT_CONFIRM "Are you sure you want to disconnect?"
 END
 

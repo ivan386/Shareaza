@@ -207,7 +207,7 @@ public:
 		return m_pInput->ReadLine( strData, bPeek );
 	}
 
-	inline void Remove(const size_t nLength) throw()
+	inline void RemoveFromInput(const size_t nLength) throw()
 	{
 		CQuickLock oInputLock( *m_pInputSection );
 

@@ -332,9 +332,7 @@ BOOL CUploadTransferHTTP::OnHeadersComplete()
 	else if ( Security.IsClientBanned( m_sUserAgent ) )
 	{
 		SendResponse( IDR_HTML_BROWSER );
-		theApp.Message( MSG_ERROR, _T("Client %s has a prohibited user agent \"%s\", banning"), (LPCTSTR)m_sAddress, (LPCTSTR)m_sUserAgent );
-		Security.Ban( &m_pHost.sin_addr, ban5Mins, FALSE, CString( _T("Prohibited user agent: ") ) + m_sUserAgent );
-		Remove( FALSE );
+		Remove( FALSE, IDS_SECURITY_BANNED_USERAGENT );
 		return FALSE;
 	}
 	else if ( m_bClientExtended )
@@ -343,9 +341,7 @@ BOOL CUploadTransferHTTP::OnHeadersComplete()
 		if ( m_bNotShareaza )
 		{
 			SendResponse( IDR_HTML_FILENOTFOUND );
-			theApp.Message( MSG_ERROR, _T("Client %s has a spoofed user agent, banning"), (LPCTSTR)m_sAddress );
-			Security.Ban( &m_pHost.sin_addr, banWeek, FALSE );
-			Remove( FALSE );
+			Remove( FALSE, IDS_SECURITY_BANNED_USERAGENT );
 			return FALSE;
 		}
 

@@ -1,7 +1,7 @@
 //
 // Connection.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2011.
+// Copyright (c) Shareaza Development Team, 2002-2014.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -172,7 +172,7 @@ BOOL CConnection::ConnectTo(const IN_ADDR* pAddress, WORD nPort)
 	if ( Security.IsDenied( pAddress ) )
 	{
 		// Report that we aren't connecting to this IP address and return false
-		theApp.Message( MSG_ERROR, IDS_NETWORK_SECURITY_OUTGOING, (LPCTSTR)CString( inet_ntoa( *pAddress ) ) );
+		theApp.Message( MSG_ERROR, IDS_SECURITY_OUTGOING, (LPCTSTR)CString( inet_ntoa( *pAddress ) ) );
 		return FALSE;
 	}
 
@@ -315,7 +315,15 @@ void CConnection::Close(UINT nError)
 
 	if ( nError )
 	{
-		if ( nError == IDS_HANDSHAKE_REJECTED )
+		if ( nError == IDS_SECURITY_BANNED_USERAGENT )
+		{
+			CString sComment;
+			sComment.Format( IDS_SECURITY_BANNED_USERAGENT, (LPCTSTR)m_sAddress, (LPCTSTR)m_sUserAgent );
+			Security.Ban( &m_pHost.sin_addr, ban2Hours, FALSE, sComment );
+
+			theApp.Message( MSG_ERROR, IDS_SECURITY_BANNED_USERAGENT, (LPCTSTR)m_sAddress, (LPCTSTR)m_sUserAgent );
+		}
+		else if ( nError == IDS_HANDSHAKE_REJECTED )
 			theApp.Message( MSG_ERROR, IDS_HANDSHAKE_REJECTED, (LPCTSTR)m_sAddress, (LPCTSTR)m_sUserAgent );
 		else
 		{
