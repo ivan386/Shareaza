@@ -197,8 +197,32 @@ void CLibraryBuilder::Remove(LPCTSTR szPath)
 
 CString CLibraryBuilder::GetCurrent() const
 {
-	CQuickLock oLock( m_pSection );
-	return m_sPath;
+	DWORD nIndex = 0;
+
+	// Return currently hashing file
+	{
+		CQuickLock oLock( m_pSection );
+		if ( ! m_sPath.IsEmpty()  )
+			return m_sPath;
+		else if ( m_pFiles.size() )
+			nIndex = m_pFiles.front().nIndex;
+		else
+			return CString();
+	}
+
+	// else first file from queue
+	{
+		CSingleLock oLibraryLock( &Library.m_pSection );
+		if ( oLibraryLock.Lock( 100 ) )
+		{
+			if ( const CLibraryFile* pFile = LibraryMaps.LookupFile( nIndex ) )
+			{
+				return pFile->GetPath();
+			}
+		}
+	}
+
+	return CString();
 }
 
 size_t CLibraryBuilder::GetRemaining() const
