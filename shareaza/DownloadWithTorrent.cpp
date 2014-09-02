@@ -387,10 +387,10 @@ BOOL CDownloadWithTorrent::SetTorrent(const CBTInfo* pTorrent)
 //////////////////////////////////////////////////////////////////////
 // CDownloadWithTorrent run
 
-bool CDownloadWithTorrent::RunTorrent(DWORD tNow)
+void CDownloadWithTorrent::RunTorrent(DWORD tNow)
 {
-	if ( !Network.IsConnected() || !Settings.BitTorrent.EnableToday )
-		return true;
+	if ( ! IsTorrent() || ! Network.IsConnected() || ! Settings.BitTorrent.EnableToday )
+		return;
 
 	// Choke torrents every 10 seconds
 	if ( tNow > m_tTorrentChoke && tNow - m_tTorrentChoke >= 10000ul )
@@ -425,8 +425,7 @@ bool CDownloadWithTorrent::RunTorrent(DWORD tNow)
 			SendStarted( nSourcesWanted );
 		}
 
-		// Report that the torrent checks have run successfully
-		return true;
+		return;
 	}
 
 	// Store if this is a regular update or not
@@ -474,8 +473,7 @@ bool CDownloadWithTorrent::RunTorrent(DWORD tNow)
 		}
 	}
 
-	// Report that the torrent checks have run successfully
-	return true;
+	return;
 }
 
 //////////////////////////////////////////////////////////////////////

@@ -83,7 +83,7 @@ public:
 	virtual BOOL	SubmitData(QWORD nOffset, LPBYTE pData, QWORD nLength);
 
 protected:
-	bool			RunTorrent(DWORD tNow);
+	void			RunTorrent(DWORD tNow);
 	void			SendCompleted();
 	void			CloseTorrent();
 	void			CloseTorrentUploads();
