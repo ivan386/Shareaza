@@ -520,7 +520,6 @@ void CSettings::Load()
 	Add( _T("Downloads"), _T("SourcesWanted"), &Downloads.SourcesWanted, 500, 1, 50, 5000 );
 	Add( _T("Downloads"), _T("SparseThreshold"), &Downloads.SparseThreshold, 8*Kilo, Kilo, 0, 256, _T(" MB") );
 	Add( _T("Downloads"), _T("StaggardStart"), &Downloads.StaggardStart, false );
-	Add( _T("Downloads"), _T("StartDroppingFailedSourcesNumber"), &Downloads.StartDroppingFailedSourcesNumber, 20, 1, 0, 50 );
 	Add( _T("Downloads"), _T("StarveGiveUp"), &Downloads.StarveGiveUp, 3, 1, 3, 120, _T(" h") );
 	Add( _T("Downloads"), _T("StarveTimeout"), &Downloads.StarveTimeout, 45*60*1000, 60*1000, 45, 24*60, _T(" m") );
 	Add( _T("Downloads"), _T("TorrentPath"), &Downloads.TorrentPath );

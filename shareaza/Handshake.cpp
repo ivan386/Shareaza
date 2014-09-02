@@ -398,6 +398,8 @@ BOOL CHandshake::OnAcceptGive()
 	}
 	oGUID.validate();
 
+	theApp.Message( MSG_DEBUG, _T( "Got push answer from %s : %s..." ), (LPCTSTR)CString( inet_ntoa( m_pHost.sin_addr ) ), (LPCTSTR)oGUID.toString< Hashes::base16Encoding >().MakeUpper() );
+
 	// If a child window recognizes this guid, return true
 	if ( Network.OnPush( oGUID, this ) )
 		return FALSE;

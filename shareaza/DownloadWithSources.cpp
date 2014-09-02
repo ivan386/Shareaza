@@ -572,13 +572,6 @@ BOOL CDownloadWithSources::AddSourceInternal(CDownloadSource* pSource)
 		// Out of memory
 		return FALSE;
 
-	if ( GetEffectiveSourceCount() >= Settings.Downloads.SourcesWanted )
-	{
-		// Too many sources
-		delete pSource;
-		return FALSE;
-	}
-
 	//Check/Reject if source is invalid
 	if ( ! pSource->m_bPushOnly )
 	{
@@ -676,8 +669,7 @@ BOOL CDownloadWithSources::AddSourceInternal(CDownloadSource* pSource)
 			CString strURL = GetURL( pSource->m_pAddress, pSource->m_nPort );
 			if ( strURL.GetLength() )
 			{
-				if ( CDownloadSource* pG2Source  = new CDownloadSource(
-					(CDownload*)this, strURL ) )
+				if ( CDownloadSource* pG2Source  = new CDownloadSource( (CDownload*)this, strURL ) )
 				{
 					pG2Source->m_sServer = pSource->m_sServer;		// Copy user-agent
 					pG2Source->m_tAttempt = pSource->m_tAttempt;	// Set the same connection delay
@@ -687,6 +679,39 @@ BOOL CDownloadWithSources::AddSourceInternal(CDownloadSource* pSource)
 				}
 			}
 		}
+	}
+
+	// Trimming extra sources - Idle and bad, busy or old
+	FILETIME tTooOld;
+	GetSystemTimeAsFileTime( &tTooOld );
+	(LONGLONG&)tTooOld -= (LONGLONG)10000000 * 600;
+	for ( POSITION posSource = m_pSources.GetTailPosition(); posSource && GetEffectiveSourceCount() >= Settings.Downloads.SourcesWanted; )
+	{
+		CDownloadSource* pExisting = m_pSources.GetPrev( posSource );
+
+		if ( pExisting->IsIdle() && ( pExisting->m_nFailures || pExisting->m_nBusyCount || CompareFileTime( &pExisting->m_tLastSeen, &tTooOld ) < 0 ) )
+		{
+			RemoveSource( pExisting, FALSE );
+			delete pExisting;
+		}
+	}
+	// Trimming extra sources - Idle
+	for ( POSITION posSource = m_pSources.GetTailPosition(); posSource && GetEffectiveSourceCount() >= Settings.Downloads.SourcesWanted; )
+	{
+		CDownloadSource* pExisting = m_pSources.GetPrev( posSource );
+
+		if ( pExisting->IsIdle() )
+		{
+			RemoveSource( pExisting, FALSE );
+			delete pExisting;
+		}
+	}
+
+	if ( GetEffectiveSourceCount() >= Settings.Downloads.SourcesWanted )
+	{
+		// Too many sources
+		delete pSource;
+		return FALSE;
 	}
 
 	InternalAdd( pSource );

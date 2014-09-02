@@ -258,6 +258,8 @@ CDownloadSource::~CDownloadSource()
 {
 	ASSUME_LOCK( Transfers.m_pSection );
 	ASSERT( m_pTransfer == NULL );
+
+	theApp.Message( MSG_DEBUG, _T( "Removed source %s : %s" ), (LPCTSTR)CString( inet_ntoa( m_pAddress ) ), (LPCTSTR)m_oGUID.toString< Hashes::base16Encoding >().MakeUpper() );
 }
 
 //////////////////////////////////////////////////////////////////////
@@ -623,20 +625,9 @@ void CDownloadSource::OnFailure(BOOL bNondestructive, DWORD nRetryAfter)
 		m_pTransfer = NULL;
 	}
 
-	DWORD nDelay = CalcFailureDelay(nRetryAfter);
-
-	// This is not too good because if the source has Uploaded even 1Byte data, Max failure gets set to 40
-	//int nMaxFailures = ( m_bReadContent ? 40 : 3 );
-
-	int nMaxFailures = Settings.Downloads.MaxAllowedFailures;
-
-	if ( nMaxFailures < 20 &&
-		m_pDownload->GetSourceCount() > Settings.Downloads.StartDroppingFailedSourcesNumber )
-		nMaxFailures = 0;
-
-	if ( bNondestructive || ( ++m_nFailures < nMaxFailures ) )
+	if ( bNondestructive || ( ++m_nFailures < Settings.Downloads.MaxAllowedFailures ) )
 	{
-		m_tAttempt = max( m_tAttempt, nDelay );
+		m_tAttempt = max( m_tAttempt, CalcFailureDelay( nRetryAfter ) );
 		m_pDownload->SetModified();
 	}
 	else
@@ -889,6 +880,7 @@ BOOL CDownloadSource::PushRequest()
 			return FALSE;
 		if ( Network.SendPush( m_oGUID, m_nIndex ) )
 		{
+			theApp.Message( MSG_DEBUG, _T("Sending push request to %s : %s..."), (LPCTSTR)CString( inet_ntoa( m_pAddress ) ).MakeUpper(), (LPCTSTR)m_oGUID.toString< Hashes::base16Encoding >().MakeUpper() );
 			theApp.Message( MSG_INFO, IDS_DOWNLOAD_PUSH_SENT, (LPCTSTR)m_pDownload->m_sName );
 			m_tAttempt = GetTickCount() + Settings.Downloads.PushTimeout;
 			return TRUE;
