@@ -1,5 +1,5 @@
 //
-// targetver.h
+// stdafx.h
 //
 // Copyright (c) Nikolay Raspopov, 2014.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
@@ -44,8 +44,16 @@
 #include <atlcom.h>
 #include <atlsafe.h>
 #include <atlstr.h>
+#include <atlhost.h>
 #include <ExDisp.h>
 #include <Shlobj.h>
+#include <Shellapi.h>
 #include <Wininet.h>
 
 using namespace ATL;
+
+#include "..\..\shareaza\Strings.h"
+
+CString LoadString( UINT nID );
+CString GetURLs();
+BOOL SaveURLs(const CString& sURLs);

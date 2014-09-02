@@ -34,6 +34,9 @@
     <ClCompile Include="..\..\shareaza\Strings.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="OptionsDlg.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Midl Include="..\..\shareaza\Shareaza.idl">
@@ -73,10 +76,30 @@
     <ClInclude Include="ShortURL.h">
       <Filter>Generated Files</Filter>
     </ClInclude>
+    <ClInclude Include="OptionsDlg.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="ShortURL.rc">
       <Filter>Resource Files</Filter>
     </ResourceCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="up.ico">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="down.ico">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="new.ico">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="delete.ico">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="test.ico">
+      <Filter>Resource Files</Filter>
+    </Image>
   </ItemGroup>
 </Project>

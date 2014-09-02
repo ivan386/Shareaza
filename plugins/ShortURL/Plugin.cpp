@@ -21,14 +21,7 @@
 
 #include "stdafx.h"
 #include "Plugin.h"
-#include "..\..\shareaza\Strings.h"
-
-inline CString LoadString(UINT nID)
-{
-	CString str;
-	str.LoadString( nID );
-	return str;
-}
+#include "OptionsDlg.h"
 
 void CPlugin::InsertCommand(LPCTSTR szTitle, const LPCWSTR* szMenu, UINT nID)
 {
@@ -73,7 +66,7 @@ HRESULT CPlugin::Request(LPCWSTR szHash)
 	}
 
 	CStringA sShortURL;
-	for ( CString sURLs = LoadString( IDS_URL ); sURLs.GetLength(); )
+	for ( CString sURLs = GetURLs(); sURLs.GetLength(); )
 	{
 		CString sURL = sURLs.SpanExcluding( _T("|") );
 		sURLs = sURLs.Mid( sURL.GetLength() + 1 );
@@ -164,6 +157,7 @@ CStringA CPlugin::RequestURL(LPCWSTR szURL)
 		InternetCloseHandle( hInternet );
 	}
 
+	sResponse.Trim( " \t\r\n" );
 	if ( sResponse.GetLength() < 16 || sResponse.Left( 7 ).CompareNoCase( "http://" ) )
 		return CStringA();
 
@@ -193,6 +187,8 @@ STDMETHODIMP CPlugin::QueryCapabilities(
 
 STDMETHODIMP CPlugin::Configure()
 {
+	COptionsDlg dlg( this );
+	dlg.DoModal();
 	return S_OK;
 }
 

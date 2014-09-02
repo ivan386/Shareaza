@@ -61,6 +61,8 @@ DECLARE_PROTECT_FINAL_CONSTRUCT()
 		m_pUserInterface.Release();
 	}
 
+	CStringA RequestURL( LPCWSTR szURL );
+
 protected:
 	CComPtr< IApplication >		m_pApplication;		// Shareaza application
 	CComPtr< IUserInterface >	m_pUserInterface;	// Shareaza GUI
@@ -70,7 +72,6 @@ protected:
 	void InsertCommand(LPCTSTR szTitle, const LPCWSTR* szMenu, UINT nID);
 
 	HRESULT Request(LPCWSTR szHash);
-	CStringA RequestURL(LPCWSTR szURL);
 
 // IGeneralPlugin
 public:

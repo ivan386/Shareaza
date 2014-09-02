@@ -2,7 +2,7 @@ HKCR
 {
 	NoRemove AppID
 	{
-		'%APPID%' = s 'ShortURL'
+		'%APPID%' = s 'URL Shortener Plugin'
 		'ShortURL.DLL'
 		{
 			val AppID = s '%APPID%'

@@ -1,5 +1,5 @@
 //
-// Plugin.cpp : Implementation of CPlugin
+// targetver.h
 //
 // Copyright (c) Nikolay Raspopov, 2014.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)

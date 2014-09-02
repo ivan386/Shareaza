@@ -1,17 +1,17 @@
 HKCR
 {
-	ForceRemove ShortURL.Plugin.1 = s 'ShortURL Plugin'
+	ForceRemove ShortURL.Plugin.1 = s 'URL Shortener Plugin'
 	{
 		CLSID = s '{76F13243-9F62-4241-AC07-3B359BBE4EC6}'
 	}
-	ForceRemove ShortURL.Plugin = s 'ShortURL Plugin'
+	ForceRemove ShortURL.Plugin = s 'URL Shortener Plugin'
 	{
 		CLSID = s '{76F13243-9F62-4241-AC07-3B359BBE4EC6}'
 		CurVer = s 'ShortURL.Plugin.1'
 	}
 	NoRemove CLSID
 	{
-		ForceRemove {76F13243-9F62-4241-AC07-3B359BBE4EC6} = s 'ShortURL Plugin'
+		ForceRemove {76F13243-9F62-4241-AC07-3B359BBE4EC6} = s 'URL Shortener Plugin'
 		{
 			ProgID = s 'ShortURL.Plugin.1'
 			VersionIndependentProgID = s 'ShortURL.Plugin'
@@ -36,9 +36,9 @@ HKCU
 				{
 					NoRemove General
 					{
-						ForceRemove val 'ShortURL Plugin' = s '{76F13243-9F62-4241-AC07-3B359BBE4EC6}'
+						val 'URL Shortener Plugin' = s '{76F13243-9F62-4241-AC07-3B359BBE4EC6}'
 					}
-					ForceRemove val '{76F13243-9F62-4241-AC07-3B359BBE4EC6}' = s ''
+					val '{76F13243-9F62-4241-AC07-3B359BBE4EC6}' = s ''
 				}
 			}
 		}

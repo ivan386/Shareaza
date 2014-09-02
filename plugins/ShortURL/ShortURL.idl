@@ -26,7 +26,7 @@ import "Shareaza.idl";
 [
 	uuid(ABC45D7F-EF52-4E5C-986A-93674FE3BBCD),
 	version(1.0),
-	helpstring("ShortURL 1.0 Type Library")
+	helpstring("URL Shortener Plugin 1.0 Type Library")
 ]
 library ShortURLLib
 {
@@ -36,7 +36,8 @@ library ShortURLLib
 	interface ICommandPlugin;
 
 	[
-		uuid(76F13243-9F62-4241-AC07-3B359BBE4EC6)
+		uuid(76F13243-9F62-4241-AC07-3B359BBE4EC6),
+		helpstring("URL Shortener Plugin")
 	]
 	coclass Plugin
 	{

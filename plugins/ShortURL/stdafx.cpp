@@ -20,3 +20,28 @@
 //
 
 #include "stdafx.h"
+
+CString LoadString( UINT nID )
+{
+	CString str;
+	str.LoadString( nID );
+	return str;
+}
+
+CString GetURLs()
+{
+	CString sURLs;
+	DWORD nType = 0, nSize = MAX_PATH * sizeof( TCHAR ) * 100;
+	LPTSTR szData = sURLs.GetBuffer( nSize );
+	if ( SHRegGetUSValue( LoadString( IDS_KEY ), _T( "URLs" ), &nType, szData, &nSize, FALSE, NULL, 0 ) != ERROR_SUCCESS || nType != REG_SZ )
+		nSize = 0;
+	szData[ nSize / sizeof( TCHAR ) ] = _T( '\0' );
+	sURLs.ReleaseBuffer();
+	sURLs.Trim();
+	return ( sURLs.IsEmpty() ? LoadString( IDS_URL ) : sURLs );
+}
+
+BOOL SaveURLs( const CString& sURLs )
+{
+	return ( SHRegSetUSValue( LoadString( IDS_KEY ), _T( "URLs" ), REG_SZ, (LPCTSTR)sURLs, sURLs.GetLength() * sizeof( TCHAR ), SHREGSET_FORCE_HKCU ) == ERROR_SUCCESS );
+}

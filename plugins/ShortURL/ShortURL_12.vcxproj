@@ -259,6 +259,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="..\..\shareaza\Strings.cpp" />
+    <ClCompile Include="OptionsDlg.cpp" />
     <ClCompile Include="Plugin.cpp" />
     <ClCompile Include="stdafx.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
@@ -289,6 +290,7 @@
     <None Include="ShortURL.rgs" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="OptionsDlg.h" />
     <ClInclude Include="Plugin.h" />
     <ClInclude Include="Resource.h" />
     <ClInclude Include="stdafx.h" />
@@ -298,7 +300,19 @@
   <ItemGroup>
     <ResourceCompile Include="ShortURL.rc" />
   </ItemGroup>
+  <ItemGroup>
+    <Image Include="delete.ico" />
+    <Image Include="down.ico" />
+    <Image Include="new.ico" />
+    <Image Include="test.ico" />
+    <Image Include="up.ico" />
+  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>
+  <ProjectExtensions>
+    <VisualStudio>
+      <UserProperties RESOURCE_FILE="ShortURL.rc" />
+    </VisualStudio>
+  </ProjectExtensions>
 </Project>
