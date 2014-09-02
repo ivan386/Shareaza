@@ -66,27 +66,26 @@ CHashProgressBar::CHashProgressBar()
 
 void CHashProgressBar::Run()
 {
-	const size_t nRemaining = LibraryBuilder.GetRemaining();
+	const CString sCurrent = LibraryBuilder.GetCurrent();
+	m_nRemaining = LibraryBuilder.GetRemaining();
 	const BOOL bFullscreen = IsUserUsingFullscreen();
-	const BOOL bShow = Settings.Library.HashWindow && nRemaining && ! bFullscreen;
+	const BOOL bShow = Settings.Library.HashWindow && ( m_nRemaining || ! sCurrent.IsEmpty() ) && ! bFullscreen;
+
+	if ( ! sCurrent.IsEmpty() )
+	{
+		m_sCurrent = PathFindFileName( sCurrent );
+		m_nIcon = ShellIcons.Get( sCurrent, 32 );
+	}
+	else if ( m_sCurrent.IsEmpty() && m_nRemaining )
+	{
+		m_sCurrent = _T( "File cooling..." );
+		m_nIcon = SHI_FILE;
+	}
+	m_nPercentage = min( LibraryBuilder.GetProgress(), 100ul );
 
 	if ( bShow )
 	{
-		const CString sCurrent = LibraryBuilder.GetCurrent();
-		if ( ! sCurrent.IsEmpty() )
-		{
-			m_sCurrent = PathFindFileName( sCurrent );
-			m_nIcon = ShellIcons.Get( sCurrent, 32 );
-		}
-		else if ( m_sCurrent.IsEmpty() && nRemaining )
-		{
-			m_sCurrent = _T("File cooling...");
-			m_nIcon = SHI_FILE;
-		}
-		m_nRemaining = nRemaining;
-		m_nPercentage = min( LibraryBuilder.GetProgress(), 100ul );
 		m_nLastShow = GetTickCount();
-
 		if ( m_hWnd == NULL )
 		{
 			try
