@@ -258,8 +258,6 @@ CDownloadSource::~CDownloadSource()
 {
 	ASSUME_LOCK( Transfers.m_pSection );
 	ASSERT( m_pTransfer == NULL );
-
-	theApp.Message( MSG_DEBUG, _T( "Removed source %s : %s" ), (LPCTSTR)CString( inet_ntoa( m_pAddress ) ), (LPCTSTR)m_oGUID.toString< Hashes::base16Encoding >().MakeUpper() );
 }
 
 //////////////////////////////////////////////////////////////////////
@@ -880,7 +878,7 @@ BOOL CDownloadSource::PushRequest()
 			return FALSE;
 		if ( Network.SendPush( m_oGUID, m_nIndex ) )
 		{
-			theApp.Message( MSG_DEBUG, _T("Sending push request to %s : %s..."), (LPCTSTR)CString( inet_ntoa( m_pAddress ) ).MakeUpper(), (LPCTSTR)m_oGUID.toString< Hashes::base16Encoding >().MakeUpper() );
+			theApp.Message( MSG_DEBUG, _T("Sending push request to %s %s..."), (LPCTSTR)CString( inet_ntoa( m_pAddress ) ).MakeUpper(), (LPCTSTR)m_oGUID.toString< Hashes::base16Encoding >().MakeUpper() );
 			theApp.Message( MSG_INFO, IDS_DOWNLOAD_PUSH_SENT, (LPCTSTR)m_pDownload->m_sName );
 			m_tAttempt = GetTickCount() + Settings.Downloads.PushTimeout;
 			return TRUE;
