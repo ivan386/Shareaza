@@ -614,7 +614,7 @@ void CDownloadWithTorrent::OnTrackerEvent(bool bSuccess, LPCTSTR pszReason, LPCT
 		m_pTorrent.SetTrackerSucceeded( tNow );
 
 		// Get new sources
-		for ( POSITION pos = pEvent->GetSources(); pos && GetEffectiveSourceCount() < Settings.Downloads.SourcesWanted; )
+		for ( POSITION pos = pEvent->GetSources(); pos; )
 		{
 			const CBTTrackerSource& pSource = pEvent->GetNextSource( pos );
 			AddSourceBT( pSource.m_pPeerID, &pSource.m_pAddress.sin_addr, ntohs( pSource.m_pAddress.sin_port ) );

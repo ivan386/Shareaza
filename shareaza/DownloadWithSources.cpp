@@ -623,6 +623,7 @@ BOOL CDownloadWithSources::AddSourceInternal(CDownloadSource* pSource)
 			if ( pExisting->Equals( pSource ) ) // IPs and ports are equal
 			{
 				bool bExistingHTTPSource = pExisting->IsHTTPSource();
+				pExisting->SetLastSeen();
 
 				if ( bNeedHTTPSource && bExistingHTTPSource )
 					bNeedHTTPSource = false;

@@ -638,7 +638,7 @@ BOOL CDownloadTransferBT::OnSourceResponse(CBTPacket* pPacket)
 	
 	int nCount = 0;
 	
-	for ( int nPeer = 0 ; nPeer < pPeers->GetCount() && m_pDownload->GetEffectiveSourceCount() < Settings.Downloads.SourcesWanted; nPeer++ )
+	for ( int nPeer = 0 ; nPeer < pPeers->GetCount(); nPeer++ )
 	{
 		const CBENode* pPeer = pPeers->GetNode( nPeer );
 		if ( ! pPeer->IsType( CBENode::beDict ) ) continue;
