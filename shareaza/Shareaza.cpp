@@ -2428,6 +2428,21 @@ CDatabase* CShareazaApp::GetDatabase() const
 	return new CDatabase( Settings.General.UserPath + _T("\\Data\\") CLIENT_NAME_T _T(".db3") );
 }
 
+BOOL CShareazaApp::GetPropertyStoreFromParsingName( LPCWSTR pszPath, IPropertyStore**ppv )
+{
+	if ( m_pfnSHGetPropertyStoreFromParsingName )
+	{
+		__try
+		{
+			return SUCCEEDED( m_pfnSHGetPropertyStoreFromParsingName( pszPath, NULL, GPS_BESTEFFORT, __uuidof( IPropertyStore ), (void**)ppv ) );
+		}
+		__except ( EXCEPTION_EXECUTE_HANDLER )
+		{
+		}
+	}
+	return FALSE;
+}
+
 CString SafeFilename(CString strName, bool bPath)
 {
 	// Restore spaces

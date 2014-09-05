@@ -315,11 +315,10 @@ bool CLibraryBuilderInternals::ExtractProperties(DWORD nIndex, const CString& st
 {
 	bool bSuccess = false;
 
-	if ( Settings.Library.ScanProperties && theApp.m_pfnSHGetPropertyStoreFromParsingName )
+	if ( Settings.Library.ScanProperties )
 	{
 		CComPtr< IPropertyStore > pStore;
-		HRESULT hr = theApp.m_pfnSHGetPropertyStoreFromParsingName( CT2W( strPath ), NULL, GPS_BESTEFFORT, __uuidof( IPropertyStore ), (void**)&pStore );
-		if ( SUCCEEDED( hr ) )
+		if ( theApp.GetPropertyStoreFromParsingName( CT2W( strPath ), &pStore ) )
 		{
 			LPCTSTR szSchema = NULL;
 			CAutoPtr< CXMLElement > pXML;

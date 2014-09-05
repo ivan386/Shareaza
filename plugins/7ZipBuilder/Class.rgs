@@ -36,8 +36,8 @@ HKCU
 				{
 					NoRemove LibraryBuilder
 					{
-						ForceRemove val '.7z' = s '{B69F80CD-FB15-45E8-B359-92A41CC571A7}'
-						ForceRemove val '.cb7' = s '{B69F80CD-FB15-45E8-B359-92A41CC571A7}'
+						val '.7z' = s '{B69F80CD-FB15-45E8-B359-92A41CC571A7}'
+						val '.cb7' = s '{B69F80CD-FB15-45E8-B359-92A41CC571A7}'
 					}
 				}
 			}
