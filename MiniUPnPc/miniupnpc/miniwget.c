@@ -1,4 +1,4 @@
-/* $Id: miniwget.c,v 1.62 2014/06/10 09:47:10 nanard Exp $ */
+/* $Id: miniwget.c,v 1.63 2014/09/06 08:08:05 nanard Exp $ */
 /* Project : miniupnp
  * Website : http://miniupnp.free.fr/
  * Author : Thomas Bernard
@@ -15,7 +15,6 @@
 #include <ws2tcpip.h>
 #include <io.h>
 #define MAXHOSTNAMELEN 64
-#define MIN(x,y) (((x)<(y))?(x):(y))
 #define snprintf _snprintf
 #define socklen_t int
 #ifndef strncasecmp
@@ -40,12 +39,14 @@
 #include <netdb.h>
 #define closesocket close
 #endif /* #else _WIN32 */
-#if defined(__sun) || defined(sun)
-#define MIN(x,y) (((x)<(y))?(x):(y))
-#endif
 #ifdef __GNU__
 #define MAXHOSTNAMELEN 64
-#endif
+#endif /* __GNU__ */
+
+#ifndef MIN
+#define MIN(x,y) (((x)<(y))?(x):(y))
+#endif /* MIN */
+
 
 #include "miniupnpcstrings.h"
 #include "miniwget.h"

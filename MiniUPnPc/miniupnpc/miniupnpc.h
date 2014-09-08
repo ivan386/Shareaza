@@ -18,7 +18,7 @@
 #define UPNPDISCOVER_MEMORY_ERROR (-102)
 
 /* versions : */
-#define MINIUPNPC_VERSION	"1.9.20140701"
+#define MINIUPNPC_VERSION	"1.9.20140906"
 #define MINIUPNPC_API_VERSION	10
 
 #ifdef __cplusplus
