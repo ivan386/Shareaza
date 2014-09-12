@@ -28,7 +28,7 @@ LANGUAGE LANG_NEUTRAL, SUBLANG_NEUTRAL
 //
 
 VS_VERSION_INFO VERSIONINFO
- FILEVERSION 1,0,0,2
+ FILEVERSION 1,0,0,3
  PRODUCTVERSION 2,7,6,0
  FILEFLAGSMASK 0x3fL
 #ifdef _DEBUG
@@ -47,7 +47,7 @@ BEGIN
             VALUE "Comments", "Shorten magnet link using online service."
             VALUE "CompanyName", "Shareaza Development Team"
             VALUE "FileDescription", "URL Shortener Plugin for Shareaza"
-            VALUE "FileVersion", "1.0.0.2"
+            VALUE "FileVersion", "1.0.0.3"
             VALUE "InternalName", "ShortURL.dll"
             VALUE "LegalCopyright", "Copyright © Shareaza Development Team, 2014. All rights reserved."
             VALUE "OriginalFilename", "ShortURL.dll"
@@ -91,7 +91,7 @@ BEGIN
     IDS_PROGRESS            "Retrieving a short URL..."
     IDS_SUCCESS             "Short URL successfully copied to clipboard."
     IDS_FAILED              "Failed to get short URL."
-    IDS_URL                 "http://tinyurl.com/api-create.php?url=|http://is.gd/create.php?format=simple&url=|http://v.gd/create.php?format=simple&url="
+    IDS_URL                 "http://tinyurl.com/api-create.php?url=|http://is.gd/create.php?format=simple&url=|http://v.gd/create.php?format=simple&url=|http://mgnet.me/api/create?format=text&m="
     IDS_COMMAND             "ShortURLPlugin_Check"
     IDS_COMMAND_TIP         "Shorten magnet link using online service."
     IDS_URL_REPORT          "Short URL: "
