@@ -162,8 +162,8 @@ ID_NETWORK_DC           ICON                    "Res\\Network_DC.ico"
 //
 
 VS_VERSION_INFO VERSIONINFO
- FILEVERSION 2,7,6,1
- PRODUCTVERSION 2,7,6,1
+ FILEVERSION 2,7,7,0
+ PRODUCTVERSION 2,7,7,0
  FILEFLAGSMASK 0x1fL
 #ifdef _DEBUG
  FILEFLAGS 0x1L
@@ -181,12 +181,12 @@ BEGIN
             VALUE "Comments", "Shareaza Ultimate File Sharing"
             VALUE "CompanyName", "Shareaza Development Team"
             VALUE "FileDescription", "Shareaza Ultimate File Sharing"
-            VALUE "FileVersion", "2.7.6.1"
+            VALUE "FileVersion", "2.7.7.0"
             VALUE "InternalName", "Shareaza"
             VALUE "LegalCopyright", "Copyright © Shareaza Development Team, 2002-2014. All rights reserved."
             VALUE "OriginalFilename", "Shareaza.exe"
             VALUE "ProductName", "Shareaza"
-            VALUE "ProductVersion", "2.7.6.1"
+            VALUE "ProductVersion", "2.7.7.0"
         END
     END
     BLOCK "VarFileInfo"
@@ -3219,8 +3219,15 @@ BEGIN
     IDR_HELPFRAME           "Shareaza Help"
     IDR_IRCFRAME            "Shareaza Chat"
     IDR_SCHEDULERFRAME      "Scheduler"
+END
+
+STRINGTABLE
+BEGIN
     IDS_SECURITY_BANNED_USERAGENT 
                             "Client %s has a prohibited user agent ""%s"", banning."
+    IDS_SECURITY_REMOVE_CONFIRM 
+                            "Are you sure you want to delete the selected security rules? This cannot be undone."
+    IDS_FOLDER_TIP          "Files shared over the Internet"
 END
 
 STRINGTABLE
@@ -3288,13 +3295,6 @@ BEGIN
     IDS_GENERAL_OK          "OK"
     IDS_GENERAL_CANCEL      "Cancel"
     IDS_GENERAL_ABORT       "Abort"
-END
-
-STRINGTABLE
-BEGIN
-    IDS_SECURITY_REMOVE_CONFIRM 
-                            "Are you sure you want to delete the selected security rules? This cannot be undone."
-    IDS_FOLDER_TIP          "Files shared over the Internet"
 END
 
 STRINGTABLE
@@ -3547,9 +3547,8 @@ BEGIN
     IDS_NETWORK_LISTENING_UDP "Listening for UDP datagrams on %s port %i."
     IDS_NETWORK_RESOLVING   "Resolving host ""%s""..."
     IDS_NETWORK_RESOLVE_FAIL "Unable to resolve host ""%s""."
-    IDS_SECURITY_DENIED      "Security manager denied connection from %s."
-    IDS_SECURITY_OUTGOING 
-                            "Security manager barred a connection to %s."
+    IDS_SECURITY_DENIED     "Security manager denied connection from %s."
+    IDS_SECURITY_OUTGOING   "Security manager barred a connection to %s."
     IDS_SECURITY_ALREADY_BLOCKED 
                             "The address %s is already blocked by your security rules."
     IDS_SECURITY_BLOCKED    "Added a security rule to block %s."
