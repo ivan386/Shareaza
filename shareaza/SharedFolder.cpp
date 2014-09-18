@@ -386,7 +386,7 @@ void CLibraryFolder::Serialize(CArchive& ar, int nVersion)
 
 		PathToName();
 
-		DWORD_PTR nCount = ar.ReadCount();
+		UINT nCount = (UINT)ar.ReadCount();
 
 		m_pFolders.InitHashTable( GetBestHashTableSize( nCount ), FALSE );
 
@@ -405,7 +405,7 @@ void CLibraryFolder::Serialize(CArchive& ar, int nVersion)
 			m_nVolume	+= pFolder->m_nVolume;
 		}
 
-		nCount = ar.ReadCount();
+		nCount = (UINT)ar.ReadCount();
 		m_pFiles.InitHashTable( GetBestHashTableSize( nCount ), FALSE );
 
 		for ( ; nCount > 0 ; nCount-- )

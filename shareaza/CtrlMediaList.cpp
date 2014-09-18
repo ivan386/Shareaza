@@ -1,7 +1,7 @@
 //
 // CtrlMediaList.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2012.
+// Copyright (c) Shareaza Development Team, 2002-2014.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -611,7 +611,7 @@ void CMediaListCtrl::OnMouseMove(UINT nFlags, CPoint point)
 	}
 	else
 	{
-		DWORD_PTR nFile = nHit >= 0 ? GetItemData( nHit ) : 0;
+		DWORD nFile = ( nHit >= 0 ) ? (DWORD)GetItemData( nHit ) : 0;
 
 		if ( nFile > 0 && ! Library.LookupFile( nFile ) ) nFile = 0;
 

@@ -586,7 +586,7 @@ BOOL CShareazaDataSource::DropToFolder(IDataObject* pIDataObject, DWORD grfKeySt
 			if ( nPath1Length > 0 && pszDest[ nPath1Length - 1 ] == _T('\\') )
 				nPath1Length--;
 			int nPath2Length = bFolder ? lstrlen( pAFOP->sFrom.GetData() ) :
-				( szPath2 - pAFOP->sFrom.GetData() - 1 );
+				(int)( szPath2 - pAFOP->sFrom.GetData() - 1 );
 			if ( nPath1Length == nPath2Length &&
 				_tcsncicmp( pszDest, pAFOP->sFrom.GetData(), nPath1Length ) == 0 )
 				// source == destination

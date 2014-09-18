@@ -202,7 +202,7 @@ void CLibraryFileView::OnMouseMove(UINT nFlags, CPoint point)
 {
 	CLibraryView::OnMouseMove( nFlags, point );
 
-	if ( DWORD_PTR nFile = HitTestIndex( point ) )
+	if ( DWORD nFile = (DWORD)HitTestIndex( point ) )
 	{
 		GetToolTip()->Show( nFile );
 	}
@@ -480,7 +480,7 @@ void CLibraryFileView::OnLibraryRefreshMetadata()
 
 	CQuickLock pLock( Library.m_pSection );
 
-	DWORD nCompleted = 0, nTotal = GetSelectedCount();
+	DWORD nCompleted = 0, nTotal = (DWORD)GetSelectedCount();
 
 	POSITION posSel = StartSelectedFileLoop();
 	while ( CLibraryFile* pFile = GetNextSelectedFile( posSel ) )

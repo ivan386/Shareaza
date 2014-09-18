@@ -231,20 +231,45 @@ using augment::IUnknownImplementation;
 typedef CString StringType;
 
 //! \brief Hash function needed for CMap with const CString& as ARG_KEY.
-template<> AFX_INLINE UINT AFXAPI HashKey(const CString& key)
+template<>
+AFX_INLINE UINT AFXAPI HashKey(const CString& key)
 {
 	return HashKey< LPCTSTR >( key );
 }
 
-template<> AFX_INLINE BOOL AFXAPI CompareElements(const IN_ADDR* pElement1, const IN_ADDR* pElement2)
+template<>
+AFX_INLINE BOOL AFXAPI CompareElements(const IN_ADDR* pElement1, const IN_ADDR* pElement2)
 {
 	return pElement1->s_addr == pElement2->s_addr;
 }
 
-template<> AFX_INLINE UINT AFXAPI HashKey(const IN_ADDR& key)
+template<>
+AFX_INLINE UINT AFXAPI HashKey(const IN_ADDR& key)
 {
 	return key.s_addr;
 }
+
+#ifdef _WIN64
+
+template<>
+AFX_INLINE UINT AFXAPI HashKey( void* key )
+{
+	return HashKey< __int64 >( (__int64)key );
+}
+
+template<>
+AFX_INLINE UINT AFXAPI HashKey( HICON key )
+{
+	return HashKey< __int64 >( (__int64)key );
+}
+
+template<>
+AFX_INLINE UINT AFXAPI HashKey( LPUNKNOWN key )
+{
+	return HashKey< __int64 >( (__int64)key );
+}
+
+#endif // _WIN64
 
 #include "Hashes.hpp"
 

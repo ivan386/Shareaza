@@ -582,7 +582,7 @@ UINT CNetwork::GetResolveCount() const
 {
 	CQuickLock pLock( m_pLookupsSection );
 
-	return m_pLookups.GetCount();
+	return (UINT)m_pLookups.GetCount();
 }
 
 CNetwork::ResolveStruct* CNetwork::GetResolve(HANDLE hAsync)

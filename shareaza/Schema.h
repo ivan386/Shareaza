@@ -28,6 +28,16 @@ class CXMLElement;
 
 typedef const CSchema* CSchemaPtr;
 
+#ifdef _WIN64
+
+template<>
+AFX_INLINE UINT AFXAPI HashKey( CSchemaPtr key )
+{
+	return HashKey< __int64 >( (__int64)key );
+}
+
+#endif // _WIN64
+
 #include "SchemaMember.h"
 
 class CSchema  

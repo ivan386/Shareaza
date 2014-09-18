@@ -175,7 +175,7 @@ void CFontCombo::DrawItem(LPDRAWITEMSTRUCT lpDrawItemStruct)
 
 	pDC->SetBkMode( TRANSPARENT );
 
-	DWORD dwData = GetItemData( lpDrawItemStruct->itemID );
+	DWORD_PTR dwData = GetItemData( lpDrawItemStruct->itemID );
 	if ( dwData & TRUETYPE_FONTTYPE )
 		m_pImages.Draw( pDC, 0, CPoint( rcItem.left + 5, rcItem.top + 4 ),
 		( lpDrawItemStruct->itemState & ODS_SELECTED ) ? ILD_SELECTED : ILD_NORMAL );

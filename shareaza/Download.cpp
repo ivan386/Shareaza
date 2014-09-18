@@ -66,6 +66,7 @@ CDownload::CDownload() :
 ,	m_tSaved		( 0 )
 ,	m_tBegan		( 0 )
 ,	m_bDownloading	( false )
+#pragma warning(suppress:4355) // 'this' : used in base member initializer list
 ,	m_pTask			( this )
 ,	m_bStableName	( false )
 {

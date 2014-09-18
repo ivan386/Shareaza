@@ -748,7 +748,7 @@ void CDownloadsWnd::OnDownloadsClear()
 	if ( pList.IsEmpty() )
 		OnTransfersForget();
 
-	DWORD nTotal = pList.GetCount();
+	DWORD nTotal = (DWORD)pList.GetCount();
 
 	while ( ! pList.IsEmpty() )
 	{
@@ -826,7 +826,7 @@ void CDownloadsWnd::OnDownloadsClearIncomplete()
 		}
 	}
 
-	DWORD nTotal = pList.GetCount();
+	DWORD nTotal = (DWORD)pList.GetCount();
 
 	while ( ! pList.IsEmpty() )
 	{

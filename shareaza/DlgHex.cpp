@@ -69,7 +69,7 @@ void CHexDlg::OnOK()
 	m_sHex.Remove( _T('\r') );
 	m_sHex.Remove( _T('\n') );
 
-	if ( size_t length = m_sHex.GetLength() )
+	if ( int length = m_sHex.GetLength() )
 	{
 		if ( ( length & 1 ) != 0 )
 		{
@@ -79,7 +79,7 @@ void CHexDlg::OnOK()
 
 		m_pBuffer.EnsureBuffer( length / 2 );
 
-		for ( size_t i = 0; i < length; ++i )
+		for ( int i = 0; i < length; ++i )
 		{
 			BYTE b = 0;
 			TCHAR c = m_sHex.GetAt( i );

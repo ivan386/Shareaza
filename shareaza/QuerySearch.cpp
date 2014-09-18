@@ -2032,7 +2032,7 @@ CString CQuerySearch::BuildRegExp(const CString& strPattern) const
 		{
 			bChanged = true;
 
-			int nLength = pszLt - pszPattern;
+			int nLength = (int)( pszLt - pszPattern );
 			if ( nLength )
 			{
 				strFilter.Append( pszPattern, nLength );

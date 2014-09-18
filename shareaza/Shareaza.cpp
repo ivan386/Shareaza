@@ -2495,7 +2495,7 @@ BOOL CreateDirectory(LPCTSTR szPath)
 	
 void DeleteFiles(CStringList& pList)
 {
-	DWORD nTotal = pList.GetCount();
+	DWORD nTotal = (DWORD)pList.GetCount();
 
 	while ( ! pList.IsEmpty() )
 	{

@@ -1233,7 +1233,7 @@ HBITMAP CDocReader::GetBitmapFromMetaFile(PICTDESC pds, int nResolution, WORD wB
 	nInfoSize = sizeof( BITMAPINFOHEADER );
 	int nColorTableSize = 0;
 	if ( wBitsPerSample <= 8 )
-		nColorTableSize = sizeof(RGBQUAD) * ( 1 << wBitsPerSample );
+		nColorTableSize = (int)sizeof(RGBQUAD) * ( 1 << wBitsPerSample );
 	nInfoSize += nColorTableSize;
 
 	BITMAPINFO* bmInfo = (LPBITMAPINFO) new (std::nothrow) BYTE[ nInfoSize ];
@@ -1332,7 +1332,7 @@ HBITMAP CDocReader::GetBitmapFromEnhMetaFile(PICTDESC pds, int nResolution, WORD
 	nInfoSize = sizeof( BITMAPINFOHEADER );
 	int nColorTableSize = 0;
 	if ( wBitsPerSample <= 8 )
-		nColorTableSize = sizeof(RGBQUAD) * ( 1 << wBitsPerSample );
+		nColorTableSize = (int)sizeof(RGBQUAD) * ( 1 << wBitsPerSample );
 	nInfoSize += nColorTableSize;
 
 	BITMAPINFO* bmInfo = (LPBITMAPINFO) new (std::nothrow) BYTE[ nInfoSize ];

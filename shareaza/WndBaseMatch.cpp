@@ -376,8 +376,8 @@ void CBaseMatchWnd::OnUpdateSearchCopy(CCmdUI* pCmdUI)
 {
 	const bool bShift = ( GetAsyncKeyState( VK_SHIFT ) & 0x8000 ) != 0;
 
-	BOOL bSelected = m_pMatches->m_pSelectedFiles.GetCount() + m_pMatches->m_pSelectedHits.GetCount();
-	pCmdUI->Enable( bSelected );
+	INT_PTR bSelected = m_pMatches->m_pSelectedFiles.GetCount() + m_pMatches->m_pSelectedHits.GetCount();
+	pCmdUI->Enable( bSelected != FALSE );
 	pCmdUI->SetText( LoadString( ( bSelected == 1 && ! bShift ) ? IDS_LIBRARY_COPYURI : IDS_LIBRARY_EXPORTURIS ) );
 }
 

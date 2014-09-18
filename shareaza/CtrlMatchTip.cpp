@@ -1,7 +1,7 @@
 //
 // CtrlMatchTip.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2012.
+// Copyright (c) Shareaza Development Team, 2002-2014.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -435,7 +435,7 @@ void CMatchTipCtrl::OnCalcSize(CDC* pDC)
 	}
 	
 	//Metadata
-	if ( int nCount = m_pMetadata.GetCount( TRUE ) )
+	if ( int nCount = (int)m_pMetadata.GetCount( TRUE ) )
 	{
 		m_sz.cy += TIP_RULE;
 

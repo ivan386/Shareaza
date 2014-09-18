@@ -1829,7 +1829,7 @@ void CIRCFrame::ActivateMessageByID(CIRCNewMessage& oNewMessage, int nMessageTyp
 
 int CIRCFrame::ParseMessageID()
 {
-	int incomingWordCount = m_pWords.GetCount();
+	int incomingWordCount = (int)m_pWords.GetCount();
 	int nMessageType = NULL;
 	if ( incomingWordCount > 1 )
 	{

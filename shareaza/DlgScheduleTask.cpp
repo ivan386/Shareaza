@@ -1,7 +1,7 @@
 //
 // DlgScheduleTask.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2010.
+// Copyright (c) Shareaza Development Team, 2002-2014.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -183,7 +183,7 @@ INT_PTR CScheduleTaskDlg::DoModal(int nPage)
 	m_pages.Add( &pPageSettings );
 
 	m_psh.dwFlags &= ~PSH_PROPSHEETPAGE;
-	m_psh.nPages = m_pages.GetCount();
+	m_psh.nPages = (UINT)m_pages.GetCount();
 	m_psh.nStartPage = nPage;
 
 	// Load first page from resource

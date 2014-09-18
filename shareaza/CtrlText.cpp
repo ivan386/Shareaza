@@ -1,7 +1,7 @@
 //
 // CtrlText.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2012.
+// Copyright (c) Shareaza Development Team, 2002-2014.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -310,7 +310,7 @@ int CTextCtrl::HitTest(const CPoint& pt) const
 		GetClientRect( &rcClient );
 		CRect rcLine( rcClient );
 		rcLine.bottom += ( m_nTotal - m_nPosition ) * m_cCharacter.cy;
-		for ( int nLine = m_pLines.GetCount() - 1;
+		for ( int nLine = (int)m_pLines.GetCount() - 1;
 			nLine >= 0 && rcLine.bottom > rcClient.top ; nLine-- )
 		{
 			CTextLine* pLine = m_pLines.GetAt( nLine );

@@ -1139,7 +1139,7 @@ CLiveList* CSecurity::GetList() const
 {
 	CQuickLock oLock( m_pSection );
 
-	CLiveList* pLiveList = new CLiveList( 6, GetCount() + GetCount() / 4u );
+	CLiveList* pLiveList = new CLiveList( 6, (UINT)GetCount() + (UINT)GetCount() / 4u );
 
 	if ( CLiveItem* pDefault = pLiveList->Add( (LPVOID)0 ) )
 	{

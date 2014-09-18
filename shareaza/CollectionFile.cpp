@@ -477,7 +477,7 @@ CXMLElement* CCollectionFile::CloneMetadata(CXMLElement* pMetadata)
 
 void CCollectionFile::Render(CString& strBuffer) const
 {
-	strBuffer.Preallocate( GetFileCount() * 128 + 256 );
+	strBuffer.Preallocate( (int)GetFileCount() * 128 + 256 );
 
 	strBuffer.Format( _T("<html>\n<head>\n")
 		_T("<meta http-equiv=\"Content-Type\" content=\"text/html; charset=UTF-8\"/>\n")

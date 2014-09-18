@@ -654,8 +654,8 @@ BOOL CCoolMenu::DoExplorerMenu(HWND hwnd, const CStringList& oFiles, POINT point
 			ici.cbSize = sizeof( CMINVOKECOMMANDINFOEX );
 			ici.fMask = CMIC_MASK_ASYNCOK | CMIC_MASK_NOZONECHECKS | CMIC_MASK_FLAG_LOG_USAGE;
 			ici.hwnd = hwnd;
-			ici.lpVerb = reinterpret_cast< LPCSTR >( nCmd - ID_SHELL_MENU_MIN );
-			ici.lpVerbW = reinterpret_cast< LPCWSTR >( nCmd - ID_SHELL_MENU_MIN );
+			ici.lpVerb = (LPCSTR)(DWORD_PTR)( nCmd - ID_SHELL_MENU_MIN );
+			ici.lpVerbW = (LPCWSTR)(DWORD_PTR)( nCmd - ID_SHELL_MENU_MIN );
 			ici.nShow = SW_SHOWNORMAL;
 			pContextMenu1->InvokeCommand( (CMINVOKECOMMANDINFO*)&ici );
 		}

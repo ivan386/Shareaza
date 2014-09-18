@@ -703,7 +703,7 @@ void CDownloadTipCtrl::OnCalcSize(CDC* pDC, CDownloadSource* pSource)
 	m_nHeaders = 0;
 	if ( ! pSource->IsIdle() && Settings.General.GUIMode != GUI_BASIC )
 	{
-		m_nHeaders = pTransfer->m_pHeaderName.GetSize();
+		m_nHeaders = (int)pTransfer->m_pHeaderName.GetSize();
 		for ( int nHeader = 0 ; nHeader < m_nHeaders ; nHeader++ )
 		{
 			CString strName		= pTransfer->m_pHeaderName.GetAt( nHeader ) + _T(':');

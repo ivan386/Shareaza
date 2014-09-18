@@ -1432,7 +1432,7 @@ BOOL CLibraryFile::PrepareDoc(LPCTSTR pszTemplate, CArray< CString >& oDocs) con
 	while ( LPCTSTR szStart = StrStrI( strDoc, _T("$meta:") ) )
 	{
 		if ( LPCTSTR szEnd = StrChr( szStart + 6, _T('$') ) )
-			strDoc.Replace( CString( szStart, szEnd - szStart + 1 ), _T("N/A") );
+			strDoc.Replace( CString( szStart, (int)( szEnd - szStart + 1 ) ), _T("N/A") );
 		else
 			break;
 	}

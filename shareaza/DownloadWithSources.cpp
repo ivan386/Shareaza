@@ -111,7 +111,7 @@ DWORD CDownloadWithSources::GetSourceCount(BOOL bNoPush, BOOL bSane) const
 	CQuickLock pLock( Transfers.m_pSection );
 
 	if ( ! bNoPush && ! bSane )
-		return GetCount();
+		return (DWORD)GetCount();
 	
 	DWORD tNow = GetTickCount();
 	DWORD nCount = 0;

@@ -1,7 +1,7 @@
 //
 // LocalSearch.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2012.
+// Copyright (c) Shareaza Development Team, 2002-2014.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -209,7 +209,7 @@ bool CLocalSearch::ExecuteSharedFiles(INT_PTR nMaximum, INT_PTR& nHits)
 		return false;
 
 	auto_ptr< CFileList > pFiles( Library.Search(
-		m_pSearch, nMaximum, FALSE,
+		m_pSearch, (int)nMaximum, FALSE,
 		// Ghost files only for G2
 		m_nProtocol != PROTOCOL_G2 ) );
 

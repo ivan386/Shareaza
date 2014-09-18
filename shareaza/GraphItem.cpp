@@ -1,7 +1,7 @@
 //
 // GraphItem.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2012.
+// Copyright (c) Shareaza Development Team, 2002-2014.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -277,7 +277,7 @@ QWORD CGraphItem::GetValue(const DWORD nCode, const float nMultiplier)
 
 	case GRC_DOWNLOADS_FILES:
 		if ( ! Transfers.m_pSection.Lock( 20 ) ) break;
-		nValue = Downloads.GetCount( TRUE );
+		nValue = (long double)Downloads.GetCount( TRUE );
 		Transfers.m_pSection.Unlock();
 		break;
 	case GRC_DOWNLOADS_TRANSFERS:

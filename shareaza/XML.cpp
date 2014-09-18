@@ -378,7 +378,7 @@ CXMLElement* CXMLElement::FromString(LPCTSTR pszXML, BOOL bHeader, CString* pEnc
 					LPCTSTR pszEncodingEnd = _tcschr( pszEncoding, _T('\"') );
 					if ( pszEncodingEnd && pszEncodingEnd < pszElement )
 					{
-						pEncoding->Append( pszEncoding, pszEncodingEnd - pszEncoding );
+						pEncoding->Append( pszEncoding, (int)( pszEncodingEnd - pszEncoding ) );
 					}
 				}
 			}
