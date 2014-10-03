@@ -49,7 +49,6 @@ CDownloadTransferBT::CDownloadTransferBT(CDownloadSource* pSource, CBTClient* pC
 	, m_pClient			( pClient )
 	, m_bChoked			( TRUE )
 	, m_bInterested		( FALSE )
-	, m_nAvailable		( 0 )
 	, m_bAvailable		( FALSE )
 	, m_tRunThrottle	( 0 )
 {
@@ -168,25 +167,13 @@ BOOL CDownloadTransferBT::OnRun()
 	QWORD nBlockSize	= m_pDownload->m_pTorrent.m_nBlockSize;
 	DWORD nBlockCount	= m_pDownload->m_pTorrent.m_nBlockCount;
 
-	if ( ! m_bAvailable && nBlockSize && nBlockCount && m_nAvailable )
+	if ( ! m_bAvailable && nBlockSize && nBlockCount && ! m_pAvailable.empty() )
 	{
 		m_bAvailable = TRUE;
 
-		if ( m_nAvailable != nBlockCount )
+		if ( m_pAvailable.size() != nBlockCount )
 		{
-			BYTE* pAvailable = m_pAvailable;
-			DWORD nAvailable = m_nAvailable;
-			
-			m_nAvailable = nBlockCount;
-			m_pAvailable = new BYTE[ nBlockCount ];
-			ZeroMemory( m_pAvailable, nBlockCount );
-			if ( pAvailable && nAvailable )
-			{
-				if ( nAvailable > nBlockCount )
-					nAvailable = nBlockCount;
-				memcpy( m_pAvailable, pAvailable, nAvailable );	
-			}
-			delete [] pAvailable;
+			m_pAvailable.resize( nBlockCount, false );
 		}
 
 		for ( DWORD nBlock = 0; nBlock < nBlockCount; nBlock++ )
@@ -273,8 +260,7 @@ BOOL CDownloadTransferBT::OnBitfield(CBTPacket* pPacket)
 	
 	m_pSource->m_oAvailable.clear();
 	
-	delete [] m_pAvailable;
-	m_pAvailable = NULL;
+	m_pAvailable.clear();
 	
 	if ( nBlockCount == 0 )
 		nBlockCount = pPacket->GetRemaining() * 8;
@@ -283,9 +269,7 @@ BOOL CDownloadTransferBT::OnBitfield(CBTPacket* pPacket)
 		return TRUE;
 
 	m_bAvailable = ( nBlockSize > 0 );
-	m_nAvailable = nBlockCount;
-	m_pAvailable = new BYTE[ m_nAvailable ];
-	ZeroMemory( m_pAvailable, nBlockCount );
+	m_pAvailable.assign( nBlockCount, false );
 	
 	for ( DWORD nBlock = 0 ; nBlock < nBlockCount && pPacket->GetRemaining() ; )
 	{
@@ -302,7 +286,7 @@ BOOL CDownloadTransferBT::OnBitfield(CBTPacket* pPacket)
 					m_pSource->m_oAvailable.insert( m_pSource->m_oAvailable.end(),
 						Fragments::Fragment( nOffset, nOffset + nLength ) );
 				}
-				m_pAvailable[ nBlock ] = TRUE;
+				m_pAvailable[ nBlock ] = true;
 			}
 		}
 	}
@@ -326,7 +310,9 @@ BOOL CDownloadTransferBT::OnHave(CBTPacket* pPacket)
 {
 	ASSUME_LOCK( Transfers.m_pSection );
 
-	if ( pPacket->GetRemaining() != sizeof(int) ) return TRUE;
+	if ( pPacket->GetRemaining() != 4 )
+		return TRUE;
+
 	QWORD nBlockSize	= m_pDownload->m_pTorrent.m_nBlockSize;
 	DWORD nBlockCount	= m_pDownload->m_pTorrent.m_nBlockCount;
 	DWORD nBlock		= pPacket->ReadLongBE();
@@ -344,22 +330,12 @@ BOOL CDownloadTransferBT::OnHave(CBTPacket* pPacket)
 		m_pSource->m_oAvailable.insert( Fragments::Fragment( nOffset, nOffset + nLength ) );
 	}
 
-	if ( m_nAvailable < nBlockCount )
+	if ( m_pAvailable.size() != nBlockCount )
 	{
-		BYTE* pAvailable = m_pAvailable;
-		DWORD nAvailable = m_nAvailable;
-
-		m_nAvailable = nBlockCount;
-		m_pAvailable = new BYTE[ nBlockCount ];
-		ZeroMemory( m_pAvailable, nBlockCount );
-		if ( pAvailable && nAvailable )
-		{
-			memcpy( m_pAvailable, pAvailable, nAvailable );	
-		}
-		delete [] pAvailable;
+		m_pAvailable.resize( nBlockCount, false );
 	}
 	
-	m_pAvailable[ nBlock ] = TRUE;
+	m_pAvailable[ nBlock ] = true;
 	ShowInterest();
 	return TRUE;
 }
@@ -379,7 +355,7 @@ void CDownloadTransferBT::ShowInterest()
 	// We can only be interested if we know what they have
 	QWORD nBlockSize = m_pDownload->m_pTorrent.m_nBlockSize;
 
-	if ( m_pAvailable && nBlockSize )
+	if ( ! m_pAvailable.empty() && nBlockSize )
 	{
 		Fragments::List oList( m_pDownload->GetWantedFragmentList() );
 		Fragments::List::const_iterator pItr = oList.begin();
@@ -390,7 +366,7 @@ void CDownloadTransferBT::ShowInterest()
 			QWORD nEnd = ( pItr->end() - 1 ) / nBlockSize;
 			for ( ; nBlock <= nEnd ; ++nBlock )
 			{
-				if ( m_pAvailable[ nBlock ] )
+				if ( nBlock < m_pAvailable.size() && m_pAvailable[ (DWORD)nBlock ] )
 				{
 					bInterested = TRUE;
 					break;
