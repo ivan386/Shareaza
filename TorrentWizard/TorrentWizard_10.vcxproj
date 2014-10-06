@@ -236,9 +236,9 @@
     </Bscmake>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="..\shareaza\BENode.cpp" />
-    <ClCompile Include="..\shareaza\Buffer.cpp" />
-    <ClCompile Include="..\shareaza\Strings.cpp" />
+    <ClCompile Include="BENode.cpp" />
+    <ClCompile Include="Buffer.cpp" />
+    <ClCompile Include="Strings.cpp" />
     <ClCompile Include="CmdLine.cpp" />
     <ClCompile Include="PageComment.cpp" />
     <ClCompile Include="PageFinished.cpp" />
@@ -258,9 +258,9 @@
     <ClCompile Include="WizardSheet.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="..\shareaza\BENode.h" />
-    <ClInclude Include="..\shareaza\Buffer.h" />
-    <ClInclude Include="..\shareaza\Strings.h" />
+    <ClInclude Include="BENode.h" />
+    <ClInclude Include="Buffer.h" />
+    <ClInclude Include="Strings.h" />
     <ClInclude Include="CmdLine.h" />
     <ClInclude Include="PageComment.h" />
     <ClInclude Include="PageFinished.h" />

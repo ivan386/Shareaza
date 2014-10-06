@@ -60,9 +60,9 @@ typedef unsigned __int64 QWORD;
 #endif
 
 #include "..\HashLib\HashLib.h"
-#include "..\Shareaza\Strings.h"
-#include "..\Shareaza\Buffer.h"
-#include "..\Shareaza\BENode.h"
+#include "Strings.h"
+#include "Buffer.h"
+#include "BENode.h"
 
 #ifdef _UNICODE
 #if defined _M_IX86

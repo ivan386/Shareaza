@@ -15,10 +15,10 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="..\shareaza\BENode.cpp">
+    <ClCompile Include="BENode.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="..\shareaza\Buffer.cpp">
+    <ClCompile Include="Buffer.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="CmdLine.cpp">
@@ -57,15 +57,15 @@
     <ClCompile Include="WizardSheet.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="..\shareaza\Strings.cpp">
+    <ClCompile Include="Strings.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="..\shareaza\BENode.h">
+    <ClInclude Include="BENode.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="..\shareaza\Buffer.h">
+    <ClInclude Include="Buffer.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="CmdLine.h">
@@ -107,7 +107,7 @@
     <ClInclude Include="WizardSheet.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="..\shareaza\Strings.h">
+    <ClInclude Include="Strings.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
