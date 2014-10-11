@@ -554,13 +554,14 @@ BOOL CUploadTransferED2K::StartNextRequest()
 
 	while ( !m_oRequested.empty() && m_nLength == SIZE_UNKNOWN )
 	{
-		if ( std::find( m_oServed.begin(), m_oServed.end(), *m_oRequested.begin() ) == m_oServed.end()
+		Fragments::Queue::const_iterator iRequested = m_oRequested.begin();
+		if ( std::find( m_oServed.begin(), m_oServed.end(), *iRequested ) == m_oServed.end()
 			// This should be redundant (Camper)
-			&& m_oRequested.begin()->begin() < m_nSize
-			&& m_oRequested.begin()->end() <= m_nSize )
+			&& iRequested->begin() < m_nSize
+			&& iRequested->end() <= m_nSize )
 		{
-			m_nOffset = m_oRequested.begin()->begin();
-			m_nLength = m_oRequested.begin()->size();
+			m_nOffset = iRequested->begin();
+			m_nLength = iRequested->size();
 			m_nPosition = 0;
 		}
 		m_oRequested.pop_front();

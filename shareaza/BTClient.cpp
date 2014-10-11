@@ -762,10 +762,10 @@ CString CBTClient::GetAzureusStyleUserAgent(const BYTE* pVendor, size_t nVendor)
 						sUserAgent.AppendFormat( _T( "%d.%02d" ), strint( &pVendor[ 2 ], 2 ), strint( &pVendor[ 4 ], 2 ) );
 						break;
 					case STYLE_BUDDY:
-						sUserAgent.AppendFormat( _T( "%c.%c%c%c" ), pVendor[ 2 ], pVendor[ 3 ], pVendor[ 4 ], pVendor[ 5 ] );
+						sUserAgent.AppendFormat( _T( "%c.%c%c%c" ), (TCHAR)pVendor[ 2 ], (TCHAR)pVendor[ 3 ], (TCHAR)pVendor[ 4 ], (TCHAR)pVendor[ 5 ] );
 						break;
 					case STYLE_ROCKET:
-						sUserAgent.AppendFormat( _T( "%c.%c (%c%c)" ), pVendor[ 2 ], pVendor[ 3 ], pVendor[ 4 ], pVendor[ 5 ] );
+						sUserAgent.AppendFormat( _T( "%c.%c (%c%c)" ), (TCHAR)pVendor[ 2 ], (TCHAR)pVendor[ 3 ], (TCHAR)pVendor[ 4 ], (TCHAR)pVendor[ 5 ] );
 						break;
 					case STYLE_CTORRENT:
 						sUserAgent.AppendFormat( _T( "%d.%d.%02d" ), charint( pVendor[ 2 ] ), charint( pVendor[ 3 ] ), strint( &pVendor[ 4 ], 2 ) );

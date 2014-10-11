@@ -662,7 +662,7 @@ void CSearchDetailPanel::OnRun()
 	}
 }
 
-BOOL CSearchDetailPanel::ExecuteRequest(CString strURL, BYTE** ppBuffer, DWORD* pnBuffer)
+BOOL CSearchDetailPanel::ExecuteRequest(const CString& strURL, BYTE** ppBuffer, DWORD* pnBuffer)
 {
 	m_pRequest.Clear();
 	m_pRequest.SetURL( strURL );

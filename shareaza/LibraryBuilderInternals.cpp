@@ -451,8 +451,8 @@ bool CLibraryBuilderInternals::ExtractProperties(DWORD nIndex, const CString& st
 						{
 							CString strItem;
 							strItem.Format( _T("%c%c%c%c"),
-								LOBYTE( LOWORD( nFourCC ) ), HIBYTE( LOWORD( nFourCC ) ),
-								LOBYTE( HIWORD( nFourCC ) ), HIBYTE( HIWORD( nFourCC ) ) );
+								(TCHAR)LOBYTE( LOWORD( nFourCC ) ), (TCHAR)HIBYTE( LOWORD( nFourCC ) ),
+								(TCHAR)LOBYTE( HIWORD( nFourCC ) ), (TCHAR)HIBYTE( HIWORD( nFourCC ) ) );
 							pXML->AddAttribute( _T("codec"), strItem );
 						}
 						
@@ -3846,7 +3846,7 @@ CString	CLibraryBuilderInternals::DecodePDFText(CString strInput)
 	if ( strInput.IsEmpty() )
 		return CString();
 
-	CString strResult, strTemp;
+	CString strResult;
 	bool bWide = false;
 	DWORD nByte = strInput.GetLength() / nFactor; // string length in bytes
 

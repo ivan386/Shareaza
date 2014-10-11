@@ -1191,40 +1191,41 @@ BOOL CBTInfo::LoadTorrentTree(const CBENode* pRoot)
 			m_sName = strPath;
 
 			// Set data/file hashes (if they aren't)
-			if ( m_pFiles.GetHead()->m_oSHA1 )
+			CBTFile* pSingleFile = m_pFiles.GetHead();
+			if ( pSingleFile->m_oSHA1 )
 			{
-				m_oSHA1 = m_pFiles.GetHead()->m_oSHA1;
+				m_oSHA1 = pSingleFile->m_oSHA1;
 			}
 			else if ( m_oSHA1 )
 			{
-				m_pFiles.GetHead()->m_oSHA1 = m_oSHA1;
+				pSingleFile->m_oSHA1 = m_oSHA1;
 			}
 
-			if ( m_pFiles.GetHead()->m_oED2K )
+			if ( pSingleFile->m_oED2K )
 			{
-				m_oED2K = m_pFiles.GetHead()->m_oED2K;
+				m_oED2K = pSingleFile->m_oED2K;
 			}
 			else if ( m_oED2K )
 			{
-				m_pFiles.GetHead()->m_oED2K = m_oED2K;
+				pSingleFile->m_oED2K = m_oED2K;
 			}
 
-			if ( m_pFiles.GetHead()->m_oMD5 )
+			if ( pSingleFile->m_oMD5 )
 			{
-				m_oMD5 = m_pFiles.GetHead()->m_oMD5;
+				m_oMD5 = pSingleFile->m_oMD5;
 			}
 			else if ( m_oMD5 )
 			{
-				m_pFiles.GetHead()->m_oMD5 = m_oMD5;
+				pSingleFile->m_oMD5 = m_oMD5;
 			}
 
-			if ( m_pFiles.GetHead()->m_oTiger )
+			if ( pSingleFile->m_oTiger )
 			{
-				m_oTiger = m_pFiles.GetHead()->m_oTiger;
+				m_oTiger = pSingleFile->m_oTiger;
 			}
 			else if ( m_oTiger )
 			{
-				m_pFiles.GetHead()->m_oTiger = m_oTiger;
+				pSingleFile->m_oTiger = m_oTiger;
 			}
 		}
 	}

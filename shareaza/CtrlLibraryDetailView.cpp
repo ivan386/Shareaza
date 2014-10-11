@@ -878,7 +878,7 @@ void CLibraryDetailView::OnEndLabelEditA(NMHDR* pNotify, LRESULT* pResult)
 
 void CLibraryDetailView::OnFindItemW(NMHDR* pNotify, LRESULT* pResult)
 {
-	CW2T pszFind( (LPCWSTR)((NMLVFINDITEM*) pNotify)->lvfi.psz );
+	CString sFind( (LPCWSTR)((NMLVFINDITEM*) pNotify)->lvfi.psz );
 
 	GET_LIST();
 	CQuickLock oLock( Library.m_pSection );
@@ -891,7 +891,7 @@ void CLibraryDetailView::OnFindItemW(NMHDR* pNotify, LRESULT* pResult)
 			{
 				if ( ((NMLVFINDITEM*) pNotify)->lvfi.flags & LVFI_STRING )
 				{
-					if ( _tcsnicmp( (LPCTSTR)pszFind, pFile->m_sName, _tcslen( (LPCTSTR)pszFind ) ) == 0 )
+					if ( _tcsnicmp( sFind, pFile->m_sName, sFind.GetLength() ) == 0 )
 					{
 						*pResult = nItem;
 						return;
