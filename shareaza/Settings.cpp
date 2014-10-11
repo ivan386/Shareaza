@@ -614,7 +614,13 @@ void CSettings::Load()
 	{
 		General.Path = theApp.GetProgramFilesFolder() + _T("\\") CLIENT_NAME_T;
 		if ( ! PathFileExists( General.Path ) )
-			General.Path = theApp.m_strBinaryPath.Left( theApp.m_strBinaryPath.ReverseFind( '\\' ) );
+		{
+			General.Path = theApp.GetProgramFilesFolder64() + _T( "\\" ) CLIENT_NAME_T;
+			if ( ! PathFileExists( General.Path ) )
+			{
+				General.Path = theApp.m_strBinaryPath.Left( theApp.m_strBinaryPath.ReverseFind( '\\' ) );
+			}
+		}
 	}
 
 	if ( General.UserPath.IsEmpty() || ! CreateDirectory( General.UserPath + _T("\\Data") ) )

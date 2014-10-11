@@ -271,19 +271,22 @@ bool CLibraryFolders::AddSharedFolder(CListCtrl& oList)
 
 	// Let user select a path to share
 	CString strPath( BrowseForFolder( _T("Select folder to share:"), strLastPath ) );
+
 	if ( strPath.IsEmpty() )
 		return false;
+
+	strLastPath = strPath;
+
+	// Check if path is valid
+	if ( ! IsShareable( strPath ) )
+	{
+		CHelpDlg::Show( _T( "ShareHelp.BadShare" ) );
+		return false;
+	}
 
 	// Convert path to lowercase
 	CString strPathLC( strPath );
 	ToLower( strPathLC );
-
-	// Check if path is valid
-	if ( !IsShareable( strPathLC ) )
-	{
-		CHelpDlg::Show( _T("ShareHelp.BadShare") );
-		return false;
-	}
 
 	// Check if path is already shared
 	bool bForceAdd( false );
@@ -441,36 +444,39 @@ CLibraryFolder* CLibraryFolders::IsSubFolderShared(const CString& strPath) const
 
 bool CLibraryFolders::IsShareable(const CString& strPath)
 {
-	// Convert path to lowercase
-	CString strPathLC( strPath );
-	ToLower( strPathLC );
+	if ( strPath.IsEmpty() )
+		return false;
 
-	//Get system paths (to compare)
-	CString strWindowsLC( theApp.GetWindowsFolder() );
-	ToLower( strWindowsLC );
+	// Get system paths (to compare)
 
-	CString strProgramsLC( theApp.GetProgramFilesFolder() );
-	ToLower( strProgramsLC );
+	const CString sWindows = theApp.GetWindowsFolder();
+	if ( _tcsnicmp( sWindows, strPath, strPath.GetLength() ) == 0 )
+		return false;
 
-	//Get various shareaza paths (to compare)
-	CString strIncompletePathLC = Settings.Downloads.IncompletePath;
-	ToLower( strIncompletePathLC );
+	const CString sProgramFiles64 = theApp.GetProgramFilesFolder64();
+	if ( _tcsnicmp( sProgramFiles64, strPath, strPath.GetLength() ) == 0 )
+		return false;
 
-	CString strGeneralPathLC = Settings.General.Path;
-	ToLower( strGeneralPathLC );
+	const CString sProgramFiles = theApp.GetProgramFilesFolder();
+	if ( _tcsnicmp( sProgramFiles, strPath, strPath.GetLength() ) == 0 )
+		return false;
 
-	CString strUserPathLC = Settings.General.UserPath;
-	ToLower( strUserPathLC );
+	// Get various Shareaza paths (to compare)
 
-	return !( strPathLC == _T( "" ) ||
-		 strPathLC == strWindowsLC.Left( 3 ) ||
-		 strPathLC == strProgramsLC ||
-		 strPathLC == strWindowsLC ||
-		 strPathLC == strGeneralPathLC ||
-		 strPathLC == strGeneralPathLC + _T("\\data") ||
-		 strPathLC == strUserPathLC ||
-		 strPathLC == strUserPathLC + _T("\\data") ||
-		 strPathLC == strIncompletePathLC );
+	if ( _tcsnicmp( strPath, Settings.General.Path, Settings.General.Path.GetLength() ) == 0 )
+		return false;
+	if ( _tcsnicmp( Settings.General.Path, strPath, strPath.GetLength() ) == 0 )
+		return false;
+
+	if ( _tcsnicmp( Settings.Downloads.IncompletePath, strPath, strPath.GetLength() ) == 0 )
+		return false;
+
+	if ( _tcsicmp( strPath, Settings.General.UserPath ) == 0 )
+		return false;
+	if ( _tcsicmp( strPath, Settings.General.UserPath + _T("\\Data") ) == 0 )
+		return false;
+
+	return true;
 }
 
 //////////////////////////////////////////////////////////////////////

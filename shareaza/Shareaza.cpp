@@ -2172,8 +2172,7 @@ CString CShareazaApp::GetWindowsFolder() const
 	if ( m_pfnSHGetKnownFolderPath )
 	{
 		PWSTR pPath = NULL;
-		hr = m_pfnSHGetKnownFolderPath( FOLDERID_Windows,
-			KF_FLAG_CREATE | KF_FLAG_INIT, NULL, &pPath );
+		hr = m_pfnSHGetKnownFolderPath( FOLDERID_Windows, KF_FLAG_DONT_VERIFY, NULL, &pPath );
 		if ( pPath )
 		{
 			sWindows = pPath;
@@ -2188,8 +2187,7 @@ CString CShareazaApp::GetWindowsFolder() const
 	// Win2K/XP way
 	if ( m_pfnSHGetFolderPathW )
 	{
-		hr = m_pfnSHGetFolderPathW( NULL, CSIDL_WINDOWS, NULL, NULL,
-			sWindows.GetBuffer( MAX_PATH ) );
+		hr = m_pfnSHGetFolderPathW( NULL, CSIDL_WINDOWS, NULL, NULL, sWindows.GetBuffer( MAX_PATH ) );
 		sWindows.ReleaseBuffer();
 		if ( SUCCEEDED( hr  ) && ! sWindows.IsEmpty() )
 		{
@@ -2203,6 +2201,40 @@ CString CShareazaApp::GetWindowsFolder() const
 	return sWindows;
 }
 
+CString CShareazaApp::GetProgramFilesFolder64() const
+{
+	HRESULT hr;
+	CString sProgramFiles;
+
+	// 64-bit way
+	if ( m_pfnSHGetKnownFolderPath )
+	{
+		PWSTR pPath = NULL;
+		hr = m_pfnSHGetKnownFolderPath( FOLDERID_ProgramFilesX64, KF_FLAG_DONT_VERIFY, NULL, &pPath );
+		if ( pPath )
+		{
+			sProgramFiles = pPath;
+			CoTaskMemFree( pPath );
+		}
+		if ( SUCCEEDED( hr ) && ! sProgramFiles.IsEmpty() )
+		{
+			return sProgramFiles;
+		}
+	}
+
+	// 32-bit way
+	DWORD nRes = ExpandEnvironmentStrings( _T("%ProgramW6432%"), sProgramFiles.GetBuffer( MAX_PATH ), MAX_PATH );
+	sProgramFiles.ReleaseBuffer( nRes );
+	sProgramFiles.Trim();
+	sProgramFiles.TrimRight( _T( "\\" ) );
+	if ( ! sProgramFiles.IsEmpty() )
+	{
+		return sProgramFiles;
+	}
+
+	return GetProgramFilesFolder();
+}
+
 CString CShareazaApp::GetProgramFilesFolder() const
 {
 	HRESULT hr;
@@ -2212,8 +2244,7 @@ CString CShareazaApp::GetProgramFilesFolder() const
 	if ( m_pfnSHGetKnownFolderPath )
 	{
 		PWSTR pPath = NULL;
-		hr = m_pfnSHGetKnownFolderPath( FOLDERID_ProgramFiles,
-			KF_FLAG_CREATE | KF_FLAG_INIT, NULL, &pPath );
+		hr = m_pfnSHGetKnownFolderPath( FOLDERID_ProgramFilesX86, KF_FLAG_DONT_VERIFY, NULL, &pPath );
 		if ( pPath )
 		{
 			sProgramFiles = pPath;
@@ -2228,8 +2259,7 @@ CString CShareazaApp::GetProgramFilesFolder() const
 	// Win2K/XP way
 	if ( m_pfnSHGetFolderPathW )
 	{
-		hr = m_pfnSHGetFolderPathW( NULL, CSIDL_PROGRAM_FILES, NULL, NULL,
-			sProgramFiles.GetBuffer( MAX_PATH ) );
+		hr = m_pfnSHGetFolderPathW( NULL, CSIDL_PROGRAM_FILES, NULL, NULL, sProgramFiles.GetBuffer( MAX_PATH ) );
 		sProgramFiles.ReleaseBuffer();
 		if ( SUCCEEDED( hr  ) && ! sProgramFiles.IsEmpty() )
 		{

@@ -190,6 +190,7 @@ public:
 	BOOL				OpenDownload(LPCTSTR lpszFileName, BOOL bDoIt);
 
 	CString				GetWindowsFolder() const;
+	CString				GetProgramFilesFolder64() const;
 	CString				GetProgramFilesFolder() const;
 	CString				GetDocumentsFolder() const;
 	CString				GetDownloadsFolder() const;

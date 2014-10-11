@@ -1057,10 +1057,13 @@ bool CHostCache::CheckMinimumServers(PROTOCOLID nProtocol)
 			{ _T("\\aMule\\server.met") }
 		};
 
-		CString sRootPathes[ 3 ];
-		sRootPathes[ 0 ] = theApp.GetProgramFilesFolder();
-		sRootPathes[ 1 ] = theApp.GetLocalAppDataFolder();
-		sRootPathes[ 2 ] = theApp.GetAppDataFolder();
+		CString sRootPathes[ 4 ] =
+		{
+			theApp.GetProgramFilesFolder(),
+			theApp.GetProgramFilesFolder64(),
+			theApp.GetLocalAppDataFolder(),
+			theApp.GetAppDataFolder()
+		};
 
 		for ( int i = 0; i < _countof( sRootPathes ); ++i )
 			for ( int j = 0; j < _countof( sServerMetPathes ); ++j )
