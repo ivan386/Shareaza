@@ -313,7 +313,6 @@ BOOL CHandshake::OnAcceptPush()
 	}
 
 	// Read the 16 hexadecimal digits of the GUID, copying it into pGUID
-	CString strGUID;
 	Hashes::Guid oGUID;
 	for ( int nByte = 0 ; nByte < 16 ; nByte++ )
 	{

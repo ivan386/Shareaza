@@ -219,7 +219,7 @@ void CDownloadsCtrl::SaveColumnState()
 
 BOOL CDownloadsCtrl::LoadColumnState()
 {
-	CString strOrdering, strWidths, strItem;
+	CString strOrdering, strWidths;
 
 	strOrdering = theApp.GetProfileString( _T("ListStates"), _T("CDownloadCtrl.Ordering"), _T("") );
 	strWidths = theApp.GetProfileString( _T("ListStates"), _T("CDownloadCtrl.Widths"), _T("") );
@@ -1016,7 +1016,6 @@ void CDownloadsCtrl::PaintDownload(CDC& dc, const CRect& rcRow, CDownload* pDown
 	{
 		CString strText;
 		CRect rcCell;
-		CString strSource;
 		BOOL bDisplayText	= TRUE;
 
 		m_wndHeader.GetItemRect( nColumn, &rcCell );

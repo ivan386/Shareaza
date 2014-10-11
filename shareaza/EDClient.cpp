@@ -1893,7 +1893,7 @@ BOOL CEDClient::OnViewSharedDirAnswer(CEDPacket* pPacket)
 	if ( pPacket->GetRemaining() >= 2 )
 	{
 		// Read original directory name
-		CString sDir = pPacket->ReadEDString( m_bEmUnicode );
+//		CString sDir = pPacket->ReadEDString( m_bEmUnicode );
 
 		if ( pPacket->GetRemaining() >= 4 )
 		{

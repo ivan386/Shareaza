@@ -52,8 +52,7 @@ static char THIS_FILE[]=__FILE__;
 // CHostBrowser construction
 
 CHostBrowser::CHostBrowser(CBrowseHostWnd* pNotify, PROTOCOLID nProtocol, IN_ADDR* pAddress, WORD nPort, BOOL bMustPush, const Hashes::Guid& oClientID, const CString& sNick)
-	: m_nState		( hbsNull )
-	, m_pNotify		( pNotify )
+	: m_pNotify		( pNotify )
 	, m_pProfile	( NULL )
 	, m_bNewBrowse	( FALSE )
 	, m_nPort		( nPort )
@@ -481,7 +480,7 @@ BOOL CHostBrowser::LoadDC(LPCTSTR pszFile, CQueryHit*& pHits)
 		// Invalid XML file format
 		return FALSE;
 
-	CString sTitle = pXML->GetAttributeValue( _T("CID") );
+//	CString sTitle = pXML->GetAttributeValue( _T("CID") );
 
 	return LoadDCDirectory( pXML.get(), pHits );
 }

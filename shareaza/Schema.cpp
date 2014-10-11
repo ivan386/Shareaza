@@ -196,8 +196,6 @@ BOOL CSchema::Load(LPCTSTR pszFile)
 
 BOOL CSchema::LoadSchema(LPCTSTR pszFile)
 {
-	CString strXML;
-
 	CXMLElement* pRoot = CXMLElement::FromFile( pszFile );
 	if ( NULL == pRoot ) return FALSE;
 

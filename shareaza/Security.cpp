@@ -933,7 +933,6 @@ BOOL CSecurity::FromXML(CXMLElement* pXML)
 
 BOOL CSecurity::Import(LPCTSTR pszFile)
 {
-	CString strText;
 	CBuffer pBuffer;
 	CFile pFile;
 

@@ -204,8 +204,6 @@ LRESULT CWizardProfilePage::OnWizardBack()
 
 LRESULT CWizardProfilePage::OnWizardNext()
 {
-	CString strMessage;
-
 	UpdateData( TRUE );
 
 	if ( CXMLElement* pIdentity = MyProfile.GetXML( _T("identity"), TRUE ) )

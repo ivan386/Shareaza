@@ -146,7 +146,6 @@ void CFontCombo::DrawItem(LPDRAWITEMSTRUCT lpDrawItemStruct)
 
 	CDC* pDC = CDC::FromHandle( lpDrawItemStruct->hDC );
 	CRect rcItem( &lpDrawItemStruct->rcItem );
-	CPoint pt( rcItem.left + 1, rcItem.top + 1 );
 
 	int nOldDC = pDC->SaveDC();
 

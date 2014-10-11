@@ -189,7 +189,7 @@ void CUploadsCtrl::SaveColumnState()
 
 BOOL CUploadsCtrl::LoadColumnState()
 {
-	CString strOrdering, strWidths, strItem;
+	CString strOrdering, strWidths;
 	
 	strOrdering = theApp.GetProfileString( _T("ListStates"), _T("CUploadCtrl.Ordering"), _T("") );
 	strWidths = theApp.GetProfileString( _T("ListStates"), _T("CUploadCtrl.Widths"), _T("") );

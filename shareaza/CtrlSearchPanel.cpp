@@ -462,7 +462,6 @@ int CSearchInputBox::OnCreate(LPCREATESTRUCT lpCreateStruct)
 	if ( CTaskBox::OnCreate( lpCreateStruct ) == -1 ) return -1;
 	
 	CRect rc( 0, 0, 0, 0 );
-	CString strCaption;
 	
 	if ( ! m_wndSearch.Create( ES_AUTOHSCROLL | WS_TABSTOP | WS_GROUP, rc,
 		this, IDC_SEARCH, _T("Search"), _T("Search.%.2i") ) ) return -1;
@@ -768,7 +767,6 @@ int CSearchAdvancedBox::OnCreate(LPCREATESTRUCT lpCreateStruct)
 	if ( CTaskBox::OnCreate( lpCreateStruct ) == -1 ) return -1;
 	
 	CRect rc( 0, 0, 0, 0 );
-	CString strCaption;
 
 	if ( ! m_wndCheckBoxG2.Create( protocolAbbr[ PROTOCOL_G2 ], WS_CHILD | WS_VISIBLE | WS_TABSTOP |
 		BS_CHECKBOX, rc, this, IDC_SEARCH_GNUTELLA2 ) ) return -1;

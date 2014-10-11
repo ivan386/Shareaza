@@ -42,7 +42,6 @@ public:
 	virtual ~CHostBrowser();
 
 public:
-	int				m_nState;
 	CGProfile*		m_pProfile;
 	BOOL			m_bNewBrowse;
 	IN_ADDR			m_pAddress;

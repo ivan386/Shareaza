@@ -107,8 +107,8 @@ void CMatchTipCtrl::LoadFromFile()
 	}
 	else
 	{
-		m_sCountryCode = _T("");
-		m_sCountry = _T("");
+		m_sCountryCode.Empty();
+		m_sCountry.Empty();
 	}
 	m_sSize = LoadString( IDS_TIP_SIZE ) + _T(": ") + m_pFile->m_sSize;
 	LoadTypeInfo();
@@ -454,7 +454,6 @@ void CMatchTipCtrl::OnCalcSize(CDC* pDC)
 void CMatchTipCtrl::OnPaint(CDC* pDC)
 {
 	CPoint pt( 0, 0 );
-	CSize sz( m_sz.cx, TIP_TEXTHEIGHT );
 
 	DrawText( pDC, &pt, m_sName );
 	pt.y += TIP_TEXTHEIGHT;

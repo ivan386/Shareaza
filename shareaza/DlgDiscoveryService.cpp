@@ -45,10 +45,7 @@ END_MESSAGE_MAP()
 
 CDiscoveryServiceDlg::CDiscoveryServiceDlg(CWnd* pParent, CDiscoveryService* pService) : CSkinDialog(CDiscoveryServiceDlg::IDD, pParent)
 {
-	//{{AFX_DATA_INIT(CDiscoveryServiceDlg)
-	m_sAddress = _T("");
 	m_nType = -1;
-	//}}AFX_DATA_INIT
 	m_pService	= pService;
 	m_bNew		= FALSE;
 }

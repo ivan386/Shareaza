@@ -48,9 +48,7 @@ CSecureRuleDlg::CSecureRuleDlg(CWnd* pParent, CSecureRule* pRule) : CSkinDialog(
 	m_nExpireM = 0;
 	m_nAction = -1;
 	m_nExpire = -1;
-	m_sComment = _T("");
 	m_nType = -1;
-	m_sContent = _T("");
 	m_nMatch = -1;
 	m_pRule	= pRule;
 	m_bNew	= FALSE;

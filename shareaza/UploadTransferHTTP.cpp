@@ -1040,8 +1040,6 @@ void CUploadTransferHTTP::SendDefaultHeaders()
 
 void CUploadTransferHTTP::SendFileHeaders()
 {
-	CString strHeader;
-
 	if ( ! m_sName.IsEmpty() )
 	{
 		Write( _P("Content-Disposition: attachment; filename=\"") );

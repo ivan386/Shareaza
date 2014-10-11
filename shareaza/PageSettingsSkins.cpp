@@ -241,7 +241,7 @@ BOOL CSkinsSettingsPage::AddSkin(LPCTSTR pszPath, LPCTSTR pszName)
 		return FALSE;
 	}
 
-	CString	strType		= pManifest->GetAttributeValue( _T("type"), _T("Unknown") );
+//	CString	strType		= pManifest->GetAttributeValue( _T("type"), _T("Unknown") );
 	CString strIcon		= pManifest->GetAttributeValue( _T("icon") );
 	CString	strName		= pManifest->GetAttributeValue( _T("name"), pszName );
 	CString strAuthor	= pManifest->GetAttributeValue( _T("author"), _T("Unknown") );

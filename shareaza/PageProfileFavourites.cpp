@@ -51,10 +51,6 @@ END_MESSAGE_MAP()
 
 CFavouritesProfilePage::CFavouritesProfilePage() : CSettingsPage( CFavouritesProfilePage::IDD )
 {
-	//{{AFX_DATA_INIT(CFavouritesProfilePage)
-	m_sURL = _T("");
-	m_sTitle = _T("");
-	//}}AFX_DATA_INIT
 }
 
 CFavouritesProfilePage::~CFavouritesProfilePage()

@@ -635,7 +635,7 @@ void CUPnPFinder::DeleteExistingPortMappings(ServicePointer pService)
 			// DeletePortMapping action takes 3 arguments:
 			//		RemoteHost, ExternalPort and PortMappingProtocol
 
-			CString strHost, strPort, strProtocol, strLocalIP;
+			CString strHost, strPort, strProtocol;
 
 			if ( _tcsistr( strActionResult, L"|VT_BSTR=Shareaza TCP|" ) != NULL ||
 				_tcsistr( strActionResult, L"|VT_BSTR=Shareaza UDP|" ) != NULL )
