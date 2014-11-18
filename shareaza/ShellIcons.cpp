@@ -1,7 +1,7 @@
 //
 // ShellIcons.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2012.
+// Copyright (c) Shareaza Development Team, 2002-2014.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -369,7 +369,7 @@ CString	CShellIcons::GetMIME(LPCTSTR pszType)
 BOOL CShellIcons::Lookup(LPCTSTR pszType, HICON* phSmallIcon, HICON* phLargeIcon, CString* psName, CString* psMIME, HICON* phHugeIcon)
 {
 	DWORD nType, nResult;
-	TCHAR szResult[MAX_PATH];
+	TCHAR szResult[ MAX_PATH + 1 ];
 	HKEY hKey, hSub;
 
 	if ( phSmallIcon ) *phSmallIcon = NULL;
