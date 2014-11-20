@@ -54,9 +54,6 @@
     <ClInclude Include="miniupnpc\receivedata.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="miniupnpc\bsdqueue.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="miniupnpc\declspec.h">
       <Filter>Header Files</Filter>
     </ClInclude>

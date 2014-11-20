@@ -1,4 +1,4 @@
-/* $Id: upnpc.c,v 1.103 2014/05/15 08:41:44 nanard Exp $ */
+/* $Id: upnpc.c,v 1.105 2014/11/01 10:37:32 nanard Exp $ */
 /* Project : miniupnp
  * Author : Thomas Bernard
  * Copyright (c) 2005-2014 Thomas Bernard
@@ -174,7 +174,7 @@ static void NewListRedirections(struct UPNPUrls * urls,
 	if(r == UPNPCOMMAND_SUCCESS)
 	{
 		printf(" i protocol exPort->inAddr:inPort description remoteHost leaseTime\n");
-		for(pm = pdata.head.lh_first; pm != NULL; pm = pm->entries.le_next)
+		for(pm = pdata.l_head; pm != NULL; pm = pm->l_next)
 		{
 			printf("%2d %s %5hu->%s:%-5hu '%s' '%s' %u\n",
 			       i, pm->protocol, pm->externalPort, pm->internalClient,
@@ -199,7 +199,7 @@ static void NewListRedirections(struct UPNPUrls * urls,
 	                               &pdata);
 	if(r == UPNPCOMMAND_SUCCESS)
 	{
-		for(pm = pdata.head.lh_first; pm != NULL; pm = pm->entries.le_next)
+		for(pm = pdata.l_head; pm != NULL; pm = pm->l_next)
 		{
 			printf("%2d %s %5hu->%s:%-5hu '%s' '%s' %u\n",
 			       i, pm->protocol, pm->externalPort, pm->internalClient,
@@ -295,8 +295,9 @@ static void SetRedirectAndTest(struct UPNPUrls * urls,
 static void
 RemoveRedirect(struct UPNPUrls * urls,
                struct IGDdatas * data,
-	       const char * eport,
-	       const char * proto)
+               const char * eport,
+               const char * proto,
+               const char * remoteHost)
 {
 	int r;
 	if(!proto || !eport)
@@ -310,7 +311,7 @@ RemoveRedirect(struct UPNPUrls * urls,
 		fprintf(stderr, "protocol invalid\n");
 		return;
 	}
-	r = UPNP_DeletePortMapping(urls->controlURL, data->first.servicetype, eport, proto, 0);
+	r = UPNP_DeletePortMapping(urls->controlURL, data->first.servicetype, eport, proto, remoteHost);
 	printf("UPNP_DeletePortMapping() returned : %d\n", r);
 }
 
@@ -584,7 +585,7 @@ int main(int argc, char ** argv)
 	   || (command == 'D' && commandargc<1))
 	{
 		fprintf(stderr, "Usage :\t%s [options] -a ip port external_port protocol [duration]\n\t\tAdd port redirection\n", argv[0]);
-		fprintf(stderr, "       \t%s [options] -d external_port protocol [port2 protocol2] [...]\n\t\tDelete port redirection\n", argv[0]);
+		fprintf(stderr, "       \t%s [options] -d external_port protocol <remote host>\n\t\tDelete port redirection\n", argv[0]);
 		fprintf(stderr, "       \t%s [options] -s\n\t\tGet Connection status\n", argv[0]);
 		fprintf(stderr, "       \t%s [options] -l\n\t\tList redirections\n", argv[0]);
 		fprintf(stderr, "       \t%s [options] -L\n\t\tList redirections (using GetListOfPortMappings (for IGD:2 only)\n", argv[0]);
@@ -677,10 +678,8 @@ int main(int argc, char ** argv)
 						   description, 0);
 				break;
 			case 'd':
-				for(i=0; i<commandargc; i+=2)
-				{
-					RemoveRedirect(&urls, &data, commandargv[i], commandargv[i+1]);
-				}
+				RemoveRedirect(&urls, &data, commandargv[0], commandargv[1],
+				               commandargc > 2 ? commandargv[2] : NULL);
 				break;
 			case 'n':	/* aNy */
 				SetRedirectAndTest(&urls, &data,

@@ -170,7 +170,6 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="miniupnpcstrings.h" />
-    <ClInclude Include="miniupnpc\bsdqueue.h" />
     <ClInclude Include="miniupnpc\connecthostport.h" />
     <ClInclude Include="miniupnpc\declspec.h" />
     <ClInclude Include="miniupnpc\igd_desc_parse.h" />
