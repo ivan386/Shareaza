@@ -1,7 +1,7 @@
 //
 // HostBrowser.h
 //
-// Copyright (c) Shareaza Development Team, 2002-2011.
+// Copyright (c) Shareaza Development Team, 2002-2014.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -41,27 +41,16 @@ public:
 	CHostBrowser(CBrowseHostWnd* pNotify = NULL, PROTOCOLID nProtocol = PROTOCOL_ANY, IN_ADDR* pAddress = NULL, WORD nPort = 0, BOOL bMustPush = FALSE, const Hashes::Guid& pClientID = Hashes::Guid(), const CString& sNick = CString());
 	virtual ~CHostBrowser();
 
-public:
 	CGProfile*		m_pProfile;
-	BOOL			m_bNewBrowse;
 	IN_ADDR			m_pAddress;
 	WORD			m_nPort;
 	Hashes::Guid	m_oClientID;
-	Hashes::Guid	m_oPushID;
 	BOOL			m_bMustPush;
-	BOOL			m_bCanPush;
 	DWORD			m_tPushed;
 	BOOL			m_bConnect;
 	int				m_nHits;
-	CVendor*		m_pVendor;
 	BOOL			m_bCanChat;
 	CString			m_sServer;
-	BOOL			m_bDeflate;
-	DWORD			m_nLength;
-	DWORD			m_nReceived;
-	CBuffer*		m_pBuffer;
-	z_streamp		m_pInflate;
-	CString			m_sNick;
 
 	enum { hbsNull, hbsConnecting, hbsRequesting, hbsHeaders, hbsContent };
 
@@ -73,15 +62,24 @@ public:
 	BOOL		IsBrowsing() const;
 	float		GetProgress() const;
 	void		OnQueryHits(CQueryHit* pHits);
+	BOOL		OnPush(const Hashes::Guid& oClientID, CConnection* pConnection);
+	BOOL		OnNewFile(const CLibraryFile* pFile);
 
 	virtual BOOL	OnConnected();
 	virtual void	OnDropped();
 	virtual BOOL	OnHeadersComplete();
-	virtual BOOL	OnPush(const Hashes::Guid& oClientID, CConnection* pConnection);
-	virtual BOOL	OnNewFile(CLibraryFile* pFile);
 
 protected:
 	CBrowseHostWnd*	m_pNotify;
+	BOOL			m_bNewBrowse;
+	Hashes::Guid	m_oPushID;
+	BOOL			m_bCanPush;
+	CVendor*		m_pVendor;
+	BOOL			m_bDeflate;
+	DWORD			m_nReceived;
+	CBuffer*		m_pBuffer;
+	z_streamp		m_pInflate;
+	CString			m_sNick;
 
 	BOOL		SendPush(BOOL bMessage);
 	void		SendRequest();
