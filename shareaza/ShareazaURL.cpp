@@ -403,8 +403,9 @@ BOOL CShareazaURL::ParseED2KFTP(LPCTSTR pszURL, BOOL bResolve)
 
 	if ( !m_oED2K.fromString( strHash ) ) return FALSE;
 
-	m_bSize = _stscanf( strURL, _T("%I64i"), &m_nSize ) == 1;
-	if ( ! m_bSize ) return FALSE;
+	QWORD nSize = 0;
+	if ( m_bSize = _stscanf( strURL, _T("%I64u"), &nSize ) != 1 || nSize == 0 ) return FALSE;
+	m_nSize = nSize;
 
 	nSlash = m_sAddress.Find( _T('@') );
 
@@ -478,8 +479,10 @@ BOOL CShareazaURL::ParseDCHub(LPCTSTR pszURL, BOOL bResolve)
 		if ( ! m_oTiger.fromString( strHash ) )
 			return FALSE;
 
-		if ( _stscanf( strURL, _T("/%I64i"), &m_nSize ) == 1 )
+		QWORD nSize = 0;
+		if ( _stscanf( strURL, _T("/%I64u"), &nSize ) == 1 && nSize != 0 )
 		{
+			m_nSize = nSize;
 			m_bSize = TRUE;
 		}
 	}
@@ -555,13 +558,17 @@ BOOL CShareazaURL::ParseMagnet(LPCTSTR pszURL)
 	CString strURL( pszURL );
 	CAutoPtr< CBTInfo > pTorrent( new CBTInfo() );
 
-	for ( strURL += '&' ; strURL.GetLength() ; )
+	// TODO: Add multi-file magnets
+	DWORD nMyNumber = (DWORD)-1;
+
+	for ( strURL += _T('&') ; strURL.GetLength() ; )
 	{
 		CString strPart = strURL.SpanExcluding( _T("&") );
 		strURL = strURL.Mid( strPart.GetLength() + 1 );
 
-		int nEquals = strPart.Find( '=' );
-		if ( nEquals < 0 ) continue;
+		int nEquals = strPart.Find( _T('=') );
+		if ( nEquals < 0 )
+			continue;
 
 		CString strKey		= URLDecode( strPart.Left( nEquals ) );
 		CString strValue	= URLDecode( strPart.Mid( nEquals + 1 ) );
@@ -569,12 +576,28 @@ BOOL CShareazaURL::ParseMagnet(LPCTSTR pszURL)
 		SafeString( strKey );
 		SafeString( strValue );
 
-		if ( strKey.IsEmpty() || strValue.IsEmpty() ) continue;
+		// Parse numbered keys
+		DWORD nNumber = 0;
+		int nDot = strKey.Find( _T('.') );
+		if ( nDot > 0 )
+		{
+			if ( _istdigit( strKey.GetAt( nDot + 1 ) ) )
+				nNumber = _tcstoul( strKey.Mid( nDot + 1 ), NULL, 10 );
+			strKey = strKey.Left( nDot );
+		}
+		if ( nMyNumber == (DWORD)-1 )
+			nMyNumber = nNumber;
 
-		if ( _tcsicmp( strKey, _T("xt") ) == 0 ||
-			 _tcsicmp( strKey, _T("xs") ) == 0 ||
-			 _tcsicmp( strKey, _T("as") ) == 0 ||
-			 _tcsnicmp( strKey, _T("tr"), 2 ) == 0 ) // "tr=", "tr.1=", "tr.2="...
+		if ( strKey.IsEmpty() || strValue.IsEmpty() )
+			continue;
+
+		strKey.MakeLower();
+
+		if ( strKey == _T("xt") ||	// "eXact Topic" (URN containing file hash)
+			 strKey == _T("xs") ||	// "eXact Source" (p2p link)
+			 strKey == _T("as") ||	// "Acceptable Source" (web link to the online file)
+			 strKey == _T("ws") ||	// "WebSeed" (web link to the online file or folder/ for multifile-torrent) 
+			 strKey == _T("tr") )	// "TRacker address" (tracker URL for BitTorrent downloads)
 		{
 			if ( StartsWith( strValue, _PT("urn:") ) ||
 				 StartsWith( strValue, _PT("sha1:") ) ||
@@ -584,12 +607,15 @@ BOOL CShareazaURL::ParseMagnet(LPCTSTR pszURL)
 				 StartsWith( strValue, _PT("btih:") ) ||
 				 StartsWith( strValue, _PT("ed2k:") ) )
 			{
-				if ( !m_oSHA1 ) m_oSHA1.fromUrn( strValue );
-				if ( !m_oTiger ) m_oTiger.fromUrn( strValue );
-				if ( !m_oMD5 ) m_oMD5.fromUrn( strValue );
-				if ( !m_oED2K ) m_oED2K.fromUrn( strValue );
-				if ( !m_oBTH ) m_oBTH.fromUrn( strValue );
-				if ( !m_oBTH ) m_oBTH.fromUrn< Hashes::base16Encoding >( strValue );
+				if ( nMyNumber == nNumber )
+				{
+					if ( ! m_oSHA1 )	m_oSHA1.fromUrn( strValue );
+					if ( ! m_oTiger )	m_oTiger.fromUrn( strValue );
+					if ( ! m_oMD5 )		m_oMD5.fromUrn( strValue );
+					if ( ! m_oED2K )	m_oED2K.fromUrn( strValue );
+					if ( ! m_oBTH )		m_oBTH.fromUrn( strValue );
+					if ( ! m_oBTH )		m_oBTH.fromUrn< Hashes::base16Encoding >( strValue );
+				}
 			}
 			else if ( StartsWith( strValue, _PT("http://") ) ||
 					  StartsWith( strValue, _PT("http%3A//") ) ||
@@ -603,52 +629,69 @@ BOOL CShareazaURL::ParseMagnet(LPCTSTR pszURL)
 				strValue.Replace( _T(" "), _T("%20") );
 				strValue.Replace( _T("%3A//"), _T("://") );
 
-				if ( _tcsicmp( strKey, _T("xt") ) == 0 )
+				if ( strKey == _T("xt") )		// "eXact Topic" (URN containing file hash)
 				{
-					CString strURL = _T("@") + strValue;
-
-					if ( m_sURL.GetLength() )
-						m_sURL = strURL + _T(", ") + m_sURL;
-					else
-						m_sURL = strURL;
+					if ( nMyNumber == nNumber )
+					{
+						if ( m_sURL.GetLength() )
+							m_sURL = _T("@") + strURL + _T(", ") + m_sURL;
+						else
+							m_sURL = _T("@") + strURL;
+					}
 				}
-				else if( _tcsnicmp( strKey, _T("tr"), 2 ) == 0 ) // "tr=", "tr.1=", "tr.2="...
+				else if( strKey == _T("tr") )	// "TRacker address" (tracker URL for BitTorrent downloads)
 				{
+					// Trackers are common
 					pTorrent->SetTracker( strValue );
 				}
 				else
 				{
-					if ( m_sURL.GetLength() ) m_sURL += _T(", ");
-					m_sURL += strValue;
+					if ( nMyNumber == nNumber )
+					{
+						if ( m_sURL.GetLength() )
+							m_sURL = m_sURL + _T(", ") + strValue;
+						else
+							m_sURL = m_sURL + strValue;
+					}
 				}
 			}
 		}
-		else if ( _tcsicmp( strKey, _T("dn") ) == 0 )
+		else if ( strKey == _T("dn") )	// "Display Name" (filename)
 		{
-			m_sName = strValue;
-		}
-		else if ( _tcsicmp( strKey, _T("kt") ) == 0 )
-		{
-			m_sName = strValue;
-			m_oSHA1.clear();
-			m_oTiger.clear();
-			m_oED2K.clear();
-			m_oMD5.clear();
-			m_oBTH.clear();
-		}
-		else if ( _tcsicmp( strKey, _T("xl") ) == 0 ||
-				  _tcsicmp( strKey, _T("sz") ) == 0 ||	// Non-standard
-				  _tcsicmp( strKey, _T("fs") ) == 0 )	// Foxy
-		{
-			QWORD nSize;
-			if ( ( ! m_bSize ) && ( _stscanf( strValue, _T("%I64i"), &nSize ) == 1 ) && ( nSize > 0 ) )
+			if ( nMyNumber == nNumber )
 			{
-				m_nSize = nSize;
-				m_bSize = TRUE;
+				m_sName = strValue;
 			}
 		}
-		else if ( _tcsicmp( strKey, _T("bn") ) == 0 )
+		else if ( strKey == _T("kt") )	// "Keyword Topic" (key words for search)
 		{
+			if ( nMyNumber == nNumber )
+			{
+				m_sName = strValue;
+				m_oSHA1.clear();
+				m_oTiger.clear();
+				m_oED2K.clear();
+				m_oMD5.clear();
+				m_oBTH.clear();
+			}
+		}
+		else if ( strKey == _T("xl") ||	// "eXact Length" (size in bytes)
+				  strKey == _T("sz") ||	// used by old Shareaza
+				  strKey == _T("fs") )	// used by Foxy
+		{
+			if ( nMyNumber == nNumber )
+			{
+				QWORD nSize = 0;
+				if ( m_nSize == SIZE_UNKNOWN && _stscanf( strValue, _T("%I64u"), &nSize ) == 1 && nSize != 0 )
+				{
+					m_nSize = nSize;
+					m_bSize = TRUE;
+				}
+			}
+		}
+		else if ( strKey == _T("bn") )	// "Bittorrent Node" (BitTorrent node address for DHT bootstrapping)
+		{
+			// Nodes are common
 			pTorrent->SetNode( strValue );
 		}
 		else if ( _tcsicmp( strKey, _T("br") ) == 0 )

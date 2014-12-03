@@ -667,7 +667,7 @@ BOOL CDownload::OpenDownload()
 
 	SetModified();
 
-	if ( IsTorrent() )
+	if ( IsTorrent(TRUE) )
 	{
 		if ( Open( m_pTorrent ) )
 			return TRUE;

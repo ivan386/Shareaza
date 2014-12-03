@@ -424,8 +424,9 @@ CString CDownloadWithFile::GetDisplayName() const
 
 BOOL CDownloadWithFile::IsPositionEmpty(QWORD nOffset)
 {
-	return m_pFile.get() && m_pFile->IsValid() &&
-		m_pFile->IsPositionRemaining( nOffset );
+	return m_pFile.get() 
+		&& m_pFile->IsValid() 
+		&& m_pFile->IsPositionRemaining( nOffset );
 }
 
 //////////////////////////////////////////////////////////////////////
