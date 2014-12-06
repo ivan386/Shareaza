@@ -120,15 +120,42 @@
 #define Description   internal_name + " Ultimate File Sharing"
 #define date          GetDateTimeString('yyyy/mm/dd', '-', '')
 
+; Output files names
 #if Str(RELEASE_BUILD) == "1" && ConfigurationName == "Release"
-  #define output_name internal_name + "_" + version + "_" + PlatformName
+  #define output_name  internal_name + "_" + version + "_" + PlatformName
+  #define symbols_name internal_name + "_" + version + "_" + PlatformName + "_Symbols.7z"
+  #define source_name  internal_name + "_" + version + "_Source.7z"
 #else
   #ifdef REVISION
-    #define output_name internal_name + "_" + version + "_" + PlatformName + "_" + ConfigurationName + "_" + REVISION + "_" + date
+    #define output_name  internal_name + "_" + version + "_" + PlatformName + "_" + ConfigurationName + "_" + REVISION + "_" + date
+    #define symbols_name internal_name + "_" + PlatformName + "_" + ConfigurationName + "_" + REVISION + "_" + date + "_Symbols.7z"
+    #define source_name  internal_name + "_" + REVISION + "_Source.7z"
   #else
-    #define output_name internal_name + "_" + version + "_" + PlatformName + "_" + ConfigurationName + "_" + date
+    #define output_name  internal_name + "_" + version + "_" + PlatformName + "_" + ConfigurationName + "_" + date
+    #define symbols_name internal_name + "_" + version + "_" + PlatformName + "_" + ConfigurationName + "_" + date + "_Symbols.7z"
+    #define source_name  internal_name + "_" + version + "_Source.7z"
   #endif
 #endif
+
+; Detect 7-Zip
+#ifexist GetEnv( "ProgramFiles" ) + "\7-Zip\7z.exe"
+  #define Zip GetEnv( "ProgramFiles" ) + "\7-Zip\7z.exe"
+#endif
+#ifexist GetEnv( "ProgramFiles(x86)" ) + "\7-Zip\7z.exe"
+  #define Zip GetEnv( "ProgramFiles(x86)" ) + "\7-Zip\7z.exe"
+#endif
+#ifexist GetEnv( "ProgramW6432" ) + "\7-Zip\7z.exe"
+  #define Zip GetEnv( "ProgramW6432" ) + "\7-Zip\7z.exe"
+#endif
+#ifndef Zip
+  #error The 7z utility is missing. Please go to https://sourceforge.net/projects/sevenzip/ and install 7-Zip.
+#endif
+
+; Pack symbols
+#expr Exec( Zip, "a -y -mx=9 builds\" + symbols_name + " ""..\" + Compiler + "\" + PlatformName + "\" + ConfigurationName + "\*.pdb""", ".." )
+
+; Pack sources
+#expr Exec( Zip, "a -y -mx=9 -r -x!.svn -x!setup\builds\*.exe -x!setup\builds\*.txt -x!setup\builds\*.iss -x!Win32 -x!x64 -x!ipch -x!*.7z -x!*.log -x!*.bak -x!*.tmp -x!*.sdf -x!*.suo -x!*.ncb -x!*.user -x!*.opensdf builds\" + source_name + " ..", ".." )
 
 [Setup]
 AppComments={#Description}

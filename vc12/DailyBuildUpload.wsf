@@ -28,7 +28,7 @@
 // Requirements:
 //	Installed "WinSCP 5.x" and "WinSCP 5.x .NET assembly/COM library" - http://winscp.net/eng/download.php
 
-var local_snapshots = "C:\\Projects\\Shareaza\\Snapshots\\";
+var local_snapshots = "C:\\Projects\\Shareaza\\Releases\\Snapshots\\";
 var remote_snapshots = "/home/pfs/project/s/sh/shareaza/Shareaza/Snapshots/";
 var max_snapshots = 10;
 var remote_index = "/home/project-web/s/sh/shareaza/htdocs/builds";

@@ -1,5 +1,6 @@
 @echo off
 del /q ".\setup\builds\*.exe" 2>nul:
+del /q ".\setup\builds\*.7z" 2>nul:
 del /q ".\setup\builds\*.iss" 2>nul:
 del /q ".\setup\builds\*.txt" 2>nul:
 for /r %%i in (*.aps) do del /q "%%i" && echo Cleaning %%i...
