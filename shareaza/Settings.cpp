@@ -120,7 +120,7 @@ void CSettings::Load()
 
 	Add( _T("VersionCheck"), _T("NextCheck"), &VersionCheck.NextCheck, 0 );
 	Add( _T("VersionCheck"), _T("Quote"), &VersionCheck.Quote );
-	Add( _T("VersionCheck"), _T("UpdateCheck"), &VersionCheck.UpdateCheck, true );
+	Add( _T("VersionCheck"), _T("UpdateCheck"), &VersionCheck.UpdateCheck, false );
 	Add( _T("VersionCheck"), _T("UpdateCheckURL"), &VersionCheck.UpdateCheckURL, WEB_SITE_T _T("version/") );
 	Add( _T("VersionCheck"), _T("UpgradeFile"), &VersionCheck.UpgradeFile );
 	Add( _T("VersionCheck"), _T("UpgradePrompt"), &VersionCheck.UpgradePrompt );
@@ -503,7 +503,7 @@ void CSettings::Load()
 	Add( _T("Downloads"), _T("MaxTransfers"), &Downloads.MaxTransfers, 100, 1, 1, 250 );
 	Add( _T("Downloads"), _T("Metadata"), &Downloads.Metadata, true );
 	Add( _T("Downloads"), _T("MediaBuffer"), &Downloads.MediaBuffer, 20*1000, 1000, 0, 180, _T(" s")  );
-	Add( _T("Downloads"), _T("MinSources"), &Downloads.MinSources, 1, 1, 0, 6 );
+	Add( _T("Downloads"), _T("MinSources"), &Downloads.MinSources, 3, 1, 0, 6 );
 	Add( _T("Downloads"), _T("NeverDrop"), &Downloads.NeverDrop, false );
 	Add( _T("Downloads"), _T("PushTimeout"), &Downloads.PushTimeout, 45*1000, 1000, 5, 180, _T(" s") );
 	Add( _T("Downloads"), _T("QueueLimit"), &Downloads.QueueLimit, 0, 1, 0, 20000 );
