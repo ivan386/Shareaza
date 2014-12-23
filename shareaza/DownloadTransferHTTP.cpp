@@ -221,7 +221,7 @@ BOOL CDownloadTransferHTTP::StartNextFragment()
 		return SendRequest();
 	}
 
-	if ( m_pDownload->NeedTigerTree() )
+	if ( m_pDownload->NeedTigerTree() && ( ! m_sTigerTree.IsEmpty() || _tcsistr( m_pSource->m_sURL, _T("?urn:") ) != NULL ) )
 	{
 		if ( m_sTigerTree.IsEmpty() && m_pDownload->m_oTiger && Settings.Downloads.VerifyTiger && ! m_bTigerIgnore )
 		{
