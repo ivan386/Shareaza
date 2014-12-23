@@ -975,16 +975,20 @@ BOOL CBTInfo::LoadTorrentTree(const CBENode* pRoot)
 
 		// Add sources from torrents - DWK
 		const CBENode* pSources = pRoot->GetNode( "sources" );
-		if( pSources && pSources->IsType( CBENode::beList ) )
-		{
-			int m_nSources = pSources->GetCount();
-			for( int nSource = 0 ; nSource < m_nSources; nSource++)
+		for (int i = 0; i<2; i++){
+			if( pSources && pSources->IsType( CBENode::beList ) )
 			{
-				CBENode* pSource = pSources->GetNode( nSource );
-				if( ! pSource || ! pSource->IsType(CBENode::beString) ) continue;
-				m_sURLs.AddTail( pSource->GetString() );
+				int m_nSources = pSources->GetCount();
+				for( int nSource = 0 ; nSource < m_nSources; nSource++)
+				{
+					CBENode* pSource = pSources->GetNode( nSource );
+					if( ! pSource || ! pSource->IsType(CBENode::beString) ) continue;
+					m_sURLs.AddTail( pSource->GetString() );
+				}
 			}
+			pSources = pRoot->GetNode( "url-list" );
 		}
+
 	}
 	else if ( const CBENode* pFiles = pInfo->GetNode( "files" ) )
 	{
