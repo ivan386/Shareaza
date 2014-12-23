@@ -39,7 +39,7 @@ public:
 	static BOOL	SetClipboardText(CString& strText);
 
 	// Gathers more information about file (including trackers list)
-	static void Resolve(CShareazaFile& pFile, CString& sTracker);
+	static void Resolve(CShareazaFile& pFile, CString& sTracker, CString& sWebSeed);
 
 	// Gathers more information about file (including trackers list) and returns magnet-link
 	static CString CreateMagnet(CShareazaFile& pFile);
