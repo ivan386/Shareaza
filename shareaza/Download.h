@@ -1,7 +1,7 @@
 //
 // Download.h
 //
-// Copyright (c) Shareaza Development Team, 2002-2013.
+// Copyright (c) Shareaza Development Team, 2002-2014.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -65,9 +65,13 @@ private:
 	bool		m_bDownloading;	// This is used to store if a download is downloading. (Performance tweak)
 								// You should count the transfers if you need a 100% current answer.
 	CDownloadTask	m_pTask;
+	bool		m_bStableName;	// Download has a stable name
 
 // Operations
 public:
+	bool		HasStableName() const;		// Download has a stable name
+	void		SetStableName(bool bStable = true);
+
 	void		Pause(BOOL bRealPause = TRUE);
 	void		Resume();
 	void		Remove();
@@ -108,6 +112,9 @@ private:
 
 // Overrides
 public:
+	// Set download new size
+	virtual bool	Resize(QWORD nNewSize);
+
 	// Return currently running task
 	virtual dtask	GetTaskType() const;
 

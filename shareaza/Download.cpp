@@ -66,7 +66,9 @@ CDownload::CDownload() :
 ,	m_tSaved		( 0 )
 ,	m_tBegan		( 0 )
 ,	m_bDownloading	( false )
+#pragma warning(suppress:4355) // 'this' : used in base member initializer list
 ,	m_pTask			( this )
+,	m_bStableName	( false )
 {
 }
 
@@ -74,6 +76,16 @@ CDownload::~CDownload()
 {
 	AbortTask();
 	DownloadGroups.Unlink( this );
+}
+
+bool CDownload::HasStableName() const
+{
+	return ! m_sName.IsEmpty() && ( m_bStableName || HasHash() );
+}
+
+void CDownload::SetStableName(bool bStable)
+{
+	m_bStableName = bStable;
 }
 
 float CDownload::GetProgress() const
@@ -393,18 +405,15 @@ CString CDownload::GetDownloadStatus() const
 	
 		if ( nTime == 0xFFFFFFFF )
 			LoadString( strText, IDS_STATUS_ACTIVE );
+		else if ( nTime == 0 )
+			LoadString( strText, IDS_STATUS_DOWNLOADING );
+		else if ( nTime > 86400 )
+			strText.Format( _T("%u:%.2u:%.2u:%.2u"), nTime / 86400, ( nTime / 3600 ) % 24, ( nTime / 60 ) % 60, nTime % 60 );
 		else
-		{
-			if ( nTime > 86400 )
-				strText.Format( _T("%u:%.2u:%.2u:%.2u"), nTime / 86400, ( nTime / 3600 ) % 24, ( nTime / 60 ) % 60, nTime % 60 );
-			else
-				strText.Format( _T("%u:%.2u:%.2u"), nTime / 3600, ( nTime / 60 ) % 60, nTime % 60 );
-		}
+			strText.Format( _T("%u:%.2u:%.2u"), nTime / 3600, ( nTime / 60 ) % 60, nTime % 60 );
 	}
 	else if ( ! IsTrying() )
 		LoadString( strText, IDS_STATUS_QUEUED );
-	else if ( IsDownloading() )
-		LoadString( strText, IDS_STATUS_DOWNLOADING );
 	else if ( nSources > 0 )
 		LoadString( strText, IDS_STATUS_PENDING );
 	else if ( IsTorrent() )
@@ -514,8 +523,7 @@ void CDownload::OnRun()
 			}	//End of 'dead download' check
 
 			// Run the download
-			if ( ! IsTorrent() || RunTorrent( tNow ) )
-			{
+			RunTorrent( tNow );
 				RunSearch( tNow );
 				RunValidation();
 
@@ -543,7 +551,6 @@ void CDownload::OnRun()
 						}
 					}
 				}
-			} // if ( RunTorrent( tNow ) )
 
 			// Calculate the current downloading state
 			if ( HasActiveTransfers() )
@@ -660,9 +667,11 @@ void CDownload::OnMoved()
 BOOL CDownload::OpenDownload()
 {
 	if ( m_sName.IsEmpty() )
+		// Download has no name yet, postponing
 		return TRUE;
 
 	if ( IsFileOpen() )
+		// Already opened
 		return TRUE;
 
 	SetModified();
@@ -934,6 +943,14 @@ BOOL CDownload::OnVerify(const CLibraryFile* pFile, TRISTATE bVerified)
 			m_oED2K = pFile->m_oED2K;
 		if ( ! m_oMD5 && pFile->m_oMD5 )
 			m_oMD5 = pFile->m_oMD5;
+
+		// Auto-start for certain file extensions
+		const CString strExt = PathFindExtension( pFile->GetPath() );
+		if ( strExt.CompareNoCase( _T(".torrent") ) == 0 )
+		{
+			theApp.Message( MSG_DEBUG, _T("Auto-starting torrent file: %s"), pFile->GetPath() );
+			theApp.OpenTorrent( pFile->GetPath(), TRUE );
+	}
 	}
 
 	return TRUE;
@@ -1131,4 +1148,33 @@ BOOL CDownload::Enqueue(int nIndex, CSingleLock* pLock)
 	}
 
 	return bResult;
+}
+
+bool CDownload::Resize(QWORD nNewSize)
+{
+	if ( m_nSize == nNewSize )
+		return false;
+
+	// Check for possible change to multi-file download
+	if ( ! m_oSHA1 && ! m_oTiger && ! m_oED2K && ! m_oMD5 && ( m_oBTH || IsTorrent() ) && IsFileOpen() )
+	{
+		auto_ptr< CFragmentedFile > pFragmentedFile( new CFragmentedFile );
+
+		if ( ! pFragmentedFile.get() )
+			// Out of memory
+			return false;
+		
+		// Remove old file
+		AbortTask();
+		ClearVerification();
+		CloseFile();
+		DeleteFile();
+
+		// Create a fresh one
+		AttachFile( pFragmentedFile );
+	}
+
+	SetSize( nNewSize );
+
+	return true;
 }

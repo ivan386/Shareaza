@@ -1,7 +1,7 @@
 //
 // DownloadBase.h
 //
-// Copyright (c) Shareaza Development Team, 2002-2013.
+// Copyright (c) Shareaza Development Team, 2002-2014.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -45,6 +45,9 @@ public:
 
 	// Set download new (and safe) name
 	virtual bool	Rename(const CString& strName) = 0;
+
+	// Set download new size
+	virtual bool	Resize(QWORD nNewSize) = 0;
 
 	// Return currently running task
 	virtual dtask	GetTaskType() const = 0;

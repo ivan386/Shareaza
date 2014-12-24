@@ -1,6 +1,6 @@
-// rev.9444M
+// rev.9507M
 
 #pragma once
 
-#define __REVISION__		"9444M"
-#define __REVISION_DATE__	"2014/06/18 18:07:35"
+#define __REVISION__		"9507M"
+#define __REVISION_DATE__	"2014/10/11 11:32:21"
