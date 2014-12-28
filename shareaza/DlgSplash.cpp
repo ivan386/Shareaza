@@ -50,6 +50,7 @@ END_MESSAGE_MAP()
 #define SPLASH_WIDTH		528
 #define SPLASH_HEIGHT		236
 
+CBitmap CSplashDlg::m_bmSplash;
 
 /////////////////////////////////////////////////////////////////////////////
 // CSplashDlg construction
@@ -87,7 +88,8 @@ BOOL CSplashDlg::OnInitDialog()
 
 	CClientDC dcScreen( this );
 
-	m_bmSplash.Attach( CImageFile::LoadBitmapFromFile( Settings.General.Path + L"\\Data\\Splash.png" ) );
+	if ( ! m_bmSplash.m_hObject )
+		m_bmSplash.Attach( CImageFile::LoadBitmapFromFile( Settings.General.Path + L"\\Data\\Splash.png" ) );
 
 	m_bmBuffer.CreateCompatibleBitmap( &dcScreen, SPLASH_WIDTH, SPLASH_HEIGHT );
 	m_dcBuffer1.CreateCompatibleDC( &dcScreen );
