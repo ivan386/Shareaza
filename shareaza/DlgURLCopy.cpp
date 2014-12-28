@@ -1,7 +1,7 @@
 //
 // DlgURLCopy.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2013.
+// Copyright (c) Shareaza Development Team, 2002-2014.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -89,7 +89,7 @@ BOOL CURLCopyDlg::OnInitDialog()
 	return TRUE;
 }
 
-void CURLCopyDlg::Resolve(CShareazaFile& pFile, CString& sTracker)
+void CURLCopyDlg::Resolve(CShareazaFile& pFile, CString& sTracker, CString& sWebSeed)
 {
 	// Use contents of .torrent-file instead of file itself
 	CBTInfo pTorrent;
@@ -104,6 +104,13 @@ void CURLCopyDlg::Resolve(CShareazaFile& pFile, CString& sTracker)
 		{
 			if ( sTracker.GetLength() ) sTracker += _T("&");
 			sTracker += _T("tr=") + URLEncode( pTorrent.GetTrackerAddress( i ) );
+		}
+
+		// Get Web-seeds
+		for ( POSITION pos = pTorrent.m_sURLs.GetHeadPosition(); pos; )
+		{
+			if ( sWebSeed.GetLength() ) sWebSeed += _T("&");
+			sWebSeed += _T("ws=") + URLEncode( pTorrent.m_sURLs.GetNext( pos ) );
 		}
 	}
 
@@ -156,9 +163,9 @@ void CURLCopyDlg::Resolve(CShareazaFile& pFile, CString& sTracker)
 
 CString CURLCopyDlg::CreateMagnet(CShareazaFile& pFile)
 {
-	CString strURN, sTracker;
+	CString strURN, sTracker, sWebSeed;
 
-	Resolve( pFile, sTracker );
+	Resolve( pFile, sTracker, sWebSeed );
 	
 	if ( pFile.m_oTiger && pFile.m_oSHA1 )
 	{
@@ -213,6 +220,12 @@ CString CURLCopyDlg::CreateMagnet(CShareazaFile& pFile)
 	{
 		if ( sMagnet.GetLength() ) sMagnet += _T("&");
 		sMagnet += sTracker;
+	}
+
+	if ( sWebSeed.GetLength() )
+	{
+		if ( sMagnet.GetLength() ) sMagnet += _T("&");
+		sMagnet += sWebSeed;
 	}
 
 	sMagnet = _T("magnet:?") + sMagnet;

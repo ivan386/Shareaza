@@ -999,15 +999,33 @@ BOOL CBTInfo::LoadTorrentTree(const CBENode* pRoot)
 		m_pFiles.AddTail( pBTFile.Detach() );
 
 		// Add sources from torrents - DWK
-		const CBENode* pSources = pRoot->GetNode( "sources" );
-		if( pSources && pSources->IsType( CBENode::beList ) )
+		if ( const CBENode* pSources = pRoot->GetNode( "sources" ) )
 		{
-			int m_nSources = pSources->GetCount();
-			for( int nSource = 0 ; nSource < m_nSources; nSource++)
+			if( pSources->IsType( CBENode::beList ) )
 			{
-				CBENode* pSource = pSources->GetNode( nSource );
-				if( ! pSource || ! pSource->IsType(CBENode::beString) ) continue;
-				m_sURLs.AddTail( pSource->GetString() );
+				const int nSources = pSources->GetCount();
+				for ( int nSource = 0 ; nSource < nSources; ++nSource )
+				{
+					if ( const CBENode* pSource = pSources->GetNode( nSource ) )
+						if( pSource->IsType(CBENode::beString) )
+							m_sURLs.AddTail( pSource->GetString() );
+				}
+			}
+		}
+		
+		// BEP 19 : WebSeed - HTTP/FTP Seeding (GetRight style) : http://bittorrent.org/beps/bep_0019.html
+		// TODO: Support multi-file torrents
+		if ( const CBENode* pUrlList = pRoot->GetNode( "url-list" ) )
+		{
+			if ( pUrlList->IsType( CBENode::beList ) )
+			{
+				const int nUrls = pUrlList->GetCount();
+				for ( int nUrl = 0; nUrl < nUrls; ++nUrl )
+				{
+					if ( const CBENode* pUrl = pUrlList->GetNode( nUrl ) )
+						if ( pUrl->IsType( CBENode::beString ) )
+							m_sURLs.AddTail( pUrl->GetString() );
+				}
 			}
 		}
 	}
