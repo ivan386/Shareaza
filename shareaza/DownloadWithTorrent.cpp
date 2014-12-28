@@ -273,6 +273,26 @@ void CDownloadWithTorrent::Serialize(CArchive& ar, int nVersion)
 	}
 }
 
+//////////////////////////////////////////////////////////////////////
+// CDownloadWithTorrent submit data
+
+BOOL CDownloadWithTorrent::SubmitData(QWORD nOffset, LPBYTE pData, QWORD nLength)
+{
+	if ( IsTorrent() )
+	{
+		CSingleLock oLock( &Transfers.m_pSection );
+		if ( oLock.Lock( 250 ) )
+		{
+			for ( CDownloadTransfer* pTransfer = GetFirstTransfer() ; pTransfer ; pTransfer = pTransfer->m_pDlNext )
+			{
+				if ( pTransfer->m_nProtocol == PROTOCOL_BT )
+					pTransfer->UnrequestRange( nOffset, nLength );
+			}
+		}
+	}
+
+	return CDownloadWithFile::SubmitData( nOffset, pData, nLength );
+}
 
 //////////////////////////////////////////////////////////////////////
 // CDownloadWithTorrent set torrent
@@ -367,10 +387,10 @@ BOOL CDownloadWithTorrent::SetTorrent(const CBTInfo* pTorrent)
 //////////////////////////////////////////////////////////////////////
 // CDownloadWithTorrent run
 
-bool CDownloadWithTorrent::RunTorrent(DWORD tNow)
+void CDownloadWithTorrent::RunTorrent(DWORD tNow)
 {
-	if ( !Network.IsConnected() || !Settings.BitTorrent.EnableToday )
-		return true;
+	if ( ! IsTorrent() || ! Network.IsConnected() || ! Settings.BitTorrent.EnableToday )
+		return;
 
 	// Choke torrents every 10 seconds
 	if ( tNow > m_tTorrentChoke && tNow - m_tTorrentChoke >= 10000ul )
@@ -405,8 +425,7 @@ bool CDownloadWithTorrent::RunTorrent(DWORD tNow)
 			SendStarted( nSourcesWanted );
 		}
 
-		// Report that the torrent checks have run successfully
-		return true;
+		return;
 	}
 
 	// Store if this is a regular update or not
@@ -454,8 +473,7 @@ bool CDownloadWithTorrent::RunTorrent(DWORD tNow)
 		}
 	}
 
-	// Report that the torrent checks have run successfully
-	return true;
+	return;
 }
 
 //////////////////////////////////////////////////////////////////////
@@ -596,7 +614,7 @@ void CDownloadWithTorrent::OnTrackerEvent(bool bSuccess, LPCTSTR pszReason, LPCT
 		m_pTorrent.SetTrackerSucceeded( tNow );
 
 		// Get new sources
-		for ( POSITION pos = pEvent->GetSources(); pos && GetEffectiveSourceCount() < Settings.Downloads.SourcesWanted; )
+		for ( POSITION pos = pEvent->GetSources(); pos; )
 		{
 			const CBTTrackerSource& pSource = pEvent->GetNextSource( pos );
 			AddSourceBT( pSource.m_pPeerID, &pSource.m_pAddress.sin_addr, ntohs( pSource.m_pAddress.sin_port ) );

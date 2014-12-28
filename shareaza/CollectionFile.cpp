@@ -477,6 +477,7 @@ CXMLElement* CCollectionFile::CloneMetadata(CXMLElement* pMetadata)
 
 void CCollectionFile::Render(CBuffer& strBuffer) const
 {
+	strBuffer.EnsureBuffer( GetFileCount() * 128 + 256 );
 
 	CString sHead;
 

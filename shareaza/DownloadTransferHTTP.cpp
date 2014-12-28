@@ -89,8 +89,13 @@ BOOL CDownloadTransferHTTP::Initiate()
 	theApp.Message( MSG_INFO, IDS_DOWNLOAD_CONNECTING,
 		(LPCTSTR)CString( inet_ntoa( m_pSource->m_pAddress ) ), m_pSource->m_nPort,
 		(LPCTSTR)m_pDownload->GetDisplayName() );
-	
-	if ( ConnectTo( &m_pSource->m_pAddress, m_pSource->m_nPort ) )
+
+	if ( m_pDownload->IsCompleted() )
+	{
+		m_pDownload->RemoveSource( m_pSource, FALSE );
+		return FALSE;
+	}
+	else if ( ConnectTo( &m_pSource->m_pAddress, m_pSource->m_nPort ) )
 	{
 		SetState( dtsConnecting );
 		

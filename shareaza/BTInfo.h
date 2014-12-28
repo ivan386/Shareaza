@@ -1,7 +1,7 @@
 //
 // BTInfo.h
 //
-// Copyright (c) Shareaza Development Team, 2002-2012.
+// Copyright (c) Shareaza Development Team, 2002-2014.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -126,11 +126,11 @@ private:
 	DWORD		m_nInfoStart;
 	DWORD		m_nInfoSize;
 
-	void		Clear();
 	BOOL		CheckFiles();
 
 // Operations
 public:
+	void		Clear();
 	void		Serialize(CArchive& ar);
 
 	BOOL		LoadInfoPiece(BYTE *pPiece, DWORD nPieceSize, DWORD nInfoSize, DWORD nInfoPiece);
