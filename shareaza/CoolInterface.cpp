@@ -1,7 +1,7 @@
 //
 // CoolInterface.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2010.
+// Copyright (c) Shareaza Development Team, 2002-2014.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -121,10 +121,15 @@ void CCoolInterface::NameCommand(UINT nID, LPCTSTR pszName)
 
 UINT CCoolInterface::NameToID(LPCTSTR pszName) const
 {
+	if ( ! pszName || ! *pszName )
+		return 0;
+
 	CQuickLock oLock( m_pSection );
 
 	UINT nID = 0;
-	if ( m_pNameMap.Lookup( pszName, nID ) ) return nID;
+	if ( m_pNameMap.Lookup( pszName, nID ) )
+		return nID;
+
 	return _tcstoul( pszName, NULL, 10 );
 }
 

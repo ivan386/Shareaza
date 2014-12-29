@@ -176,6 +176,7 @@ void CBuffer::Attach(CBuffer* pBuffer)
 	SetTo( pBuffer->m_pMBlock, pBuffer->m_nMBlock );
 	m_nLength = pBuffer->m_nLength;
 	m_nRemoved = pBuffer->m_nRemoved;
+	m_pBuffer = m_pMBlock + m_nRemoved;
 
 	pBuffer->m_pMBlock = pBuffer->m_pBuffer = NULL;
 	pBuffer->m_nMBlock = pBuffer->m_nLength = 0;

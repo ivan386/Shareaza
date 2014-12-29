@@ -216,15 +216,16 @@ CShareazaApp::CShareazaApp() :
 ,	m_hShlWapi				( NULL )
 ,	m_pfnAssocIsDangerous	( NULL )
 
-,	m_hShell32				( NULL )
-,	m_pfnSHGetFolderPathW	( NULL )
-,	m_pfnSHGetKnownFolderPath( NULL )
-,	m_pfnSHCreateItemFromParsingName( NULL )
+,	m_hShell32									( NULL )
+,	m_pfnSHGetFolderPathW						( NULL )
+,	m_pfnSHGetKnownFolderPath					( NULL )
+,	m_pfnSHCreateItemFromParsingName			( NULL )
+,	m_pfnSHGetPropertyStoreFromParsingName		( NULL )
 ,	m_pfnSetCurrentProcessExplicitAppUserModelID( NULL )
-,	m_pfnSHGetImageList		( NULL )
+,	m_pfnSHGetImageList							( NULL )
 
-,	m_hUser32				( NULL )
-,	m_pfnChangeWindowMessageFilter( NULL )
+,	m_hUser32									( NULL )
+,	m_pfnChangeWindowMessageFilter				( NULL )
 
 ,	m_hGeoIP				( NULL )
 ,	m_pGeoIP				( NULL )
@@ -1136,6 +1137,7 @@ void CShareazaApp::InitResources()
 		(FARPROC&)m_pfnSHGetFolderPathW = GetProcAddress( m_hShell32, "SHGetFolderPathW" );
 		(FARPROC&)m_pfnSHGetKnownFolderPath = GetProcAddress( m_hShell32, "SHGetKnownFolderPath" );
 		(FARPROC&)m_pfnSHCreateItemFromParsingName = GetProcAddress( m_hShell32, "SHCreateItemFromParsingName" );
+		(FARPROC&)m_pfnSHGetPropertyStoreFromParsingName  = GetProcAddress( m_hShell32, "SHGetPropertyStoreFromParsingName" );
 		(FARPROC&)m_pfnSetCurrentProcessExplicitAppUserModelID = GetProcAddress( m_hShell32, "SetCurrentProcessExplicitAppUserModelID" );
 		(FARPROC&)m_pfnSHGetImageList = GetProcAddress( m_hShell32, MAKEINTRESOURCEA(727) );
 	}
@@ -2182,8 +2184,7 @@ CString CShareazaApp::GetWindowsFolder() const
 	if ( m_pfnSHGetKnownFolderPath )
 	{
 		PWSTR pPath = NULL;
-		hr = m_pfnSHGetKnownFolderPath( FOLDERID_Windows,
-			KF_FLAG_CREATE | KF_FLAG_INIT, NULL, &pPath );
+		hr = m_pfnSHGetKnownFolderPath( FOLDERID_Windows, KF_FLAG_DONT_VERIFY, NULL, &pPath );
 		if ( pPath )
 		{
 			sWindows = pPath;
@@ -2198,8 +2199,7 @@ CString CShareazaApp::GetWindowsFolder() const
 	// Win2K/XP way
 	if ( m_pfnSHGetFolderPathW )
 	{
-		hr = m_pfnSHGetFolderPathW( NULL, CSIDL_WINDOWS, NULL, NULL,
-			sWindows.GetBuffer( MAX_PATH ) );
+		hr = m_pfnSHGetFolderPathW( NULL, CSIDL_WINDOWS, NULL, NULL, sWindows.GetBuffer( MAX_PATH ) );
 		sWindows.ReleaseBuffer();
 		if ( SUCCEEDED( hr  ) && ! sWindows.IsEmpty() )
 		{
@@ -2213,6 +2213,40 @@ CString CShareazaApp::GetWindowsFolder() const
 	return sWindows;
 }
 
+CString CShareazaApp::GetProgramFilesFolder64() const
+{
+	HRESULT hr;
+	CString sProgramFiles;
+
+	// 64-bit way
+	if ( m_pfnSHGetKnownFolderPath )
+	{
+		PWSTR pPath = NULL;
+		hr = m_pfnSHGetKnownFolderPath( FOLDERID_ProgramFilesX64, KF_FLAG_DONT_VERIFY, NULL, &pPath );
+		if ( pPath )
+		{
+			sProgramFiles = pPath;
+			CoTaskMemFree( pPath );
+		}
+		if ( SUCCEEDED( hr ) && ! sProgramFiles.IsEmpty() )
+		{
+			return sProgramFiles;
+		}
+	}
+
+	// 32-bit way
+	DWORD nRes = ExpandEnvironmentStrings( _T("%ProgramW6432%"), sProgramFiles.GetBuffer( MAX_PATH ), MAX_PATH );
+	sProgramFiles.ReleaseBuffer( nRes );
+	sProgramFiles.Trim();
+	sProgramFiles.TrimRight( _T( "\\" ) );
+	if ( ! sProgramFiles.IsEmpty() )
+	{
+		return sProgramFiles;
+	}
+
+	return GetProgramFilesFolder();
+}
+
 CString CShareazaApp::GetProgramFilesFolder() const
 {
 	HRESULT hr;
@@ -2222,8 +2256,7 @@ CString CShareazaApp::GetProgramFilesFolder() const
 	if ( m_pfnSHGetKnownFolderPath )
 	{
 		PWSTR pPath = NULL;
-		hr = m_pfnSHGetKnownFolderPath( FOLDERID_ProgramFiles,
-			KF_FLAG_CREATE | KF_FLAG_INIT, NULL, &pPath );
+		hr = m_pfnSHGetKnownFolderPath( FOLDERID_ProgramFilesX86, KF_FLAG_DONT_VERIFY, NULL, &pPath );
 		if ( pPath )
 		{
 			sProgramFiles = pPath;
@@ -2238,8 +2271,7 @@ CString CShareazaApp::GetProgramFilesFolder() const
 	// Win2K/XP way
 	if ( m_pfnSHGetFolderPathW )
 	{
-		hr = m_pfnSHGetFolderPathW( NULL, CSIDL_PROGRAM_FILES, NULL, NULL,
-			sProgramFiles.GetBuffer( MAX_PATH ) );
+		hr = m_pfnSHGetFolderPathW( NULL, CSIDL_PROGRAM_FILES, NULL, NULL, sProgramFiles.GetBuffer( MAX_PATH ) );
 		sProgramFiles.ReleaseBuffer();
 		if ( SUCCEEDED( hr  ) && ! sProgramFiles.IsEmpty() )
 		{
@@ -2438,6 +2470,21 @@ CDatabase* CShareazaApp::GetDatabase() const
 	return new CDatabase( Settings.General.UserPath + _T("\\Data\\") CLIENT_NAME_T _T(".db3") );
 }
 
+BOOL CShareazaApp::GetPropertyStoreFromParsingName( LPCWSTR pszPath, IPropertyStore**ppv )
+{
+	if ( m_pfnSHGetPropertyStoreFromParsingName )
+	{
+		__try
+		{
+			return SUCCEEDED( m_pfnSHGetPropertyStoreFromParsingName( pszPath, NULL, GPS_BESTEFFORT, __uuidof( IPropertyStore ), (void**)ppv ) );
+		}
+		__except ( EXCEPTION_EXECUTE_HANDLER )
+		{
+		}
+	}
+	return FALSE;
+}
+
 CString SafeFilename(CString strName, bool bPath)
 {
 	// Restore spaces
@@ -2490,7 +2537,7 @@ BOOL CreateDirectory(LPCTSTR szPath)
 	
 void DeleteFiles(CStringList& pList)
 {
-	DWORD nTotal = pList.GetCount();
+	DWORD nTotal = (DWORD)pList.GetCount();
 
 	while ( ! pList.IsEmpty() )
 	{

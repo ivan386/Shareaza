@@ -595,8 +595,8 @@ BOOL CShareazaURL::ParseMagnet(LPCTSTR pszURL)
 
 		if ( strKey == _T("xt") ||	// "eXact Topic" (URN containing file hash)
 			 strKey == _T("xs") ||	// "eXact Source" (p2p link)
+			 strKey == _T("ws") ||	// "Web Seed" HTTP/FTP Seeding (GetRight style), BEP 19
 			 strKey == _T("as") ||	// "Acceptable Source" (web link to the online file)
-			 strKey == _T("ws") ||	// "WebSeed" (web link to the online file or folder/ for multifile-torrent) 
 			 strKey == _T("tr") )	// "TRacker address" (tracker URL for BitTorrent downloads)
 		{
 			if ( StartsWith( strValue, _PT("urn:") ) ||

@@ -1,7 +1,7 @@
 //
 // CtrlDownloadTip.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2012.
+// Copyright (c) Shareaza Development Team, 2002-2014.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -470,9 +470,7 @@ void CDownloadTipCtrl::OnPaint(CDC* pDC, CDownload* pDownload)
 		DrawText( pDC, &pt, strFormat, 3 );
 		DrawText( pDC, &pt, strETA, m_nStatWidth );
 		pt.y += TIP_TEXTHEIGHT;
-	}
-	if ( ! pDownload->IsSeeding() )
-	{	// Volume downloaded. Not for seeding torrents
+		// Volume downloaded. Not for seeding torrents
 		LoadString( strFormat, IDS_DLM_VOLUME_DOWNLOADED );
 		DrawText( pDC, &pt, strFormat, 3 );
 		DrawText( pDC, &pt, strVolume, m_nStatWidth );
@@ -705,7 +703,7 @@ void CDownloadTipCtrl::OnCalcSize(CDC* pDC, CDownloadSource* pSource)
 	m_nHeaders = 0;
 	if ( ! pSource->IsIdle() && Settings.General.GUIMode != GUI_BASIC )
 	{
-		m_nHeaders = pTransfer->m_pHeaderName.GetSize();
+		m_nHeaders = (int)pTransfer->m_pHeaderName.GetSize();
 		for ( int nHeader = 0 ; nHeader < m_nHeaders ; nHeader++ )
 		{
 			CString strName		= pTransfer->m_pHeaderName.GetAt( nHeader ) + _T(':');

@@ -1,7 +1,7 @@
 //
 // CtrlSearchDetailPanel.h
 //
-// Copyright (c) Shareaza Development Team, 2002-2012.
+// Copyright (c) Shareaza Development Team, 2002-2014.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -71,7 +71,7 @@ protected:
 	BOOL		RequestPreview();
 	void		CancelPreview();
 	void		OnRun();
-	BOOL		ExecuteRequest(CString strURL, BYTE** ppBuffer, DWORD* pnBuffer);
+	BOOL		ExecuteRequest(const CString& strURL, BYTE** ppBuffer, DWORD* pnBuffer);
     void		OnPreviewLoaded(const Hashes::Sha1Hash& oSHA1, CImageFile* pImage);
     BOOL		CachePreviewImage(const Hashes::Sha1Hash& oSHA1, LPBYTE pBuffer, DWORD nBuffer);
 	
@@ -99,7 +99,9 @@ protected:
 	CList< CString >	m_pPreviewURLs;
 	CBitmap				m_bmThumb;			// Thumbnail
 	CRect				m_rcThumb;			// Thumbnail rect used for mouse click detection
+	BOOL				m_bRedraw;
 
+	afx_msg int  OnCreate(LPCREATESTRUCT lpCreateStruct);
 	afx_msg void OnDestroy();
 	afx_msg void OnVScroll(UINT nSBCode, UINT nPos, CScrollBar* pScrollBar);
 	afx_msg BOOL OnMouseWheel(UINT nFlags, short zDelta, CPoint pt);
@@ -108,6 +110,7 @@ protected:
 	afx_msg BOOL OnSetCursor(CWnd* pWnd, UINT nHitTest, UINT message);
 	afx_msg void OnLButtonUp(UINT nFlags, CPoint point);
 	afx_msg void OnClickReview(NMHDR* pNotify, LRESULT *pResult);
+	afx_msg void OnTimer(UINT_PTR nIDEvent);
 
 	DECLARE_MESSAGE_MAP()
 };

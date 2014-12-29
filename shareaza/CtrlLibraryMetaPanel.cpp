@@ -1,7 +1,7 @@
 //
 // CtrlLibraryMetaPanel.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2012.
+// Copyright (c) Shareaza Development Team, 2002-2014.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -54,15 +54,17 @@ BEGIN_MESSAGE_MAP(CLibraryMetaPanel, CPanelCtrl)
 	ON_WM_SETCURSOR()
 	ON_WM_LBUTTONUP()
 	ON_WM_LBUTTONDOWN()
+	ON_WM_TIMER()
 END_MESSAGE_MAP()
 
 /////////////////////////////////////////////////////////////////////////////
 // CLibraryMetaPanel construction
 
 CLibraryMetaPanel::CLibraryMetaPanel()
-:	m_pMetadata( new CMetaList() )
-,	m_pServiceData( NULL )
-,	m_bForceUpdate( FALSE )
+	: m_pMetadata	( new CMetaList() )
+	, m_pServiceData( NULL )
+	, m_bForceUpdate( FALSE )
+	, m_bRedraw		( TRUE )
 {
 	m_rcFolder.SetRectEmpty();
 }
@@ -234,10 +236,7 @@ void CLibraryMetaPanel::Update()
 		}
 	}
 
-	pLock2.Unlock();
-	pLock1.Unlock();
-
-	Invalidate();
+	m_bRedraw = TRUE;
 }
 
 /////////////////////////////////////////////////////////////////////////////
@@ -247,11 +246,15 @@ int CLibraryMetaPanel::OnCreate(LPCREATESTRUCT lpCreateStruct)
 {
 	if ( CPanelCtrl::OnCreate( lpCreateStruct ) == -1 ) return -1;
 
+	SetTimer( 1, 500, NULL );
+
 	return 0;
 }
 
 void CLibraryMetaPanel::OnDestroy()
 {
+	KillTimer( 1 );
+
 	CloseThread();
 
 	CPanelCtrl::OnDestroy();
@@ -512,6 +515,21 @@ void CLibraryMetaPanel::OnLButtonDown(UINT /*nFlags*/, CPoint /*point*/)
 	pFrame->HideDynamicBar();
 }
 
+void CLibraryMetaPanel::OnTimer(UINT_PTR nIDEvent)
+{
+	CPanelCtrl::OnTimer( nIDEvent );
+
+	{
+		CQuickLock pLock( m_pSection );
+		if ( ! m_bRedraw )
+			return;
+		m_bRedraw = FALSE;
+	}
+
+	Invalidate();
+	UpdateWindow();
+}
+
 /////////////////////////////////////////////////////////////////////////////
 // CLibraryMetaPanel thread run
 
@@ -544,11 +562,11 @@ void CLibraryMetaPanel::OnRun()
 				m_bmThumb.Attach( pFile.CreateBitmap() );
 			}
 
-			Invalidate();
-
 			break;
 		}
 	}
+
+	m_bRedraw = TRUE;
 
 	m_pSection.Unlock();
 }

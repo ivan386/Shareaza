@@ -1,7 +1,7 @@
 //
 // CtrlLibraryDetailView.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2010.
+// Copyright (c) Shareaza Development Team, 2002-2014.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -344,8 +344,11 @@ void CLibraryDetailView::Update()
 			{
 				m_nBuffer += 64;
 				LDVITEM* pList = new LDVITEM[ m_nBuffer ];
-				if ( m_nList ) CopyMemory( pList, m_pList, m_nList * sizeof(LDVITEM) );
-				if ( m_pList ) delete [] m_pList;
+				if ( m_pList )
+				{
+					if ( m_nList ) CopyMemory( pList, m_pList, m_nList * sizeof(LDVITEM) );
+					delete [] m_pList;
+				}
 				ZeroMemory( pList + m_nList, ( m_nBuffer - m_nList ) * sizeof(LDVITEM) );
 				m_pList = pList;
 			}
@@ -875,7 +878,7 @@ void CLibraryDetailView::OnEndLabelEditA(NMHDR* pNotify, LRESULT* pResult)
 
 void CLibraryDetailView::OnFindItemW(NMHDR* pNotify, LRESULT* pResult)
 {
-	CW2T pszFind( (LPCWSTR)((NMLVFINDITEM*) pNotify)->lvfi.psz );
+	CString sFind( (LPCWSTR)((NMLVFINDITEM*) pNotify)->lvfi.psz );
 
 	GET_LIST();
 	CQuickLock oLock( Library.m_pSection );
@@ -888,7 +891,7 @@ void CLibraryDetailView::OnFindItemW(NMHDR* pNotify, LRESULT* pResult)
 			{
 				if ( ((NMLVFINDITEM*) pNotify)->lvfi.flags & LVFI_STRING )
 				{
-					if ( _tcsnicmp( (LPCTSTR)pszFind, pFile->m_sName, _tcslen( (LPCTSTR)pszFind ) ) == 0 )
+					if ( _tcsnicmp( sFind, pFile->m_sName, sFind.GetLength() ) == 0 )
 					{
 						*pResult = nItem;
 						return;
