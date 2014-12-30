@@ -1,7 +1,7 @@
 //
 // TransferFile.h
 //
-// Copyright (c) Shareaza Development Team, 2002-2009.
+// Copyright (c) Shareaza Development Team, 2002-2014.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -65,7 +65,7 @@ public:
 
 	inline BOOL	IsOpen() const throw()
 	{
-		return ( m_hFile != INVALID_HANDLE_VALUE );
+		return ( m_hFile != INVALID_HANDLE_VALUE ) || IsFolder();
 	}
 
 	inline BOOL	IsExists() const throw()
@@ -76,6 +76,11 @@ public:
 	inline BOOL	IsWritable() const throw()
 	{
 		return m_bWrite;
+	}
+
+	inline BOOL	IsFolder() const throw()
+	{
+		return ( m_sPath.GetAt( m_sPath.GetLength() - 1 ) == _T( '\\' ) );
 	}
 
 protected:

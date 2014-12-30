@@ -1,7 +1,7 @@
 //
 // DlgURLCopy.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2013.
+// Copyright (c) Shareaza Development Team, 2002-2014.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -106,6 +106,7 @@ void CURLCopyDlg::Resolve(CShareazaFile& pFile, CString& sTracker, CString& sWeb
 			sTracker += _T("tr=") + URLEncode( pTorrent.GetTrackerAddress( i ) );
 		}
 
+		// Get Web-seeds
 		for ( POSITION pos = pTorrent.m_sURLs.GetHeadPosition(); pos; )
 		{
 			if ( sWebSeed.GetLength() ) sWebSeed += _T("&");

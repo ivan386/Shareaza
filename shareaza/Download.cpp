@@ -147,11 +147,12 @@ void CDownload::Pause(BOOL bRealPause)
 
 	theApp.Message( MSG_NOTICE, IDS_DOWNLOAD_PAUSED, GetDisplayName() );
 
-	StopTrying();
 	m_bTempPaused = TRUE;
 
 	if ( bRealPause )
 		m_bPaused = TRUE;
+
+	StopTrying();
 
 	SetModified();
 }
@@ -258,8 +259,6 @@ void CDownload::StopTrying()
 	if ( !IsTrying() || ( IsCompleted() && !IsSeeding() ) )
 		return;
 
-	Downloads.StopTrying( IsTorrent() );
-
 	m_tBegan = 0;
 	m_bDownloading = false;
 
@@ -287,7 +286,6 @@ void CDownload::StartTrying()
 	if ( !Network.IsConnected() && !Network.Connect( TRUE ) )
 		return;
 
-	Downloads.StartTrying( IsTorrent() );
 	m_tBegan = GetTickCount();
 	m_nCompletedAtBegan = GetVolumeComplete();
 }
@@ -555,6 +553,20 @@ void CDownload::OnRun()
 			// Calculate the current downloading state
 			if ( HasActiveTransfers() )
 				m_bDownloading = true;
+			
+			// Mutate regular download to torrent download
+			if ( Settings.BitTorrent.EnablePromote && m_oBTH && ! IsTorrent() )
+			{
+				m_pTorrent.Clear();
+				m_pTorrent.m_oMD5	= m_oMD5;
+				m_pTorrent.m_oBTH	= m_oBTH;
+				m_pTorrent.m_oSHA1	= m_oSHA1;
+				m_pTorrent.m_oED2K	= m_oED2K;
+				m_pTorrent.m_oTiger	= m_oTiger;
+				m_pTorrent.m_sName	= m_sName;
+				m_pTorrent.m_nSize	= m_nSize;
+				SetTorrent();
+			}
 		}
 		else if ( ! IsCompleted() && m_bVerify != TRI_TRUE )
 		{
@@ -683,7 +695,7 @@ BOOL CDownload::OpenDownload()
 	}
 	else
 	{
-		if ( Open() )
+		if ( Open( this ) )
 			return TRUE;
 	}
 
@@ -732,7 +744,7 @@ BOOL CDownload::SeedTorrent()
 		return FALSE;
 	}
 
-	AttachFile( pFragmentedFile );
+	AttachFile( pFragmentedFile.release() );
 
 	if ( IsSingleFileTorrent() )
 	{
@@ -1158,12 +1170,6 @@ bool CDownload::Resize(QWORD nNewSize)
 	// Check for possible change to multi-file download
 	if ( ! m_oSHA1 && ! m_oTiger && ! m_oED2K && ! m_oMD5 && ( m_oBTH || IsTorrent() ) && IsFileOpen() )
 	{
-		auto_ptr< CFragmentedFile > pFragmentedFile( new CFragmentedFile );
-
-		if ( ! pFragmentedFile.get() )
-			// Out of memory
-			return false;
-		
 		// Remove old file
 		AbortTask();
 		ClearVerification();
@@ -1171,7 +1177,7 @@ bool CDownload::Resize(QWORD nNewSize)
 		DeleteFile();
 
 		// Create a fresh one
-		AttachFile( pFragmentedFile );
+		AttachFile( new CFragmentedFile );
 	}
 
 	SetSize( nNewSize );
