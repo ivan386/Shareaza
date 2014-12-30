@@ -1,7 +1,7 @@
 //
 // DlgDownloadMonitor.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2012.
+// Copyright (c) Shareaza Development Team, 2002-2014.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -47,7 +47,6 @@ static char THIS_FILE[] = __FILE__;
 #endif
 
 BEGIN_MESSAGE_MAP(CDownloadMonitorDlg, CSkinDialog)
-	//{{AFX_MSG_MAP(CDownloadMonitorDlg)
 	ON_WM_PAINT()
 	ON_BN_CLICKED(IDC_DOWNLOAD_CANCEL, OnDownloadCancel)
 	ON_WM_DESTROY()
@@ -62,7 +61,6 @@ BEGIN_MESSAGE_MAP(CDownloadMonitorDlg, CSkinDialog)
 	ON_WM_INITMENUPOPUP()
 	ON_MESSAGE(WM_TRAY, OnTray)
 	ON_NOTIFY_EX(TTN_NEEDTEXT, 0, OnNeedText)
-	//}}AFX_MSG_MAP
 END_MESSAGE_MAP()
 
 CList< CDownloadMonitorDlg* > CDownloadMonitorDlg::m_pWindows;
@@ -71,15 +69,15 @@ CList< CDownloadMonitorDlg* > CDownloadMonitorDlg::m_pWindows;
 /////////////////////////////////////////////////////////////////////////////
 // CDownloadMonitorDlg dialog
 
-CDownloadMonitorDlg::CDownloadMonitorDlg(CDownload* pDownload) : CSkinDialog( CDownloadMonitorDlg::IDD, NULL )
+CDownloadMonitorDlg::CDownloadMonitorDlg(CDownload* pDownload)
+	: CSkinDialog	( CDownloadMonitorDlg::IDD, NULL )
+	, m_pDownload	( pDownload )
+	, m_sName		( pDownload->m_sName )
+	, m_pGraph		( NULL )
+	, m_bTray		( FALSE )
+	, m_bCompleted	( FALSE )
 {
-	//{{AFX_DATA_INIT(CDownloadMonitorDlg)
-	//}}AFX_DATA_INIT
-
-	m_pDownload		= pDownload;
-	m_pGraph		= NULL;
-	m_bTray			= FALSE;
-	m_bCompleted	= FALSE;
+	ASSUME_LOCK( Transfers.m_pSection );
 
 	CreateReal( IDD );
 
@@ -95,7 +93,7 @@ CDownloadMonitorDlg::~CDownloadMonitorDlg()
 void CDownloadMonitorDlg::DoDataExchange(CDataExchange* pDX)
 {
 	CSkinDialog::DoDataExchange( pDX );
-	//{{AFX_DATA_MAP(CDownloadMonitorDlg)
+
 	DDX_Control(pDX, IDC_DOWNLOAD_VOLUME, m_wndVolume);
 	DDX_Control(pDX, IDC_DOWNLOAD_CANCEL, m_wndCancel);
 	DDX_Control(pDX, IDC_DOWNLOAD_CLOSE, m_wndClose);
@@ -110,7 +108,6 @@ void CDownloadMonitorDlg::DoDataExchange(CDataExchange* pDX)
 	DDX_Control(pDX, IDC_DOWNLOAD_ICON, m_wndIcon);
 	DDX_Control(pDX, IDC_DOWNLOAD_GRAPH, m_wndGraph);
 	DDX_Control(pDX, IDC_DOWNLOAD_FILE, m_wndFile);
-	//}}AFX_DATA_MAP
 }
 
 /////////////////////////////////////////////////////////////////////////////
@@ -178,17 +175,8 @@ BOOL CDownloadMonitorDlg::OnInitDialog()
 	pMenu->InsertMenu( 0, MF_BYPOSITION|MF_SEPARATOR, ID_SEPARATOR );
 	pMenu->InsertMenu( 0, MF_BYPOSITION|MF_STRING, SC_NEXTWINDOW, _T("&Always on Top") );
 
-	CSingleLock pLock( &Transfers.m_pSection, TRUE );
-
-	if ( Downloads.Check( m_pDownload ) )
-	{
-		m_sName = m_pDownload->m_sName;
-		m_wndIcon.SetIcon( ShellIcons.ExtractIcon(
-			ShellIcons.Get( m_sName, 32 ), 32 ) );
-		m_wndFile.SetWindowText( m_sName );
-	}
-
-	pLock.Unlock();
+	m_wndIcon.SetIcon( ShellIcons.ExtractIcon( ShellIcons.Get( m_sName, 32 ), 32 ) );
+	m_wndFile.SetWindowText( m_sName );
 
 	m_pGraph	= new CLineGraph();
 	m_pItem		= new CGraphItem( 0, 1.0f, RGB( 0xFF, 0, 0 ) );
@@ -224,7 +212,7 @@ void CDownloadMonitorDlg::OnDestroy()
 		CSingleLock pLock( &Transfers.m_pSection );
 		if ( pLock.Lock( 250 ) )
 		{
-			if ( Downloads.Check( pDownload ) )
+			if ( Downloads.Check( pDownload ) && pDownload->m_pMonitorWnd == this )
 				pDownload->m_pMonitorWnd = NULL;
 		}
 	}
@@ -249,7 +237,7 @@ void CDownloadMonitorDlg::OnTimer(UINT_PTR /*nIDEvent*/)
 	CSingleLock pLock( &Transfers.m_pSection );
 	if ( ! pLock.Lock( 250 ) ) return;
 
-	if ( ! m_pDownload || ! Downloads.Check( m_pDownload ) )
+	if ( ! Downloads.Check( m_pDownload ) )
 	{
 		KillTimer( 1 );
 		PostMessage( WM_CLOSE );
@@ -312,8 +300,7 @@ void CDownloadMonitorDlg::OnTimer(UINT_PTR /*nIDEvent*/)
 		}
 		else
 		{
-			ShowWindow( SW_SHOWNORMAL );
-			SetForegroundWindow();
+			Show();
 		}
 
 		m_bCompleted = TRUE;
@@ -505,12 +492,10 @@ void CDownloadMonitorDlg::DrawProgressBar(CDC* pDC, CRect* pRect)
 	pDC->Draw3dRect( &rcCell, 0, 0 );
 	rcCell.DeflateRect( 1, 1 );
 
-	if ( Transfers.m_pSection.Lock( 50 ) )
-	{
-		if ( Downloads.Check( m_pDownload ) )
-			CFragmentBar::DrawDownload( pDC, &rcCell, m_pDownload, Skin.m_crDialog );
-		Transfers.m_pSection.Unlock();
-	}
+	CSingleLock pLock( &Transfers.m_pSection );
+	if ( ! pLock.Lock( 50 ) || ! Downloads.Check( m_pDownload ) ) return;
+
+	CFragmentBar::DrawDownload( pDC, &rcCell, m_pDownload, Skin.m_crDialog );
 }
 
 void CDownloadMonitorDlg::OnDownloadLaunch()
@@ -521,8 +506,6 @@ void CDownloadMonitorDlg::OnDownloadLaunch()
 	bool bComplete = m_pDownload->IsCompleted();
 
 	m_pDownload->Launch( -1, &pLock, FALSE );
-
-	pLock.Unlock();
 
 	if ( bComplete ) PostMessage( WM_CLOSE );
 }
@@ -561,7 +544,7 @@ void CDownloadMonitorDlg::OnDownloadStop()
 
 void CDownloadMonitorDlg::OnDownloadCancel()
 {
-	PostMessage( WM_CLOSE );
+	CloseToTray();
 }
 
 void CDownloadMonitorDlg::OnClose()
@@ -569,32 +552,63 @@ void CDownloadMonitorDlg::OnClose()
 	DestroyWindow();
 }
 
+void CDownloadMonitorDlg::Show()
+{
+	if ( m_bTray )
+		OpenFromTray();
+	else
+	{
+		ShowWindow( SW_SHOWNORMAL );
+		BringWindowToTop();
+		SetForegroundWindow();
+	}
+}
+
+void CDownloadMonitorDlg::CloseToTray()
+{
+	if ( m_bTray )
+		return;
+	m_bTray = TRUE;
+
+	m_pTray.cbSize				= sizeof(m_pTray);
+	m_pTray.hWnd				= GetSafeHwnd();
+	m_pTray.uID					= 0;
+	m_pTray.uFlags				= NIF_ICON | NIF_MESSAGE | NIF_TIP;
+	m_pTray.uCallbackMessage	= WM_TRAY;
+	m_pTray.hIcon				= CoolInterface.ExtractIcon( IDI_DOWNLOAD_MONITOR, FALSE );
+	_tcsncpy( m_pTray.szTip, Settings.SmartAgent(), _countof( m_pTray.szTip ) - 1 );
+	m_pTray.szTip[ _countof( m_pTray.szTip ) - 1 ] = _T('\0');
+	Shell_NotifyIcon( NIM_ADD, &m_pTray );
+
+	ShowWindow( SW_HIDE );
+}
+
+void CDownloadMonitorDlg::OpenFromTray()
+{
+	if ( ! m_bTray )
+		return;
+	m_bTray = FALSE;
+
+	Shell_NotifyIcon( NIM_DELETE, &m_pTray );
+
+	ShowWindow( SW_SHOWNORMAL );
+	BringWindowToTop();
+	SetForegroundWindow();
+}
+
 void CDownloadMonitorDlg::OnSysCommand(UINT nID, LPARAM lParam)
 {
 	UINT nCommand = nID & 0xFFF0;
 	BOOL bShift = GetAsyncKeyState( VK_SHIFT ) & 0x8000;
 
-	if ( nCommand == SC_MAXIMIZE || ( nCommand == SC_MINIMIZE && bShift ) )
+	if ( ( nCommand == SC_MAXIMIZE || ( nCommand == SC_MINIMIZE && bShift ) ) && ! m_bTray )
 	{
-		if ( ! m_bTray )
-		{
-			m_pTray.cbSize				= sizeof(m_pTray);
-			m_pTray.hWnd				= GetSafeHwnd();
-			m_pTray.uID					= 0;
-			m_pTray.uFlags				= NIF_ICON | NIF_MESSAGE | NIF_TIP;
-			m_pTray.uCallbackMessage	= WM_TRAY;
-			m_pTray.hIcon				= CoolInterface.ExtractIcon( IDI_DOWNLOAD_MONITOR, FALSE );
-			_tcsncpy( m_pTray.szTip, Settings.SmartAgent(), _countof( m_pTray.szTip ) - 1 );
-			m_pTray.szTip[ _countof( m_pTray.szTip ) - 1 ] = _T('\0');
-			Shell_NotifyIcon( NIM_ADD, &m_pTray );
-			ShowWindow( SW_HIDE );
-			m_bTray = TRUE;
-		}
+		CloseToTray();
 		return;
 	}
 	else if ( nCommand == SC_RESTORE && m_bTray )
 	{
-		OnTray( WM_LBUTTONDBLCLK, 0 );
+		OpenFromTray();
 		return;
 	}
 	else if ( nCommand == SC_NEXTWINDOW )
@@ -615,14 +629,24 @@ void CDownloadMonitorDlg::OnSysCommand(UINT nID, LPARAM lParam)
 
 LRESULT CDownloadMonitorDlg::OnTray(WPARAM /*wParam*/, LPARAM lParam)
 {
-	if ( LOWORD(lParam) == WM_LBUTTONDBLCLK && m_bTray )
+	switch ( LOWORD( lParam ) )
 	{
-		Shell_NotifyIcon( NIM_DELETE, &m_pTray );
-		ShowWindow( SW_SHOWNORMAL );
-		SetForegroundWindow();
-		m_bTray = FALSE;
-	}
+	case WM_LBUTTONDBLCLK:
+		OpenFromTray();
+		break;
 
+	case WM_RBUTTONDOWN:
+		{
+			CPoint pt;
+			GetCursorPos( &pt );
+			OnContextMenu( this, pt );
+
+			PostMessage( WM_NULL );
+
+			Shell_NotifyIcon( NIM_SETFOCUS, &m_pTray );
+		}
+		break;
+	}
 	return 0;
 }
 
@@ -638,37 +662,55 @@ HBRUSH CDownloadMonitorDlg::OnCtlColor(CDC* pDC, CWnd* pWnd, UINT nCtlColor)
 	return hbr;
 }
 
+const static struct
+{
+	LPCTSTR szMenu;
+	UINT nDefaultID;
+}
+ContextMenus[] =
+{
+	{ _T("CDownloadsWnd.Seeding"), ID_DOWNLOADS_LAUNCH_COMPLETE },
+	{ _T("CDownloadsWnd.Completed"),ID_DOWNLOADS_LAUNCH_COMPLETE },
+	{ _T("CDownloadsWnd.Download"), ID_DOWNLOADS_LAUNCH_COPY }
+};
+
 void CDownloadMonitorDlg::OnContextMenu(CWnd* /*pWnd*/, CPoint point)
 {
+	static bool bInMenu = false;
+	if ( bInMenu ) return;
+	bInMenu = true;
+
 	CMainWnd* pMainWnd = (CMainWnd*)AfxGetMainWnd();
 	if ( ! pMainWnd || ! IsWindow( pMainWnd->m_hWnd ) ) return;
 
 	CDownloadsWnd* pDownWnd = (CDownloadsWnd*)pMainWnd->m_pWindows.Find( RUNTIME_CLASS(CDownloadsWnd) );
 	if ( ! pDownWnd ) return;
 
-	if ( ! pDownWnd->Select( m_pDownload ) ) return;
-
-	CMenu* pPopup = ::Skin.GetMenu( _T("CDownloadsWnd.Download") );
-	if ( ! pPopup ) return;
-
-	MENUITEMINFO pInfo;
-	pInfo.cbSize	= sizeof(pInfo);
-	pInfo.fMask		= MIIM_STATE;
-	GetMenuItemInfo( pPopup->GetSafeHmenu(), m_pDownload->IsCompleted() ?
-		ID_DOWNLOADS_LAUNCH_COMPLETE : ID_DOWNLOADS_LAUNCH_COPY, FALSE, &pInfo );
-	pInfo.fState	|= MFS_DEFAULT;
-	SetMenuItemInfo( pPopup->GetSafeHmenu(), m_pDownload->IsCompleted() ?
-		ID_DOWNLOADS_LAUNCH_COMPLETE : ID_DOWNLOADS_LAUNCH_COPY, FALSE, &pInfo );
-
-	CoolMenu.AddMenu( pPopup, TRUE );
-
-	UINT nID = pPopup->TrackPopupMenu( TPM_LEFTALIGN|TPM_LEFTBUTTON|TPM_RIGHTBUTTON|TPM_RETURNCMD,
-		point.x, point.y, pDownWnd );
-
-	if ( nID && pDownWnd->Select( m_pDownload ) )
+	int nMenu;
+	CStringList pList;
 	{
-		pDownWnd->SendMessage( WM_COMMAND, nID );
+		CSingleLock pLock( &Transfers.m_pSection );
+
+		if ( ! pLock.Lock( 250 ) || ! Downloads.Check( m_pDownload ) ) return;
+
+		if ( ! pDownWnd->Select( m_pDownload ) ) return;
+
+		if ( m_pDownload->IsSeeding() )
+			nMenu = 0;
+		else if ( m_pDownload->IsCompleted() )
+			nMenu = 1;
+		else
+			nMenu = 2;
+	
+		for ( DWORD i = 0; i < m_pDownload->GetFileCount(); ++i )
+		{
+			pList.AddTail( m_pDownload->GetPath( i ) );
+		}
 	}
+
+	Skin.TrackPopupMenu( ContextMenus[ nMenu ].szMenu, point, ContextMenus[ nMenu ].nDefaultID, pList, pDownWnd, TPM_CENTERALIGN|TPM_LEFTBUTTON|TPM_RIGHTBUTTON );
+
+	bInMenu = false;
 }
 
 BOOL CDownloadMonitorDlg::OnNeedText(UINT /*nID*/, NMHDR* pTTTH, LRESULT* /*pResult*/)

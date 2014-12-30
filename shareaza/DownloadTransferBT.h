@@ -1,7 +1,7 @@
 //
 // DownloadTransferBT.h
 //
-// Copyright (c) Shareaza Development Team, 2002-2013.
+// Copyright (c) Shareaza Development Team, 2002-2014.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -40,7 +40,6 @@ public:
 	BOOL			m_bChoked;
 	BOOL			m_bInterested;
 public:
-	DWORD			m_nAvailable;
 	BOOL			m_bAvailable;
 	DWORD			m_tRunThrottle;
 

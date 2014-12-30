@@ -264,9 +264,7 @@ BOOL CDownloadTransferED2K::OnFileReqAnswer(CEDPacket* /*pPacket*/)
 {
 	if ( m_pDownload->m_nSize <= ED2K_PART_SIZE )
 	{
-		delete [] m_pAvailable;
-		m_pAvailable = new BYTE[ 1 ];
-		m_pAvailable[ 0 ] = TRUE;
+		m_pAvailable.assign( 1, true );
 		m_pSource->m_oAvailable.insert( m_pSource->m_oAvailable.end(),
 			Fragments::Fragment( 0, m_pDownload->m_nSize ) );
 		SendSecondaryRequest();
@@ -311,9 +309,7 @@ BOOL CDownloadTransferED2K::OnFileStatus(CEDPacket* pPacket)
 	{
         m_pSource->m_oAvailable.clear();
 		
-		delete [] m_pAvailable;
-		m_pAvailable = new BYTE[ nBlocks ];
-		ZeroMemory( m_pAvailable, nBlocks );
+		m_pAvailable.assign( nBlocks, false );
 		
 		for ( DWORD nBlock = 0 ; nBlock < nBlocks && pPacket->GetRemaining() ; )
 		{
@@ -329,7 +325,7 @@ BOOL CDownloadTransferED2K::OnFileStatus(CEDPacket* pPacket)
 					
 					m_pSource->m_oAvailable.insert( m_pSource->m_oAvailable.end(),
 						Fragments::Fragment( nFrom, nTo ) );
-					m_pAvailable[ nBlock ] = TRUE;
+					m_pAvailable[ nBlock ] = true;
 				}
 			}
 		}
@@ -338,8 +334,7 @@ BOOL CDownloadTransferED2K::OnFileStatus(CEDPacket* pPacket)
 	{
 		m_pSource->m_oAvailable.clear();
 		
-		delete [] m_pAvailable;
-		m_pAvailable = NULL;
+		m_pAvailable.clear();
 	}
 	else
 	{

@@ -1,7 +1,7 @@
 //
 // Skin.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2012.
+// Copyright (c) Shareaza Development Team, 2002-2014.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -712,6 +712,11 @@ CMenu* CSkin::CreatePopupMenu(LPCTSTR pszName)
 
 BOOL CSkin::CreateMenu(CXMLElement* pRoot, HMENU hMenu)
 {
+	if ( const UINT nID = LookupCommandID( pRoot, _T("id") ) )
+	{
+		VERIFY( SetMenuContextHelpId( hMenu, nID ) );
+	}
+
 	for ( POSITION pos = pRoot->GetElementIterator() ; pos ; )
 	{
 		CXMLElement* pXML	= pRoot->GetNextElement( pos );
@@ -2117,17 +2122,19 @@ BOOL CSkin::LoadCommandBitmap(CXMLElement* pBase, const CString& strPath)
 //////////////////////////////////////////////////////////////////////
 // CSkin popup menu helper
 
-void CSkin::TrackPopupMenu(LPCTSTR pszMenu, const CPoint& point,
-	UINT nDefaultID, const CStringList& oFiles, CWnd* pWnd) const
+BOOL CSkin::TrackPopupMenu(LPCTSTR pszMenu, const CPoint& point, UINT nDefaultID, const CStringList& oFiles, CWnd* pWnd, UINT nFlags) const
 {
 	CMenu* pPopup = GetMenu( pszMenu );
 	if ( pPopup == NULL )
-		return;
+		return FALSE;
 
 	if ( nDefaultID != 0 )
 	{
 		pPopup->SetDefaultItem( nDefaultID );
 	}
+
+	if ( pWnd != AfxGetMainWnd() )
+		CoolMenu.AddMenu( pPopup, TRUE );
 
 	if ( oFiles.GetCount() )
 	{
@@ -2140,27 +2147,24 @@ void CSkin::TrackPopupMenu(LPCTSTR pszMenu, const CPoint& point,
 		ASSERT( hSubMenu );
 		if ( pPopup->SetMenuItemInfo( ID_SHELL_MENU, &pInfo ) )
 		{
-			CoolMenu.DoExplorerMenu( pWnd->GetSafeHwnd(), oFiles,
-				point, pPopup->GetSafeHmenu(), pInfo.hSubMenu,
-				TPM_LEFTALIGN | TPM_LEFTBUTTON | TPM_RIGHTBUTTON );
+			BOOL nCmd = CoolMenu.DoExplorerMenu( pWnd->GetSafeHwnd(), oFiles, point, pPopup->GetSafeHmenu(), pInfo.hSubMenu, nFlags );
 
 			// Change ID_SHELL_MENU back
 			pInfo.hSubMenu = NULL;
 			VERIFY( pPopup->SetMenuItemInfo( ID_SHELL_MENU, &pInfo ) );
 
-			return;
+			return nCmd;
 		}
 		VERIFY( DestroyMenu( hSubMenu ) );
 	}
 
 	__try	// Fix for very strange TrackPopupMenu crash inside GUI
 	{
-		pPopup->TrackPopupMenu(
-			TPM_LEFTALIGN | TPM_LEFTBUTTON | TPM_RIGHTBUTTON,
-			point.x, point.y, pWnd );
+		return pPopup->TrackPopupMenu( nFlags, point.x, point.y, pWnd );
 	}
 	__except( EXCEPTION_EXECUTE_HANDLER )
 	{
+		return FALSE;
 	}
 }
 

@@ -1,7 +1,7 @@
 //
 // DlgURLAction.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2012.
+// Copyright (c) Shareaza Development Team, 2002-2014.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -193,7 +193,7 @@ BOOL CURLActionDlg::OnInitDialog()
 		{
 			m_sNameValue = m_pURL->m_sName;
 
-			if ( m_pURL->m_bSize )
+			if ( m_pURL->m_nSize != SIZE_UNKNOWN )
 				m_sNameValue += _T(" (") + Settings.SmartVolume( m_pURL->m_nSize ) + _T(")");
 		}
 		else
@@ -201,31 +201,9 @@ BOOL CURLActionDlg::OnInitDialog()
 			LoadString(m_sNameValue, IDS_URL_UNSPECIFIED );
 		}
 
-		if ( m_pURL->m_oTiger && m_pURL->m_oSHA1 )
+		if ( m_pURL->HasHash() )
 		{
-			m_sHashValue = _T("bitprint:")
-						 + m_pURL->m_oSHA1.toString() + _T(".")
-						 + m_pURL->m_oTiger.toString();
-		}
-		else if ( m_pURL->m_oTiger )
-		{
-			m_sHashValue = m_pURL->m_oTiger.toShortUrn();
-		}
-		else if ( m_pURL->m_oSHA1 )
-		{
-			m_sHashValue = m_pURL->m_oSHA1.toShortUrn();
-		}
-		else if ( m_pURL->m_oED2K )
-		{
-			m_sHashValue = m_pURL->m_oED2K.toShortUrn();
-		}
-		else if ( m_pURL->m_oMD5 )
-		{
-			m_sHashValue = m_pURL->m_oMD5.toShortUrn();
-		}
-		else if ( m_pURL->m_oBTH )
-		{
-			m_sHashValue = m_pURL->m_oBTH.toShortUrn();
+			m_sHashValue = m_pURL->GetShortURN();
 		}
 		else
 		{
@@ -298,28 +276,18 @@ void CURLActionDlg::OnUrlDownload()
 			return;
 		}
 
-		CDownload* pDownload = Downloads.Add( *m_pURL );
-
-		if ( pDownload == NULL )
-		{
-			DestroyWindow();
-			return;
-		}
-
-		if ( ( GetAsyncKeyState( VK_SHIFT ) & 0x8000 ) == 0 &&
-			! Network.IsWellConnected() )
-		{
+		if ( ( GetAsyncKeyState( VK_SHIFT ) & 0x8000 ) == 0 && ! Network.IsWellConnected() )
 			Network.Connect( TRUE );
-		}
 
-		CMainWnd* pMainWnd = (CMainWnd*)AfxGetMainWnd();
-		pMainWnd->m_pWindows.Open( RUNTIME_CLASS(CDownloadsWnd) );
+		if ( CMainWnd* pMainWnd = (CMainWnd*)AfxGetMainWnd() )
+			pMainWnd->m_pWindows.Open( RUNTIME_CLASS(CDownloadsWnd) );
 
-		if ( Settings.Downloads.ShowMonitorURLs )
+		CSingleLock pLock( &Transfers.m_pSection, TRUE );
+
+		if ( CDownload* pDownload = Downloads.Add( *m_pURL ) )
 		{
-			CSingleLock pLock( &Transfers.m_pSection, TRUE );
-			if ( Downloads.Check( pDownload ) )
-				pDownload->ShowMonitor( &pLock );
+			if ( Settings.Downloads.ShowMonitorURLs )
+				pDownload->ShowMonitor();
 		}
 	}
 	else if ( m_pURL->m_nAction == CShareazaURL::uriHost )

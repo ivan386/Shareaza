@@ -50,7 +50,6 @@ CShareazaURL::CShareazaURL(LPCTSTR pszURL)
 	, m_nPort			( 0 )
 	, m_pServerAddress	()
 	, m_nServerPort		( 0 )
-	, m_bSize			( FALSE )
 {
 	if ( pszURL != NULL ) Parse( pszURL );
 }
@@ -64,7 +63,6 @@ CShareazaURL::CShareazaURL(CBTInfo* pTorrent)
 	, m_nPort			( 0 )
 	, m_pServerAddress	()
 	, m_nServerPort		( 0 )
-	, m_bSize			( TRUE )
 {
 }
 
@@ -78,7 +76,6 @@ CShareazaURL::CShareazaURL(const CShareazaURL& pURL)
 	, m_nPort			( pURL.m_nPort )
 	, m_pServerAddress	( pURL.m_pServerAddress )
 	, m_nServerPort		( pURL.m_nServerPort )
-	, m_bSize			( pURL.m_bSize )
 	, m_sLogin			( pURL.m_sLogin )
 	, m_sPassword		( pURL.m_sPassword )
 	, m_oBTC			( pURL.m_oBTC )
@@ -114,7 +111,6 @@ void CShareazaURL::Clear()
 	m_nPort					= 0;
 	m_pServerAddress.s_addr = 0;
 	m_nServerPort			= 0;
-	m_bSize					= FALSE;
 	m_sLogin.Empty ();
 	m_sPassword.Empty ();
 	m_oBTC.clear();
@@ -404,7 +400,7 @@ BOOL CShareazaURL::ParseED2KFTP(LPCTSTR pszURL, BOOL bResolve)
 	if ( !m_oED2K.fromString( strHash ) ) return FALSE;
 
 	QWORD nSize = 0;
-	if ( m_bSize = _stscanf( strURL, _T("%I64u"), &nSize ) != 1 || nSize == 0 ) return FALSE;
+	if ( _stscanf( strURL, _T("%I64u"), &nSize ) != 1 || nSize == 0 ) return FALSE;
 	m_nSize = nSize;
 
 	nSlash = m_sAddress.Find( _T('@') );
@@ -481,10 +477,7 @@ BOOL CShareazaURL::ParseDCHub(LPCTSTR pszURL, BOOL bResolve)
 
 		QWORD nSize = 0;
 		if ( _stscanf( strURL, _T("/%I64u"), &nSize ) == 1 && nSize != 0 )
-		{
 			m_nSize = nSize;
-			m_bSize = TRUE;
-		}
 	}
 	else
 	{
@@ -685,7 +678,6 @@ BOOL CShareazaURL::ParseMagnet(LPCTSTR pszURL)
 				if ( m_nSize == SIZE_UNKNOWN && _stscanf( strValue, _T("%I64u"), &nSize ) == 1 && nSize != 0 )
 				{
 					m_nSize = nSize;
-					m_bSize = TRUE;
 				}
 			}
 		}
@@ -993,8 +985,9 @@ BOOL CShareazaURL::ParseDonkeyFile(LPCTSTR pszURL)
 	strPart	= strURL.Left( nSep );
 	strURL	= strURL.Mid( nSep + 1 );
 
-	if ( _stscanf( strPart, _T("%I64i"), &m_nSize ) != 1 ) return FALSE;
-	m_bSize = TRUE;
+	QWORD nSize = 0;
+	if ( _stscanf( strPart, _T("%I64u"), &nSize ) != 1 || nSize == 0 ) return FALSE;
+	m_nSize = nSize;
 
 	// Hash
 	nSep = strURL.Find( '|' );
@@ -1144,8 +1137,9 @@ BOOL CShareazaURL::ParsePioletFile(LPCTSTR pszURL)
 	strPart	= strURL.Left( nSep );
 	strURL	= strURL.Mid( nSep + 1 );
 
-	if ( _stscanf( strPart, _T("%I64i"), &m_nSize ) != 1 ) return FALSE;
-	m_bSize = TRUE;
+	QWORD nSize = 0;
+	if ( _stscanf( strPart, _T("%I64u"), &nSize ) != 1 || nSize == 0 ) return FALSE;
+	m_nSize = nSize;
 
 	strPart = strURL.SpanExcluding( _T(" |/") );
 	m_oSHA1.fromString( strPart );

@@ -1,7 +1,7 @@
 //
 // MatchListView.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2009.
+// Copyright (c) Shareaza Development Team, 2002-2014.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -23,6 +23,9 @@
 #include "Shareaza.h"
 #include "MatchObjects.h"
 #include "QueryHit.h"
+#include "Download.h"
+#include "Downloads.h"
+#include "Transfers.h"
 #include "MatchListView.h"
 
 #ifdef _DEBUG
@@ -42,28 +45,55 @@ END_INTERFACE_MAP()
 //////////////////////////////////////////////////////////////////////
 // CMatchListView construction
 
-CMatchListView::CMatchListView(LPCTSTR pszName, CMatchList* pList)
+CMatchListView::CMatchListView()
 {
 	EnableDispatch( IID_IGenericView );
 
-	m_sName = pszName;
-	m_pList = pList;
-	m_pList->m_pSection.Lock();
+	m_xEnumVARIANT.m_pos = NULL;
+}
 
-	for ( POSITION pos = m_pList->m_pSelectedFiles.GetHeadPosition() ; pos ; )
+CMatchListView::CMatchListView(LPCTSTR pszName, CMatchList* pList)
+	: m_sName( pszName )
+{
+	EnableDispatch( IID_IGenericView );
+
+	CQuickLock oLock( pList->m_pSection );
+
+	for ( POSITION pos = pList->m_pSelectedFiles.GetHeadPosition() ; pos ; )
 	{
-		m_pSelection.AddTail( m_pList->m_pSelectedFiles.GetNext( pos ) );
+		m_pSelection.AddTail( *pList->m_pSelectedFiles.GetNext( pos ) );
 	}
 
-	for ( POSITION pos = m_pList->m_pSelectedHits.GetHeadPosition() ; pos ; )
+	for ( POSITION pos = pList->m_pSelectedHits.GetHeadPosition() ; pos ; )
 	{
-		m_pSelection.AddTail( m_pList->m_pSelectedHits.GetNext( pos ) );
+		m_pSelection.AddTail( *pList->m_pSelectedHits.GetNext( pos ) );
 	}
+
+	m_xEnumVARIANT.m_pos = m_pSelection.GetHeadPosition();
+}
+
+CMatchListView::CMatchListView(LPCTSTR pszName, CDownloads* pDownloads)
+	: m_sName( pszName )
+{
+	EnableDispatch( IID_IGenericView );
+
+	CQuickLock oLock( Transfers.m_pSection );
+
+	for ( POSITION pos = pDownloads->GetIterator() ; pos ; )
+	{
+		const CDownload* pDownload = pDownloads->GetNext( pos );
+
+		if ( pDownload->m_bSelected )
+		{
+			m_pSelection.AddTail( *pDownload );
+		}
+	}
+
+	m_xEnumVARIANT.m_pos = m_pSelection.GetHeadPosition();
 }
 
 CMatchListView::~CMatchListView()
 {
-	m_pList->m_pSection.Unlock();
 }
 
 //////////////////////////////////////////////////////////////////////
@@ -72,41 +102,13 @@ CMatchListView::~CMatchListView()
 IGenericView* CMatchListView::Attach(LPCTSTR pszName, CMatchList* pList)
 {
 	CMatchListView* pView = new CMatchListView( pszName, pList );
-	return (IGenericView*)pView->GetInterface( IID_IGenericView, FALSE );
+	return pView ? (IGenericView*)pView->GetInterface( IID_IGenericView, FALSE ) : NULL;
 }
 
-POSITION CMatchListView::GetIterator() const
+IGenericView* CMatchListView::Attach(LPCTSTR pszName, CDownloads* pDownloads)
 {
-	return m_pSelection.GetHeadPosition();
-}
-
-void CMatchListView::GetNext(POSITION& pos, CMatchFile** ppFile, CQueryHit** ppHit) const
-{
-	LPVOID pItem = pos ? m_pSelection.GetNext( pos ) : NULL;
-
-	if ( ppFile != NULL )
-	{
-		if ( pItem && m_pList->m_pSelectedFiles.Find( static_cast< CMatchFile* >( pItem ) ) )
-		{
-			*ppFile = static_cast< CMatchFile* >( pItem );
-		}
-		else
-		{
-			*ppFile = NULL;
-		}
-	}
-
-	if ( ppHit != NULL )
-	{
-		if ( pItem && m_pList->m_pSelectedHits.Find( static_cast< CQueryHit* >( pItem ) ) )
-		{
-			*ppHit = static_cast< CQueryHit* >( pItem );
-		}
-		else
-		{
-			*ppHit = NULL;
-		}
-	}
+	CMatchListView* pView = new CMatchListView( pszName, pDownloads );
+	return pView ? (IGenericView*)pView->GetInterface( IID_IGenericView, FALSE ) : NULL;
 }
 
 //////////////////////////////////////////////////////////////////////
@@ -117,7 +119,12 @@ IMPLEMENT_DISPATCH(CMatchListView, GenericView)
 STDMETHODIMP CMatchListView::XGenericView::get_Name(BSTR FAR* psName)
 {
 	METHOD_PROLOGUE( CMatchListView, GenericView )
+
+	if ( ! psName )
+		return E_POINTER;
+
 	*psName = CComBSTR( pThis->m_sName ).Detach();
+
 	return S_OK;
 }
 
@@ -136,9 +143,16 @@ STDMETHODIMP CMatchListView::XGenericView::get_Param(LONG FAR* /*pnParam*/)
 STDMETHODIMP CMatchListView::XGenericView::get__NewEnum(IUnknown FAR* FAR* ppEnum)
 {
 	METHOD_PROLOGUE( CMatchListView, GenericView )
+
+	if ( ! ppEnum )
+		return E_POINTER;
+
 	*ppEnum = &pThis->m_xEnumVARIANT;
-	pThis->m_xEnumVARIANT.m_pos = pThis->GetIterator();
+
+	pThis->m_xEnumVARIANT.m_pos = pThis->m_pSelection.GetHeadPosition();
+
 	AddRef();
+
 	return S_OK;
 }
 
@@ -146,33 +160,27 @@ STDMETHODIMP CMatchListView::XGenericView::get_Item(VARIANT vIndex, VARIANT FAR*
 {
 	METHOD_PROLOGUE( CMatchListView, GenericView )
 
-	VARIANT va;
-	VariantInit( &va );
+	if ( ! pvItem )
+		return E_POINTER;
+
 	VariantClear( pvItem );
 
-	if ( FAILED( VariantChangeType( &va, (VARIANT FAR*)&vIndex, 0, VT_I4 ) ) ) return E_INVALIDARG;
+	CComVariant va;
+	if ( FAILED( va.ChangeType( VT_I4, &vIndex ) ) )
+		return E_INVALIDARG;
 
-	if ( va.lVal < 0 || va.lVal >= pThis->GetCount() ) return S_OK;
+	if ( va.lVal < 0 || va.lVal >= pThis->m_pSelection.GetCount() )
+		return S_OK;
 
-	for ( POSITION pos = pThis->GetIterator() ; pos ; )
+	for ( POSITION pos = pThis->m_pSelection.GetHeadPosition(); pos; )
 	{
 		BOOL bThis = ( va.lVal-- == 0 );
 
-		CMatchFile* pFile = NULL;
-		CQueryHit* pHit = NULL;
-		pThis->GetNext( pos, &pFile, &pHit );
+		CShareazaFile& pFile = pThis->m_pSelection.GetNext( pos );
 		if ( bThis )
 		{
-			if ( pFile )
-			{
-				pvItem->vt = VT_DISPATCH;
-				pvItem->punkVal = pFile->GetDispatch( TRUE );
-			}
-			else if ( pHit )
-			{
-				pvItem->vt = VT_DISPATCH;
-				pvItem->punkVal = pHit->GetDispatch( TRUE );
-			}
+			pvItem->vt = VT_DISPATCH;
+			pvItem->punkVal = pFile.GetDispatch( TRUE );
 			break;
 		}
 	}
@@ -183,7 +191,12 @@ STDMETHODIMP CMatchListView::XGenericView::get_Item(VARIANT vIndex, VARIANT FAR*
 STDMETHODIMP CMatchListView::XGenericView::get_Count(LONG FAR* pnCount)
 {
 	METHOD_PROLOGUE( CMatchListView, GenericView )
-	*pnCount = static_cast< LONG >( pThis->GetCount() );
+	
+	if ( ! pnCount )
+		return E_POINTER;
+
+	*pnCount = static_cast< LONG >( pThis->m_pSelection.GetCount() );
+
 	return S_OK;
 }
 
@@ -196,45 +209,47 @@ STDMETHODIMP CMatchListView::XEnumVARIANT::Next(ULONG celt, VARIANT FAR* rgvar, 
 {
 	METHOD_PROLOGUE( CMatchListView, EnumVARIANT )
 
-	if ( pceltFetched ) *pceltFetched = 0;
-	else if ( celt > 1 ) return E_INVALIDARG;
+	if ( ! rgvar )
+		return E_POINTER;
 
-	if ( m_pos == NULL ) return S_FALSE;
-
-	VariantInit( &rgvar[0] );
-
-	CMatchFile* pFile = NULL;
-	CQueryHit* pHit = NULL;
-	pThis->GetNext( m_pos, &pFile, &pHit );
-	if ( pFile )
+	ULONG nCount = 0;
+	for ( ULONG i = 0; i < celt; ++i )
 	{
-		rgvar[0].vt = VT_DISPATCH;
-		rgvar[0].punkVal = pFile->GetDispatch( TRUE );
-	}
-	else if ( pHit )
-	{
-		rgvar[0].vt = VT_DISPATCH;
-		rgvar[0].punkVal = pHit->GetDispatch( TRUE );
+		VariantInit( &rgvar[ i ] );
+		if ( m_pos )
+		{
+			rgvar[ i ].vt = VT_DISPATCH;
+			rgvar[ i ].punkVal = pThis->m_pSelection.GetNext( m_pos ).GetDispatch( TRUE );
+			++nCount;
+		}
 	}
 
-	if ( pceltFetched ) (*pceltFetched)++;
+	if ( pceltFetched )
+		*pceltFetched = nCount;
 
-	return S_OK;
+	return ( celt == nCount ) ? S_OK : S_FALSE;
 }
 
 STDMETHODIMP CMatchListView::XEnumVARIANT::Skip(ULONG celt)
 {
     METHOD_PROLOGUE( CMatchListView, EnumVARIANT )
 
-	while ( celt-- && m_pos ) pThis->GetNext( m_pos, NULL, NULL );
+	ULONG nCount = 0;
+	for ( ULONG i = 0; i < celt && m_pos; ++i )
+	{
+		pThis->m_pSelection.GetNext( m_pos );
+		++nCount;
+	}
 
-    return ( celt == 0 ? S_OK : S_FALSE );
+    return ( celt == nCount ) ? S_OK : S_FALSE;
 }
 
 STDMETHODIMP CMatchListView::XEnumVARIANT::Reset()
 {
     METHOD_PROLOGUE( CMatchListView, EnumVARIANT )
-	m_pos = pThis->GetIterator();
+
+	m_pos = pThis->m_pSelection.GetHeadPosition();
+
     return S_OK;
 }
 

@@ -427,7 +427,7 @@ BOOL CNetwork::ConnectTo(LPCTSTR pszAddress, int nPort, PROTOCOLID nProtocol, BO
 		return TRUE;
 	}
 
-	return AsyncResolve( pszAddress, (WORD)nPort, nProtocol, bNoUltraPeer ? RESOLVE_CONNECT : RESOLVE_CONNECT_ULTRAPEER );
+	return AsyncResolve( pszAddress, (WORD)nPort, nProtocol, bNoUltraPeer ? (BYTE)RESOLVE_CONNECT : (BYTE)RESOLVE_CONNECT_ULTRAPEER );
 }
 
 //////////////////////////////////////////////////////////////////////
@@ -582,7 +582,7 @@ UINT CNetwork::GetResolveCount() const
 {
 	CQuickLock pLock( m_pLookupsSection );
 
-	return m_pLookups.GetCount();
+	return (UINT)m_pLookups.GetCount();
 }
 
 CNetwork::ResolveStruct* CNetwork::GetResolve(HANDLE hAsync)

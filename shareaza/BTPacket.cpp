@@ -1,7 +1,7 @@
 //
 // BTPacket.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2013.
+// Copyright (c) Shareaza Development Team, 2002-2014.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -334,7 +334,7 @@ void CDHT::OnEvent(void* /*closure*/, int evt, const unsigned char* info_hash, c
 				if ( CDownload* pDownload = Downloads.FindByBTH( oHash ) )
 				{
 					size_t nCount = data_len / 6;
-					for ( size_t i = 0; i < nCount && pDownload->GetEffectiveSourceCount() < Settings.Downloads.SourcesWanted; ++i )
+					for ( size_t i = 0; i < nCount; ++i )
 					{
 						const char* p = &((const char*)data)[ i * 6 ];
 						pDownload->AddSourceBT( Hashes::BtGuid(), (IN_ADDR*)p, ntohs( *(WORD*)(p + 4) ) );

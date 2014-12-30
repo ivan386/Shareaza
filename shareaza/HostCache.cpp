@@ -1,7 +1,7 @@
 //
 // HostCache.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2013.
+// Copyright (c) Shareaza Development Team, 2002-2014.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -830,7 +830,7 @@ int CHostCache::Import(LPCTSTR pszFile, BOOL bFreshOnly)
 
 int CHostCache::ImportHubList(CFile* pFile)
 {
-	DWORD nSize = pFile->GetLength();
+	DWORD nSize = (DWORD)pFile->GetLength();
 
 	CBuffer pBuffer;
 	if ( ! pBuffer.EnsureBuffer( nSize ) )
@@ -1060,10 +1060,13 @@ bool CHostCache::CheckMinimumServers(PROTOCOLID nProtocol)
 			{ _T("\\aMule\\server.met") }
 		};
 
-		CString sRootPathes[ 3 ];
-		sRootPathes[ 0 ] = theApp.GetProgramFilesFolder();
-		sRootPathes[ 1 ] = theApp.GetLocalAppDataFolder();
-		sRootPathes[ 2 ] = theApp.GetAppDataFolder();
+		CString sRootPathes[ 4 ] =
+		{
+			theApp.GetProgramFilesFolder(),
+			theApp.GetProgramFilesFolder64(),
+			theApp.GetLocalAppDataFolder(),
+			theApp.GetAppDataFolder()
+		};
 
 		for ( int i = 0; i < _countof( sRootPathes ); ++i )
 			for ( int j = 0; j < _countof( sServerMetPathes ); ++j )

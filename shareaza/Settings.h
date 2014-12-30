@@ -106,6 +106,8 @@ public:
 		bool		TipNeighbours;
 		bool		TipMedia;
 		bool		Snarl;						// Use Snarl notifications - http://www.getsnarl.info/
+		DWORD		SearchWindowsLimit;			// Maximum amount of opened Search windows
+		DWORD		BrowseWindowsLimit;			// Maximum amount of opened Browse Host windows
 	} Interface;
 
 	struct sWindows
@@ -166,26 +168,19 @@ public:
 		bool		ScanAVI;					// Enable .avi metadata extraction by internals
 		bool		ScanCHM;					// Enable .chm metadata extraction by internals
 		bool		ScanEXE;					// Enable .exe,.dll metadata extraction by internals
+		bool		ScanFLV;					// Enable .flv metadata extraction by internals
 		bool		ScanImage;					// Enable .jpg,.jpeg,.gif,.png,.bmp metadata extraction by internals
 		bool		ScanMP3;					// Enable .mp3 metadata extraction by internals
 		bool		ScanMPEG;					// Enable .mpeg,.mpg metadata extraction by internals
 		bool		ScanMSI;					// Enable .msi metadata extraction by internals
 		bool		ScanOGG;					// Enable .ogg metadata extraction by internals
 		bool		ScanPDF;					// Enable .pdf metadata extraction by internals
+		bool		ScanProperties;				// Enable Windows properties metadata extraction by internals
 		bool		SmartSeriesDetection;		// Organize video files in Library by using predefined patterns
 		CString		LastUsedView;				// Name of last used view
 		CString		URLExportFormat;			// Template for URL export
 		DWORD		TooManyWarning;				// Too many files warning. 0 - ask user; 1 - no; 2 - yes.
 	} Library;
-
-	struct sWebServices
-	{
-		CString		BitziAgent;
-		CString		BitziWebView;
-		CString		BitziWebSubmit;
-		CString		BitziXML;
-		bool		BitziOkay;
-	} WebServices;
 
 	struct sSearch
 	{
@@ -492,6 +487,7 @@ public:
 		DWORD		QueryHostDeadline;			// Time to wait for DHT reply (sec)
 		bool		AutoMerge;					// Automatically merge download with local files on start-up
 		CString		PeerID;						// Use this peer ID for trackers in form of "CCvvvv" where "CC" - agent code ("SZ", "UT" etc,), v.v.v.v - version
+		bool		EnablePromote;				// Enable regular to torrent download promotion
 	} BitTorrent;
 
 	struct sDownloads
@@ -544,7 +540,6 @@ public:
 		bool		SortSources;				// Automatically sort sources (Status, protocol, queue)
 		DWORD		SourcesWanted;				// Number of sources Shareaza 'wants'. (Will not request more than this number of sources from ed2k)
 		DWORD		MaxReviews;					// Maximum number of reviews to store per download
-		DWORD		StartDroppingFailedSourcesNumber;	// The number of sources where Shareaza start dropping failed sources after only one attempt
 		bool		WebHookEnable;
 		string_set	WebHookExtensions;
 	} Downloads;

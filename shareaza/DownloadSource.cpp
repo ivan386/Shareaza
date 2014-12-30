@@ -1,7 +1,7 @@
 //
 // DownloadSource.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2013.
+// Copyright (c) Shareaza Development Team, 2002-2014.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -182,7 +182,7 @@ CDownloadSource::CDownloadSource(const CDownload* pDownload,
 
 	m_bBTH		= TRUE;
 	m_oGUID		= transformGuid( oGUID );
-	m_sServer	= _T("BitTorrent");
+	m_sServer	= protocolNames[ PROTOCOL_BT ];
 
 	ResolveURL();
 }
@@ -191,7 +191,7 @@ CDownloadSource::CDownloadSource(const CDownload* pDownload,
 // CDownloadSource construction from URL
 
 CDownloadSource::CDownloadSource(const CDownload* pDownload, LPCTSTR pszURL,
-	BOOL /*bSHA1*/, BOOL bHashAuth, FILETIME* pLastSeen, int nRedirectionCount)
+	BOOL bHashAuth, FILETIME* pLastSeen, int nRedirectionCount)
 	: m_oAvailable		( pDownload->m_nSize )
 	, m_oPastFragments	( pDownload->m_nSize )
 {
@@ -623,20 +623,9 @@ void CDownloadSource::OnFailure(BOOL bNondestructive, DWORD nRetryAfter)
 		m_pTransfer = NULL;
 	}
 
-	DWORD nDelay = CalcFailureDelay(nRetryAfter);
-
-	// This is not too good because if the source has Uploaded even 1Byte data, Max failure gets set to 40
-	//int nMaxFailures = ( m_bReadContent ? 40 : 3 );
-
-	int nMaxFailures = Settings.Downloads.MaxAllowedFailures;
-
-	if ( nMaxFailures < 20 &&
-		m_pDownload->GetSourceCount() > Settings.Downloads.StartDroppingFailedSourcesNumber )
-		nMaxFailures = 0;
-
-	if ( bNondestructive || ( ++m_nFailures < nMaxFailures ) )
+	if ( bNondestructive || ( ++m_nFailures < Settings.Downloads.MaxAllowedFailures ) )
 	{
-		m_tAttempt = max( m_tAttempt, nDelay );
+		m_tAttempt = max( m_tAttempt, CalcFailureDelay( nRetryAfter ) );
 		m_pDownload->SetModified();
 	}
 	else
@@ -657,9 +646,13 @@ DWORD CDownloadSource::CalcFailureDelay(DWORD nRetryAfter) const
 {
 	DWORD nDelay;
 
-	if ( nRetryAfter != 0 )
+	if ( nRetryAfter )
 	{
 		nDelay = nRetryAfter * 1000;
+	}
+	else if ( m_pDownload->IsPaused() )
+	{
+		nDelay = Settings.Downloads.ConnectThrottle;
 	}
 	else
 	{
@@ -885,6 +878,7 @@ BOOL CDownloadSource::PushRequest()
 			return FALSE;
 		if ( Network.SendPush( m_oGUID, m_nIndex ) )
 		{
+			theApp.Message( MSG_DEBUG, _T("Sending push request to %s %s..."), (LPCTSTR)CString( inet_ntoa( m_pAddress ) ).MakeUpper(), (LPCTSTR)m_oGUID.toString< Hashes::base16Encoding >().MakeUpper() );
 			theApp.Message( MSG_INFO, IDS_DOWNLOAD_PUSH_SENT, (LPCTSTR)m_pDownload->m_sName );
 			m_tAttempt = GetTickCount() + Settings.Downloads.PushTimeout;
 			return TRUE;

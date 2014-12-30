@@ -1,7 +1,7 @@
 //
 // WndDownloads.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2013.
+// Copyright (c) Shareaza Development Team, 2002-2014.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -35,6 +35,7 @@
 
 #include "Library.h"
 #include "LibraryMaps.h"
+#include "MatchListView.h"
 #include "SharedFile.h"
 #include "FileExecutor.h"
 #include "ShareazaURL.h"
@@ -170,6 +171,16 @@ CDownloadsWnd::CDownloadsWnd()
 
 CDownloadsWnd::~CDownloadsWnd()
 {
+}
+
+HRESULT CDownloadsWnd::GetGenericView(IGenericView** ppView)
+{
+	*ppView = NULL;
+	if ( IsWindow( m_wndDownloads.GetSafeHwnd() ) )
+	{
+		*ppView = CMatchListView::Attach( _T("CDownloadsWnd"), &Downloads );
+	}
+	return *ppView ? S_OK : S_FALSE;
 }
 
 /////////////////////////////////////////////////////////////////////////////
@@ -530,7 +541,7 @@ void CDownloadsWnd::Prepare()
 	DWORD tNow = GetTickCount();
 	if ( tNow - m_tSel < 250 ) return;
 
-	m_nSelectedDownloads = 0;
+	m_nSelectedDownloads = m_nSelectedSources = 0;
 	m_bSelAny = m_bSelDownload = m_bSelSource = m_bSelTrying = m_bSelPaused = FALSE;
 	m_bSelNotPausedOrMoving = m_bSelNoPreview = m_bSelNotCompleteAndNoPreview = FALSE;
 	m_bSelCompletedAndNoPreview = m_bSelStartedAndNotMoving = m_bSelCompleted = FALSE;
@@ -613,6 +624,7 @@ void CDownloadsWnd::Prepare()
 
 			if ( pSource->m_bSelected )
 			{
+				m_nSelectedSources ++;
 				m_bSelAny = TRUE;
 				m_bSelSource = TRUE;
 				m_bSelSourceExtended = pSource->m_bClientExtended;
@@ -736,7 +748,7 @@ void CDownloadsWnd::OnDownloadsClear()
 	if ( pList.IsEmpty() )
 		OnTransfersForget();
 
-	DWORD nTotal = pList.GetCount();
+	DWORD nTotal = (DWORD)pList.GetCount();
 
 	while ( ! pList.IsEmpty() )
 	{
@@ -814,7 +826,7 @@ void CDownloadsWnd::OnDownloadsClearIncomplete()
 		}
 	}
 
-	DWORD nTotal = pList.GetCount();
+	DWORD nTotal = (DWORD)pList.GetCount();
 
 	while ( ! pList.IsEmpty() )
 	{
@@ -1201,7 +1213,8 @@ void CDownloadsWnd::OnDownloadsUrl()
 
 				for ( POSITION pos = dlg.m_pURLs.GetHeadPosition(); pos; )
 				{
-					pDownload->AddSourceURL( dlg.m_pURLs.GetNext( pos ), FALSE );
+					CShareazaURL pURL( dlg.m_pURLs.GetNext( pos ) );
+					pDownload->AddSourceHit( pURL, TRUE );
 				}
 			}
 		}
@@ -1245,11 +1258,17 @@ void CDownloadsWnd::OnDownloadsBoost()
 void CDownloadsWnd::OnUpdateDownloadsCopy(CCmdUI* pCmdUI)
 {
 	Prepare();
+
+	const bool bShift = ( GetAsyncKeyState( VK_SHIFT ) & 0x8000 ) != 0;
+
 	pCmdUI->Enable( m_bSelSHA1orTTHorED2KorName || m_bSelSource );
+	pCmdUI->SetText( LoadString( ( ( m_nSelectedSources + m_nSelectedDownloads ) == 1 && ! bShift ) ? IDS_LIBRARY_COPYURI : IDS_LIBRARY_EXPORTURIS ) );
 }
 
 void CDownloadsWnd::OnDownloadsCopy()
 {
+	const bool bShift = ( GetAsyncKeyState( VK_SHIFT ) & 0x8000 ) != 0;
+
 	CList< CShareazaFile > pList;
 
 	{
@@ -1278,13 +1297,13 @@ void CDownloadsWnd::OnDownloadsCopy()
 		}
 	}
 
-	if ( pList.GetCount() == 1 )
+	if ( pList.GetCount() == 1  && ! bShift )
 	{
 		CURLCopyDlg dlg;
 		dlg.Add( &pList.GetHead() );
 		dlg.DoModal();
 	}
-	else if ( pList.GetCount() > 1 )
+	else if ( pList.GetCount() > 0 )
 	{
 		CURLExportDlg dlg;
 		for ( POSITION pos = pList.GetHeadPosition(); pos; )
@@ -1330,21 +1349,13 @@ void CDownloadsWnd::OnUpdateDownloadsMonitor(CCmdUI* pCmdUI)
 void CDownloadsWnd::OnDownloadsMonitor()
 {
 	CSingleLock pLock( &Transfers.m_pSection, TRUE );
-	CList<CDownload*> pList;
 
 	for ( POSITION pos = Downloads.GetIterator() ; pos ; )
 	{
 		CDownload* pDownload = Downloads.GetNext( pos );
-		if ( pDownload->m_bSelected ) pList.AddTail( pDownload );
-	}
-
-	while ( ! pList.IsEmpty() )
-	{
-		CDownload* pDownload = pList.RemoveHead();
-
-		if ( Downloads.Check( pDownload ) && ! pDownload->IsMoving() )
+		if ( pDownload->m_bSelected  && ! pDownload->IsMoving() )
 		{
-			pDownload->ShowMonitor( &pLock );
+			pDownload->ShowMonitor();
 		}
 	}
 }
@@ -1407,6 +1418,8 @@ void CDownloadsWnd::OnTransfersConnect()
 {
 	CSingleLock pLock( &Transfers.m_pSection, TRUE );
 
+	CList< CDownloadSource* > pSelectedSources;
+
 	for ( POSITION pos = Downloads.GetIterator() ; pos ; )
 	{
 		CDownload* pDownload = Downloads.GetNext( pos );
@@ -1421,23 +1434,25 @@ void CDownloadsWnd::OnTransfersConnect()
 			ASSERT( pSource->m_pDownload == pDownload );
 
 			// Only create a new Transfer if there isn't already one
-			if ( pSource->m_bSelected && pSource->IsIdle()
-				&& pSource->m_nProtocol != PROTOCOL_ED2K )
+			if ( pSource->m_bSelected && pSource->IsIdle() )
 			{
-				if ( pDownload->IsPaused() )
-					pDownload->Resume();
-
-				pDownload->Resume();
-
-				if ( pSource->m_bPushOnly )
-					pSource->PushRequest();
-				else
-				{
-					CDownloadTransfer* pTransfer = pSource->CreateTransfer();
-					if ( pTransfer )
-						pTransfer->Initiate();
-				}
+				pSelectedSources.AddTail( pSource );
 			}
+		}
+	}
+
+	for ( POSITION posSource = pSelectedSources.GetHeadPosition(); posSource ; )
+	{
+		CDownloadSource* pSource = pSelectedSources.GetNext( posSource );
+
+		pSource->m_pDownload->Resume();
+
+		if ( pSource->m_bPushOnly )
+			pSource->PushRequest();
+		else
+		{
+			if ( CDownloadTransfer* pTransfer = pSource->CreateTransfer() )
+				pTransfer->Initiate();
 		}
 	}
 
@@ -1454,6 +1469,8 @@ void CDownloadsWnd::OnTransfersDisconnect()
 {
 	CSingleLock pLock( &Transfers.m_pSection, TRUE );
 
+	CList< CDownloadSource* > pSelectedSources;
+
 	for ( POSITION pos = Downloads.GetIterator() ; pos ; )
 	{
 		CDownload* pDownload = Downloads.GetNext( pos );
@@ -1464,9 +1481,16 @@ void CDownloadsWnd::OnTransfersDisconnect()
 
 			if ( pSource->m_bSelected && ! pSource->IsIdle() )
 			{
-				pSource->Close();
+				pSelectedSources.AddTail( pSource );
 			}
 		}
+	}
+
+	for ( POSITION posSource = pSelectedSources.GetHeadPosition(); posSource ; )
+	{
+		CDownloadSource* pSource = pSelectedSources.GetNext( posSource );
+
+		pSource->Close();
 	}
 
 	Update();
@@ -1481,6 +1505,8 @@ void CDownloadsWnd::OnUpdateTransfersForget(CCmdUI* pCmdUI)
 void CDownloadsWnd::OnTransfersForget()
 {
 	CSingleLock pLock( &Transfers.m_pSection, TRUE );
+	
+	CList< CDownloadSource* > pSelectedSources;
 
 	for ( POSITION pos = Downloads.GetIterator() ; pos ; )
 	{
@@ -1491,8 +1517,17 @@ void CDownloadsWnd::OnTransfersForget()
 			CDownloadSource* pSource = pDownload->GetNext( posSource );
 
 			if ( pSource->m_bSelected )
-				pSource->Remove( TRUE, TRUE );
+			{
+				pSelectedSources.AddTail( pSource );
+			}
 		}
+	}
+
+	for ( POSITION posSource = pSelectedSources.GetHeadPosition(); posSource ; )
+	{
+		CDownloadSource* pSource = pSelectedSources.GetNext( posSource );
+
+		pSource->Remove( TRUE, TRUE );
 	}
 
 	Update();

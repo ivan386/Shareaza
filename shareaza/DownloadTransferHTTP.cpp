@@ -1070,7 +1070,8 @@ BOOL CDownloadTransferHTTP::OnHeadersComplete()
 	}
 	else if ( m_bRedirect )
 	{
-		m_pDownload->AddSourceURL( m_sRedirectionURL, FALSE, NULL, m_pSource->m_nRedirectionCount + 1 );
+		CShareazaURL pURL( m_sRedirectionURL );
+		m_pDownload->AddSourceHit( pURL, TRUE, m_pSource->m_nRedirectionCount + 1 );
 		Close( TRI_FALSE );
 		return FALSE;
 	}

@@ -22,26 +22,27 @@
 #include "StdAfx.h"
 #include "Shareaza.h"
 #include "Settings.h"
-#include "Downloads.h"
 #include "Download.h"
-#include "DownloadWithSources.h"
 #include "DownloadGroups.h"
-#include "DownloadTransfer.h"
 #include "DownloadSource.h"
+#include "DownloadTransfer.h"
+#include "DownloadWithSources.h"
+#include "Downloads.h"
+#include "Library.h"
 #include "MatchObjects.h"
-#include "Network.h"
 #include "Neighbours.h"
-#include "Transfer.h"
+#include "Network.h"
+#include "QueryHashMaster.h"
 #include "QueryHit.h"
-#include "ShareazaURL.h"
 #include "Schema.h"
 #include "SchemaCache.h"
-#include "Library.h"
+#include "Security.h"
+#include "ShareazaURL.h"
 #include "SharedFile.h"
-#include "XML.h"
-#include "QueryHashMaster.h"
-#include "VendorCache.h"
+#include "Transfer.h"
 #include "Transfers.h"
+#include "VendorCache.h"
+#include "XML.h"
 
 #ifdef _DEBUG
 #undef THIS_FILE
@@ -150,7 +151,7 @@ DWORD CDownloadWithSources::GetEffectiveSourceCount() const
 	if ( bIsG2Allowed )
 		nResult += m_nG2SourceCount;
 
-	if ( bIsG1Allowed | bIsG2Allowed )
+	if ( bIsG1Allowed || bIsG2Allowed )
 		nResult += m_nHTTPSourceCount;
 
 	if ( bIsEdAllowed )
@@ -252,38 +253,38 @@ BOOL CDownloadWithSources::AddSource(const CShareazaFile* pHit, BOOL bForce)
 	ASSUME_LOCK( Transfers.m_pSection );
 
 	const bool bHasHash = HasHash();
-	const BOOL bHitHasName = ( pHit->m_sName.GetLength() != 0 );
-	const BOOL bHitHasSize = ( pHit->m_nSize != 0 && pHit->m_nSize != SIZE_UNKNOWN );
-	BOOL bHash = FALSE;
-	BOOL bUpdated = FALSE;
+	const bool bHitHasName = ( pHit->m_sName.GetLength() != 0 );
+	const bool bHitHasSize = ( pHit->m_nSize != 0 && pHit->m_nSize != SIZE_UNKNOWN );
+	bool bHash = FALSE;
+	bool bUpdated = FALSE;
 	
 	if ( ! bForce )
 	{
 		if ( m_oSHA1 && pHit->m_oSHA1 )
 		{
 			if ( m_oSHA1 != pHit->m_oSHA1 ) return FALSE;
-			bHash = TRUE;
+			bHash = true;
 		}
 		if ( m_oTiger && pHit->m_oTiger )
 		{
 			if ( m_oTiger != pHit->m_oTiger ) return FALSE;
-			bHash = TRUE;
+			bHash = true;
 		}
         if ( m_oED2K && pHit->m_oED2K )
 		{
 			if ( m_oED2K != pHit->m_oED2K ) return FALSE;
-			bHash = TRUE;
+			bHash = true;
 		}
 		if ( m_oMD5 && pHit->m_oMD5 )
 		{
 			if ( m_oMD5 != pHit->m_oMD5 ) return FALSE;
-			bHash = TRUE;
+			bHash = true;
 		}
 		// BTH check is a last chance
 		if ( ! bHash && m_oBTH && pHit->m_oBTH )
 		{
 			if ( m_oBTH != pHit->m_oBTH ) return FALSE;
-			bHash = TRUE;
+			bHash = true;
 		}
 	}
 	
@@ -302,37 +303,35 @@ BOOL CDownloadWithSources::AddSource(const CShareazaFile* pHit, BOOL bForce)
 	if ( !m_oSHA1 && pHit->m_oSHA1 )
 	{
 		m_oSHA1 = pHit->m_oSHA1;
-		bUpdated = TRUE;
+		bUpdated = true;
 	}
     if ( !m_oTiger && pHit->m_oTiger )
 	{
 		m_oTiger = pHit->m_oTiger;
-		bUpdated = TRUE;
+		bUpdated = true;
 	}
     if ( !m_oED2K && pHit->m_oED2K )
 	{
 		m_oED2K = pHit->m_oED2K;
-		bUpdated = TRUE;
+		bUpdated = true;
 	}
 	if ( !m_oBTH && pHit->m_oBTH )
 	{
 		m_oBTH = pHit->m_oBTH;
-		bUpdated = TRUE;
+		bUpdated = true;
 	}
 	if ( !m_oMD5 && pHit->m_oMD5 )
 	{
 		m_oMD5 = pHit->m_oMD5;
-		bUpdated = TRUE;
+		bUpdated = true;
 	}
 	if ( ( m_sName.IsEmpty() || ! bHasHash ) && bHitHasName )
 	{
-		Rename( pHit->m_sName );
-		bUpdated = TRUE;
+		bUpdated = Rename( pHit->m_sName );
 	}
 	if ( ( m_nSize == SIZE_UNKNOWN || ! bHasHash ) && bHitHasSize )
 	{
-		Resize( pHit->m_nSize );
-		bUpdated = TRUE;
+		bUpdated = Resize( pHit->m_nSize );
 	}
 	if ( m_nBitrate == 0 && (pHit->m_nBitrate > 0) )
 	{
@@ -341,7 +340,10 @@ BOOL CDownloadWithSources::AddSource(const CShareazaFile* pHit, BOOL bForce)
 
 	if ( bUpdated )
 	{
-		((CDownload*)this)->m_bUpdateSearch = TRUE;
+		// Re-link
+		DownloadGroups.Link( static_cast< CDownload* >( this ) );
+
+		static_cast< CDownload* >( this )->m_bUpdateSearch = TRUE;
 	
 		QueryHashMaster.Invalidate();
 	}
@@ -402,13 +404,15 @@ BOOL CDownloadWithSources::AddSourceHit(const CQueryHit* pHit, BOOL bForce)
 
 BOOL CDownloadWithSources::AddSourceHit(const CMatchFile* pMatchFile, BOOL bForce)
 {
-	BOOL bRet = FALSE;
+	CQuickLock oLock( Transfers.m_pSection );
+
+	BOOL bRet = AddSource( pMatchFile, bForce );
 
 	// Best goes first if forced
 	const CQueryHit* pBestHit = pMatchFile->GetBest();
 	if ( bForce && pBestHit )
 	{
-		bRet = AddSourceHit( pBestHit, TRUE );
+		bRet = AddSourceHit( pBestHit, TRUE ) || bRet;
 	}
 
 	for ( const CQueryHit* pHit = pMatchFile->GetHits() ; pHit; pHit = pHit->m_pNext )
@@ -430,7 +434,7 @@ BOOL CDownloadWithSources::AddSourceHit(const CMatchFile* pMatchFile, BOOL bForc
 	return bRet;
 }
 
-BOOL CDownloadWithSources::AddSourceHit(const CShareazaURL& oURL, BOOL bForce)
+BOOL CDownloadWithSources::AddSourceHit(const CShareazaURL& oURL, BOOL bForce, int nRedirectionCount)
 {
 	CQuickLock oLock( Transfers.m_pSection );
 
@@ -442,11 +446,17 @@ BOOL CDownloadWithSources::AddSourceHit(const CShareazaURL& oURL, BOOL bForce)
 		((CDownload*)this)->SetTorrent( oURL.m_pTorrent );
 	}
 
-	if ( oURL.m_sURL.GetLength() )
+	for ( CString sURLs = oURL.m_sURL; sURLs.GetLength(); )
 	{
-		if ( ! AddSourceURLs( oURL.m_sURL ) )
+		CString sURL = sURLs.SpanExcluding( _T(",") );
+		sURLs = sURLs.Mid( sURL.GetLength() + 1 );
+		sURL.Trim();
+		if ( sURL.GetLength() )
 		{
-			return FALSE;
+			if ( ! AddSourceURL( sURL, NULL, nRedirectionCount, FALSE, bForce ) )
+			{
+				return FALSE;
+			}
 		}
 	}
 
@@ -473,7 +483,7 @@ BOOL CDownloadWithSources::AddSourceBT(const Hashes::BtGuid& oGUID, const IN_ADD
 //////////////////////////////////////////////////////////////////////
 // CDownloadWithSources add a single URL source
 
-BOOL CDownloadWithSources::AddSourceURL(LPCTSTR pszURL, BOOL bURN, FILETIME* pLastSeen, int nRedirectionCount, BOOL bFailed)
+BOOL CDownloadWithSources::AddSourceURL(LPCTSTR pszURL, FILETIME* pLastSeen, int nRedirectionCount, BOOL bFailed, BOOL bForce)
 {
 	if ( pszURL == NULL || *pszURL == 0 )
 		return FALSE;
@@ -534,55 +544,17 @@ BOOL CDownloadWithSources::AddSourceURL(LPCTSTR pszURL, BOOL bURN, FILETIME* pLa
 		return TRUE;
 	}
 
-	if ( ! AddSource( &pURL, FALSE ) )
+	if ( ! AddSource( &pURL, bForce ) )
 		// Not match
 		return FALSE;
 
-	// Get SHA1
-	if ( pURL.m_oSHA1 && ! m_oSHA1 )
-	{
-		m_oSHA1 = pURL.m_oSHA1;
-	}
-	// Get Tiger
-	if ( pURL.m_oTiger && ! m_oTiger )
-	{
-		m_oTiger = pURL.m_oTiger;
-	}
-	// Get ED2K
-	if ( pURL.m_oED2K && ! m_oED2K )
-	{
-		m_oED2K = pURL.m_oED2K;
-	}
-	// Get MD5
-	if ( pURL.m_oMD5 && ! m_oMD5 )
-	{
-		m_oMD5 = pURL.m_oMD5;
-	}
-	// Get BTH
-	if ( pURL.m_oBTH && ! m_oBTH )
-	{
-		m_oBTH = pURL.m_oBTH;
-	}
-	// Get size
-	if ( m_nSize == SIZE_UNKNOWN &&
-		pURL.m_bSize && pURL.m_nSize && pURL.m_nSize != SIZE_UNKNOWN )
-	{
-		m_nSize = pURL.m_nSize;
-	}
-	// Get name
-	if ( m_sName.IsEmpty() && pURL.m_sName.GetLength() )
-	{
-		Rename( pURL.m_sName );
-	}
-
-	return AddSourceInternal( new CDownloadSource( static_cast< const CDownload* >( this ),
-		pszURL, bURN, bHashAuth, pLastSeen, nRedirectionCount ) );
+	return AddSourceInternal( new CDownloadSource( static_cast< const CDownload* >( this ), pszURL, bHashAuth, pLastSeen, nRedirectionCount ) );
 }
 
 //////////////////////////////////////////////////////////////////////
 // CDownloadWithSources add several URL sources
 
-int CDownloadWithSources::AddSourceURLs(LPCTSTR pszURLs, BOOL bURN, BOOL bFailed)
+int CDownloadWithSources::AddSourceURLs(LPCTSTR pszURLs, BOOL bFailed)
 {
 	int nCount = 0;
 
@@ -595,8 +567,7 @@ int CDownloadWithSources::AddSourceURLs(LPCTSTR pszURLs, BOOL bURN, BOOL bFailed
 		FILETIME tSeen = {};
 		oUrls.GetNextAssoc( pos, strURL, tSeen );
 		
-		if ( AddSourceURL( strURL, bURN,
-			( tSeen.dwLowDateTime | tSeen.dwHighDateTime ) ? &tSeen : NULL, 0, bFailed ) )
+		if ( AddSourceURL( strURL, ( tSeen.dwLowDateTime | tSeen.dwHighDateTime ) ? &tSeen : NULL, 0, bFailed ) )
 		{
 			if ( bFailed )
 			{
@@ -621,13 +592,6 @@ BOOL CDownloadWithSources::AddSourceInternal(CDownloadSource* pSource)
 	if ( ! pSource )
 		// Out of memory
 		return FALSE;
-
-	if ( GetEffectiveSourceCount() >= Settings.Downloads.SourcesWanted )
-	{
-		// Too many sources
-		delete pSource;
-		return FALSE;
-	}
 
 	//Check/Reject if source is invalid
 	if ( ! pSource->m_bPushOnly )
@@ -680,6 +644,7 @@ BOOL CDownloadWithSources::AddSourceInternal(CDownloadSource* pSource)
 			if ( pExisting->Equals( pSource ) ) // IPs and ports are equal
 			{
 				bool bExistingHTTPSource = pExisting->IsHTTPSource();
+				pExisting->SetLastSeen();
 
 				if ( bNeedHTTPSource && bExistingHTTPSource )
 					bNeedHTTPSource = false;
@@ -726,8 +691,7 @@ BOOL CDownloadWithSources::AddSourceInternal(CDownloadSource* pSource)
 			CString strURL = GetURL( pSource->m_pAddress, pSource->m_nPort );
 			if ( strURL.GetLength() )
 			{
-				if ( CDownloadSource* pG2Source  = new CDownloadSource(
-					(CDownload*)this, strURL ) )
+				if ( CDownloadSource* pG2Source  = new CDownloadSource( (CDownload*)this, strURL ) )
 				{
 					pG2Source->m_sServer = pSource->m_sServer;		// Copy user-agent
 					pG2Source->m_tAttempt = pSource->m_tAttempt;	// Set the same connection delay
@@ -736,6 +700,63 @@ BOOL CDownloadWithSources::AddSourceInternal(CDownloadSource* pSource)
 					AddSourceInternal( pG2Source );
 				}
 			}
+		}
+	}
+
+	// Trimming extra sources - Idle and bad or busy
+	DWORD nSourceCount = GetEffectiveSourceCount();
+#ifdef _DEBUG
+	FILETIME tNow;
+	GetSystemTimeAsFileTime( &tNow );
+#endif
+	if ( nSourceCount >= Settings.Downloads.SourcesWanted )
+	{
+		CSortedSources oIdleSources;
+		for ( POSITION posSource = m_pSources.GetTailPosition(); posSource && nSourceCount >= Settings.Downloads.SourcesWanted; )
+		{
+			CDownloadSource* pExisting = m_pSources.GetPrev( posSource );
+
+			if ( pExisting->IsIdle() )
+			{
+				if ( pExisting->m_nFailures || pExisting->m_nBusyCount )
+				{
+#ifdef _DEBUG
+					theApp.Message( MSG_DEBUG, _T( "Removed extra source %s %s (%I64d seconds old)" ), (LPCTSTR)CString( inet_ntoa( pExisting->m_pAddress ) ),
+						(LPCTSTR)pExisting->m_oGUID.toString< Hashes::base16Encoding >().MakeUpper(),
+						( *( (LONGLONG*)&tNow ) - *( (LONGLONG*)&pExisting->m_tLastSeen ) ) / 10000000 );
+#endif
+					RemoveSource( pExisting, FALSE );
+					delete pExisting;
+					nSourceCount = GetEffectiveSourceCount();
+				}
+				else
+				{
+					oIdleSources.insert( pExisting );
+				}
+			}
+		}
+		// Remove older sources first
+		for ( CSortedSources::const_iterator i = oIdleSources.begin(); i != oIdleSources.end() && nSourceCount >= Settings.Downloads.SourcesWanted; ++i )
+		{
+			CDownloadSource* pExisting = (*i);
+#ifdef _DEBUG
+			theApp.Message( MSG_DEBUG, _T( "Removed extra source %s %s (%I64d seconds old)" ), (LPCTSTR)CString( inet_ntoa( pExisting->m_pAddress ) ),
+				(LPCTSTR)pExisting->m_oGUID.toString< Hashes::base16Encoding >().MakeUpper(),
+				( *( (LONGLONG*)&tNow ) - *( (LONGLONG*)&pExisting->m_tLastSeen ) ) / 10000000 );
+#endif
+			RemoveSource( pExisting, FALSE );
+			delete pExisting;
+			nSourceCount = GetEffectiveSourceCount();
+		}
+		if ( nSourceCount >= Settings.Downloads.SourcesWanted )
+		{
+			// Still too many sources
+#ifdef _DEBUG
+			theApp.Message( MSG_DEBUG, _T( "Ignored extra source %s %s due sources limit %u" ), (LPCTSTR)CString( inet_ntoa( pSource->m_pAddress ) ),
+				(LPCTSTR)pSource->m_oGUID.toString< Hashes::base16Encoding >().MakeUpper(), Settings.Downloads.SourcesWanted );
+#endif
+			delete pSource;
+			return FALSE;
 		}
 	}
 

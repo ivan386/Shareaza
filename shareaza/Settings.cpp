@@ -142,6 +142,8 @@ void CSettings::Load()
 	Add( _T("Interface"), _T("TipSearch"), &Interface.TipSearch, true );
 	Add( _T("Interface"), _T("TipUploads"), &Interface.TipUploads, true );
 	Add( _T("Interface"), _T("Snarl"), &Interface.Snarl, false );
+	Add( _T("Interface"), _T("SearchWindowsLimit"), &Interface.SearchWindowsLimit, 10, 1, 0, 50, _T(" windows") );
+	Add( _T("Interface"), _T("BrowseWindowsLimit"), &Interface.BrowseWindowsLimit, 10, 1, 0, 50, _T(" windows") );
 
 	Add( _T("Windows"), _T("RunWizard"), &Windows.RunWizard, false );
 	Add( _T("Windows"), _T("RunWarnings"), &Windows.RunWarnings, false );
@@ -174,12 +176,14 @@ void CSettings::Load()
 	Add( _T("Library"), _T("ScanAVI"), &Library.ScanAVI, true );
 	Add( _T("Library"), _T("ScanCHM"), &Library.ScanCHM, true );
 	Add( _T("Library"), _T("ScanEXE"), &Library.ScanEXE, true );
+	Add( _T("Library"), _T("ScanFLV"), &Library.ScanFLV, true );
 	Add( _T("Library"), _T("ScanImage"), &Library.ScanImage, true );
 	Add( _T("Library"), _T("ScanMP3"), &Library.ScanMP3, true );
 	Add( _T("Library"), _T("ScanMPEG"), &Library.ScanMPEG, true );
 	Add( _T("Library"), _T("ScanMSI"), &Library.ScanMSI, true );
 	Add( _T("Library"), _T("ScanOGG"), &Library.ScanOGG, true );
 	Add( _T("Library"), _T("ScanPDF"), &Library.ScanPDF, true );
+	Add( _T("Library"), _T("ScanProperties"), &Library.ScanProperties, true );
 	Add( _T("Library"), _T("SchemaURI"), &Library.SchemaURI, CSchema::uriAudio );
 	Add( _T("Library"), _T("ShowCoverArt"), &Library.ShowCoverArt, true );
 	Add( _T("Library"), _T("ShowPanel"), &Library.ShowPanel, true );
@@ -200,12 +204,6 @@ void CSettings::Load()
 	Add( _T("Library"), _T("LastUsedView"), &Library.LastUsedView );
 	Add( _T("Library"), _T("URLExportFormat"), &Library.URLExportFormat, _T("<a href=\"magnet:?xt=urn:bitprint:[SHA1].[TIGER]&amp;xt=urn:ed2khash:[ED2K]&amp;xt=urn:md5:[MD5]&amp;xl=[ByteSize]&amp;dn=[NameURI]\">[Name]</a><br>") );
 	Add( _T("Library"), _T("TooManyWarning"), &Library.TooManyWarning, 0, 1, 0, 2 );
-
-	Add( _T("WebServices"), _T("BitziAgent"), &WebServices.BitziAgent, _T(".") );
-	Add( _T("WebServices"), _T("BitziOkay"), &WebServices.BitziOkay, false, true );
-	Add( _T("WebServices"), _T("BitziWebSubmit"), &WebServices.BitziWebSubmit, _T("http://bitzi.com/lookup/(SHA1).(TTH)?fl=(SIZE)&ff=(FIRST20)&fn=(NAME)&tag.ed2k.ed2khash=(ED2K)&(INFO)&a=(AGENT)&v=Q0.4&ref=shareaza") );
-	Add( _T("WebServices"), _T("BitziWebView"), &WebServices.BitziWebView, _T("http://bitzi.com/lookup/(URN)?v=detail&ref=shareaza") );
-	Add( _T("WebServices"), _T("BitziXML"), &WebServices.BitziXML, _T("http://bitzi.com/rdf/(SHA1)") );
 
 	Add( _T("Search"), _T("AdultFilter"), &Search.AdultFilter, false );
 	Add( _T("Search"), _T("AdvancedPanel"), &Search.AdvancedPanel, true );
@@ -463,6 +461,7 @@ void CSettings::Load()
 	Add( _T("BitTorrent"), _T("DownloadTorrents"), &BitTorrent.DownloadTorrents, 3, 1, 1, 10 );
 	Add( _T("BitTorrent"), _T("EnableAlways"), &BitTorrent.EnableAlways, true );
 	Add( _T("BitTorrent"), _T("EnableDHT"), &BitTorrent.EnableDHT, true );
+	Add( _T("BitTorrent"), _T("EnablePromote"), &BitTorrent.EnablePromote, true );
 	Add( _T("BitTorrent"), _T("Endgame"), &BitTorrent.Endgame, true );
 	Add( _T("BitTorrent"), _T("HostExpire"), &BitTorrent.HostExpire, 2*24*60*60, 24*60*60, 1, 100, _T(" d") );
 	Add( _T("BitTorrent"), _T("LinkPing"), &BitTorrent.LinkPing, 120*1000, 1000, 10, 60*10, _T(" s") );
@@ -523,19 +522,18 @@ void CSettings::Load()
 	Add( _T("Downloads"), _T("SourcesWanted"), &Downloads.SourcesWanted, 500, 1, 50, 5000 );
 	Add( _T("Downloads"), _T("SparseThreshold"), &Downloads.SparseThreshold, 8*Kilo, Kilo, 0, 256, _T(" MB") );
 	Add( _T("Downloads"), _T("StaggardStart"), &Downloads.StaggardStart, false );
-	Add( _T("Downloads"), _T("StartDroppingFailedSourcesNumber"), &Downloads.StartDroppingFailedSourcesNumber, 20, 1, 0, 50 );
 	Add( _T("Downloads"), _T("StarveGiveUp"), &Downloads.StarveGiveUp, 3, 1, 3, 120, _T(" h") );
 	Add( _T("Downloads"), _T("StarveTimeout"), &Downloads.StarveTimeout, 45*60*1000, 60*1000, 45, 24*60, _T(" m") );
 	Add( _T("Downloads"), _T("TorrentPath"), &Downloads.TorrentPath );
 	Add( _T("Downloads"), _T("VerifyED2K"), &Downloads.VerifyED2K, true );
 	Add( _T("Downloads"), _T("VerifyFiles"), &Downloads.VerifyFiles, true );
 	Add( _T("Downloads"), _T("VerifyTiger"), &Downloads.VerifyTiger, true );
-	Add( _T("Downloads"), _T("WebHookEnable"), &Downloads.WebHookEnable, true );
+	Add( _T("Downloads"), _T("WebHookEnable"), &Downloads.WebHookEnable, false );
 	Add( _T("Downloads"), _T("WebHookExtensions"), &Downloads.WebHookExtensions, _T("|zip|7z|gz|rar|r0|tgz|ace|z|tar|arj|lzh|sit|hqx|fml|grs|mp3|iso|msi|exe|bin|") );
 
 	Add( _T("Uploads"), _T("AllowBackwards"), &Uploads.AllowBackwards, true );
 	Add( _T("Uploads"), _T("AutoClear"), &Uploads.AutoClear, false );
-	Add( _T("Uploads"), _T("BlockAgents"), &Uploads.BlockAgents, _T("|Mozilla|Fake Shareaza|") );
+	Add( _T("Uploads"), _T("BlockAgents"), &Uploads.BlockAgents, _T("|Mozilla|Foxy|Fake Shareaza|") );
 	Add( _T("Uploads"), _T("ClampdownFactor"), &Uploads.ClampdownFactor, 20, 1, 0, 100, _T("%") );
 	Add( _T("Uploads"), _T("ClampdownFloor"), &Uploads.ClampdownFloor, 8*128, 128, 0, 4096, _T(" Kb/s") );
 	Add( _T("Uploads"), _T("ClearDelay"), &Uploads.ClearDelay, 30*1000, 1000, 1, 1800, _T(" s") );
@@ -618,7 +616,13 @@ void CSettings::Load()
 	{
 		General.Path = theApp.GetProgramFilesFolder() + _T("\\") CLIENT_NAME_T;
 		if ( ! PathFileExists( General.Path ) )
-			General.Path = theApp.m_strBinaryPath.Left( theApp.m_strBinaryPath.ReverseFind( '\\' ) );
+		{
+			General.Path = theApp.GetProgramFilesFolder64() + _T( "\\" ) CLIENT_NAME_T;
+			if ( ! PathFileExists( General.Path ) )
+			{
+				General.Path = theApp.m_strBinaryPath.Left( theApp.m_strBinaryPath.ReverseFind( '\\' ) );
+			}
+		}
 	}
 
 	if ( General.UserPath.IsEmpty() || ! CreateDirectory( General.UserPath + _T("\\Data") ) )
@@ -749,13 +753,6 @@ void CSettings::Load()
 	// Temporary until G1 ultrapeer has been updated
 	Gnutella1.ClientMode = MODE_LEAF;
 
-	// UPnP is not supported on servers
-	if ( theApp.m_bIsServer )
-	{
-		Connection.EnableUPnP = false;
-		Connection.DeleteUPnPPorts = false;
-	}
-
 	// UPnP will setup a random port, so we need to reset values after it sets Connection.InPort
 	if ( Connection.RandomPort )
 		Connection.InPort = 0;
@@ -844,7 +841,7 @@ void CSettings::SmartUpgrade()
 		{
 			Gnutella2.UdpOutResend			= 6000;
 			Gnutella2.UdpOutExpire			= 26000;
-			Library.TigerHeight		= 9;
+			Library.TigerHeight				= 9;
 
 			Downloads.AutoExpand			= false;
 
@@ -1120,25 +1117,6 @@ void CSettings::SmartUpgrade()
 			// uTorrent
 			if ( ! IsIn( Library.PrivateTypes, _T("!ut") ) )
 				Library.PrivateTypes.insert( _T("!ut") );
-		}
-
-		if ( General.SmartVersion < 55 ) // Migrate values to other section
-		{
-			WebServices.BitziOkay		= theApp.GetProfileInt( L"Library", L"BitziOkay", false ) != 0;
-
-			// Delete old values
-			theApp.WriteProfileString( L"Library", L"BitziAgent", NULL );
-			theApp.WriteProfileString( L"Library", L"BitziWebSubmit", NULL );
-			theApp.WriteProfileString( L"Library", L"BitziWebView", NULL );
-			theApp.WriteProfileString( L"Library", L"BitziXML", NULL );
-			theApp.WriteProfileString( L"Library", L"BitziWebView", NULL );
-			SHDeleteValue( HKEY_CURRENT_USER,
-				REGISTRY_KEY _T("\\Library"), _T("BitziOkay") );
-		}
-
-		if ( General.SmartVersion < 56 )
-		{
-			WebServices.BitziXML = _T("http://bitzi.com/rdf/(SHA1)");
 		}
 
 		if ( General.SmartVersion < 57 )
