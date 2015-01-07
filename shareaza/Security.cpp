@@ -1,7 +1,7 @@
 //
 // Security.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2013.
+// Copyright (c) Shareaza Development Team, 2002-2014.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -338,7 +338,7 @@ void CSecurity::Ban(const CShareazaFile* pFile, int nBanLength, BOOL bMessage, L
 	Add( pRule );
 
 	if ( bMessage && pFile )
-		theApp.Message( MSG_NOTICE, IDS_NETWORK_SECURITY_BLOCKED, (LPCTSTR)pFile->m_sName );
+		theApp.Message( MSG_NOTICE, IDS_SECURITY_BLOCKED, (LPCTSTR)pFile->m_sName );
 }
 
 void CSecurity::Ban(const IN_ADDR* pAddress, int nBanLength, BOOL bMessage, LPCTSTR szComment)
@@ -410,7 +410,7 @@ void CSecurity::Ban(const IN_ADDR* pAddress, int nBanLength, BOOL bMessage, LPCT
 
 	if ( bMessage )
 	{
-		theApp.Message( MSG_NOTICE, IDS_NETWORK_SECURITY_BLOCKED,
+		theApp.Message( MSG_NOTICE, IDS_SECURITY_BLOCKED,
 			(LPCTSTR)CString( inet_ntoa( *pAddress ) ) );
 	}
 }
@@ -602,10 +602,10 @@ BOOL CSecurity::IsDenied(const CShareazaFile* pFile)
 	return m_bDenyPolicy;
 }
 
-BOOL CSecurity::IsIgnoreCountry(const CString& strCountry)
+BOOL CSecurity::IsIgnoredCountry(const CString& strCountry)
 {
-	if (!strCountry || strCountry.IsEmpty()) return FALSE;
-	return Settings.Connection.IgnoreCountry.Find(strCountry) >= 0;
+	if (strCountry.IsEmpty()) return FALSE;
+	return Settings.Connection.IgnoredCountry.find(strCountry) != Settings.Connection.IgnoredCountry.end();
 }
 
 BOOL CSecurity::IsDenied(const CQuerySearch* pQuery, const CString& strContent)
@@ -939,7 +939,6 @@ BOOL CSecurity::FromXML(CXMLElement* pXML)
 
 BOOL CSecurity::Import(LPCTSTR pszFile)
 {
-	CString strText;
 	CBuffer pBuffer;
 	CFile pFile;
 
@@ -1145,7 +1144,7 @@ CLiveList* CSecurity::GetList() const
 {
 	CQuickLock oLock( m_pSection );
 
-	CLiveList* pLiveList = new CLiveList( 6, GetCount() + GetCount() / 4u );
+	CLiveList* pLiveList = new CLiveList( 6, (UINT)GetCount() + (UINT)GetCount() / 4u );
 
 	if ( CLiveItem* pDefault = pLiveList->Add( (LPVOID)0 ) )
 	{

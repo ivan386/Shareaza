@@ -348,7 +348,7 @@ int CALLBACK CHandshakes::AcceptCheck(IN LPWSABUF lpCallerId,
 	// If the remote computer's IP address is on the list of blocked IPs
 	if ( Security.IsDenied( &pHost->sin_addr ) )
 	{
-		theApp.Message( MSG_ERROR, IDS_NETWORK_SECURITY_DENIED, (LPCTSTR)CString( inet_ntoa( pHost->sin_addr ) ) );
+		theApp.Message( MSG_ERROR, IDS_SECURITY_DENIED, (LPCTSTR)CString( inet_ntoa( pHost->sin_addr ) ) );
 		return CF_REJECT;
 	}
 

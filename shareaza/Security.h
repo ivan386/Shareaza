@@ -80,7 +80,7 @@ public:
 
 	bool			Complain(const IN_ADDR* pAddress, int nBanLength = ban5Mins, int nExpire = 10, int nCount = 3);
 	void			Clear();
-	BOOL			IsIgnoreCountry(const CString& strCountry);
+	BOOL			IsIgnoredCountry(const CString& strCountry);
 	BOOL			IsDenied(const IN_ADDR* pAddress);
 	BOOL			IsDenied(LPCTSTR pszContent);
 	BOOL			IsDenied(const CShareazaFile* pFile);

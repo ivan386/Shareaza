@@ -422,7 +422,7 @@ CHostCacheHostPtr CHostCacheList::Add(const IN_ADDR* pAddress, WORD nPort, DWORD
 		pHost = Find( szAddress );
 	if ( ! pHost )
 	{
-		if (Security.IsIgnoreCountry(theApp.GetCountryCode( *pAddress )))
+		if (Security.IsIgnoredCountry(theApp.GetCountryCode( *pAddress )))
 			return NULL;
 
 		// Create new host
@@ -655,7 +655,7 @@ void CHostCacheList::PruneOldHosts(DWORD tNow)
 {
 	CQuickLock oLock( m_pSection );
 
-	for( CHostCacheMapItr i = m_Hosts.begin(); i != m_Hosts.end(); )
+	for( CHostCacheMapItr i = m_Hosts.begin(); i != m_Hosts.end() && m_Hosts.size() > 100; )
 	{
 		CHostCacheHostPtr pHost = (*i).second;
 

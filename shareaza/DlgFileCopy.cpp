@@ -1,7 +1,7 @@
 //
 // DlgFileCopy.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2013.
+// Copyright (c) Shareaza Development Team, 2002-2014.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -301,30 +301,6 @@ void CFileCopyDlg::OnRun()
 		}
 
 		delete pMetadata;
-/*
-		// Alternate code to check if file is hashing first
-		CString sCurrent, sFile;
-		int nRemaining;
-		LibraryBuilder.UpdateStatus( &sCurrent, &nRemaining );
-		sFile = strPath + _T("\\") + strName;
-
-		if ( sFile == sCurrent )
-		{
-			LoadString ( sFile, IDS_LIBRARY_BITZI_HASHED );
-			sCurrent.Format( sFile, strName );
-			theApp.Message( MSG_NOTICE, sCurrent  );
-
-			LoadString ( sCurrent, IDS_STATUS_FILEERROR );
-			m_wndFileName.SetWindowText( sCurrent );
-
-		}
-		else
-		{
-			m_wndFileName.SetWindowText( strName );
-			ProcessFile( strName, strPath, bMetaData );
-		}
-		//
-*/
 	}
 
 	m_bCompleted = true;
