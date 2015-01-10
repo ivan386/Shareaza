@@ -655,7 +655,7 @@ void CHostCacheList::PruneOldHosts(DWORD tNow)
 {
 	CQuickLock oLock( m_pSection );
 
-	for( CHostCacheMapItr i = m_Hosts.begin(); i != m_Hosts.end() && m_Hosts.size() > 100; )
+	for( CHostCacheMapItr i = m_Hosts.begin(); i != m_Hosts.end(); )
 	{
 		CHostCacheHostPtr pHost = (*i).second;
 
@@ -698,7 +698,9 @@ void CHostCacheList::PruneOldHosts(DWORD tNow)
 
 		if ( ! pHost->m_bPriority &&
 			 ( pHost->m_nFailures > Settings.Connection.FailureLimit ||
-			   pHost->IsExpired( tNow ) ) )
+			   pHost->IsExpired( tNow ) ||
+			   ! ( this->m_nProtocol == PROTOCOL_G2 &&
+			       m_Hosts.size() >= 100 ) ) )
 		{
 			i = Remove( pHost );
 		}
@@ -1577,7 +1579,9 @@ bool CHostCacheHost::CanConnect(DWORD tNow) const
 		// ...and we lost no hope on this host...
 		( m_nFailures <= Settings.Connection.FailureLimit ) &&
 		// ...and host isn't expired...
-		( m_bPriority || ! IsExpired( tNow ) ) &&
+		( m_bPriority || ! IsExpired( tNow ) ||
+			( this->m_nProtocol == PROTOCOL_G2 &&
+			  Neighbours.GetCount( PROTOCOL_G2, 7, 1 ) <= 1 ) ) &&
 		// ...and make sure we reconnect not too fast...
 		( ! IsThrottled( tNow ) );
 		// ...then we can connect!
