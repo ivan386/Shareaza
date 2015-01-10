@@ -699,8 +699,8 @@ void CHostCacheList::PruneOldHosts(DWORD tNow)
 		if ( ! pHost->m_bPriority &&
 			 ( pHost->m_nFailures > Settings.Connection.FailureLimit ||
 			   pHost->IsExpired( tNow ) ||
-			   ! ( this->m_nProtocol == PROTOCOL_G2 &&
-			       m_Hosts.size() >= 100 ) ) )
+			   ! ( pHost->m_nProtocol == PROTOCOL_G2 &&
+			       m_Hosts.size() >= 100 ) ) ) 
 		{
 			i = Remove( pHost );
 		}
