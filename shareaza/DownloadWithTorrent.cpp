@@ -321,6 +321,11 @@ BOOL CDownloadWithTorrent::SetTorrent(const CBTInfo* pTorrent)
 		m_nSize = m_pTorrent.m_nSize;
 	}
 
+	if ( m_pTorrent.m_nBitrate )
+	{
+		m_nBitrate = m_pTorrent.m_nBitrate;
+	}
+
 	if ( m_pTorrent.m_sName.GetLength() )
 	{
 		Rename( m_pTorrent.m_sName );

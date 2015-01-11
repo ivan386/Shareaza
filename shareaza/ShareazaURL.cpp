@@ -698,6 +698,7 @@ BOOL CShareazaURL::ParseMagnet(LPCTSTR pszURL)
 	{
 		pTorrent->SetTrackerMode( ( pTorrent->GetTrackerCount() > 1 ) ? CBTInfo::tMultiFinding : CBTInfo::tSingle );
 		m_pTorrent = pTorrent;
+		m_pTorrent->m_nBitrate		= m_nBitrate;
 		m_pTorrent->m_oMD5			= m_oMD5;
 		m_pTorrent->m_oBTH			= m_oBTH;
 		m_pTorrent->m_oSHA1			= m_oSHA1;
