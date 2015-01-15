@@ -129,6 +129,8 @@ void CURLCopyDlg::Resolve(CShareazaFile& pFile, CString& sTracker, CString& sWeb
 				pFile.m_oED2K = pDownload->m_oED2K;
 			if ( ! pFile.m_oMD5 && pDownload->m_oMD5 )
 				pFile.m_oMD5 = pDownload->m_oMD5;
+			if ( ! pFile.m_nBitrate && pDownload->m_nBitrate )
+				pFile.m_nBitrate = pDownload->m_nBitrate;
 
 			// Get trackers
 			if ( sTracker.IsEmpty() && pDownload->IsTorrent() )
@@ -157,6 +159,8 @@ void CURLCopyDlg::Resolve(CShareazaFile& pFile, CString& sTracker, CString& sWeb
 				pFile.m_oED2K = pLibraryFile->m_oED2K;
 			if ( ! pFile.m_oMD5 && pLibraryFile->m_oMD5 )
 				pFile.m_oMD5 = pLibraryFile->m_oMD5;
+			if ( ! pFile.m_nBitrate && pLibraryFile->m_nBitrate )
+				pFile.m_nBitrate = pLibraryFile->m_nBitrate;
 		}
 	}
 }
@@ -215,6 +219,13 @@ CString CURLCopyDlg::CreateMagnet(CShareazaFile& pFile)
 			sMagnet += _T("kt=");
 		sMagnet += URLEncode( pFile.m_sName );
 	}
+
+	if ( pFile.m_nBitrate != 0 && pFile.m_nBitrate != SIZE_UNKNOWN )
+	{
+		if ( sMagnet.GetLength() ) sMagnet += _T("&");
+		sMagnet.AppendFormat( _T("br=%I64u"), pFile.m_nBitrate );
+	}
+
 
 	if ( sTracker.GetLength() )
 	{

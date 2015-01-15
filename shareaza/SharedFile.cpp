@@ -1017,6 +1017,25 @@ void CLibraryFile::Serialize(CArchive& ar, int nVersion)
 				delete m_pMetadata;
 				m_pMetadata = NULL;
 			}
+			else
+			{
+					if ( m_nBitrate == 0 && m_pMetadata ){
+						QWORD nLength = 0;
+						CString sMinutes = m_pMetadata->GetAttributeValue(L"minutes");
+						CString sSeconds = m_pMetadata->GetAttributeValue(L"seconds");
+						if (!sMinutes.IsEmpty())
+						{
+							double nMins = 0.0;
+							_stscanf( sMinutes, _T("%lf"), &nMins );
+							nLength = (QWORD)( nMins * (double)60 );	// Convert to seconds
+						}
+						if (!sSeconds.IsEmpty())
+							_stscanf( sSeconds, _T("%I64i"), &nLength );
+						
+						if (m_nSize > 0 && nLength > 0)
+							m_nBitrate = (m_nSize / nLength) * 8;
+					}
+			}
 			// else schema URI changed
 		}
 		if ( m_pSchema == NULL )
