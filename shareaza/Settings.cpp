@@ -232,8 +232,8 @@ void CSettings::Load()
 
 	Add( _T("MediaPlayer"), _T("Aspect"), &MediaPlayer.Aspect, smaDefault );
 	Add( _T("MediaPlayer"), _T("AviPreviewCLSID"), &MediaPlayer.AviPreviewCLSID, _T("{394011F0-6D5C-42a3-96C6-24B9AD6B010C}") );
-	Add( _T("MediaPlayer"), _T("EnableEnqueue"), &MediaPlayer.EnableEnqueue, true );
-	Add( _T("MediaPlayer"), _T("EnablePlay"), &MediaPlayer.EnablePlay, true );
+	Add( _T("MediaPlayer"), _T("EnableEnqueue"), &MediaPlayer.EnableEnqueue, false );
+	Add( _T("MediaPlayer"), _T("EnablePlay"), &MediaPlayer.EnablePlay, false );
 	Add( _T("MediaPlayer"), _T("FileTypes"), &MediaPlayer.FileTypes, _T("") );
 	Add( _T("MediaPlayer"), _T("ListSize"), &MediaPlayer.ListSize, 240 );
 	Add( _T("MediaPlayer"), _T("ListVisible"), &MediaPlayer.ListVisible, true );
