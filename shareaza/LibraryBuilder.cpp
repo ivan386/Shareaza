@@ -151,7 +151,7 @@ void CLibraryBuilder::Remove(const CLibraryFile* pFile)
 		{
 			CQuickLock oLock( m_pSection );
 
-			if ( m_nProgress == 100 || m_sPath.CompareNoCase( sPath ) != 0 )
+			if ( m_nProgress == 100 || m_sPath.CompareNoCase( sPath ) != 0 || theApp.m_bClosing )
 				break;
 
 			m_oSkip.SetEvent();
