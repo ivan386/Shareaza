@@ -1262,6 +1262,7 @@ BOOL CBTClient::OnMetadataRequest(CBTPacket* pPacket)
 					else
 					{
 						int nNextPiece = m_pDownload->m_pTorrent.NextInfoPiece();
+						ASSERT( nNextPiece > nPiece );
 						if ( nNextPiece >= 0 && m_nUtMetadataID )
 							SendInfoRequest( nNextPiece );
 					}
