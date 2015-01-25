@@ -1,0 +1,46 @@
+HKCR
+{
+	ForceRemove ShortURL.Plugin.1 = s 'URL Shortener Plugin'
+	{
+		CLSID = s '{76F13243-9F62-4241-AC07-3B359BBE4EC6}'
+	}
+	ForceRemove ShortURL.Plugin = s 'URL Shortener Plugin'
+	{
+		CLSID = s '{76F13243-9F62-4241-AC07-3B359BBE4EC6}'
+		CurVer = s 'ShortURL.Plugin.1'
+	}
+	NoRemove CLSID
+	{
+		ForceRemove {76F13243-9F62-4241-AC07-3B359BBE4EC6} = s 'URL Shortener Plugin'
+		{
+			ProgID = s 'ShortURL.Plugin.1'
+			VersionIndependentProgID = s 'ShortURL.Plugin'
+			InprocServer32 = s '%MODULE%'
+			{
+				val ThreadingModel = s 'Both'
+			}
+			val AppID = s '%APPID%'
+			'TypeLib' = s '{ABC45D7F-EF52-4E5C-986A-93674FE3BBCD}'
+		}
+	}
+}
+HKCU
+{
+	NoRemove Software
+	{
+		NoRemove Shareaza
+		{
+			NoRemove Shareaza
+			{
+				NoRemove Plugins
+				{
+					NoRemove General
+					{
+						val 'URL Shortener Plugin' = s '{76F13243-9F62-4241-AC07-3B359BBE4EC6}'
+					}
+					val '{76F13243-9F62-4241-AC07-3B359BBE4EC6}' = s ''
+				}
+			}
+		}
+	}
+}

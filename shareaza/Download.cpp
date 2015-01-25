@@ -688,7 +688,7 @@ BOOL CDownload::OpenDownload()
 
 	SetModified();
 
-	if ( IsTorrent(TRUE) )
+	if ( IsTorrent() && ! ( m_oSHA1 || m_oTiger || m_oED2K || m_oMD5 ) )
 	{
 		if ( Open( m_pTorrent ) )
 			return TRUE;

@@ -1,7 +1,7 @@
 //
 // UPnPFinder.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2011.
+// Copyright (c) Shareaza Development Team, 2002-2014.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -635,7 +635,7 @@ void CUPnPFinder::DeleteExistingPortMappings(ServicePointer pService)
 			// DeletePortMapping action takes 3 arguments:
 			//		RemoteHost, ExternalPort and PortMappingProtocol
 
-			CString strHost, strPort, strProtocol, strLocalIP;
+			CString strHost, strPort, strProtocol;
 
 			if ( _tcsistr( strActionResult, L"|VT_BSTR=Shareaza TCP|" ) != NULL ||
 				_tcsistr( strActionResult, L"|VT_BSTR=Shareaza UDP|" ) != NULL )
@@ -776,7 +776,7 @@ HRESULT CUPnPFinder::InvokeAction(ServicePointer pService,
 
 	for( INT_PTR nArg = 0 ; nArg < nArgs ; nArg++ )
 	{
-		nPos = nArg + 1;
+		nPos = (LONG)( nArg + 1 );
 		hr = SafeArrayPutElement( psaArgs, &nPos, ppVars[ nArg ] );
 		if ( FAILED( hr ) ) return hr;
 	}

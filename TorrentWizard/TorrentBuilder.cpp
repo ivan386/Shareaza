@@ -550,7 +550,6 @@ BOOL CTorrentBuilder::WriteOutput()
 
 			pInfo->Add( "length" )->SetInt( m_nTotalSize );
 
-
 			if ( m_bMD5 )
 			{
 				CMD5::Digest pFileMD5;
@@ -602,10 +601,10 @@ BOOL CTorrentBuilder::WriteOutput()
 			
 					if ( nFile == 0 )
 						continue;
-					
+			
 					LPCTSTR pszFirst	= strFirst;
 					LPCTSTR pszThis		= strThis;
-					
+			
 					for ( int nPos = 0, nSlash = 0 ; nPos < nCommonPath ; nPos++ )
 					{
 						if ( pszThis[nPos] != pszFirst[nPos] ||
@@ -683,7 +682,7 @@ BOOL CTorrentBuilder::WriteOutput()
 				for ( DWORD i = 0 ; i < m_nPieceCount; ++i )
 					m_pPieceSHA1[ i ].GetHash( (uchar*)&pPieceSHA1[ i ][ 0 ] );
 				pInfo->Add( "pieces" )->SetString( pPieceSHA1, m_nPieceCount * sizeof CSHA::Digest );
-			}	
+			}
 
 			if ( m_bPrivate )
 				pInfo->Add( "private" )->SetInt( 1 );
@@ -692,7 +691,7 @@ BOOL CTorrentBuilder::WriteOutput()
 				pInfo->Add( "source" )->SetString( m_sSource );
 		}
 	}
-	
+
 	CBuffer pOutput;
 	pRoot.Encode( &pOutput );
 	

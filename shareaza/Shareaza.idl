@@ -1,7 +1,7 @@
 //
 // Shareaza.idl
 //
-// Copyright (c) Shareaza Development Team, 2002-2010.
+// Copyright (c) Shareaza Development Team, 2002-2014.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -397,6 +397,24 @@ library Shareaza
 	//
 	// Shareaza Object Model
 	//
+	
+	// Log severity (log level)
+	cpp_quote("#define MSG_SEVERITY_MASK		0x000f")
+	cpp_quote("#define MSG_ERROR				0x0000")
+	cpp_quote("#define MSG_WARNING				0x0001")
+	cpp_quote("#define MSG_NOTICE				0x0002")
+	cpp_quote("#define MSG_INFO					0x0003")
+	cpp_quote("#define MSG_DEBUG				0x0004")
+
+	// Log facility
+	cpp_quote("#define MSG_FACILITY_MASK		0xff00")
+	cpp_quote("#define MSG_FACILITY_DEFAULT		0x0000")
+	cpp_quote("#define MSG_FACILITY_SEARCH		0x0100")
+	cpp_quote("#define MSG_FACILITY_INCOMING	0x0200")
+	cpp_quote("#define MSG_FACILITY_OUTGOING	0x0300")
+
+	// Show message in tray also
+	cpp_quote("#define MSG_TRAY					0x0010")
 
 	interface IApplication;
 	interface IUserInterface;
@@ -417,6 +435,9 @@ library Shareaza
 		[id(22),propget] HRESULT Settings( [out,retval] ISettings** ppSettings );
 
 		[id(23),propget] HRESULT ImageService( [out,retval] IImageServicePlugin** ppImageService );
+
+		[id(40),propget] HRESULT SmartAgent( [out,retval] BSTR* psSmartAgent );
+		[id(41)] HRESULT Message( [in] WORD nType, [in] BSTR bsMessage );
 	};
 
 	//
@@ -438,7 +459,7 @@ library Shareaza
 		[id(11),propget] HRESULT MainWindowHwnd( [out,retval] HWND* phWnd );
 		[id(12),propget] HRESULT ActiveView( [out,retval] IGenericView** ppView );
 
-		[id(20)] HRESULT RegisterCommand( [in] BSTR bsName, [in] HICON hIcon, [out,retval] UINT* pnCommand );
+		[id(20)] HRESULT RegisterCommand( [in] BSTR bsName, [in] HICON hIcon, [out,retval] UINT* pnCommandID );
 		[id(21)] HRESULT AddFromString( [in] BSTR sXML );
 		[id(22)] HRESULT AddFromResource( [in] HINSTANCE hInstance, [in] UINT nID );
 		[id(23)] HRESULT AddFromXML( [in] ISXMLElement* pXML );
@@ -446,6 +467,9 @@ library Shareaza
 		[id(31)] HRESULT GetMenu( [in] BSTR bsName, [in] VARIANT_BOOL bCreate, [out,retval] ISMenu** ppMenu );
 		[id(32)] HRESULT GetToolbar( [in] BSTR bsName, [in] VARIANT_BOOL bCreate, [out,retval] ISToolbar** ppToolbar );
 
+		[id(40)] HRESULT NameToID( [in] BSTR bsName, [out,retval] UINT* pnCommandID );
+		[id(41)] HRESULT AddString( [in] UINT nStringID, [in] BSTR sText );
+		[id(42)] HRESULT LoadString( [in] UINT nStringID, [out,retval] BSTR* psText );
 	};
 
 	typedef enum
@@ -486,6 +510,9 @@ library Shareaza
 		[id(31)] HRESULT InsertSeparator( [in] LONG nPosition );
 		[id(32)] HRESULT InsertMenu( [in] LONG nPosition, [in] BSTR sText, [out,retval] ISMenu** ppMenu );
 		[id(33)] HRESULT InsertCommand( [in] LONG nPosition, [in] LONG nCommandID, [in] BSTR sText, [out,retval] ISMenu** ppMenu );
+
+		[id(40),propget] HRESULT Position( [out,retval] LONG* pnCommandID );
+		[id(41),propget] HRESULT Parent( [out,retval] ISMenu** ppMenu );
 	};
 
 	typedef enum
@@ -625,6 +652,8 @@ library Shareaza
 		[id(22),propget] HRESULT URN( [in] BSTR sURN, [out,retval] BSTR* psURN );
 		[id(25),propget] HRESULT Hash( [in] URN_TYPE nType, [in] ENCODING nEncoding, [out,retval] BSTR* psURN );
 		[id(26),propget] HRESULT URL( [out,retval] BSTR* psURL );
+		
+		[id(40),propget] HRESULT Magnet( [out,retval] BSTR* psMagnet );
 	};
 
 	[ uuid(B663F7DE-E1C6-4fe6-92BD-D0549B7601E3), dual, oleautomation ]

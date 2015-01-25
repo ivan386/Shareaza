@@ -1,7 +1,7 @@
 //
 // HubHorizon.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2007.
+// Copyright (c) Shareaza Development Team, 2002-2014.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -218,8 +218,11 @@ void CHubHorizonGroup::Add(IN_ADDR* pAddress, WORD nPort)
 	{
 		m_nBuffer += 8;
 		CHubHorizonHub** pList = new CHubHorizonHub*[ m_nBuffer ];
-		if ( m_nCount ) CopyMemory( pList, m_pList, sizeof(CHubHorizonHub*) * m_nCount );
-		if ( m_pList ) delete [] m_pList;
+		if ( m_pList )
+		{
+			if ( m_nCount ) CopyMemory( pList, m_pList, sizeof(CHubHorizonHub*) * m_nCount );
+			delete [] m_pList;
+		}
 		m_pList = pList;
 	}
 

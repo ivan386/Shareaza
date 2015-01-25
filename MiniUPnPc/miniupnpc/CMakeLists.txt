@@ -2,7 +2,7 @@ cmake_minimum_required (VERSION 2.6)
 
 project (miniupnpc C)
 set (MINIUPNPC_VERSION 1.9)
-set (MINIUPNPC_API_VERSION 10)
+set (MINIUPNPC_API_VERSION 12)
 
 if (NOT CMAKE_BUILD_TYPE)
   if (WIN32)
@@ -36,7 +36,7 @@ else (NOT WIN32)
 endif (NOT WIN32)
 
 if (CMAKE_SYSTEM_NAME STREQUAL "Darwin")
-  add_definitions (-DMACOSX -D_DARWIN_C_SOURCE)
+  add_definitions (-D_DARWIN_C_SOURCE)
 endif ()
 
 # Set compiler specific build flags
@@ -86,7 +86,7 @@ endif (NOT WIN32 AND NOT CMAKE_SYSTEM_NAME STREQUAL "AmigaOS")
 
 if (WIN32)
   set_source_files_properties (${MINIUPNPC_SOURCES} PROPERTIES
-                                                    COMPILE_DEFINITIONS STATICLIB
+                                                    COMPILE_DEFINITIONS MINIUPNP_STATICLIB
                                                     COMPILE_DEFINITIONS MINIUPNP_EXPORTS
   )
 endif (WIN32)
@@ -165,6 +165,8 @@ install (FILES
   igd_desc_parse.h
   upnpreplyparse.h
   upnperrors.h
+  miniupnpctypes.h
+  portlistingparse.h
   declspec.h
   DESTINATION include/miniupnpc
 )

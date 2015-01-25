@@ -9,6 +9,9 @@ The Unzip library is Copyright (C) 1998-2003 Gilles Vollant.
 
 #pragma once
 
+#define _WIN32_WINNT 0x0501
+#include <SDKDDKVer.h>
+
 #include <windows.h>
 #include <tchar.h>
 #include <shlwapi.h>

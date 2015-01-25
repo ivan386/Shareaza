@@ -1,7 +1,7 @@
 //
 // ShareazaDataSource.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2012.
+// Copyright (c) Shareaza Development Team, 2002-2014.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -377,8 +377,7 @@ HRESULT CShareazaDataSource::DoDragDropHelper(const T* pList, HBITMAP pImage, co
 				if ( SUCCEEDED( hr ) )
 				{
 					// Begin async drag-n-drop operation
-					HANDLE hThread = BeginThread( "DragDrop",
-						DragDropThread<T>, (LPVOID)pStream );
+					HANDLE hThread = CRazaThread::BeginThread( "DragDrop", DragDropThread<T>, (LPVOID)pStream );
 					hr = ( hThread != NULL ) ? S_OK : E_FAIL;
 				}
 			}
@@ -587,7 +586,7 @@ BOOL CShareazaDataSource::DropToFolder(IDataObject* pIDataObject, DWORD grfKeySt
 			if ( nPath1Length > 0 && pszDest[ nPath1Length - 1 ] == _T('\\') )
 				nPath1Length--;
 			int nPath2Length = bFolder ? lstrlen( pAFOP->sFrom.GetData() ) :
-				( szPath2 - pAFOP->sFrom.GetData() - 1 );
+				(int)( szPath2 - pAFOP->sFrom.GetData() - 1 );
 			if ( nPath1Length == nPath2Length &&
 				_tcsncicmp( pszDest, pAFOP->sFrom.GetData(), nPath1Length ) == 0 )
 				// source == destination
@@ -615,8 +614,7 @@ BOOL CShareazaDataSource::DropToFolder(IDataObject* pIDataObject, DWORD grfKeySt
 
 	pAFOP->dwEffect = *pdwEffect;
 
-	HANDLE hThread = BeginThread( "SHFileOperation",
-		AsyncFileOperationThread, (LPVOID)pAFOP.release() );
+	HANDLE hThread = CRazaThread::BeginThread( "SHFileOperation", AsyncFileOperationThread, (LPVOID)pAFOP.release() );
 	if ( hThread == NULL )
 		return FALSE;
 

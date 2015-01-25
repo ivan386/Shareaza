@@ -1063,9 +1063,9 @@ BOOL CBTInfo::LoadTorrentTree(const CBENode* pRoot)
 			if ( pPath && pPath->IsType( CBENode::beList ) )
 			{
 				const CBENode* pPart = pPath->GetNode( 0 );
-					if ( pPart && pPart->IsType( CBENode::beString ) )
-						strPath = pPart->GetString();
-				}
+				if ( pPart && pPart->IsType( CBENode::beString ) )
+					strPath = pPart->GetString();
+			}
 
 			// Get the regular path
 			pPath = pFile->GetNode( "path" );

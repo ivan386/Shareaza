@@ -1,7 +1,7 @@
 //
 // WndBrowseHost.h
 //
-// Copyright (c) Shareaza Development Team, 2002-2011.
+// Copyright (c) Shareaza Development Team, 2002-2014.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -35,26 +35,13 @@ class CG2Packet;
 
 class CBrowseHostWnd : public CBaseMatchWnd
 {
-// Construction
+	DECLARE_DYNCREATE(CBrowseHostWnd)
+
 public:
 	CBrowseHostWnd(PROTOCOLID nProtocol = PROTOCOL_ANY, SOCKADDR_IN* pHost = NULL, BOOL bMustPush = FALSE, const Hashes::Guid& pClientID = Hashes::Guid(), const CString& sNick = CString());
-	virtual ~CBrowseHostWnd();
-
-	DECLARE_DYNCREATE(CBrowseHostWnd)
 
 	inline CHostBrowser* GetBrowser() const { return m_pBrowser; }
 
-// Attributes
-protected:
-	CHostBrowser*		m_pBrowser;
-	CBrowseHeaderCtrl	m_wndHeader;
-	CBrowseProfileCtrl	m_wndProfile;
-	CBrowseFrameCtrl	m_wndFrame;
-	BOOL				m_bOnFiles;
-	BOOL				m_bAutoBrowse;
-
-// Operations
-public:
 	void			Serialize(CArchive& ar, int nVersion = BROWSER_SER_VERSION);
 	virtual void	OnSkinChange();
 	virtual void	OnProfileReceived();
@@ -66,11 +53,16 @@ public:
 	virtual BOOL	OnNewFile(CLibraryFile* pFile);
 	virtual void	UpdateMessages(BOOL bActive = TRUE);
 
-// Implementation
-public:
-	virtual BOOL OnCmdMsg(UINT nID, int nCode, void* pExtra, AFX_CMDHANDLERINFO* pHandlerInfo);
 protected:
-	DECLARE_MESSAGE_MAP()
+	CAutoPtr< CHostBrowser > m_pBrowser;
+	CBrowseHeaderCtrl	m_wndHeader;
+	CBrowseProfileCtrl	m_wndProfile;
+	CBrowseFrameCtrl	m_wndFrame;
+	BOOL				m_bOnFiles;
+	BOOL				m_bAutoBrowse;
+
+	virtual BOOL OnCmdMsg(UINT nID, int nCode, void* pExtra, AFX_CMDHANDLERINFO* pHandlerInfo);
+
 	afx_msg int OnCreate(LPCREATESTRUCT lpCreateStruct);
 	afx_msg void OnDestroy();
 	afx_msg void OnContextMenu(CWnd* pWnd, CPoint point);
@@ -86,4 +78,5 @@ protected:
 	afx_msg void OnSearchChat();
 	afx_msg void OnSelChangeMatches();
 
+	DECLARE_MESSAGE_MAP()
 };

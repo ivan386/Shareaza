@@ -523,7 +523,7 @@ void CUploadsWnd::OnUploadsChat()
 			{
 				PROTOCOLID nProtocol = pTransfer->m_nProtocol;
 				SOCKADDR_IN pAddress = pTransfer->m_pHost;
-				CString sNick = pTransfer->m_sRemoteNick;
+//				CString sNick = pTransfer->m_sRemoteNick;
 				BOOL bClientExtended = pTransfer->m_bClientExtended;
 				pLock.Unlock();
 

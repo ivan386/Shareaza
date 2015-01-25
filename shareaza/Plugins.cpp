@@ -1,7 +1,7 @@
 //
 // Plugins.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2013.
+// Copyright (c) Shareaza Development Team, 2002-2014.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -414,7 +414,8 @@ void CPlugins::OnRun()
 		if ( pGITPlugin )
 		{
 			// Create plugin
-			if ( SUCCEEDED( hr = pGITPlugin->m_pIUnknown.CoCreateInstance( m_inCLSID ) ) &&
+			if ( ( SUCCEEDED( hr = pGITPlugin->m_pIUnknown.CoCreateInstance( m_inCLSID, NULL, CLSCTX_LOCAL_SERVER ) ) || 
+				   SUCCEEDED( hr = pGITPlugin->m_pIUnknown.CoCreateInstance( m_inCLSID ) ) ) &&
 				 // Add plugin interface to GIT
 				 SUCCEEDED( hr = pGITPlugin->m_pGIT.Attach( pGITPlugin->m_pIUnknown ) ) )
 			{
@@ -696,11 +697,15 @@ BOOL CPlugin::Start()
 		// Something very bad
 		return FALSE;
 
-	hr = m_pPlugin.CoCreateInstance( m_pCLSID );
+	hr = m_pPlugin.CoCreateInstance( m_pCLSID, NULL, CLSCTX_LOCAL_SERVER );
 	if ( FAILED( hr ) )
 	{
-		m_pPlugin.Release();
-		return FALSE;
+		hr = m_pPlugin.CoCreateInstance( m_pCLSID );
+		if ( FAILED( hr ) )
+		{
+			m_pPlugin.Release();
+			return FALSE;
+		}
 	}
 
 	hr = m_pPlugin->SetApplication( pApplication );

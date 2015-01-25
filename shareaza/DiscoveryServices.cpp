@@ -1,7 +1,7 @@
 //
 // DiscoveryServices.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2012.
+// Copyright (c) Shareaza Development Team, 2002-2014.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -826,7 +826,7 @@ void CDiscoveryServices::MergeURLs()
 
 BOOL CDiscoveryServices::Update()
 {
-	DWORD tNow = static_cast< DWORD >( time( NULL ) );
+	const DWORD tNow = static_cast< DWORD >( time( NULL ) );
 
 	// Don't update too frequently
 	if ( tNow < Settings.Discovery.UpdatePeriod + m_tUpdated )
@@ -912,7 +912,7 @@ BOOL CDiscoveryServices::Execute(BOOL bDiscovery, PROTOCOLID nProtocol, USHORT n
 		if ( m_pRequest.IsPending() )
 			return FALSE;
 
-		DWORD tNow = static_cast< DWORD >( time( NULL ) );
+		const DWORD tNow = static_cast< DWORD >( time( NULL ) );
 		if ( m_tExecute != 0 && tNow - m_tExecute < 5 && nForceDiscovery < 2 ) return FALSE;
 		if ( m_tQueried != 0 && tNow - m_tQueried < 60 && nForceDiscovery == 0 ) return FALSE;
 		if ( nForceDiscovery > 0 && nProtocol == PROTOCOL_NULL ) return FALSE;
@@ -994,6 +994,7 @@ int CDiscoveryServices::ExecuteBootstraps(int nCount, BOOL bUDP, PROTOCOLID nPro
 	CArray< CDiscoveryService* > pRandom;
 	int nSuccess;
 	BOOL bGnutella1, bGnutella2;
+	const DWORD tNow = static_cast< DWORD >( time( NULL ) );
 
 	switch(nProtocol)
 	{
@@ -1027,7 +1028,7 @@ int CDiscoveryServices::ExecuteBootstraps(int nCount, BOOL bUDP, PROTOCOLID nPro
 		CDiscoveryService* pService = m_pList.GetNext( pos );
 		if ( pService->m_nType == CDiscoveryService::dsGnutella &&
 			( ( bGnutella1 && bGnutella2 ) || ( bGnutella1 == pService->m_bGnutella1 && bGnutella2 == pService->m_bGnutella2 ) ) &&
-			( ( ( pService->m_nSubType == CDiscoveryService::dsGnutellaUDPHC || pService->m_nSubType == CDiscoveryService::dsGnutella2UDPKHL ) && bUDP && ( time( NULL ) - pService->m_tAccessed >= 300 ) ) ||
+			( ( ( pService->m_nSubType == CDiscoveryService::dsGnutellaUDPHC || pService->m_nSubType == CDiscoveryService::dsGnutella2UDPKHL ) && bUDP && ( tNow - pService->m_tAccessed >= 300 ) ) ||
 			( ( pService->m_nSubType == CDiscoveryService::dsOldBootStrap || pService->m_nSubType == CDiscoveryService::dsGnutellaTCP || pService->m_nSubType == CDiscoveryService::dsGnutella2TCP ) && ! bUDP ) ) )
 				pRandom.Add( pService );
 	}
@@ -1085,7 +1086,7 @@ CDiscoveryService* CDiscoveryServices::GetRandomService(PROTOCOLID nProtocol)
 	ASSUME_LOCK( Network.m_pSection );
 
 	CArray< CDiscoveryService* > pServices;
-	DWORD tNow = static_cast< DWORD >( time( NULL ) );
+	const DWORD tNow = static_cast< DWORD >( time( NULL ) );
 
 	// Loops through all services
 	for ( POSITION pos = m_pList.GetHeadPosition() ; pos ; )
@@ -1099,7 +1100,7 @@ CDiscoveryService* CDiscoveryServices::GetRandomService(PROTOCOLID nProtocol)
 				( tNow - pService->m_tAccessed > pService->m_nAccessPeriod ) )
 				pServices.Add( pService );
 			else if ( ( pService->m_nType == CDiscoveryService::dsGnutella ) && ( pService->m_nSubType == CDiscoveryService::dsGnutellaUDPHC ) &&
-				time( NULL ) - pService->m_tAccessed >= 300 )
+				tNow - pService->m_tAccessed >= 300 )
 				pServices.Add( pService );
 			break;
 		case PROTOCOL_G2:
@@ -1107,7 +1108,7 @@ CDiscoveryService* CDiscoveryServices::GetRandomService(PROTOCOLID nProtocol)
 				( tNow - pService->m_tAccessed > pService->m_nAccessPeriod ) )
 				pServices.Add( pService );
 			else if ( ( pService->m_nType == CDiscoveryService::dsGnutella ) && ( pService->m_nSubType == CDiscoveryService::dsGnutella2UDPKHL ) &&
-				time( NULL ) - pService->m_tAccessed >= 300 )
+				tNow - pService->m_tAccessed >= 300 )
 				pServices.Add( pService );
 			break;
 		case PROTOCOL_ED2K:
@@ -1142,7 +1143,7 @@ CDiscoveryService* CDiscoveryServices::GetRandomWebCache(PROTOCOLID nProtocol, B
 
 	// Select a random webcache (G1/G2 only)
 	CArray< CDiscoveryService* > pWebCaches;
-	DWORD tNow = static_cast< DWORD >( time( NULL ) );
+	const DWORD tNow = static_cast< DWORD >( time( NULL ) );
 
 	for ( POSITION pos = m_pList.GetHeadPosition() ; pos ; )
 	{
@@ -1200,7 +1201,7 @@ BOOL CDiscoveryServices::RequestWebCache(CDiscoveryService* pService, Mode nMode
 	if ( ! pLock.Lock( 250 ) )
 		return FALSE;
 
-	DWORD tNow = (DWORD)time( NULL );
+	const DWORD tNow = static_cast< DWORD >( time( NULL ) );
 	DWORD nHosts = 0;
 
 	switch ( nProtocol )
@@ -1220,8 +1221,8 @@ BOOL CDiscoveryServices::RequestWebCache(CDiscoveryService* pService, Mode nMode
 
 	if ( pService != NULL )
 	{
-		if ( time( NULL ) - pService->m_tAccessed < pService->m_nAccessPeriod &&
-			 nHosts ) return FALSE;
+		if ( tNow - pService->m_tAccessed < pService->m_nAccessPeriod && nHosts )
+			return FALSE;
 	}
 
 	m_pWebCache	= pService;
@@ -1403,6 +1404,8 @@ BOOL CDiscoveryServices::RunWebCacheGet(BOOL bCaches)
 	if ( ! SendWebCacheRequest( strURL, strOutput ) )
 		return FALSE;
 
+	const DWORD tNow = static_cast< DWORD >( time( NULL ) );
+
 	if ( ! pLock.Lock( 250 ) )
 		return FALSE;
 
@@ -1442,10 +1445,10 @@ BOOL CDiscoveryServices::RunWebCacheGet(BOOL bCaches)
 					( nAddress = inet_addr( CT2CA( (LPCTSTR)oParts[ 1 ].Left( nPos ) ) ) ) != INADDR_NONE &&
 					_stscanf( oParts[ 1 ].Mid( nPos + 1 ), _T("%i"), &nPort ) == 1 &&
 					nPort > 0 && nPort < 65536 &&
-					_stscanf( oParts[ 2 ], _T("%i"), &nSeconds ) == 1 &&
-					nSeconds >= 0 && nSeconds < 60 * 60 * 24 * 365 )
+					_stscanf( oParts[ 2 ], _T("%i"), &nSeconds ) == 1 )
 				{
-					DWORD tSeen	= static_cast< DWORD >( time( NULL ) ) - nSeconds;
+					nSeconds = max( min( nSeconds, 60 * 60 * 24 * 365 ), 0 );
+					DWORD tSeen	= tNow - nSeconds;
 
 					// Skip cluster field
 
@@ -1837,6 +1840,8 @@ BOOL CDiscoveryServices::RunWebCacheUpdate()
 	if ( ! SendWebCacheRequest( strURL, strOutput ) )
 		return FALSE;
 
+	const DWORD tNow = static_cast< DWORD >( time( NULL ) );
+
 	if ( ! pLock.Lock( 250 ) )
 		return FALSE;
 
@@ -1854,7 +1859,7 @@ BOOL CDiscoveryServices::RunWebCacheUpdate()
 
 		if ( _tcsstr( strLine, _T("OK") ) != NULL )
 		{
-			m_pWebCache->m_tUpdated = (DWORD)time( NULL );
+			m_pWebCache->m_tUpdated = tNow;
 			m_pWebCache->m_nUpdates++;
 			m_pWebCache->OnSuccess();
 			return TRUE;
@@ -2054,7 +2059,7 @@ CDiscoveryService::CDiscoveryService(Type nType, LPCTSTR pszAddress) :
 	m_sAddress		( pszAddress ? pszAddress : _T("") ),
 	m_bGnutella2	( FALSE ),
 	m_bGnutella1	( FALSE ),
-	m_tCreated		( (DWORD)time( NULL ) ),
+	m_tCreated		( static_cast< DWORD >( time( NULL ) ) ),
 	m_tAccessed		( 0 ),
 	m_nAccesses		( 0 ),
 	m_tUpdated		( 0 ),
@@ -2171,7 +2176,8 @@ BOOL CDiscoveryService::ResolveGnutella()
 {
 	if ( ! Network.Connect( FALSE ) ) return FALSE;
 
-	if ( time( NULL ) - m_tAccessed < 300 ) return FALSE;
+	const DWORD tNow = static_cast< DWORD >( time( NULL ) );
+	if ( tNow < 300 + m_tAccessed ) return FALSE;
 
 	CString strHost	= m_sAddress;
 	int nSkip = 0;
@@ -2287,7 +2293,7 @@ BOOL CDiscoveryService::ResolveGnutella()
 
 void CDiscoveryService::OnAccess()
 {
-	m_tAccessed = (DWORD)time( NULL );
+	m_tAccessed = static_cast< DWORD >( time( NULL ) );
 	m_nAccesses ++;
 }
 

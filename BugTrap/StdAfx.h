@@ -1,6 +1,6 @@
 /*
  * This is a part of the BugTrap package.
- * Copyright (c) 2005-2009 IntelleSoft.
+ * Copyright (c) 2005-2014 IntelleSoft.
  * All rights reserved.
  *
  * Description: Precomplied header file.
@@ -28,6 +28,9 @@
 #ifdef _WIN64
  #undef USE_VDMDBG
 #endif
+
+#define _WIN32_WINNT 0x0501
+#include <SDKDDKVer.h>
 
 #include <windows.h>
 #include <windowsx.h>

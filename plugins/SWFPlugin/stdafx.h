@@ -2,7 +2,7 @@
 // or project specific include files that are used frequently,
 // but are changed infrequently
 //
-// Copyright (c) Nikolay Raspopov, 2005.
+// Copyright (c) Nikolay Raspopov, 2005-2014.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -29,6 +29,9 @@
 #define _ATL_CSTRING_EXPLICIT_CONSTRUCTORS
 #define _ATL_CSTRING_NO_CRT
 #define _ATL_ALL_WARNINGS
+
+#define _WIN32_WINNT 0x0501
+#include <SDKDDKVer.h>
 
 #pragma warning( push, 0 )
 

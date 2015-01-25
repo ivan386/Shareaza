@@ -472,7 +472,7 @@ size_t AnsiDecodeChar(const BYTE* pBytes, size_t nNumBytes, TCHAR arrChar[2], si
 	if (nNumBytes >= (size_t)nNumBytesInChar)
 	{
 #ifdef _UNICODE
-		nCharSize = MultiByteToWideChar(CP_ACP, 0, (const CHAR*)pBytes, nNumBytesInChar, arrChar, countof(arrChar));
+		nCharSize = MultiByteToWideChar(CP_ACP, 0, (const CHAR*)pBytes, nNumBytesInChar, arrChar, 2);
 		if (nCharSize == 0)
 			nNumBytesInChar = 0;
 #else

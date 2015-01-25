@@ -79,8 +79,6 @@ INT_PTR CFilePropertiesSheet::DoModal(int nPage)
 	CFileSharingPage	pSharing;
 	CFileSourcesPage	pSources;
 
-	CString strTabLabel;
-
 	switch ( m_pList->GetCount() )
 	{
 	case 0:

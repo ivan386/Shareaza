@@ -313,7 +313,6 @@ BOOL CHandshake::OnAcceptPush()
 	}
 
 	// Read the 16 hexadecimal digits of the GUID, copying it into pGUID
-	CString strGUID;
 	Hashes::Guid oGUID;
 	for ( int nByte = 0 ; nByte < 16 ; nByte++ )
 	{
@@ -397,6 +396,8 @@ BOOL CHandshake::OnAcceptGive()
 		oGUID[ nByte ] = (BYTE)nPos;
 	}
 	oGUID.validate();
+
+	theApp.Message( MSG_DEBUG, _T( "Got push answer from %s : %s..." ), (LPCTSTR)CString( inet_ntoa( m_pHost.sin_addr ) ), (LPCTSTR)oGUID.toString< Hashes::base16Encoding >().MakeUpper() );
 
 	// If a child window recognizes this guid, return true
 	if ( Network.OnPush( oGUID, this ) )

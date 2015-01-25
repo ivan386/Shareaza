@@ -67,7 +67,7 @@ public:
 	void			AddUpload(CUploadTransferBT* pUpload);
 	void			RemoveUpload(CUploadTransferBT* pUpload);
 	bool			IsSeeding() const;
-	bool			IsTorrent(BOOL bWithInfo = 0) const;
+	bool			IsTorrent() const;
 	bool			IsSingleFileTorrent() const;
 	float			GetRatio() const;
 	BOOL			UploadExists(in_addr* pIP) const;

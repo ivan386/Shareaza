@@ -4491,9 +4491,6 @@ BEGIN
     ID_SEARCH_STOP          "Stop receiving results in this window."
     ID_TOOLS_DOWNLOAD       "Start downloading a new file or BitTorrent torrent..."
     ID_DOWNLOADS_URL        "Add a source URL to the selected download..."
-    ID_LIBRARY_BITZI_WEB    "View the Bitzi(TM) ticket for the selected file on the web."
-    ID_LIBRARY_BITZI_DOWNLOAD 
-                            "Download metadata for the selected file(s) from Bitzi(TM)..."
     ID_LIBRARY_REFRESH_METADATA "Refresh file metadata"
     ID_VIEW_SECURITY        "Show or hide the SECURITY window."
 END

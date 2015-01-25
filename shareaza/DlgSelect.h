@@ -50,7 +50,7 @@ public:
 	typedef CList< CItem > CItemList;
 
 	// Add new item to selection list
-	inline void Add(const CString& sItem, DWORD_PTR nData)
+	inline void Add(const CString& sItem, int nData)
 	{
 		m_List.AddTail( CItem( sItem, nData ) );
 	}

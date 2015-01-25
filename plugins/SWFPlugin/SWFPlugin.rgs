@@ -3,6 +3,9 @@ HKCR
 	NoRemove AppID
 	{
 		'%APPID%' = s 'SWFPlugin'
+		{
+			val DllSurrogate = s ''
+		}
 		'SWFPlugin.DLL'
 		{
 			val AppID = s '%APPID%'

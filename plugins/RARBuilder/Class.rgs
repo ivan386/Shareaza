@@ -36,8 +36,8 @@ HKCU
 				{
 					NoRemove LibraryBuilder
 					{
-						ForceRemove val '.cbr' = s '{F801DAD7-F08D-48EF-B0DF-6B120377E835}'
-						ForceRemove val '.rar' = s '{F801DAD7-F08D-48EF-B0DF-6B120377E835}'
+						val '.cbr' = s '{F801DAD7-F08D-48EF-B0DF-6B120377E835}'
+						val '.rar' = s '{F801DAD7-F08D-48EF-B0DF-6B120377E835}'
 					}
 				}
 			}

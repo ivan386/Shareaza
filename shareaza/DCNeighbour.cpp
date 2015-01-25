@@ -177,7 +177,7 @@ BOOL CDCNeighbour::ProcessPackets()
 		}
 	}
 
-	CBuffer* pInput = m_pZInput ? m_pZInput : pInputLocked;
+	CBuffer* pInput = m_pZInput ? m_pZInput : (CBuffer*)pInputLocked;
 
 	return ProcessPackets( pInput );
 }
@@ -437,7 +437,7 @@ BOOL CDCNeighbour::OnChat(CDCPacket* pPacket)
 
 	if ( LPCSTR szMessage = strchr( (LPCSTR)pPacket->m_pBuffer, '>' ) )
 	{
-		int nNickLen = szMessage - (LPCSTR)pPacket->m_pBuffer - 1;
+		int nNickLen = (int)( szMessage - (LPCSTR)pPacket->m_pBuffer - 1 );
 		CString sNick( UTF8Decode( (LPCSTR)&pPacket->m_pBuffer[ 1 ], nNickLen ) );
 
 		if ( nNickLen > 0 && m_sNick != sNick )

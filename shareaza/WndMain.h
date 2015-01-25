@@ -1,7 +1,7 @@
 //
 // WndMain.h
 //
-// Copyright (c) Shareaza Development Team, 2002-2012.
+// Copyright (c) Shareaza Development Team, 2002-2014.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -300,7 +300,11 @@ protected:
 	afx_msg LRESULT OnMenuChar(UINT nChar, UINT nFlags, CMenu* pMenu);
 	afx_msg LRESULT OnSanityCheck(WPARAM wParam, LPARAM lParam);
 	afx_msg LRESULT OnNowUploading(WPARAM wParam, LPARAM lParam);
+#if _MSC_VER >= 1800 // Microsoft Visual Studio 2013
+	afx_msg UINT OnPowerBroadcast(UINT nPowerEvent, LPARAM nEventData);
+#else
 	afx_msg UINT OnPowerBroadcast(UINT nPowerEvent, UINT nEventData);
+#endif
 	afx_msg BOOL OnCopyData(CWnd* pWnd,COPYDATASTRUCT* pCopyDataStruct);
 
 	DECLARE_MESSAGE_MAP()

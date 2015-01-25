@@ -1,7 +1,7 @@
 //
 // WndSearchMonitor.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2013.
+// Copyright (c) Shareaza Development Team, 2002-2014.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -229,33 +229,8 @@ void CSearchMonitorWnd::OnQuerySearch(const CQuerySearch* pSearch)
 			inet_ntoa( pSearch->m_pEndpoint.sin_addr ),
 			ntohs( pSearch->m_pEndpoint.sin_port ) );
 
-	if ( pSearch->m_oSHA1 && pSearch->m_oTiger )
-	{
-		strURN	= _T("bitprint:")
-				+ pSearch->m_oSHA1.toString()
-				+ '.'
-				+ pSearch->m_oTiger.toString();
-	}
-	else if ( pSearch->m_oTiger )
-	{
-		strURN = pSearch->m_oTiger.toShortUrn();
-	}
-	else if ( pSearch->m_oSHA1 )
-	{
-		strURN = pSearch->m_oSHA1.toShortUrn();
-	}
-	else if ( pSearch->m_oED2K )
-	{
-		strURN = pSearch->m_oED2K.toShortUrn();
-	}
-	else if ( pSearch->m_oBTH )
-	{
-		strURN = pSearch->m_oBTH.toShortUrn();
-	}
-	else if ( pSearch->m_oMD5 )
-	{
-		strURN = pSearch->m_oMD5.toShortUrn();
-	}
+	if ( pSearch->HasHash() )
+		strURN = pSearch->GetShortURN();
 	else
 		strURN = _T("None");
 

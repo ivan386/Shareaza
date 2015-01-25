@@ -60,14 +60,10 @@ CQueuePropertiesDlg::CQueuePropertiesDlg(CUploadQueue* pQueue, BOOL bEnable, CWn
 	m_pQueue = pQueue;
 	m_bEnableOverride = bEnable;
 
-	//{{AFX_DATA_INIT(CQueuePropertiesDlg)
 	m_nCapacity = 0;
 	m_bMaxSize = FALSE;
-	m_sMaxSize = _T("");
 	m_bMinSize = FALSE;
-	m_sMinSize = _T("");
 	m_bMarked = FALSE;
-	m_sName = _T("");
 	m_nFileStatusFlag = CUploadQueue::ulqBoth;
 	m_bProtocols = FALSE;
 	m_bRotate = FALSE;
@@ -76,10 +72,7 @@ CQueuePropertiesDlg::CQueuePropertiesDlg(CUploadQueue* pQueue, BOOL bEnable, CWn
 	m_nTransfersMax = 0;
 	m_nTransfersMin = 0;
 	m_bMatch = FALSE;
-	m_sMatch = _T("");
 	m_bEnable = FALSE;
-	m_sMarked = _T("");
-	//}}AFX_DATA_INIT
 }
 
 void CQueuePropertiesDlg::DoDataExchange(CDataExchange* pDX)

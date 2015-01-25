@@ -386,11 +386,11 @@
 			UniqueIdentifier="{4FC737F1-C7A5-4376-A066-2A32D752A2FF}"
 			>
 			<File
-				RelativePath="..\shareaza\BENode.cpp"
+				RelativePath="BENode.cpp"
 				>
 			</File>
 			<File
-				RelativePath="..\shareaza\Buffer.cpp"
+				RelativePath="Buffer.cpp"
 				>
 			</File>
 			<File
@@ -462,7 +462,7 @@
 				</FileConfiguration>
 			</File>
 			<File
-				RelativePath="..\shareaza\Strings.cpp"
+				RelativePath="Strings.cpp"
 				>
 			</File>
 			<File
@@ -484,11 +484,11 @@
 			UniqueIdentifier="{93995380-89BD-4b04-88EB-625FBE52EBFB}"
 			>
 			<File
-				RelativePath="..\shareaza\BENode.h"
+				RelativePath="BENode.h"
 				>
 			</File>
 			<File
-				RelativePath="..\shareaza\Buffer.h"
+				RelativePath="Buffer.h"
 				>
 			</File>
 			<File
@@ -532,7 +532,7 @@
 				>
 			</File>
 			<File
-				RelativePath="..\shareaza\Strings.h"
+				RelativePath="Strings.h"
 				>
 			</File>
 			<File
@@ -574,7 +574,7 @@
 				>
 			</File>
 			<File
-				RelativePath="..\shareaza\Res\Wizard.bmp"
+				RelativePath="Res\Wizard.bmp"
 				>
 			</File>
 		</Filter>

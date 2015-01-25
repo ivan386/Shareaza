@@ -1,7 +1,7 @@
 //
 // SharedFile.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2013.
+// Copyright (c) Shareaza Development Team, 2002-2014.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -346,7 +346,7 @@ DWORD CLibraryFile::GetCreationTime()
 	if ( ! bResult )
 		return 0;
 
-	return m_tCreateTime = ( ( MAKEQWORD( ftLastWriteTime.dwLowDateTime,
+	return m_tCreateTime = (DWORD)( ( MAKEQWORD( ftLastWriteTime.dwLowDateTime,
 		ftLastWriteTime.dwHighDateTime ) ) / 10000000ui64 - 11644473600ui64 );
 }
 
@@ -1451,7 +1451,7 @@ BOOL CLibraryFile::PrepareDoc(LPCTSTR pszTemplate, CArray< CString >& oDocs) con
 	while ( LPCTSTR szStart = StrStrI( strDoc, _T("$meta:") ) )
 	{
 		if ( LPCTSTR szEnd = StrChr( szStart + 6, _T('$') ) )
-			strDoc.Replace( CString( szStart, szEnd - szStart + 1 ), _T("N/A") );
+			strDoc.Replace( CString( szStart, (int)( szEnd - szStart + 1 ) ), _T("N/A") );
 		else
 			break;
 	}
@@ -1547,6 +1547,12 @@ STDMETHODIMP CLibraryFile::XLibraryFile::get_URL(BSTR FAR* psURL)
 {
 	METHOD_PROLOGUE( CLibraryFile, LibraryFile )
 	return pThis->m_xShareazaFile.get_URL( psURL );
+}
+
+STDMETHODIMP CLibraryFile::XLibraryFile::get_Magnet(BSTR FAR* psMagnet)
+{
+	METHOD_PROLOGUE( CLibraryFile, LibraryFile )
+	return pThis->m_xShareazaFile.get_Magnet( psMagnet );
 }
 
 STDMETHODIMP CLibraryFile::XLibraryFile::get_Application(IApplication FAR* FAR* ppApplication)

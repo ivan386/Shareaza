@@ -1,7 +1,7 @@
 //
 // StdAfx.h
 //
-// Copyright (c) Shareaza Development Team, 2002-2012.
+// Copyright (c) Shareaza Development Team, 2002-2014.
 // This file is part of Shareaza Torrent Wizard (shareaza.sourceforge.net).
 //
 // Shareaza Torrent Wizard is free software; you can redistribute it
@@ -21,7 +21,8 @@
 
 #pragma once
 
-#include <sdkddkver.h>					// Setup versioning for windows SDK/DDK
+#define _WIN32_WINNT 0x0501
+#include <SDKDDKVer.h>
 
 #ifndef _SECURE_ATL
 #define _SECURE_ATL 1
@@ -31,7 +32,9 @@
 #define VC_EXTRALEAN
 #endif
 
+#ifndef WIN32_LEAN_AND_MEAN
 #define WIN32_LEAN_AND_MEAN
+#endif
 
 #define _CRT_SECURE_CPP_OVERLOAD_STANDARD_NAMES 1		// Enable secure template overloads
 #define _CRT_SECURE_CPP_OVERLOAD_STANDARD_NAMES_COUNT 1	// Enable secure template overloads
@@ -47,11 +50,6 @@
 #include <shlobj.h>			// Shell objects
 #include <shlwapi.h>
 
-#include "..\HashLib\HashLib.h"
-#include "..\Shareaza\Strings.h"
-#include "..\Shareaza\Buffer.h"
-#include "..\Shareaza\BENode.h"
-
 typedef unsigned __int64 QWORD;
 
 #ifndef BIF_NEWDIALOGSTYLE
@@ -60,6 +58,11 @@ typedef unsigned __int64 QWORD;
 #ifndef OFN_ENABLESIZING
 	#define OFN_ENABLESIZING	0x00800000
 #endif
+
+#include "..\HashLib\HashLib.h"
+#include "Strings.h"
+#include "Buffer.h"
+#include "BENode.h"
 
 #ifdef _UNICODE
 #if defined _M_IX86

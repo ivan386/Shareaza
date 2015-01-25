@@ -220,7 +220,7 @@ BOOL CEDNeighbour::ProcessPackets()
 {
 	CLockedBuffer pInputLocked( GetInput() );
 
-	CBuffer* pInput = m_pZInput ? m_pZInput : pInputLocked;
+	CBuffer* pInput = m_pZInput ? m_pZInput : (CBuffer*)pInputLocked;
 	
 	return ProcessPackets( pInput );
 }

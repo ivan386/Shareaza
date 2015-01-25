@@ -169,7 +169,7 @@ protected:
 	void		ClearResolve();
 
 	// Restore WinINet connection to Internet
-	bool		CNInternetConnect();
+	bool		InternetConnect();
 
 	bool		PreRun();
 	void		OnRun();
@@ -236,9 +236,9 @@ public:
 	// Safe way to receive UDP data
 	static int RecvFrom(SOCKET s, char* buf, int len, SOCKADDR_IN* pFrom);
 	// Safe way to call InternetOpen
-	static HINTERNET CNInternetOpen();
+	static HINTERNET InternetOpen();
 	// Safe way to call InternetOpenUrl
-	static HINTERNET CNInternetOpenUrl(HINTERNET hInternet, LPCWSTR lpszUrl, LPCWSTR lpszHeaders, DWORD dwHeadersLength, DWORD dwFlags);
+	static HINTERNET InternetOpenUrl(HINTERNET hInternet, LPCWSTR lpszUrl, LPCWSTR lpszHeaders, DWORD dwHeadersLength, DWORD dwFlags);
 	// Safe way to call WSACleanup
 	static void Cleanup();
 

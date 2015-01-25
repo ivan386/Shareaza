@@ -1,0 +1,214 @@
+
++----------------------------------------------------------------------+
+|                       Shareaza Connection Test                       |
+|                               ChangeLog                              |
++----------------------------------------------------------------------+
+
+2009-07-09
+  * (jlh) updated French translation (by zigotozor)
+  * (jlh) updated Turkish translation (by zigotozor)
+  * (jlh) added a favicon
+  * (jlh) Fixed URLs from pantheraproject.net to sourceforge.net
+  * (jlh) v1.12 (released)
+
+2009-03-26
+  * (jlh) updated French translation (by zigotozor)
+
+2009-03-20
+  * (jlh) updated French translation (by zigotozor)
+  * (jlh) updated Finnish translation (by Warial Brute)
+
+2008-11-18
+  * (jlh) completed Hebrew translation (by omega09)
+
+2008-11-12
+  * (jlh) added Russian Translation (by Wieldar)
+  * (jlh) added Greek Translation (by erimitis)
+
+2008-11-06
+  * (jlh) Fixed URLs from shareazasecurity.be to pantheraproject.net
+  * (jlh) Make title a link to the website
+  * (jlh) v1.11 (released)
+
+2008-10-03
+  * (jlh) added Turkish translation (by zigotozor)
+
+2008-03-17
+  * (jlh) v1.10 (released)
+
+2008-02-02
+  * (jlh) Replaced all links to shareazasecurity.be
+
+2006-03-08
+  * (jlh) v1.9 (released)
+
+2006-03-08
+  * (jlh) replaced 0.0.0.0 with INADDR_ANY in detail log.  the strange IP was
+          worrying people
+  * (jlh) unfinished Hebrew translation by __peer__, disabled by default
+
+2005-12-23
+  * (jlh) added Chinese translation (by sanly)
+
+2005-12-20
+  * (jlh) fixed use of fprintf() which is PHP5 only
+
+2005-11-01
+  * (jlh) Support for RTL languages
+  * (jlh) fixed error reporting when lang files are not readable
+  * (jlh) added Lithuanian translation (by Rolandas)
+  * (jlh) send headers to make pages never go in a browser cache
+
+2005-10-27
+  * (jlh) IE 5.x CSS fixes
+
+2005-10-03
+  * (jlh) fixed file locking.  probably was unsafe
+
+2005-07-09
+  * (jlh) main font set to 10pt
+  * (jlh) minor HTML changes
+
+2005-04-14
+  * (jlh) get_client_ip() didn't properly work inside a LAN.
+  * (jlh) v1.8 (released)
+
+2005-04-13
+  * (jlh) removed locale stuff and changed dates to yyyy-mm-dd
+  * (jlh) slightly wider box to make it likelier to all fit on screen
+  * (jlh) language_error(): send encoding in header and put it in <head>
+
+2005-03-23
+  * (jlh) added Finnish translation (by GF Webmaster)
+  * (jlh) stats file gets created if it doesn't exist
+  * (jlh) moved ChangeLog to separate file
+  * (jlh) all language files are now UTF-8
+
+2005-03-06
+  * (jlh) added Portuguese translation (by enigmabr)
+
+2005-03-03
+  * (jlh) added URL info and timestamp to data dump
+
+2005-03-02
+  * (jlh) added statistics in the footer
+
+2005-02-19
+  * (jlh) added Italian translation (by Jocker)
+  * (jlh) fixed line breaks in footer and language list
+  * (jlh) small changes
+
+2004-11-25
+  * (jlh) v1.7 (released)
+
+2004-11-18
+  * (jlh) port field is empty by default to force people to look it up (updated
+    error message)
+  * (jlh) fixed language links ('&' to '&amp;') and made them simpler
+
+2004-11-14
+  * (jlh) changed the way the UDP socketing works, fixing the problem with
+    PATing.  UDP packets are now received from anywhere, with proper filtering
+  * (jlh) option to accept UDP answer from any IP
+  * (jlh) v1.6
+
+2004-11-12
+  * (jlh) v1.5 (released)
+
+2004-11-02
+  * (jlh) added Spanish translation (by help)
+
+2004-10-27
+  * (jlh) UDP test now completes much faster on success
+  * (jlh) v1.4 (released)
+
+2004-10-24
+  * (jlh) fixed wiki links and pointed to wiki translations
+  * (jlh) added French translation (by JEL)
+
+2004-10-22
+  * (jlh) properly sending charset as header
+
+2004-10-21
+  * (jlh) use HTTP HEAD instead of GET (Shareaza and GnucDNA are ok with that)
+
+2004-10-19
+  * (jlh) v1.3 (first release of source)
+
+2004-10-18
+  * (jlh) data dump in detail log
+
+2004-10-14
+  * (jlh) some reorganisation of the file
+  * (jlh) can now give 'port=' without triggering the test
+  * (jlh) other changes
+
+2004-10-13
+  * (jlh) fix for HTTP_X_FORWARDED_FOR containing more than one IP
+  * (jlh) use HTTP_ACCEPT_LANGUAGE for default language selection
+  * (jlh) other changes
+  * (jlh) v1.2
+
+2004-10-11
+  * (jlh) added Dutch translation (by jonne)
+
+2004-10-09
+  * (jlh) GPL applies to all files now
+  * (jlh) renamed a few variables
+  * (jlh) added Polish translation (by Brov)
+  * (jlh) other small changes and bug fixes
+  * (jlh) v1.1
+
+2004-10-01
+  * (jlh) renamed file to index.php; links are now supposed to point to the
+    directory
+  * (jlh) v1.0 (first publicly available version)
+
+2004-09-27
+  * (jlh) the UDP test now sends a /JCT with request to acknowledge, instead of
+    a /PI, as /PO have been sent multiple times by clients due to lacking
+    acknowledge from the test
+  * (jlh) sending 3 instead of 4 packets should be enough
+  * (jlh) other small changes
+  * (jlh) v0.7
+
+2004-09-21
+  * (jlh) new option 'long timeout'
+  * (jlh) new note about undetected proxy servers
+  * (jlh) UDP sends the packet four times to avoid lost packets
+  * (jlh) the /PI doesn't require acknowledgement anymore
+  * (jlh) v0.6
+
+2004-09-20
+  * (Brov) multilanguage support
+  * (Brov) determining the language by top-level domain of remote user
+  * (Brov) some other fixes
+  * (Brov) v0.4.1
+  * (jlh) many changes in multilanguage support (no more auto-selection)
+  * (jlh) other changes
+  * (jlh) v0.5
+
+2004-09-19
+  * (jlh) added support for proxy servers
+  * (jlh) links to wiki and forum
+  * (jlh) better messages
+  * (jlh) handle bogus port numbers
+  * (jlh) added the ChangeLog
+  * (jlh) other changes
+  * (jlh) v0.4
+
+2004-09-18
+  * (jlh) corrected HTML errors
+  * (jlh) feature to hide/show detail log
+  * (jlh) enhanced messages
+  * (jlh) better compatibility with older browsers
+  * (jlh) v0.3
+
+2004-09-17
+  * (jlh) added CSS
+  * (jlh) other changes & enhancements
+  * (jlh) v0.2
+
+2004-09-16
+  * (jlh) initial writing
+  * (jlh) v0.1

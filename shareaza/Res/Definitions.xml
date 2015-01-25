@@ -193,8 +193,6 @@
 	<resource code="32889" id="ID_SEARCH_STOP"/>
 	<resource code="32890" id="ID_TOOLS_DOWNLOAD"/>
 	<resource code="32891" id="ID_DOWNLOADS_URL"/>
-	<resource code="32892" id="ID_LIBRARY_BITZI_WEB"/>
-	<resource code="32893" id="ID_LIBRARY_BITZI_DOWNLOAD"/>
 	<resource code="32894" id="ID_LIBRARY_REFRESH_METADATA"/>
 	<resource code="32895" id="ID_VIEW_SECURITY"/>
 	<resource code="32896" id="ID_SECURITY_EDIT"/>

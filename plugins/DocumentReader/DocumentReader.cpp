@@ -3,7 +3,7 @@
 //
 //	Created by:		Rolandas Rudomanskis
 //
-// Copyright (c) Shareaza Development Team, 2002-2010.
+// Copyright (c) Shareaza Development Team, 2002-2014.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -32,7 +32,6 @@ HINSTANCE         v_hModule;             // DLL module handle
 ULONG             v_cLocks;              // Count of server locks
 CRITICAL_SECTION  v_csSynch;             // Critical Section
 HANDLE            v_hPrivateHeap;        // Private Heap for Component
-BOOL              v_fRunningOnNT;        // Flag Set When on Unicode OS
 PFN_STGOPENSTGEX  v_pfnStgOpenStorageEx; // StgOpenStorageEx (Win2K/XP only)
 
 class CDocumentReaderModule : public CAtlDllModuleT< CDocumentReaderModule >
@@ -52,9 +51,7 @@ extern "C" BOOL WINAPI DllMain(HINSTANCE hInstance, DWORD dwReason, LPVOID lpRes
 	case DLL_PROCESS_ATTACH:
 		v_hModule = hInstance; v_cLocks = 0;
         v_hPrivateHeap = HeapCreate(0, 0x1000, 0);
-        v_fRunningOnNT = ( ( GetVersion() & 0x80000000 ) != 0x80000000 );
-        v_pfnStgOpenStorageEx = ( ( v_fRunningOnNT ) ? 
-			(PFN_STGOPENSTGEX)GetProcAddress( GetModuleHandle( _T("OLE32") ), "StgOpenStorageEx" ) : NULL );
+        v_pfnStgOpenStorageEx = (PFN_STGOPENSTGEX)GetProcAddress( GetModuleHandle( _T("OLE32") ), "StgOpenStorageEx" );
 		InitializeCriticalSection( &v_csSynch );
 		DisableThreadLibraryCalls( hInstance );
 		break;

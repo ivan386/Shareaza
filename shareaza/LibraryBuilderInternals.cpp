@@ -1,7 +1,7 @@
 //
 // LibraryBuilderInternals.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2013.
+// Copyright (c) Shareaza Development Team, 2002-2014.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -49,6 +49,148 @@ static char THIS_FILE[]=__FILE__;
 #define ReadValueOrFail(hFile, nID, nRead, nValue, nFile) \
 	if ( ! ReadFile( hFile, &nID, 4, &nRead, NULL ) || nRead != 4 || nID != nValue ) return false;
 
+LPCTSTR GetColorsByBits(DWORD nBits)
+{
+	if ( nBits == 0 )
+		return _T("");
+	else if ( nBits == 1 )
+		return _T("2");
+	else if ( nBits == 2 )
+		return _T("4");
+	else if ( nBits <= 4 )
+		return _T("16");
+	else if ( nBits <= 8)
+		return _T("256");
+	else if ( nBits <= 16 )
+		return _T("64K");
+	else if ( nBits <= 24 )
+		return _T("16.7M");
+	else
+		return _T("16.7M + Alpha");
+}
+
+bool PropGetValue(IPropertyStore* pStore, const PROPERTYKEY& key, DWORD& val)
+{
+	CComPropVariant prop;
+	if ( pStore && SUCCEEDED( pStore->GetValue( key, &prop ) ) && prop.vt == VT_UI4 )
+	{
+		val = prop.ulVal;
+		return true;
+	}
+	return false;
+}
+
+bool PropGetValue(IPropertyStore* pStore, const PROPERTYKEY& key, LONG& val)
+{
+	CComPropVariant prop;
+	if ( pStore && SUCCEEDED( pStore->GetValue( key, &prop ) ) && prop.vt == VT_I4 )
+	{
+		val = prop.lVal;
+		return true;
+	}
+	return false;
+}
+
+bool PropGetValue(IPropertyStore* pStore, const PROPERTYKEY& key, QWORD& val)
+{
+	CComPropVariant prop;
+	if ( pStore && SUCCEEDED( pStore->GetValue( key, &prop ) ) && prop.vt == VT_UI8 )
+	{
+		val = prop.uhVal.QuadPart;
+		return true;
+	}
+	return false;
+}
+
+bool PropGetValue(IPropertyStore* pStore, const PROPERTYKEY& key, bool& val)
+{
+	CComPropVariant prop;
+	if ( pStore && SUCCEEDED( pStore->GetValue( key, &prop ) ) && prop.vt == VT_BOOL )
+	{
+		val = ( prop.boolVal != VARIANT_FALSE );
+		return true;
+	}
+	return false;
+}
+
+bool PropGetValue(IPropertyStore* pStore, const PROPERTYKEY& key, CString& val)
+{
+	val.Empty();
+
+	CComPropVariant prop;
+	if ( pStore && SUCCEEDED( pStore->GetValue( key, &prop ) ) )
+	{
+		switch ( prop.vt )
+		{
+		case VT_BSTR:
+			val = CW2T( (LPCWSTR)prop.bstrVal );
+			break;
+
+		case VT_LPWSTR:
+			val = CW2T( prop.pwszVal );
+			break;
+
+		case VT_LPSTR:
+			val = CA2T( prop.pszVal );
+			break;
+
+		case VT_ARRAY | VT_BSTR:
+			{
+				CComSafeArray< BSTR > arr;
+				if ( SUCCEEDED( arr.Attach( prop.parray ) ) )
+				{
+					ULONG nCount = arr.GetCount();
+					for ( ULONG i = 0; i < nCount; ++i )
+					{
+						CString str( CW2T( (LPCWSTR)arr.GetAt( i ) ) );
+						str.Trim();
+						if ( str.IsEmpty() ) continue;
+						if ( ! val.IsEmpty() ) val += _T(", ");
+						val += str;
+					}
+					arr.Detach();
+				}
+			}
+			break;
+
+		case VT_VECTOR | VT_BSTR:
+			for ( ULONG i = 0; i < prop.cabstr.cElems; ++i )
+			{
+				CString str( CW2T( (LPCWSTR)prop.cabstr.pElems[ i ] ) );
+				str.Trim();
+				if ( str.IsEmpty() ) continue;
+				if ( ! val.IsEmpty() ) val += _T(", ");
+				val += str;
+			}
+			break;
+
+		case VT_VECTOR | VT_LPWSTR:
+			for ( ULONG i = 0; i < prop.calpwstr.cElems; ++i )
+			{
+				CString str( CW2T( prop.calpwstr.pElems[ i ] ) );
+				str.Trim();
+				if ( str.IsEmpty() ) continue;
+				if ( ! val.IsEmpty() ) val += _T(", ");
+				val += str;
+			}
+			break;
+
+		case VT_VECTOR | VT_LPSTR:
+			for ( ULONG i = 0; i < prop.calpstr.cElems; ++i )
+			{
+				CString str( CA2T( prop.calpstr.pElems[ i ] ) );
+				str.Trim();
+				if ( str.IsEmpty() ) continue;
+				if ( ! val.IsEmpty() ) val += _T(", ");
+				val += str;
+			}
+			break;
+		}
+	}
+	val.Trim();
+	return ! val.IsEmpty();
+}
+
 //////////////////////////////////////////////////////////////////////
 // CLibraryBuilderInternals extract metadata (threaded)
 
@@ -85,6 +227,13 @@ bool CLibraryBuilderInternals::ExtractMetadata(DWORD nIndex, const CString& strP
 		if ( !Settings.Library.ScanMSI )
 			return false;
 		return ReadMSI( nIndex, strPath );
+	}
+	else if ( strType == _T(".flv") )
+	{
+		if ( !Settings.Library.ScanFLV )
+			return false;
+		if ( ! ReadFLV( nIndex, hFile ) )
+			return true;
 	}
 	else if ( strType == _T(".asf") || strType == _T(".wma") || strType == _T(".wmv") )
 	{
@@ -127,34 +276,6 @@ bool CLibraryBuilderInternals::ExtractMetadata(DWORD nIndex, const CString& strP
 		if ( ReadAPE( nIndex, hFile, false ) )
 			return true;
 	}
-	else if ( strType == _T(".jpg") || strType == _T(".jpeg") )
-	{
-		if ( !Settings.Library.ScanImage )
-			return false;
-		if ( ReadJPEG( nIndex, hFile ) )
-			return true;
-	}
-	else if ( strType == _T(".gif") )
-	{
-		if ( !Settings.Library.ScanImage )
-			return false;
-		if ( ReadGIF( nIndex, hFile ) )
-			return true;
-	}
-	else if ( strType == _T(".png") )
-	{
-		if ( !Settings.Library.ScanImage )
-			return false;
-		if ( ReadPNG( nIndex, hFile ) )
-			return true;
-	}
-	else if ( strType == _T(".bmp") )
-	{
-		if ( !Settings.Library.ScanImage )
-			return false;
-		if ( ReadBMP( nIndex, hFile ) )
-			return true;
-	}
 	else if ( strType == _T(".pdf") )
 	{
 		if ( !Settings.Library.ScanPDF )
@@ -178,11 +299,222 @@ bool CLibraryBuilderInternals::ExtractMetadata(DWORD nIndex, const CString& strP
 	{
 		return ReadTorrent( nIndex, hFile, strPath );
 	}
+	else if ( strType == _T(".djvu") ||
+		strType == _T(".djv") )
+	{
+		return ReadDJVU( nIndex, hFile );
+	}
 	else
 		return false;
 
 	LibraryBuilder.SubmitCorrupted( nIndex );
 	return false;
+}
+
+bool CLibraryBuilderInternals::ExtractProperties(DWORD nIndex, const CString& strPath)
+{
+	bool bSuccess = false;
+
+	if ( Settings.Library.ScanProperties )
+	{
+		CComPtr< IPropertyStore > pStore;
+		if ( theApp.GetPropertyStoreFromParsingName( CT2W( strPath ), &pStore ) )
+		{
+			LPCTSTR szSchema = NULL;
+			CAutoPtr< CXMLElement > pXML;
+
+			LONG nType;
+			if ( PropGetValue( pStore, PKEY_PerceivedType, nType ) )
+			{
+				switch ( nType )
+				{
+				case PERCEIVED_TYPE_DOCUMENT:
+					szSchema = CSchema::uriDocument;
+					pXML.Attach( new CXMLElement( NULL, _T("wordprocessing") ) );
+					if ( pXML )
+					{
+						LONG nPages;
+						if ( PropGetValue( pStore, PKEY_Document_PageCount, nPages ) && nPages > 0 )
+						{
+							CString strItem;
+							strItem.Format( _T("%lu"), nPages );
+							pXML->AddAttribute( _T("pages"), strItem );
+						}
+
+						CString strFormat;
+						if ( PropGetValue( pStore, PKEY_ItemTypeText, strFormat ) )
+							pXML->AddAttribute( _T("format"), strFormat );
+
+						CString strSubject;
+						if ( PropGetValue( pStore, PKEY_Subject, strSubject ) )
+							pXML->AddAttribute( _T("subject"), strSubject );
+					}
+					break;
+
+				case PERCEIVED_TYPE_IMAGE:
+					szSchema = CSchema::uriImage;
+					pXML.Attach( new CXMLElement( NULL, _T("image") ) );
+					if ( pXML )
+					{
+						DWORD nWidth;
+						if ( PropGetValue( pStore, PKEY_Image_HorizontalSize, nWidth ) && nWidth )
+						{
+							CString strItem;
+							strItem.Format( _T("%lu"), nWidth );
+							pXML->AddAttribute( _T("width"), strItem );
+						}
+
+						DWORD nHeight;
+						if ( PropGetValue( pStore, PKEY_Image_VerticalSize, nHeight ) && nHeight )
+						{
+							CString strItem;
+							strItem.Format( _T("%lu"), nHeight );
+							pXML->AddAttribute( _T("height"), strItem );
+						}
+
+						DWORD nBitDepth;
+						if ( PropGetValue( pStore, PKEY_Image_BitDepth, nBitDepth ) && nBitDepth )
+							pXML->AddAttribute( _T("colors"), GetColorsByBits( nBitDepth ) );
+
+						CString strSubject;
+						if ( PropGetValue( pStore, PKEY_Subject, strSubject ) )
+							pXML->AddAttribute( _T("subject"), strSubject );
+					}
+					break;
+
+				case PERCEIVED_TYPE_AUDIO:
+					szSchema = CSchema::uriAudio;
+					pXML.Attach( new CXMLElement( NULL, _T("audio") ) );
+					if ( pXML )
+					{
+						DWORD nSampleRate;
+						if ( PropGetValue( pStore, PKEY_Audio_SampleRate, nSampleRate ) && nSampleRate )
+						{
+							CString strItem;
+							strItem.Format( _T("%lu"), nSampleRate );
+							pXML->AddAttribute( _T("sampleRate"), strItem );
+						}
+						
+						DWORD nBitrate;
+						if ( PropGetValue( pStore, PKEY_Audio_EncodingBitrate, nBitrate ) && nBitrate )
+						{
+							bool bVariableBitRate = false;
+							PropGetValue( pStore, PKEY_Audio_IsVariableBitRate, bVariableBitRate );
+
+							CString strItem;
+							strItem.Format( _T("%lu%s"), nBitrate / 1000, ( bVariableBitRate ? _T("~") : _T("") ) );
+							pXML->AddAttribute( _T("bitrate"), strItem );
+						}
+
+						QWORD nContentLength;
+						if ( PropGetValue( pStore, PKEY_Media_Duration, nContentLength ) && nContentLength )
+						{
+							DWORD nSeconds = (DWORD)( nContentLength / 10000000ui64 );
+							CString strItem;
+							strItem.Format( _T("%lu"), nSeconds );
+							pXML->AddAttribute( _T("seconds"), strItem );
+						}
+
+						DWORD nChannelCount;
+						if ( PropGetValue( pStore, PKEY_Audio_ChannelCount, nChannelCount ) && nChannelCount )
+						{
+							CString strItem;
+							strItem.Format( _T("%lu"), nChannelCount );
+							pXML->AddAttribute( _T("channels"), strItem );
+						}
+					}
+					break;
+
+				case PERCEIVED_TYPE_VIDEO:
+					szSchema = CSchema::uriVideo;
+					pXML.Attach( new CXMLElement( NULL, _T("video") ) );
+					if ( pXML )
+					{
+						DWORD nVideoWidth;
+						if ( PropGetValue( pStore, PKEY_Video_FrameWidth, nVideoWidth ) && nVideoWidth )
+						{
+							CString strItem;
+							strItem.Format( _T("%lu"), nVideoWidth );
+							pXML->AddAttribute( _T("width"), strItem );
+						}
+
+						DWORD nVideoHeight;
+						if ( PropGetValue( pStore, PKEY_Video_FrameHeight, nVideoHeight ) && nVideoHeight )
+						{
+							CString strItem;
+							strItem.Format( _T("%lu"), nVideoHeight );
+							pXML->AddAttribute( _T("height"), strItem );
+						}
+
+						DWORD nFourCC;
+						if ( PropGetValue( pStore, PKEY_Video_FourCC, nFourCC ) )
+						{
+							CString strItem;
+							strItem.Format( _T("%c%c%c%c"),
+								(TCHAR)LOBYTE( LOWORD( nFourCC ) ), (TCHAR)HIBYTE( LOWORD( nFourCC ) ),
+								(TCHAR)LOBYTE( HIWORD( nFourCC ) ), (TCHAR)HIBYTE( HIWORD( nFourCC ) ) );
+							pXML->AddAttribute( _T("codec"), strItem );
+						}
+						
+						DWORD nFrameRate;
+						if ( PropGetValue( pStore, PKEY_Video_FrameRate, nFrameRate ) && nFrameRate )
+						{
+							CString strItem;
+							strItem.Format( _T("%.2f"), ( (double)nFrameRate / 1000 ) );
+							pXML->AddAttribute( _T("frameRate"), strItem );
+						}
+
+						QWORD nContentLength;
+						if ( PropGetValue( pStore, PKEY_Media_Duration, nContentLength ) && nContentLength )
+						{
+							DWORD nMilliSeconds = (DWORD)( nContentLength / 10000ui64 );
+							CString strItem;
+							strItem.Format( _T("%.3f"), ( (double)nMilliSeconds / 60000 ) );
+							pXML->AddAttribute( _T("minutes"), strItem );
+						}
+
+						CString strDirector;
+						if ( PropGetValue( pStore, PKEY_Video_Director, strDirector ) )
+							pXML->AddAttribute( _T("director"), strDirector );
+					}
+					break;
+				}
+			}
+
+			if ( pXML )
+			{
+				CString strTitle;
+				if ( PropGetValue( pStore, PKEY_Title, strTitle ) )
+					pXML->AddAttribute( _T("title"), strTitle );
+
+				CString strDescription;
+				if ( PropGetValue( pStore, PKEY_Comment, strDescription ) )
+					pXML->AddAttribute( ( nType == PERCEIVED_TYPE_DOCUMENT ) ? _T("comments") : _T("description"), strDescription );
+
+				CString strArtist;
+				if ( PropGetValue( pStore, PKEY_Author, strArtist ) )
+					pXML->AddAttribute( ( nType == PERCEIVED_TYPE_VIDEO || nType == PERCEIVED_TYPE_AUDIO ) ? _T("artist") : _T("author"), strArtist );
+	
+				CString strCopyright;
+				if ( PropGetValue( pStore, PKEY_Copyright, strCopyright ) )
+					pXML->AddAttribute( _T("copyright"), strCopyright );
+
+				bool bDRM;
+				if ( PropGetValue( pStore, PKEY_DRM_IsProtected, bDRM ) && bDRM )
+					pXML->AddAttribute( _T("DRM"), _T("true") );
+				
+				CString strKeywords;
+				if ( PropGetValue( pStore, PKEY_Keywords, strKeywords ) )
+					pXML->AddAttribute( _T("keywords"), strKeywords );
+
+				LibraryBuilder.SubmitMetadata( nIndex, szSchema, pXML.Detach() );
+
+				bSuccess = true;
+			}
+		}
+	}
+
+	return bSuccess;
 }
 
 //////////////////////////////////////////////////////////////////////
@@ -342,7 +674,6 @@ bool CLibraryBuilderInternals::ReadID3v2(DWORD nIndex, HANDLE hFile)
 	}
 
 	auto_ptr< CXMLElement > pXML( new CXMLElement( NULL, _T("audio") ) );
-	bool bBugInFrameSize = false;
 
 	while ( nBuffer )
 	{
@@ -366,7 +697,7 @@ bool CLibraryBuilderInternals::ReadID3v2(DWORD nIndex, HANDLE hFile)
 
 			nFrameSize = swapEndianess( pFrame->nSize );
 
-			if ( pHeader.nMajorVersion >= 4 && !bBugInFrameSize )
+			if ( pHeader.nMajorVersion >= 4 )
 			{
 				ID3_DESYNC_SIZE( nFrameSize );
 				if ( nBuffer < nFrameSize )
@@ -1243,308 +1574,385 @@ CString CLibraryBuilderInternals::GetSummaryField(MSIHANDLE hSummaryInfo, UINT n
 }
 
 //////////////////////////////////////////////////////////////////////
-// CLibraryBuilderInternals JPEG (threaded)
+// CLibraryBuilderInternals FLV
 
-bool CLibraryBuilderInternals::ReadJPEG(DWORD nIndex, HANDLE hFile)
+#pragma pack( push, 1 )
+
+typedef BYTE UI8;
+
+typedef WORD UI16;			// big-endian
+
+typedef struct
 {
-	DWORD nRead	= 0;
-	WORD wMagic	= 0;
-	BYTE nByte	= 0;
+	BYTE b1;
+	BYTE b2;
+	BYTE b3;
+} UI24;						// big-endian
 
-	SetFilePointer( hFile, 0, NULL, FILE_BEGIN );
-	if ( ! ReadFile( hFile, &wMagic, 2, &nRead, NULL ) )
+typedef DWORD UI32;			// big-endian
+
+typedef QWORD UI64;			// big-endian
+
+// big-endian -> little-endian
+#define GetUI16(x) (_byteswap_ushort(x))
+#define GetUI24(x) ( ((DWORD)((x).b1) << 16) & 0x00ff0000 | ((DWORD)((x).b2) << 8) & 0x0000ff00 | (DWORD)((x).b3) & 0x000000ff )
+#define GetUI32(x) (_byteswap_ulong(x))
+#define GetUI64(x) (_byteswap_uint64(x))
+
+
+typedef struct
+{
+	UI8 Signature1;			// Signature byte always 'F' (0x46)
+	UI8 Signature2;			// Signature byte always 'L' (0x4C)
+	UI8 Signature3;			// Signature byte always 'V' (0x56)
+	UI8 Version;			// File version (for example, 0x01 for FLV version 1)
+	UI8 TypeFlags;			// [5] Must be 0
+							// [1] Audio tags are present
+							// [1] Must be 0
+							// [1] Video tags are present
+	UI32 DataOffset;		// Offset in bytes from start of file to start of body (that is, size of header)
+} FLV_HEADER;
+
+#define FLV_AUDIO			0x04
+#define FLV_VIDEO			0x01
+
+typedef struct
+{
+	UI8 TagType;			// Type of this tag. Values are: 8 - audio, 9 - video, 18 - script data, all others - reserved
+	UI24 DataSize;			// Length of the data in the Data field
+	UI24 Timestamp;			// Time in milliseconds at which the data in this tag applies. This value is relative to the first tag in the FLV file, which always has a timestamp of 0.
+	UI8 TimestampExtended;	// Extension of the Timestamp field to form a SI32 value. This field represents the upper 8 bits, while the previous Timestamp field represents the lower 24 bits of the time in milliseconds.
+	UI24 StreamID;			// Always 0
+	// AUDIODATA			If TagType == 8
+	// VIDEODATA			If TagType == 9
+	// SCRIPTDATAOBJECT		If TagType == 18
+} FLVTAG_HEADER;
+
+#define FLVTAG_AUDIO		0x08
+#define FLVTAG_VIDEO		0x09
+#define FLVTAG_SCRIPT		0x12
+
+#define FLVDATA_DOUBLE			0	// Number type
+#define FLVDATA_BOOL			1	// Boolean type
+#define FLVDATA_STRING			2	// String type
+#define FLVDATA_OBJECT			3	// Object type
+#define FLVDATA_CLIP			4	// MovieClip type
+#define FLVDATA_NULL			5	// Null type
+#define FLVDATA_UDEFIED			6	// Undefined type
+#define FLVDATA_REFERENCE		7	// Reference type
+#define FLVDATA_EMCA_ARRAY		8	// ECMA array type
+#define FLVDATA_END				9	// End marker
+#define FLVDATA_STRICT_ARRAY	10	// Strict array type
+#define FLVDATA_DATE			11	// Date type
+#define FLVDATA_LONG_STRING		12	// Long string type
+
+#pragma pack( pop )
+
+bool CLibraryBuilderInternals::ReadFLVVariable(HANDLE hFile, DWORD& nRemaning, VARIANT& varData, CXMLElement* pXML)
+{
+	DWORD nRead;
+
+	UI8 Type;
+	if ( nRemaning < sizeof( Type ) )
 		return false;
-	if ( nRead != 2 || wMagic != 0xD8FF )
+	if ( ! ReadFile( hFile, &Type, sizeof( Type ), &nRead, NULL ) || nRead != sizeof( Type ) )
 		return false;
+	nRemaning -= sizeof( Type );
 
-	BYTE nBits = 0, nComponents = 0;
-	WORD nWidth = 0, nHeight = 0;
-	CString strComment;
-
-	for ( DWORD nSeek = 512 ; nSeek > 0 ; nSeek-- )
+	switch ( Type )
 	{
-		if ( ! ReadFile( hFile, &nByte, 1, &nRead, NULL ) )
-			return false;
-		if ( nRead != 1 )
-			return false;
-		if ( nByte != 0xFF )
-			continue;
-
-		while ( nByte == 0xFF )
+	case FLVDATA_DOUBLE:
 		{
-			if ( ! ReadFile( hFile, &nByte, 1, &nRead, NULL ) )
+			double dData;
+			if ( ! ReadFLVDouble( hFile, nRemaning, dData ) )
 				return false;
-			if ( nRead != 1 )
-				return false;
+			varData.vt = VT_R8;
+			varData.dblVal = dData;
+			return true;
 		}
 
-		if ( ! ReadFile( hFile, &wMagic, 2, &nRead, NULL ) )
-			return false;
-		wMagic = swapEndianess( wMagic );
-		if ( nRead != 2 || wMagic < 2 )
-			return false;
-
-		switch ( nByte )
+	case FLVDATA_BOOL:
 		{
-		case 0xC0: case 0xC1: case 0xC2: case 0xC3: case 0xC5: case 0xC6: case 0xC7:
-		case 0xC9: case 0xCA: case 0xCB: case 0xCD: case 0xCE: case 0xCF:
-			if ( ! ReadFile( hFile, &nBits, 1, &nRead, NULL ) )
+			bool bData;
+			if ( ! ReadFLVBool( hFile, nRemaning, bData ) )
 				return false;
-			if ( nRead != 1 )
-				return false;
-			if ( ! ReadFile( hFile, &nHeight, 2, &nRead, NULL ) )
-				return false;
-			if ( nRead != 2 )
-				return false;
-			nHeight = swapEndianess( nHeight );
-			if ( ! ReadFile( hFile, &nWidth, 2, &nRead, NULL ) )
-				return false;
-			if ( nRead != 2 )
-				return false;
-			nWidth = swapEndianess( nWidth );
-			if ( ! ReadFile( hFile, &nComponents, 1, &nRead, NULL ) )
-				return false;
-			if ( nRead != 1 )
-				return false;
-			if ( wMagic < 8 )
-				return false;
-			SetFilePointer( hFile, wMagic - 8, NULL, FILE_CURRENT );
-			break;
-		case 0xFE: case 0xEC:
-			if ( wMagic > 2 )
-			{
-				CBuffer pComment;
-				pComment.EnsureBuffer( wMagic - 2 );
-				pComment.m_nLength = (DWORD)wMagic - 2;
-				if ( ! ReadFile( hFile, pComment.m_pBuffer, wMagic - 2, &nRead, NULL ) )
-					return false;
-				strComment = pComment.ReadString( nRead );
-			}
-			break;
-		case 0xD9: case 0xDA:
-			nSeek = 1;
-			break;
-		default:
-			SetFilePointer( hFile, wMagic - 2, NULL, FILE_CURRENT );
-			break;
+			varData.vt = VT_BOOL;
+			varData.boolVal = bData ? VARIANT_TRUE : VARIANT_FALSE;
+			return true;
 		}
+
+	case FLVDATA_EMCA_ARRAY:
+		return ReadFLVEMCA( hFile, nRemaning, pXML );
+
+	case FLVDATA_STRING:
+		{
+			CStringA strString;
+			if ( ! ReadFLVString( hFile, nRemaning, FALSE, strString ) )
+				return false;
+			varData.vt = VT_BSTR;
+			varData.bstrVal = strString.AllocSysString();
+			return true;
+		}
+
+	case FLVDATA_LONG_STRING:
+		{
+			CStringA strString;
+			if ( ! ReadFLVString( hFile, nRemaning, TRUE, strString ) )
+				return false;
+			varData.vt = VT_BSTR;
+			varData.bstrVal = strString.AllocSysString();
+			return true;
+		}
+
+	default:
+		TRACE( "FLV variable: Unknown type %d\n", Type );
 	}
 
-	if ( nWidth == 0 || nHeight == 0 )
-		return false;
-
-	strComment.TrimLeft();
-	strComment.TrimRight();
-
-	for ( int nChar = 0 ; nChar < strComment.GetLength() ; nChar++ )
-	{
-		if ( strComment[ nChar ] < 32 )
-			strComment.SetAt( nChar, '?' );
-	}
-
-	auto_ptr< CXMLElement > pXML( new CXMLElement( NULL, _T("image") ) );
-	CString strItem;
-
-	strItem.Format( _T("%lu"), nWidth );
-	pXML->AddAttribute( _T("width"), strItem );
-	strItem.Format( _T("%lu"), nHeight );
-	pXML->AddAttribute( _T("height"), strItem );
-
-	if ( nComponents == 3 )
-		pXML->AddAttribute( _T("colors"), _T("16.7M") );
-	else if ( nComponents == 1 )
-		pXML->AddAttribute( _T("colors"), _T("Greyscale") );
-
-	if ( strComment.GetLength() )
-		pXML->AddAttribute( _T("description"), strComment );
-
-	LibraryBuilder.SubmitMetadata( nIndex, CSchema::uriImage, pXML.release() );
+	// Unknown type
 	return true;
 }
 
-//////////////////////////////////////////////////////////////////////
-// CLibraryBuilderInternals GIF (threaded)
-
-bool CLibraryBuilderInternals::ReadGIF(DWORD nIndex, HANDLE hFile)
+bool CLibraryBuilderInternals::ReadFLVDouble(HANDLE hFile, DWORD& nRemaning, double& dValue)
 {
-	CHAR szMagic[6];
 	DWORD nRead;
 
-	SetFilePointer( hFile, 0, NULL, FILE_BEGIN );
-	if ( ! ReadFile( hFile, szMagic, 6, &nRead, NULL ) )
+	UI64 d;
+	if ( nRemaning < sizeof( d ) )
 		return false;
-
-	if ( nRead != 6 || ( strncmp( szMagic, "GIF87a", 6 ) && strncmp( szMagic, "GIF89a", 6 ) ) )
+	if ( ! ReadFile( hFile, &d, sizeof( d ), &nRead, NULL ) || nRead != sizeof( d ) )
 		return false;
-
-	WORD nWidth, nHeight;
-
-	if ( ! ReadFile( hFile, &nWidth, 2, &nRead, NULL ) )
-		return false;
-	if ( nRead != 2 || nWidth == 0 )
-		return false;
-	if ( ! ReadFile( hFile, &nHeight, 2, &nRead, NULL ) )
-		return false;
-	if ( nRead != 2 || nHeight == 0 )
-		return false;
-
-	auto_ptr< CXMLElement > pXML( new CXMLElement( NULL, _T("image") ) );
-	CString strItem;
-
-	strItem.Format( _T("%lu"), nWidth );
-	pXML->AddAttribute( _T("width"), strItem );
-	strItem.Format( _T("%lu"), nHeight );
-	pXML->AddAttribute( _T("height"), strItem );
-
-	pXML->AddAttribute( _T("colors"), _T("256") );
-
-	LibraryBuilder.SubmitMetadata( nIndex, CSchema::uriImage, pXML.release() );
+	nRemaning -= sizeof( d );
+	*((QWORD*)&dValue) = GetUI64( d );
 	return true;
 }
 
-//////////////////////////////////////////////////////////////////////
-// CLibraryBuilderInternals PNG (threaded)
-
-bool CLibraryBuilderInternals::ReadPNG(DWORD nIndex, HANDLE hFile)
+bool CLibraryBuilderInternals::ReadFLVBool(HANDLE hFile, DWORD& nRemaning, bool& bValue)
 {
-	BYTE nMagic[8];
 	DWORD nRead;
 
-	if ( GetFileSize( hFile, NULL ) < 33 )
+	UI8 d;
+	if ( nRemaning < sizeof( d ) )
 		return false;
-	SetFilePointer( hFile, 0, NULL, FILE_BEGIN );
+	if ( ! ReadFile( hFile, &d, sizeof( d ), &nRead, NULL ) || nRead != sizeof( d ) )
+		return false;
+	nRemaning -= sizeof( d );
+	bValue = ( d != 0 );
+	return true;
+}
 
-	if ( ! ReadFile( hFile, nMagic, 8, &nRead, NULL ) )
-		return false;
-	if ( nRead != 8 )
-		return false;
-	if ( nMagic[0] != 137 || nMagic[1] != 80 || nMagic[2] != 78 )
-		return false;
-	if ( nMagic[3] != 71 || nMagic[4] != 13 || nMagic[5] != 10 )
-		return false;
-	if ( nMagic[6] != 26 || nMagic[7] != 10 )
-		return false;
+bool CLibraryBuilderInternals::ReadFLVString(HANDLE hFile, DWORD& nRemaning, BOOL bLong, CStringA& strValue)
+{
+	DWORD nRead;
 
-	DWORD nLength, nIHDR;
-
-	if ( ! ReadFile( hFile, &nLength, 4, &nRead, NULL ) )
-		return false;
-	nLength = swapEndianess( nLength );
-	if ( nRead != 4 || nLength < 10 )
-		return false;
-	if ( ! ReadFile( hFile, &nIHDR, 4, &nRead, NULL ) )
-		return false;
-	if ( nRead != 4 || nIHDR != 'RDHI' )
-		return false;
-
-	DWORD nWidth, nHeight;
-	BYTE nBits, nColors;
-
-	if ( ! ReadFile( hFile, &nWidth, 4, &nRead, NULL ) )
-		return false;
-	nWidth = swapEndianess( nWidth );
-	if ( nRead != 4 || nWidth <= 0 || nWidth > 0xFFFF )
-		return false;
-	if ( ! ReadFile( hFile, &nHeight, 4, &nRead, NULL ) )
-		return false;
-	nHeight = swapEndianess( nHeight );
-	if ( nRead != 4 || nHeight <= 0 || nHeight > 0xFFFF )
-		return false;
-
-	if ( ! ReadFile( hFile, &nBits, 1, &nRead, NULL ) )
-		return false;
-	if ( nRead != 1 )
-		return false;
-	if ( ! ReadFile( hFile, &nColors, 1, &nRead, NULL ) )
-		return false;
-	if ( nRead != 1 )
-		return false;
-
-	auto_ptr< CXMLElement > pXML( new CXMLElement( NULL, _T("image") ) );
-	CString strItem;
-
-	strItem.Format( _T("%lu"), nWidth );
-	pXML->AddAttribute( _T("width"), strItem );
-	strItem.Format( _T("%lu"), nHeight );
-	pXML->AddAttribute( _T("height"), strItem );
-
-	/*
-	if ( nColors == 2 || nColors == 4 )
+	DWORD nStringSize;
+	if ( bLong )
 	{
-		pXML->AddAttribute( _T("colors"), _T("Greyscale") );
+		UI32 StringSize;
+		if ( nRemaning < sizeof( StringSize ) )
+			return false;
+		if ( ! ReadFile( hFile, &StringSize, sizeof( StringSize ), &nRead, NULL ) || nRead != sizeof( StringSize ) )
+			return false;
+		nRemaning -= sizeof( StringSize );
+		nStringSize = GetUI32( StringSize );
 	}
 	else
-	*/
 	{
-		switch ( nBits )
-		{
-		case 1:
-			pXML->AddAttribute( _T("colors"), _T("2") );
-			break;
-		case 2:
-			pXML->AddAttribute( _T("colors"), _T("4") );
-			break;
-		case 4:
-			pXML->AddAttribute( _T("colors"), _T("16") );
-			break;
-		case 8:
-			pXML->AddAttribute( _T("colors"), _T("256") );
-			break;
-		case 16:
-			pXML->AddAttribute( _T("colors"), _T("64K") );
-			break;
-		}
+		UI16 StringSize;
+		if ( nRemaning < sizeof( StringSize ) )
+			return false;
+		if ( ! ReadFile( hFile, &StringSize, sizeof( StringSize ), &nRead, NULL ) || nRead != sizeof( StringSize ) )
+			return false;
+		nRemaning -= sizeof( StringSize );
+		nStringSize = GetUI16( StringSize );
 	}
 
-	LibraryBuilder.SubmitMetadata( nIndex, CSchema::uriImage, pXML.release() );
+	if ( nRemaning < nStringSize )
+		return false;
+	BOOL bResult = ReadFile( hFile, strValue.GetBuffer( nStringSize ), nStringSize, &nRead, NULL );
+	strValue.ReleaseBuffer( nStringSize );
+	if ( ! bResult || nRead != nStringSize )
+		return false;
+	nRemaning -= nStringSize;
+
 	return true;
 }
 
-//////////////////////////////////////////////////////////////////////
-// CLibraryBuilderInternals BMP (threaded)
-
-bool CLibraryBuilderInternals::ReadBMP(DWORD nIndex, HANDLE hFile)
+bool CLibraryBuilderInternals::ReadFLVEMCA(HANDLE hFile, DWORD& nRemaning, CXMLElement* pXML)
 {
-	BITMAPFILEHEADER pBFH;
-	BITMAPINFOHEADER pBIH;
 	DWORD nRead;
 
-	if ( GetFileSize( hFile, NULL ) < sizeof(pBFH) + sizeof(pBIH) )
+	UI32 Fields;
+	if ( nRemaning < sizeof( Fields ) )
 		return false;
-
-	SetFilePointer( hFile, 0, NULL, FILE_BEGIN );
-	if ( ! ReadFile( hFile, &pBFH, sizeof(pBFH), &nRead, NULL ) )
+	if ( ! ReadFile( hFile, &Fields, sizeof( Fields ), &nRead, NULL ) || nRead != sizeof( Fields ) )
 		return false;
-	if ( nRead != sizeof(pBFH) || pBFH.bfType != 'MB' )
-		return false;
+	nRemaning -= sizeof( Fields );
+	DWORD nFields = GetUI32( Fields );
 
-	if ( ! ReadFile( hFile, &pBIH, sizeof(pBIH), &nRead, NULL ) )
-		return false;
-	if ( nRead != sizeof(pBIH) || pBIH.biSize != sizeof(pBIH) )
-		return false;
+	TRACE( "FLV found EMCA with %u variable(s).\n", nFields );
 
-	auto_ptr< CXMLElement > pXML( new CXMLElement( NULL, _T("image") ) );
-	CString strItem;
-
-	strItem.Format( _T("%d"), pBIH.biWidth );
-	pXML->AddAttribute( _T("width"), strItem );
-	strItem.Format( _T("%d"), pBIH.biHeight );
-	pXML->AddAttribute( _T("height"), strItem );
-
-	switch ( pBIH.biBitCount )
+	// String-value pairs
+	for ( DWORD i = 0; i < nFields; ++ i )
 	{
-	case 4:
-		pXML->AddAttribute( _T("colors"), _T("16") );
-		break;
-	case 8:
-		pXML->AddAttribute( _T("colors"), _T("256") );
-		break;
-	case 24:
-		pXML->AddAttribute( _T("colors"), _T("16.7M") );
-		break;
+		CStringA strName;
+		if ( ! ReadFLVString( hFile, nRemaning, FALSE, strName ) )
+			return false;
+
+		CComVariant varValue;
+		if ( ! ReadFLVVariable( hFile, nRemaning, varValue ) )
+			return false;
+
+#ifdef _DEBUG
+		CComVariant varDebug;
+		varDebug.ChangeType( VT_BSTR, &varValue );
+		TRACE( "FLV EMCA %2u : %s = \"%s\"\n", i + 1, strName, (LPCSTR)CW2A( (LPCWSTR)varDebug.bstrVal ) );
+#endif
+
+		if ( pXML )
+		{
+			if ( strName.CompareNoCase( "width" ) == 0 )
+			{
+				if ( SUCCEEDED( varValue.ChangeType( VT_UI4 ) ) )
+				{
+					CString strItem;
+					strItem.Format( _T("%lu"), varValue.ulVal );
+					pXML->AddAttribute( _T("width"), strItem );
+				}
+			}
+			else if ( strName.CompareNoCase( "height" ) == 0 )
+			{
+				if ( SUCCEEDED( varValue.ChangeType( VT_UI4 ) ) )
+				{
+					CString strItem;
+					strItem.Format( _T("%lu"), varValue.ulVal );
+					pXML->AddAttribute( _T("height"), strItem );
+				}
+			}
+			else if ( strName.CompareNoCase( "duration" ) == 0 )
+			{
+				if ( pXML->GetName() == _T("video") )
+				{
+					if ( SUCCEEDED( varValue.ChangeType( VT_R8 ) ) )
+					{
+						CString strItem;
+						strItem.Format( _T("%.3f"), varValue.dblVal / 60 );
+						pXML->AddAttribute( _T("minutes"), strItem );
+					}
+				}
+				else
+				{
+					if ( SUCCEEDED( varValue.ChangeType( VT_UI4 ) ) )
+					{
+						CString strItem;
+						strItem.Format( _T("%lu"), varValue.ulVal );
+						pXML->AddAttribute( _T("seconds"), strItem );
+					}
+				}
+			}
+			else if ( strName.CompareNoCase( "framerate" ) == 0 )
+			{
+				if ( SUCCEEDED( varValue.ChangeType( VT_R8 ) ) )
+				{
+					CString strItem;
+					strItem.Format( _T("%.2f"), varValue.dblVal );
+					pXML->AddAttribute( _T("frameRate"), strItem );
+				}
+			}
+		}
 	}
 
-	LibraryBuilder.SubmitMetadata( nIndex, CSchema::uriImage, pXML.release() );
+	return true;
+}
+
+bool CLibraryBuilderInternals::ReadFLV(DWORD nIndex, HANDLE hFile)
+{
+	BOOL bMetadata = FALSE;
+
+	DWORD nRead;
+
+	if ( SetFilePointer( hFile, 0, NULL, FILE_BEGIN ) == INVALID_SET_FILE_POINTER )
+		return false;
+
+	FLV_HEADER header;
+	if ( ! ReadFile( hFile, &header, sizeof( header ), &nRead, NULL ) || nRead != sizeof( header ) )
+		return false;
+	if ( header.Signature1 != 'F' || header.Signature2 != 'L' || header.Signature3 != 'V' || header.DataOffset < sizeof( header ) )
+		return false;
+	TRACE( "FLV version: %d\n", header.Version );
+	DWORD nDataOffset = GetUI32( header.DataOffset );
+	if ( SetFilePointer( hFile, nDataOffset, NULL, FILE_BEGIN ) == INVALID_SET_FILE_POINTER )
+		return false;
+	if ( ( header.TypeFlags & ( FLV_AUDIO | FLV_VIDEO ) ) == 0 )
+	{
+		// Not interested
+		TRACE( "FLV without Video or Audio streams.\n" );
+		return true;
+	}
+	const bool bVideo = ( header.TypeFlags & FLV_VIDEO );
+
+	CAutoPtr< CXMLElement > pXML( new CXMLElement( NULL, bVideo ? _T("video") : _T("audio") ) );
+	if ( ! pXML )
+		// Out of memory
+		return false;
+
+	DWORD nLastTagSize = 0;
+	DWORD nTags = 0;
+	for ( ; ! bMetadata ; ++nTags )
+	{
+		UI32 PreviousTagSize;
+		if ( ! ReadFile( hFile, &PreviousTagSize, sizeof( PreviousTagSize ), &nRead, NULL ) || nRead != sizeof( PreviousTagSize ) )
+			return false;
+		DWORD nPreviousTagSize = GetUI32( PreviousTagSize );
+		if ( nPreviousTagSize != nLastTagSize )
+		{
+			TRACE( "FLV wrong last tag size.\n" );
+			return false;
+		}
+
+		FLVTAG_HEADER tag_header;
+		if ( ! ReadFile( hFile, &tag_header, sizeof( tag_header ), &nRead, NULL ) )
+			return false;
+		if ( nRead == 0 )
+			// EOF
+			break;
+		if ( nRead != sizeof( tag_header ) )
+			return false;
+
+		DWORD nDataSize = GetUI24( tag_header.DataSize );
+		const DWORD nNextTagPosition = SetFilePointer( hFile, 0, NULL, FILE_CURRENT ) + nDataSize;
+		nLastTagSize = nDataSize + sizeof( tag_header );
+
+		if ( tag_header.TagType == FLVTAG_SCRIPT )
+		{
+			TRACE( "FLV found script tag.\n" );
+
+			for ( DWORD nRemaning = nDataSize; nRemaning > 3; )	// Except last SCRIPTDATAOBJECTEND(UI24) == 0x000009
+			{
+				CComVariant var;
+				if ( ! ReadFLVVariable( hFile, nRemaning, var, pXML ) )
+					return false;
+
+				if ( var.vt == VT_BSTR && _wcsicmp( var.bstrVal, L"onMetaData" ) == 0 )
+				{
+					bMetadata = TRUE;
+				}
+				else if ( bMetadata )
+					break;
+			}
+		} 
+
+		SetFilePointer( hFile, nNextTagPosition, NULL, FILE_BEGIN );
+	}
+
+	TRACE( "FLV processed tags: %lu. Metadata found: %s.\n", nTags, bMetadata ? "yes" : "no" );
+
+	if ( bMetadata )
+	{
+		pXML->AddAttribute( _T("codec"), _T("FLV") );
+
+		LibraryBuilder.SubmitMetadata( nIndex, bVideo ? CSchema::uriVideo : CSchema::uriAudio, pXML.Detach() );
+	}
+
 	return true;
 }
 
@@ -2955,14 +3363,14 @@ bool CLibraryBuilderInternals::ReadPDF(DWORD nIndex, HANDLE hFile, LPCTSTR pszPa
 		// get total object count
 		if ( ReadPDFLine( hFile, false ).IsEmpty() )
 			strLine = ReadPDFLine( hFile, false );
-		if ( strLine != _T("endobj") )
+		if ( strLine.CompareNoCase( _T("endobj") ) != 0 )
 			return false;
 
 		nOffset = SetFilePointer( hFile, 0, NULL, FILE_CURRENT );
 		strLine = ReadPDFLine( hFile, false );
 		if ( strLine.IsEmpty() )
 			strLine = ReadPDFLine( hFile, false );
-		if ( strLine != _T("xref") )
+		if ( strLine.CompareNoCase( _T("xref") ) != 0 )
 			return false;
 
 		strLine = ReadPDFLine( hFile, false );
@@ -2979,19 +3387,24 @@ bool CLibraryBuilderInternals::ReadPDF(DWORD nIndex, HANDLE hFile, LPCTSTR pszPa
 		strLine = ReadPDFLine( hFile, true );
 		if ( strLine.IsEmpty() )
 			strLine = ReadPDFLine( hFile, true );
+		if ( strLine.IsEmpty() )
+			strLine = ReadPDFLine( hFile, true );
 
 		// TODO: %%EOF should be within the last 1024 KB by specs
-		if ( strLine != _T("%%EOF") )
+		if ( strLine.CompareNoCase( _T("%%EOF") ) != 0 )
 			return false;
 
 		strLine = ReadPDFLine( hFile, true );
-		if ( ReadPDFLine( hFile, true ) != _T("startxref") )
-			return false;
-
 		// get last reference object number
 		if ( _stscanf( strLine, _T("%lu"), &nOffset ) != 1 )
 			return false;
-		if ( ! ReadPDFLine( hFile, true, true ).IsEmpty() )
+
+		strLine = ReadPDFLine( hFile, true );
+		if ( strLine.CompareNoCase( _T("startxref") ) != 0 )
+			return false;
+
+		strLine = ReadPDFLine( hFile, true, true );
+		if ( ! strLine.IsEmpty() )
 			return false;
 
 		int nLines;
@@ -3010,9 +3423,12 @@ bool CLibraryBuilderInternals::ReadPDF(DWORD nIndex, HANDLE hFile, LPCTSTR pszPa
 
 	// read trailer dictionary
 	strLine = ReadPDFLine( hFile, false );
+	if ( strLine.IsEmpty() )
+		strLine = ReadPDFLine( hFile, false );
 	if ( strLine.CompareNoCase( _T("trailer") ) != 0 )
 		return false;
-	if ( ! ReadPDFLine( hFile, false, true ).IsEmpty() )
+	strLine = ReadPDFLine( hFile, false, true );
+	if ( ! strLine.IsEmpty() )
 		return false;
 	strLine = ReadPDFLine( hFile, false, true );
 	if ( strLine.IsEmpty() )
@@ -3073,7 +3489,7 @@ bool CLibraryBuilderInternals::ReadPDF(DWORD nIndex, HANDLE hFile, LPCTSTR pszPa
 		strLine = ReadPDFLine( hFile, false );
 		if ( strLine.IsEmpty() )
 			strLine = ReadPDFLine( hFile, false );
-		if ( strLine != _T("xref") )
+		if ( strLine.CompareNoCase( _T("xref") ) != 0 )
 			return false;
 		strLine = ReadPDFLine( hFile, false );
 		DWORD nTemp;
@@ -3101,12 +3517,16 @@ bool CLibraryBuilderInternals::ReadPDF(DWORD nIndex, HANDLE hFile, LPCTSTR pszPa
 				}
 			}
 		}
-		if ( ReadPDFLine( hFile, false ) != _T("trailer") )
+		strLine = ReadPDFLine( hFile, false );
+		if ( strLine.IsEmpty() )
+			strLine = ReadPDFLine( hFile, false );
+		if ( strLine.CompareNoCase( _T("trailer") ) != 0 )
 			return false;
 		// Only the last data from trailers are used for /Info and /Root positions
 		nOffsetPrev = 0;
 
-		if ( ! ReadPDFLine( hFile, false, true ).IsEmpty() )
+		strLine = ReadPDFLine( hFile, false, true );
+		if ( ! strLine.IsEmpty() )
 			return false;
 		strLine = ReadPDFLine( hFile, false, true );
 		if ( strLine.IsEmpty() )
@@ -3243,7 +3663,8 @@ bool CLibraryBuilderInternals::ReadPDF(DWORD nIndex, HANDLE hFile, LPCTSTR pszPa
 			if ( strLine.Find( _T("obj"), nObjPos + 1 ) != -1 )
 				continue;
 
-			if ( ReadPDFLine( hFile, false, true ).IsEmpty() )
+			strLine = ReadPDFLine( hFile, false, true );
+			if ( strLine.IsEmpty() )
 			{
 				strLine = ReadPDFLine( hFile, false, true );
 				if ( strLine.IsEmpty() )
@@ -3270,9 +3691,10 @@ bool CLibraryBuilderInternals::ReadPDF(DWORD nIndex, HANDLE hFile, LPCTSTR pszPa
 		strSeek.Format( _T("%lu 0 obj"), nOffsetInfo );
 		SetFilePointer( hFile, pOffset[ nOffsetInfo ], NULL, FILE_BEGIN );
 		strLine = ReadPDFLine( hFile, false, true, false );
-		if ( strLine == strSeek )
+		if ( strLine.CompareNoCase( strSeek ) == 0 )
 		{
-			if ( ! ReadPDFLine( hFile, false, true ).IsEmpty() )
+			strLine = ReadPDFLine( hFile, false, true );
+			if ( ! strLine.IsEmpty() )
 				return false;
 			strLine = ReadPDFLine( hFile, false, true );
 			if ( strLine.IsEmpty() )
@@ -3325,21 +3747,19 @@ bool CLibraryBuilderInternals::ReadPDF(DWORD nIndex, HANDLE hFile, LPCTSTR pszPa
 							break;
 					}
 				}
+
+				const CString strDecodedLine = DecodePDFText( strLine );
+
 				if ( strEntry.CompareNoCase( _T("title") ) == 0 )
-					pXML->AddAttribute( _T("title"), DecodePDFText( strLine ) );
+					pXML->AddAttribute( _T("title"), strDecodedLine );
 				else if ( strEntry.CompareNoCase( _T("author") ) == 0 )
-					pXML->AddAttribute( _T("author"), DecodePDFText( strLine ) );
+					pXML->AddAttribute( _T("author"), strDecodedLine );
 				else if ( strEntry.CompareNoCase( _T("subject") ) == 0 )
-					pXML->AddAttribute( _T("subject"), DecodePDFText( strLine ) );
+					pXML->AddAttribute( _T("subject"), strDecodedLine );
 				else if ( strEntry.CompareNoCase( _T("keywords") ) == 0 )
-					pXML->AddAttribute( _T("keywords"), DecodePDFText( strLine ) );
+					pXML->AddAttribute( _T("keywords"), strDecodedLine );
 				else if ( strEntry.CompareNoCase( _T("company") ) == 0 )
-				{
-					if ( bBook )
-						pXML->AddAttribute( _T("publisher"), DecodePDFText( strLine ) );
-					else
-						pXML->AddAttribute( _T("copyright"), DecodePDFText( strLine ) );
-				}
+					pXML->AddAttribute( bBook ? _T("publisher") : _T("copyright"), strDecodedLine );
 				//else if ( strEntry.CompareNoCase( _T("creator") ) == 0 )
 				//else if ( strEntry.CompareNoCase( _T("producer") ) == 0 )
 				//else if ( strEntry.CompareNoCase( _T("moddate") ) == 0 )
@@ -3377,11 +3797,11 @@ bool CLibraryBuilderInternals::ReadPDF(DWORD nIndex, HANDLE hFile, LPCTSTR pszPa
 inline char unhex(TCHAR c)
 {
 	if ( c >= _T('0') && c <= _T('9') )
-		return ( c - _T('0') );
+		return (char)( c - _T('0') );
 	else if ( c >= _T('A') && c <= _T('F') )
-		return ( c - _T('A') + 10 );
+		return (char)( c - _T('A') + 10 );
 	else if ( c >= _T('a') && c <= _T('f') )
-		return ( c - _T('a') + 10 );
+		return (char)( c - _T('a') + 10 );
 	else
 		return 0;
 }
@@ -3426,7 +3846,7 @@ CString	CLibraryBuilderInternals::DecodePDFText(CString strInput)
 	if ( strInput.IsEmpty() )
 		return CString();
 
-	CString strResult, strTemp;
+	CString strResult;
 	bool bWide = false;
 	DWORD nByte = strInput.GetLength() / nFactor; // string length in bytes
 
@@ -4016,7 +4436,6 @@ bool CLibraryBuilderInternals::ReadCHM(DWORD nIndex, HANDLE hFile, LPCTSTR pszPa
 	return true;
 }
 
-
 //////////////////////////////////////////////////////////////////////
 // CLibraryBuilderInternals TORRENT
 
@@ -4050,5 +4469,123 @@ bool CLibraryBuilderInternals::ReadTorrent(DWORD nIndex, HANDLE /*hFile*/, LPCTS
 	pXML->AddAttribute( L"privateflag", oTorrent.m_bPrivate ? L"true" : L"false" );
 
 	LibraryBuilder.SubmitMetadata( nIndex, CSchema::uriBitTorrent, pXML.release() );
+	return true;
+}
+
+//////////////////////////////////////////////////////////////////////
+// CLibraryBuilderInternals DJVU
+
+bool CLibraryBuilderInternals::ReadDJVU(DWORD nIndex, HANDLE hFile)
+{
+	DWORD nRead;
+
+	SetFilePointer( hFile, 0, NULL, FILE_BEGIN );
+
+	BYTE pMagic[ 8 ];
+	if ( ! ReadFile( hFile, pMagic, sizeof( pMagic ), &nRead, NULL ) || nRead != sizeof( pMagic ) )
+		return false;
+
+	if ( memcmp( pMagic, "AT&TFORM", sizeof( pMagic ) ) != 0 )
+		return false;
+
+	// Document size (MSB)
+	DWORD nFileSize;
+	if ( ! ReadFile( hFile, &nFileSize, sizeof( nFileSize ), &nRead, NULL ) || nRead != sizeof( nFileSize ) )
+		return false;
+	nFileSize = _byteswap_ulong( nFileSize ) + sizeof( pMagic ) + sizeof( nFileSize );
+	const DWORD nRealFileSize = GetFileSize( hFile, NULL );
+	if ( nRealFileSize < nFileSize )
+		return false;
+
+	BYTE pType[ 8 ];
+	if ( ! ReadFile( hFile, pType, sizeof( pType ), &nRead, NULL ) || nRead != sizeof( pType ) )
+		return false;
+
+	WORD nPages = 0, nWidth = 0, nHeight = 0, nDPI = 0, nVersion = 0;
+
+	if ( memcmp( pType, "DJVMDIRM", sizeof( pType ) ) == 0 )
+	{
+		// Multi-page document
+
+		// Skip size
+		SetFilePointer( hFile, 4, NULL, FILE_CURRENT );
+		
+		BYTE nFlags;
+		if ( ! ReadFile( hFile, &nFlags, sizeof( nFlags ), &nRead, NULL ) || nRead != sizeof( nFlags ) )
+			return false;
+		const bool bBundled = ( ( nFlags & 0x80 ) != 0 );
+
+		// Files count (MSB)
+		WORD nFiles;
+		if ( ! ReadFile( hFile, &nFiles, sizeof( nFiles ), &nRead, NULL ) || nRead != sizeof( nFiles ) )
+			return false;
+		nFiles = _byteswap_ushort( nFiles );
+
+		// Skip offsets array
+		if ( bBundled )
+			SetFilePointer( hFile, 4 * nFiles, NULL, FILE_CURRENT );
+
+		// BZZ-encoded
+		//for ( WORD i = 0; i < nFiles; ++i )
+		//{
+		//}
+
+		// TODO: Implement DjVU-file correct page detection
+	}
+	else if ( memcmp( pType, "DJVUINFO", sizeof( pType ) ) == 0 )
+	{
+		// Single-page document
+
+		// Skip size
+		SetFilePointer( hFile, 4, NULL, FILE_CURRENT );
+
+		// Image width (MSB)
+		if ( ! ReadFile( hFile, &nWidth, sizeof( nWidth ), &nRead, NULL ) || nRead != sizeof( nWidth ) )
+			return false;
+		nWidth = _byteswap_ushort( nWidth );
+
+		// Image height (MSB)
+		if ( ! ReadFile( hFile, &nHeight, sizeof( nHeight ), &nRead, NULL ) || nRead != sizeof( nHeight ) )
+			return false;
+		nHeight = _byteswap_ushort( nHeight );
+
+		// Version
+		if ( ! ReadFile( hFile, &nVersion, sizeof( nVersion ), &nRead, NULL ) || nRead != sizeof( nVersion ) )
+			return false;
+
+		// DPI (LSB)
+		if ( ! ReadFile( hFile, &nDPI, sizeof( nDPI ), &nRead, NULL ) || nRead != sizeof( nDPI ) )
+			return false;
+	}
+	else
+		return false;
+
+	const bool bBook = ( nWidth == 0 && nHeight == 0 );
+	CAutoPtr< CXMLElement > pXML( new CXMLElement( NULL, bBook ? _T("wordprocessing") : _T("image") ) );
+	if ( ! pXML )
+		return true;
+
+	pXML->AddAttribute( bBook ? _T("format") : _T("description"), _T("Lizardtech DjVu") );
+
+	if ( nPages > 1 )
+	{
+		CString strPages;
+		strPages.Format( _T("%u"), nPages );
+		pXML->AddAttribute( _T("pages"), strPages );
+	}
+	if ( nWidth )
+	{
+		CString strWidth;
+		strWidth.Format( _T("%u"), nWidth );
+		pXML->AddAttribute( _T("width"), strWidth );
+	}
+	if ( nHeight )
+	{
+		CString strHeight;
+		strHeight.Format( _T("%u"), nHeight );
+		pXML->AddAttribute( _T("height"), strHeight );
+	}
+
+	LibraryBuilder.SubmitMetadata( nIndex, bBook ? CSchema::uriDocument : CSchema::uriImage, pXML.Detach() );
 	return true;
 }

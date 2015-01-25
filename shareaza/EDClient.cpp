@@ -1,7 +1,7 @@
 //
 // EDClient.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2013.
+// Copyright (c) Shareaza Development Team, 2002-2014.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -1366,7 +1366,7 @@ void CEDClient::DetermineUserAgent()
 			{
 				CString strVersion;
 				strVersion.Format( _T("%u"), m_nVersion );
-				m_sUserAgent.AppendFormat( _T("v%c.%c.%c"), strVersion[0], strVersion[2], strVersion[4] );
+				m_sUserAgent.AppendFormat( _T("v%c.%c.%c"), (TCHAR)strVersion[0], (TCHAR)strVersion[2], (TCHAR)strVersion[4] );
 			}
 			else if ( m_nVersion >= 1100 )	// Unknown
 				m_sUserAgent.AppendFormat( _T("%u"), m_nVersion );
@@ -1407,12 +1407,22 @@ BOOL CEDClient::OnFileRequest(CEDPacket* pPacket)
 	pReply->Write( m_oUpED2K );
 
 	// Extra security check (Shouldn't be needed, but there have been reports of glitches)
-	if ( Security.IsDenied( &m_pHost.sin_addr ) ||
-		 Security.IsClientBanned( m_sUserAgent ) )
+	if ( Security.IsDenied( &m_pHost.sin_addr ) )
 	{
 		pReply->m_nType = ED2K_C2C_FILENOTFOUND;
 		Send( pReply );
-		theApp.Message( MSG_ERROR, _T("ED2K upload to %s blocked by security rules."), m_sAddress);
+		theApp.Message( MSG_ERROR, IDS_SECURITY_DENIED, (LPCTSTR)m_sAddress);
+		return TRUE;
+	}
+
+	if ( Security.IsClientBanned( m_sUserAgent ) )
+	{
+		pReply->m_nType = ED2K_C2C_FILENOTFOUND;
+		Send( pReply );
+		CString sComment;
+		sComment.Format( IDS_SECURITY_BANNED_USERAGENT, (LPCTSTR)m_sAddress, (LPCTSTR)m_sUserAgent );
+		Security.Ban( &m_pHost.sin_addr, ban2Hours, FALSE, sComment );
+		theApp.Message( MSG_ERROR, IDS_SECURITY_BANNED_USERAGENT, (LPCTSTR)m_sAddress, (LPCTSTR)m_sUserAgent );
 		return TRUE;
 	}
 
@@ -1883,7 +1893,7 @@ BOOL CEDClient::OnViewSharedDirAnswer(CEDPacket* pPacket)
 	if ( pPacket->GetRemaining() >= 2 )
 	{
 		// Read original directory name
-		CString sDir = pPacket->ReadEDString( m_bEmUnicode );
+//		CString sDir = pPacket->ReadEDString( m_bEmUnicode );
 
 		if ( pPacket->GetRemaining() >= 4 )
 		{
@@ -1961,10 +1971,19 @@ BOOL CEDClient::OnRequestPreview(CEDPacket* pPacket)
 		theApp.Message( MSG_ERROR, IDS_ED2K_CLIENT_BAD_PACKET, (LPCTSTR)m_sAddress, pPacket->m_nType );
 		return TRUE;
 	}
-	else if ( Security.IsDenied( &m_pHost.sin_addr ) ||
-		 Security.IsClientBanned( m_sUserAgent ) )  // Extra security check
+
+	if ( Security.IsDenied( &m_pHost.sin_addr ) )
 	{
-		theApp.Message( MSG_ERROR, _T("ED2K upload to %s blocked by security rules."), m_sAddress);
+		theApp.Message( MSG_ERROR, IDS_SECURITY_DENIED, (LPCTSTR)m_sAddress);
+		return TRUE;
+	}
+
+	if ( Security.IsClientBanned( m_sUserAgent ) )
+	{
+		CString sComment;
+		sComment.Format( IDS_SECURITY_BANNED_USERAGENT, (LPCTSTR)m_sAddress, (LPCTSTR)m_sUserAgent );
+		Security.Ban( &m_pHost.sin_addr, ban2Hours, FALSE, sComment );
+		theApp.Message( MSG_ERROR, IDS_SECURITY_BANNED_USERAGENT, (LPCTSTR)m_sAddress, (LPCTSTR)m_sUserAgent );
 		return TRUE;
 	}
 

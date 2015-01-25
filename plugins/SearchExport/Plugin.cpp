@@ -3,27 +3,38 @@
 #include "stdafx.h"
 #include "Plugin.h"
 
-static const LPCWSTR SearchExport_CHECK	= L"&Export...";
-
-// Insert menu item if no item present only
-void InsertCommand(ISMenu* pMenu, int nPos, UINT nID, LPCWSTR szItem)
+inline CString LoadString(UINT nID)
 {
-	LONG nCount;
-	if ( SUCCEEDED( pMenu->get_Count( &nCount ) ) )
+	CString str;
+	str.LoadString( nID );
+	return str;
+}
+
+void CPlugin::InsertCommand(LPCTSTR szTitle, const LPCWSTR* szMenu, UINT nID)
+{
+	for ( int i = 0; szMenu[ i ]; ++i )
 	{
-		for ( int i = 0; i < (int)nCount; ++i )
+		CComPtr< ISMenu > pMenu;
+		if ( SUCCEEDED( m_pUserInterface->GetMenu( CComBSTR( szMenu[ i ] ), VARIANT_FALSE, &pMenu ) ) && pMenu )
 		{
-			CComPtr< ISMenu > pItem;
-			LONG nItemID;	// note: -1 - submenu, 0 - separator
-			if ( SUCCEEDED( pMenu->get_Item( CComVariant( i ), &pItem ) ) && pItem &&
-				 SUCCEEDED( pItem->get_CommandID( &nItemID ) ) && (UINT)nItemID == nID )
-				// Already in place
-				return;
+			LONG nPos = -1;
+			CComPtr< ISMenu > pCopyMenu;
+			if ( nID && SUCCEEDED( pMenu->get_Item( CComVariant( nID ), &pCopyMenu ) ) && pCopyMenu && SUCCEEDED( pCopyMenu->get_Position( &nPos ) ) )
+			{
+				// Check for existing menu item
+				CComPtr< ISMenu > pCheckMenu;
+				if ( SUCCEEDED( pMenu->get_Item( CComVariant( m_nCmdCheck ), &pCheckMenu ) ) && ! pCheckMenu )
+				{
+					CComPtr< ISMenu > pInsertMenu;
+					if ( SUCCEEDED( pCopyMenu->get_Parent( &pInsertMenu ) ) && pInsertMenu )
+					{
+						// Insert new menu item
+						pInsertMenu->InsertCommand( nPos + 1, m_nCmdCheck, CComBSTR( szTitle ), NULL );
+					}
+				}
+			}
 		}
 	}
-
-	// Insert new
-	pMenu->InsertCommand( nPos, nID, CComBSTR( szItem ), NULL );
 }
 
 #define Kilo	( 1024 )
@@ -416,11 +427,12 @@ STDMETHODIMP CPlugin::RegisterCommands()
 	if ( ! m_pUserInterface )
 		return E_UNEXPECTED;
 
-	HRESULT hr = m_pUserInterface->RegisterCommand( CComBSTR( L"SearchExportPlugin_Check" ),
+	HRESULT hr = m_pUserInterface->RegisterCommand( CComBSTR( LoadString( IDS_COMMAND ) ),
 		LoadIcon( _AtlBaseModule.GetResourceInstance(), MAKEINTRESOURCE( IDI_ICON ) ),
 		&m_nCmdCheck );
 	if ( SUCCEEDED( hr ) )
 	{
+		m_pUserInterface->AddString( m_nCmdCheck, CComBSTR( LoadString( IDS_COMMAND_TIP ) ) );
 		return S_OK;
 	}
 
@@ -432,14 +444,17 @@ STDMETHODIMP CPlugin::InsertCommands()
 	if ( ! m_pUserInterface )
 		return E_UNEXPECTED;
 
-	CComPtr< ISMenu > pSearchMenu;
-	if ( SUCCEEDED( m_pUserInterface->GetMenu( CComBSTR( L"CSearchWnd" ),
-		VARIANT_FALSE, &pSearchMenu ) ) && pSearchMenu )
+	CString sMenuItem = LoadString( IDS_MENU_ITEM );
+
+	// Insert before "Filter Results..." item
 	{
-		InsertCommand( pSearchMenu, 13, m_nCmdCheck, SearchExport_CHECK );
+		UINT nSearchID = 0;
+		m_pUserInterface->NameToID( CComBSTR( L"ID_SEARCH_FILTER" ), &nSearchID );
+		const LPCWSTR szSearchMenu[] = {  L"CSearchWnd", L"CBrowseHostWnd", L"CHitMonitorWnd", NULL };
+		InsertCommand( sMenuItem, szSearchMenu, nSearchID );
 	}
 
-	return E_FAIL;
+	return S_OK;
 }
 
 STDMETHODIMP CPlugin::OnUpdate( 

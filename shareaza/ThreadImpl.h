@@ -1,7 +1,7 @@
 //
 // ThreadImpl.h
 //
-// Copyright (c) Shareaza Development Team, 2008-2013.
+// Copyright (c) Shareaza Development Team, 2008-2014.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -30,7 +30,6 @@ class CThreadImpl
 public:
 	CThreadImpl()
 		: m_pCancel		( FALSE, TRUE )
-		, m_hThread		( NULL )
 		, m_nThreadID	( 0 )
 		, m_bCanceling	( FALSE )
 	{
@@ -38,12 +37,11 @@ public:
 
 	virtual ~CThreadImpl()
 	{
-		CloseThread();
+		CRazaThread::DetachThread( m_nThreadID );
 	}
 
 private:
 	CEvent			m_pCancel;		// Thread cancel event (signaled if abort requested)
-	volatile HANDLE	m_hThread;		// Thread handle
 	DWORD			m_nThreadID;	// Thread ID
 	CEvent			m_pWakeup;		// Thread wakeup event (optional)
 	volatile LONG	m_bCanceling;	// Thread is canceling
@@ -52,7 +50,6 @@ private:
 	{
 		CThreadImpl* pThis = reinterpret_cast< CThreadImpl* >( pParam );
 		pThis->OnRun();
-		pThis->m_hThread = NULL;
 		return 0;
 	}
 
@@ -64,12 +61,11 @@ protected:
 
 	inline bool BeginThread(LPCSTR szName = NULL, int nPriority = THREAD_PRIORITY_NORMAL) throw()
 	{
-		if ( ! IsThreadAlive() )
-		{
-			m_pCancel.ResetEvent();	// Enable thread run
-			m_hThread = ::BeginThread( szName, ThreadStart, this, nPriority, 0, 0, NULL, &m_nThreadID );
-		}
-		return ( m_hThread != NULL );
+		if ( IsThreadAlive() )
+			return true;
+
+		m_pCancel.ResetEvent();	// Enable thread run
+		return ( CRazaThread::BeginThread( szName, ThreadStart, this, nPriority, 0, 0, NULL, &m_nThreadID ) != NULL );
 	}
 
 public:
@@ -81,8 +77,8 @@ public:
 		{
 			if ( m_nThreadID != GetCurrentThreadId() )
 			{
-				::CloseThread( m_hThread, dwTimeout );
-				m_hThread = NULL;
+				CRazaThread::CloseThread( m_nThreadID, dwTimeout );
+				m_nThreadID = 0;
 			}
 			InterlockedExchange( &m_bCanceling, FALSE );
 		}
@@ -94,8 +90,8 @@ public:
 		{
 			if ( m_nThreadID != GetCurrentThreadId() )
 			{
-				::CloseThread( m_hThread, INFINITE );
-				m_hThread = NULL;
+				CRazaThread::CloseThread( m_nThreadID, INFINITE );
+				m_nThreadID = 0;
 			}
 			InterlockedExchange( &m_bCanceling, FALSE );
 		}
@@ -130,7 +126,7 @@ public:
 
 	inline bool IsThreadAlive() const throw()
 	{
-		return m_hThread && ( WaitForSingleObject( m_hThread, 0 ) == WAIT_TIMEOUT );
+		return CRazaThread::IsThreadAlive( m_nThreadID );
 	}
 
 	inline void Exit() throw()
@@ -140,6 +136,6 @@ public:
 
 	inline bool SetThreadPriority(int nPriority) throw()
 	{
-		return m_hThread && ( ::SetThreadPriority( m_hThread, nPriority ) != FALSE );
+		return CRazaThread::SetThreadPriority( m_nThreadID, nPriority );
 	}
 };

@@ -51,7 +51,7 @@
 #include "WndSearch.h"
 #include "WndSearchMonitor.h"
 
-//#include "MiniUPnP.h"		// UPnP tier 0 - MiniUPnPc library
+#include "MiniUPnP.h"		// UPnP tier 0 - MiniUPnPc library
 #include "UPnPNAT.h"		// UPnP tier 1 - Windows modern
 #include "UPnPFinder.h"		// UPnP tier 2 - Windows legacy
 #define UPNP_MAX		2	// UPnP max tier number (0,1,2)
@@ -218,7 +218,7 @@ BOOL CNetwork::IsSelfIP(const IN_ADDR& nAddress) const
 	return ( m_pHostAddresses.Find( nAddress.s_addr ) != NULL );
 }
 
-HINTERNET CNetwork::CNInternetOpen()
+HINTERNET CNetwork::InternetOpen()
 {
 	__try
 	{
@@ -232,7 +232,7 @@ HINTERNET CNetwork::CNInternetOpen()
 	return NULL;
 }
 
-bool CNetwork::CNInternetConnect()
+bool CNetwork::InternetConnect()
 {
 	__try
 	{
@@ -714,7 +714,7 @@ bool CNetwork::PreRun()
 	if ( Settings.Connection.ForceConnectedState )
 	{
 		INTERNET_CONNECTED_INFO ici = {};
-		HINTERNET hInternet = CNInternetOpen();
+		HINTERNET hInternet = InternetOpen();
 
 		ici.dwConnectedState = INTERNET_STATE_CONNECTED;
 		InternetSetOption( hInternet, INTERNET_OPTION_CONNECTED_STATE, &ici, sizeof(ici) );
@@ -722,7 +722,7 @@ bool CNetwork::PreRun()
 	}
 
 #ifndef _WIN64
-	if ( ! CNInternetConnect() )
+	if ( ! InternetConnect() )
 	{
 		theApp.Message( MSG_ERROR, _T("Internet connection attempt failed.") );
 		return false;
@@ -1495,7 +1495,7 @@ int CNetwork::RecvFrom(SOCKET s, char* buf, int len, SOCKADDR_IN* pFrom)
 	}
 }
 
-HINTERNET CNetwork::CNInternetOpenUrl(HINTERNET hInternet, LPCWSTR lpszUrl, LPCWSTR lpszHeaders, DWORD dwHeadersLength, DWORD dwFlags)
+HINTERNET CNetwork::InternetOpenUrl(HINTERNET hInternet, LPCWSTR lpszUrl, LPCWSTR lpszHeaders, DWORD dwHeadersLength, DWORD dwFlags)
 {
 	__try	// Fix against stupid firewalls like (iS3 Anti-Spyware or Norman Virus Control)
 	{
@@ -1541,7 +1541,7 @@ void CNetwork::MapPorts()
 		switch ( m_nUPnPTier )
 		{
 		case 0:
-			//UPnPFinder.Attach( new CMiniUPnP() );
+			UPnPFinder.Attach( new CMiniUPnP() );
 			break;
 		case 1:
 			UPnPFinder.Attach( new CUPnPNAT() );

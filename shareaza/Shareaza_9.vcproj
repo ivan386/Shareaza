@@ -818,6 +818,10 @@
 				>
 			</File>
 			<File
+				RelativePath=".\MiniUPnP.cpp"
+				>
+			</File>
+			<File
 				RelativePath="Neighbour.cpp"
 				>
 			</File>
@@ -1510,10 +1514,6 @@
 				</File>
 				<File
 					RelativePath="DlgFilePreview.cpp"
-					>
-				</File>
-				<File
-					RelativePath="DlgFileProperties.cpp"
 					>
 				</File>
 				<File
@@ -2467,6 +2467,10 @@
 				>
 			</File>
 			<File
+				RelativePath=".\MiniUPnP.h"
+				>
+			</File>
+			<File
 				RelativePath="MinMax.hpp"
 				>
 			</File>
@@ -3215,10 +3219,6 @@
 				</File>
 				<File
 					RelativePath="DlgFilePreview.h"
-					>
-				</File>
-				<File
-					RelativePath="DlgFileProperties.h"
 					>
 				</File>
 				<File

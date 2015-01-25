@@ -1130,7 +1130,6 @@ void CDownloadsCtrl::PaintDownload(CDC& dc, const CRect& rcRow, CDownload* pDown
 					CFragmentBar::DrawDownloadSimple( &dc, &rcCell, pDownload, crNatural );
 				else
 					CFragmentBar::DrawDownload( &dc, &rcCell, pDownload, crNatural );
-				
 			}
 			else if ( ( pDownload->m_nSize < SIZE_UNKNOWN ) && ( pDownload->m_nSize > 0 ) )
 				if ( rcCell.Width() > 50 )

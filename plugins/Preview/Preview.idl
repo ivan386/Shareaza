@@ -1,7 +1,7 @@
 //
 // Preview.idl : IDL source for Preview
 //
-// Copyright (c) Nikolay Raspopov, 2009.
+// Copyright (c) Nikolay Raspopov, 2009-2014.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -21,7 +21,7 @@
 
 import "oaidl.idl";
 import "ocidl.idl";
-import "../../Shareaza/Shareaza.idl";
+import "Shareaza.idl";
 
 [
 	uuid(9DB3D2BA-C333-4691-AFDC-52279AF2D71F),

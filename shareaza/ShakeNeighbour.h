@@ -1,7 +1,7 @@
 //
 // ShakeNeighbour.h
 //
-// Copyright (c) Shareaza Development Team, 2002-2010.
+// Copyright (c) Shareaza Development Team, 2002-2014.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -107,7 +107,7 @@ protected:
 
 	// Possibly not in use (do)
 	TRISTATE m_bUltraPeerLoaded;
-	BOOL	m_bDelayClose;			// This is DelayClose
+	UINT	m_bDelayClose;			// This is DelayClose reason
 	QWORD	m_nHereIsTheBug;		// bypass
 	CString	m_sTryUltrapeers;		// Storage of X-Try-Ultrapeers Header
 	CString	m_sTryHubs;				// Storage of X-Try-Hubs Header

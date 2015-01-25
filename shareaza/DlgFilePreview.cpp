@@ -1,7 +1,7 @@
 //
 // DlgFilePreview.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2012.
+// Copyright (c) Shareaza Development Team, 2002-2014.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -501,9 +501,9 @@ STDMETHODIMP CFilePreviewDlg::XDownloadPreviewSite::GetAvailableRanges(SAFEARRAY
 	METHOD_PROLOGUE( CFilePreviewDlg, DownloadPreviewSite )
 
 	SAFEARRAYBOUND pBound[2] = { { static_cast< ULONG >( pThis->m_pRanges.GetSize() / 2 ), 0 }, { 2, 0 } };
-	*pArray = SafeArrayCreate( VT_I4, 2, pBound );
+	*pArray = SafeArrayCreate( VT_UI8, 2, pBound );
 
-	DWORD* pTarget;
+	QWORD* pTarget;
 	SafeArrayAccessData( *pArray, (void**)&pTarget );
 
 	for ( int nRange = 0 ; nRange < pThis->m_pRanges.GetSize() ; nRange++, pTarget++ )

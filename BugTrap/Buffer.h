@@ -117,7 +117,7 @@ BOOL CMixedBuffer<TYPE, dwStatBufferSize>::SetSize(DWORD dwBufferSize)
 		if (countof(m_arrStatBuffer) >= dwBufferSize)
 			return TRUE;
 	}
-	TYPE* pDynBuffer = new TYPE[dwBufferSize];
+	TYPE* pDynBuffer = new (std::nothrow) TYPE[dwBufferSize];
 	if (pDynBuffer == NULL)
 		return FALSE;
 	delete[] m_pDynBuffer;
@@ -181,7 +181,7 @@ void CDynamicBuffer<TYPE>::FreeBuffer(void)
 template <typename TYPE>
 BOOL CDynamicBuffer<TYPE>::AllocBuffer(DWORD dwBufferSize)
 {
-	TYPE* pBuffer = new TYPE[dwBufferSize];
+	TYPE* pBuffer = new (std::nothrow) TYPE[dwBufferSize];
 	if (pBuffer == NULL)
 		return FALSE;
 	delete[] m_pBuffer;

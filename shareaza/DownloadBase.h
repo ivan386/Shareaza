@@ -43,6 +43,8 @@ public:
 	void			SetModified();
 	bool			IsModified() const;
 
+	virtual BOOL	SubmitData(QWORD nOffset, LPBYTE pData, QWORD nLength) = 0;
+
 	// Set download new (and safe) name
 	virtual bool	Rename(const CString& strName) = 0;
 

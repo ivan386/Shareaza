@@ -92,9 +92,9 @@ bool CDownloadWithTorrent::IsSeeding() const
 	return m_bSeeding != 0;
 }
 
-bool CDownloadWithTorrent::IsTorrent(BOOL bWithInfo) const
+bool CDownloadWithTorrent::IsTorrent() const
 {
-	return bWithInfo ? m_pTorrent.IsAvailableInfo() : m_pTorrent.IsAvailable();
+	return m_pTorrent.IsAvailable();
 }
 
 bool CDownloadWithTorrent::IsSingleFileTorrent() const

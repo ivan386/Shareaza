@@ -120,15 +120,42 @@
 #define Description   internal_name + " Ultimate File Sharing"
 #define date          GetDateTimeString('yyyy/mm/dd', '-', '')
 
+; Output files names
 #if Str(RELEASE_BUILD) == "1" && ConfigurationName == "Release"
-  #define output_name internal_name + "_" + version + "_" + PlatformName
+  #define output_name  internal_name + "_" + version + "_" + PlatformName
+  #define symbols_name internal_name + "_" + version + "_" + PlatformName + "_Symbols.7z"
+  #define source_name  internal_name + "_" + version + "_Source.7z"
 #else
   #ifdef REVISION
-    #define output_name internal_name + "_" + version + "_" + PlatformName + "_" + ConfigurationName + "_" + REVISION + "_" + date
+    #define output_name  internal_name + "_" + version + "_" + PlatformName + "_" + ConfigurationName + "_" + REVISION + "_" + date
+    #define symbols_name internal_name + "_" + PlatformName + "_" + ConfigurationName + "_" + REVISION + "_" + date + "_Symbols.7z"
+    #define source_name  internal_name + "_" + REVISION + "_Source.7z"
   #else
-    #define output_name internal_name + "_" + version + "_" + PlatformName + "_" + ConfigurationName + "_" + date
+    #define output_name  internal_name + "_" + version + "_" + PlatformName + "_" + ConfigurationName + "_" + date
+    #define symbols_name internal_name + "_" + version + "_" + PlatformName + "_" + ConfigurationName + "_" + date + "_Symbols.7z"
+    #define source_name  internal_name + "_" + version + "_Source.7z"
   #endif
 #endif
+
+; Detect 7-Zip
+#ifexist GetEnv( "ProgramFiles" ) + "\7-Zip\7z.exe"
+  #define Zip GetEnv( "ProgramFiles" ) + "\7-Zip\7z.exe"
+#endif
+#ifexist GetEnv( "ProgramFiles(x86)" ) + "\7-Zip\7z.exe"
+  #define Zip GetEnv( "ProgramFiles(x86)" ) + "\7-Zip\7z.exe"
+#endif
+#ifexist GetEnv( "ProgramW6432" ) + "\7-Zip\7z.exe"
+  #define Zip GetEnv( "ProgramW6432" ) + "\7-Zip\7z.exe"
+#endif
+#ifndef Zip
+  #error The 7z utility is missing. Please go to https://sourceforge.net/projects/sevenzip/ and install 7-Zip.
+#endif
+
+; Pack symbols
+#expr Exec( Zip, "a -y -mx=9 builds\" + symbols_name + " ""..\" + Compiler + "\" + PlatformName + "\" + ConfigurationName + "\*.pdb""", ".." )
+
+; Pack sources
+#expr Exec( Zip, "a -y -mx=9 -r -x!.svn -x!.git -x!setup\builds\*.exe -x!setup\builds\*.txt -x!setup\builds\*.iss -x!Win32 -x!x64 -x!ipch -x!*.7z -x!*.log -x!*.bak -x!*.tmp -x!*.sdf -x!*.suo -x!*.ncb -x!*.user -x!*.opensdf builds\" + source_name + " ..", ".." )
 
 [Setup]
 AppComments={#Description}
@@ -180,10 +207,8 @@ AppPublisherURL=http://shareaza.sourceforge.net/
 AppSupportURL=http://shareaza.sourceforge.net/?id=support
 AppUpdatesURL=http://shareaza.sourceforge.net/?id=download
 
-#if Compiler == "vc10"
-  #if ConfigurationName == "Release"
-    #include SourcePath + "..\..\vc10\vcredist\vcredist.iss"
-  #endif
+#if ConfigurationName == "Release"
+    #include SourcePath + "..\..\" + Compiler + "\vcredist\vcredist.iss"
 #endif
 
 [Tasks]
@@ -231,7 +256,7 @@ Source: "{#Compiler}\{#PlatformName}\{#ConfigurationName}\GeoIP.dll"; DestDir: "
 Source: "GeoIP\GeoIP.dat"; DestDir: "{app}"; Flags: overwritereadonly replacesameversion restartreplace uninsremovereadonly sortfilesbyextension
 
 ; MiniUPnPc
-; Source: "{#Compiler}\{#PlatformName}\{#ConfigurationName}\MiniUPnPc.dll"; DestDir: "{app}"; DestName: "MiniUPnPc.dll"; Flags: overwritereadonly replacesameversion restartreplace uninsremovereadonly sortfilesbyextension
+Source: "{#Compiler}\{#PlatformName}\{#ConfigurationName}\MiniUPnPc.dll"; DestDir: "{app}"; DestName: "MiniUPnPc.dll"; Flags: overwritereadonly replacesameversion restartreplace uninsremovereadonly sortfilesbyextension
 
 ; Plugins
 Source: "{#Compiler}\{#PlatformName}\{#ConfigurationName}\7ZipBuilder.dll"; DestDir: "{app}"; Flags: overwritereadonly replacesameversion restartreplace uninsremovereadonly sortfilesbyextension regserver
@@ -258,6 +283,7 @@ Source: "{#Compiler}\{#PlatformName}\{#ConfigurationName}\unrar64.dll"; DestDir:
 Source: "{#Compiler}\{#PlatformName}\{#ConfigurationName}\RatDVDReader.dll"; DestDir: "{app}"; Flags: overwritereadonly replacesameversion restartreplace uninsremovereadonly sortfilesbyextension regserver
 Source: "{#Compiler}\Win32\{#ConfigurationName}\RazaWebHook32.dll"; DestDir: "{app}"; Flags: overwritereadonly replacesameversion restartreplace uninsremovereadonly uninsrestartdelete sortfilesbyextension regserver noregerror
 Source: "{#Compiler}\x64\{#ConfigurationName}\RazaWebHook64.dll"; DestDir: "{app}"; Flags: overwritereadonly replacesameversion restartreplace uninsremovereadonly uninsrestartdelete sortfilesbyextension regserver noregerror
+Source: "{#Compiler}\{#PlatformName}\{#ConfigurationName}\ShortURL.dll"; DestDir: "{app}"; Flags: overwritereadonly replacesameversion restartreplace uninsremovereadonly sortfilesbyextension regserver
 Source: "{#Compiler}\{#PlatformName}\{#ConfigurationName}\SkinScanSKS.dll"; DestDir: "{app}"; Flags: overwritereadonly replacesameversion restartreplace uninsremovereadonly sortfilesbyextension regserver
 Source: "{#Compiler}\{#PlatformName}\{#ConfigurationName}\SWFPlugin.dll"; DestDir: "{app}"; Flags: overwritereadonly replacesameversion restartreplace uninsremovereadonly sortfilesbyextension regserver
 Source: "{#Compiler}\{#PlatformName}\{#ConfigurationName}\VirusTotal.dll"; DestDir: "{app}"; Flags: overwritereadonly replacesameversion restartreplace uninsremovereadonly sortfilesbyextension regserver
@@ -392,9 +418,6 @@ Root: HKCU; Subkey: "AppEvents\Schemes\Apps\Shareaza\RAZA_IncomingChat\.default"
 ; Set UPNP as choosed during the setup
 Root: HKCU; Subkey: "Software\Shareaza\Shareaza\Connection"; ValueType: dword; ValueName: "EnableUPnP"; ValueData: 1; Flags: deletevalue; Tasks: upnp
 Root: HKCU; Subkey: "Software\Shareaza\Shareaza\Connection"; ValueType: dword; ValueName: "EnableUPnP"; ValueData: 0; Flags: deletevalue; Tasks: not upnp
-
-; ShareMonkey CID
-Root: HKCU; Subkey: "Software\Shareaza\Shareaza\WebServices"; ValueType: string; ValueName: "ShareMonkeyCid"; ValueData: "197506"; Flags: deletevalue uninsdeletekey
 
 ; Delete keys at uninstall
 Root: HKLM; Subkey: "SOFTWARE\Shareaza"; Flags: dontcreatekey uninsdeletekey

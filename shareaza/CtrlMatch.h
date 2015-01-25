@@ -89,7 +89,7 @@ protected:
 	void	DrawItem(CDC& dc, CRect& rc, CMatchFile* pFile, CQueryHit* pHit, BOOL bFocus);
 	void	DrawStatus(CDC& dc, CRect& rcCol, CMatchFile* pFile, CQueryHit* pHit, BOOL bSelected, COLORREF crBack);
 	void	DrawRating(CDC& dc, CRect& rcCol, int nRating, BOOL bSelected, COLORREF crBack);
-	void	DrawCountry(CDC& dc, CRect& rcCol, CString sCountry, BOOL bSelected, COLORREF crBack);
+	void	DrawCountry(CDC& dc, CRect& rcCol, const CString& sCountry, BOOL bSelected, COLORREF crBack);
 	void	DrawEmptyMessage(CDC& dc, CRect& rcClient);
 	BOOL	HitTest(const CPoint& point, CMatchFile** poFile, CQueryHit** poHit, DWORD* pnIndex = NULL, CRect* pRect = NULL);
 	BOOL	GetItemRect(CMatchFile* pFindFile, CQueryHit* pFindHit, CRect* pRect);

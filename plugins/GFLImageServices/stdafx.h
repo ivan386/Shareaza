@@ -3,7 +3,7 @@
 // or project specific include files that are used frequently,
 // but are changed infrequently
 //
-// Copyright (c) Nikolay Raspopov, 2005-2013.
+// Copyright (c) Nikolay Raspopov, 2005-2014.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // GFL Library, GFL SDK and XnView
@@ -34,7 +34,8 @@
 #define _ATL_CSTRING_NO_CRT
 #define _ATL_ALL_WARNINGS
 
-#pragma warning( push, 0 )
+#define _WIN32_WINNT 0x0501
+#include <SDKDDKVer.h>
 
 #include "resource.h"
 
@@ -49,8 +50,6 @@ HRESULT SAFEgflLoadBitmap (LPCWSTR filename, GFL_BITMAP **bitmap, const GFL_LOAD
 HRESULT SAFEgflLoadBitmapFromMemory (const GFL_UINT8 * data, GFL_UINT32 data_length, GFL_BITMAP **bitmap, const GFL_LOAD_PARAMS *params, GFL_FILE_INFORMATION *info) throw ();
 HRESULT SAFEgflSaveBitmapIntoMemory (GFL_UINT8 ** data, GFL_UINT32 * data_length, const GFL_BITMAP *bitmap, const GFL_SAVE_PARAMS *params) throw ();
 HRESULT SAFEgflSaveBitmap (LPCWSTR filename, const GFL_BITMAP *bitmap, const GFL_SAVE_PARAMS *params) throw ();
-int GetFormatIndexByExt (LPCTSTR ext);
+int GetFormatIndexByExt (LPCSTR ext);
 
 using namespace ATL;
-
-#pragma warning( pop )

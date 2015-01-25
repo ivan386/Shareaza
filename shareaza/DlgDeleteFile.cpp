@@ -237,7 +237,6 @@ void CDeleteFileDlg::OnDrawItem(int /*nIDCtl*/, LPDRAWITEMSTRUCT lpDrawItemStruc
 		( lpDrawItemStruct->itemAction & ODA_DRAWENTIRE ) == 0 ) return;
 
 	CRect rcItem( &lpDrawItemStruct->rcItem );
-	CPoint pt( rcItem.left + 1, rcItem.top + 1 );
 	CDC dc;
 
 	dc.Attach( lpDrawItemStruct->hDC );

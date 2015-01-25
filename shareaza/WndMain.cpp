@@ -29,6 +29,7 @@
 #include "HostCache.h"
 #include "Neighbours.h"
 #include "Transfers.h"
+#include "Download.h"
 #include "Downloads.h"
 #include "Library.h"
 #include "LibraryBuilder.h"
@@ -302,7 +303,7 @@ CMainWnd::CMainWnd()
 	, m_nAlpha			( 255 )
 {
 	ZeroMemory( &m_pTray, sizeof( NOTIFYICONDATA ) );
-	m_pTray.cbSize				= sizeof( NOTIFYICONDATA );
+	m_pTray.cbSize				= theApp.m_bIsVistaOrNewer ? sizeof( NOTIFYICONDATA ) : NOTIFYICONDATA_V3_SIZE;
 	m_pTray.uCallbackMessage	= WM_TRAY;
 	m_pTray.uVersion			= NOTIFYICON_VERSION; // NOTIFYICON_VERSION_4;
 }
@@ -440,13 +441,14 @@ int CMainWnd::OnCreate(LPCREATESTRUCT lpCreateStruct)
 	// Tray
 
 	m_pTray.hWnd = GetSafeHwnd();
-	m_pTray.hIcon = CoolInterface.ExtractIcon( IDR_MAINFRAME, FALSE );
+	m_pTray.hIcon = CoolInterface.ExtractIcon( IDR_MAINFRAME, FALSE, LVSIL_SMALL );
 
 	SnarlRegister();
 
 	// Icon
 
-	SetIcon( CoolInterface.ExtractIcon( IDR_MAINFRAME, FALSE ), FALSE );
+	SetIcon( CoolInterface.ExtractIcon( IDR_MAINFRAME, FALSE, LVSIL_NORMAL ), TRUE );
+	SetIcon( CoolInterface.ExtractIcon( IDR_MAINFRAME, FALSE, LVSIL_SMALL  ), FALSE );
 
 	// Status Bar
 
@@ -2514,14 +2516,17 @@ void CMainWnd::OnToolsDownload()
 			if ( pURL.m_nAction == CShareazaURL::uriDownload ||
 				 pURL.m_nAction == CShareazaURL::uriSource )
 			{
+				if ( ( GetAsyncKeyState( VK_SHIFT ) & 0x8000 ) == 0 && ! Network.IsWellConnected() )
+					Network.Connect( TRUE );
+
+				m_pWindows.Open( RUNTIME_CLASS(CDownloadsWnd) );
+
+				CSingleLock pLock( &Transfers.m_pSection, TRUE );
+
 				if ( CDownload* pDownload = Downloads.Add( pURL ) )
 				{
-					if ( ( GetAsyncKeyState( VK_SHIFT ) & 0x8000 ) == 0 &&
-						! Network.IsWellConnected() )
-					{
-						Network.Connect( TRUE );
-					}
-					m_pWindows.Open( RUNTIME_CLASS(CDownloadsWnd) );
+					if ( Settings.Downloads.ShowMonitorURLs )
+						pDownload->ShowMonitor();
 				}
 			}
 			else
@@ -3259,7 +3264,11 @@ void CMainWnd::ShowTrayPopup(const CString& sText, const CString& sTitle, DWORD 
 	m_pTray.szInfoTitle[ 0 ] = _T('\0');
 }
 
+#if _MSC_VER >= 1800 // Microsoft Visual Studio 2013
+UINT CMainWnd::OnPowerBroadcast(UINT nPowerEvent, LPARAM nEventData)
+#else
 UINT CMainWnd::OnPowerBroadcast(UINT nPowerEvent, UINT nEventData)
+#endif
 {
 	static bool bWasConnected = false;
 

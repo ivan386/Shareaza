@@ -1,7 +1,7 @@
 //
 // MD5.h
 //
-// Copyright (c) Shareaza Development Team, 2002-2011.
+// Copyright (c) Shareaza Development Team, 2002-2014.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -40,7 +40,6 @@ public:
 
 	void GetHash(__in_bcount(16) uchar* pHash) const;
 
-private:
 	struct MD5State
 	{
 		static const size_t blockSize = 64;
@@ -48,6 +47,8 @@ private:
 		uint32	m_nState[ 4 ];
 		uchar	m_oBuffer[ blockSize ];
 	};
+
+private:
 	MD5State m_State;
 
 #ifndef HASHLIB_USE_ASM

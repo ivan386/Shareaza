@@ -234,7 +234,7 @@ void CIRCFrame::ClearCountChanList()
 // otherwise, it sets the number
 void CIRCFrame::FillCountChanList(const CString& strUserCount, const CString& strChannelName)
 {
-	CString strCurrentChannel, strList, strUsers, strDisplay;
+	CString strList, strDisplay;
 	BOOL bFound = FALSE;
 	int nCount = _tstoi( strUserCount ), nList, nIndex, nCountWnd;
 	CListCtrl& wndChanList = m_wndPanel.m_boxChans.m_wndChanList;
@@ -1572,7 +1572,7 @@ void CIRCFrame::ActivateMessageByID(CIRCNewMessage& oNewMessage, int nMessageTyp
 		}
 		case ID_MESSAGE_CLIENT_JOIN_USERLIST:
 		{
-			CString strChannelName = m_pWords.GetAt( 4 ), strTemp, nModeStr;
+			CString strChannelName = m_pWords.GetAt( 4 ), strTemp;
 			int nMode, nWord, nModeColumn, nTab = m_wndTab.GetCurSel();
 			for ( nWord = 6 ; nWord < m_pWords.GetCount() - 1 ; nWord++ )
 			{
@@ -1789,7 +1789,6 @@ void CIRCFrame::ActivateMessageByID(CIRCNewMessage& oNewMessage, int nMessageTyp
 		{		
 			CString strNick = m_pWords.GetAt( 0 );
 			CString strChannelName = GetTabText();
-			CString strTmp;
 			CString strCurUser;
 			int nListUser, nTab;
 			for ( nTab = 0 ; nTab < m_wndTab.GetItemCount() ; nTab++ )
@@ -1829,7 +1828,7 @@ void CIRCFrame::ActivateMessageByID(CIRCNewMessage& oNewMessage, int nMessageTyp
 
 int CIRCFrame::ParseMessageID()
 {
-	int incomingWordCount = m_pWords.GetCount();
+	int incomingWordCount = (int)m_pWords.GetCount();
 	int nMessageType = NULL;
 	if ( incomingWordCount > 1 )
 	{
@@ -1930,10 +1929,10 @@ int CIRCFrame::ParseMessageID()
 		else if ( command == "PRIVMSG" )
 		{
 			CString str = m_pWords.GetAt( 8 );
-			char pszFirst = str.GetAt( 0 );
+			TCHAR pszFirst = str.GetAt( 0 );
 			str = str.Mid( 1, str.GetLength() - 2 ).MakeLower();
 			// 0x01 indicates a CTCP message, which includes '/me'
-			if ( pszFirst == char('\x01') )
+			if ( pszFirst == _T('\x01') )
 			{
 				if( m_pWords.GetAt( 6 ).CompareNoCase( m_sNickname ) == 0 )
 				{
@@ -2133,7 +2132,7 @@ void CIRCFrame::TabClick()
 	RedrawWindow();
 }
 
-int CIRCFrame::AddTab(CString strTabName, int nKindOfTab)
+int CIRCFrame::AddTab(const CString& strTabName, int nKindOfTab)
 {
 	if ( m_wndTab.GetItemCount() + 1 == MAX_CHANNELS )
 	{

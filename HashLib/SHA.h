@@ -1,7 +1,7 @@
 //
 // SHA.h
 //
-// Copyright (c) Shareaza Development Team, 2002-2011.
+// Copyright (c) Shareaza Development Team, 2002-2014.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -52,7 +52,6 @@ public:
 	};
 #endif
 
-private:
 	struct SHA1State
 	{
 		static const size_t	blockSize = 64;
@@ -60,6 +59,8 @@ private:
 		uint32	m_nState[ 5 ];
 		uchar	m_oBuffer[ blockSize ];
 	};
+
+private:
 	SHA1State m_State;
 
 #ifndef HASHLIB_USE_ASM

@@ -1,7 +1,7 @@
 //
 // WndBrowseHost.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2013.
+// Copyright (c) Shareaza Development Team, 2002-2014.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -32,6 +32,7 @@
 #include "DlgHitColumns.h"
 #include "ChatWindows.h"
 #include "Skin.h"
+#include "Transfers.h"
 
 #ifdef _DEBUG
 #define new DEBUG_NEW
@@ -47,36 +48,29 @@ BEGIN_MESSAGE_MAP(CBrowseHostWnd, CBaseMatchWnd)
 	ON_WM_CONTEXTMENU()
 	ON_WM_NCLBUTTONUP()
 	ON_WM_SIZE()
-	ON_LBN_SELCHANGE(IDC_MATCHES, OnSelChangeMatches)
-	ON_UPDATE_COMMAND_UI(ID_BROWSE_STOP, OnUpdateBrowseHostStop)
-	ON_COMMAND(ID_BROWSE_STOP, OnBrowseHostStop)
-	ON_COMMAND(ID_BROWSE_REFRESH, OnBrowseHostRefresh)
-	ON_UPDATE_COMMAND_UI(ID_BROWSE_PROFILE, OnUpdateBrowseProfile)
-	ON_COMMAND(ID_BROWSE_PROFILE, OnBrowseProfile)
-	ON_UPDATE_COMMAND_UI(ID_BROWSE_FILES, OnUpdateBrowseFiles)
-	ON_COMMAND(ID_BROWSE_FILES, OnBrowseFiles)
-	ON_UPDATE_COMMAND_UI(ID_SEARCH_CHAT, OnUpdateSearchChat)
-	ON_COMMAND(ID_SEARCH_CHAT, OnSearchChat)
+	ON_LBN_SELCHANGE(IDC_MATCHES, &CBrowseHostWnd::OnSelChangeMatches)
+	ON_UPDATE_COMMAND_UI(ID_BROWSE_STOP, &CBrowseHostWnd::OnUpdateBrowseHostStop)
+	ON_COMMAND(ID_BROWSE_STOP, &CBrowseHostWnd::OnBrowseHostStop)
+	ON_COMMAND(ID_BROWSE_REFRESH, &CBrowseHostWnd::OnBrowseHostRefresh)
+	ON_UPDATE_COMMAND_UI(ID_BROWSE_PROFILE, &CBrowseHostWnd::OnUpdateBrowseProfile)
+	ON_COMMAND(ID_BROWSE_PROFILE, &CBrowseHostWnd::OnBrowseProfile)
+	ON_UPDATE_COMMAND_UI(ID_BROWSE_FILES, &CBrowseHostWnd::OnUpdateBrowseFiles)
+	ON_COMMAND(ID_BROWSE_FILES, &CBrowseHostWnd::OnBrowseFiles)
+	ON_UPDATE_COMMAND_UI(ID_SEARCH_CHAT, &CBrowseHostWnd::OnUpdateSearchChat)
+	ON_COMMAND(ID_SEARCH_CHAT, &CBrowseHostWnd::OnSearchChat)
 END_MESSAGE_MAP()
 
 
 /////////////////////////////////////////////////////////////////////////////
 // CBrowseHostWnd construction
 
-CBrowseHostWnd::CBrowseHostWnd(PROTOCOLID nProtocol, SOCKADDR_IN* pAddress, BOOL bMustPush, const Hashes::Guid& oClientID, const CString& sNick) :
-	m_pBrowser( NULL ),
-	m_bOnFiles( FALSE ),
-	m_bAutoBrowse( pAddress != NULL )
+CBrowseHostWnd::CBrowseHostWnd(PROTOCOLID nProtocol, SOCKADDR_IN* pAddress, BOOL bMustPush, const Hashes::Guid& oClientID, const CString& sNick)
+	: m_bOnFiles	( FALSE )
+	, m_bAutoBrowse	( pAddress != NULL )
 {
-	m_pBrowser = new CHostBrowser( this, nProtocol, ( pAddress ? &pAddress->sin_addr : NULL ),
-		( pAddress ? htons( pAddress->sin_port ) : 0 ), bMustPush, oClientID, sNick );
+	m_pBrowser.Attach( new CHostBrowser( this, nProtocol, ( pAddress ? &pAddress->sin_addr : NULL ), ( pAddress ? htons( pAddress->sin_port ) : 0 ), bMustPush, oClientID, sNick ) );
 
 	Create( IDR_BROWSEHOSTFRAME );
-}
-
-CBrowseHostWnd::~CBrowseHostWnd()
-{
-	if ( m_pBrowser ) delete m_pBrowser;
 }
 
 /////////////////////////////////////////////////////////////////////////////
@@ -110,9 +104,6 @@ int CBrowseHostWnd::OnCreate(LPCREATESTRUCT lpCreateStruct)
 void CBrowseHostWnd::OnDestroy()
 {
 	m_pBrowser->Stop();
-
-	delete m_pBrowser;
-	m_pBrowser = NULL;
 
 	if ( m_wndList.m_pSchema != NULL )
 		Settings.Search.BlankSchemaURI = m_wndList.m_pSchema->GetURI();
@@ -237,16 +228,12 @@ void CBrowseHostWnd::OnBrowseHostRefresh()
 
 void CBrowseHostWnd::OnUpdateSearchChat(CCmdUI* pCmdUI)
 {
-	pCmdUI->Enable( m_pBrowser && m_pBrowser->m_bCanChat );
+	pCmdUI->Enable( m_pBrowser->m_bCanChat );
 }
 
 void CBrowseHostWnd::OnSearchChat()
 {
-	if ( m_pBrowser != NULL )
-	{
-		ChatWindows.OpenPrivate( m_pBrowser->m_oClientID,
-			&m_pBrowser->m_pAddress, m_pBrowser->m_nPort, m_pBrowser->m_bMustPush, m_pBrowser->m_nProtocol );
-	}
+	ChatWindows.OpenPrivate( m_pBrowser->m_oClientID, &m_pBrowser->m_pAddress, m_pBrowser->m_nPort, m_pBrowser->m_bMustPush, m_pBrowser->m_nProtocol );
 }
 
 void CBrowseHostWnd::OnSelChangeMatches()
@@ -259,6 +246,8 @@ void CBrowseHostWnd::OnSelChangeMatches()
 
 void CBrowseHostWnd::UpdateMessages(BOOL /*bActive*/)
 {
+	CQuickLock oTransfersLock( Transfers.m_pSection );
+
 	CString strCaption, strOld;
 
 	m_wndHeader.Update( m_pBrowser );
@@ -393,12 +382,12 @@ void CBrowseHostWnd::OnVirtualTree(CG2Packet* pPacket)
 
 BOOL CBrowseHostWnd::OnPush(const Hashes::Guid& oClientID, CConnection* pConnection)
 {
-	return m_pBrowser != NULL && m_pBrowser->OnPush( oClientID, pConnection );
+	return m_pBrowser->OnPush( oClientID, pConnection );
 }
 
 BOOL CBrowseHostWnd::OnNewFile(CLibraryFile* pFile)
 {
-	return m_pBrowser != NULL && m_pBrowser->OnNewFile( pFile );
+	return m_pBrowser->OnNewFile( pFile );
 }
 
 /////////////////////////////////////////////////////////////////////////////

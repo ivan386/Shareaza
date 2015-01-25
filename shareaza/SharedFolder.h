@@ -1,7 +1,7 @@
 //
 // SharedFolder.h
 //
-// Copyright (c) Shareaza Development Team, 2002-2012.
+// Copyright (c) Shareaza Development Team, 2002-2014.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -64,7 +64,7 @@ public:
 	POSITION		GetFolderIterator() const;
 	CLibraryFolder*	GetNextFolder(POSITION& pos) const;
 	CLibraryFolder*	GetFolderByName(LPCTSTR pszName) const;
-	CLibraryFolder*	GetFolderByPath(LPCTSTR pszPath) const;
+	CLibraryFolder*	GetFolderByPath(const CString& strPath) const;
 	BOOL			CheckFolder(CLibraryFolder* pFolder, BOOL bRecursive = FALSE) const;
 	DWORD			GetFolderCount() const;
 	// Add new or get existing file

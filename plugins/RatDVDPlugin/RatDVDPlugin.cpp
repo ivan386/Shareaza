@@ -3,7 +3,7 @@
 //
 //	Created by:		Rolandas Rudomanskis
 //
-// Copyright (c) Shareaza Development Team, 2002-2009.
+// Copyright (c) Shareaza Development Team, 2002-2014.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -573,7 +573,7 @@ STDMETHODIMP CRatDVDPlugin::GetRatDVDThumbnail(BSTR bsFile, IMAGESERVICEDATA* pP
 	if ( nContentLength > MAX_LENGTH_ALLOWED * 1024 ) return S_FALSE;
 
 	nRead = 0;
-	BYTE* pBuffer = new BYTE[ nContentLength ];
+	BYTE* pBuffer = new (std::nothrow) BYTE[ nContentLength ];
 	if ( ! pBuffer ) return E_OUTOFMEMORY;
 
 	ReadFile( hFile, (VOID*)pBuffer, nContentLength, &nRead, NULL );

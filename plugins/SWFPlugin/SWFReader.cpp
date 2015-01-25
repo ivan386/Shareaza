@@ -1,7 +1,7 @@
 //
 // SWFReader.cpp : Implementation of CSWFReader
 //
-// Copyright (c) Nikolay Raspopov, 2005-2012.
+// Copyright (c) Nikolay Raspopov, 2005-2014.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // GFL Library, GFL SDK and XnView
@@ -189,7 +189,7 @@ unsigned WINAPI LoadSWF (void* filename)
 								Sleep (0);
 							}
 							hr = E_OUTOFMEMORY;
-							_Data = new MY_DATA;	
+							_Data = new (std::nothrow) MY_DATA;	
 							if (_Data) {
 								_Data->hBitmap = NULL;
 								ZeroMemory (&_Data->bmiHeader, sizeof (_Data->bmiHeader));
@@ -305,7 +305,7 @@ STDMETHODIMP CSWFReader::LoadFromMemory (
 	/* [in,out] */ IMAGESERVICEDATA* /* pParams */,
 	/* [out] */ SAFEARRAY** /* ppImage */)
 {
-	ATLTRACENOTIMPL( "SWFPlugin::LoadFromMemory" );
+	return E_NOTIMPL;
 }
 
 STDMETHODIMP CSWFReader::SaveToFile (
@@ -313,7 +313,7 @@ STDMETHODIMP CSWFReader::SaveToFile (
 	/* [in,out] */ IMAGESERVICEDATA* /* pParams */,
 	/* [in] */ SAFEARRAY* /* pImage */)
 {
-	ATLTRACENOTIMPL( "SWFPlugin::SaveToFile" );
+	return E_NOTIMPL;
 }
 
 STDMETHODIMP CSWFReader::SaveToMemory (
@@ -322,5 +322,5 @@ STDMETHODIMP CSWFReader::SaveToMemory (
 	/* [in,out] */ IMAGESERVICEDATA* /* pParams */,
 	/* [in] */ SAFEARRAY* /* pImage */)
 {
-	ATLTRACENOTIMPL( "SWFPlugin::SaveToMemory" );
+	return E_NOTIMPL;
 }

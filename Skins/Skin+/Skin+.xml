@@ -312,7 +312,6 @@
 			<item id="ID_SEARCH_FOR_SERIES" text="Episodes in the same Series"/>
 		</menu>
 		<menu text="_Web Services">
-			<item id="ID_LIBRARY_BITZI_WEB" text="View _Bitzi Ticket"/>
 		</menu>
 		<separator/>
 		<item id="ID_SEARCH_FILTER" text="_Filter Results..."/>
@@ -338,7 +337,6 @@
 			<item id="ID_SEARCH_FOR_SERIES" text="Episodes in the same Series"/>
 		</menu>
 		<menu text="_Web Services">
-			<item id="ID_LIBRARY_BITZI_WEB" text="View _Bitzi Ticket"/>
 		</menu>
 		<separator/>
 		<item id="ID_SEARCH_FILTER" text="_Filter Results..."/>
@@ -448,9 +446,6 @@
 			<item id="ID_SEARCH_FOR_SERIES" text="Episodes in the same Series"/>
 		</menu>
 		<menu text="_Web Services">
-			<item id="ID_LIBRARY_BITZI_WEB" text="View _Bitzi Ticket"/>
-			<item id="ID_LIBRARY_BITZI_DOWNLOAD" text="_Acquire Metadata"/>
-			<separator/>
 			<item id="ID_LIBRARY_CREATETORRENT" text="Create Torrent File"/>
 		</menu>
 		<separator/>
@@ -481,9 +476,6 @@
 			<item id="ID_SEARCH_FOR_SERIES" text="Episodes in the same Series"/>
 		</menu>
 		<menu text="_Web Services">
-			<item id="ID_LIBRARY_BITZI_WEB" text="View _Bitzi Ticket"/>
-			<item id="ID_LIBRARY_BITZI_DOWNLOAD" text="_Acquire Metadata"/>
-			<separator/>
 			<item id="ID_LIBRARY_CREATETORRENT" text="Create Torrent File"/>
 		</menu>
 		<separator/>

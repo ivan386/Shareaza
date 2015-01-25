@@ -1,7 +1,7 @@
 //
 // stdafx.h
 //
-// Copyright (c) Shareaza Development Team, 2009-2011.
+// Copyright (c) Shareaza Development Team, 2009-2014.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -27,9 +27,15 @@
 #define _ATL_CSTRING_NO_CRT
 #define _ATL_NO_COM_SUPPORT
 
+#define _WIN32_WINNT 0x0501
+#include <sdkddkver.h>
+
 #include <atlbase.h>
 #include <atlstr.h>
 #include <atlcoll.h>
 #include <atltime.h>
 #include <atlfile.h>
+#include <fcntl.h>
+#include <stdio.h>
+#include <io.h>
 #include <msxml2.h>

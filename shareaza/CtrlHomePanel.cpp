@@ -1102,7 +1102,7 @@ void CHomeConnectionBox::OnSkinChange()
 	m_pDocument = NULL;
 	m_pdConnectedHours = m_pdConnectedMinutes = NULL;
 	
-	for ( PROTOCOLID nP = PROTOCOL_NULL ; nP < PROTOCOL_LAST ; ++nP )
+	for ( int nP = PROTOCOL_NULL ; nP < PROTOCOL_LAST ; ++nP )
 	{
 		for ( int nT = ntNode ; nT <= ntLeaf ; nT++ )
 		{
@@ -1141,7 +1141,7 @@ void CHomeConnectionBox::OnSkinChange()
 
 	pMap.Lookup( _T("DCHubs"), m_pdCount[PROTOCOL_DC][ntHub] );
 
-	for ( PROTOCOLID nP = PROTOCOL_NULL ; nP < PROTOCOL_LAST ; ++nP )
+	for ( int nP = PROTOCOL_NULL ; nP < PROTOCOL_LAST ; ++nP )
 	{
 		for ( int nT = ntNode ; nT <= ntLeaf ; nT++ )
 		{
@@ -1205,7 +1205,7 @@ void CHomeConnectionBox::Update()
 
 	BOOL bDetail = Settings.General.GUIMode != GUI_BASIC;
 	
-	for ( PROTOCOLID nProtocol = PROTOCOL_NULL ; nProtocol < PROTOCOL_LAST ; ++nProtocol )
+	for ( int nProtocol = PROTOCOL_NULL ; nProtocol < PROTOCOL_LAST ; ++nProtocol )
 	{
 		int nBase = nProtocol * 10;
 

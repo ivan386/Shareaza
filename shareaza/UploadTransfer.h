@@ -1,7 +1,7 @@
 //
 // UploadTransfer.h
 //
-// Copyright (c) Shareaza Development Team, 2002-2012.
+// Copyright (c) Shareaza Development Team, 2002-2014.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -66,7 +66,7 @@ private:
 	auto_ptr< CFragmentedFile > m_pFile;	// Disk file
 
 public:
-	virtual void	Remove(BOOL bMessage = TRUE);
+	virtual void	Remove(BOOL bMessage = TRUE, UINT nError = 0);
 	virtual void	Close(UINT nError = 0);
 	virtual BOOL	Promote();
 	// Rename, delete or release uploading file.

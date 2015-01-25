@@ -1,7 +1,7 @@
 //
 // StdAfx.h
 //
-// Copyright (c) Shareaza Development Team, 2002-2012.
+// Copyright (c) Shareaza Development Team, 2002-2014.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -40,8 +40,6 @@
 #pragma warning ( disable : 4350 )	// (Level 1)	behavior change: 'member1' called instead of 'member2'
 #pragma warning ( disable : 4351 )	// (Level 1)	new behavior: elements of array 'array' will be default initialized
 
-#pragma warning ( disable : 4244 )	// (Level 2)	'argument' : conversion from 'type1' to 'type2', possible loss of data
-
 #pragma warning ( disable : 4347 )	// (Level 4)	behavior change: 'function template' is called instead of 'function'
 #pragma warning ( disable : 4512 )	// (Level 4)	'class' : assignment operator could not be generated
 
@@ -49,7 +47,6 @@
 #pragma warning ( disable : 4264 )	// (Level 1)	'virtual_function' : no override available for virtual member function from base 'class'; function is hidden
 #pragma warning ( disable : 4555 )	// (Level 1)	expression has no effect; expected expression with side-effect
 #pragma warning ( disable : 4711 )	// (Level 1)	function 'function' selected for inline expansion
-#pragma warning ( disable : 4548 )	// (Level 1)	expression before comma has no effect; expected expression with side-effect
 
 #pragma warning ( disable : 4191 )	// (Level 3)	'operator/operation' : unsafe conversion from 'type of expression' to 'type required'
 #pragma warning ( disable : 4640 )	// (Level 3)	'instance' : construction of local static object is not thread-safe
@@ -70,7 +67,18 @@
 
 #include <sdkddkver.h>					// Setup versioning for windows SDK/DDK
 
+#ifndef _SECURE_ATL
+#define _SECURE_ATL 1
+#endif
+
+#ifndef VC_EXTRALEAN
 #define VC_EXTRALEAN
+#endif
+
+#ifndef WIN32_LEAN_AND_MEAN
+#define WIN32_LEAN_AND_MEAN
+#endif
+
 #define SECURITY_WIN32
 
 #define _CRT_SECURE_CPP_OVERLOAD_STANDARD_NAMES 1		// Enable secure template overloads
@@ -119,6 +127,7 @@
 
 #include <atlfile.h>		// Thin file classes
 #include <atltime.h>		// Time classes
+#include <atlsafe.h>		// CComSafeArray class
 
 //
 // WIN32
@@ -139,6 +148,7 @@
 #include <powrprof.h>		// The power policy applicator
 #include <propkey.h>
 #include <propvarutil.h>
+#include <ras.h>
 #include <security.h>		// For security aware components
 #include <shlwapi.h>		// Windows Shell API
 #include <taskschd.h>		// Task Scheduler 2.0 interfaces
@@ -222,20 +232,45 @@ using augment::IUnknownImplementation;
 typedef CString StringType;
 
 //! \brief Hash function needed for CMap with const CString& as ARG_KEY.
-template<> AFX_INLINE UINT AFXAPI HashKey(const CString& key)
+template<>
+AFX_INLINE UINT AFXAPI HashKey(const CString& key)
 {
 	return HashKey< LPCTSTR >( key );
 }
 
-template<> AFX_INLINE BOOL AFXAPI CompareElements(const IN_ADDR* pElement1, const IN_ADDR* pElement2)
+template<>
+AFX_INLINE BOOL AFXAPI CompareElements(const IN_ADDR* pElement1, const IN_ADDR* pElement2)
 {
 	return pElement1->s_addr == pElement2->s_addr;
 }
 
-template<> AFX_INLINE UINT AFXAPI HashKey(const IN_ADDR& key)
+template<>
+AFX_INLINE UINT AFXAPI HashKey(const IN_ADDR& key)
 {
 	return key.s_addr;
 }
+
+#ifdef _WIN64
+
+template<>
+AFX_INLINE UINT AFXAPI HashKey( void* key )
+{
+	return HashKey< __int64 >( (__int64)key );
+}
+
+template<>
+AFX_INLINE UINT AFXAPI HashKey( HICON key )
+{
+	return HashKey< __int64 >( (__int64)key );
+}
+
+template<>
+AFX_INLINE UINT AFXAPI HashKey( LPUNKNOWN key )
+{
+	return HashKey< __int64 >( (__int64)key );
+}
+
+#endif // _WIN64
 
 #include "Hashes.hpp"
 
@@ -623,6 +658,26 @@ private:
 	CTimeAverage(const CTimeAverage&);
 	CTimeAverage* operator&() const;
 	CTimeAverage& operator=(const CTimeAverage&);
+};
+
+// Simple PROPVARIANT wrapper
+class CComPropVariant : public PROPVARIANT
+{
+public:
+	inline CComPropVariant()
+	{
+		::PropVariantInit( this );
+	}
+
+	inline ~CComPropVariant()
+	{
+		Clear();
+	}
+
+	inline HRESULT Clear()
+	{
+		return ::PropVariantClear( this );
+	}
 };
 
 template< class T >

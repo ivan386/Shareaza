@@ -46,14 +46,7 @@ END_MESSAGE_MAP()
 
 CIdentityProfilePage::CIdentityProfilePage() : CSettingsPage( CIdentityProfilePage::IDD )
 {
-	//{{AFX_DATA_INIT(CIdentityProfilePage)
-	m_sAge = _T("");
-	m_sGender = _T("");
-	m_sNick = _T("");
-	m_sFirst = _T("");
-	m_sLast = _T("");
 	m_bBrowseUser = FALSE;
-	//}}AFX_DATA_INIT
 }
 
 CIdentityProfilePage::~CIdentityProfilePage()

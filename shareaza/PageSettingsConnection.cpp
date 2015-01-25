@@ -171,11 +171,6 @@ BOOL CConnectionSettingsPage::OnInitDialog()
 
 	m_wndInBind.EnableWindow( m_sInHost != strAutomatic);
 
-	if ( theApp.m_bIsServer )
-	{
-		CButton* pWnd = (CButton*)GetDlgItem( IDC_ENABLE_UPNP );
-		pWnd->EnableWindow( FALSE );
-	}
 	return TRUE;
 }
 

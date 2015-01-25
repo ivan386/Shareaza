@@ -3,7 +3,7 @@
 // or project specific include files that are used frequently,
 // but are changed infrequently
 //
-// Copyright (c) Nikolay Raspopov, 2005-2010.
+// Copyright (c) Nikolay Raspopov, 2005-2014.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -28,7 +28,11 @@
 #define _ATL_FREE_THREADED
 #define _ATL_ALL_WARNINGS
 
+#define _WIN32_WINNT 0x0501
+#include <SDKDDKVer.h>
+
 #include "resource.h"
+
 #include <atlbase.h>
 #include <atlcom.h>
 #include <dshow.h>

@@ -1,7 +1,7 @@
 //
 // UploadTransfer.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2013.
+// Copyright (c) Shareaza Development Team, 2002-2014.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -81,7 +81,7 @@ CUploadTransfer::~CUploadTransfer()
 //////////////////////////////////////////////////////////////////////
 // CUploadTransfer remove record
 
-void CUploadTransfer::Remove(BOOL bMessage)
+void CUploadTransfer::Remove(BOOL bMessage, UINT nError)
 {
 	ASSERT( this != NULL );
 
@@ -92,7 +92,7 @@ void CUploadTransfer::Remove(BOOL bMessage)
 	}
 
 	m_nUploaded = 1;
-	Close();
+	Close( nError );
 
 	delete this;
 }

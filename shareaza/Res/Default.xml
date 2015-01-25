@@ -904,8 +904,7 @@
 				<item id="ID_SEARCH_FOR_ALBUM" text="Music in the same _Album"/>
 				<item id="ID_SEARCH_FOR_SERIES" text="_Episodes in the same Series"/>
 			</menu>
-			<menu text="_Web Services">
-				<item id="ID_LIBRARY_BITZI_WEB" text="View _Bitzi Ticket"/>
+			<menu id="ID_WEBSERVICES_LIST" text="_Web Services">
 			</menu>
 		</menu>
 		<menu name="CSearchWnd">
@@ -925,8 +924,7 @@
 				<item id="ID_SEARCH_FOR_ALBUM" text="Music in the same _Album"/>
 				<item id="ID_SEARCH_FOR_SERIES" text="_Episodes in the same Series"/>
 			</menu>
-			<menu text="_Web Services">
-				<item id="ID_LIBRARY_BITZI_WEB" text="View _Bitzi Ticket"/>
+			<menu id="ID_WEBSERVICES_LIST" text="_Web Services">
 			</menu>
 			<separator/>
 			<item id="ID_SEARCH_FILTER" text="_Filter Results..."/>
@@ -951,8 +949,7 @@
 				<item id="ID_SEARCH_FOR_ALBUM" text="Music in the same _Album"/>
 				<item id="ID_SEARCH_FOR_SERIES" text="_Episodes in the same Series"/>
 			</menu>
-			<menu text="_Web Services">
-				<item id="ID_LIBRARY_BITZI_WEB" text="View _Bitzi Ticket"/>
+			<menu id="ID_WEBSERVICES_LIST" text="_Web Services">
 			</menu>
 		</menu>
 		<menu name="CBrowseHostWnd">
@@ -970,8 +967,7 @@
 				<item id="ID_SEARCH_FOR_ALBUM" text="Music in the same _Album"/>
 				<item id="ID_SEARCH_FOR_SERIES" text="_Episodes in the same Series"/>
 			</menu>
-			<menu text="_Web Services">
-				<item id="ID_LIBRARY_BITZI_WEB" text="View _Bitzi Ticket"/>
+			<menu id="ID_WEBSERVICES_LIST" text="_Web Services">
 			</menu>
 			<separator/>
 			<item id="ID_SEARCH_FILTER" text="_Filter Results..."/>
@@ -995,8 +991,7 @@
 				<item id="ID_SEARCH_FOR_ALBUM" text="Music in the same _Album"/>
 				<item id="ID_SEARCH_FOR_SERIES" text="_Episodes in the same Series"/>
 			</menu>
-			<menu text="_Web Services">
-				<item id="ID_LIBRARY_BITZI_WEB" text="View _Bitzi Ticket"/>
+			<menu id="ID_WEBSERVICES_LIST" text="_Web Services">
 			</menu>
 			<separator/>
 			<item id="ID_SEARCH_FILTER" text="_Filter Results..."/>
@@ -1231,9 +1226,7 @@
 				<item id="ID_SEARCH_FOR_ALBUM" text="Music in the same _Album"/>
 				<item id="ID_SEARCH_FOR_SERIES" text="_Episodes in the same Series"/>
 			</menu>
-			<menu text="_Web Services">
-				<item id="ID_LIBRARY_BITZI_WEB" text="View _Bitzi Ticket"/>
-				<item id="ID_LIBRARY_BITZI_DOWNLOAD" text="_Download Metadata"/>
+			<menu id="ID_WEBSERVICES_LIST" text="_Web Services">
 				<item id="ID_WEBSERVICES_MUSICBRAINZ" text="_MusicBrainz"/>
 			</menu>
 			<menu text="O_rganise">
@@ -1263,9 +1256,7 @@
 				<item id="ID_SEARCH_FOR_ALBUM" text="Music in the same _Album"/>
 				<item id="ID_SEARCH_FOR_SERIES" text="_Episodes in the same Series"/>
 			</menu>
-			<menu text="_Web Services">
-				<item id="ID_LIBRARY_BITZI_WEB" text="View _Bitzi Ticket"/>
-				<item id="ID_LIBRARY_BITZI_DOWNLOAD" text="_Download Metadata"/>
+			<menu id="ID_WEBSERVICES_LIST" text="_Web Services">
 				<item id="ID_WEBSERVICES_MUSICBRAINZ" text="_MusicBrainz"/>
 				<separator/>
 				<item id="ID_LIBRARY_CREATETORRENT" text="Create ._torrent File"/>
@@ -1303,9 +1294,7 @@
 				<item id="ID_SEARCH_FOR_ALBUM" text="Music in the same _Album"/>
 				<item id="ID_SEARCH_FOR_SERIES" text="_Episodes in the same Series"/>
 			</menu>
-			<menu text="_Web Services">
-				<item id="ID_LIBRARY_BITZI_WEB" text="View _Bitzi Ticket"/>
-				<item id="ID_LIBRARY_BITZI_DOWNLOAD" text="_Download Metadata"/>
+			<menu id="ID_WEBSERVICES_LIST" text="_Web Services">
 			</menu>
 			<menu text="O_rganise">
 				<item id="ID_LIBRARY_RENAME" text="_Rename File"/>
@@ -1338,10 +1327,7 @@
 				<item id="ID_SEARCH_FOR_ALBUM" text="Music in the same _Album"/>
 				<item id="ID_SEARCH_FOR_SERIES" text="_Episodes in the same Series"/>
 			</menu>
-			<menu text="_Web Services">
-				<item id="ID_LIBRARY_BITZI_WEB" text="View _Bitzi Ticket"/>
-				<item id="ID_LIBRARY_BITZI_DOWNLOAD" text="_Download Metadata"/>
-				<separator/>
+			<menu id="ID_WEBSERVICES_LIST" text="_Web Services">
 				<item id="ID_LIBRARY_CREATETORRENT" text="Create ._torrent File"/>
 			</menu>
 			<menu text="O_rganise">
@@ -1635,8 +1621,6 @@
 			</menu>
 		</menu>
 		<menu name="WebServices.List.Menu">
-			<item id="ID_LIBRARY_BITZI_WEB" text="View _Bitzi Ticket"/>
-			<item id="ID_LIBRARY_BITZI_DOWNLOAD" text="_Download Metadata"/>
 			<item id="ID_WEBSERVICES_MUSICBRAINZ" text="_MusicBrainz"/>
 		</menu>
 	</menus>
@@ -2554,7 +2538,7 @@
 			<image id="ID_LIBRARY_MOVE"/>
 			<image id="ID_LIBRARY_COPY" id1="ID_SYSTEM_COPY"/>
 			<image id="ID_LIBRARY_DELETE" id1="ID_DOWNLOAD_GROUP_REMOVE"/>
-			<image id="ID_LIBRARY_BITZI_WEB"/>
+			<image id=""/>
 			<image id="ID_LIBRARY_COLUMNS"/>
 			<image id="ID_LIBRARY_SEARCH" id1="ID_LIBRARY_SEARCH_QUICK" id2="ID_LIBRARY_FOLDER_OPEN"/>
 			<image id="ID_LIBRARY_REFRESH"/>

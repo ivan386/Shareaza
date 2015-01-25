@@ -1,0 +1,147 @@
+
++----------------------------------------------------------------------+
+|                       Shareaza Connection Test                       |
+|                                 v1.12                                |
++----------------------------------------------------------------------+
+
+This is the Shareaza Connection Test, a PHP script that checks if a
+Gnutella2 client is reachable from the network, and thus confirms that
+any firewall and/or router has properly been configured on TCP as well
+as on UDP.  This test works with all Gnutella2 compliant clients, which
+includes Shareaza, Adagio and all GnucDNA-based clients.
+
+NOTE: This package contains the source of the test, which you only need
+if you intend to run a copy of this test on a server.  If you just want
+to test your client, then you don't need this package; instead use one
+of the tests that is already running an a server.  Refer to the Shareaza
+Forums to find them (http://shareaza.sourceforge.net/phpbb/).
+
+
+License
+-------
+
+All files packaged with this test are covered by the GNU General Public
+License (GPL).  This also includes the language files.  Further
+informations are included at the top of the files themselves and in the
+file COPYING.
+
+
+Requirements
+------------
+
+This test of course needs a working web server with PHP installed.  But
+I don't know which is the oldest version of PHP that works properly with
+this test.  It has been tested on at least PHP 5.0.x and 4.3.8 and works
+fine on both of them.  It's possible that it will fail to run on
+versions prior to 4.3, but you probably shouldn't have such a version
+installed anyway.
+
+Also note that the connection test uses some socket functions that are
+still marked as being 'experimental' by PHP documentation, though they
+really seem to work fine.  It is to note that not every installation of
+PHP provides all required socket functions!  This is something to be
+specially aware of if you're trying to run it on a free hosting, as they
+often don't provide them.
+
+
+Installation
+------------
+
+Installation should be very simple.  Just unpack the content of the ZIP
+file; it will create a new directory named 'connectiontest', containing
+everything.  You can change the name of this directory if you want.
+After this is done, the test should be ready to be used.
+
+However, the statistics at the bottom of the page will only work if the
+test can read and write the file 'var/stats.dat'.  Make sure it has
+proper permissions set.  This data file is *not* included in the ZIP
+package!  This is so that it won't get overwritten when new versions are
+installed on top of an old ones.  You either have to create this file
+yourself and give it proper permissions (creating an empty file is
+fine); or then change the permissions of the var/ directory, so that the
+test can create the file itself.  The latter is the prefered method.
+
+There also are a few settings in the file 'index.php'.  But usually, you
+won't have to mess with them.  Please know what you're doing, if you
+change settings in that file.  You probably shouldn't enable the 'IP
+field' in publicly available versions.
+
+
+Testing
+-------
+
+IMPORTANT: Please, do always test the connection test before you make
+the link to it public.  It is always possible that something went wrong
+or that your network environment prevents it from working properly.
+Make sure there is no firewall that would disallow arbitrary outgoing
+traffic, be sure that the server doesn't restrict the port numbers the
+connection test can bind to.  Start Shareaza or another G2 client and
+make the test, try a few different ports including 6346 and ports below
+1024.  Do this over the internet, not only through your LAN.  You might
+want to change the variable '$opt_error_level' to 'E_ALL' for testing,
+so you'll see error messages.  But note that error/warning messages
+don't automatically imply that something is wrong, for example, they are
+normal on a 'connection refused'.  (Turn those messages off again after
+testing).
+
+If it works properly, give the link to a few friends so they can test it
+too.  It's possible that it works for some people while it doesn't for
+others.
+
+If you notice that something is wrong, like that some ports don't work,
+then either fix the problem or don't make the test public!  It would be
+very bad to make a non-functional test public, as it may then give out
+wrong results to users.
+
+
+Linking to the test
+-------------------
+
+The test is in an own directory, so that you only need to link to that
+directory.  Don't forget the trailing slash!  For example:
+
+  http://www.blah.com/ct/
+
+In links to the test, you can change the default values to whatever you
+want.  This includes the port, the 'long timeout' (lto), the language
+and the IP field if it is enabled.  The most common case is to provide
+links with a different language like this:
+
+  http://www.blah.com/ct/?lang=fr
+
+Here's an example link that changes all of those defaults:
+
+  http://www.blah.com/ct/?lang=de&ip=192.168.123.202&port=9500&lto=1
+
+
+Pass the link around
+--------------------
+
+After having done all the testing and you're positive that everything is
+working properly, then consider making the link publicly available, so
+that everyone can make use of it.  The test doesn't consume much
+bandwidth; on average, there's currently one test being done every 3-4
+minutes on my server (rising tendency).  For making the test public,
+either contact me or post the link on the Shareaza Forums
+(http://shareaza.sourceforge.net/phpbb/).
+
+
+That's it
+---------
+
+There's not much more to say.  If you have any problem, question or
+comment about this connection test, then feel free to drop me an email:
+jlh at gmx dot ch.
+
+Please don't send me questions about installing web server software
+and/or PHP itself, I won't be of much help; instead, see the respective
+documentations.  Also, don't send me questions about configuring your
+firewall and/or router; instead, go to the Shareaza Forums
+(http://shareaza.sourceforge.net/phpbb/) or to the Shareaza Wiki
+(http://shareaza.sourceforge.net/mediawiki/).
+
+Last but not least, thanks go to everyone that helped me making this
+test, to everyone that provided translations and to everyone that is
+hosting it!  :)
+
+                                                       -- jlh, July 2009

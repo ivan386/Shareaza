@@ -1,7 +1,7 @@
 //
 // DlgSplash.h
 //
-// Copyright (c) Shareaza Development Team, 2002-2010.
+// Copyright (c) Shareaza Development Team, 2002-2014.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -42,10 +42,11 @@ protected:
 	int			m_nMax;
 	bool		m_bClosing;
 	CString		m_sState;
-	CBitmap		m_bmSplash;
 	CBitmap		m_bmBuffer;
 	CDC			m_dcBuffer1;
 	CDC			m_dcBuffer2;
+
+	static CBitmap m_bmSplash;
 
 	void		DoPaint(CDC* pDC);
 	BOOL		(WINAPI *m_pfnAnimateWindow)(HWND, DWORD, DWORD);

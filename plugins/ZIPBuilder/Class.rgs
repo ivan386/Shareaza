@@ -36,9 +36,9 @@ HKCU
 				{
 					NoRemove LibraryBuilder
 					{
-						ForceRemove val '.cbz' = s '{2F74AA28-2498-4805-911A-04C39858D529}'
-						ForceRemove val '.jar' = s '{2F74AA28-2498-4805-911A-04C39858D529}'
-						ForceRemove val '.zip' = s '{2F74AA28-2498-4805-911A-04C39858D529}'
+						val '.cbz' = s '{2F74AA28-2498-4805-911A-04C39858D529}'
+						val '.jar' = s '{2F74AA28-2498-4805-911A-04C39858D529}'
+						val '.zip' = s '{2F74AA28-2498-4805-911A-04C39858D529}'
 					}
 				}
 			}

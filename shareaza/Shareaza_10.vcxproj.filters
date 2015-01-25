@@ -75,9 +75,6 @@
     <ClCompile Include="BENode.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="BitziDownloader.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="BTClient.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -787,9 +784,6 @@
       <Filter>Source Files\Dialogs</Filter>
     </ClCompile>
     <ClCompile Include="DlgFilePreview.cpp">
-      <Filter>Source Files\Dialogs</Filter>
-    </ClCompile>
-    <ClCompile Include="DlgFileProperties.cpp">
       <Filter>Source Files\Dialogs</Filter>
     </ClCompile>
     <ClCompile Include="DlgFilePropertiesPage.cpp">
@@ -1999,9 +1993,6 @@
       <Filter>Header Files\Dialogs</Filter>
     </ClInclude>
     <ClInclude Include="DlgFilePreview.h">
-      <Filter>Header Files\Dialogs</Filter>
-    </ClInclude>
-    <ClInclude Include="DlgFileProperties.h">
       <Filter>Header Files\Dialogs</Filter>
     </ClInclude>
     <ClInclude Include="DlgFilePropertiesPage.h">

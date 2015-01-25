@@ -1,7 +1,7 @@
 //
 // TransferFile.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2012.
+// Copyright (c) Shareaza Development Team, 2002-2014.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -213,22 +213,29 @@ BOOL CTransferFile::Open(BOOL bWrite)
 	if ( m_hFile != INVALID_HANDLE_VALUE ) return FALSE;
 
 	m_bExists = ( GetFileAttributes( CString( _T("\\\\?\\") ) + m_sPath ) != INVALID_FILE_ATTRIBUTES );
+	if ( IsFolder() )
+	{
+		m_bWrite = bWrite;
+		return TRUE;
+	}
 	m_hFile = CreateFile( CString( _T("\\\\?\\") ) + m_sPath,
 		GENERIC_READ | ( bWrite ? GENERIC_WRITE : 0 ),
 		FILE_SHARE_READ | FILE_SHARE_WRITE | FILE_SHARE_DELETE,
 		NULL, ( bWrite ? OPEN_ALWAYS : OPEN_EXISTING ), FILE_ATTRIBUTE_NORMAL, NULL );
-
 	if ( m_hFile != INVALID_HANDLE_VALUE )
 	{
 		m_bWrite = bWrite;
 		return TRUE;
 	}
-	else
-		return FALSE;
+
+	return FALSE;
 }
 
 QWORD CTransferFile::GetSize() const
 {
+	if ( IsFolder() )
+		return 0;
+
 	LARGE_INTEGER nSize;
 	if ( m_hFile != INVALID_HANDLE_VALUE && GetFileSizeEx( m_hFile, &nSize ) )
 		return nSize.QuadPart;
@@ -241,16 +248,19 @@ QWORD CTransferFile::GetSize() const
 
 BOOL CTransferFile::EnsureWrite()
 {
-	if ( m_hFile == INVALID_HANDLE_VALUE ) return FALSE;
+	if ( m_hFile == INVALID_HANDLE_VALUE && ! IsFolder() ) return FALSE;
 	if ( m_bWrite ) return TRUE;
 
-	CloseHandle( m_hFile );
-	m_hFile = INVALID_HANDLE_VALUE;
+	if ( m_hFile != INVALID_HANDLE_VALUE )
+	{
+		CloseHandle( m_hFile );
+		m_hFile = INVALID_HANDLE_VALUE;
+	}
 
 	if ( Open( TRUE ) )
 		return TRUE;
 
-	DWORD dwError = GetLastError();
+	const DWORD dwError = GetLastError();
 	Open( FALSE );
 	SetLastError( dwError );
 
@@ -259,13 +269,16 @@ BOOL CTransferFile::EnsureWrite()
 
 BOOL CTransferFile::CloseWrite()
 {
-	if ( m_hFile == INVALID_HANDLE_VALUE ) return FALSE;
+	if ( m_hFile == INVALID_HANDLE_VALUE && ! IsFolder() ) return FALSE;
 	if ( ! m_bWrite ) return TRUE;
 
 	DeferredWrite();
 
-	CloseHandle( m_hFile );
-	m_hFile = INVALID_HANDLE_VALUE;
+	if ( m_hFile != INVALID_HANDLE_VALUE )
+	{
+		CloseHandle( m_hFile );
+		m_hFile = INVALID_HANDLE_VALUE;
+	}
 
 	return Open( FALSE );
 }
@@ -278,7 +291,7 @@ BOOL CTransferFile::Read(QWORD nOffset, LPVOID pBuffer, QWORD nBuffer, QWORD* pn
 	CSingleLock pLock( &TransferFiles.m_pSection, TRUE );
 
 	*pnRead = 0;
-	if ( m_hFile == INVALID_HANDLE_VALUE ) return FALSE;
+	if ( m_hFile == INVALID_HANDLE_VALUE ) return IsFolder();
 	if ( m_nDeferred > 0 ) DeferredWrite();
 
 	DWORD nOffsetLow	= (DWORD)( nOffset & 0x00000000FFFFFFFF );
@@ -304,7 +317,7 @@ BOOL CTransferFile::Write(QWORD nOffset, LPCVOID pBuffer, QWORD nBuffer, QWORD* 
 	CSingleLock pLock( &TransferFiles.m_pSection, TRUE );
 
 	*pnWritten = 0;
-	if ( m_hFile == INVALID_HANDLE_VALUE ) return FALSE;
+	if ( m_hFile == INVALID_HANDLE_VALUE ) return IsFolder();
 	if ( ! m_bWrite ) return FALSE;
 
 	if ( nOffset > DEFERRED_THRESHOLD )

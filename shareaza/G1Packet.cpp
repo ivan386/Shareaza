@@ -1,7 +1,7 @@
 //
 // G1Packet.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2013.
+// Copyright (c) Shareaza Development Team, 2002-2014.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -640,7 +640,7 @@ BOOL CG1Packet::OnPing(const SOCKADDR_IN* pHost)
 		if ( CGGEPItem* pItem = pGGEP.Add( GGEP_HEADER_VENDOR_INFO ) )
 		{
 			pItem->Write( VENDOR_CODE, 4 );
-			pItem->WriteByte( ( theApp.m_nVersion[ 0 ] << 4 ) | theApp.m_nVersion[ 1 ] );
+			pItem->WriteByte( (BYTE)( ( theApp.m_nVersion[ 0 ] << 4 ) | theApp.m_nVersion[ 1 ] ) );
 		}
 
 		if ( bSCP )

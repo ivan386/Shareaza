@@ -1,7 +1,7 @@
 //
 // HashDatabase.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2011.
+// Copyright (c) Shareaza Development Team, 2002-2014.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -225,8 +225,11 @@ HASHDB_INDEX* CHashDatabase::PrepareToStore(DWORD nIndex, DWORD nType, DWORD nLe
 		{
 			m_nBuffer += 64;
 			HASHDB_INDEX* pNew = new HASHDB_INDEX[ m_nBuffer ];
-			if ( m_nIndex ) CopyMemory( pNew, m_pIndex, sizeof(HASHDB_INDEX) * m_nIndex );
-			if ( m_pIndex ) delete [] m_pIndex;
+			if ( m_pIndex )
+			{
+				if ( m_nIndex ) CopyMemory( pNew, m_pIndex, sizeof(HASHDB_INDEX) * m_nIndex );
+				delete [] m_pIndex;
+			}
 			m_pIndex = pNew;
 		}
 

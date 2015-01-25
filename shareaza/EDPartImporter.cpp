@@ -1,7 +1,7 @@
 //
 // EDPartImporter.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2013.
+// Copyright (c) Shareaza Development Team, 2002-2014.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -334,7 +334,7 @@ BOOL CEDPartImporter::ImportFile(LPCTSTR pszPath, LPCTSTR pszFile)
 
 	Message( IDS_ED2K_EPI_COPY_FINISHED );
 
-	CQuickLock oTransfersLock( Transfers.m_pSection );
+	CSingleLock pLock( &Transfers.m_pSection, TRUE );
 
 	CDownload* pDownload = Downloads.Add();
 	if ( ! pDownload )
@@ -370,6 +370,9 @@ BOOL CEDPartImporter::ImportFile(LPCTSTR pszPath, LPCTSTR pszFile)
 
 	Message( IDS_ED2K_EPI_FILE_CREATED,
 		Settings.SmartVolume( pDownload->GetVolumeRemaining() ) );
+	
+	if ( Settings.Downloads.ShowMonitorURLs )
+		pDownload->ShowMonitor();
 
 	return TRUE;
 }
@@ -382,21 +385,19 @@ void CEDPartImporter::Message(UINT nMessageID, ...)
 	CEdit* pCtrl = m_pTextCtrl;
 	if ( pCtrl == NULL ) return;
 
-	const DWORD nBufferLength = 2048;
-	auto_array< TCHAR > szBuffer( new TCHAR[ nBufferLength ] );
-	ZeroMemory( szBuffer.get(), nBufferLength * sizeof( TCHAR ) );
-	CString strFormat;
-	va_list pArgs;
-
+	CString sBuffer, strFormat;
 	LoadString( strFormat, nMessageID );
+
+	va_list pArgs;
 	va_start( pArgs, nMessageID );
-	_vsntprintf_s( szBuffer.get(), nBufferLength, nBufferLength - 8, strFormat, pArgs );
-	_tcscat( szBuffer.get(), _T("\r\n") );
+	sBuffer.FormatMessageV( strFormat, &pArgs );
 	va_end( pArgs );
+
+	sBuffer += _T( "\r\n" );
 
 	int nLen = pCtrl->GetWindowTextLength();
 	pCtrl->SetSel( nLen, nLen );
-	pCtrl->ReplaceSel( szBuffer.get() );
-	nLen += static_cast< int >( _tcslen( szBuffer.get() ) );
+	pCtrl->ReplaceSel( sBuffer );
+	nLen += sBuffer.GetLength();
 	pCtrl->SetSel( nLen, nLen );
 }

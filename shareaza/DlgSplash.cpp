@@ -1,7 +1,7 @@
 //
 // DlgSplash.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2012.
+// Copyright (c) Shareaza Development Team, 2002-2014.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -50,6 +50,7 @@ END_MESSAGE_MAP()
 #define SPLASH_WIDTH		528
 #define SPLASH_HEIGHT		236
 
+CBitmap CSplashDlg::m_bmSplash;
 
 /////////////////////////////////////////////////////////////////////////////
 // CSplashDlg construction
@@ -59,7 +60,7 @@ CSplashDlg::CSplashDlg(int nMax, bool bClosing) :
 	m_nPos( 0 ),
 	m_nMax( nMax ),
 	m_bClosing( bClosing ),
-	m_sState( theApp.m_sSmartAgent ),
+	m_sState( Settings.SmartAgent() ),
 	m_pfnAnimateWindow( NULL )
 {
 	Create( IDD, GetDesktopWindow() );
@@ -87,7 +88,8 @@ BOOL CSplashDlg::OnInitDialog()
 
 	CClientDC dcScreen( this );
 
-	m_bmSplash.Attach( CImageFile::LoadBitmapFromFile( Settings.General.Path + L"\\Data\\Splash.png" ) );
+	if ( ! m_bmSplash.m_hObject )
+		m_bmSplash.Attach( CImageFile::LoadBitmapFromFile( Settings.General.Path + L"\\Data\\Splash.png" ) );
 
 	m_bmBuffer.CreateCompatibleBitmap( &dcScreen, SPLASH_WIDTH, SPLASH_HEIGHT );
 	m_dcBuffer1.CreateCompatibleDC( &dcScreen );

@@ -3,7 +3,7 @@
 // or project specific include files that are used frequently,
 // but are changed infrequently
 //
-// Copyright (c) Shareaza Development Team, 2007-2013.
+// Copyright (c) Shareaza Development Team, 2007-2014.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -24,6 +24,7 @@
 #pragma once
 
 
+#define _WIN32_WINNT 0x0501
 #include <SDKDDKVer.h>
 
 #define STRICT
