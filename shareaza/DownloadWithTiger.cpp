@@ -602,6 +602,14 @@ BOOL CDownloadWithTiger::FindNewValidationBlock(int nHash)
 		pBlockPtr	= m_pTigerBlock;
 		nBlockCount	= m_nTigerBlock;
 		nBlockSize	= m_nTigerSize;
+
+		if ( ( ! pBlockPtr || ! nBlockCount || ! nBlockSize ) && IsComplete() && m_oTiger ){
+			SetTigerTree( (BYTE*) &*m_oTiger.begin(), m_oTiger.byteCount );
+			pBlockPtr	= m_pTigerBlock;
+			nBlockCount	= m_nTigerBlock;
+			nBlockSize	= m_nTigerSize;
+		}
+
 		break;
 
 	case HASH_ED2K:
