@@ -1596,7 +1596,9 @@ bool CHostCacheHost::CanQuote(const DWORD tNow) const
 		// A host isn't dead...
 		( m_nFailures == 0 ) &&
 		// ...and host isn't expired...
-		( ! IsExpired( tNow ) );
+		( ! IsExpired( tNow ) ) &&
+		// ...and we checked this host...
+		( m_nUserLimit > 0 && m_bCheckedLocally );
 		// ...then we can tell about it to others!
 }
 
