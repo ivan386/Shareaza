@@ -434,7 +434,7 @@ __int64 GetRandomNum<__int64>(const __int64& min, const __int64& max);
 #define BT_ID1				'S'
 #define BT_ID2				'Z'
 
-#define WEB_SITE			"http://shareaza.sourceforge.net/"
+#define WEB_SITE			"http://ivan386.github.io/"
 #define WEB_SITE_T			_T( WEB_SITE )
 
 // URLs used by Shareaza

@@ -335,7 +335,7 @@ BOOL CDownloadWithSources::AddSource(const CShareazaFile* pHit, BOOL bForce)
 	}
 	if ( m_nBitrate == 0 && (pHit->m_nBitrate > 0) )
 	{
-		bUpdated = Resize( pHit->m_nSize );
+		m_nBitrate = pHit->m_nBitrate;
 	}
 
 	if ( bUpdated )

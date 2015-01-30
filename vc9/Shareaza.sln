@@ -94,9 +94,6 @@ EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "HashLib", "..\HashLib\HashLib_9.vcproj", "{196C99FC-9A4E-421F-B44C-8E3FD177122F}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Plugins", "Plugins", "{9296CFD2-D5ED-449A-9D40-0F3274AA095F}"
-	ProjectSection(SolutionItems) = preProject
-		..\MiniUPnPc\MiniUPnPc_10.vcxproj = ..\MiniUPnPc\MiniUPnPc_10.vcxproj
-	EndProjectSection
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "RazaWebHook32", "..\plugins\RazaWebHook\RazaWebHook32_9.vcproj", "{7030A905-13CF-40FF-A7CC-9FBA3B6EDF92}"
 	ProjectSection(ProjectDependencies) = postProject

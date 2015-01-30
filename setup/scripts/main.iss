@@ -152,10 +152,10 @@
 #endif
 
 ; Pack symbols
-#expr Exec( Zip, "a -y -mx=9 builds\" + symbols_name + " ""..\" + Compiler + "\" + PlatformName + "\" + ConfigurationName + "\*.pdb""", ".." )
+;#expr Exec( Zip, "a -y -mx=9 builds\" + symbols_name + " ""..\" + Compiler + "\" + PlatformName + "\" + ConfigurationName + "\*.pdb""", ".." )
 
 ; Pack sources
-#expr Exec( Zip, "a -y -mx=9 -r -x!.svn -x!.git -x!setup\builds\*.exe -x!setup\builds\*.txt -x!setup\builds\*.iss -x!Win32 -x!x64 -x!ipch -x!*.7z -x!*.log -x!*.bak -x!*.tmp -x!*.sdf -x!*.suo -x!*.ncb -x!*.user -x!*.opensdf builds\" + source_name + " ..", ".." )
+;#expr Exec( Zip, "a -y -mx=9 -r -x!.svn -x!.git -x!setup\builds\*.exe -x!setup\builds\*.txt -x!setup\builds\*.iss -x!Win32 -x!x64 -x!ipch -x!*.7z -x!*.log -x!*.bak -x!*.tmp -x!*.sdf -x!*.suo -x!*.ncb -x!*.user -x!*.opensdf builds\" + source_name + " ..", ".." )
 
 [Setup]
 AppComments={#Description}

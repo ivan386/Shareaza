@@ -86,7 +86,7 @@
 			Name="Release|Win32"
 			OutputDirectory="$(SolutionDir)\$(PlatformName)\$(ConfigurationName)"
 			IntermediateDirectory="$(PlatformName)\$(ConfigurationName)"
-			ConfigurationType="1"
+			ConfigurationType="2"
 			>
 			<Tool
 				Name="VCPreBuildEventTool"
@@ -105,7 +105,8 @@
 			/>
 			<Tool
 				Name="VCCLCompilerTool"
-				PreprocessorDefinitions="_CRT_SECURE_NO_WARNINGS;MINIUPNP_STATICLIB"
+				AdditionalIncludeDirectories=".\"
+				PreprocessorDefinitions="MINIUPNP_EXPORTS;_WIN32;_CRT_SECURE_NO_WARNINGS;WIN32;_WINDOWS;_USRDLL;MINIUPNPC_EXPORTS;"
 			/>
 			<Tool
 				Name="VCManagedResourceCompilerTool"
@@ -118,6 +119,8 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
+				AdditionalDependencies="ws2_32.lib IPHlpApi.Lib"
+				LinkIncremental="2"
 			/>
 			<Tool
 				Name="VCALinkTool"
@@ -225,11 +228,11 @@
 				>
 			</File>
 			<File
-				RelativePath=".\miniupnpc\miniupnpcstrings.h"
+				RelativePath=".\miniupnpcstrings.h"
 				>
 			</File>
 			<File
-				RelativePath=".\miniupnpcstrings.h"
+				RelativePath=".\miniupnpc\miniupnpcstrings.h"
 				>
 			</File>
 			<File
