@@ -359,8 +359,10 @@ BOOL CDownloadWithTorrent::SetTorrent(const CBTInfo* pTorrent)
 	m_nTorrentBlock	= m_pTorrent.m_nBlockCount;
 
 	delete [] m_pTorrentBlock;
-	m_pTorrentBlock	= new BYTE[ m_nTorrentBlock ];
-	memset( m_pTorrentBlock, TRI_UNKNOWN, m_nTorrentBlock );
+	if ( m_nTorrentBlock > 0 ){
+		m_pTorrentBlock	= new BYTE[ m_nTorrentBlock ];
+		memset( m_pTorrentBlock, TRI_UNKNOWN, m_nTorrentBlock );
+	}
 	m_nTorrentSuccess = 0;
 
 	if ( CreateDirectory( Settings.Downloads.TorrentPath ) )

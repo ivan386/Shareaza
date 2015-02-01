@@ -123,11 +123,11 @@ BOOL CDownloadWithTiger::GetNextVerifyRange(QWORD& nOffset, QWORD& nLength, BOOL
 
 	if ( nHash == HASH_NULL )
 	{
-		if ( m_pTorrentBlock )
+		if ( m_pTorrentBlock && m_nTorrentBlock )
 			nHash = HASH_TORRENT;
-		else if ( m_pTigerBlock )
+		else if ( m_pTigerBlock && m_nTigerBlock )
 			nHash = HASH_TIGERTREE;
-		else if ( m_pHashsetBlock )
+		else if ( m_pHashsetBlock && m_nHashsetBlock )
 			nHash = HASH_ED2K;
 	}
 
