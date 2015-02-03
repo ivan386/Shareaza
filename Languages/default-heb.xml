@@ -1649,6 +1649,10 @@
 		<menu name="WebServices.List.Menu">
 			<item id="ID_WEBSERVICES_MUSICBRAINZ" text="_MusicBrainz"/>
 		</menu>
+		<menu name="Path.Menu">
+			<item id="ID_PATH_EXPLORE" text="‪_סייר"/>
+			<item id="ID_PATH_COPY" text="_העתק"/>
+		</menu>
 	</menus>
 	<!-- Documents -->
 	<documents>
@@ -2559,6 +2563,8 @@
 		<tip id="ID_NEXT_PANE" message="Switch to the next window pane" tip="Next Pane"/>
 		<tip id="ID_OPEN_DOWNLOADS_FOLDER" message="Open my folder of completed Downloads"/>
 		<tip id="ID_PREV_PANE" message="Switch back to the previous window pane" tip="Previous Pane"/>
+		<tip id="ID_PATH_COPY" message="Copy this path to clipboard."/>
+		<tip id="ID_PATH_EXPLORE" message="Explore this path."/>
 		<tip id="ID_SCHEDULER_ACTIVATE" message="Activates selected task(s) from the list."/>
 		<tip id="ID_SCHEDULER_ADD" message="Adds a new task to scheduler list."/>
 		<tip id="ID_SCHEDULER_DEACTIVATE" message="Deactivates selected tasks."/>
@@ -2861,6 +2867,7 @@
 		<string id="8336" value="‪המקורות לקובץ כרגע במצב לא יציב"/>
 		<string id="8337" value="Untrusted"/>
 		<string id="8338" value="Free:"/>
+		<string id="12999" value="Client %s has a prohibited user agent &quot;%s&quot;, banning."/>
 		<string id="13000" value="Are you sure you want to delete the selected security rules? This cannot be undone."/>
 		<string id="13001" value="Files shared over the Internet"/>
 		<string id="16063" value="UPnP port mapping failed after 10 attempts."/>
@@ -3433,6 +3440,10 @@
 		<string id="20265" value="Done"/>
 		<string id="20266" value="Waiting..."/>
 		<string id="20267" value="No Tasks Currently Scheduled"/>
+		<string id="20268" value="אכסן קבצים שהושלמה הורדתם בתיקייה"/>
+		<string id="20269" value="אכסן קבצים זמניים כאן"/>
+		<string id="20270" value="אכסן טורנטים כאן"/>
+		<string id="20271" value="אגור כאן את האוספים"/>
 	</strings>
 	<!-- Localised Dialog Text, the "cookie" verifies that the dialog matches the skin -->
 	<!-- Don't edit dialogs manualy! Use DialogScan feature instead -->
@@ -3473,7 +3484,7 @@
 			<control caption="‪:כשאני לוחצ/ת מזער"/>
 			<control caption="‪רגיל|מזער"/>
 		</dialog>
-		<dialog name="CLibrarySettingsPage" cookie="BuBuBuBuBuBuStEdmsStStEdmsStBuBuCoBuBuBuCoBuBuBuEdBuBuBu" caption="‪‪ספרייה">
+		<dialog name="CLibrarySettingsPage" cookie="BuBuBuBuBuBuStEdmsStStEdmsStBuBuCoBuBuBuCoBuBuBuCoBuBuBu" caption="‪‪ספרייה">
 			<control caption=":אפשרויות"/>
 			<control caption="זכור את תצוגות התיקייה"/>
 			<control caption="צפה בתיקיות הספריה"/>
@@ -3497,7 +3508,7 @@
 			<control/>
 			<control caption="הוסף"/>
 			<control caption="‪_הסר"/>
-			<control caption=":אגור כאן את האוספים"/>
+			<control caption="אגור כאן את האוספים"/>
 			<control/>
 			<control/>
 			<control caption="Create ghost files when deleting"/>
@@ -3610,8 +3621,8 @@
 			<control/>
 			<control/>
 		</dialog>
-		<dialog name="CDownloadsSettingsPage" cookie="BuEdBuBuStCoBuStEdmsStEdmsStEdmsBuStCoStCoBuBuEdBu" caption="‪הורדות">
-			<control caption="Save Completed Files Here"/>
+		<dialog name="CDownloadsSettingsPage" cookie="BuCoBuBuStCoBuStEdmsStEdmsStEdmsBuStCoStCoBuBuCoBu" caption="‪הורדות">
+			<control caption="אכסן קבצים שהושלמה הורדתם בתיקייה"/>
 			<control/>
 			<control/>
 			<control caption="Scan every completed file with AntiVirus"/>
@@ -3633,7 +3644,7 @@
 			<control caption=":אורך תורות מקסימלי"/>
 			<control/>
 			<control caption="‪‏מחובר‎ ‏אליהן אני‎ ‏ברשתות‎ ‏ורק‎ ‏אך‎ ‏והורד‎ ‏העלה"/>
-			<control caption="Store Temporary Incomplete Files Here"/>
+			<control caption="אכסן קבצים זמניים כאן"/>
 			<control/>
 			<control/>
 		</dialog>
@@ -3744,7 +3755,7 @@
 			<control caption=":כלים של אי-דונקי 2000"/>
 			<control caption="הורד רשימת שרתים של אידונקי מהרשת"/>
 		</dialog>
-		<dialog name="CBitTorrentSettingsPage" cookie="BuBuBuEdmsEdmsBuEdmsBuBuEdBuEdBuEdBuBuBuStStStStBu" caption="ביט-טורנט">
+		<dialog name="CBitTorrentSettingsPage" cookie="BuBuBuEdmsEdmsBuEdmsBuBuCoBuEdBuEdBuBuBuStStStStBu" caption="ביט-טורנט">
 			<control caption="Always connect to BitTorrent"/>
 			<control caption="Connect to BitTorrent today"/>
 			<control caption="Enable BitTorrent DHT"/>
@@ -3764,7 +3775,7 @@
 			<control/>
 			<control caption="_BitTorrent Network:"/>
 			<control caption=":הגדרות הורדה בביט-טורנט"/>
-			<control caption=":אכסן טורנטים כאן"/>
+			<control caption="אכסן טורנטים כאן"/>
 			<control caption="טורנטים בו זמנית"/>
 			<control caption="מקסימום חיבורים"/>
 			<control caption="%"/>

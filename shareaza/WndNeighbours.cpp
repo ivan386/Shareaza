@@ -1,7 +1,7 @@
 //
 // WndNeighbours.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2014.
+// Copyright (c) Shareaza Development Team, 2002-2015.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -389,7 +389,7 @@ void CNeighboursWnd::OnNeighboursCopy()
 			(LPCTSTR)pNeighbour->m_sAddress, htons( pNeighbour->m_pHost.sin_port ) );
 	}
 
-	CURLCopyDlg::SetClipboardText( strURL );
+	theApp.SetClipboardText( strURL );
 }
 
 void CNeighboursWnd::OnUpdateNeighboursChat(CCmdUI* pCmdUI)

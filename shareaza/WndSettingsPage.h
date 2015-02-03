@@ -1,7 +1,7 @@
 //
 // WndSettingsPage.h
 //
-// Copyright (c) Shareaza Development Team, 2002-2014.
+// Copyright (c) Shareaza Development Team, 2002-2015.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -30,7 +30,6 @@ class CSettingsPage : public CDialog
 
 public:
 	CSettingsPage(UINT nIDTemplate, LPCTSTR pszName = NULL);
-	virtual ~CSettingsPage();
 
 	CToolTipCtrl	m_wndToolTip;
 	CString			m_sName;		// Dialog name used for skinning
@@ -73,16 +72,15 @@ protected:
 	DECLARE_MESSAGE_MAP()
 };
 
-// CEditPath
-// Same functionality as CEdit has but with ability to run specified
-// file or folder on mouse double click.
+// CComboBoxPath
+// Same functionality as CComboBox has but with ability to run specified file or folder on mouse right click.
 
-class CEditPath : public CEdit
+class CComboBoxPath : public CComboBox
 {
-	DECLARE_DYNAMIC(CEditPath)
+	DECLARE_DYNAMIC(CComboBoxPath)
 
 protected:
-	afx_msg void OnLButtonDblClk(UINT nFlags, CPoint point);
+	afx_msg void OnRButtonDown(UINT nFlags, CPoint point);
 
 	DECLARE_MESSAGE_MAP()
 };

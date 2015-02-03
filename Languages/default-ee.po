@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Shareaza\n"
 "Report-Msgid-Bugs-To: shareaza <shareaza@cherubicsoft.com>\n"
-"POT-Creation-Date: 2014-08-03 12:40+0000\n"
+"POT-Creation-Date: 2015-02-03 12:58+0000\n"
 "PO-Revision-Date: \n"
 "Last-Translator: ryo-oh-ki <ryo-oh-ki@narod.ru>\n"
 "Language-Team: Shareaza Development Team\n"
@@ -1469,6 +1469,7 @@ msgstr "Näita Ajalugu"
 
 #: clibrarytree.physical.basic;item;id_library_explore
 #: clibrarytree.physical;item;id_library_explore
+#: path.menu;item;id_path_explore
 msgid "_Explore"
 msgstr "_Vaata Faile"
 
@@ -1788,7 +1789,8 @@ msgstr ""
 msgid "Timestam_p"
 msgstr "Ajastu_s"
 
-#: csystemwnd;item;id_system_copy curlexportdlg;control;7
+#: csystemwnd;item;id_system_copy path.menu;item;id_path_copy
+#: curlexportdlg;control;7
 msgid "_Copy"
 msgstr "_Kopeeri"
 
@@ -4119,6 +4121,14 @@ msgstr "Hüppa tagasi, eelmisele failile playlistis ."
 msgid "Previous Pane"
 msgstr "Eelmine"
 
+#: message;id_path_copy
+msgid "Copy this path to clipboard."
+msgstr ""
+
+#: message;id_path_explore
+msgid "Explore this path."
+msgstr ""
+
 #: message;id_scheduler_activate
 #, fuzzy
 msgid "Activates selected task(s) from the list."
@@ -5209,6 +5219,10 @@ msgstr "Ebausaldatav"
 #, fuzzy
 msgid "Free:"
 msgstr "Loodud:"
+
+#: string;12999
+msgid "Client %s has a prohibited user agent \"%s\", banning."
+msgstr ""
 
 #: string;13000
 msgid "Are you sure you want to delete the selected security rules? This cannot be undone."
@@ -7476,6 +7490,22 @@ msgstr ""
 msgid "No Tasks Currently Scheduled"
 msgstr ""
 
+#: string;20268 cdownloadssettingspage;control;1
+msgid "Save Completed Files Here"
+msgstr "Salvesta Lõpetatud Failid Siia"
+
+#: string;20269 cdownloadssettingspage;control;23
+msgid "Store Temporary Incomplete Files Here"
+msgstr "Salvesta Ajutised Poolikud Failid Siia"
+
+#: string;20270 cbittorrentsettingspage;control;20
+msgid "Store Torrents Here"
+msgstr "Salvesta Torrentid Siia"
+
+#: string;20271 clibrarysettingspage;control;24
+msgid "Store Collections Here"
+msgstr "Siia Salvesta Kollektsioonid"
+
 #: csettingsheet;control;4 cprofilemanagerdlg;control;4
 msgid "Apply"
 msgstr "Kinnita"
@@ -7626,10 +7656,6 @@ msgstr "_Lisa"
 #: clibrarysettingspage;control;20
 msgid "_Never Share:"
 msgstr "_Ära Kunagi Jaga:"
-
-#: clibrarysettingspage;control;24
-msgid "Store _Collections Here:"
-msgstr "Siia _Salvesta Kollektsioonid:"
 
 #: clibrarysettingspage;control;27
 msgid "Create ghost files when deleting"
@@ -7867,11 +7893,6 @@ msgstr "Ühendusi:"
 msgid "Handshake:"
 msgstr ""
 
-#: cdownloadssettingspage;control;1
-#, fuzzy
-msgid "Save Completed Files Here"
-msgstr "Salvesta _Lõpetatud Failid Siia:"
-
 #: cdownloadssettingspage;control;4
 msgid "Scan every completed file with AntiVirus"
 msgstr ""
@@ -7914,11 +7935,6 @@ msgstr "Maksimaalne Järjekordade arv:"
 #: cdownloadssettingspage;control;22
 msgid "Only download and upload to networks which are connected."
 msgstr "Tõmba ainult ühendatud võrkudest."
-
-#: cdownloadssettingspage;control;23
-#, fuzzy
-msgid "Store Temporary Incomplete Files Here"
-msgstr "Salvesta Ajutised _Poolikud Failid Siia:"
 
 #: cuploadssettingspage;control;2
 msgid "Share NEW partial downloads"
@@ -8239,10 +8255,6 @@ msgstr ""
 #: cbittorrentsettingspage;control;19
 msgid "_Download Connections:"
 msgstr "_Allalaadimisühendused:"
-
-#: cbittorrentsettingspage;control;20
-msgid "_Store Torrents Here:"
-msgstr "_Salvesta Torrentid Siia:"
 
 #: cbittorrentsettingspage;control;21
 msgid "Torrents at once"
@@ -9979,6 +9991,12 @@ msgstr "TigerTree"
 #, fuzzy
 msgid "NextRun"
 msgstr "Järgmine"
+
+#~ msgid "Store _Collections Here:"
+#~ msgstr "Siia _Salvesta Kollektsioonid:"
+
+#~ msgid "_Store Torrents Here:"
+#~ msgstr "_Salvesta Torrentid Siia:"
 
 #~ msgid "Display simple progress bar"
 #~ msgstr "Kuva lihtne edenemisriba"

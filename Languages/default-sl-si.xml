@@ -1649,6 +1649,10 @@
 		<menu name="WebServices.List.Menu">
 			<item id="ID_WEBSERVICES_MUSICBRAINZ" text="_MusicBrainz"/>
 		</menu>
+		<menu name="Path.Menu">
+			<item id="ID_PATH_EXPLORE" text="_Razišči"/>
+			<item id="ID_PATH_COPY" text="_Kopiraj"/>
+		</menu>
 	</menus>
 	<!-- Documents -->
 	<documents>
@@ -2560,6 +2564,8 @@
 		<tip id="ID_NEXT_PANE" message="Switch to the next window pane" tip="Next Pane"/>
 		<tip id="ID_OPEN_DOWNLOADS_FOLDER" message="Open my folder of completed Downloads"/>
 		<tip id="ID_PREV_PANE" message="Switch back to the previous window pane" tip="Previous Pane"/>
+		<tip id="ID_PATH_COPY" message="Copy this path to clipboard."/>
+		<tip id="ID_PATH_EXPLORE" message="Explore this path."/>
 		<tip id="ID_SCHEDULER_ACTIVATE" message="Activates selected task(s) from the list."/>
 		<tip id="ID_SCHEDULER_ADD" message="Adds a new task to scheduler list."/>
 		<tip id="ID_SCHEDULER_DEACTIVATE" message="Deactivates selected tasks."/>
@@ -2862,6 +2868,7 @@
 		<string id="8336" value="Viri za to datoteko so morda nestabilni"/>
 		<string id="8337" value="Ni vreden zaupanja"/>
 		<string id="8338" value="Free:"/>
+		<string id="12999" value="Client %s has a prohibited user agent &quot;%s&quot;, banning."/>
 		<string id="13000" value="Are you sure you want to delete the selected security rules? This cannot be undone."/>
 		<string id="13001" value="Files shared over the Internet"/>
 		<string id="16063" value="UPnP port mapping failed after 10 attempts."/>
@@ -3434,6 +3441,10 @@
 		<string id="20265" value="Done"/>
 		<string id="20266" value="Waiting..."/>
 		<string id="20267" value="No Tasks Currently Scheduled"/>
+		<string id="20268" value="Shrani dokočane datoteke na tem mestu"/>
+		<string id="20269" value="Shrani začasne nedokončane datoteke na tem mestu"/>
+		<string id="20270" value="Shrani Torrente na tem mestu"/>
+		<string id="20271" value="Shrani zbirke na tem mestu"/>
 	</strings>
 	<!-- Localised Dialog Text, the "cookie" verifies that the dialog matches the skin -->
 	<!-- Don't edit dialogs manualy! Use DialogScan feature instead -->
@@ -3474,7 +3485,7 @@
 			<control caption="Ko izberem minimizranje:"/>
 			<control caption="Navadno|Minimiziraj v opravilno vrstico"/>
 		</dialog>
-		<dialog name="CLibrarySettingsPage" cookie="BuBuBuBuBuBuStEdmsStStEdmsStBuBuCoBuBuBuCoBuBuBuEdBuBuBu" caption="Knjižnica">
+		<dialog name="CLibrarySettingsPage" cookie="BuBuBuBuBuBuStEdmsStStEdmsStBuBuCoBuBuBuCoBuBuBuCoBuBuBu" caption="Knjižnica">
 			<control caption="_Možnosti:"/>
 			<control caption="Zapomni si poglede map"/>
 			<control caption="Opazuj knjižnične mape"/>
@@ -3498,7 +3509,7 @@
 			<control/>
 			<control caption="_Dodaj"/>
 			<control caption="_Odstrani"/>
-			<control caption="Shrani _zbirke na tem mestu:"/>
+			<control caption="Shrani zbirke na tem mestu"/>
 			<control/>
 			<control/>
 			<control caption="Create ghost files when deleting"/>
@@ -3611,8 +3622,8 @@
 			<control/>
 			<control/>
 		</dialog>
-		<dialog name="CDownloadsSettingsPage" cookie="BuEdBuBuStCoBuStEdmsStEdmsStEdmsBuStCoStCoBuBuEdBu" caption="Prenosi">
-			<control caption="Save Completed Files Here"/>
+		<dialog name="CDownloadsSettingsPage" cookie="BuCoBuBuStCoBuStEdmsStEdmsStEdmsBuStCoStCoBuBuCoBu" caption="Prenosi">
+			<control caption="Shrani dokočane datoteke na tem mestu"/>
 			<control/>
 			<control/>
 			<control caption="Scan every completed file with AntiVirus"/>
@@ -3634,7 +3645,7 @@
 			<control caption="Največja dolžina čakalne vrste:"/>
 			<control/>
 			<control caption="Prenašaj (download) in nalagaj (upload) samo na povezana omrežja."/>
-			<control caption="Store Temporary Incomplete Files Here"/>
+			<control caption="Shrani začasne nedokončane datoteke na tem mestu"/>
 			<control/>
 			<control/>
 		</dialog>
@@ -3745,7 +3756,7 @@
 			<control caption="Prenesi eDonkey2000 seznam strežnikov iz spleta:"/>
 			<control caption="Prenesi..."/>
 		</dialog>
-		<dialog name="CBitTorrentSettingsPage" cookie="BuBuBuEdmsEdmsBuEdmsBuBuEdBuEdBuEdBuBuBuStStStStBu" caption="BitTorrent">
+		<dialog name="CBitTorrentSettingsPage" cookie="BuBuBuEdmsEdmsBuEdmsBuBuCoBuEdBuEdBuBuBuStStStStBu" caption="BitTorrent">
 			<control caption="Always connect to BitTorrent"/>
 			<control caption="Connect to BitTorrent today"/>
 			<control caption="Enable BitTorrent DHT"/>
@@ -3765,7 +3776,7 @@
 			<control/>
 			<control caption="_BitTorrent Network:"/>
 			<control caption="_Prenosne povezave:"/>
-			<control caption="_Shrani Torrente na tem mestu:"/>
+			<control caption="Shrani Torrente na tem mestu"/>
 			<control caption="Torrentov na enkrat"/>
 			<control caption="Povezave odjemalca"/>
 			<control caption="%"/>

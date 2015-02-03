@@ -1,7 +1,7 @@
 //
 // DlgURLCopy.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2014.
+// Copyright (c) Shareaza Development Team, 2002-2015.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -341,37 +341,13 @@ BOOL CURLCopyDlg::OnSetCursor(CWnd* pWnd, UINT nHitTest, UINT message)
 	return CSkinDialog::OnSetCursor( pWnd, nHitTest, message );
 }
 
-BOOL CURLCopyDlg::SetClipboardText(CString& strText)
-{
-	if ( ! AfxGetMainWnd()->OpenClipboard() ) return FALSE;
-
-	EmptyClipboard();
-
-	CT2CW pszWide( (LPCTSTR)strText );
-	HANDLE hMem = GlobalAlloc( GMEM_MOVEABLE|GMEM_DDESHARE, ( wcslen(pszWide) + 1 ) * sizeof(WCHAR) );
-	if ( hMem )
-	{
-		LPVOID pMem = GlobalLock( hMem );
-		if ( pMem )
-		{
-			CopyMemory( pMem, pszWide, ( wcslen(pszWide) + 1 ) * sizeof(WCHAR) );
-			GlobalUnlock( hMem );
-			SetClipboardData( CF_UNICODETEXT, hMem );
-		}
-	}
-
-	CloseClipboard();
-
-	return TRUE;
-}
-
 void CURLCopyDlg::OnStnClickedUrlHost()
 {
 	UpdateData();
 
 	if ( m_sHost.GetLength() )
 	{
-		SetClipboardText( m_sHost );
+		theApp.SetClipboardText( m_sHost );
 
 		CSkinDialog::OnOK();
 	}
@@ -383,7 +359,7 @@ void CURLCopyDlg::OnStnClickedUrlMagnet()
 
 	if ( m_sMagnet.GetLength() )
 	{
-		SetClipboardText( m_sMagnet );
+		theApp.SetClipboardText( m_sMagnet );
 
 		CSkinDialog::OnOK();
 	}
@@ -395,7 +371,7 @@ void CURLCopyDlg::OnStnClickedUrlEd2k()
 
 	if ( m_sED2K.GetLength() )
 	{
-		SetClipboardText( m_sED2K );
+		theApp.SetClipboardText( m_sED2K );
 
 		CSkinDialog::OnOK();
 	}

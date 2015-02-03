@@ -1,7 +1,7 @@
 //
 // PageSettingsBitTorrent.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2012.
+// Copyright (c) Shareaza Development Team, 2002-2015.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -58,10 +58,6 @@ CBitTorrentSettingsPage::CBitTorrentSettingsPage()
 {
 }
 
-CBitTorrentSettingsPage::~CBitTorrentSettingsPage()
-{
-}
-
 void CBitTorrentSettingsPage::DoDataExchange(CDataExchange* pDX)
 {
 	CSettingsPage::DoDataExchange(pDX);
@@ -81,7 +77,7 @@ void CBitTorrentSettingsPage::DoDataExchange(CDataExchange* pDX)
 	DDX_Check(pDX, IDC_TORRENT_PREFERENCE, m_bPrefBTSources);
 	DDX_Text(pDX, IDC_TORRENT_DEFAULTTRACKER, m_sTracker);
 	DDX_Control(pDX, IDC_TORRENTS_BROWSE, m_wndTorrentPath);
-	DDX_Text(pDX, IDC_TORRENTS_FOLDER, m_sTorrentPath);
+	DDX_Control(pDX, IDC_TORRENTS_FOLDER, m_wndTorrentFolder);
 	DDX_Control(pDX, IDC_TORRENTS_TORRENTMAKERBROWSE, m_wndMakerPath);
 	DDX_Text(pDX, IDC_TORRENTS_TORRENTMAKER, m_sMakerPath);
 }
@@ -93,13 +89,15 @@ BOOL CBitTorrentSettingsPage::OnInitDialog()
 {
 	CSettingsPage::OnInitDialog();
 
+	AddAndSelect( m_wndTorrentFolder, Settings.General.UserPath + _T("\\Torrents") );
+	AddAndSelect( m_wndTorrentFolder, Settings.Downloads.TorrentPath );
+
 	m_bEnableToday		= Settings.BitTorrent.EnableToday;
 	m_bEnableAlways		= Settings.BitTorrent.EnableAlways;
 	m_bEnableDHT		= Settings.BitTorrent.EnableDHT;
 	m_bEndGame			= Settings.BitTorrent.Endgame;
 	m_nLinks			= Settings.BitTorrent.DownloadConnections;
 	m_sTracker			= Settings.BitTorrent.DefaultTracker;
-	m_sTorrentPath		= Settings.Downloads.TorrentPath;
 	m_nDownloads		= Settings.BitTorrent.DownloadTorrents;
 	m_sMakerPath		= Settings.BitTorrent.TorrentCreatorPath;
 	m_bAutoClear		= Settings.BitTorrent.AutoClear;
@@ -119,8 +117,6 @@ BOOL CBitTorrentSettingsPage::OnInitDialog()
 	m_wndLinksSpin.SetRange( 0, 200 );
 	m_wndDownloadsSpin.SetRange( 0, (WORD)nMaxTorrents );
 	UpdateData( FALSE );
-
-	m_wndTorrentFolder.SubclassDlgItem( IDC_TORRENTS_FOLDER, this );
 
 	return TRUE;
 }
@@ -147,14 +143,13 @@ void CBitTorrentSettingsPage::OnTorrentsAutoClear()
 
 void CBitTorrentSettingsPage::OnTorrentsBrowse()
 {
-	CString strPath( BrowseForFolder( _T("Select folder for torrents:"),
-		m_sTorrentPath ) );
-	if ( strPath.IsEmpty() )
+	CString sTorrentPath;
+	m_wndTorrentFolder.GetWindowText( sTorrentPath );
+	sTorrentPath = BrowseForFolder( IDS_SELECT_FOLDER_TORRENTS, sTorrentPath );
+	if ( sTorrentPath.IsEmpty() )
 		return;
 
-	UpdateData( TRUE );
-	m_sTorrentPath = strPath;
-	UpdateData( FALSE );
+	AddAndSelect( m_wndTorrentFolder, sTorrentPath );
 }
 
 void CBitTorrentSettingsPage::OnMakerBrowse()
@@ -173,7 +168,7 @@ void CBitTorrentSettingsPage::OnMakerBrowse()
 
 void CBitTorrentSettingsPage::OnOK()
 {
-	UpdateData( TRUE );
+	UpdateData();
 
 	m_nClearPercentage = min (m_nClearPercentage, 999);
 	m_nClearPercentage = max (m_nClearPercentage, 100);
@@ -190,6 +185,9 @@ void CBitTorrentSettingsPage::OnOK()
 
 	m_nDownloads = min( m_nDownloads, (int)( ( Settings.GetOutgoingBandwidth() / 2 ) + 2 ) );
 
+	CString sTorrentPath;
+	m_wndTorrentFolder.GetWindowText( sTorrentPath );
+
 	UpdateData( FALSE );
 
 	Settings.BitTorrent.EnableToday			= m_bEnableToday != FALSE;
@@ -202,7 +200,7 @@ void CBitTorrentSettingsPage::OnOK()
 	Settings.BitTorrent.ClearRatio			= m_nClearPercentage;
 	Settings.BitTorrent.PreferenceBTSources	= m_bPrefBTSources != FALSE;
 	Settings.BitTorrent.DefaultTracker		= m_sTracker;
-	Settings.Downloads.TorrentPath			= m_sTorrentPath;
+	Settings.Downloads.TorrentPath			= sTorrentPath;
 	Settings.BitTorrent.TorrentCreatorPath	= m_sMakerPath;
 
 	if ( ! ( StartsWith( Settings.BitTorrent.DefaultTracker, _PT("http://") ) ||

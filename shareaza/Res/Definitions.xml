@@ -97,6 +97,8 @@
 	<resource code="32777" id="ID_NETWORK_CONNECT"/>
 	<resource code="32778" id="ID_NETWORK_DISCONNECT"/>
 	<resource code="32779" id="ID_TOOLS_SETTINGS"/>
+	<resource code="32780" id="ID_PATH_EXPLORE"/>
+	<resource code="32781" id="ID_PATH_COPY"/>
 	<resource code="32782" id="ID_VIEW_SYSTEM"/>
 	<resource code="32783" id="ID_VIEW_NEIGHBOURS"/>
 	<resource code="32784" id="ID_VIEW_TRAFFIC"/>

@@ -1,7 +1,7 @@
 //
 // PageSettingsLibrary.h
 //
-// Copyright (c) Shareaza Development Team, 2002-2010.
+// Copyright (c) Shareaza Development Team, 2002-2015.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -31,7 +31,6 @@ class CLibrarySettingsPage : public CSettingsPage
 
 public:
 	CLibrarySettingsPage();
-	virtual ~CLibrarySettingsPage();
 
 	enum { IDD = IDD_SETTINGS_LIBRARY };
 
@@ -55,8 +54,7 @@ protected:
 	BOOL			m_bMakeGhosts;
 	BOOL			m_bSmartSeries;
 	CIconButtonCtrl	m_wndCollectionPath;
-	CString			m_sCollectionPath;
-	CEditPath		m_wndCollectionFolder;
+	CComboBoxPath	m_wndCollectionFolder;
 	CButton			m_wndRecentClear;
 
 	virtual void DoDataExchange(CDataExchange* pDX);    // DDX/DDV support

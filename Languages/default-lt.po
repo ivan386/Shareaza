@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Shareaza\n"
 "Report-Msgid-Bugs-To: shareaza <shareaza@cherubicsoft.com>\n"
-"POT-Creation-Date: 2014-08-03 12:40+0000\n"
+"POT-Creation-Date: 2015-02-03 12:58+0000\n"
 "PO-Revision-Date: \n"
 "Last-Translator: ryo-oh-ki <ryo-oh-ki@narod.ru>\n"
 "Language-Team: Shareaza Development Team\n"
@@ -1469,6 +1469,7 @@ msgstr "Rodyti ž_urnalą"
 
 #: clibrarytree.physical.basic;item;id_library_explore
 #: clibrarytree.physical;item;id_library_explore
+#: path.menu;item;id_path_explore
 msgid "_Explore"
 msgstr "P_eržvelgti"
 
@@ -1788,7 +1789,8 @@ msgstr "_Derinimas"
 msgid "Timestam_p"
 msgstr "_Rodyti laiką"
 
-#: csystemwnd;item;id_system_copy curlexportdlg;control;7
+#: csystemwnd;item;id_system_copy path.menu;item;id_path_copy
+#: curlexportdlg;control;7
 msgid "_Copy"
 msgstr "_Kopijuoti"
 
@@ -4126,6 +4128,14 @@ msgstr "Pereiti prie ankstesnio failo veikiančiame grojaraštyje."
 msgid "Previous Pane"
 msgstr "Ankstesnis"
 
+#: message;id_path_copy
+msgid "Copy this path to clipboard."
+msgstr ""
+
+#: message;id_path_explore
+msgid "Explore this path."
+msgstr ""
+
 #: message;id_scheduler_activate
 #, fuzzy
 msgid "Activates selected task(s) from the list."
@@ -5217,6 +5227,10 @@ msgstr "Patikimas"
 #, fuzzy
 msgid "Free:"
 msgstr "Sukurtas:"
+
+#: string;12999
+msgid "Client %s has a prohibited user agent \"%s\", banning."
+msgstr ""
 
 #: string;13000
 msgid "Are you sure you want to delete the selected security rules? This cannot be undone."
@@ -7484,6 +7498,22 @@ msgstr ""
 msgid "No Tasks Currently Scheduled"
 msgstr ""
 
+#: string;20268 cdownloadssettingspage;control;1
+msgid "Save Completed Files Here"
+msgstr "Saugoti parsiųstus failus čia"
+
+#: string;20269 cdownloadssettingspage;control;23
+msgid "Store Temporary Incomplete Files Here"
+msgstr "Laikyti nebaigtus siųstis failus čia"
+
+#: string;20270 cbittorrentsettingspage;control;20
+msgid "Store Torrents Here"
+msgstr "Laikyti torrent failus čia"
+
+#: string;20271 clibrarysettingspage;control;24
+msgid "Store Collections Here"
+msgstr "Laikyti rinkinius čia"
+
 #: csettingsheet;control;4 cprofilemanagerdlg;control;4
 msgid "Apply"
 msgstr "Pritaikyti"
@@ -7634,10 +7664,6 @@ msgstr "_Pridėti"
 #: clibrarysettingspage;control;20
 msgid "_Never Share:"
 msgstr "_Niekada nebendrinti:"
-
-#: clibrarysettingspage;control;24
-msgid "Store _Collections Here:"
-msgstr "_Laikyti rinkinius čia:"
 
 #: clibrarysettingspage;control;27
 msgid "Create ghost files when deleting"
@@ -7875,11 +7901,6 @@ msgstr "_Laiko limitai:"
 msgid "Handshake:"
 msgstr "Patvirtinimui:"
 
-#: cdownloadssettingspage;control;1
-#, fuzzy
-msgid "Save Completed Files Here"
-msgstr "Saugoti _parsiųstus failus čia:"
-
 #: cdownloadssettingspage;control;4
 msgid "Scan every completed file with AntiVirus"
 msgstr ""
@@ -7922,11 +7943,6 @@ msgstr "Maksimalus eilės dydis:"
 #: cdownloadssettingspage;control;22
 msgid "Only download and upload to networks which are connected."
 msgstr "Failų mainus vykdyti tik tinkluose, prie kurių prisijungta."
-
-#: cdownloadssettingspage;control;23
-#, fuzzy
-msgid "Store Temporary Incomplete Files Here"
-msgstr "Laikyti _nebaigtus siųstis failus čia:"
 
 #: cuploadssettingspage;control;2
 msgid "Share NEW partial downloads"
@@ -8247,10 +8263,6 @@ msgstr ""
 #: cbittorrentsettingspage;control;19
 msgid "_Download Connections:"
 msgstr "_Atsisiuntimų susijungimai:"
-
-#: cbittorrentsettingspage;control;20
-msgid "_Store Torrents Here:"
-msgstr "_Laikyti torrent failus čia:"
 
 #: cbittorrentsettingspage;control;21
 msgid "Torrents at once"
@@ -9987,6 +9999,12 @@ msgstr "Dryžinė maiša"
 #, fuzzy
 msgid "NextRun"
 msgstr "Tolesnis"
+
+#~ msgid "Store _Collections Here:"
+#~ msgstr "_Laikyti rinkinius čia:"
+
+#~ msgid "_Store Torrents Here:"
+#~ msgstr "_Laikyti torrent failus čia:"
 
 #~ msgid "Display simple progress bar"
 #~ msgstr "Rodyti supaprastintą eigos juostą"

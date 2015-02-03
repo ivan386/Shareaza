@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Shareaza\n"
 "Report-Msgid-Bugs-To: shareaza <shareaza@cherubicsoft.com>\n"
-"POT-Creation-Date: 2014-08-03 12:40+0000\n"
+"POT-Creation-Date: 2015-02-03 12:58+0000\n"
 "PO-Revision-Date: \n"
 "Last-Translator: ryo-oh-ki <ryo-oh-ki@narod.ru>\n"
 "Language-Team: Shareaza Development Team\n"
@@ -1469,6 +1469,7 @@ msgstr "Näytä Historia"
 
 #: clibrarytree.physical.basic;item;id_library_explore
 #: clibrarytree.physical;item;id_library_explore
+#: path.menu;item;id_path_explore
 msgid "_Explore"
 msgstr "_Selaa"
 
@@ -1788,7 +1789,8 @@ msgstr ""
 msgid "Timestam_p"
 msgstr "Aikaleim_a"
 
-#: csystemwnd;item;id_system_copy curlexportdlg;control;7
+#: csystemwnd;item;id_system_copy path.menu;item;id_path_copy
+#: curlexportdlg;control;7
 msgid "_Copy"
 msgstr ""
 
@@ -4085,6 +4087,14 @@ msgstr ""
 msgid "Previous Pane"
 msgstr "Edellinen"
 
+#: message;id_path_copy
+msgid "Copy this path to clipboard."
+msgstr ""
+
+#: message;id_path_explore
+msgid "Explore this path."
+msgstr ""
+
 #: message;id_scheduler_activate
 msgid "Activates selected task(s) from the list."
 msgstr ""
@@ -5166,6 +5176,10 @@ msgstr ""
 #, fuzzy
 msgid "Free:"
 msgstr "Hae:"
+
+#: string;12999
+msgid "Client %s has a prohibited user agent \"%s\", banning."
+msgstr ""
 
 #: string;13000
 msgid "Are you sure you want to delete the selected security rules? This cannot be undone."
@@ -7422,6 +7436,22 @@ msgstr ""
 msgid "No Tasks Currently Scheduled"
 msgstr ""
 
+#: string;20268 cdownloadssettingspage;control;1
+msgid "Save Completed Files Here"
+msgstr ""
+
+#: string;20269 cdownloadssettingspage;control;23
+msgid "Store Temporary Incomplete Files Here"
+msgstr ""
+
+#: string;20270 cbittorrentsettingspage;control;20
+msgid "Store Torrents Here"
+msgstr ""
+
+#: string;20271 clibrarysettingspage;control;24
+msgid "Store Collections Here"
+msgstr ""
+
 #: csettingsheet;control;4 cprofilemanagerdlg;control;4
 msgid "Apply"
 msgstr ""
@@ -7571,10 +7601,6 @@ msgstr ""
 
 #: clibrarysettingspage;control;20
 msgid "_Never Share:"
-msgstr ""
-
-#: clibrarysettingspage;control;24
-msgid "Store _Collections Here:"
 msgstr ""
 
 #: clibrarysettingspage;control;27
@@ -7813,10 +7839,6 @@ msgstr ""
 msgid "Handshake:"
 msgstr ""
 
-#: cdownloadssettingspage;control;1
-msgid "Save Completed Files Here"
-msgstr ""
-
 #: cdownloadssettingspage;control;4
 msgid "Scan every completed file with AntiVirus"
 msgstr ""
@@ -7856,10 +7878,6 @@ msgstr ""
 
 #: cdownloadssettingspage;control;22
 msgid "Only download and upload to networks which are connected."
-msgstr ""
-
-#: cdownloadssettingspage;control;23
-msgid "Store Temporary Incomplete Files Here"
 msgstr ""
 
 #: cuploadssettingspage;control;2
@@ -8180,10 +8198,6 @@ msgstr ""
 
 #: cbittorrentsettingspage;control;19
 msgid "_Download Connections:"
-msgstr ""
-
-#: cbittorrentsettingspage;control;20
-msgid "_Store Torrents Here:"
 msgstr ""
 
 #: cbittorrentsettingspage;control;21

@@ -1649,6 +1649,10 @@
 		<menu name="WebServices.List.Menu">
 			<item id="ID_WEBSERVICES_MUSICBRAINZ" text="_MusicBrainz"/>
 		</menu>
+		<menu name="Path.Menu">
+			<item id="ID_PATH_EXPLORE" text="Ve_rkennen"/>
+			<item id="ID_PATH_COPY" text="_Kopieer"/>
+		</menu>
 	</menus>
 	<!-- Documents -->
 	<documents>
@@ -2554,6 +2558,8 @@
 		<tip id="ID_NEXT_PANE" message="Ga naar het volgende venster" tip="Volgende venster"/>
 		<tip id="ID_OPEN_DOWNLOADS_FOLDER" message="Open mijn map met complete downloads"/>
 		<tip id="ID_PREV_PANE" message="Ga terug naar het vorige venster" tip="Vorige venster"/>
+		<tip id="ID_PATH_COPY" message="Copy this path to clipboard."/>
+		<tip id="ID_PATH_EXPLORE" message="Explore this path."/>
 		<tip id="ID_SCHEDULER_ACTIVATE" message="De geselecteerde taken activeren."/>
 		<tip id="ID_SCHEDULER_ADD" message="Een nieuwe taak toevoegen aan de planningslijst."/>
 		<tip id="ID_SCHEDULER_DEACTIVATE" message="De geselecteerde taken deactiveren."/>
@@ -2856,6 +2862,7 @@
 		<string id="8336" value="Bronnen voor dit bestand kunnen instabiel zijn"/>
 		<string id="8337" value="Niet betrouwbaar"/>
 		<string id="8338" value="Vrij:"/>
+		<string id="12999" value="Client %s has a prohibited user agent &quot;%s&quot;, banning."/>
 		<string id="13000" value="Weet je zeker dat je deze veiligheidsregels wilt verwijderen? Dit kan niet ongedaan worden gemaakt."/>
 		<string id="13001" value="Bestanden gedeeld over het internet"/>
 		<string id="16063" value="Je router automatisch instellen mislukte na 10 pogingen."/>
@@ -3428,6 +3435,10 @@
 		<string id="20265" value="Gedaan"/>
 		<string id="20266" value="Wachten..."/>
 		<string id="20267" value="Er zijn nu geen taken gepland"/>
+		<string id="20268" value="Voltooide bestanden hier opslaan"/>
+		<string id="20269" value="Tijdelijke incomplete bestanden hier opslaan"/>
+		<string id="20270" value="Bewaar torrents hier"/>
+		<string id="20271" value="Verzamelingen hier opslaan"/>
 	</strings>
 	<!-- Localised Dialog Text, the "cookie" verifies that the dialog matches the skin -->
 	<!-- Don't edit dialogs manualy! Use DialogScan feature instead -->
@@ -3468,7 +3479,7 @@
 			<control caption="Als ik minimaliseer:"/>
 			<control caption="Normaal|Minimaliseer"/>
 		</dialog>
-		<dialog name="CLibrarySettingsPage" cookie="BuBuBuBuBuBuStEdmsStStEdmsStBuBuCoBuBuBuCoBuBuBuEdBuBuBu" caption="Bibliotheek">
+		<dialog name="CLibrarySettingsPage" cookie="BuBuBuBuBuBuStEdmsStStEdmsStBuBuCoBuBuBuCoBuBuBuCoBuBuBu" caption="Bibliotheek">
 			<control caption="_Opties:"/>
 			<control caption="Herinner de mappenweergave"/>
 			<control caption="Bewaak bibliotheekmappen"/>
@@ -3492,7 +3503,7 @@
 			<control/>
 			<control caption="_Toevoegen"/>
 			<control caption="Ver_wijderen"/>
-			<control caption="_Verzamelingen hier opslaan:"/>
+			<control caption="Verzamelingen hier opslaan"/>
 			<control/>
 			<control/>
 			<control caption="Maak spookbestand bij verwijderen"/>
@@ -3605,7 +3616,7 @@
 			<control/>
 			<control/>
 		</dialog>
-		<dialog name="CDownloadsSettingsPage" cookie="BuEdBuBuStCoBuStEdmsStEdmsStEdmsBuStCoStCoBuBuEdBu" caption="Downloads">
+		<dialog name="CDownloadsSettingsPage" cookie="BuCoBuBuStCoBuStEdmsStEdmsStEdmsBuStCoStCoBuBuCoBu" caption="Downloads">
 			<control caption="Voltooide bestanden hier opslaan"/>
 			<control/>
 			<control/>
@@ -3739,7 +3750,7 @@
 			<control caption="eDonkey _tools:"/>
 			<control caption="eDonkey serverlijst downloaden van het internet:"/>
 		</dialog>
-		<dialog name="CBitTorrentSettingsPage" cookie="BuBuBuEdmsEdmsBuEdmsBuBuEdBuEdBuEdBuBuBuStStStStBu" caption="BitTorrent">
+		<dialog name="CBitTorrentSettingsPage" cookie="BuBuBuEdmsEdmsBuEdmsBuBuCoBuEdBuEdBuBuBuStStStStBu" caption="BitTorrent">
 			<control caption="Altijd verbinden met BitTorrent"/>
 			<control caption="Vandaag verbinden met BitTorrent"/>
 			<control caption="Inschakelen BitTorrent DHT"/>
@@ -3759,7 +3770,7 @@
 			<control/>
 			<control caption="_BitTorrent Netwerk:"/>
 			<control caption="_Download verbindingen:"/>
-			<control caption="Bewaar torrents _hier:"/>
+			<control caption="Bewaar torrents hier"/>
 			<control caption="Torrents tegelijkertijd"/>
 			<control caption="cliënt verbindingen"/>
 			<control caption="%"/>

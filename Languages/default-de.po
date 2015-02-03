@@ -2,16 +2,16 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Shareaza\n"
 "Report-Msgid-Bugs-To: shareaza <shareaza@cherubicsoft.com>\n"
-"POT-Creation-Date: 2014-08-03 12:40+0000\n"
+"POT-Creation-Date: 2015-02-03 12:58+0000\n"
 "PO-Revision-Date: \n"
-"Last-Translator: ryo-oh-ki <ryo-oh-ki@narod.ru>\n"
+"Last-Translator: Nikolay Raspopov <raspopov@cherubicsoft.com>\n"
 "Language-Team: Shareaza Development Team\n"
-"Language: \n"
+"Language: de\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "X-Poedit-SourceCharset: utf-8\n"
-"X-Poedit-Language: Deutsch\n"
+"X-Generator: Poedit 1.7\n"
 
 #: manifest-name
 msgid "(translation language: English)"
@@ -1469,6 +1469,7 @@ msgstr "_Uploadverlauf anzeigen"
 
 #: clibrarytree.physical.basic;item;id_library_explore
 #: clibrarytree.physical;item;id_library_explore
+#: path.menu;item;id_path_explore
 msgid "_Explore"
 msgstr "Im Explorer _öffnen"
 
@@ -1786,7 +1787,8 @@ msgstr "_Debug"
 msgid "Timestam_p"
 msgstr "Zeitstem_pel"
 
-#: csystemwnd;item;id_system_copy curlexportdlg;control;7
+#: csystemwnd;item;id_system_copy path.menu;item;id_path_copy
+#: curlexportdlg;control;7
 msgid "_Copy"
 msgstr "_Kopieren"
 
@@ -4062,6 +4064,14 @@ msgstr "Zur vorherigen Fenstersektion wechseln"
 msgid "Previous Pane"
 msgstr "Vorherige Fenstersektion"
 
+#: message;id_path_copy
+msgid "Copy this path to clipboard."
+msgstr ""
+
+#: message;id_path_explore
+msgid "Explore this path."
+msgstr ""
+
 #: message;id_scheduler_activate
 msgid "Activates selected task(s) from the list."
 msgstr "Markierte(n) Task(s) aus der Liste entfernen."
@@ -5141,6 +5151,10 @@ msgstr "Nicht vertraut"
 #: string;8338
 msgid "Free:"
 msgstr "Frei:"
+
+#: string;12999
+msgid "Client %s has a prohibited user agent \"%s\", banning."
+msgstr ""
 
 #: string;13000
 msgid "Are you sure you want to delete the selected security rules? This cannot be undone."
@@ -7392,6 +7406,22 @@ msgstr "Warte..."
 msgid "No Tasks Currently Scheduled"
 msgstr "Keine Aufgaben geplant"
 
+#: string;20268 cdownloadssettingspage;control;1
+msgid "Save Completed Files Here"
+msgstr "Downloadverzeichnis"
+
+#: string;20269 cdownloadssettingspage;control;23
+msgid "Store Temporary Incomplete Files Here"
+msgstr "Unvollständige Dateien"
+
+#: string;20270 cbittorrentsettingspage;control;20
+msgid "Store Torrents Here"
+msgstr "Torrents hier speichern"
+
+#: string;20271 clibrarysettingspage;control;24
+msgid "Store Collections Here"
+msgstr "Kollektionen hier speichern"
+
 #: csettingsheet;control;4 cprofilemanagerdlg;control;4
 msgid "Apply"
 msgstr "Übernehmen"
@@ -7542,10 +7572,6 @@ msgstr "_Hinzufügen"
 #: clibrarysettingspage;control;20
 msgid "_Never Share:"
 msgstr "_Nie Freigeben:"
-
-#: clibrarysettingspage;control;24
-msgid "Store _Collections Here:"
-msgstr "_Kollektionen hier speichern:"
 
 #: clibrarysettingspage;control;27
 msgid "Create ghost files when deleting"
@@ -7783,10 +7809,6 @@ msgstr "_Wartezeiten:"
 msgid "Handshake:"
 msgstr "Handshake:"
 
-#: cdownloadssettingspage;control;1
-msgid "Save Completed Files Here"
-msgstr "_Downloadverzeichnis:"
-
 #: cdownloadssettingspage;control;4
 msgid "Scan every completed file with AntiVirus"
 msgstr "Scan every completed file with AntiVirus"
@@ -7826,10 +7848,6 @@ msgstr "Max. Warteschlangenlänge:"
 #: cdownloadssettingspage;control;22
 msgid "Only download and upload to networks which are connected."
 msgstr "Nur in verbundenen Netzwerken hoch- und herunterladen."
-
-#: cdownloadssettingspage;control;23
-msgid "Store Temporary Incomplete Files Here"
-msgstr "_Unvollständige Dateien:"
 
 #: cuploadssettingspage;control;2
 msgid "Share NEW partial downloads"
@@ -8150,10 +8168,6 @@ msgstr ""
 #: cbittorrentsettingspage;control;19
 msgid "_Download Connections:"
 msgstr "_Download-Verbindungen:"
-
-#: cbittorrentsettingspage;control;20
-msgid "_Store Torrents Here:"
-msgstr "Torrents hier _speichern:"
 
 #: cbittorrentsettingspage;control;21
 msgid "Torrents at once"
@@ -9887,6 +9901,12 @@ msgstr "TigerTree"
 #: column;nextrun
 msgid "NextRun"
 msgstr "Nächste Ausführung"
+
+#~ msgid "Store _Collections Here:"
+#~ msgstr "_Kollektionen hier speichern:"
+
+#~ msgid "_Store Torrents Here:"
+#~ msgstr "Torrents hier _speichern:"
 
 #~ msgid "Display simple progress bar"
 #~ msgstr "Einfache Fortschrittsanzeige verwenden"

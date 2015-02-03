@@ -1649,6 +1649,10 @@
 		<menu name="WebServices.List.Menu">
 			<item id="ID_WEBSERVICES_MUSICBRAINZ" text="_MusicBrainz"/>
 		</menu>
+		<menu name="Path.Menu">
+			<item id="ID_PATH_EXPLORE" text="_Εξερεύνηση"/>
+			<item id="ID_PATH_COPY" text="_Αντιγραφή"/>
+		</menu>
 	</menus>
 	<!-- Documents -->
 	<documents>
@@ -2558,6 +2562,8 @@
 		<tip id="ID_NEXT_PANE" message="Switch to the next window pane" tip="Next Pane"/>
 		<tip id="ID_OPEN_DOWNLOADS_FOLDER" message="Open my folder of completed Downloads"/>
 		<tip id="ID_PREV_PANE" message="Switch back to the previous window pane" tip="Previous Pane"/>
+		<tip id="ID_PATH_COPY" message="Copy this path to clipboard."/>
+		<tip id="ID_PATH_EXPLORE" message="Explore this path."/>
 		<tip id="ID_SCHEDULER_ACTIVATE" message="Activates selected task(s) from the list."/>
 		<tip id="ID_SCHEDULER_ADD" message="Adds a new task to scheduler list."/>
 		<tip id="ID_SCHEDULER_DEACTIVATE" message="Deactivates selected tasks."/>
@@ -2860,6 +2866,7 @@
 		<string id="8336" value="Οι πηγές αυτού του αρχείου δείχνουν ασταθείς"/>
 		<string id="8337" value="Αφερέγγυο"/>
 		<string id="8338" value="Free:"/>
+		<string id="12999" value="Client %s has a prohibited user agent &quot;%s&quot;, banning."/>
 		<string id="13000" value="Θέλετε σίγουρα να διαγράψετε τους επιλεγμένους κανόνες ασφαλείας; Αυτό δεν μπορεί να αναιρεθεί!"/>
 		<string id="13001" value="Αρχεία κοινοποιημένα στο Διαδίκτυο"/>
 		<string id="16063" value="Η αντιστοίχηση θυρών UPnP εγκαταλήφθηκε μετά από 10 προσπάθειες."/>
@@ -3432,6 +3439,10 @@
 		<string id="20265" value="Done"/>
 		<string id="20266" value="Waiting..."/>
 		<string id="20267" value="No Tasks Currently Scheduled"/>
+		<string id="20268" value="Αποθήκευση Ολοκληρωμένων Αρχείων Σε"/>
+		<string id="20269" value="Αποθήκευση Προσωρινών Ημιτελών Αρχείων Σε"/>
+		<string id="20270" value="Αποθήκευση Torrents Σε"/>
+		<string id="20271" value="Αποθήκευση Συλλογών Σε"/>
 	</strings>
 	<!-- Localised Dialog Text, the "cookie" verifies that the dialog matches the skin -->
 	<!-- Don't edit dialogs manualy! Use DialogScan feature instead -->
@@ -3472,7 +3483,7 @@
 			<control caption="Με εντολή ελαχιστοποίησης:"/>
 			<control caption="Ελαχιστ. στην Μπάρα Έναρξης|Ελαχιστ. στη Γραμμή Συστήματος"/>
 		</dialog>
-		<dialog name="CLibrarySettingsPage" cookie="BuBuBuBuBuBuStEdmsStStEdmsStBuBuCoBuBuBuCoBuBuBuEdBuBuBu" caption="Βιβλιοθήκη">
+		<dialog name="CLibrarySettingsPage" cookie="BuBuBuBuBuBuStEdmsStStEdmsStBuBuCoBuBuBuCoBuBuBuCoBuBuBu" caption="Βιβλιοθήκη">
 			<control caption="_Επιλογές:"/>
 			<control caption="Απομνημόν. προβολών φακέλων"/>
 			<control caption="Παρακολούθ. φακέλων Βιβλιοθήκης"/>
@@ -3496,7 +3507,7 @@
 			<control/>
 			<control caption="_Προσθήκη"/>
 			<control caption="Α_φαίρεση"/>
-			<control caption="Αποθήκευση Συλλογών Σε:"/>
+			<control caption="Αποθήκευση Συλλογών Σε"/>
 			<control/>
 			<control/>
 			<control caption="Δημιουργία αρχείων φαντασμάτων"/>
@@ -3609,8 +3620,8 @@
 			<control/>
 			<control/>
 		</dialog>
-		<dialog name="CDownloadsSettingsPage" cookie="BuEdBuBuStCoBuStEdmsStEdmsStEdmsBuStCoStCoBuBuEdBu" caption="Μεταφορές">
-			<control caption="Save Completed Files Here"/>
+		<dialog name="CDownloadsSettingsPage" cookie="BuCoBuBuStCoBuStEdmsStEdmsStEdmsBuStCoStCoBuBuCoBu" caption="Μεταφορές">
+			<control caption="Αποθήκευση Ολοκληρωμένων Αρχείων Σε"/>
 			<control/>
 			<control/>
 			<control caption="Scan every completed file with AntiVirus"/>
@@ -3632,7 +3643,7 @@
 			<control caption="Μέγιστη Θέση Αναμονής σε Ουρά:"/>
 			<control/>
 			<control caption="Λήψεις και αποστολές μόνο σε ενωμένα δίκτυα."/>
-			<control caption="Store Temporary Incomplete Files Here"/>
+			<control caption="Αποθήκευση Προσωρινών Ημιτελών Αρχείων Σε"/>
 			<control/>
 			<control/>
 		</dialog>
@@ -3743,7 +3754,7 @@
 			<control caption="_Εργαλεία ED2K:"/>
 			<control caption="Λήψη λίστας servers του ED2K από τον Ιστό:"/>
 		</dialog>
-		<dialog name="CBitTorrentSettingsPage" cookie="BuBuBuEdmsEdmsBuEdmsBuBuEdBuEdBuEdBuBuBuStStStStBu" caption="BitTorrent">
+		<dialog name="CBitTorrentSettingsPage" cookie="BuBuBuEdmsEdmsBuEdmsBuBuCoBuEdBuEdBuBuBuStStStStBu" caption="BitTorrent">
 			<control caption="Always connect to BitTorrent"/>
 			<control caption="Connect to BitTorrent today"/>
 			<control caption="Enable BitTorrent DHT"/>
@@ -3763,7 +3774,7 @@
 			<control/>
 			<control caption="_BitTorrent Network:"/>
 			<control caption="Συνδέσεις _Λήψης:"/>
-			<control caption="_Αποθήκευση Torrents Σε:"/>
+			<control caption="Αποθήκευση Torrents Σε"/>
 			<control caption="Ταυτόχρονα Torrents"/>
 			<control caption="Συνδέσεις Client"/>
 			<control caption="%"/>

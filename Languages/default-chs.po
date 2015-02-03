@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Shareaza\n"
 "Report-Msgid-Bugs-To: shareaza <shareaza@cherubicsoft.com>\n"
-"POT-Creation-Date: 2014-08-03 12:40+0000\n"
+"POT-Creation-Date: 2015-02-03 12:58+0000\n"
 "PO-Revision-Date: \n"
 "Last-Translator: ryo-oh-ki <ryo-oh-ki@narod.ru>\n"
 "Language-Team: Shareaza Development Team\n"
@@ -1469,6 +1469,7 @@ msgstr "显示历史"
 
 #: clibrarytree.physical.basic;item;id_library_explore
 #: clibrarytree.physical;item;id_library_explore
+#: path.menu;item;id_path_explore
 msgid "_Explore"
 msgstr "浏览(_E)"
 
@@ -1786,7 +1787,8 @@ msgstr "调试(_D)"
 msgid "Timestam_p"
 msgstr "时间戳(_P)"
 
-#: csystemwnd;item;id_system_copy curlexportdlg;control;7
+#: csystemwnd;item;id_system_copy path.menu;item;id_path_copy
+#: curlexportdlg;control;7
 msgid "_Copy"
 msgstr "复制(_C)"
 
@@ -4043,6 +4045,14 @@ msgstr "返回上一个窗格"
 msgid "Previous Pane"
 msgstr "上一个窗格"
 
+#: message;id_path_copy
+msgid "Copy this path to clipboard."
+msgstr ""
+
+#: message;id_path_explore
+msgid "Explore this path."
+msgstr ""
+
 #: message;id_scheduler_activate
 msgid "Activates selected task(s) from the list."
 msgstr "从列表中启用选中任务。"
@@ -5123,6 +5133,10 @@ msgstr "未受信任"
 #, fuzzy
 msgid "Free:"
 msgstr "已经创建:"
+
+#: string;12999
+msgid "Client %s has a prohibited user agent \"%s\", banning."
+msgstr ""
 
 #: string;13000
 msgid "Are you sure you want to delete the selected security rules? This cannot be undone."
@@ -7378,6 +7392,22 @@ msgstr "等待..."
 msgid "No Tasks Currently Scheduled"
 msgstr "当前没有计划的任务"
 
+#: string;20268 cdownloadssettingspage;control;1
+msgid "Save Completed Files Here"
+msgstr "在这里保存已完成文件"
+
+#: string;20269 cdownloadssettingspage;control;23
+msgid "Store Temporary Incomplete Files Here"
+msgstr "只在已连接的网络下载和上传。"
+
+#: string;20270 cbittorrentsettingspage;control;20
+msgid "Store Torrents Here"
+msgstr "保存种子到"
+
+#: string;20271 clibrarysettingspage;control;24
+msgid "Store Collections Here"
+msgstr "在这里储存收集"
+
 #: csettingsheet;control;4 cprofilemanagerdlg;control;4
 msgid "Apply"
 msgstr "应用"
@@ -7528,10 +7558,6 @@ msgstr "添加(_A)"
 #: clibrarysettingspage;control;20
 msgid "_Never Share:"
 msgstr "不共享扩展名(_N):"
-
-#: clibrarysettingspage;control;24
-msgid "Store _Collections Here:"
-msgstr "在这里储存收集(_C):"
 
 #: clibrarysettingspage;control;27
 msgid "Create ghost files when deleting"
@@ -7769,10 +7795,6 @@ msgstr "超时(_T):"
 msgid "Handshake:"
 msgstr "握手:"
 
-#: cdownloadssettingspage;control;1
-msgid "Save Completed Files Here"
-msgstr "在这里保存已完成文件(_C):"
-
 #: cdownloadssettingspage;control;4
 msgid "Scan every completed file with AntiVirus"
 msgstr "在这里保存未完成文件(_I):"
@@ -7812,10 +7834,6 @@ msgstr "最大排队长度:"
 #: cdownloadssettingspage;control;22
 msgid "Only download and upload to networks which are connected."
 msgstr "只上传下载到连接的网络。"
-
-#: cdownloadssettingspage;control;23
-msgid "Store Temporary Incomplete Files Here"
-msgstr "只在已连接的网络下载和上传。"
 
 #: cuploadssettingspage;control;2
 msgid "Share NEW partial downloads"
@@ -8136,10 +8154,6 @@ msgstr ""
 #: cbittorrentsettingspage;control;19
 msgid "_Download Connections:"
 msgstr "下载连接(_D):"
-
-#: cbittorrentsettingspage;control;20
-msgid "_Store Torrents Here:"
-msgstr "保存种子到(_S):"
 
 #: cbittorrentsettingspage;control;21
 msgid "Torrents at once"
@@ -9873,6 +9887,12 @@ msgstr "触发器"
 #: column;nextrun
 msgid "NextRun"
 msgstr "下次运行"
+
+#~ msgid "Store _Collections Here:"
+#~ msgstr "在这里储存收集(_C):"
+
+#~ msgid "_Store Torrents Here:"
+#~ msgstr "保存种子到(_S):"
 
 #~ msgid "Display simple progress bar"
 #~ msgstr "显示简易的进度栏"

@@ -1555,6 +1555,10 @@
 #define IDS_SCHEDULER_TASK_DONE         20265
 #define IDS_SCHEDULER_TASK_WAITING      20266
 #define IDS_SCHEDULER_NOTASK            20267
+#define IDS_SELECT_FOLDER_DOWNLOAD      20268
+#define IDS_SELECT_FOLDER_INCOMPLETE    20269
+#define IDS_SELECT_FOLDER_TORRENTS      20270
+#define IDS_SELECT_FOLDER_COLLECTIONS   20271
 #define ID_HELP_ABOUT                   32772
 #define ID_HELP_VERSION_CHECK           32773
 #define ID_CHECKMARK                    32774
@@ -1562,6 +1566,8 @@
 #define ID_NETWORK_CONNECT              32777
 #define ID_NETWORK_DISCONNECT           32778
 #define ID_TOOLS_SETTINGS               32779
+#define ID_PATH_EXPLORE                 32780
+#define ID_PATH_COPY                    32781
 #define ID_VIEW_SYSTEM                  32782
 #define ID_VIEW_NEIGHBOURS              32783
 #define ID_VIEW_TRAFFIC                 32784

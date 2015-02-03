@@ -1649,6 +1649,10 @@
 		<menu name="WebServices.List.Menu">
 			<item id="ID_WEBSERVICES_MUSICBRAINZ" text="_MusicBrainz"/>
 		</menu>
+		<menu name="Path.Menu">
+			<item id="ID_PATH_EXPLORE" text="E_xplorer"/>
+			<item id="ID_PATH_COPY" text="_Copier"/>
+		</menu>
 	</menus>
 	<!-- Documents -->
 	<documents>
@@ -2556,6 +2560,8 @@
 		<tip id="ID_NEXT_PANE" message="Switch to the next window pane" tip="Next Pane"/>
 		<tip id="ID_OPEN_DOWNLOADS_FOLDER" message="Ouvrir mon dossier des téléchargements terminés"/>
 		<tip id="ID_PREV_PANE" message="Switch back to the previous window pane" tip="Previous Pane"/>
+		<tip id="ID_PATH_COPY" message="Copy this path to clipboard."/>
+		<tip id="ID_PATH_EXPLORE" message="Explore this path."/>
 		<tip id="ID_SCHEDULER_ACTIVATE" message="Activates selected task(s) from the list."/>
 		<tip id="ID_SCHEDULER_ADD" message="Adds a new task to scheduler list."/>
 		<tip id="ID_SCHEDULER_DEACTIVATE" message="Deactivates selected tasks."/>
@@ -2858,6 +2864,7 @@
 		<string id="8336" value="Les sources pour ce fichier sont peut-être instables"/>
 		<string id="8337" value="Non fiable"/>
 		<string id="8338" value="Free:"/>
+		<string id="12999" value="Client %s has a prohibited user agent &quot;%s&quot;, banning."/>
 		<string id="13000" value="Êtes-vous certain de vouloir supprimer ces règles ? Il ne sera pas possible d'annuler cette suppression."/>
 		<string id="13001" value="Fichiers partagés sur Internet"/>
 		<string id="16063" value="Au bout de dix essais, Shareaza n'a pas réussi à configurer votre pare-feu ou routeur avec l'UPnP"/>
@@ -3430,6 +3437,10 @@
 		<string id="20265" value="Effectué"/>
 		<string id="20266" value="En attente..."/>
 		<string id="20267" value="Aucune tâche n'est actuellement planifiée"/>
+		<string id="20268" value="Sauvegarder les fichiers terminés ici"/>
+		<string id="20269" value="Stocker les fichiers incomplets ici"/>
+		<string id="20270" value="Stocker les Torrents ici"/>
+		<string id="20271" value="Stocker les collections ici"/>
 	</strings>
 	<!-- Localised Dialog Text, the "cookie" verifies that the dialog matches the skin -->
 	<!-- Don't edit dialogs manualy! Use DialogScan feature instead -->
@@ -3470,7 +3481,7 @@
 			<control caption="Qd je clique sur Minimiser :"/>
 			<control caption="Normal|Minimiser dans la barre des tâches"/>
 		</dialog>
-		<dialog name="CLibrarySettingsPage" cookie="BuBuBuBuBuBuStEdmsStStEdmsStBuBuCoBuBuBuCoBuBuBuEdBuBuBu" caption="Bibliothèque">
+		<dialog name="CLibrarySettingsPage" cookie="BuBuBuBuBuBuStEdmsStStEdmsStBuBuCoBuBuBuCoBuBuBuCoBuBuBu" caption="Bibliothèque">
 			<control caption="_Options :"/>
 			<control caption="Mémoriser l'affichage des dossiers"/>
 			<control caption="Surveiller les dossiers"/>
@@ -3494,7 +3505,7 @@
 			<control/>
 			<control caption="_Ajouter"/>
 			<control caption="_Enlever"/>
-			<control caption="Stocker les _collections ici :"/>
+			<control caption="Stocker les collections ici"/>
 			<control/>
 			<control/>
 			<control caption="Créer des fichiers fantômes"/>
@@ -3607,8 +3618,8 @@
 			<control/>
 			<control/>
 		</dialog>
-		<dialog name="CDownloadsSettingsPage" cookie="BuEdBuBuStCoBuStEdmsStEdmsStEdmsBuStCoStCoBuBuEdBu" caption="Téléchargements">
-			<control caption="Save Completed Files Here"/>
+		<dialog name="CDownloadsSettingsPage" cookie="BuCoBuBuStCoBuStEdmsStEdmsStEdmsBuStCoStCoBuBuCoBu" caption="Téléchargements">
+			<control caption="Sauvegarder les fichiers terminés ici"/>
 			<control/>
 			<control/>
 			<control caption="Scan every completed file with AntiVirus"/>
@@ -3630,7 +3641,7 @@
 			<control caption="Taille de la file d'attente :"/>
 			<control/>
 			<control caption="Télécharger et envoyer uniquement sur les réseaux connectés."/>
-			<control caption="Store Temporary Incomplete Files Here"/>
+			<control caption="Stocker les fichiers incomplets ici"/>
 			<control/>
 			<control/>
 		</dialog>
@@ -3741,7 +3752,7 @@
 			<control caption="Ou_tils eDonkey:"/>
 			<control caption="Télécharger la liste des serveurs ED2K sur le Web :"/>
 		</dialog>
-		<dialog name="CBitTorrentSettingsPage" cookie="BuBuBuEdmsEdmsBuEdmsBuBuEdBuEdBuEdBuBuBuStStStStBu" caption="BitTorrent">
+		<dialog name="CBitTorrentSettingsPage" cookie="BuBuBuEdmsEdmsBuEdmsBuBuCoBuEdBuEdBuBuBuStStStStBu" caption="BitTorrent">
 			<control caption="Always connect to BitTorrent"/>
 			<control caption="Connect to BitTorrent today"/>
 			<control caption="Enable BitTorrent DHT"/>
@@ -3761,7 +3772,7 @@
 			<control/>
 			<control caption="_BitTorrent Network:"/>
 			<control caption="Connexions de _Téléchargement :"/>
-			<control caption="_Stocker les Torrents ici :"/>
+			<control caption="Stocker les Torrents ici"/>
 			<control caption="Nombre de torrents à la fois"/>
 			<control caption="Connexions à des clients"/>
 			<control caption="%"/>

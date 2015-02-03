@@ -1649,6 +1649,10 @@
 		<menu name="WebServices.List.Menu">
 			<item id="ID_WEBSERVICES_MUSICBRAINZ" text="_MusicBrainz"/>
 		</menu>
+		<menu name="Path.Menu">
+			<item id="ID_PATH_EXPLORE" text="_Explorar"/>
+			<item id="ID_PATH_COPY" text="_Copiar"/>
+		</menu>
 	</menus>
 	<!-- Documents -->
 	<documents>
@@ -2554,6 +2558,8 @@ puede comenzar a transferir en cualquier momento.</text>
 		<tip id="ID_NEXT_PANE" message="Cambiar a la siguiente area de la ventana" tip="Siguiente area"/>
 		<tip id="ID_OPEN_DOWNLOADS_FOLDER" message="Abrir mi carpeta de descargas finalizadas"/>
 		<tip id="ID_PREV_PANE" message="Ir al archivo anterior." tip="Anterior"/>
+		<tip id="ID_PATH_COPY" message="Copy this path to clipboard."/>
+		<tip id="ID_PATH_EXPLORE" message="Explore this path."/>
 		<tip id="ID_SCHEDULER_ACTIVATE" message="Eliminar las transferencias seleccionadas."/>
 		<tip id="ID_SCHEDULER_ADD" message="Añade una nueva tarea al programador."/>
 		<tip id="ID_SCHEDULER_DEACTIVATE" message="Desactiva las tareas seleccionadas."/>
@@ -2856,6 +2862,7 @@ puede comenzar a transferir en cualquier momento.</text>
 		<string id="8336" value="Las fuentes pueden ser inestables"/>
 		<string id="8337" value="No confiado"/>
 		<string id="8338" value="Gratuito:"/>
+		<string id="12999" value="Client %s has a prohibited user agent &quot;%s&quot;, banning."/>
 		<string id="13000" value="Estas seguro que quieres borrar las reglas de seguridad seleccionadas? Esto no se puede deshacer."/>
 		<string id="13001" value="Archivos compartidos a través de Internet"/>
 		<string id="16063" value="Mapeo del puerto UPnP falló después de 10 intentos."/>
@@ -3428,6 +3435,10 @@ puede comenzar a transferir en cualquier momento.</text>
 		<string id="20265" value="Hecho"/>
 		<string id="20266" value="Esperando..."/>
 		<string id="20267" value="No hay tareas programadas"/>
+		<string id="20268" value="Carpeta de archivos completados"/>
+		<string id="20269" value="Carpeta de archivos incompletos"/>
+		<string id="20270" value="Almacena torrents aquí"/>
+		<string id="20271" value="Guardar Colecciones Aquí"/>
 	</strings>
 	<!-- Localised Dialog Text, the "cookie" verifies that the dialog matches the skin -->
 	<!-- Don't edit dialogs manualy! Use DialogScan feature instead -->
@@ -3468,7 +3479,7 @@ puede comenzar a transferir en cualquier momento.</text>
 			<control caption="Cuando hago click minimizar:"/>
 			<control caption="Normal|Minimizar en el area de notificación"/>
 		</dialog>
-		<dialog name="CLibrarySettingsPage" cookie="BuBuBuBuBuBuStEdmsStStEdmsStBuBuCoBuBuBuCoBuBuBuEdBuBuBu" caption="Mi Colección">
+		<dialog name="CLibrarySettingsPage" cookie="BuBuBuBuBuBuStEdmsStStEdmsStBuBuCoBuBuBuCoBuBuBuCoBuBuBu" caption="Mi Colección">
 			<control caption="_Opciones:"/>
 			<control caption="Recordar vistas de carpetas"/>
 			<control caption="Ver carpetas de Mi Colección"/>
@@ -3492,7 +3503,7 @@ puede comenzar a transferir en cualquier momento.</text>
 			<control/>
 			<control caption="_Agregar"/>
 			<control caption="_Eliminar"/>
-			<control caption="Guardar _Colecciones Aquí:"/>
+			<control caption="Guardar Colecciones Aquí"/>
 			<control/>
 			<control/>
 			<control caption="Crear huellas de archivos (ghost files) cuando sean borrados"/>
@@ -3605,8 +3616,8 @@ puede comenzar a transferir en cualquier momento.</text>
 			<control/>
 			<control/>
 		</dialog>
-		<dialog name="CDownloadsSettingsPage" cookie="BuEdBuBuStCoBuStEdmsStEdmsStEdmsBuStCoStCoBuBuEdBu" caption="Descargas">
-			<control caption="_Carpeta de archivos completados:"/>
+		<dialog name="CDownloadsSettingsPage" cookie="BuCoBuBuStCoBuStEdmsStEdmsStEdmsBuStCoStCoBuBuCoBu" caption="Descargas">
+			<control caption="Carpeta de archivos completados"/>
 			<control/>
 			<control/>
 			<control caption="Escanear con el antivirus cada archivo completado"/>
@@ -3628,7 +3639,7 @@ puede comenzar a transferir en cualquier momento.</text>
 			<control caption="Tamaño máximo de las colas:"/>
 			<control/>
 			<control caption="Solo subir y descargar usando las redes conectadas."/>
-			<control caption="Carpeta de archivos _incompletos: (temporales)"/>
+			<control caption="Carpeta de archivos incompletos"/>
 			<control/>
 			<control/>
 		</dialog>
@@ -3739,7 +3750,7 @@ puede comenzar a transferir en cualquier momento.</text>
 			<control caption="_Herramientas de eDonkey:"/>
 			<control caption="Descargar lista de servidores eDonkey de la web:"/>
 		</dialog>
-		<dialog name="CBitTorrentSettingsPage" cookie="BuBuBuEdmsEdmsBuEdmsBuBuEdBuEdBuEdBuBuBuStStStStBu" caption="BitTorrent">
+		<dialog name="CBitTorrentSettingsPage" cookie="BuBuBuEdmsEdmsBuEdmsBuBuCoBuEdBuEdBuBuBuStStStStBu" caption="BitTorrent">
 			<control caption="Always connect to BitTorrent"/>
 			<control caption="Connect to BitTorrent today"/>
 			<control caption="Enable BitTorrent DHT"/>
@@ -3759,7 +3770,7 @@ puede comenzar a transferir en cualquier momento.</text>
 			<control/>
 			<control caption="_BitTorrent Network:"/>
 			<control caption="_Conexiones de descarga:"/>
-			<control caption="Almacena torrent_s aquí "/>
+			<control caption="Almacena torrents aquí"/>
 			<control caption="Torrents al mismo tiempo"/>
 			<control caption="Conexiones de cliente"/>
 			<control caption="%"/>

@@ -1,7 +1,7 @@
 //
 // Shareaza.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2014.
+// Copyright (c) Shareaza Development Team, 2002-2015.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -1695,6 +1695,29 @@ BOOL CShareazaApp::InternalURI(LPCTSTR pszURI)
 	}
 	else
 		return FALSE;
+
+	return TRUE;
+}
+
+BOOL CShareazaApp::SetClipboardText(const CString& strText)
+{
+	if ( ! m_pMainWnd || ! m_pMainWnd->OpenClipboard() )
+		return FALSE;
+
+	EmptyClipboard();
+
+	size_t nSize = ( strText.GetLength() + 1 ) * sizeof( WCHAR );
+	if ( HANDLE hMem = GlobalAlloc( GMEM_MOVEABLE | GMEM_DDESHARE, nSize ) )
+	{
+		if ( LPVOID pMem = GlobalLock( hMem ) )
+		{
+			CopyMemory( pMem, (LPCTSTR)strText, nSize );
+			GlobalUnlock( hMem );
+			SetClipboardData( CF_UNICODETEXT, hMem );
+		}
+	}
+
+	CloseClipboard();
 
 	return TRUE;
 }
@@ -3404,6 +3427,22 @@ INT_PTR MsgBox(LPCTSTR lpszText, UINT nType, UINT nIDHelp, DWORD* pnDefault, DWO
 INT_PTR MsgBox(UINT nIDPrompt, UINT nType, UINT nIDHelp, DWORD* pnDefault, DWORD nTimer)
 {
 	return MsgBox( LoadString( nIDPrompt ), nType, nIDHelp, pnDefault, nTimer );
+}
+
+void AddAndSelect(CComboBox& wndBox, const CString& sText)
+{
+	const int nCount = wndBox.GetCount();
+	for ( int i = 0; i < nCount; ++i )
+	{
+		CString sTemp;
+		wndBox.GetLBText( i, sTemp );
+		if ( sText.CompareNoCase( sTemp ) == 0 )
+		{
+			wndBox.SetCurSel( i );
+			return;
+		}
+	}
+	wndBox.SetCurSel( wndBox.AddString( sText ) );
 }
 
 /////////////////////////////////////////////////////////////////////////////

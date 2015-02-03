@@ -1,7 +1,7 @@
 //
 // WndMain.h
 //
-// Copyright (c) Shareaza Development Team, 2002-2014.
+// Copyright (c) Shareaza Development Team, 2002-2015.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -306,6 +306,8 @@ protected:
 	afx_msg UINT OnPowerBroadcast(UINT nPowerEvent, UINT nEventData);
 #endif
 	afx_msg BOOL OnCopyData(CWnd* pWnd,COPYDATASTRUCT* pCopyDataStruct);
+	afx_msg void OnUpdatePathExplore(CCmdUI* pCmdUI);
+	afx_msg void OnUpdatePathCopy(CCmdUI* pCmdUI);
 
 	DECLARE_MESSAGE_MAP()
 	DECLARE_DROP()

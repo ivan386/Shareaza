@@ -1,7 +1,7 @@
 //
 // PageSettingsDownloads.h
 //
-// Copyright (c) Shareaza Development Team, 2002-2014.
+// Copyright (c) Shareaza Development Team, 2002-2015.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -46,17 +46,14 @@ protected:
 	CComboBox		m_wndAntiVirus;
 	CComboBox		m_wndBandwidthLimit;
 	CComboBox		m_wndQueueLimit;
-	CString			m_sDownloadsPath;
-	CString			m_sIncompletePath;
 	int				m_nMaxDownFiles;
 	int				m_nMaxFileTransfers;
 	int				m_nMaxDownTransfers;
 	CString			m_sBandwidthLimit;
 	CString			m_sQueueLimit;
 	BOOL			m_bRequireConnect;
-	BOOL			m_bDownloadsChanged;
-	CEditPath		m_wndDownloadsFolder;
-	CEditPath		m_wndIncompleteFolder;
+	CComboBoxPath	m_wndDownloadsFolder;
+	CComboBoxPath	m_wndIncompleteFolder;
 
 	virtual void DoDataExchange(CDataExchange* pDX);    // DDX/DDV support
 	virtual BOOL OnInitDialog();

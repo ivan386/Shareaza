@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Shareaza\n"
 "Report-Msgid-Bugs-To: shareaza <shareaza@cherubicsoft.com>\n"
-"POT-Creation-Date: 2014-08-03 12:40+0000\n"
+"POT-Creation-Date: 2015-02-03 12:58+0000\n"
 "PO-Revision-Date: \n"
 "Last-Translator: ryo-oh-ki <ryo-oh-ki@narod.ru>\n"
 "Language-Team: Shareaza Development Team\n"
@@ -1469,6 +1469,7 @@ msgstr "Trego _Historinë"
 
 #: clibrarytree.physical.basic;item;id_library_explore
 #: clibrarytree.physical;item;id_library_explore
+#: path.menu;item;id_path_explore
 msgid "_Explore"
 msgstr "_Eksploro"
 
@@ -1788,7 +1789,8 @@ msgstr "_Debug"
 msgid "Timestam_p"
 msgstr "Me Dat_ë"
 
-#: csystemwnd;item;id_system_copy curlexportdlg;control;7
+#: csystemwnd;item;id_system_copy path.menu;item;id_path_copy
+#: curlexportdlg;control;7
 msgid "_Copy"
 msgstr "_Kopjo"
 
@@ -4136,6 +4138,14 @@ msgstr "Kalon pas në skedën tjetër të listës aktuale."
 msgid "Previous Pane"
 msgstr "Skedë e Pasme"
 
+#: message;id_path_copy
+msgid "Copy this path to clipboard."
+msgstr ""
+
+#: message;id_path_explore
+msgid "Explore this path."
+msgstr ""
+
 #: message;id_scheduler_activate
 #, fuzzy
 msgid "Activates selected task(s) from the list."
@@ -5227,6 +5237,10 @@ msgstr "I pasigurt"
 #, fuzzy
 msgid "Free:"
 msgstr "Krijimi:"
+
+#: string;12999
+msgid "Client %s has a prohibited user agent \"%s\", banning."
+msgstr ""
 
 #: string;13000
 msgid "Are you sure you want to delete the selected security rules? This cannot be undone."
@@ -7494,6 +7508,22 @@ msgstr ""
 msgid "No Tasks Currently Scheduled"
 msgstr ""
 
+#: string;20268 cdownloadssettingspage;control;1
+msgid "Save Completed Files Here"
+msgstr "Depozito Këtu Skedat e Përfunduara"
+
+#: string;20269 cdownloadssettingspage;control;23
+msgid "Store Temporary Incomplete Files Here"
+msgstr "Depozito Këtu Skedat Kohëshkurtër të Papërfunduara"
+
+#: string;20270 cbittorrentsettingspage;control;20
+msgid "Store Torrents Here"
+msgstr "Depozito Këtu Torrentet"
+
+#: string;20271 clibrarysettingspage;control;24
+msgid "Store Collections Here"
+msgstr "Depozito Këtu Koleksionet"
+
 #: csettingsheet;control;4 cprofilemanagerdlg;control;4
 msgid "Apply"
 msgstr "Zbato"
@@ -7644,10 +7674,6 @@ msgstr "_Shto"
 #: clibrarysettingspage;control;20
 msgid "_Never Share:"
 msgstr "_Kurrë Mos Shpërnda:"
-
-#: clibrarysettingspage;control;24
-msgid "Store _Collections Here:"
-msgstr "Depozito Këtu _Koleksionet:"
 
 #: clibrarysettingspage;control;27
 msgid "Create ghost files when deleting"
@@ -7885,11 +7911,6 @@ msgstr "_Jashtë kohe:"
 msgid "Handshake:"
 msgstr "Takimi i Dorës:"
 
-#: cdownloadssettingspage;control;1
-#, fuzzy
-msgid "Save Completed Files Here"
-msgstr "Depozito Këtu Skedat e _Përfunduara:"
-
 #: cdownloadssettingspage;control;4
 msgid "Scan every completed file with AntiVirus"
 msgstr ""
@@ -7932,11 +7953,6 @@ msgstr "Gjatësi Maksimale e Radhës:"
 #: cdownloadssettingspage;control;22
 msgid "Only download and upload to networks which are connected."
 msgstr "Shkarko dhe ngarko vetëm nga rrjetet e lidhura."
-
-#: cdownloadssettingspage;control;23
-#, fuzzy
-msgid "Store Temporary Incomplete Files Here"
-msgstr "Depozito Këtu Skedat Kohëshkurtër të _Papërfunduara:"
 
 #: cuploadssettingspage;control;2
 msgid "Share NEW partial downloads"
@@ -8257,10 +8273,6 @@ msgstr ""
 #: cbittorrentsettingspage;control;19
 msgid "_Download Connections:"
 msgstr "Lidhjet e _Shkarkimit:"
-
-#: cbittorrentsettingspage;control;20
-msgid "_Store Torrents Here:"
-msgstr "_Depozito Këtu Torrentet:"
 
 #: cbittorrentsettingspage;control;21
 msgid "Torrents at once"
@@ -9997,6 +10009,12 @@ msgstr "TigerTree"
 #, fuzzy
 msgid "NextRun"
 msgstr "Tjetër"
+
+#~ msgid "Store _Collections Here:"
+#~ msgstr "Depozito Këtu _Koleksionet:"
+
+#~ msgid "_Store Torrents Here:"
+#~ msgstr "_Depozito Këtu Torrentet:"
 
 #~ msgid "Display simple progress bar"
 #~ msgstr "Trego brez të thjeshtë të progresit"

@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Shareaza\n"
 "Report-Msgid-Bugs-To: shareaza <shareaza@cherubicsoft.com>\n"
-"POT-Creation-Date: 2014-08-03 12:40+0000\n"
+"POT-Creation-Date: 2015-02-03 12:58+0000\n"
 "PO-Revision-Date: \n"
 "Last-Translator: HanV <hanv@sourceforge.net>\n"
 "Language-Team: Shareaza Development Team\n"
@@ -1469,6 +1469,7 @@ msgstr "_Geschiedenis tonen"
 
 #: clibrarytree.physical.basic;item;id_library_explore
 #: clibrarytree.physical;item;id_library_explore
+#: path.menu;item;id_path_explore
 msgid "_Explore"
 msgstr "Ve_rkennen"
 
@@ -1786,7 +1787,8 @@ msgstr "_Debuggen"
 msgid "Timestam_p"
 msgstr "_Tijdstempel"
 
-#: csystemwnd;item;id_system_copy curlexportdlg;control;7
+#: csystemwnd;item;id_system_copy path.menu;item;id_path_copy
+#: curlexportdlg;control;7
 msgid "_Copy"
 msgstr "_Kopieer"
 
@@ -4066,6 +4068,14 @@ msgstr "Ga terug naar het vorige venster"
 msgid "Previous Pane"
 msgstr "Vorige venster"
 
+#: message;id_path_copy
+msgid "Copy this path to clipboard."
+msgstr ""
+
+#: message;id_path_explore
+msgid "Explore this path."
+msgstr ""
+
 #: message;id_scheduler_activate
 msgid "Activates selected task(s) from the list."
 msgstr "De geselecteerde taken activeren."
@@ -5145,6 +5155,10 @@ msgstr "Niet betrouwbaar"
 #: string;8338
 msgid "Free:"
 msgstr "Vrij:"
+
+#: string;12999
+msgid "Client %s has a prohibited user agent \"%s\", banning."
+msgstr ""
 
 #: string;13000
 msgid "Are you sure you want to delete the selected security rules? This cannot be undone."
@@ -7396,6 +7410,22 @@ msgstr "Wachten..."
 msgid "No Tasks Currently Scheduled"
 msgstr "Er zijn nu geen taken gepland"
 
+#: string;20268 cdownloadssettingspage;control;1
+msgid "Save Completed Files Here"
+msgstr "Voltooide bestanden hier opslaan"
+
+#: string;20269 cdownloadssettingspage;control;23
+msgid "Store Temporary Incomplete Files Here"
+msgstr "Tijdelijke incomplete bestanden hier opslaan"
+
+#: string;20270 cbittorrentsettingspage;control;20
+msgid "Store Torrents Here"
+msgstr "Bewaar torrents hier"
+
+#: string;20271 clibrarysettingspage;control;24
+msgid "Store Collections Here"
+msgstr "Verzamelingen hier opslaan"
+
 #: csettingsheet;control;4 cprofilemanagerdlg;control;4
 msgid "Apply"
 msgstr "Toepassen"
@@ -7546,10 +7576,6 @@ msgstr "_Toevoegen"
 #: clibrarysettingspage;control;20
 msgid "_Never Share:"
 msgstr "_Nooit delen:"
-
-#: clibrarysettingspage;control;24
-msgid "Store _Collections Here:"
-msgstr "_Verzamelingen hier opslaan:"
 
 #: clibrarysettingspage;control;27
 msgid "Create ghost files when deleting"
@@ -7787,10 +7813,6 @@ msgstr "_Wachttijden:"
 msgid "Handshake:"
 msgstr "Handshake:"
 
-#: cdownloadssettingspage;control;1
-msgid "Save Completed Files Here"
-msgstr "Voltooide bestanden hier opslaan"
-
 #: cdownloadssettingspage;control;4
 msgid "Scan every completed file with AntiVirus"
 msgstr "Elk gedownload bestand scannen met AntiVirus"
@@ -7830,10 +7852,6 @@ msgstr "Max. wachtrijlengte:"
 #: cdownloadssettingspage;control;22
 msgid "Only download and upload to networks which are connected."
 msgstr "Alleen downloaden en uploaden met verbonden netwerken."
-
-#: cdownloadssettingspage;control;23
-msgid "Store Temporary Incomplete Files Here"
-msgstr "Tijdelijke incomplete bestanden hier opslaan"
 
 #: cuploadssettingspage;control;2
 msgid "Share NEW partial downloads"
@@ -8154,10 +8172,6 @@ msgstr "_BitTorrent Netwerk:"
 #: cbittorrentsettingspage;control;19
 msgid "_Download Connections:"
 msgstr "_Download verbindingen:"
-
-#: cbittorrentsettingspage;control;20
-msgid "_Store Torrents Here:"
-msgstr "Bewaar torrents _hier:"
 
 #: cbittorrentsettingspage;control;21
 msgid "Torrents at once"
@@ -9891,6 +9905,12 @@ msgstr "Trigger"
 #: column;nextrun
 msgid "NextRun"
 msgstr "Volgende uitvoering"
+
+#~ msgid "Store _Collections Here:"
+#~ msgstr "_Verzamelingen hier opslaan:"
+
+#~ msgid "_Store Torrents Here:"
+#~ msgstr "Bewaar torrents _hier:"
 
 #~ msgid "Display simple progress bar"
 #~ msgstr "Toon een simpele voortgangsbalk"

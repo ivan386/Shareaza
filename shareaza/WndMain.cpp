@@ -1,7 +1,7 @@
 //
 // WndMain.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2014.
+// Copyright (c) Shareaza Development Team, 2002-2015.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -288,6 +288,8 @@ BEGIN_MESSAGE_MAP(CMainWnd, CMDIFrameWnd)
 	ON_MESSAGE(WM_NOWUPLOADING, &CMainWnd::OnNowUploading)
 	ON_WM_POWERBROADCAST()
 	ON_WM_COPYDATA()
+	ON_UPDATE_COMMAND_UI(ID_PATH_EXPLORE, &CMainWnd::OnUpdatePathExplore)
+	ON_UPDATE_COMMAND_UI(ID_PATH_COPY, &CMainWnd::OnUpdatePathCopy)
 END_MESSAGE_MAP()
 
 /////////////////////////////////////////////////////////////////////////////
@@ -3314,4 +3316,14 @@ BOOL CMainWnd::OnCopyData(CWnd* /*pWnd*/, COPYDATASTRUCT* pCopyDataStruct)
 		}
 	}
 	return TRUE;
+}
+
+void CMainWnd::OnUpdatePathCopy(CCmdUI* pCmdUI)
+{
+	pCmdUI->Enable();
+}
+
+void CMainWnd::OnUpdatePathExplore(CCmdUI* pCmdUI)
+{
+	pCmdUI->Enable();
 }

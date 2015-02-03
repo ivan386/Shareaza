@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Shareaza\n"
 "Report-Msgid-Bugs-To: shareaza <shareaza@cherubicsoft.com>\n"
-"POT-Creation-Date: 2014-08-03 12:40+0000\n"
+"POT-Creation-Date: 2015-02-03 12:58+0000\n"
 "PO-Revision-Date: \n"
 "Last-Translator: ryo-oh-ki <ryo-oh-ki@narod.ru>\n"
 "Language-Team: Shareaza Development Team\n"
@@ -1469,6 +1469,7 @@ msgstr "Mostra l'historial"
 
 #: clibrarytree.physical.basic;item;id_library_explore
 #: clibrarytree.physical;item;id_library_explore
+#: path.menu;item;id_path_explore
 msgid "_Explore"
 msgstr "_Explora"
 
@@ -1788,7 +1789,8 @@ msgstr "_Debug"
 msgid "Timestam_p"
 msgstr "Timestam_p"
 
-#: csystemwnd;item;id_system_copy curlexportdlg;control;7
+#: csystemwnd;item;id_system_copy path.menu;item;id_path_copy
+#: curlexportdlg;control;7
 msgid "_Copy"
 msgstr "_Copy"
 
@@ -4122,6 +4124,14 @@ msgstr "Va a l'arxiu anterior de la llista de reproducció."
 msgid "Previous Pane"
 msgstr "Anterior arxiu"
 
+#: message;id_path_copy
+msgid "Copy this path to clipboard."
+msgstr ""
+
+#: message;id_path_explore
+msgid "Explore this path."
+msgstr ""
+
 #: message;id_scheduler_activate
 #, fuzzy
 msgid "Activates selected task(s) from the list."
@@ -5213,6 +5223,10 @@ msgstr "Amb desconfiança"
 #, fuzzy
 msgid "Free:"
 msgstr "Creat:"
+
+#: string;12999
+msgid "Client %s has a prohibited user agent \"%s\", banning."
+msgstr ""
 
 #: string;13000
 msgid "Are you sure you want to delete the selected security rules? This cannot be undone."
@@ -7480,6 +7494,22 @@ msgstr ""
 msgid "No Tasks Currently Scheduled"
 msgstr ""
 
+#: string;20268 cdownloadssettingspage;control;1
+msgid "Save Completed Files Here"
+msgstr "Carpeta d'arxius completats"
+
+#: string;20269 cdownloadssettingspage;control;23
+msgid "Store Temporary Incomplete Files Here"
+msgstr "Carpeta d'arxius incomplets"
+
+#: string;20270 cbittorrentsettingspage;control;20
+msgid "Store Torrents Here"
+msgstr "Desa els torrents aquí"
+
+#: string;20271 clibrarysettingspage;control;24
+msgid "Store Collections Here"
+msgstr "Desa les col·leccions aquí"
+
 #: csettingsheet;control;4 cprofilemanagerdlg;control;4
 msgid "Apply"
 msgstr "Aplica"
@@ -7630,10 +7660,6 @@ msgstr "_Afegeix"
 #: clibrarysettingspage;control;20
 msgid "_Never Share:"
 msgstr "_Mai compartir:"
-
-#: clibrarysettingspage;control;24
-msgid "Store _Collections Here:"
-msgstr "Desa les _col·leccions aquí:"
 
 #: clibrarysettingspage;control;27
 msgid "Create ghost files when deleting"
@@ -7871,11 +7897,6 @@ msgstr "_Temps d'expiració:"
 msgid "Handshake:"
 msgstr "A negociacions:"
 
-#: cdownloadssettingspage;control;1
-#, fuzzy
-msgid "Save Completed Files Here"
-msgstr "_Carpeta d'arxius completats:"
-
 #: cdownloadssettingspage;control;4
 msgid "Scan every completed file with AntiVirus"
 msgstr ""
@@ -7918,11 +7939,6 @@ msgstr "Mida màxima de les cues:"
 #: cdownloadssettingspage;control;22
 msgid "Only download and upload to networks which are connected."
 msgstr "Sols puja i descarrega per les xarxes connectades."
-
-#: cdownloadssettingspage;control;23
-#, fuzzy
-msgid "Store Temporary Incomplete Files Here"
-msgstr "Carpeta d'arxius _incomplets: (temporal)"
 
 #: cuploadssettingspage;control;2
 msgid "Share NEW partial downloads"
@@ -8243,10 +8259,6 @@ msgstr ""
 #: cbittorrentsettingspage;control;19
 msgid "_Download Connections:"
 msgstr "_Connexions de descàrrega:"
-
-#: cbittorrentsettingspage;control;20
-msgid "_Store Torrents Here:"
-msgstr "_Desa els torrents aquí "
 
 #: cbittorrentsettingspage;control;21
 msgid "Torrents at once"
@@ -9983,6 +9995,12 @@ msgstr "TigerTree"
 #, fuzzy
 msgid "NextRun"
 msgstr "Següent"
+
+#~ msgid "Store _Collections Here:"
+#~ msgstr "Desa les _col·leccions aquí:"
+
+#~ msgid "_Store Torrents Here:"
+#~ msgstr "_Desa els torrents aquí "
 
 #~ msgid "Display simple progress bar"
 #~ msgstr "Mostra la barra de progrés simplificada"

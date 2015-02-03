@@ -1,7 +1,7 @@
 //
 // Shareaza.h
 //
-// Copyright (c) Shareaza Development Team, 2002-2014.
+// Copyright (c) Shareaza Development Team, 2002-2015.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -205,6 +205,9 @@ public:
 	// Must be freed by "delete" operator.
 	CDatabase*			GetDatabase() const;
 
+	// Copy text to clipboard (Unicode)
+	BOOL SetClipboardText(const CString& strText);
+
 protected:
 	CSplashDlg*			m_dlgSplash;		// Splash dialog
 
@@ -339,6 +342,9 @@ BOOL AreServiceHealthy(LPCTSTR szService);
 
 // Creates shell link
 IShellLink* CreateShellLink(LPCWSTR szTargetExecutablePath, LPCWSTR szCommandLineArgs, LPCWSTR szTitle, LPCWSTR szIconPath, int nIconIndex, LPCWSTR szDescription);
+
+// Select existing string of ComboBox, or add and select a new one
+void AddAndSelect(CComboBox& wndBox, const CString& sText);
 
 struct CompareNums
 {

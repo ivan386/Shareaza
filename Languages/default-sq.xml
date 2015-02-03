@@ -1649,6 +1649,10 @@
 		<menu name="WebServices.List.Menu">
 			<item id="ID_WEBSERVICES_MUSICBRAINZ" text="_MusicBrainz"/>
 		</menu>
+		<menu name="Path.Menu">
+			<item id="ID_PATH_EXPLORE" text="_Eksploro"/>
+			<item id="ID_PATH_COPY" text="_Kopjo"/>
+		</menu>
 	</menus>
 	<!-- Documents -->
 	<documents>
@@ -2558,6 +2562,8 @@
 		<tip id="ID_NEXT_PANE" message="Switch to the next window pane" tip="Next Pane"/>
 		<tip id="ID_OPEN_DOWNLOADS_FOLDER" message="Open my folder of completed Downloads"/>
 		<tip id="ID_PREV_PANE" message="Switch back to the previous window pane" tip="Previous Pane"/>
+		<tip id="ID_PATH_COPY" message="Copy this path to clipboard."/>
+		<tip id="ID_PATH_EXPLORE" message="Explore this path."/>
 		<tip id="ID_SCHEDULER_ACTIVATE" message="Activates selected task(s) from the list."/>
 		<tip id="ID_SCHEDULER_ADD" message="Adds a new task to scheduler list."/>
 		<tip id="ID_SCHEDULER_DEACTIVATE" message="Deactivates selected tasks."/>
@@ -2860,6 +2866,7 @@
 		<string id="8336" value="Burimet për këtë skedë mund të jenë të paqëndrueshme"/>
 		<string id="8337" value="I pasigurt"/>
 		<string id="8338" value="Free:"/>
+		<string id="12999" value="Client %s has a prohibited user agent &quot;%s&quot;, banning."/>
 		<string id="13000" value="Je i sigurt për fshirjen e rregullave të zgjedhur të sigurisë?  Kjo nuk mund të kthehet."/>
 		<string id="13001" value="Skedat që shpërndahen në Internet"/>
 		<string id="16063" value="Përcjellja UPnP e portit dështoi pas 10 orvatjesh."/>
@@ -3432,6 +3439,10 @@
 		<string id="20265" value="Done"/>
 		<string id="20266" value="Waiting..."/>
 		<string id="20267" value="No Tasks Currently Scheduled"/>
+		<string id="20268" value="Depozito Këtu Skedat e Përfunduara"/>
+		<string id="20269" value="Depozito Këtu Skedat Kohëshkurtër të Papërfunduara"/>
+		<string id="20270" value="Depozito Këtu Torrentet"/>
+		<string id="20271" value="Depozito Këtu Koleksionet"/>
 	</strings>
 	<!-- Localised Dialog Text, the "cookie" verifies that the dialog matches the skin -->
 	<!-- Don't edit dialogs manualy! Use DialogScan feature instead -->
@@ -3472,7 +3483,7 @@
 			<control caption="Kur klikoj minimizo:"/>
 			<control caption="Normale|Minimizim në Brez"/>
 		</dialog>
-		<dialog name="CLibrarySettingsPage" cookie="BuBuBuBuBuBuStEdmsStStEdmsStBuBuCoBuBuBuCoBuBuBuEdBuBuBu" caption="Librari">
+		<dialog name="CLibrarySettingsPage" cookie="BuBuBuBuBuBuStEdmsStStEdmsStBuBuCoBuBuBuCoBuBuBuCoBuBuBu" caption="Librari">
 			<control caption="_Mundësi:"/>
 			<control caption="Mbaje mend pamjen e dosjes"/>
 			<control caption="Shiko dosjet në librari"/>
@@ -3496,7 +3507,7 @@
 			<control/>
 			<control caption="_Shto"/>
 			<control caption="_Fshije"/>
-			<control caption="Depozito Këtu _Koleksionet:"/>
+			<control caption="Depozito Këtu Koleksionet"/>
 			<control/>
 			<control/>
 			<control caption="Krijo skeda fantazmë kur fshin"/>
@@ -3609,8 +3620,8 @@
 			<control/>
 			<control/>
 		</dialog>
-		<dialog name="CDownloadsSettingsPage" cookie="BuEdBuBuStCoBuStEdmsStEdmsStEdmsBuStCoStCoBuBuEdBu" caption="Shkarkim">
-			<control caption="Save Completed Files Here"/>
+		<dialog name="CDownloadsSettingsPage" cookie="BuCoBuBuStCoBuStEdmsStEdmsStEdmsBuStCoStCoBuBuCoBu" caption="Shkarkim">
+			<control caption="Depozito Këtu Skedat e Përfunduara"/>
 			<control/>
 			<control/>
 			<control caption="Scan every completed file with AntiVirus"/>
@@ -3632,7 +3643,7 @@
 			<control caption="Gjatësi Maksimale e Radhës:"/>
 			<control/>
 			<control caption="Shkarko dhe ngarko vetëm nga rrjetet e lidhura."/>
-			<control caption="Store Temporary Incomplete Files Here"/>
+			<control caption="Depozito Këtu Skedat Kohëshkurtër të Papërfunduara"/>
 			<control/>
 			<control/>
 		</dialog>
@@ -3743,7 +3754,7 @@
 			<control caption="_Mjetet e eDonkey:"/>
 			<control caption="Shkarko server-listën e eDonkey në rrjet:"/>
 		</dialog>
-		<dialog name="CBitTorrentSettingsPage" cookie="BuBuBuEdmsEdmsBuEdmsBuBuEdBuEdBuEdBuBuBuStStStStBu" caption="BitTorrent">
+		<dialog name="CBitTorrentSettingsPage" cookie="BuBuBuEdmsEdmsBuEdmsBuBuCoBuEdBuEdBuBuBuStStStStBu" caption="BitTorrent">
 			<control caption="Always connect to BitTorrent"/>
 			<control caption="Connect to BitTorrent today"/>
 			<control caption="Enable BitTorrent DHT"/>
@@ -3763,7 +3774,7 @@
 			<control/>
 			<control caption="_BitTorrent Network:"/>
 			<control caption="Lidhjet e _Shkarkimit:"/>
-			<control caption="_Depozito Këtu Torrentet:"/>
+			<control caption="Depozito Këtu Torrentet"/>
 			<control caption="Torrente përnjëherë"/>
 			<control caption="Lidhje me klientë"/>
 			<control caption="%"/>

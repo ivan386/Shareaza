@@ -1623,6 +1623,10 @@
 		<menu name="WebServices.List.Menu">
 			<item id="ID_WEBSERVICES_MUSICBRAINZ" text="_MusicBrainz"/>
 		</menu>
+		<menu name="Path.Menu">
+			<item id="ID_PATH_EXPLORE" text="_Explore"/>
+			<item id="ID_PATH_COPY" text="_Copy"/>
+		</menu>
 	</menus>
 	<!-- Watermarks -->
 	<watermarks>
@@ -2517,7 +2521,7 @@
 			<image id="ID_DOWNLOADS_RESUME" id1="ID_DOWNLOAD_GROUP_RESUME"/>
 			<image id="ID_DOWNLOADS_PAUSE" id1="ID_DOWNLOAD_GROUP_PAUSE"/>
 			<image id="ID_DOWNLOADS_CLEAR" id1="ID_DOWNLOAD_GROUP_CLEAR" id2="ID_DOWNLOADS_CLEAR_COMPLETE" id3="ID_DOWNLOADS_CLEAR_INCOMPLETE"/>
-			<image id="ID_LIBRARY_ALBUM_OPEN" id1="ID_LIBRARY_EXPLORE"/>
+			<image id="ID_LIBRARY_ALBUM_OPEN" id1="ID_LIBRARY_EXPLORE" id2="ID_PATH_EXPLORE"/>
 			<image id="ID_DOWNLOADS_ENQUEUE"/>
 			<image id="ID_DOWNLOADS_SOURCES"/>
 			<image id="ID_DOWNLOADS_URL"/>
@@ -2536,7 +2540,7 @@
 			<image id="ID_LIBRARY_URL"/>
 			<image id="ID_LIBRARY_RENAME"/>
 			<image id="ID_LIBRARY_MOVE"/>
-			<image id="ID_LIBRARY_COPY" id1="ID_SYSTEM_COPY"/>
+			<image id="ID_LIBRARY_COPY" id1="ID_SYSTEM_COPY" id2="ID_PATH_COPY"/>
 			<image id="ID_LIBRARY_DELETE" id1="ID_DOWNLOAD_GROUP_REMOVE"/>
 			<image id=""/>
 			<image id="ID_LIBRARY_COLUMNS"/>

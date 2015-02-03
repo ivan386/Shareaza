@@ -1,7 +1,7 @@
 //
 // RichViewCtrl.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2011.
+// Copyright (c) Shareaza Development Team, 2002-2015.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -967,19 +967,7 @@ void CRichViewCtrl::CopySelection() const
 	}
 	// end of block
 
-	if ( str.GetLength() && AfxGetMainWnd()->OpenClipboard() )
-	{
-		EmptyClipboard();
-
-		CT2W pszWide( (LPCTSTR)str );
-		HANDLE hMem = GlobalAlloc( GMEM_MOVEABLE|GMEM_DDESHARE, ( wcslen(pszWide) + 1 ) * sizeof(WCHAR) );
-		LPVOID pMem = GlobalLock( hMem );
-		CopyMemory( pMem, pszWide, ( wcslen(pszWide) + 1 ) * sizeof(WCHAR) );
-		GlobalUnlock( hMem );
-		SetClipboardData( CF_UNICODETEXT, hMem );
-
-		CloseClipboard();
-	}
+	theApp.SetClipboardText( str );
 }
 
 void CRichViewCtrl::OnLButtonDblClk(UINT nFlags, CPoint point)

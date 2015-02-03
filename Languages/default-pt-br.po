@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Shareaza 2.5.3.0\n"
 "Report-Msgid-Bugs-To: shareaza <shareaza@cherubicsoft.com>\n"
-"POT-Creation-Date: 2014-08-03 12:40+0000\n"
+"POT-Creation-Date: 2015-02-03 12:58+0000\n"
 "PO-Revision-Date: \n"
 "Last-Translator: ryo-oh-ki <ryo-oh-ki@narod.ru>\n"
 "Language-Team: Felipe\n"
@@ -1470,6 +1470,7 @@ msgstr "Mostrar _Histórico"
 
 #: clibrarytree.physical.basic;item;id_library_explore
 #: clibrarytree.physical;item;id_library_explore
+#: path.menu;item;id_path_explore
 msgid "_Explore"
 msgstr "_Explorar"
 
@@ -1787,7 +1788,8 @@ msgstr "_Debug"
 msgid "Timestam_p"
 msgstr "Horário"
 
-#: csystemwnd;item;id_system_copy curlexportdlg;control;7
+#: csystemwnd;item;id_system_copy path.menu;item;id_path_copy
+#: curlexportdlg;control;7
 msgid "_Copy"
 msgstr "_Copiar"
 
@@ -4071,6 +4073,14 @@ msgstr "Trocar de volta ao painel da janela anterior"
 msgid "Previous Pane"
 msgstr "Painel Anterior"
 
+#: message;id_path_copy
+msgid "Copy this path to clipboard."
+msgstr ""
+
+#: message;id_path_explore
+msgid "Explore this path."
+msgstr ""
+
 #: message;id_scheduler_activate
 msgid "Activates selected task(s) from the list."
 msgstr "Ativa a(s) tarefa(s) selecionada(s) da lista."
@@ -5151,6 +5161,10 @@ msgstr "Não confiável"
 #, fuzzy
 msgid "Free:"
 msgstr "Criado:"
+
+#: string;12999
+msgid "Client %s has a prohibited user agent \"%s\", banning."
+msgstr ""
 
 #: string;13000
 msgid "Are you sure you want to delete the selected security rules? This cannot be undone."
@@ -7411,6 +7425,22 @@ msgstr "Esperando..."
 msgid "No Tasks Currently Scheduled"
 msgstr "Sem Tarefas Agendadas Atualmente"
 
+#: string;20268 cdownloadssettingspage;control;1
+msgid "Save Completed Files Here"
+msgstr "Salvar Arquivos Completados Aqui"
+
+#: string;20269 cdownloadssettingspage;control;23
+msgid "Store Temporary Incomplete Files Here"
+msgstr "Armazenar Arquivos Incompletos Temporários Aqui"
+
+#: string;20270 cbittorrentsettingspage;control;20
+msgid "Store Torrents Here"
+msgstr "Armazenar Torrents Aqui"
+
+#: string;20271 clibrarysettingspage;control;24
+msgid "Store Collections Here"
+msgstr "Armazenar as Coleções Aqui"
+
 #: csettingsheet;control;4 cprofilemanagerdlg;control;4
 msgid "Apply"
 msgstr "Aplicar"
@@ -7561,10 +7591,6 @@ msgstr "_Adicionar"
 #: clibrarysettingspage;control;20
 msgid "_Never Share:"
 msgstr "_Nunca Compartilhar:"
-
-#: clibrarysettingspage;control;24
-msgid "Store _Collections Here:"
-msgstr "Armazenar as _Coleções Aqui:"
 
 #: clibrarysettingspage;control;27
 msgid "Create ghost files when deleting"
@@ -7802,11 +7828,6 @@ msgstr "_Tempo para encerrar:"
 msgid "Handshake:"
 msgstr "Inicialização:"
 
-#: cdownloadssettingspage;control;1
-#, fuzzy
-msgid "Save Completed Files Here"
-msgstr "Salvar _Arquivos Completados Aqui:"
-
 #: cdownloadssettingspage;control;4
 msgid "Scan every completed file with AntiVirus"
 msgstr ""
@@ -7849,11 +7870,6 @@ msgstr "Tamanho Máximo da Fila:"
 #: cdownloadssettingspage;control;22
 msgid "Only download and upload to networks which are connected."
 msgstr "Só baixar e enviar para redes nas quais está conectado."
-
-#: cdownloadssettingspage;control;23
-#, fuzzy
-msgid "Store Temporary Incomplete Files Here"
-msgstr "Armazenar Arquivos _Incompletos Temporários Aqui:"
 
 #: cuploadssettingspage;control;2
 msgid "Share NEW partial downloads"
@@ -8174,10 +8190,6 @@ msgstr ""
 #: cbittorrentsettingspage;control;19
 msgid "_Download Connections:"
 msgstr "_Conexões de Download:"
-
-#: cbittorrentsettingspage;control;20
-msgid "_Store Torrents Here:"
-msgstr "_Armazenar Torrents Aqui:"
 
 #: cbittorrentsettingspage;control;21
 msgid "Torrents at once"
@@ -9911,6 +9923,12 @@ msgstr "Gatilho"
 #: column;nextrun
 msgid "NextRun"
 msgstr "PróximaExecução"
+
+#~ msgid "Store _Collections Here:"
+#~ msgstr "Armazenar as _Coleções Aqui:"
+
+#~ msgid "_Store Torrents Here:"
+#~ msgstr "_Armazenar Torrents Aqui:"
 
 #~ msgid "Display simple progress bar"
 #~ msgstr "Exibir barra de progresso simples"
