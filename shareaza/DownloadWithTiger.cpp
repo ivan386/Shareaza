@@ -87,22 +87,22 @@ DWORD CDownloadWithTiger::GetVerifyLength(PROTOCOLID nProtocol, int nHash) const
 
 	if ( nHash == HASH_NULL )
 	{
-		if ( nProtocol == PROTOCOL_BT && m_pTorrentBlock )
+		if ( nProtocol == PROTOCOL_BT && IsTorrentSet() )
 			return m_nTorrentSize;
-		else if ( nProtocol == PROTOCOL_ED2K && m_pHashsetBlock )
+		else if ( nProtocol == PROTOCOL_ED2K && IsHashsetSet() )
 			return ED2K_PART_SIZE;
-		else if ( m_pTigerBlock )
+		else if ( IsTigerSet() )
 			return m_nTigerSize;
 	}
-	else if ( nHash == HASH_TIGERTREE && m_pTigerBlock != NULL )
+	else if ( nHash == HASH_TIGERTREE && IsTigerSet() )
 	{
 		return m_nTigerSize;
 	}
-	else if ( nHash == HASH_ED2K && m_pHashsetBlock != NULL )
+	else if ( nHash == HASH_ED2K && IsHashsetSet() )
 	{
 		return ED2K_PART_SIZE;
 	}
-	else if ( nHash == HASH_TORRENT && m_pTorrentBlock != NULL )
+	else if ( nHash == HASH_TORRENT && IsTorrentSet() )
 	{
 		return m_nTorrentSize;
 	}
@@ -118,16 +118,16 @@ BOOL CDownloadWithTiger::GetNextVerifyRange(QWORD& nOffset, QWORD& nLength, BOOL
 	if ( nOffset >= m_nSize )
 		return FALSE;
 
-	if ( !m_pTigerBlock && !m_pHashsetBlock && !m_pTorrentBlock )
+	if ( ! ( IsTigerSet() || IsHashsetSet() || IsTorrentSet() ) )
 		return FALSE;
 
 	if ( nHash == HASH_NULL )
 	{
-		if ( m_pTorrentBlock && m_nTorrentBlock )
+		if ( IsTorrentSet() )
 			nHash = HASH_TORRENT;
-		else if ( m_pTigerBlock && m_nTigerBlock )
+		else if ( IsTigerSet() )
 			nHash = HASH_TIGERTREE;
-		else if ( m_pHashsetBlock && m_nHashsetBlock )
+		else if ( IsHashsetSet() )
 			nHash = HASH_ED2K;
 	}
 
@@ -137,7 +137,7 @@ BOOL CDownloadWithTiger::GetNextVerifyRange(QWORD& nOffset, QWORD& nLength, BOOL
 	switch ( nHash )
 	{
 	case HASH_TIGERTREE:
-		if ( !m_pTigerBlock )
+		if ( !IsTigerSet() )
 			return FALSE;
 
 		pBlockPtr	= m_pTigerBlock;
@@ -146,7 +146,7 @@ BOOL CDownloadWithTiger::GetNextVerifyRange(QWORD& nOffset, QWORD& nLength, BOOL
 		break;
 
 	case HASH_ED2K:
-		if ( !m_pHashsetBlock )
+		if ( !IsHashsetSet() )
 			return FALSE;
 
 		pBlockPtr	= m_pHashsetBlock;
@@ -155,7 +155,7 @@ BOOL CDownloadWithTiger::GetNextVerifyRange(QWORD& nOffset, QWORD& nLength, BOOL
 		break;
 
 	case HASH_TORRENT:
-		if ( !m_pTorrentBlock )
+		if ( !IsTorrentSet() )
 			return FALSE;
 
 		pBlockPtr	= m_pTorrentBlock;
@@ -217,7 +217,7 @@ bool CDownloadWithTiger::IsFullyVerified() const
 	bool bAvailable = false;
 	Fragments::List oList = GetFullFragmentList();
 
-	if ( m_pTorrentBlock )
+	if ( IsTorrentSet() )
 	{
 		for ( DWORD i = 0 ; i < m_nTorrentBlock; i++ )
 		{
@@ -235,7 +235,7 @@ bool CDownloadWithTiger::IsFullyVerified() const
 		bAvailable = true;
 	}
 
-	if ( m_pTigerBlock && Settings.Downloads.VerifyTiger )
+	if ( IsTigerSet() && Settings.Downloads.VerifyTiger )
 	{
 		for ( DWORD i = 0 ; i < m_nTigerBlock; i++ )
 		{
@@ -253,7 +253,7 @@ bool CDownloadWithTiger::IsFullyVerified() const
 		bAvailable = true;
 	}
 
-	if ( m_pHashsetBlock && Settings.Downloads.VerifyED2K )
+	if ( IsHashsetSet() && Settings.Downloads.VerifyED2K )
 	{
 		for ( DWORD i = 0 ; i < m_nHashsetBlock; i++ )
 		{
@@ -570,8 +570,13 @@ void CDownloadWithTiger::RunValidation()
 	if ( ! oLock.Lock( 50 ) )
 		return;
 
-	if ( m_pTigerBlock == NULL && m_pHashsetBlock == NULL && m_pTorrentBlock == NULL )
-		return;
+	if ( ! ( IsTigerSet() || IsHashsetSet() || IsTorrentSet() ) )
+	{
+		if ( IsComplete() && m_oTiger && m_bTigerTrusted )
+			SetTigerTree( (BYTE*) &*m_oTiger.begin(), m_oTiger.byteCount );
+		else
+			return;
+	}
 
 	if ( ! IsFileOpen() )
 		return;
@@ -602,14 +607,6 @@ BOOL CDownloadWithTiger::FindNewValidationBlock(int nHash)
 		pBlockPtr	= m_pTigerBlock;
 		nBlockCount	= m_nTigerBlock;
 		nBlockSize	= m_nTigerSize;
-
-		if ( ( ! pBlockPtr || ! nBlockCount || ! nBlockSize ) && IsComplete() && m_oTiger ){
-			SetTigerTree( (BYTE*) &*m_oTiger.begin(), m_oTiger.byteCount );
-			pBlockPtr	= m_pTigerBlock;
-			nBlockCount	= m_nTigerBlock;
-			nBlockSize	= m_nTigerSize;
-		}
-
 		break;
 
 	case HASH_ED2K:
@@ -775,7 +772,7 @@ void CDownloadWithTiger::FinishValidation()
 {
 	Fragments::List oCorrupted( m_nSize );
 
-	if ( m_nVerifyHash == HASH_TIGERTREE && m_pTigerBlock )
+	if ( m_nVerifyHash == HASH_TIGERTREE && IsTigerSet() )
 	{
 		if ( m_pTigerTree.FinishBlockTest( m_nVerifyBlock ) )
 		{
@@ -791,7 +788,7 @@ void CDownloadWithTiger::FinishValidation()
 				min( nOffset + m_nTigerSize, m_nSize ) ) );
 		}
 	}
-	else if ( m_nVerifyHash == HASH_ED2K && m_pHashsetBlock )
+	else if ( m_nVerifyHash == HASH_ED2K && IsHashsetSet() )
 	{
 		if ( m_pHashset.FinishBlockTest( m_nVerifyBlock ) )
 		{
@@ -807,7 +804,7 @@ void CDownloadWithTiger::FinishValidation()
 				min( nOffset + ED2K_PART_SIZE, m_nSize ) ) );
 		}
 	}
-	else if ( m_nVerifyHash == HASH_TORRENT && m_pTorrentBlock )
+	else if ( m_nVerifyHash == HASH_TORRENT && IsTorrentSet() )
 	{
 		if ( m_pTorrent.FinishBlockTest( m_nVerifyBlock ) )
 		{
@@ -828,11 +825,11 @@ void CDownloadWithTiger::FinishValidation()
 
 	if ( !oCorrupted.empty() && IsFileOpen() )
 	{
-		if ( m_pTigerBlock != NULL )
+		if ( IsTigerSet() )
 			SubtractHelper( oCorrupted, m_pTigerBlock, m_nTigerBlock, m_nTigerSize );
-		if ( m_pHashsetBlock != NULL )
+		if ( IsHashsetSet() )
 			SubtractHelper( oCorrupted, m_pHashsetBlock, m_nHashsetBlock, ED2K_PART_SIZE );
-		if ( m_pTorrentBlock != NULL )
+		if ( IsTorrentSet() )
 			SubtractHelper( oCorrupted, m_pTorrentBlock, m_nTorrentBlock, m_nTorrentSize );
 
 		Fragments::List::const_iterator pItr = oCorrupted.begin();
@@ -876,18 +873,18 @@ Fragments::List CDownloadWithTiger::GetHashableFragmentList() const
 	// Select hash with smallest parts
 	int nHash = HASH_NULL;
 	DWORD nSmallest = 0xffffffff;
-	if ( m_pTorrentBlock )
+	if ( IsTorrentSet() )
 	{
 		nHash = HASH_TORRENT;
 		nSmallest = m_nTorrentSize;
 	}
-	if ( m_pTigerBlock && Settings.Downloads.VerifyTiger &&
+	if ( IsTigerSet() && Settings.Downloads.VerifyTiger &&
 		 nSmallest > m_nTigerSize )
 	{
 		nHash = HASH_TIGERTREE;
 		nSmallest = m_nTigerSize;
 	}
-	if ( m_pHashsetBlock && Settings.Downloads.VerifyED2K &&
+	if ( IsHashsetSet() && Settings.Downloads.VerifyED2K &&
 		 nSmallest > ED2K_PART_SIZE )
 	{
 		nHash = HASH_ED2K;

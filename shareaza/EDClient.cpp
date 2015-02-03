@@ -2266,7 +2266,7 @@ void CEDClient::WritePartStatus(CEDPacket* pPacket, CDownload* pDownload)
 
 	pPacket->WriteShortLE( (WORD)nParts );
 
-	if ( pDownload->m_pHashsetBlock != NULL && pDownload->m_nHashsetBlock == nParts )
+	if ( pDownload->IsHashsetSet() && pDownload->m_nHashsetBlock == nParts )
 	{
 		for ( QWORD nPart = 0 ; nPart < nParts ; )
 		{

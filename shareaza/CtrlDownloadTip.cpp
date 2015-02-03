@@ -548,7 +548,7 @@ void CDownloadTipCtrl::PrepareDownloadInfo(CDownload* pDownload)
 	m_sTiger = pDownload->m_oTiger.toShortUrn();
 	if ( m_sTiger.GetLength() )
 	{
-		if ( ! pDownload->m_pTigerBlock )
+		if ( ! pDownload->IsTigerSet() )
 		{
 			if ( pDownload->m_bTigerTrusted )
 			{
@@ -568,7 +568,7 @@ void CDownloadTipCtrl::PrepareDownloadInfo(CDownload* pDownload)
 	m_sED2K = pDownload->m_oED2K.toShortUrn();
 	if ( m_sED2K.GetLength() )
 	{
-		if ( ! pDownload->m_pHashsetBlock )
+		if ( ! pDownload->IsHashsetSet() )
 		{
 			if ( pDownload->m_bED2KTrusted )
 			{
@@ -588,7 +588,7 @@ void CDownloadTipCtrl::PrepareDownloadInfo(CDownload* pDownload)
 	m_sBTH = pDownload->m_oBTH.toShortUrn();
 	if ( m_sBTH.GetLength() )
 	{
-		if ( ! pDownload->m_pTorrentBlock )
+		if ( ! pDownload->IsTorrentSet() )
 		{
 			if ( pDownload->m_bBTHTrusted )
 			{
