@@ -1649,6 +1649,10 @@
 		<menu name="WebServices.List.Menu">
 			<item id="ID_WEBSERVICES_MUSICBRAINZ" text="_MusicBrainz"/>
 		</menu>
+		<menu name="Path.Menu">
+			<item id="ID_PATH_EXPLORE" text="_Araştır"/>
+			<item id="ID_PATH_COPY" text="_Kopyala"/>
+		</menu>
 	</menus>
 	<!-- Documents -->
 	<documents>
@@ -2558,6 +2562,8 @@
 		<tip id="ID_NEXT_PANE" message="Switch to the next window pane" tip="Next Pane"/>
 		<tip id="ID_OPEN_DOWNLOADS_FOLDER" message="Open my folder of completed Downloads"/>
 		<tip id="ID_PREV_PANE" message="Switch back to the previous window pane" tip="Previous Pane"/>
+		<tip id="ID_PATH_COPY" message="Copy this path to clipboard."/>
+		<tip id="ID_PATH_EXPLORE" message="Explore this path."/>
 		<tip id="ID_SCHEDULER_ACTIVATE" message="Activates selected task(s) from the list."/>
 		<tip id="ID_SCHEDULER_ADD" message="Adds a new task to scheduler list."/>
 		<tip id="ID_SCHEDULER_DEACTIVATE" message="Deactivates selected tasks."/>
@@ -2860,6 +2866,7 @@
 		<string id="8336" value="Bu dosya için kaynaklar değişken olabilir"/>
 		<string id="8337" value="Güvenliği garanti olmayan"/>
 		<string id="8338" value="Free:"/>
+		<string id="12999" value="Client %s has a prohibited user agent &quot;%s&quot;, banning."/>
 		<string id="13000" value="Seçilen güvenlik kuralını silmek istediğinizden emin misiniz? Geri dönüş mümkün olmayacaktır."/>
 		<string id="13001" value="İnternet üzerinden paylaşılan dosyalar"/>
 		<string id="16063" value="UPnP port açılışı 10 denemeye rağmen başarısız olmuştur."/>
@@ -3432,6 +3439,10 @@
 		<string id="20265" value="Done"/>
 		<string id="20266" value="Waiting..."/>
 		<string id="20267" value="No Tasks Currently Scheduled"/>
+		<string id="20268" value="Dosyanın tamamını buraya kaydet"/>
+		<string id="20269" value="Geçici tamamlanmamış dosyaları burada depola"/>
+		<string id="20270" value="Torrentlar burada saklanıyor"/>
+		<string id="20271" value="Tüm Kolleksiyonlar Burada"/>
 	</strings>
 	<!-- Localised Dialog Text, the "cookie" verifies that the dialog matches the skin -->
 	<!-- Don't edit dialogs manualy! Use DialogScan feature instead -->
@@ -3472,7 +3483,7 @@
 			<control caption="Tıklandığında Küçült:"/>
 			<control caption="Normal|Boyut Küçült"/>
 		</dialog>
-		<dialog name="CLibrarySettingsPage" cookie="BuBuBuBuBuBuStEdmsStStEdmsStBuBuCoBuBuBuCoBuBuBuEdBuBuBu" caption="Kütüphane">
+		<dialog name="CLibrarySettingsPage" cookie="BuBuBuBuBuBuStEdmsStStEdmsStBuBuCoBuBuBuCoBuBuBuCoBuBuBu" caption="Kütüphane">
 			<control caption="_Seçenekler:"/>
 			<control caption="Klasör görünümlerini hatırla"/>
 			<control caption="Kütüphane klasörlerini izle"/>
@@ -3496,7 +3507,7 @@
 			<control/>
 			<control caption="_Ekle"/>
 			<control caption="_Kaldır"/>
-			<control caption="Tüm K_olleksiyonlar Burada:"/>
+			<control caption="Tüm Kolleksiyonlar Burada"/>
 			<control/>
 			<control/>
 			<control caption="Silerken hayalet dosya yarat"/>
@@ -3609,8 +3620,8 @@
 			<control/>
 			<control/>
 		</dialog>
-		<dialog name="CDownloadsSettingsPage" cookie="BuEdBuBuStCoBuStEdmsStEdmsStEdmsBuStCoStCoBuBuEdBu" caption="İndirmeler">
-			<control caption="Save Completed Files Here"/>
+		<dialog name="CDownloadsSettingsPage" cookie="BuCoBuBuStCoBuStEdmsStEdmsStEdmsBuStCoStCoBuBuCoBu" caption="İndirmeler">
+			<control caption="Dosyanın tamamını buraya kaydet"/>
 			<control/>
 			<control/>
 			<control caption="Scan every completed file with AntiVirus"/>
@@ -3632,7 +3643,7 @@
 			<control caption="Maksimum sıra uzunluğu:"/>
 			<control/>
 			<control caption="Sadece bağlanılan ağlara aktarım yapın ve indirmede bulunun."/>
-			<control caption="Store Temporary Incomplete Files Here"/>
+			<control caption="Geçici tamamlanmamış dosyaları burada depola"/>
 			<control/>
 			<control/>
 		</dialog>
@@ -3743,7 +3754,7 @@
 			<control caption="eDonkey2000 _Araçları:"/>
 			<control caption="Webden eDonkey2000 server listesini indir:"/>
 		</dialog>
-		<dialog name="CBitTorrentSettingsPage" cookie="BuBuBuEdmsEdmsBuEdmsBuBuEdBuEdBuEdBuBuBuStStStStBu" caption="BitTorrent">
+		<dialog name="CBitTorrentSettingsPage" cookie="BuBuBuEdmsEdmsBuEdmsBuBuCoBuEdBuEdBuBuBuStStStStBu" caption="BitTorrent">
 			<control caption="Always connect to BitTorrent"/>
 			<control caption="Connect to BitTorrent today"/>
 			<control caption="Enable BitTorrent DHT"/>
@@ -3763,7 +3774,7 @@
 			<control/>
 			<control caption="_BitTorrent Network:"/>
 			<control caption="_İndirme Bağlantıları:"/>
-			<control caption="Torrentlar burada _saklanıyor:"/>
+			<control caption="Torrentlar burada saklanıyor"/>
 			<control caption="İlk olarak Torrentlar"/>
 			<control caption="İstemci bağlantıları"/>
 			<control caption="%"/>

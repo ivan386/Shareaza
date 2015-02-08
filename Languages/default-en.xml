@@ -1662,6 +1662,10 @@
 		<menu name="WebServices.List.Menu">
 			<item id="ID_WEBSERVICES_MUSICBRAINZ" text="_MusicBrainz"/>
 		</menu>
+		<menu name="Path.Menu">
+			<item id="ID_PATH_EXPLORE" text="_Explore"/>
+			<item id="ID_PATH_COPY" text="_Copy"/>
+		</menu>
 	</menus>
 	<!-- Documents -->
 	<documents>
@@ -2573,6 +2577,8 @@
 		<tip id="ID_NEXT_PANE" message="Switch to the next window pane" tip="Next Pane"/>
 		<tip id="ID_OPEN_DOWNLOADS_FOLDER" message="Open my folder of completed Downloads"/>
 		<tip id="ID_PREV_PANE" message="Switch back to the previous window pane" tip="Previous Pane"/>
+		<tip id="ID_PATH_COPY" message="Copy this path to clipboard."/>
+		<tip id="ID_PATH_EXPLORE" message="Explore this path."/>
 		<tip id="ID_SCHEDULER_ACTIVATE" message="Activates selected task(s) from the list."/>
 		<tip id="ID_SCHEDULER_ADD" message="Adds a new task to scheduler list."/>
 		<tip id="ID_SCHEDULER_DEACTIVATE" message="Deactivates selected tasks."/>
@@ -2875,6 +2881,7 @@
 		<string id="8336" value="Sources for this file may be unstable"/>
 		<string id="8337" value="Untrusted"/>
 		<string id="8338" value="Free:"/>
+		<string id="12999" value="Client %s has a prohibited user agent &quot;%s&quot;, banning."/>
 		<string id="13000" value="Are you sure you want to delete the selected security rules? This cannot be undone."/>
 		<string id="13001" value="Files shared over the Internet"/>
 		<string id="16063" value="UPnP port mapping failed after 10 attempts."/>
@@ -3447,6 +3454,10 @@
 		<string id="20265" value="Done"/>
 		<string id="20266" value="Waiting..."/>
 		<string id="20267" value="No Tasks Currently Scheduled"/>
+		<string id="20268" value="Save Completed Files Here"/>
+		<string id="20269" value="Store Temporary Incomplete Files Here"/>
+		<string id="20270" value="Store Torrents Here"/>
+		<string id="20271" value="Store Collections Here"/>
 	</strings>
 	<!-- Localised Dialog Text, the "cookie" verifies that the dialog matches the skin -->
 	<!-- Don't edit dialogs manualy! Use DialogScan feature instead -->
@@ -3487,7 +3498,7 @@
 			<control caption="When I click minimise:"/>
 			<control caption="Normal|Minimise to Tray"/>
 		</dialog>
-		<dialog name="CLibrarySettingsPage" cookie="BuBuBuBuBuBuStEdmsStStEdmsStBuBuCoBuBuBuCoBuBuBuEdBuBuBu" caption="Library">
+		<dialog name="CLibrarySettingsPage" cookie="BuBuBuBuBuBuStEdmsStStEdmsStBuBuCoBuBuBuCoBuBuBuCoBuBuBu" caption="Library">
 			<control caption="_Options:"/>
 			<control caption="Remember folder views"/>
 			<control caption="Watch library folders"/>
@@ -3511,7 +3522,7 @@
 			<control/>
 			<control caption="_Add"/>
 			<control caption="_Remove"/>
-			<control caption="Store _Collections Here:"/>
+			<control caption="Store Collections Here"/>
 			<control/>
 			<control/>
 			<control caption="Create ghost files when deleting"/>
@@ -3624,7 +3635,7 @@
 			<control/>
 			<control/>
 		</dialog>
-		<dialog name="CDownloadsSettingsPage" cookie="BuEdBuBuStCoBuStEdmsStEdmsStEdmsBuStCoStCoBuBuEdBu" caption="Downloads">
+		<dialog name="CDownloadsSettingsPage" cookie="BuCoBuBuStCoBuStEdmsStEdmsStEdmsBuStCoStCoBuBuCoBu" caption="Downloads">
 			<control caption="Save Completed Files Here"/>
 			<control/>
 			<control/>
@@ -3758,7 +3769,7 @@
 			<control caption="eDonkey _Tools:"/>
 			<control caption="Download eDonkey server list from the web:"/>
 		</dialog>
-		<dialog name="CBitTorrentSettingsPage" cookie="BuBuBuEdmsEdmsBuEdmsBuBuEdBuEdBuEdBuBuBuStStStStBu" caption="BitTorrent">
+		<dialog name="CBitTorrentSettingsPage" cookie="BuBuBuEdmsEdmsBuEdmsBuBuCoBuEdBuEdBuBuBuStStStStBu" caption="BitTorrent">
 			<control caption="Always connect to BitTorrent"/>
 			<control caption="Connect to BitTorrent today"/>
 			<control caption="Enable BitTorrent DHT"/>
@@ -3778,7 +3789,7 @@
 			<control/>
 			<control caption="_BitTorrent Network:"/>
 			<control caption="_Download Connections:"/>
-			<control caption="_Store Torrents Here:"/>
+			<control caption="Store Torrents Here"/>
 			<control caption="Torrents at once"/>
 			<control caption="Client connections"/>
 			<control caption="%"/>

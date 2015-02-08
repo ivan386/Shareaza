@@ -1,7 +1,7 @@
 //
 // CtrlText.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2014.
+// Copyright (c) Shareaza Development Team, 2002-2015.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -349,23 +349,9 @@ void CTextCtrl::CopyText() const
 		}
 	}
 
-	if ( bGotIt && AfxGetMainWnd()->OpenClipboard() )
+	if ( bGotIt )
 	{
-		EmptyClipboard();
-
-		CT2W pszWide( (LPCTSTR)str );
-		DWORD nSize = ( lstrlenW(pszWide) + 1 ) * sizeof(WCHAR);
-		if ( HANDLE hMem = GlobalAlloc( GMEM_MOVEABLE|GMEM_DDESHARE, nSize ) )
-		{
-			if ( LPVOID pMem = GlobalLock( hMem ) )
-			{
-				CopyMemory( pMem, pszWide, nSize );
-				GlobalUnlock( hMem );
-				SetClipboardData( CF_UNICODETEXT, hMem );
-			}
-		}
-
-		CloseClipboard();
+		theApp.SetClipboardText( str );
 	}
 }
 

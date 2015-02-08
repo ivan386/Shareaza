@@ -1649,6 +1649,10 @@
 		<menu name="WebServices.List.Menu">
 			<item id="ID_WEBSERVICES_MUSICBRAINZ" text="_MusicBrainz"/>
 		</menu>
+		<menu name="Path.Menu">
+			<item id="ID_PATH_EXPLORE" text="_Esplora"/>
+			<item id="ID_PATH_COPY" text="_Copia"/>
+		</menu>
 	</menus>
 	<!-- Documents -->
 	<documents>
@@ -2558,6 +2562,8 @@
 		<tip id="ID_NEXT_PANE" message="Switch to the next window pane" tip="Next Pane"/>
 		<tip id="ID_OPEN_DOWNLOADS_FOLDER" message="Open my folder of completed Downloads"/>
 		<tip id="ID_PREV_PANE" message="Switch back to the previous window pane" tip="Previous Pane"/>
+		<tip id="ID_PATH_COPY" message="Copy this path to clipboard."/>
+		<tip id="ID_PATH_EXPLORE" message="Explore this path."/>
 		<tip id="ID_SCHEDULER_ACTIVATE" message="Activates selected task(s) from the list."/>
 		<tip id="ID_SCHEDULER_ADD" message="Adds a new task to scheduler list."/>
 		<tip id="ID_SCHEDULER_DEACTIVATE" message="Deactivates selected tasks."/>
@@ -2860,6 +2866,7 @@
 		<string id="8336" value="I sorgenti di questo file possono essere instabili"/>
 		<string id="8337" value="Non sicuro"/>
 		<string id="8338" value="Free:"/>
+		<string id="12999" value="Client %s has a prohibited user agent &quot;%s&quot;, banning."/>
 		<string id="13000" value="Sei sicuro di voler cancellare le regole di sicurezza selezionate?  Ciò non può essere annullato."/>
 		<string id="13001" value="File condivisi su internet"/>
 		<string id="16063" value="La mappatura delle porta UPnP è fallita dopo 10 tentativi."/>
@@ -3432,6 +3439,10 @@
 		<string id="20265" value="Done"/>
 		<string id="20266" value="Waiting..."/>
 		<string id="20267" value="No Tasks Currently Scheduled"/>
+		<string id="20268" value="Cartella dei file completati"/>
+		<string id="20269" value="Cartella dei file incompleti temporanei"/>
+		<string id="20270" value="Salva torrent qui"/>
+		<string id="20271" value="Salva collezioni qui"/>
 	</strings>
 	<!-- Localised Dialog Text, the "cookie" verifies that the dialog matches the skin -->
 	<!-- Don't edit dialogs manualy! Use DialogScan feature instead -->
@@ -3472,7 +3483,7 @@
 			<control caption="Quando clicco minimizza:"/>
 			<control caption="Normale|Minimizza nell'area di notifica"/>
 		</dialog>
-		<dialog name="CLibrarySettingsPage" cookie="BuBuBuBuBuBuStEdmsStStEdmsStBuBuCoBuBuBuCoBuBuBuEdBuBuBu" caption="Libreria">
+		<dialog name="CLibrarySettingsPage" cookie="BuBuBuBuBuBuStEdmsStStEdmsStBuBuCoBuBuBuCoBuBuBuCoBuBuBu" caption="Libreria">
 			<control caption="_Opzioni:"/>
 			<control caption="Salva visualizzazione cartelle"/>
 			<control caption="Guarda cartelle nella libreria"/>
@@ -3496,7 +3507,7 @@
 			<control/>
 			<control caption="_Aggiungi"/>
 			<control caption="_Rimuovi"/>
-			<control caption="Salva _collezioni qui:"/>
+			<control caption="Salva collezioni qui"/>
 			<control/>
 			<control/>
 			<control caption="Crea file fantasma durante la cancellazione"/>
@@ -3609,8 +3620,8 @@
 			<control/>
 			<control/>
 		</dialog>
-		<dialog name="CDownloadsSettingsPage" cookie="BuEdBuBuStCoBuStEdmsStEdmsStEdmsBuStCoStCoBuBuEdBu" caption="Download">
-			<control caption="Save Completed Files Here"/>
+		<dialog name="CDownloadsSettingsPage" cookie="BuCoBuBuStCoBuStEdmsStEdmsStEdmsBuStCoStCoBuBuCoBu" caption="Download">
+			<control caption="Cartella dei file completati"/>
 			<control/>
 			<control/>
 			<control caption="Scan every completed file with AntiVirus"/>
@@ -3632,7 +3643,7 @@
 			<control caption="Lunghezza massima di coda:"/>
 			<control/>
 			<control caption="Scarica e invia file solo alle reti connesse."/>
-			<control caption="Store Temporary Incomplete Files Here"/>
+			<control caption="Cartella dei file incompleti temporanei"/>
 			<control/>
 			<control/>
 		</dialog>
@@ -3743,7 +3754,7 @@
 			<control caption="_Strumenti eDonkey:"/>
 			<control caption="Scarica la lista dei server eDonkey dal web:"/>
 		</dialog>
-		<dialog name="CBitTorrentSettingsPage" cookie="BuBuBuEdmsEdmsBuEdmsBuBuEdBuEdBuEdBuBuBuStStStStBu" caption="BitTorrent">
+		<dialog name="CBitTorrentSettingsPage" cookie="BuBuBuEdmsEdmsBuEdmsBuBuCoBuEdBuEdBuBuBuStStStStBu" caption="BitTorrent">
 			<control caption="Always connect to BitTorrent"/>
 			<control caption="Connect to BitTorrent today"/>
 			<control caption="Enable BitTorrent DHT"/>
@@ -3763,7 +3774,7 @@
 			<control/>
 			<control caption="_BitTorrent Network:"/>
 			<control caption="_Connessioni di download:"/>
-			<control caption="_Salva torrent qui:"/>
+			<control caption="Salva torrent qui"/>
 			<control caption="Torrent in contemporanea"/>
 			<control caption="Connessioni del client"/>
 			<control caption="%"/>

@@ -1,7 +1,7 @@
 //
 // WndHostCache.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2012.
+// Copyright (c) Shareaza Development Team, 2002-2015.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -527,7 +527,7 @@ void CHostCacheWnd::OnNeighboursCopy()
 			(LPCTSTR)pHost->Address(), pHost->m_nUDPPort );
 	}
 
-	CURLCopyDlg::SetClipboardText( strURL );
+	theApp.SetClipboardText( strURL );
 }
 
 void CHostCacheWnd::OnUpdateHostCacheRemove(CCmdUI* pCmdUI)

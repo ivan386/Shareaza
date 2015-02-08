@@ -1649,6 +1649,10 @@
 		<menu name="WebServices.List.Menu">
 			<item id="ID_WEBSERVICES_MUSICBRAINZ" text="_MusicBrainz"/>
 		</menu>
+		<menu name="Path.Menu">
+			<item id="ID_PATH_EXPLORE" text="_Průzkumník"/>
+			<item id="ID_PATH_COPY" text="_Kopírovat"/>
+		</menu>
 	</menus>
 	<!-- Documents -->
 	<documents>
@@ -2561,6 +2565,8 @@
 		<tip id="ID_NEXT_PANE" message="Switch to the next window pane" tip="Next Pane"/>
 		<tip id="ID_OPEN_DOWNLOADS_FOLDER" message="Open my folder of completed Downloads"/>
 		<tip id="ID_PREV_PANE" message="Switch back to the previous window pane" tip="Previous Pane"/>
+		<tip id="ID_PATH_COPY" message="Copy this path to clipboard."/>
+		<tip id="ID_PATH_EXPLORE" message="Explore this path."/>
 		<tip id="ID_SCHEDULER_ACTIVATE" message="Activates selected task(s) from the list."/>
 		<tip id="ID_SCHEDULER_ADD" message="Adds a new task to scheduler list."/>
 		<tip id="ID_SCHEDULER_DEACTIVATE" message="Deactivates selected tasks."/>
@@ -2863,6 +2869,7 @@
 		<string id="8336" value="Zdroje pro tento soubor mohou být nestabilní"/>
 		<string id="8337" value="Nedůvěryhodný"/>
 		<string id="8338" value="Free:"/>
+		<string id="12999" value="Client %s has a prohibited user agent &quot;%s&quot;, banning."/>
 		<string id="13000" value="Checte smazat vybraná bezpoečnostní pravidla? Tato operace je nevratná."/>
 		<string id="13001" value="Soubory sdílené v Internetu"/>
 		<string id="16063" value="Mapování UPnP portu selhalo po 10 pokusech."/>
@@ -3435,6 +3442,10 @@
 		<string id="20265" value="Done"/>
 		<string id="20266" value="Waiting..."/>
 		<string id="20267" value="No Tasks Currently Scheduled"/>
+		<string id="20268" value="Ukládat dokončené soubory do"/>
+		<string id="20269" value="Ukládat neúplné soubory do"/>
+		<string id="20270" value="Torrenty skladovat zde"/>
+		<string id="20271" value="Sbírky ukládat do adresáře"/>
 	</strings>
 	<!-- Localised Dialog Text, the "cookie" verifies that the dialog matches the skin -->
 	<!-- Don't edit dialogs manualy! Use DialogScan feature instead -->
@@ -3475,7 +3486,7 @@
 			<control caption="Když kliknu minimalizovat:"/>
 			<control caption="Normálně na lištu|Shodit do ikony v liště"/>
 		</dialog>
-		<dialog name="CLibrarySettingsPage" cookie="BuBuBuBuBuBuStEdmsStStEdmsStBuBuCoBuBuBuCoBuBuBuEdBuBuBu" caption="Knihovna">
+		<dialog name="CLibrarySettingsPage" cookie="BuBuBuBuBuBuStEdmsStStEdmsStBuBuCoBuBuBuCoBuBuBuCoBuBuBu" caption="Knihovna">
 			<control caption="_Nastavení:"/>
 			<control caption="Pamatovat si vzhled složky"/>
 			<control caption="Sledovat složky knihovny"/>
@@ -3499,7 +3510,7 @@
 			<control/>
 			<control caption="Přid_at"/>
 			<control caption="Odst_ranit"/>
-			<control caption="Sbírky _ukládat do adresáře:"/>
+			<control caption="Sbírky ukládat do adresáře"/>
 			<control/>
 			<control/>
 			<control caption="Ukládat informace o smazaných souborech"/>
@@ -3612,8 +3623,8 @@
 			<control/>
 			<control/>
 		</dialog>
-		<dialog name="CDownloadsSettingsPage" cookie="BuEdBuBuStCoBuStEdmsStEdmsStEdmsBuStCoStCoBuBuEdBu" caption="Stahování">
-			<control caption="Save Completed Files Here"/>
+		<dialog name="CDownloadsSettingsPage" cookie="BuCoBuBuStCoBuStEdmsStEdmsStEdmsBuStCoStCoBuBuCoBu" caption="Stahování">
+			<control caption="Ukládat dokončené soubory do"/>
 			<control/>
 			<control/>
 			<control caption="Scan every completed file with AntiVirus"/>
@@ -3635,7 +3646,7 @@
 			<control caption="Maximální délka fronty:"/>
 			<control/>
 			<control caption="Stahovat a odesílat pouze ze sítí, které jsou připojené."/>
-			<control caption="Store Temporary Incomplete Files Here"/>
+			<control caption="Ukládat neúplné soubory do"/>
 			<control/>
 			<control/>
 		</dialog>
@@ -3746,7 +3757,7 @@
 			<control caption="Nás_troje eDonkey:"/>
 			<control caption="Stáhnout seznam serverů eDonkey z webu:"/>
 		</dialog>
-		<dialog name="CBitTorrentSettingsPage" cookie="BuBuBuEdmsEdmsBuEdmsBuBuEdBuEdBuEdBuBuBuStStStStBu" caption="BitTorrent">
+		<dialog name="CBitTorrentSettingsPage" cookie="BuBuBuEdmsEdmsBuEdmsBuBuCoBuEdBuEdBuBuBuStStStStBu" caption="BitTorrent">
 			<control caption="Always connect to BitTorrent"/>
 			<control caption="Connect to BitTorrent today"/>
 			<control caption="Enable BitTorrent DHT"/>
@@ -3766,7 +3777,7 @@
 			<control/>
 			<control caption="_BitTorrent Network:"/>
 			<control caption="_Připojená stahování:"/>
-			<control caption="_Torrenty skladovat zde:"/>
+			<control caption="Torrenty skladovat zde"/>
 			<control caption="Torrenty najednou"/>
 			<control caption="připojených klientů"/>
 			<control caption="%"/>

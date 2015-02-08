@@ -1649,6 +1649,10 @@
 		<menu name="WebServices.List.Menu">
 			<item id="ID_WEBSERVICES_MUSICBRAINZ" text="_MusicBrainz"/>
 		</menu>
+		<menu name="Path.Menu">
+			<item id="ID_PATH_EXPLORE" text="Im Explorer _öffnen"/>
+			<item id="ID_PATH_COPY" text="_Kopieren"/>
+		</menu>
 	</menus>
 	<!-- Documents -->
 	<documents>
@@ -2553,6 +2557,8 @@
 		<tip id="ID_NEXT_PANE" message="Zur nächsten Fenstersektion wechseln" tip="Nächste Fenstersektion"/>
 		<tip id="ID_OPEN_DOWNLOADS_FOLDER" message="Öffne das Verzeichnis der abgeschlossenen Downloads."/>
 		<tip id="ID_PREV_PANE" message="Zur vorherigen Fenstersektion wechseln" tip="Vorherige Fenstersektion"/>
+		<tip id="ID_PATH_COPY" message="Copy this path to clipboard."/>
+		<tip id="ID_PATH_EXPLORE" message="Explore this path."/>
 		<tip id="ID_SCHEDULER_ACTIVATE" message="Markierte(n) Task(s) aus der Liste entfernen."/>
 		<tip id="ID_SCHEDULER_ADD" message="Neuen geplanten Task hinzufügen."/>
 		<tip id="ID_SCHEDULER_DEACTIVATE" message="Markierte(n) Task(s) deaktivieren."/>
@@ -2855,6 +2861,7 @@
 		<string id="8336" value="Quellen für diese Datei können instabil sein"/>
 		<string id="8337" value="Nicht vertraut"/>
 		<string id="8338" value="Frei:"/>
+		<string id="12999" value="Client %s has a prohibited user agent &quot;%s&quot;, banning."/>
 		<string id="13000" value="Sind Sie sicher, dass Sie die ausgewählten Sicherheitsregeln löschen möchten? Dieser Schritt kann nicht rückgängig gemacht werden."/>
 		<string id="13001" value="Über das Internet freigegebene Dateien"/>
 		<string id="16063" value="UPnP-Portfreigabe nach 10 Versuchen fehlgeschlagen."/>
@@ -3427,6 +3434,10 @@
 		<string id="20265" value="Fertig"/>
 		<string id="20266" value="Warte..."/>
 		<string id="20267" value="Keine Aufgaben geplant"/>
+		<string id="20268" value="Downloadverzeichnis"/>
+		<string id="20269" value="Unvollständige Dateien"/>
+		<string id="20270" value="Torrents hier speichern"/>
+		<string id="20271" value="Kollektionen hier speichern"/>
 	</strings>
 	<!-- Localised Dialog Text, the "cookie" verifies that the dialog matches the skin -->
 	<!-- Don't edit dialogs manualy! Use DialogScan feature instead -->
@@ -3467,7 +3478,7 @@
 			<control caption="Bei Klick auf [-]:"/>
 			<control caption="Minimieren (normal)|In den Tray minimieren"/>
 		</dialog>
-		<dialog name="CLibrarySettingsPage" cookie="BuBuBuBuBuBuStEdmsStStEdmsStBuBuCoBuBuBuCoBuBuBuEdBuBuBu" caption="Bibliothek">
+		<dialog name="CLibrarySettingsPage" cookie="BuBuBuBuBuBuStEdmsStStEdmsStBuBuCoBuBuBuCoBuBuBuCoBuBuBu" caption="Bibliothek">
 			<control caption="_Optionen:"/>
 			<control caption="Ansichtoptionen speichern"/>
 			<control caption="Ordner überwachen"/>
@@ -3491,7 +3502,7 @@
 			<control/>
 			<control caption="_Hinzufügen"/>
 			<control caption="_Entfernen"/>
-			<control caption="_Kollektionen hier speichern:"/>
+			<control caption="Kollektionen hier speichern"/>
 			<control/>
 			<control/>
 			<control caption="Erst. Ghost-Dateien beim Löschen"/>
@@ -3604,8 +3615,8 @@
 			<control/>
 			<control/>
 		</dialog>
-		<dialog name="CDownloadsSettingsPage" cookie="BuEdBuBuStCoBuStEdmsStEdmsStEdmsBuStCoStCoBuBuEdBu" caption="Downloads">
-			<control caption="_Downloadverzeichnis:"/>
+		<dialog name="CDownloadsSettingsPage" cookie="BuCoBuBuStCoBuStEdmsStEdmsStEdmsBuStCoStCoBuBuCoBu" caption="Downloads">
+			<control caption="Downloadverzeichnis"/>
 			<control/>
 			<control/>
 			<control caption="Scan every completed file with AntiVirus"/>
@@ -3627,7 +3638,7 @@
 			<control caption="Max. Warteschlangenlänge:"/>
 			<control/>
 			<control caption="Nur in verbundenen Netzwerken hoch- und herunterladen."/>
-			<control caption="_Unvollständige Dateien:"/>
+			<control caption="Unvollständige Dateien"/>
 			<control/>
 			<control/>
 		</dialog>
@@ -3738,7 +3749,7 @@
 			<control caption="eDonkey-_Tools:"/>
 			<control caption="Serverliste aus dem Internet herunterladen:"/>
 		</dialog>
-		<dialog name="CBitTorrentSettingsPage" cookie="BuBuBuEdmsEdmsBuEdmsBuBuEdBuEdBuEdBuBuBuStStStStBu" caption="BitTorrent">
+		<dialog name="CBitTorrentSettingsPage" cookie="BuBuBuEdmsEdmsBuEdmsBuBuCoBuEdBuEdBuBuBuStStStStBu" caption="BitTorrent">
 			<control caption="Always connect to BitTorrent"/>
 			<control caption="Connect to BitTorrent today"/>
 			<control caption="Enable BitTorrent DHT"/>
@@ -3758,7 +3769,7 @@
 			<control/>
 			<control caption="_BitTorrent Network:"/>
 			<control caption="_Download-Verbindungen:"/>
-			<control caption="Torrents hier _speichern:"/>
+			<control caption="Torrents hier speichern"/>
 			<control caption="Torrents gleichzeitig"/>
 			<control caption="Client-Verbindungen"/>
 			<control caption="%"/>

@@ -1649,6 +1649,10 @@
 		<menu name="WebServices.List.Menu">
 			<item id="ID_WEBSERVICES_MUSICBRAINZ" text="_MusicBrainz"/>
 		</menu>
+		<menu name="Path.Menu">
+			<item id="ID_PATH_EXPLORE" text="探索"/>
+			<item id="ID_PATH_COPY" text="複製"/>
+		</menu>
 	</menus>
 	<!-- Documents -->
 	<documents>
@@ -2558,6 +2562,8 @@
 		<tip id="ID_NEXT_PANE" message="Switch to the next window pane" tip="Next Pane"/>
 		<tip id="ID_OPEN_DOWNLOADS_FOLDER" message="Open my folder of completed Downloads"/>
 		<tip id="ID_PREV_PANE" message="Switch back to the previous window pane" tip="Previous Pane"/>
+		<tip id="ID_PATH_COPY" message="Copy this path to clipboard."/>
+		<tip id="ID_PATH_EXPLORE" message="Explore this path."/>
 		<tip id="ID_SCHEDULER_ACTIVATE" message="Activates selected task(s) from the list."/>
 		<tip id="ID_SCHEDULER_ADD" message="Adds a new task to scheduler list."/>
 		<tip id="ID_SCHEDULER_DEACTIVATE" message="Deactivates selected tasks."/>
@@ -2860,6 +2866,7 @@
 		<string id="8336" value="這個檔案的來源可能不穩定"/>
 		<string id="8337" value="不可靠的"/>
 		<string id="8338" value="Free:"/>
+		<string id="12999" value="Client %s has a prohibited user agent &quot;%s&quot;, banning."/>
 		<string id="13000" value="Are you sure you want to delete the selected security rules? This cannot be undone."/>
 		<string id="13001" value="Files shared over the Internet"/>
 		<string id="16063" value="UPnP port mapping failed after 10 attempts."/>
@@ -3432,6 +3439,10 @@
 		<string id="20265" value="Done"/>
 		<string id="20266" value="Waiting..."/>
 		<string id="20267" value="No Tasks Currently Scheduled"/>
+		<string id="20268" value="請將下載完成的檔案存放在這裡"/>
+		<string id="20269" value="請將暫存的未完成檔案放在這裡"/>
+		<string id="20270" value="Torrents 存放於此"/>
+		<string id="20271" value="將組檔存放在這個位置"/>
 	</strings>
 	<!-- Localised Dialog Text, the "cookie" verifies that the dialog matches the skin -->
 	<!-- Don't edit dialogs manualy! Use DialogScan feature instead -->
@@ -3472,7 +3483,7 @@
 			<control caption="當我點選最小化時:"/>
 			<control caption="標準|最小化至系統列"/>
 		</dialog>
-		<dialog name="CLibrarySettingsPage" cookie="BuBuBuBuBuBuStEdmsStStEdmsStBuBuCoBuBuBuCoBuBuBuEdBuBuBu" caption="收藏">
+		<dialog name="CLibrarySettingsPage" cookie="BuBuBuBuBuBuStEdmsStStEdmsStBuBuCoBuBuBuCoBuBuBuCoBuBuBu" caption="收藏">
 			<control caption="選項:"/>
 			<control caption="記住資料夾檢視方式"/>
 			<control caption="監視收藏的資料夾"/>
@@ -3496,7 +3507,7 @@
 			<control/>
 			<control caption="新增"/>
 			<control caption="移除"/>
-			<control caption="將組檔存放在這個位置:"/>
+			<control caption="將組檔存放在這個位置"/>
 			<control/>
 			<control/>
 			<control caption="当删除时建立回收文件"/>
@@ -3609,8 +3620,8 @@
 			<control/>
 			<control/>
 		</dialog>
-		<dialog name="CDownloadsSettingsPage" cookie="BuEdBuBuStCoBuStEdmsStEdmsStEdmsBuStCoStCoBuBuEdBu" caption="下載">
-			<control caption="Save Completed Files Here"/>
+		<dialog name="CDownloadsSettingsPage" cookie="BuCoBuBuStCoBuStEdmsStEdmsStEdmsBuStCoStCoBuBuCoBu" caption="下載">
+			<control caption="請將下載完成的檔案存放在這裡"/>
 			<control/>
 			<control/>
 			<control caption="Scan every completed file with AntiVirus"/>
@@ -3632,7 +3643,7 @@
 			<control caption="最大排隊長度:"/>
 			<control/>
 			<control caption="只與您連線的網路下載與上傳."/>
-			<control caption="Store Temporary Incomplete Files Here"/>
+			<control caption="請將暫存的未完成檔案放在這裡"/>
 			<control/>
 			<control/>
 		</dialog>
@@ -3743,7 +3754,7 @@
 			<control caption="eDonkey2000 工具箱:"/>
 			<control caption="從網際網路下載 eDonkey2000 伺服器清單:"/>
 		</dialog>
-		<dialog name="CBitTorrentSettingsPage" cookie="BuBuBuEdmsEdmsBuEdmsBuBuEdBuEdBuEdBuBuBuStStStStBu" caption="BitTorrent">
+		<dialog name="CBitTorrentSettingsPage" cookie="BuBuBuEdmsEdmsBuEdmsBuBuCoBuEdBuEdBuBuBuStStStStBu" caption="BitTorrent">
 			<control caption="Always connect to BitTorrent"/>
 			<control caption="Connect to BitTorrent today"/>
 			<control caption="Enable BitTorrent DHT"/>
@@ -3763,7 +3774,7 @@
 			<control/>
 			<control caption="_BitTorrent Network:"/>
 			<control caption="下載連線:"/>
-			<control caption="Torrents 存放於此:"/>
+			<control caption="Torrents 存放於此"/>
 			<control caption="同時進行...個 Torrent"/>
 			<control caption="客戶端連線"/>
 			<control caption="%"/>

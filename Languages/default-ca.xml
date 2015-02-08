@@ -1649,6 +1649,10 @@
 		<menu name="WebServices.List.Menu">
 			<item id="ID_WEBSERVICES_MUSICBRAINZ" text="_MusicBrainz"/>
 		</menu>
+		<menu name="Path.Menu">
+			<item id="ID_PATH_EXPLORE" text="_Explora"/>
+			<item id="ID_PATH_COPY" text="_Copy"/>
+		</menu>
 	</menus>
 	<!-- Documents -->
 	<documents>
@@ -2558,6 +2562,8 @@
 		<tip id="ID_NEXT_PANE" message="Switch to the next window pane" tip="Next Pane"/>
 		<tip id="ID_OPEN_DOWNLOADS_FOLDER" message="Open my folder of completed Downloads"/>
 		<tip id="ID_PREV_PANE" message="Switch back to the previous window pane" tip="Previous Pane"/>
+		<tip id="ID_PATH_COPY" message="Copy this path to clipboard."/>
+		<tip id="ID_PATH_EXPLORE" message="Explore this path."/>
 		<tip id="ID_SCHEDULER_ACTIVATE" message="Activates selected task(s) from the list."/>
 		<tip id="ID_SCHEDULER_ADD" message="Adds a new task to scheduler list."/>
 		<tip id="ID_SCHEDULER_DEACTIVATE" message="Deactivates selected tasks."/>
@@ -2860,6 +2866,7 @@
 		<string id="8336" value="Les fonts poden ser inestables"/>
 		<string id="8337" value="Amb desconfiança"/>
 		<string id="8338" value="Free:"/>
+		<string id="12999" value="Client %s has a prohibited user agent &quot;%s&quot;, banning."/>
 		<string id="13000" value="Estàs segur de esborrar les normes de seguretat seleccionades? Aquesta operació no pot ser desfeta."/>
 		<string id="13001" value="Arxius compartits a Internet"/>
 		<string id="16063" value="El mapegi de ports UPnP ha fallat després de 10 intents."/>
@@ -3432,6 +3439,10 @@
 		<string id="20265" value="Done"/>
 		<string id="20266" value="Waiting..."/>
 		<string id="20267" value="No Tasks Currently Scheduled"/>
+		<string id="20268" value="Carpeta d'arxius completats"/>
+		<string id="20269" value="Carpeta d'arxius incomplets"/>
+		<string id="20270" value="Desa els torrents aquí"/>
+		<string id="20271" value="Desa les col·leccions aquí"/>
 	</strings>
 	<!-- Localised Dialog Text, the "cookie" verifies that the dialog matches the skin -->
 	<!-- Don't edit dialogs manualy! Use DialogScan feature instead -->
@@ -3472,7 +3483,7 @@
 			<control caption="Quant es fa clic a minimitzar:"/>
 			<control caption="Normal|Minimitza a la barra de tasques"/>
 		</dialog>
-		<dialog name="CLibrarySettingsPage" cookie="BuBuBuBuBuBuStEdmsStStEdmsStBuBuCoBuBuBuCoBuBuBuEdBuBuBu" caption="La meva col·lecció">
+		<dialog name="CLibrarySettingsPage" cookie="BuBuBuBuBuBuStEdmsStStEdmsStBuBuCoBuBuBuCoBuBuBuCoBuBuBu" caption="La meva col·lecció">
 			<control caption="_Opcions:"/>
 			<control caption="Recordar les vistes de carpetes"/>
 			<control caption="Mostra les carpetes de la col·lecció"/>
@@ -3496,7 +3507,7 @@
 			<control/>
 			<control caption="_Afegeix"/>
 			<control caption="_Esborra"/>
-			<control caption="Desa les _col·leccions aquí:"/>
+			<control caption="Desa les col·leccions aquí"/>
 			<control/>
 			<control/>
 			<control caption="Crea arxius fantasma a l'esborrar descàrregues"/>
@@ -3609,8 +3620,8 @@
 			<control/>
 			<control/>
 		</dialog>
-		<dialog name="CDownloadsSettingsPage" cookie="BuEdBuBuStCoBuStEdmsStEdmsStEdmsBuStCoStCoBuBuEdBu" caption="Descàrregues">
-			<control caption="Save Completed Files Here"/>
+		<dialog name="CDownloadsSettingsPage" cookie="BuCoBuBuStCoBuStEdmsStEdmsStEdmsBuStCoStCoBuBuCoBu" caption="Descàrregues">
+			<control caption="Carpeta d'arxius completats"/>
 			<control/>
 			<control/>
 			<control caption="Scan every completed file with AntiVirus"/>
@@ -3632,7 +3643,7 @@
 			<control caption="Mida màxima de les cues:"/>
 			<control/>
 			<control caption="Sols puja i descarrega per les xarxes connectades."/>
-			<control caption="Store Temporary Incomplete Files Here"/>
+			<control caption="Carpeta d'arxius incomplets"/>
 			<control/>
 			<control/>
 		</dialog>
@@ -3743,7 +3754,7 @@
 			<control caption="_Eines d'eDonkey:"/>
 			<control caption="Descarrega una llista de servidors de eDonkey de la web:"/>
 		</dialog>
-		<dialog name="CBitTorrentSettingsPage" cookie="BuBuBuEdmsEdmsBuEdmsBuBuEdBuEdBuEdBuBuBuStStStStBu" caption="BitTorrent">
+		<dialog name="CBitTorrentSettingsPage" cookie="BuBuBuEdmsEdmsBuEdmsBuBuCoBuEdBuEdBuBuBuStStStStBu" caption="BitTorrent">
 			<control caption="Always connect to BitTorrent"/>
 			<control caption="Connect to BitTorrent today"/>
 			<control caption="Enable BitTorrent DHT"/>
@@ -3763,7 +3774,7 @@
 			<control/>
 			<control caption="_BitTorrent Network:"/>
 			<control caption="_Connexions de descàrrega:"/>
-			<control caption="_Desa els torrents aquí "/>
+			<control caption="Desa els torrents aquí"/>
 			<control caption="Torrents al mateix temps"/>
 			<control caption="Connexions de clients"/>
 			<control caption="%"/>

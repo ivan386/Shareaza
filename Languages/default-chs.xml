@@ -1649,6 +1649,10 @@
 		<menu name="WebServices.List.Menu">
 			<item id="ID_WEBSERVICES_MUSICBRAINZ" text="MusicBrainz(_M)"/>
 		</menu>
+		<menu name="Path.Menu">
+			<item id="ID_PATH_EXPLORE" text="浏览(_E)"/>
+			<item id="ID_PATH_COPY" text="复制(_C)"/>
+		</menu>
 	</menus>
 	<!-- Documents -->
 	<documents>
@@ -2538,6 +2542,8 @@
 		<tip id="ID_NEXT_PANE" message="切换到下一个窗格" tip="下一个窗格"/>
 		<tip id="ID_OPEN_DOWNLOADS_FOLDER" message="打开我的已完成下载文件夹"/>
 		<tip id="ID_PREV_PANE" message="返回上一个窗格" tip="上一个窗格"/>
+		<tip id="ID_PATH_COPY" message="Copy this path to clipboard."/>
+		<tip id="ID_PATH_EXPLORE" message="Explore this path."/>
 		<tip id="ID_SCHEDULER_ACTIVATE" message="从列表中启用选中任务。"/>
 		<tip id="ID_SCHEDULER_ADD" message="添加一个新任务到计划列表。"/>
 		<tip id="ID_SCHEDULER_DEACTIVATE" message="取消选中的任务。"/>
@@ -2840,6 +2846,7 @@
 		<string id="8336" value="此文件来源可能不稳定"/>
 		<string id="8337" value="未受信任"/>
 		<string id="8338" value="Free:"/>
+		<string id="12999" value="Client %s has a prohibited user agent &quot;%s&quot;, banning."/>
 		<string id="13000" value="您是否确定要删除选中的安全规则？该操作无法还原。"/>
 		<string id="13001" value="通过互联网分享文件"/>
 		<string id="16063" value="UPnP 端口映射失败超过10次。"/>
@@ -3412,6 +3419,10 @@
 		<string id="20265" value="完成"/>
 		<string id="20266" value="等待..."/>
 		<string id="20267" value="当前没有计划的任务"/>
+		<string id="20268" value="在这里保存已完成文件"/>
+		<string id="20269" value="只在已连接的网络下载和上传。"/>
+		<string id="20270" value="保存种子到"/>
+		<string id="20271" value="在这里储存收集"/>
 	</strings>
 	<!-- Localised Dialog Text, the "cookie" verifies that the dialog matches the skin -->
 	<!-- Don't edit dialogs manualy! Use DialogScan feature instead -->
@@ -3452,7 +3463,7 @@
 			<control caption="点击最小化时:"/>
 			<control caption="标准|最小化到系统托盘"/>
 		</dialog>
-		<dialog name="CLibrarySettingsPage" cookie="BuBuBuBuBuBuStEdmsStStEdmsStBuBuCoBuBuBuCoBuBuBuEdBuBuBu" caption="收藏">
+		<dialog name="CLibrarySettingsPage" cookie="BuBuBuBuBuBuStEdmsStStEdmsStBuBuCoBuBuBuCoBuBuBuCoBuBuBu" caption="收藏">
 			<control caption="选项(_O):"/>
 			<control caption="记住文件夹视图"/>
 			<control caption="监视收藏文件夹"/>
@@ -3476,7 +3487,7 @@
 			<control/>
 			<control caption="添加(_A)"/>
 			<control caption="移除(_R)"/>
-			<control caption="在这里储存收集(_C):"/>
+			<control caption="在这里储存收集"/>
 			<control/>
 			<control/>
 			<control caption="当删除时建立回收文件"/>
@@ -3589,8 +3600,8 @@
 			<control/>
 			<control/>
 		</dialog>
-		<dialog name="CDownloadsSettingsPage" cookie="BuEdBuBuStCoBuStEdmsStEdmsStEdmsBuStCoStCoBuBuEdBu" caption="传送">
-			<control caption="在这里保存已完成文件(_C):"/>
+		<dialog name="CDownloadsSettingsPage" cookie="BuCoBuBuStCoBuStEdmsStEdmsStEdmsBuStCoStCoBuBuCoBu" caption="传送">
+			<control caption="在这里保存已完成文件"/>
 			<control/>
 			<control/>
 			<control caption="在这里保存未完成文件(_I):"/>
@@ -3723,7 +3734,7 @@
 			<control caption="eDonkey 工具(_T):"/>
 			<control caption="导入 eDonkey/eMule 未完成下载 (.part):"/>
 		</dialog>
-		<dialog name="CBitTorrentSettingsPage" cookie="BuBuBuEdmsEdmsBuEdmsBuBuEdBuEdBuEdBuBuBuStStStStBu" caption="BitTorrent">
+		<dialog name="CBitTorrentSettingsPage" cookie="BuBuBuEdmsEdmsBuEdmsBuBuCoBuEdBuEdBuBuBuStStStStBu" caption="BitTorrent">
 			<control caption="Always connect to BitTorrent"/>
 			<control caption="Connect to BitTorrent today"/>
 			<control caption="Enable BitTorrent DHT"/>
@@ -3743,7 +3754,7 @@
 			<control/>
 			<control caption="_BitTorrent Network:"/>
 			<control caption="下载连接(_D):"/>
-			<control caption="保存种子到(_S):"/>
+			<control caption="保存种子到"/>
 			<control caption="个 Torrent 一次"/>
 			<control caption="个客户端连接"/>
 			<control caption="%"/>

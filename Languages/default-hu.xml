@@ -1649,6 +1649,10 @@
 		<menu name="WebServices.List.Menu">
 			<item id="ID_WEBSERVICES_MUSICBRAINZ" text="_MusicBrainz"/>
 		</menu>
+		<menu name="Path.Menu">
+			<item id="ID_PATH_EXPLORE" text="_Intézőben megnyit"/>
+			<item id="ID_PATH_COPY" text="_Másolás"/>
+		</menu>
 	</menus>
 	<!-- Documents -->
 	<documents>
@@ -2558,6 +2562,8 @@
 		<tip id="ID_NEXT_PANE" message="Switch to the next window pane" tip="Next Pane"/>
 		<tip id="ID_OPEN_DOWNLOADS_FOLDER" message="Open my folder of completed Downloads"/>
 		<tip id="ID_PREV_PANE" message="Switch back to the previous window pane" tip="Previous Pane"/>
+		<tip id="ID_PATH_COPY" message="Copy this path to clipboard."/>
+		<tip id="ID_PATH_EXPLORE" message="Explore this path."/>
 		<tip id="ID_SCHEDULER_ACTIVATE" message="Activates selected task(s) from the list."/>
 		<tip id="ID_SCHEDULER_ADD" message="Adds a new task to scheduler list."/>
 		<tip id="ID_SCHEDULER_DEACTIVATE" message="Deactivates selected tasks."/>
@@ -2860,6 +2866,7 @@
 		<string id="8336" value="A források ehhez a fájlhoz bizonytalanok"/>
 		<string id="8337" value="Megbízhatatlan"/>
 		<string id="8338" value="Free:"/>
+		<string id="12999" value="Client %s has a prohibited user agent &quot;%s&quot;, banning."/>
 		<string id="13000" value="Biztosan törölni akarja a kiválasztott biztonsági szabályokat? Később már nem lehet visszavonni."/>
 		<string id="13001" value="Az interneten megosztott fájlok"/>
 		<string id="16063" value="Az UPnP port hozzárendelés a 10 próbálkozás után sem sikerült."/>
@@ -3432,6 +3439,10 @@
 		<string id="20265" value="Done"/>
 		<string id="20266" value="Waiting..."/>
 		<string id="20267" value="No Tasks Currently Scheduled"/>
+		<string id="20268" value="Kész letöltések mappája"/>
+		<string id="20269" value="Félkész letöltések mappája"/>
+		<string id="20270" value="Torrentfájlok mappája"/>
+		<string id="20271" value="Gyűjtemények tárolása"/>
 	</strings>
 	<!-- Localised Dialog Text, the "cookie" verifies that the dialog matches the skin -->
 	<!-- Don't edit dialogs manualy! Use DialogScan feature instead -->
@@ -3472,7 +3483,7 @@
 			<control caption="Kis méret gomb:"/>
 			<control caption="Normál|Leküldi az óra mellé"/>
 		</dialog>
-		<dialog name="CLibrarySettingsPage" cookie="BuBuBuBuBuBuStEdmsStStEdmsStBuBuCoBuBuBuCoBuBuBuEdBuBuBu" caption="Könyvtár">
+		<dialog name="CLibrarySettingsPage" cookie="BuBuBuBuBuBuStEdmsStStEdmsStBuBuCoBuBuBuCoBuBuBuCoBuBuBu" caption="Könyvtár">
 			<control caption="_Beállítások"/>
 			<control caption="Utolsó mappa megjegyzése"/>
 			<control caption="Mappák figyelése"/>
@@ -3496,7 +3507,7 @@
 			<control/>
 			<control caption="_Hozzáad"/>
 			<control caption="_Eltávolít"/>
-			<control caption="_Gyűjtemények tárolása"/>
+			<control caption="Gyűjtemények tárolása"/>
 			<control/>
 			<control/>
 			<control caption="Szellemfájl készítése törléskor"/>
@@ -3609,8 +3620,8 @@
 			<control/>
 			<control/>
 		</dialog>
-		<dialog name="CDownloadsSettingsPage" cookie="BuEdBuBuStCoBuStEdmsStEdmsStEdmsBuStCoStCoBuBuEdBu" caption="Letöltések">
-			<control caption="Save Completed Files Here"/>
+		<dialog name="CDownloadsSettingsPage" cookie="BuCoBuBuStCoBuStEdmsStEdmsStEdmsBuStCoStCoBuBuCoBu" caption="Letöltések">
+			<control caption="Kész letöltések mappája"/>
 			<control/>
 			<control/>
 			<control caption="Scan every completed file with AntiVirus"/>
@@ -3632,7 +3643,7 @@
 			<control caption="Maximum sorbanállás:"/>
 			<control/>
 			<control caption="Csak a kapcsolatban lévő hálózatokon van forgalom"/>
-			<control caption="Store Temporary Incomplete Files Here"/>
+			<control caption="Félkész letöltések mappája"/>
 			<control/>
 			<control/>
 		</dialog>
@@ -3743,7 +3754,7 @@
 			<control caption="eDonkey e_szközök"/>
 			<control caption="eDonkey szerverlista letöltése az internetről:"/>
 		</dialog>
-		<dialog name="CBitTorrentSettingsPage" cookie="BuBuBuEdmsEdmsBuEdmsBuBuEdBuEdBuEdBuBuBuStStStStBu" caption="BitTorrent">
+		<dialog name="CBitTorrentSettingsPage" cookie="BuBuBuEdmsEdmsBuEdmsBuBuCoBuEdBuEdBuBuBuStStStStBu" caption="BitTorrent">
 			<control caption="Always connect to BitTorrent"/>
 			<control caption="Connect to BitTorrent today"/>
 			<control caption="Enable BitTorrent DHT"/>
@@ -3763,7 +3774,7 @@
 			<control/>
 			<control caption="_BitTorrent Network:"/>
 			<control caption="_Letöltési kapcsolatok"/>
-			<control caption="_Torrentfájlok mappája"/>
+			<control caption="Torrentfájlok mappája"/>
 			<control caption="torrent letöltése egyszerre"/>
 			<control caption="kliens kapcsolódhat hozzám egyszerre"/>
 			<control caption="%"/>

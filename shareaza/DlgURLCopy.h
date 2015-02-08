@@ -1,7 +1,7 @@
 //
 // DlgURLCopy.h
 //
-// Copyright (c) Shareaza Development Team, 2002-2014.
+// Copyright (c) Shareaza Development Team, 2002-2015.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -35,8 +35,6 @@ public:
 	enum { IDD = IDD_URL_COPY };
 
 	void		Add(const CShareazaFile* pFile);
-
-	static BOOL	SetClipboardText(CString& strText);
 
 	// Gathers more information about file (including trackers list)
 	static void Resolve(CShareazaFile& pFile, CString& sTracker, CString& sWebSeed);

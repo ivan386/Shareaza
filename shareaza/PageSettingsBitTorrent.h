@@ -1,7 +1,7 @@
 //
 // PageSettingsBitTorrent.h
 //
-// Copyright (c) Shareaza Development Team, 2002-2012.
+// Copyright (c) Shareaza Development Team, 2002-2015.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -31,7 +31,6 @@ class CBitTorrentSettingsPage : public CSettingsPage
 
 public:
 	CBitTorrentSettingsPage();
-	virtual ~CBitTorrentSettingsPage();
 
 	enum { IDD = IDD_SETTINGS_BITTORRENT };
 
@@ -53,11 +52,10 @@ protected:
 	int				m_nClearPercentage;
 	BOOL			m_bPrefBTSources;
 	CIconButtonCtrl	m_wndTorrentPath;
-	CString			m_sTorrentPath;
 	CString			m_sTracker;
 	CIconButtonCtrl	m_wndMakerPath;
 	CString			m_sMakerPath;
-	CEditPath		m_wndTorrentFolder;
+	CComboBoxPath	m_wndTorrentFolder;
 
 	virtual void DoDataExchange(CDataExchange* pDX);    // DDX/DDV support
 	virtual BOOL OnInitDialog();
