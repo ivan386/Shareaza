@@ -1,7 +1,7 @@
 //
 // DownloadWithTiger.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2014.
+// Copyright (c) Shareaza Development Team, 2002-2015.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -94,15 +94,15 @@ DWORD CDownloadWithTiger::GetVerifyLength(PROTOCOLID nProtocol, int nHash) const
 		else if ( m_pTigerBlock )
 			return m_nTigerSize;
 	}
-	else if ( nHash == HASH_TIGERTREE && m_pTigerBlock != NULL )
+	else if ( nHash == HASH_TIGERTREE && m_pTigerBlock )
 	{
 		return m_nTigerSize;
 	}
-	else if ( nHash == HASH_ED2K && m_pHashsetBlock != NULL )
+	else if ( nHash == HASH_ED2K && m_pHashsetBlock )
 	{
 		return ED2K_PART_SIZE;
 	}
-	else if ( nHash == HASH_TORRENT && m_pTorrentBlock != NULL )
+	else if ( nHash == HASH_TORRENT && m_pTorrentBlock )
 	{
 		return m_nTorrentSize;
 	}
@@ -118,7 +118,7 @@ BOOL CDownloadWithTiger::GetNextVerifyRange(QWORD& nOffset, QWORD& nLength, BOOL
 	if ( nOffset >= m_nSize )
 		return FALSE;
 
-	if ( !m_pTigerBlock && !m_pHashsetBlock && !m_pTorrentBlock )
+	if ( ! m_pTigerBlock && ! m_pHashsetBlock && ! m_pTorrentBlock )
 		return FALSE;
 
 	if ( nHash == HASH_NULL )
@@ -137,7 +137,7 @@ BOOL CDownloadWithTiger::GetNextVerifyRange(QWORD& nOffset, QWORD& nLength, BOOL
 	switch ( nHash )
 	{
 	case HASH_TIGERTREE:
-		if ( !m_pTigerBlock )
+		if ( ! m_pTigerBlock )
 			return FALSE;
 
 		pBlockPtr	= m_pTigerBlock;
@@ -146,7 +146,7 @@ BOOL CDownloadWithTiger::GetNextVerifyRange(QWORD& nOffset, QWORD& nLength, BOOL
 		break;
 
 	case HASH_ED2K:
-		if ( !m_pHashsetBlock )
+		if ( ! m_pHashsetBlock )
 			return FALSE;
 
 		pBlockPtr	= m_pHashsetBlock;
@@ -155,7 +155,7 @@ BOOL CDownloadWithTiger::GetNextVerifyRange(QWORD& nOffset, QWORD& nLength, BOOL
 		break;
 
 	case HASH_TORRENT:
-		if ( !m_pTorrentBlock )
+		if ( ! m_pTorrentBlock )
 			return FALSE;
 
 		pBlockPtr	= m_pTorrentBlock;
@@ -217,7 +217,7 @@ bool CDownloadWithTiger::IsFullyVerified() const
 	bool bAvailable = false;
 	Fragments::List oList = GetFullFragmentList();
 
-	if ( m_pTorrentBlock )
+	if ( m_pTorrentBlock && Settings.Downloads.VerifyTorrent )
 	{
 		for ( DWORD i = 0 ; i < m_nTorrentBlock; i++ )
 		{
@@ -570,7 +570,7 @@ void CDownloadWithTiger::RunValidation()
 	if ( ! oLock.Lock( 50 ) )
 		return;
 
-	if ( m_pTigerBlock == NULL && m_pHashsetBlock == NULL && m_pTorrentBlock == NULL )
+	if ( ! m_pTigerBlock && ! m_pHashsetBlock && ! m_pTorrentBlock )
 		return;
 
 	if ( ! IsFileOpen() )
@@ -613,6 +613,8 @@ BOOL CDownloadWithTiger::FindNewValidationBlock(int nHash)
 		break;
 
 	case HASH_TORRENT:
+		if ( ! Settings.Downloads.VerifyTorrent )
+			return FALSE;
 		pBlockPtr	= m_pTorrentBlock;
 		nBlockCount	= m_nTorrentBlock;
 		nBlockSize	= m_nTorrentSize;
@@ -820,11 +822,11 @@ void CDownloadWithTiger::FinishValidation()
 
 	if ( !oCorrupted.empty() && IsFileOpen() )
 	{
-		if ( m_pTigerBlock != NULL )
+		if ( m_pTigerBlock )
 			SubtractHelper( oCorrupted, m_pTigerBlock, m_nTigerBlock, m_nTigerSize );
-		if ( m_pHashsetBlock != NULL )
+		if ( m_pHashsetBlock )
 			SubtractHelper( oCorrupted, m_pHashsetBlock, m_nHashsetBlock, ED2K_PART_SIZE );
-		if ( m_pTorrentBlock != NULL )
+		if ( m_pTorrentBlock )
 			SubtractHelper( oCorrupted, m_pTorrentBlock, m_nTorrentBlock, m_nTorrentSize );
 
 		Fragments::List::const_iterator pItr = oCorrupted.begin();
@@ -868,7 +870,7 @@ Fragments::List CDownloadWithTiger::GetHashableFragmentList() const
 	// Select hash with smallest parts
 	int nHash = HASH_NULL;
 	DWORD nSmallest = 0xffffffff;
-	if ( m_pTorrentBlock )
+	if ( m_pTorrentBlock && Settings.Downloads.VerifyTorrent )
 	{
 		nHash = HASH_TORRENT;
 		nSmallest = m_nTorrentSize;
@@ -1081,9 +1083,9 @@ void CDownloadWithTiger::ResetVerification()
 		m_pTorrent.FinishBlockTest( m_nVerifyBlock );
 	}
 
-	if ( m_pTigerBlock != NULL ) ZeroMemory( m_pTigerBlock, m_nTigerBlock );
-	if ( m_pHashsetBlock != NULL ) ZeroMemory( m_pHashsetBlock, m_nHashsetBlock );
-	if ( m_pTorrentBlock != NULL ) ZeroMemory( m_pTorrentBlock, m_nTorrentBlock );
+	if ( m_pTigerBlock   ) ZeroMemory( m_pTigerBlock,   m_nTigerBlock );
+	if ( m_pHashsetBlock ) ZeroMemory( m_pHashsetBlock, m_nHashsetBlock );
+	if ( m_pTorrentBlock ) ZeroMemory( m_pTorrentBlock, m_nTorrentBlock );
 
 	m_nTigerSuccess		= 0;
 	m_nHashsetSuccess	= 0;
@@ -1102,8 +1104,8 @@ void CDownloadWithTiger::ClearVerification()
 
 	ResetVerification();
 
-	if ( m_pTigerBlock != NULL ) delete [] m_pTigerBlock;
-	if ( m_pHashsetBlock != NULL ) delete [] m_pHashsetBlock;
+	if ( m_pTigerBlock   ) delete [] m_pTigerBlock;
+	if ( m_pHashsetBlock ) delete [] m_pHashsetBlock;
 
 	m_pTigerBlock		= NULL;
 	m_nTigerBlock		= 0;

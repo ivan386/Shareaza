@@ -1,7 +1,7 @@
 //
 // DownloadWithTorrent.h
 //
-// Copyright (c) Shareaza Development Team, 2002-2014.
+// Copyright (c) Shareaza Development Team, 2002-2015.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -57,7 +57,7 @@ protected:
 	DWORD		m_nTorrentBlock;
 	DWORD		m_nTorrentSuccess;
 	DWORD		m_nTorrentSize;
-	BYTE*		m_pTorrentBlock;
+	CAutoVectorPtr< BYTE >		m_pTorrentBlock;
 private:
 	CList< CUploadTransferBT* >	m_pTorrentUploads;
 	DWORD						m_tTorrentChoke;

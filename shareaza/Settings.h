@@ -1,7 +1,7 @@
 //
 // Settings.h
 //
-// Copyright (c) Shareaza Development Team, 2002-2014.
+// Copyright (c) Shareaza Development Team, 2002-2015.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -519,6 +519,7 @@ public:
 		bool		VerifyFiles;
 		bool		VerifyTiger;
 		bool		VerifyED2K;
+		bool		VerifyTorrent;
 		bool		NeverDrop;					// Do not drop bad sources (may pollute source list with many dead sources)
 		bool		RequestHash;
 		bool		RequestHTTP11;
