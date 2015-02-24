@@ -3806,7 +3806,9 @@
 			<control caption="_Configurer..."/>
 			<control caption="Plus de thèmes"/>
 		</dialog>
-		<dialog name="CAdvancedSettingsPage" cookie="SyEdmsBuBuStStEdBuCo" caption="Avancée">
+		<dialog name="CAdvancedSettingsPage" cookie="EdStSyEdmsBuBuStStEdBuCo" caption="Avancée">
+			<control/>
+			<control/>
 			<control/>
 			<control/>
 			<control/>

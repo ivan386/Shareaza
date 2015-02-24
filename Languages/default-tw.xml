@@ -3808,7 +3808,9 @@
 			<control caption="設定..."/>
 			<control caption="更多外觀"/>
 		</dialog>
-		<dialog name="CAdvancedSettingsPage" cookie="SyEdmsBuBuStStEdBuCo" caption="進階">
+		<dialog name="CAdvancedSettingsPage" cookie="EdStSyEdmsBuBuStStEdBuCo" caption="進階">
+			<control/>
+			<control/>
 			<control/>
 			<control/>
 			<control/>

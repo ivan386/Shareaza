@@ -13,10 +13,10 @@
 #undef APSTUDIO_READONLY_SYMBOLS
 
 /////////////////////////////////////////////////////////////////////////////
-// English (Australia) resources
+// English resources
 
-#if !defined(AFX_RESOURCE_DLL) || defined(AFX_TARG_ENA)
-LANGUAGE LANG_ENGLISH, SUBLANG_ENGLISH_AUS
+#if !defined(AFX_RESOURCE_DLL) || defined(AFX_TARG_ENU)
+LANGUAGE LANG_ENGLISH, SUBLANG_NEUTRAL
 #pragma code_page(1252)
 
 #ifdef APSTUDIO_INVOKED
@@ -46,7 +46,7 @@ BEGIN
     "#define _AFX_NO_MOUSE_RESOURCES\r\n"
     "\r\n"
     "#if !defined(AFX_RESOURCE_DLL) || defined(AFX_TARG_ENU)\r\n"
-    "LANGUAGE LANG_ENGLISH, SUBLANG_ENGLISH_AUS\r\n"
+    "LANGUAGE LANG_ENGLISH, SUBLANG_NEUTRAL\r\n"
     "#pragma code_page(1252)\r\n"
     "#include ""Res\\Shareaza.rc2""  // non-Microsoft Visual C++ edited resources\r\n"
     "#include ""afxres.rc""         // Standard components\r\n"
@@ -401,7 +401,9 @@ STYLE DS_SETFONT | WS_CHILD | WS_DISABLED | WS_CAPTION
 CAPTION "Advanced"
 FONT 8, "Tahoma", 0, 0, 0x1
 BEGIN
-    CONTROL         "List1",IDC_PROPERTIES,"SysListView32",LVS_REPORT | LVS_SINGLESEL | LVS_SHOWSELALWAYS | WS_BORDER | WS_TABSTOP,7,7,268,138
+    EDITTEXT        IDC_QUICKFILTER,160,7,100,14,ES_AUTOHSCROLL
+    ICON            IDI_POINTER_ARROW,IDC_QUICKFILTER_ICON,264,8,16,16,SS_REALSIZEIMAGE
+    CONTROL         "List1",IDC_PROPERTIES,"SysListView32",LVS_REPORT | LVS_SINGLESEL | LVS_SHOWSELALWAYS | WS_BORDER | WS_TABSTOP,7,27,268,118
     EDITTEXT        IDC_VALUE,60,163,125,16,ES_AUTOHSCROLL | NOT WS_VISIBLE
     CONTROL         "Spin1",IDC_VALUE_SPIN,"msctls_updown32",UDS_SETBUDDYINT | UDS_ALIGNRIGHT | UDS_AUTOBUDDY | UDS_ARROWKEYS | UDS_NOTHOUSANDS | NOT WS_VISIBLE | WS_DISABLED,169,160,11,16
     PUSHBUTTON      "Set Default",IDC_DEFAULT_VALUE,194,163,72,16
@@ -2751,18 +2753,6 @@ IDR_HTML_DISABLED       HTML                    "Res\\Disabled.htm"
 
 /////////////////////////////////////////////////////////////////////////////
 //
-// GZIP
-//
-
-IDR_HTML_STYLE          GZIP                    "Res\\style.css.gz"
-IDR_HTML_ABOUT          GZIP                    "Res\\About.htm.gz"
-IDR_HTML_BROWSER        GZIP                    "Res\\Browser.htm.gz"
-IDR_XML_DEFINITIONS     GZIP                    "Res\\Definitions.xml.gz"
-IDR_XML_DEFAULT         GZIP                    "Res\\Default.xml.gz"
-IDR_XML_SCHEMA_MAPS     GZIP                    "Res\\SchemaMappings.xml.gz"
-
-/////////////////////////////////////////////////////////////////////////////
-//
 // Dialog Info
 //
 
@@ -4874,7 +4864,7 @@ BEGIN
     ID_SCHEDULER_REMOVE_ALL "Removes all scheduled tasks."
 END
 
-#endif    // English (Australia) resources
+#endif    // English resources
 /////////////////////////////////////////////////////////////////////////////
 
 
@@ -4892,7 +4882,7 @@ END
 #define _AFX_NO_MOUSE_RESOURCES
 
 #if !defined(AFX_RESOURCE_DLL) || defined(AFX_TARG_ENU)
-LANGUAGE LANG_ENGLISH, SUBLANG_ENGLISH_AUS
+LANGUAGE LANG_ENGLISH, SUBLANG_NEUTRAL
 #pragma code_page(1252)
 #include "Res\Shareaza.rc2"  // non-Microsoft Visual C++ edited resources
 #include "afxres.rc"         // Standard components

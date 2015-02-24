@@ -3812,7 +3812,9 @@ pasta dos arquivos baixados a sua biblioteca agora?"/>
 			<control caption="_Configuração..."/>
 			<control caption="Obter Mais"/>
 		</dialog>
-		<dialog name="CAdvancedSettingsPage" cookie="SyEdmsBuBuStStEdBuCo" caption="Avançado">
+		<dialog name="CAdvancedSettingsPage" cookie="EdStSyEdmsBuBuStStEdBuCo" caption="Avançado">
+			<control/>
+			<control/>
 			<control/>
 			<control/>
 			<control/>

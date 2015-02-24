@@ -3808,7 +3808,9 @@
 			<control caption="_Kur..."/>
 			<control caption="Dahası"/>
 		</dialog>
-		<dialog name="CAdvancedSettingsPage" cookie="SyEdmsBuBuStStEdBuCo" caption="Uygulandı">
+		<dialog name="CAdvancedSettingsPage" cookie="EdStSyEdmsBuBuStStEdBuCo" caption="Uygulandı">
+			<control/>
+			<control/>
 			<control/>
 			<control/>
 			<control/>

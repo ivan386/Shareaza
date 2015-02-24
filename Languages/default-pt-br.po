@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Shareaza 2.5.3.0\n"
 "Report-Msgid-Bugs-To: shareaza <shareaza@cherubicsoft.com>\n"
-"POT-Creation-Date: 2015-02-03 12:58+0000\n"
+"POT-Creation-Date: 2015-02-24 08:37+0000\n"
 "PO-Revision-Date: \n"
 "Last-Translator: ryo-oh-ki <ryo-oh-ki@narod.ru>\n"
 "Language-Team: Felipe\n"
@@ -8242,7 +8242,7 @@ msgid "Author:"
 msgstr "Autor:"
 
 #: cskinssettingspage;control;7 cpluginssettingspage;control;5
-#: cadvancedsettingspage;control;7 ccollectionexportdlg;control;8
+#: cadvancedsettingspage;control;9 ccollectionexportdlg;control;8
 msgid "Description:"
 msgstr "Descrição:"
 
@@ -8266,15 +8266,15 @@ msgstr "Informação do Plugin:"
 msgid "_Setup..."
 msgstr "_Configuração..."
 
-#: cadvancedsettingspage;control;4
+#: cadvancedsettingspage;control;6
 msgid "Set Default"
 msgstr "Definir Padrão"
 
-#: cadvancedsettingspage;control;5
+#: cadvancedsettingspage;control;7
 msgid "Setting Properties:"
 msgstr "Propriedades da Configuração:"
 
-#: cadvancedsettingspage;control;6
+#: cadvancedsettingspage;control;8
 msgid "Value:"
 msgstr "Valor:"
 

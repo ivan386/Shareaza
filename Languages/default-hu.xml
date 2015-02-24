@@ -3808,7 +3808,9 @@
 			<control caption="_Beállít..."/>
 			<control caption="Többet akarok"/>
 		</dialog>
-		<dialog name="CAdvancedSettingsPage" cookie="SyEdmsBuBuStStEdBuCo" caption="Fejlett">
+		<dialog name="CAdvancedSettingsPage" cookie="EdStSyEdmsBuBuStStEdBuCo" caption="Fejlett">
+			<control/>
+			<control/>
 			<control/>
 			<control/>
 			<control/>

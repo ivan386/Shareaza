@@ -3808,7 +3808,9 @@
 			<control caption="_Inställningar…"/>
 			<control caption="Skaffa fler"/>
 		</dialog>
-		<dialog name="CAdvancedSettingsPage" cookie="SyEdmsBuBuStStEdBuCo" caption="Avancerat…">
+		<dialog name="CAdvancedSettingsPage" cookie="EdStSyEdmsBuBuStStEdBuCo" caption="Avancerat…">
+			<control/>
+			<control/>
 			<control/>
 			<control/>
 			<control/>

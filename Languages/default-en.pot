@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Shareaza\n"
 "Report-Msgid-Bugs-To: shareaza <shareaza@cherubicsoft.com>\n"
-"POT-Creation-Date: 2015-02-03 15:30+0000\n"
+"POT-Creation-Date: 2015-02-24 08:37+0000\n"
 "PO-Revision-Date: \n"
 "Last-Translator: (translation author)\n"
 "Language-Team: Shareaza Development Team\n"
@@ -7544,7 +7544,7 @@ msgstr ""
 msgid "Author:"
 msgstr ""
 
-#: cskinssettingspage;control;7 cpluginssettingspage;control;5 cadvancedsettingspage;control;7 ccollectionexportdlg;control;8
+#: cskinssettingspage;control;7 cpluginssettingspage;control;5 cadvancedsettingspage;control;9 ccollectionexportdlg;control;8
 msgid "Description:"
 msgstr ""
 
@@ -7568,15 +7568,15 @@ msgstr ""
 msgid "_Setup..."
 msgstr ""
 
-#: cadvancedsettingspage;control;4
+#: cadvancedsettingspage;control;6
 msgid "Set Default"
 msgstr ""
 
-#: cadvancedsettingspage;control;5
+#: cadvancedsettingspage;control;7
 msgid "Setting Properties:"
 msgstr ""
 
-#: cadvancedsettingspage;control;6
+#: cadvancedsettingspage;control;8
 msgid "Value:"
 msgstr ""
 

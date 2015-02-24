@@ -1,7 +1,7 @@
 //
 // DlgSettingsManager.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2012
+// Copyright (c) Shareaza Development Team, 2002-2015
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -41,7 +41,7 @@
 #include "PageSettingsBitTorrent.h"
 #include "PageSettingsSkins.h"
 #include "PageSettingsPlugins.h"
-#include "PageSettingsTraffic.h"
+#include "PageSettingsAdvanced.h"
 
 #ifdef _DEBUG
 #define new DEBUG_NEW

@@ -3808,7 +3808,9 @@
 			<control caption="Ustaw..."/>
 			<control caption="Więcej Skórek"/>
 		</dialog>
-		<dialog name="CAdvancedSettingsPage" cookie="SyEdmsBuBuStStEdBuCo" caption="Zaawansowane">
+		<dialog name="CAdvancedSettingsPage" cookie="EdStSyEdmsBuBuStStEdBuCo" caption="Zaawansowane">
+			<control/>
+			<control/>
 			<control/>
 			<control/>
 			<control/>

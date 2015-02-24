@@ -3810,7 +3810,9 @@
 			<control caption="_Namestitev..."/>
 			<control caption="Več"/>
 		</dialog>
-		<dialog name="CAdvancedSettingsPage" cookie="SyEdmsBuBuStStEdBuCo" caption="Napredno">
+		<dialog name="CAdvancedSettingsPage" cookie="EdStSyEdmsBuBuStStEdBuCo" caption="Napredno">
+			<control/>
+			<control/>
 			<control/>
 			<control/>
 			<control/>

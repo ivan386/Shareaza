@@ -3808,7 +3808,9 @@
 			<control caption="_Setup..."/>
 			<control caption="Get More"/>
 		</dialog>
-		<dialog name="CAdvancedSettingsPage" cookie="SyEdmsBuBuStStEdBuCo" caption="Advanced">
+		<dialog name="CAdvancedSettingsPage" cookie="EdStSyEdmsBuBuStStEdBuCo" caption="Advanced">
+			<control/>
+			<control/>
 			<control/>
 			<control/>
 			<control/>

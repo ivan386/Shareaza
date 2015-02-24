@@ -698,7 +698,7 @@
     <ClCompile Include="PageSettingsRemote.cpp" />
     <ClCompile Include="PageSettingsRich.cpp" />
     <ClCompile Include="PageSettingsSkins.cpp" />
-    <ClCompile Include="PageSettingsTraffic.cpp" />
+    <ClCompile Include="PageSettingsAdvanced.cpp" />
     <ClCompile Include="PageSettingsUploads.cpp" />
     <ClCompile Include="PageSettingsWeb.cpp" />
     <ClCompile Include="PageTorrentFiles.cpp" />
@@ -1082,7 +1082,7 @@
     <ClInclude Include="PageSettingsRemote.h" />
     <ClInclude Include="PageSettingsRich.h" />
     <ClInclude Include="PageSettingsSkins.h" />
-    <ClInclude Include="PageSettingsTraffic.h" />
+    <ClInclude Include="PageSettingsAdvanced.h" />
     <ClInclude Include="PageSettingsUploads.h" />
     <ClInclude Include="PageSettingsWeb.h" />
     <ClInclude Include="PageTorrentFiles.h" />

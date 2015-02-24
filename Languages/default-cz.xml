@@ -3811,7 +3811,9 @@
 			<control caption="Na_stavení..."/>
 			<control caption="Stáhnout další"/>
 		</dialog>
-		<dialog name="CAdvancedSettingsPage" cookie="SyEdmsBuBuStStEdBuCo" caption="Pokročilé...">
+		<dialog name="CAdvancedSettingsPage" cookie="EdStSyEdmsBuBuStStEdBuCo" caption="Pokročilé...">
+			<control/>
+			<control/>
 			<control/>
 			<control/>
 			<control/>

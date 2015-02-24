@@ -3808,7 +3808,9 @@
 			<control caption="_Ndërto..."/>
 			<control caption="Gjej më Shumë"/>
 		</dialog>
-		<dialog name="CAdvancedSettingsPage" cookie="SyEdmsBuBuStStEdBuCo" caption="Avancuar">
+		<dialog name="CAdvancedSettingsPage" cookie="EdStSyEdmsBuBuStStEdBuCo" caption="Avancuar">
+			<control/>
+			<control/>
 			<control/>
 			<control/>
 			<control/>

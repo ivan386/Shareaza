@@ -3808,7 +3808,9 @@
 			<control caption="_Εγκατάσταση..."/>
 			<control caption="Λήψη επιπλέων"/>
 		</dialog>
-		<dialog name="CAdvancedSettingsPage" cookie="SyEdmsBuBuStStEdBuCo" caption="Προχωρημένα">
+		<dialog name="CAdvancedSettingsPage" cookie="EdStSyEdmsBuBuStStEdBuCo" caption="Προχωρημένα">
+			<control/>
+			<control/>
 			<control/>
 			<control/>
 			<control/>

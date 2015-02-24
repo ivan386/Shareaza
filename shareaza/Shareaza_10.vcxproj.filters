@@ -1089,7 +1089,7 @@
     <ClCompile Include="PageSettingsSkins.cpp">
       <Filter>Source Files\Pages</Filter>
     </ClCompile>
-    <ClCompile Include="PageSettingsTraffic.cpp">
+    <ClCompile Include="PageSettingsAdvanced.cpp">
       <Filter>Source Files\Pages</Filter>
     </ClCompile>
     <ClCompile Include="PageSettingsUploads.cpp">
@@ -2226,7 +2226,7 @@
     <ClInclude Include="PageSettingsSkins.h">
       <Filter>Header Files\Pages</Filter>
     </ClInclude>
-    <ClInclude Include="PageSettingsTraffic.h">
+    <ClInclude Include="PageSettingsAdvanced.h">
       <Filter>Header Files\Pages</Filter>
     </ClInclude>
     <ClInclude Include="PageSettingsUploads.h">

@@ -3809,7 +3809,9 @@
 			<control caption="_Seade..."/>
 			<control caption="Otsi lisa"/>
 		</dialog>
-		<dialog name="CAdvancedSettingsPage" cookie="SyEdmsBuBuStStEdBuCo" caption="Täpsemalt">
+		<dialog name="CAdvancedSettingsPage" cookie="EdStSyEdmsBuBuStStEdBuCo" caption="Täpsemalt">
+			<control/>
+			<control/>
 			<control/>
 			<control/>
 			<control/>

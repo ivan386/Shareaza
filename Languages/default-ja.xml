@@ -3809,7 +3809,9 @@
 			<control caption="設定(_S)..."/>
 			<control caption="更に追加"/>
 		</dialog>
-		<dialog name="CAdvancedSettingsPage" cookie="SyEdmsBuBuStStEdBuCo" caption="高度">
+		<dialog name="CAdvancedSettingsPage" cookie="EdStSyEdmsBuBuStStEdBuCo" caption="高度">
+			<control/>
+			<control/>
 			<control/>
 			<control/>
 			<control/>

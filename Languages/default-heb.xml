@@ -3809,7 +3809,9 @@
 			<control caption="...התקנה"/>
 			<control caption=":מידע נוסף"/>
 		</dialog>
-		<dialog name="CAdvancedSettingsPage" cookie="SyEdmsBuBuStStEdBuCo" caption="מתקדם">
+		<dialog name="CAdvancedSettingsPage" cookie="EdStSyEdmsBuBuStStEdBuCo" caption="מתקדם">
+			<control/>
+			<control/>
 			<control/>
 			<control/>
 			<control/>

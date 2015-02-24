@@ -1,7 +1,7 @@
 //
-// PageSettingsTraffic.cpp
+// PageSettingsAdvanced.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2012.
+// Copyright (c) Shareaza Development Team, 2002-2015.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -22,8 +22,9 @@
 #include "StdAfx.h"
 #include "Shareaza.h"
 #include "Settings.h"
+#include "CoolInterface.h"
 #include "LiveList.h"
-#include "PageSettingsTraffic.h"
+#include "PageSettingsAdvanced.h"
 #include "Skin.h"
 
 #ifdef _DEBUG
@@ -42,26 +43,31 @@ BEGIN_MESSAGE_MAP(CAdvancedSettingsPage, CSettingsPage)
 	ON_BN_CLICKED(IDC_DEFAULT_VALUE, &CAdvancedSettingsPage::OnBnClickedDefaultValue)
 	ON_BN_CLICKED(IDC_BOOL, &CAdvancedSettingsPage::OnChangeValue)
 	ON_CBN_SELCHANGE(IDC_FONT, &CAdvancedSettingsPage::OnChangeValue)
+	ON_EN_CHANGE(IDC_QUICKFILTER, &CAdvancedSettingsPage::OnEnChangeQuickfilter)
+	ON_WM_TIMER()
 END_MESSAGE_MAP()
 
 /////////////////////////////////////////////////////////////////////////////
 // CAdvancedSettingsPage property page
 
 CAdvancedSettingsPage::CAdvancedSettingsPage()
-	: CSettingsPage(CAdvancedSettingsPage::IDD)
-	,  m_bUpdating( false )
+	: CSettingsPage	(CAdvancedSettingsPage::IDD)
+	, m_bUpdating	( false )
+	, m_nTimer		( 0 )
 {
 }
 
 void CAdvancedSettingsPage::DoDataExchange(CDataExchange* pDX)
 {
-	CSettingsPage::DoDataExchange(pDX);
-	DDX_Control(pDX, IDC_VALUE_SPIN, m_wndValueSpin);
-	DDX_Control(pDX, IDC_VALUE, m_wndValue);
-	DDX_Control(pDX, IDC_PROPERTIES, m_wndList);
-	DDX_Control(pDX, IDC_FONT, m_wndFonts);
-	DDX_Control(pDX, IDC_DEFAULT_VALUE, m_wndDefaultBtn);
-	DDX_Control(pDX, IDC_BOOL, m_wndBool);
+	CSettingsPage::DoDataExchange( pDX );
+	DDX_Control( pDX, IDC_QUICKFILTER, m_wndQuickFilter );
+	DDX_Control( pDX, IDC_VALUE_SPIN, m_wndValueSpin );
+	DDX_Control( pDX, IDC_VALUE, m_wndValue );
+	DDX_Control( pDX, IDC_PROPERTIES, m_wndList );
+	DDX_Control( pDX, IDC_FONT, m_wndFonts );
+	DDX_Control( pDX, IDC_DEFAULT_VALUE, m_wndDefaultBtn );
+	DDX_Control( pDX, IDC_BOOL, m_wndBool );
+	DDX_Control( pDX, IDC_QUICKFILTER_ICON, m_wndQuickFilterIcon );
 }
 
 /////////////////////////////////////////////////////////////////////////////
@@ -70,6 +76,21 @@ void CAdvancedSettingsPage::DoDataExchange(CDataExchange* pDX)
 BOOL CAdvancedSettingsPage::OnInitDialog() 
 {
 	CSettingsPage::OnInitDialog();
+
+	for ( POSITION pos = Settings.GetHeadPosition(); pos; )
+	{
+		const CSettings::Item* pItem = Settings.GetNext( pos );
+
+		if ( !pItem->m_bHidden &&
+			( pItem->m_pBool ||
+			( pItem->m_pDword && pItem->m_nScale ) ||
+			( pItem->m_pString && pItem->m_nType != CSettings::setNull ) ) )
+		{
+			m_pSettings.AddTail( new EditItem( pItem ) );
+		}
+	}
+
+	m_wndQuickFilterIcon.SetIcon( CoolInterface.ExtractIcon( ID_SEARCH_SEARCH, FALSE, LVSIL_SMALL ) );
 
 	CRect rc;
 	m_wndList.GetClientRect( &rc );
@@ -80,13 +101,11 @@ BOOL CAdvancedSettingsPage::OnInitDialog()
 	m_wndList.SetExtendedStyle( m_wndList.GetExtendedStyle() | LVS_EX_FULLROWSELECT | LVS_EX_LABELTIP );
 
 	Skin.Translate( _T("CAdvancedSettingsList"), m_wndList.GetHeaderCtrl() );
+	
+	CLiveList::Sort( &m_wndList, 0 );
+	CLiveList::Sort( &m_wndList, 0 );
 
 	AddSettings();
-
-	CLiveList::Sort( &m_wndList, 0 );
-	CLiveList::Sort( &m_wndList, 0 );
-
-	UpdateInputArea();
 
 	m_wndList.EnsureVisible( Settings.General.LastSettingsIndex, FALSE );
 	m_wndList.EnsureVisible( Settings.General.LastSettingsIndex + m_wndList.GetCountPerPage() - 1, FALSE );
@@ -98,66 +117,92 @@ void CAdvancedSettingsPage::AddSettings()
 {
 	m_wndList.DeleteAllItems();
 
-	for ( POSITION pos = Settings.GetHeadPosition() ; pos ; )
-	{
-		CSettings::Item* pItem = Settings.GetNext( pos );
-		if ( ! pItem->m_bHidden &&
-			( pItem->m_pBool ||
-			( pItem->m_pDword && pItem->m_nScale ) ||
-			( pItem->m_pString && pItem->m_nType != CSettings::setNull ) ) )
-		{
-			EditItem* pEdit = new EditItem( pItem );
-			ASSERT( pEdit != NULL );
-			if ( pEdit == NULL ) return;
+	CString sQuickFilter;
+	m_wndQuickFilter.GetWindowText( sQuickFilter );
+	sQuickFilter.Trim();
 
+	for ( POSITION pos = m_pSettings.GetHeadPosition(); pos; )
+	{
+		const EditItem* pEdit = m_pSettings.GetNext( pos );
+
+		if ( sQuickFilter.IsEmpty() || _tcsistr( pEdit->m_sName, sQuickFilter ) != NULL )
+		{
 			LV_ITEM pList = {};
-			pList.mask		= LVIF_PARAM|LVIF_TEXT|LVIF_IMAGE;
-			pList.iItem		= m_wndList.GetItemCount();
-			pList.lParam	= (LPARAM)pEdit;
-			pList.iImage	= 0;
-			pList.pszText	= (LPTSTR)(LPCTSTR)pEdit->m_sName;
-			pList.iItem		= m_wndList.InsertItem( &pList );
+			pList.mask = LVIF_PARAM | LVIF_IMAGE;
+			pList.iItem = m_wndList.GetItemCount();
+			pList.lParam = (LPARAM)pEdit;
+			pList.iImage = 0;
+			pList.iItem = m_wndList.InsertItem( &pList );
 
 			UpdateListItem( pList.iItem );
 		}
 	}
+
+	CLiveList::Sort( &m_wndList );
+
+	UpdateInputArea();
 }
+
 void CAdvancedSettingsPage::CommitAll()
 {
-	for ( int nItem = 0 ; nItem < m_wndList.GetItemCount() ; nItem++ )
+	for ( POSITION pos = m_pSettings.GetHeadPosition(); pos; )
 	{
-		EditItem* pItem = (EditItem*)m_wndList.GetItemData( nItem );
-		pItem->Commit();
+		if ( EditItem* pItem = m_pSettings.GetNext( pos ) )
+			pItem->Commit();
 	}
 }
 
 void CAdvancedSettingsPage::UpdateAll()
 {
-	for ( int nItem = 0 ; nItem < m_wndList.GetItemCount() ; nItem++ )
+	for ( POSITION pos = m_pSettings.GetHeadPosition(); pos; )
 	{
-		EditItem* pItem = (EditItem*)m_wndList.GetItemData( nItem );
-		pItem->Update();
-		UpdateListItem( nItem );
+		if ( EditItem* pItem = m_pSettings.GetNext( pos ) )
+		{
+			pItem->Update();
+
+			UpdateListItem( GetListItem( pItem ) );
+		}
 	}
 
 	UpdateInputArea();
 }
 
+int CAdvancedSettingsPage::GetListItem(const EditItem* pItem)
+{
+	const int nCount = m_wndList.GetItemCount();
+	for ( int nItem = 0; nItem < nCount; ++nItem )
+	{
+		if ( (const EditItem*)m_wndList.GetItemData( nItem ) == pItem )
+			return nItem;
+	}
+	return -1;
+}
+
 void CAdvancedSettingsPage::UpdateListItem(int nItem)
 {
-	EditItem* pItem = (EditItem*)m_wndList.GetItemData( nItem );
+	if ( nItem < 0 )
+		return;
+
+	const EditItem* pItem = (const EditItem*)m_wndList.GetItemData( nItem );
+
+	if ( pItem->IsDefault() )
+	{
+		m_wndList.SetItemText( nItem, 0, pItem->m_sName );
+	}
+	else
+	{
+		m_wndList.SetItemText( nItem, 0, pItem->m_sName + _T( "*" ) );
+	}
+
 	CString strValue;
-		
 	if ( pItem->m_pItem->m_pBool )
 	{
-		ASSERT( pItem->m_pItem->m_nScale == 1 &&
-			pItem->m_pItem->m_nMin == 0 && pItem->m_pItem->m_nMax == 1 );
+		ASSERT( pItem->m_pItem->m_nScale == 1 && pItem->m_pItem->m_nMin == 0 && pItem->m_pItem->m_nMax == 1 );
 		strValue = pItem->m_bValue ? _T("True") : _T("False");
 	}
 	else if ( pItem->m_pItem->m_pDword )
 	{
-		ASSERT( pItem->m_pItem->m_nScale &&
-			pItem->m_pItem->m_nMin < pItem->m_pItem->m_nMax );
+		ASSERT( pItem->m_pItem->m_nScale && pItem->m_pItem->m_nMin < pItem->m_pItem->m_nMax );
 		strValue.Format( _T("%lu"), pItem->m_nValue / pItem->m_pItem->m_nScale );
 		if ( Settings.General.LanguageRTL )
 			strValue = _T("\x200E") + strValue + pItem->m_pItem->m_szSuffix;
@@ -168,24 +213,7 @@ void CAdvancedSettingsPage::UpdateListItem(int nItem)
 	{
 		strValue = pItem->m_sValue;
 	}
-
 	m_wndList.SetItemText( nItem, 1, strValue );
-	if ( pItem->IsDefault() )
-	{
-		if ( pItem->m_sName.Right( 1 ) == L"*" )
-		{
-			pItem->m_sName.TrimRight( L"*" );
-			m_wndList.SetItemText( nItem, 0, pItem->m_sName );
-		}
-	}
-	else
-	{
-		if ( pItem->m_sName.Right( 1 ) != L"*" )
-		{
-			pItem->m_sName += L"*";
-			m_wndList.SetItemText( nItem, 0, pItem->m_sName );
-		}
-	}
 }
 
 void CAdvancedSettingsPage::OnItemChangedProperties(NMHDR* /*pNMHDR*/, LRESULT* pResult) 
@@ -219,7 +247,7 @@ void CAdvancedSettingsPage::UpdateInputArea()
 	
 	if ( nItem >= 0 )
 	{
-		const EditItem* pItem = (EditItem*)m_wndList.GetItemData( nItem );
+		const EditItem* pItem = (const EditItem*)m_wndList.GetItemData( nItem );
 		
 		if ( pItem->m_pItem->m_pDword )
 		{
@@ -319,13 +347,23 @@ void CAdvancedSettingsPage::OnOK()
 
 void CAdvancedSettingsPage::OnDestroy() 
 {
-	Settings.General.LastSettingsIndex = m_wndList.GetTopIndex();
+	if ( m_nTimer )
+		KillTimer( m_nTimer );
 
-	for ( int nItem = 0 ; nItem < m_wndList.GetItemCount() ; nItem++ )
+	CString sQuickFilter;
+	m_wndQuickFilter.GetWindowText( sQuickFilter );
+	sQuickFilter.Trim();
+
+	if ( sQuickFilter.IsEmpty() )
 	{
-		delete (EditItem*)m_wndList.GetItemData( nItem );
+		Settings.General.LastSettingsIndex = m_wndList.GetTopIndex();
 	}
-	
+
+	for ( POSITION pos = m_pSettings.GetHeadPosition(); pos; )
+	{
+		delete m_pSettings.GetNext( pos );
+	}
+
 	CSettingsPage::OnDestroy();
 }
 
@@ -335,22 +373,45 @@ void CAdvancedSettingsPage::OnBnClickedDefaultValue()
 	if ( nItem >= 0 )
 	{
 		EditItem* pItem = (EditItem*)m_wndList.GetItemData( nItem );
+
 		pItem->Default();
 
-		UpdateListItem( nItem );
+		UpdateListItem( GetListItem( pItem ) );
 		UpdateInputArea();
 	}
 }
 
 bool CAdvancedSettingsPage::IsModified() const
 {
-	for ( int nItem = 0 ; nItem < m_wndList.GetItemCount() ; nItem++ )
+	for ( POSITION pos = m_pSettings.GetHeadPosition(); pos; )
 	{
-		const EditItem* pItem = (EditItem*)m_wndList.GetItemData( nItem );
-		if ( pItem->IsModified() )
-			return true;
+		if ( const EditItem* pItem = m_pSettings.GetNext( pos ) )
+		{
+			if ( pItem->IsModified() )
+				return true;
+		}
 	}
 	return false;
+}
+
+void CAdvancedSettingsPage::OnEnChangeQuickfilter()
+{
+	if ( m_nTimer )
+		KillTimer( m_nTimer );
+
+	m_nTimer = SetTimer( 1, 500, NULL );
+}
+
+void CAdvancedSettingsPage::OnTimer(UINT_PTR nIDEvent)
+{
+	if ( m_nTimer == nIDEvent )
+	{
+		KillTimer( m_nTimer );
+
+		AddSettings();
+	}
+
+	CSettingsPage::OnTimer( nIDEvent );
 }
 
 /////////////////////////////////////////////////////////////////////////////
@@ -370,8 +431,6 @@ CAdvancedSettingsPage::EditItem::EditItem(const CSettings::Item* pItem) :
 {
 	m_sName += L".";
 	m_sName += pItem->m_szName;
-	if ( ! IsDefault() )
-		m_sName += L"*";
 }
 
 void CAdvancedSettingsPage::EditItem::Update()

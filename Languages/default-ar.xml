@@ -3808,7 +3808,9 @@
 			<control caption="_تثبيت..."/>
 			<control caption="أحضر المزيد"/>
 		</dialog>
-		<dialog name="CAdvancedSettingsPage" cookie="SyEdmsBuBuStStEdBuCo" caption="متقدم...">
+		<dialog name="CAdvancedSettingsPage" cookie="EdStSyEdmsBuBuStStEdBuCo" caption="متقدم...">
+			<control/>
+			<control/>
 			<control/>
 			<control/>
 			<control/>

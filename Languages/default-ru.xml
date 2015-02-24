@@ -3805,7 +3805,9 @@
 			<control caption="_Установки..."/>
 			<control caption="_Хочу ещё..."/>
 		</dialog>
-		<dialog name="CAdvancedSettingsPage" cookie="SyEdmsBuBuStStEdBuCo" caption="Дополнительно">
+		<dialog name="CAdvancedSettingsPage" cookie="EdStSyEdmsBuBuStStEdBuCo" caption="Дополнительно">
+			<control/>
+			<control/>
 			<control/>
 			<control/>
 			<control/>

@@ -820,6 +820,8 @@
 #define IDC_FONT                        1624
 #define IDC_BOOL                        1625
 #define IDC_EDIT_HEX                    1626
+#define IDC_QUICKFILTER                 1627
+#define IDC_QUICKFILTER_ICON            1628
 #define IDS_FILTER_DELETE_CONFIRM       7000
 #define IDS_SCHEMAS                     7001
 #define IDS_MULTIPLE_VALUES             7002
@@ -1949,7 +1951,7 @@
 #define _APS_3D_CONTROLS                     1
 #define _APS_NEXT_RESOURCE_VALUE        351
 #define _APS_NEXT_COMMAND_VALUE         33329
-#define _APS_NEXT_CONTROL_VALUE         1627
+#define _APS_NEXT_CONTROL_VALUE         1629
 #define _APS_NEXT_SYMED_VALUE           104
 #endif
 #endif

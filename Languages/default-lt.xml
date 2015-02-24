@@ -3809,7 +3809,9 @@
 			<control caption="_Nustatyti..."/>
 			<control caption="Gauti daugiau"/>
 		</dialog>
-		<dialog name="CAdvancedSettingsPage" cookie="SyEdmsBuBuStStEdBuCo" caption="Išsamiau">
+		<dialog name="CAdvancedSettingsPage" cookie="EdStSyEdmsBuBuStStEdBuCo" caption="Išsamiau">
+			<control/>
+			<control/>
 			<control/>
 			<control/>
 			<control/>

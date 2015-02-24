@@ -1,7 +1,7 @@
 //
-// PageSettingsTraffic.h
+// PageSettingsAdvanced.h
 //
-// Copyright (c) Shareaza Development Team, 2002-2012.
+// Copyright (c) Shareaza Development Team, 2002-2015.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -38,21 +38,6 @@ public:
 protected:
 	enum { IDD = IDD_SETTINGS_ADVANCED };
 
-	CSpinButtonCtrl		m_wndValueSpin;
-	CEdit				m_wndValue;
-	CListCtrl			m_wndList;
-	CFontCombo			m_wndFonts;
-	CButton				m_wndDefaultBtn;
-	CButton				m_wndBool;
-	bool				m_bUpdating;
-
-	void	AddSettings();				// Add settings to list
-	void	UpdateListItem(int nItem);	// Update list item
-	void	UpdateInputArea();			// Update edit box, spins and buttons
-	void	CommitAll();				// Commit all data to settings
-	void	UpdateAll();				// Update settings list
-	bool	IsModified() const;			// Check if some of settings was modified
-
 	class EditItem
 	{
 	public:
@@ -74,6 +59,28 @@ protected:
 		void	Default();				// Restore default value
 	};
 
+	typedef CList< EditItem* > CEditItemList;
+
+	CEdit				m_wndQuickFilter;
+	CStatic				m_wndQuickFilterIcon;
+	CSpinButtonCtrl		m_wndValueSpin;
+	CEdit				m_wndValue;
+	CListCtrl			m_wndList;
+	CFontCombo			m_wndFonts;
+	CButton				m_wndDefaultBtn;
+	CButton				m_wndBool;
+	bool				m_bUpdating;
+	CEditItemList		m_pSettings;
+	UINT_PTR			m_nTimer;
+
+	void	AddSettings();				// Add settings to list
+	int		GetListItem(const EditItem* pItem);
+	void	UpdateListItem(int nItem);	// Update list item
+	void	UpdateInputArea();			// Update edit box, spins and buttons
+	void	CommitAll();				// Commit all data to settings
+	void	UpdateAll();				// Update settings list
+	bool	IsModified() const;			// Check if some of settings was modified
+
 	virtual void OnOK();
 	virtual void DoDataExchange(CDataExchange* pDX);    // DDX/DDV support
 	virtual BOOL OnInitDialog();
@@ -83,6 +90,8 @@ protected:
 	afx_msg void OnChangeValue();
 	afx_msg void OnColumnClickProperties(NMHDR* pNMHDR, LRESULT* pResult);
 	afx_msg void OnBnClickedDefaultValue();
+	afx_msg void OnEnChangeQuickfilter();
+	afx_msg void OnTimer(UINT_PTR nIDEvent);
 
 	DECLARE_MESSAGE_MAP()	
 };

@@ -3788,7 +3788,9 @@
 			<control caption="安装(_S)..."/>
 			<control caption="获取更多"/>
 		</dialog>
-		<dialog name="CAdvancedSettingsPage" cookie="SyEdmsBuBuStStEdBuCo" caption="高级">
+		<dialog name="CAdvancedSettingsPage" cookie="EdStSyEdmsBuBuStStEdBuCo" caption="高级">
+			<control/>
+			<control/>
 			<control/>
 			<control/>
 			<control/>
