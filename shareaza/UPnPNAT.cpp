@@ -1,7 +1,7 @@
 //
 // UPnPNAT.cpp
 //
-// Copyright (c) Shareaza Development Team, 2014.
+// Copyright (c) Shareaza Development Team, 2014-2015.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -141,13 +141,16 @@ void CUPnPNAT::OnRun()
 					nPort = Network.RandomPort();
 
 				// Try to map both ports
+				CString strInfo;
 				for ( int i = 0; IsThreadEnabled() && i < 5; ++i )
 				{
-					m_nExternalTCPPort = MapPort( pCollection, strLocalIP, nPort, L"TCP", CLIENT_NAME_T );
+					strInfo.Format( _T("%s at %s:%u"), CLIENT_NAME_T _T(" TCP"), strLocalIP, nPort );
+					m_nExternalTCPPort = MapPort( pCollection, strLocalIP, nPort, L"TCP", strInfo );
 					if ( m_nExternalTCPPort  )
 						theApp.Message( MSG_DEBUG, _T("UPnP successfully mapped TCP port %u."), m_nExternalTCPPort );
 
-					m_nExternalUDPPort = MapPort( pCollection, strLocalIP, nPort, L"UDP", CLIENT_NAME_T );
+					strInfo.Format( _T("%s at %s:%u"), CLIENT_NAME_T _T(" UDP"), strLocalIP, nPort );
+					m_nExternalUDPPort = MapPort( pCollection, strLocalIP, nPort, L"UDP", strInfo );
 					if ( m_nExternalUDPPort  )
 						theApp.Message( MSG_DEBUG, _T("UPnP successfully mapped UDP port %u."), m_nExternalUDPPort );
 
