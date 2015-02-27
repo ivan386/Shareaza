@@ -1,4 +1,4 @@
-/* $Id: miniupnpc.c,v 1.121 2014/11/17 09:41:32 nanard Exp $ */
+/* $Id: miniupnpc.c,v 1.125 2015/01/22 09:24:19 nanard Exp $ */
 /* Project : miniupnp
  * Web : http://miniupnp.free.fr/
  * Author : Thomas BERNARD
@@ -30,7 +30,6 @@
 #include <ws2tcpip.h>
 #include <io.h>
 #include <iphlpapi.h>
-#undef IF_NAMESIZE /* Windows XP fix */
 #define snprintf _snprintf
 #define strdup _strdup
 #ifndef strncasecmp
@@ -94,6 +93,9 @@ struct ip_mreqn
 #include "upnpcommands.h"
 #include "connecthostport.h"
 #include "receivedata.h"
+
+/* compare the begining of a string with a constant string */
+#define COMPARE(str, cstr) (0==memcmp(str, cstr, sizeof(cstr) - 1))
 
 #ifdef _WIN32
 #define PRINT_SOCKET_ERROR(x)    printf("Socket error: %s, %d\n", x, WSAGetLastError());
@@ -499,7 +501,7 @@ upnpDiscoverDevices(const char * const deviceTypes[],
 			 * MS Windows Vista and MS Windows Server 2008.
 			 * http://msdn.microsoft.com/en-us/library/bb408409%28v=vs.85%29.aspx */
 			unsigned int ifindex = if_nametoindex(multicastif); /* eth0, etc. */
-			if(setsockopt(sudp, IPPROTO_IPV6, IPV6_MULTICAST_IF, &ifindex, sizeof(&ifindex)) < 0)
+			if(setsockopt(sudp, IPPROTO_IPV6, IPV6_MULTICAST_IF, &ifindex, sizeof(ifindex)) < 0)
 			{
 				PRINT_SOCKET_ERROR("setsockopt");
 			}
@@ -788,11 +790,11 @@ build_absolute_url(const char * baseurl, const char * descURL,
 	char * s;
 	const char * base;
 	char * p;
-#ifdef IF_NAMESIZE
+#if defined(IF_NAMESIZE) && !defined(_WIN32)
 	char ifname[IF_NAMESIZE];
-#else
+#else /* defined(IF_NAMESIZE) && !defined(_WIN32) */
 	char scope_str[8];
-#endif
+#endif	/* defined(IF_NAMESIZE) && !defined(_WIN32) */
 
 	if(  (url[0] == 'h')
 	   &&(url[1] == 't')
@@ -813,14 +815,14 @@ build_absolute_url(const char * baseurl, const char * descURL,
 	if(url[0] != '/')
 		l++;
 	if(scope_id != 0) {
-#ifdef IF_NAMESIZE
+#if defined(IF_NAMESIZE) && !defined(_WIN32)
 		if(if_indextoname(scope_id, ifname)) {
 			l += 3 + strlen(ifname);	/* 3 == strlen(%25) */
 		}
-#else
+#else /* defined(IF_NAMESIZE) && !defined(_WIN32) */
 		/* under windows, scope is numerical */
 		l += 3 + snprintf(scope_str, sizeof(scope_str), "%u", scope_id);
-#endif
+#endif /* defined(IF_NAMESIZE) && !defined(_WIN32) */
 	}
 	s = malloc(l);
 	if(s == NULL) return NULL;
@@ -832,17 +834,17 @@ build_absolute_url(const char * baseurl, const char * descURL,
 			p = strchr(s, ']');
 			if(p) {
 				/* insert %25<scope> into URL */
-#ifdef IF_NAMESIZE
+#if defined(IF_NAMESIZE) && !defined(_WIN32)
 				memmove(p + 3 + strlen(ifname), p, strlen(p) + 1);
 				memcpy(p, "%25", 3);
 				memcpy(p + 3, ifname, strlen(ifname));
 				n += 3 + strlen(ifname);
-#else
+#else /* defined(IF_NAMESIZE) && !defined(_WIN32) */
 				memmove(p + 3 + strlen(scope_str), p, strlen(p) + 1);
 				memcpy(p, "%25", 3);
 				memcpy(p + 3, scope_str, strlen(scope_str));
 				n += 3 + strlen(scope_str);
-#endif
+#endif /* defined(IF_NAMESIZE) && !defined(_WIN32) */
 			}
 		}
 	}
@@ -978,8 +980,8 @@ UPNP_GetValidIGD(struct UPNPDev * devlist,
 			memset(data, 0, sizeof(struct IGDdatas));
 			memset(urls, 0, sizeof(struct UPNPUrls));
 			parserootdesc(desc[i].xml, desc[i].size, data);
-			if(0==strcmp(data->CIF.servicetype,
-			   "urn:schemas-upnp-org:service:WANCommonInterfaceConfig:1"))
+			if(COMPARE(data->CIF.servicetype,
+			           "urn:schemas-upnp-org:service:WANCommonInterfaceConfig:"))
 			{
 				desc[i].is_igd = 1;
 				n_igd++;

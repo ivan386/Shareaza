@@ -1,9 +1,9 @@
-# $Id: Makefile,v 1.115 2014/11/17 09:41:32 nanard Exp $
+# $Id: Makefile,v 1.120 2015/01/07 09:07:32 nanard Exp $
 # MiniUPnP Project
 # http://miniupnp.free.fr/
 # http://miniupnp.tuxfamily.org/
 # https://github.com/miniupnp/miniupnp
-# (c) 2005-2014 Thomas Bernard
+# (c) 2005-2015 Thomas Bernard
 # to install use :
 # $ make DESTDIR=/tmp/dummylocation install
 # or
@@ -35,7 +35,7 @@ CFLAGS += -W -Wstrict-prototypes
 CFLAGS += -fno-common
 CFLAGS += -DMINIUPNPC_SET_SOCKET_TIMEOUT
 CFLAGS += -DMINIUPNPC_GET_SRC_ADDR
-CFLAGS += -D_BSD_SOURCE -D_POSIX_C_SOURCE=1
+CFLAGS += -D_BSD_SOURCE -D_POSIX_C_SOURCE=200112L
 CFLAGS += -ansi
 # -DNO_GETADDRINFO
 INSTALL = install
@@ -145,7 +145,7 @@ all:	$(LIBRARY) $(EXECUTABLES)
 test:	check
 
 check:	validateminixml validateminiwget validateupnpreplyparse \
-	validateportlistingparse
+	validateportlistingparse validateigddescparse
 
 everything:	all $(EXECUTABLES_ADDTESTS)
 
@@ -183,12 +183,19 @@ validateportlistingparse:	testportlistingparse
 	./testportlistingparse
 	touch $@
 
+validateigddescparse:	testigddescparse
+	@echo "igd desc parse validation test"
+	./testigddescparse testdesc/new_LiveBox_desc.xml testdesc/new_LiveBox_desc.values
+	./testigddescparse testdesc/linksys_WAG200G_desc.xml testdesc/linksys_WAG200G_desc.values
+	touch $@
+
 clean:
 	$(RM) $(LIBRARY) $(SHAREDLIBRARY) $(EXECUTABLES) $(OBJS) miniupnpcstrings.h
 	$(RM) $(EXECUTABLES_ADDTESTS)
 	# clean python stuff
 	$(RM) pythonmodule pythonmodule3
 	$(RM) validateminixml validateminiwget validateupnpreplyparse
+	$(RM) validateigddescparse
 	$(RM) minihttptestserver
 	$(RM) -r build/ dist/
 	#python setup.py clean
@@ -226,6 +233,13 @@ ifeq ($(OS), Linux)
 endif
 endif
 
+install-static:	updateversion $(FILESTOINSTALL)
+	$(INSTALL) -d $(DESTDIR)$(INSTALLDIRINC)
+	$(INSTALL) -m 644 $(HEADERS) $(DESTDIR)$(INSTALLDIRINC)
+	$(INSTALL) -d $(DESTDIR)$(INSTALLDIRLIB)
+	$(INSTALL) -m 644 $(LIBRARY) $(DESTDIR)$(INSTALLDIRLIB)
+	$(INSTALL) -d $(DESTDIR)$(INSTALLDIRBIN)
+	$(INSTALL) -m 755 external-ip.sh $(DESTDIR)$(INSTALLDIRBIN)/external-ip
 
 cleaninstall:
 	$(RM) -r $(DESTDIR)$(INSTALLDIRINC)
@@ -340,3 +354,4 @@ testportlistingparse.o: portlistingparse.h declspec.h miniupnpctypes.h
 miniupnpcmodule.o: miniupnpc.h declspec.h igd_desc_parse.h upnpcommands.h
 miniupnpcmodule.o: upnpreplyparse.h portlistingparse.h miniupnpctypes.h
 miniupnpcmodule.o: upnperrors.h
+listdevices.o: miniupnpc.h declspec.h igd_desc_parse.h
