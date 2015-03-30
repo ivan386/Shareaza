@@ -1,5 +1,4 @@
 M http://cache.w3-hidden.cc/
-M http://gweb.dwbo.nl/
 M http://tenafly5k.com/gwc/skulls.php
 
 2 http://cache.ce3c.be/
@@ -13,6 +12,9 @@ U uhc:yin.cloud.bishopston.net:33558
 D http://peerates.net/servers.php
 D http://upd.emule-security.org/server.met
 D http://www.gruk.org/server.met
+
+# Hacked:
+X http://gweb.dwbo.nl/
 
 # Banned:
 X http://buriti2.serveftp.com:8080/skulls.php
