@@ -4723,7 +4723,7 @@ pasta dos arquivos baixados a sua biblioteca agora?"/>
 		<list name="CSchedulerWnd">
 			<column from="Action" to="Ação"/>
 			<column from="Trigger" to="Gatilho"/>
-			<column from="Next Run" to="NextRun"/>
+			<column from="Next Run" to="PróximaExecução"/>
 			<column from="Active" to="Ativ(o)a"/>
 			<column from="Status" to="Status"/>
 			<column from="Description" to="Descrição"/>

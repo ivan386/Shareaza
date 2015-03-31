@@ -4719,7 +4719,7 @@
 		<list name="CSchedulerWnd">
 			<column from="Action" to="Akcja"/>
 			<column from="Trigger" to="TigerTree"/>
-			<column from="Next Run" to="NextRun"/>
+			<column from="Next Run" to="Następny"/>
 			<column from="Active" to="Aktywne"/>
 			<column from="Status" to="Status"/>
 			<column from="Description" to="Opis"/>
