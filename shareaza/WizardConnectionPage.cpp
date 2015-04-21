@@ -1,7 +1,7 @@
 //
 // WizardConnectionPage.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2011.
+// Copyright (c) Shareaza Development Team, 2002-2015.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -279,7 +279,7 @@ void CWizardConnectionPage::OnRun()
 		m_wndStatus.SetWindowText( strMessage );
 
 		DiscoveryServices.CheckMinimumServices();
-		nCurrentStep +=15;
+		nCurrentStep +=10;
 		m_wndProgress.PostMessage( PBM_SETPOS, nCurrentStep );
 
 		BOOL bConnected = Network.IsConnected();
@@ -296,10 +296,13 @@ void CWizardConnectionPage::OnRun()
 			for ( i = 0; i < 2 && !DiscoveryServices.Execute(TRUE, PROTOCOL_ED2K, 2); i++ ) Sleep(200);
 			nCurrentStep += 5;
 			m_wndProgress.PostMessage( PBM_SETPOS, nCurrentStep );
+			for ( i = 0; i < 2 && !DiscoveryServices.Execute(TRUE, PROTOCOL_DC, 2); i++ ) Sleep(200);
+			nCurrentStep += 5;
+			m_wndProgress.PostMessage( PBM_SETPOS, nCurrentStep );
 		}
 		else
 		{
-			nCurrentStep += 15;
+			nCurrentStep += 20;
 			m_wndProgress.PostMessage( PBM_SETPOS, nCurrentStep );
 		}
 	}
