@@ -1,7 +1,7 @@
 //
 // Handshakes.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2014.
+// Copyright (c) Shareaza Development Team, 2002-2015.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -365,7 +365,8 @@ void CHandshakes::RunStableUpdate()
 	if ( m_nStableCount > 0 )
 	{
 		// If there isn't a record of when we first connected yet, set it to the current time.
-		if ( m_tStableTime == 0 ) m_tStableTime = (DWORD)time( NULL ); // The function time( NULL ) resolves to the number of seconds since 1970
+		const DWORD tNow = static_cast< DWORD >( time( NULL ) );
+		if ( m_tStableTime == 0 || tNow < m_tStableTime ) m_tStableTime = tNow;
 
 		// Update the discovery services (do)
 		DiscoveryServices.Update();

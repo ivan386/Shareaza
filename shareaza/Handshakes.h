@@ -1,7 +1,7 @@
 //
 // Handshakes.h
 //
-// Copyright (c) Shareaza Development Team, 2002-2012.
+// Copyright (c) Shareaza Development Team, 2002-2015.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -66,7 +66,8 @@ public:
 	// The time at least one has been connected (seconds)
 	inline DWORD GetStableTime() const
 	{
-		return m_tStableTime ? ( static_cast< DWORD >( time( NULL ) ) - m_tStableTime ) : 0;
+		const DWORD tNow = static_cast< DWORD >( time( NULL ) );
+		return ( m_tStableTime && tNow > m_tStableTime ) ? ( tNow - m_tStableTime ) : 0;
 	}
 };
 
