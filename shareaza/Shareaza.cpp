@@ -2246,8 +2246,8 @@ CString CShareazaApp::GetProgramFilesFolder64() const
 	}
 
 	// 32-bit way
-	DWORD nRes = ExpandEnvironmentStrings( _T("%ProgramW6432%"), sProgramFiles.GetBuffer( MAX_PATH ), MAX_PATH );
-	sProgramFiles.ReleaseBuffer( nRes );
+	ExpandEnvironmentStrings( _T("%ProgramW6432%"), sProgramFiles.GetBuffer( MAX_PATH ), MAX_PATH );
+	sProgramFiles.ReleaseBuffer();
 	sProgramFiles.Trim();
 	sProgramFiles.TrimRight( _T( "\\" ) );
 	if ( ! sProgramFiles.IsEmpty() )
