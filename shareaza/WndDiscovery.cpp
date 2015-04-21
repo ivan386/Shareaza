@@ -1,7 +1,7 @@
 //
 // WndDiscovery.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2012.
+// Copyright (c) Shareaza Development Team, 2002-2015.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -154,41 +154,53 @@ void CDiscoveryWnd::Update()
 		{
 			if ( ! m_bShowGnutella ) continue;
 			pItem = m_wndList.Add( pService );
-			pItem->Set( 1, _T("Bootstrap") );
+			pItem->Set( 1, _T("Gnutella Bootstrap") );
 			pItem->SetImage( 0, 0 );
 		}
 		else if ( pService->m_nType == CDiscoveryService::dsWebCache )
 		{
 			if ( ! m_bShowWebCache ) continue;
 			pItem = m_wndList.Add( pService );
-			pItem->Set( 1, _T("GWebCache") );
 			if ( pService->m_bGnutella2 && pService->m_bGnutella1 )
 			{
+				pItem->Set( 1, _T("G1/G2 GWebCache") );
 				pItem->SetImage( 0, 2 );			// Multi-coloured icon
 			}
 			else
 			{
+				ASSERT( pService->m_bGnutella2 || pService->m_bGnutella1 );
 				if ( pService->m_bGnutella2 )
+				{
+					pItem->Set( 1, _T("G2 GWebCache") );
 					pItem->SetImage( 0, 4 );		// Blue icon
-				else if ( pService->m_bGnutella1 )
+				}
+				else
+				{
+					pItem->Set( 1, _T("G1 GWebCache") );
 					pItem->SetImage( 0, 1 );		// Grey icon
-				else 
-					pItem->SetImage( 0, 3 );		// Blank
+				}
 			}
 		}
 		else if ( pService->m_nType == CDiscoveryService::dsServerMet )
 		{
 			if ( ! m_bShowServerMet ) continue;
 			pItem = m_wndList.Add( pService );
-			pItem->Set( 1, _T("Server.met") );
-			pItem->SetImage( 0, 3 );
+			pItem->Set( 1, _T("Server.met URL") );
+			pItem->SetImage( 0, 3 );				// URL icon
+		}
+		else if ( pService->m_nType == CDiscoveryService::dsDCHubList )
+		{
+			if ( ! m_bShowServerMet ) continue;
+			pItem = m_wndList.Add( pService );
+			pItem->Set( 1, _T( "DC++ Hub List URL" ) );
+			pItem->SetImage( 0, 3 );				// URL icon
 		}
 		else if ( pService->m_nType == CDiscoveryService::dsBlocked )
 		{
 			if ( ! m_bShowBlocked ) continue;
 			pItem = m_wndList.Add( pService );
 			pItem->Set( 1, _T("Blocked") );
-			pItem->SetImage( 0, 5 );
+			pItem->SetImage( 0, 5 );				// Block icon
 		}
 		else
 		{
@@ -314,12 +326,9 @@ void CDiscoveryWnd::OnDiscoveryQuery()
 	for ( int nItem = -1 ; ( nItem = m_wndList.GetNextItem( nItem, LVIS_SELECTED ) ) >= 0 ; )
 	{
 		CDiscoveryService* pService = GetItem( nItem );
-		
-		if ( pService != NULL )
+		if ( pService && pService->m_nType != CDiscoveryService::dsBlocked )
 		{
-			DiscoveryServices.Execute( pService,
-				( GetAsyncKeyState( VK_SHIFT ) & 0x8000 ) ?
-				CDiscoveryServices::wcmCaches : CDiscoveryServices::wcmHosts );
+			DiscoveryServices.Query( pService, ( GetAsyncKeyState( VK_SHIFT ) & 0x8000 ) ? CDiscoveryServices::wcmCaches : CDiscoveryServices::wcmHosts );
 			break;
 		}
 	}
@@ -347,10 +356,9 @@ void CDiscoveryWnd::OnDiscoveryAdvertise()
 		return;
 
 	CDiscoveryService* pService = GetItem( m_wndList.GetNextItem( -1, LVIS_SELECTED ) );
-
-	if ( pService )
+	if ( pService && pService->m_nType == CDiscoveryService::dsWebCache )
 	{
-		DiscoveryServices.Execute( pService, CDiscoveryServices::wcmSubmit );
+		DiscoveryServices.Query( pService, CDiscoveryServices::wcmSubmit );
 	}
 }
 
@@ -487,7 +495,15 @@ BOOL CDiscoveryWnd::PreTranslateMessage(MSG* pMsg)
 {
 	if ( pMsg->message == WM_KEYDOWN )
 	{
-		if ( pMsg->wParam == VK_DELETE )
+		if ( pMsg->wParam == 'A' && GetAsyncKeyState( VK_CONTROL ) & 0x8000 )
+		{
+			for ( int nItem = m_wndList.GetItemCount() - 1; nItem >= 0; nItem-- )
+			{
+				m_wndList.SetItemState( nItem, LVIS_SELECTED, LVIS_SELECTED );
+			}
+			return TRUE;
+		}
+		else if ( pMsg->wParam == VK_DELETE )
 		{
 			PostMessage( WM_COMMAND, ID_DISCOVERY_REMOVE );
 			return TRUE;

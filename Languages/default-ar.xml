@@ -4113,7 +4113,7 @@
 			<control caption=":عنوان ال_خدمة"/>
 			<control/>
 			<control caption=": نوع خدمة الإكتشاف"/>
-			<control caption="Gnutella Bootstrap|G1 GWebCache|G2 GWebCache|G1/G2 GWebCache|Server.met| رابطالمحجوبة"/>
+			<control caption="Gnutella Bootstrap|G1 GWebCache|G2 GWebCache|G1/G2 GWebCache|Server.met|DC++ Hub List URL| رابطالمحجوبة"/>
 			<control caption="حسنا"/>
 			<control caption="إلغاء الأمر"/>
 		</dialog>

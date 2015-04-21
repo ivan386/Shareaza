@@ -1,7 +1,7 @@
 //
 // DlgURLAction.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2014.
+// Copyright (c) Shareaza Development Team, 2002-2015.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -49,8 +49,8 @@ static char THIS_FILE[] = __FILE__;
 IMPLEMENT_DYNAMIC(CURLActionDlg, CSkinDialog)
 
 BEGIN_MESSAGE_MAP(CURLActionDlg, CSkinDialog)
-	ON_BN_CLICKED(IDC_URL_DOWNLOAD, OnUrlDownload)
-	ON_BN_CLICKED(IDC_URL_SEARCH, OnUrlSearch)
+	ON_BN_CLICKED(IDC_URL_DOWNLOAD, &CURLActionDlg::OnUrlDownload)
+	ON_BN_CLICKED(IDC_URL_SEARCH, &CURLActionDlg::OnUrlSearch)
 END_MESSAGE_MAP()
 
 
@@ -58,9 +58,9 @@ END_MESSAGE_MAP()
 // CURLActionDlg construction
 
 CURLActionDlg::CURLActionDlg(CShareazaURL* pURL)
-:	CSkinDialog( CURLActionDlg::IDD )
-,	m_bNewWindow	( FALSE )
-,	m_bAlwaysOpen	( FALSE )
+	: CSkinDialog( CURLActionDlg::IDD )
+	, m_bNewWindow( FALSE )
+	, m_bAlwaysOpen( FALSE )
 {
 	if ( pURL )
 	{
@@ -78,7 +78,7 @@ CURLActionDlg::~CURLActionDlg()
 void CURLActionDlg::DoDataExchange(CDataExchange* pDX)
 {
 	CSkinDialog::DoDataExchange(pDX);
-	//{{AFX_DATA_MAP(CURLActionDlg)
+
 	DDX_Control(pDX, IDC_MESSAGE_4, m_wndMessage4);
 	DDX_Control(pDX, IDC_MESSAGE_3, m_wndMessage3);
 	DDX_Control(pDX, IDC_NEW_WINDOW, m_wndNewWindow);
@@ -93,7 +93,6 @@ void CURLActionDlg::DoDataExchange(CDataExchange* pDX)
 	DDX_Text(pDX, IDC_URL_URN_VALUE, m_sHashValue);
 	DDX_Check(pDX, IDC_NEW_WINDOW, m_bNewWindow);
 	DDX_Check(pDX, IDC_ALWAYS_OPEN, m_bAlwaysOpen);
-	//}}AFX_DATA_MAP
 }
 
 /////////////////////////////////////////////////////////////////////////////
@@ -159,14 +158,22 @@ BOOL CURLActionDlg::OnInitDialog()
 
 		m_sNameValue = m_pURL->m_sURL;
 
-		switch ( m_pURL->m_nSize )
+		switch ( m_pURL->GetDiscoveryService() )
 		{
+		case CDiscoveryService::dsGnutella:
+			m_sHashValue = _T( "Gnutella Bootstrap" );
+			break;
 		case CDiscoveryService::dsWebCache:
-			m_sHashValue = _T("GWebCache");
+			m_sHashValue = _T( "G1/G2 GWebCache" );
 			break;
 		case CDiscoveryService::dsServerMet:
-			m_sHashValue = _T("Server.met URL");
+			m_sHashValue = _T( "Server.met URL" );
 			break;
+		case CDiscoveryService::dsDCHubList:
+			m_sHashValue = _T( "DC++ Hub List URL" );
+			break;
+		default:
+			m_sHashValue.Empty();
 		}
 
 		m_wndMessage4.ShowWindow( SW_SHOW );
@@ -305,7 +312,7 @@ void CURLActionDlg::OnUrlDownload()
 	}
 	else if ( m_pURL->m_nAction == CShareazaURL::uriDiscovery )
 	{
-		DiscoveryServices.Add( m_pURL->m_sURL, (int)m_pURL->m_nSize );
+		DiscoveryServices.Add( m_pURL->m_sURL, m_pURL->GetDiscoveryService() );
 	}
 
 	DestroyWindow();

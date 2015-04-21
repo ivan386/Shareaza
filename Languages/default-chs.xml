@@ -4093,7 +4093,7 @@
 			<control caption="服务地址(_A):"/>
 			<control/>
 			<control caption="探索服务类型:"/>
-			<control caption="Gnutella Bootstrap|G1 GWebCache|G2 GWebCache|G1/G2 GWebCache|Server.met 链接|阻挡"/>
+			<control caption="Gnutella Bootstrap|G1 GWebCache|G2 GWebCache|G1/G2 GWebCache|Server.met 链接|DC++ Hub List URL|阻挡"/>
 			<control caption="确定"/>
 			<control caption="取消"/>
 		</dialog>

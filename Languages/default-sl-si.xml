@@ -4115,7 +4115,7 @@
 			<control caption="Naslov _storitve:"/>
 			<control/>
 			<control caption="Storitev Discovery tipa:"/>
-			<control caption="Gnutella Bootstrap|G1 GWebCache|G2 GWebCache|G1/G2 GWebCache|Server.met URL|Blocked"/>
+			<control caption="Gnutella Bootstrap|G1 GWebCache|G2 GWebCache|G1/G2 GWebCache|Server.met URL|DC++ Hub List URL|Blocked"/>
 			<control caption="V redu"/>
 			<control caption="Prekliči"/>
 		</dialog>

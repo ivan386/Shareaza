@@ -4128,7 +4128,7 @@
 			<control caption="Service _Address:"/>
 			<control/>
 			<control caption="Discovery Service Type:"/>
-			<control caption="Gnutella Bootstrap|G1 GWebCache|G2 GWebCache|G1/G2 GWebCache|Server.met URL|Blocked"/>
+			<control caption="Gnutella Bootstrap|G1 GWebCache|G2 GWebCache|G1/G2 GWebCache|Server.met URL|DC++ Hub List URL|Blocked"/>
 			<control caption="OK"/>
 			<control caption="Cancel"/>
 		</dialog>

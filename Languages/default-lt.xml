@@ -4114,7 +4114,7 @@
 			<control caption="Tarnybos _adresas:"/>
 			<control/>
 			<control caption="Tarnybos tipas:"/>
-			<control caption="Gnutella Bootstrap|G1 GWebCache|G2 GWebCache|G1/G2 GWebCache|Server.met URL|Blocked"/>
+			<control caption="Gnutella Bootstrap|G1 GWebCache|G2 GWebCache|G1/G2 GWebCache|Server.met URL|DC++ Hub List URL|Blokuota"/>
 			<control caption="Gerai"/>
 			<control caption="Atšaukti"/>
 		</dialog>

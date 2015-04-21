@@ -4100,7 +4100,7 @@
 			<control caption="Servis _Adresi:"/>
 			<control/>
 			<control caption="Keşif Servis Türü:"/>
-			<control caption="Gnutella Bootstrap|G1 GWebCache|G2 GWebCache|G1/G2 GWebCache|Server.met URL|Engellenmiş"/>
+			<control caption="Gnutella Bootstrap|G1 GWebCache|G2 GWebCache|G1/G2 GWebCache|Server.met URL|DC++ Hub List URL|Engellenmiş"/>
 			<control caption="Tamam"/>
 			<control caption="İptal"/>
 		</dialog>

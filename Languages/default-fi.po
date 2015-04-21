@@ -8930,7 +8930,7 @@ msgid "Discovery Service Type:"
 msgstr ""
 
 #: cdiscoveryservicedlg;control;4
-msgid "Gnutella Bootstrap|G1 GWebCache|G2 GWebCache|G1/G2 GWebCache|Server.met URL|Blocked"
+msgid "Gnutella Bootstrap|G1 GWebCache|G2 GWebCache|G1/G2 GWebCache|Server.met URL|DC++ Hub List URL|Blocked"
 msgstr ""
 
 #: dialog;cdownloadmonitordlg

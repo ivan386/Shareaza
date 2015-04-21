@@ -1,7 +1,7 @@
 //
 // DiscoveryServices.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2014.
+// Copyright (c) Shareaza Development Team, 2002-2015.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -57,8 +57,7 @@ CDiscoveryServices::CDiscoveryServices() :
 	m_nLastUpdateProtocol ( PROTOCOL_NULL ),
 	m_bFirstTime	( TRUE ),
 	m_tExecute		( 0 ),
-	m_tQueried		( 0 ),
-	m_tMetQueried	( 0 )
+	m_tQueried		( 0 )
 {
 }
 
@@ -83,31 +82,27 @@ CDiscoveryService* CDiscoveryServices::GetNext(POSITION& pos) const
 	return m_pList.GetNext( pos );
 }
 
-BOOL CDiscoveryServices::Check(CDiscoveryService* pService, CDiscoveryService::Type nType) const
+BOOL CDiscoveryServices::Check(const CDiscoveryService* pService, CDiscoveryService::Type nType) const
 {
 	ASSUME_LOCK( Network.m_pSection );
 
-	if ( pService == NULL ) return FALSE;
-	if ( m_pList.Find( pService ) == NULL ) return FALSE;
-	return ( nType == CDiscoveryService::dsNull ) || ( pService->m_nType == nType );
+	return pService && m_pList.Find( const_cast< CDiscoveryService* >( pService ) ) &&
+		( ( nType == CDiscoveryService::dsNull ) || ( pService->m_nType == nType ) );
 }
 
-DWORD CDiscoveryServices::GetCount(int nType, PROTOCOLID nProtocol) const
+DWORD CDiscoveryServices::GetCount(CDiscoveryService::Type nType, PROTOCOLID nProtocol) const
 {
 	ASSUME_LOCK( Network.m_pSection );
 
 	DWORD nCount = 0;
-	CDiscoveryService* ptr;
-
 	for ( POSITION pos = m_pList.GetHeadPosition() ; pos ; )
 	{
-		ptr = m_pList.GetNext( pos );
+		const CDiscoveryService* ptr = m_pList.GetNext( pos );
 		if ( ( nType == CDiscoveryService::dsNull ) || ( ptr->m_nType == nType ) )	// If we're counting all types, or it matches
 		{
 			if ( ( nProtocol == PROTOCOL_NULL ) ||									// If we're counting all protocols
 			   ( ( nProtocol == PROTOCOL_G1   ) && ptr->m_bGnutella1 ) ||			// Or we're counting G1 and it matches
-			   ( ( nProtocol == PROTOCOL_G2   ) && ptr->m_bGnutella2 ) ||			// Or we're counting G2 and it matches
-			   ( ( nProtocol == PROTOCOL_ED2K ) && ptr->m_nType == CDiscoveryService::dsServerMet ) ) // Or we're counting ED2K
+			   ( ( nProtocol == PROTOCOL_G2   ) && ptr->m_bGnutella2 ) )			// Or we're counting G2 and it matches
 			{
 			   nCount++;
 			}
@@ -119,7 +114,7 @@ DWORD CDiscoveryServices::GetCount(int nType, PROTOCOLID nProtocol) const
 //////////////////////////////////////////////////////////////////////
 // CDiscoveryServices list modification
 
-BOOL CDiscoveryServices::Add(LPCTSTR pszAddress, int nType, PROTOCOLID nProtocol)
+BOOL CDiscoveryServices::Add(LPCTSTR pszAddress, CDiscoveryService::Type nType, PROTOCOLID nProtocol)
 {
 	CSingleLock pLock( &Network.m_pSection, FALSE );
 	if ( ! pLock.Lock( 250 ) )
@@ -150,35 +145,40 @@ BOOL CDiscoveryServices::Add(LPCTSTR pszAddress, int nType, PROTOCOLID nProtocol
 	{
 	case CDiscoveryService::dsWebCache:
 		if ( CheckWebCacheValid( pszAddress ) )
-			pService = new CDiscoveryService( CDiscoveryService::dsWebCache, strAddress );
+			pService = new CDiscoveryService( nType, strAddress );
 		break;
 
 	case CDiscoveryService::dsServerMet:
 		if ( CheckWebCacheValid( pszAddress ) )
-			pService = new CDiscoveryService( CDiscoveryService::dsServerMet, strAddress );
+			pService = new CDiscoveryService( nType, strAddress );
+		break;
+
+	case CDiscoveryService::dsDCHubList:
+		if ( CheckWebCacheValid( pszAddress ) )
+			pService = new CDiscoveryService( nType, strAddress );
 		break;
 
 	case CDiscoveryService::dsGnutella:
 		if ( CheckWebCacheValid( pszAddress ) )
 		{
-			pService = new CDiscoveryService( CDiscoveryService::dsGnutella, strAddress );
+			pService = new CDiscoveryService( nType, strAddress );
 
-			if ( _tcsnicmp( strAddress, _T("gnutella1:host:"),  15 ) == 0 )
+			if ( _tcsnicmp( strAddress, _PT( DSGnutellaTCP ) ) == 0 )
 			{
 				nProtocol = PROTOCOL_G1;
 				pService->m_nSubType = CDiscoveryService::dsGnutellaTCP;
 			}
-			else if ( _tcsnicmp( strAddress, _T("gnutella2:host:"), 15 ) == 0 )
+			else if ( _tcsnicmp( strAddress, _PT( DSGnutella2TCP ) ) == 0 )
 			{
 				nProtocol = PROTOCOL_G2;
 				pService->m_nSubType = CDiscoveryService::dsGnutella2TCP;
 			}
-			else if ( _tcsnicmp( strAddress, _T("uhc:"), 4 )  == 0 )
+			else if ( _tcsnicmp( strAddress, _PT( DSGnutellaUDPHC ) )  == 0 )
 			{
 				nProtocol = PROTOCOL_G1;
 				pService->m_nSubType = CDiscoveryService::dsGnutellaUDPHC;
 			}
-			else if ( _tcsnicmp( strAddress, _T("ukhl:"), 5 )  == 0 )
+			else if ( _tcsnicmp( strAddress, _PT( DSGnutella2UDPKHL ) )  == 0 )
 			{
 				nProtocol = PROTOCOL_G2;
 				pService->m_nSubType = CDiscoveryService::dsGnutella2UDPKHL;
@@ -187,7 +187,7 @@ BOOL CDiscoveryServices::Add(LPCTSTR pszAddress, int nType, PROTOCOLID nProtocol
 		break;
 
 	case CDiscoveryService::dsBlocked:
-		pService = new CDiscoveryService( CDiscoveryService::dsBlocked, strAddress );
+		pService = new CDiscoveryService( nType, strAddress );
 		for ( POSITION pos = m_pList.GetHeadPosition() ; pos ; )
 		{
 			CDiscoveryService* pItem = m_pList.GetNext( pos );
@@ -202,7 +202,10 @@ BOOL CDiscoveryServices::Add(LPCTSTR pszAddress, int nType, PROTOCOLID nProtocol
 				}
 			}
 		}
+		break;
 
+	case CDiscoveryService::dsNull:
+		ASSERT( nType != CDiscoveryService::dsNull );
 		break;
 	}
 
@@ -213,6 +216,7 @@ BOOL CDiscoveryServices::Add(LPCTSTR pszAddress, int nType, PROTOCOLID nProtocol
 	switch( nProtocol )
 	{
 	case PROTOCOL_ED2K:
+	case PROTOCOL_DC:
 		pService->m_bGnutella2 = FALSE;
 		pService->m_bGnutella1 = FALSE;
 		break;
@@ -258,7 +262,7 @@ BOOL CDiscoveryServices::Add(CDiscoveryService* pService)
 		if ( m_pList.Find( pService ) == NULL )
 		{
 			// It's a new service, but we don't want more. We should delete it.
-			theApp.Message( MSG_DEBUG, _T("[DiscoveryServices] Maximum discovery service count reached, %s not added"), pService->m_sAddress );
+			theApp.Message( MSG_DEBUG, _T("[DiscoveryServices] Maximum discovery service count reached, %s not added"), (LPCTSTR)pService->m_sAddress );
 			delete pService;
 			return FALSE;
 		}
@@ -313,17 +317,17 @@ BOOL CDiscoveryServices::CheckWebCacheValid(LPCTSTR pszAddress)
 	}
 
 	// Check it has a valid protocol
-	if ( _tcsnicmp( pszAddress, _T("http://"),  7 ) == 0 )
+	if (	  _tcsnicmp( pszAddress, _PT( "http://" ) ) == 0 )
 		pszAddress += 7;
-	else if ( _tcsnicmp( pszAddress, _T("https://"), 8 ) == 0 )
+	else if ( _tcsnicmp( pszAddress, _PT( "https://" ) ) == 0 )
 		pszAddress += 8;
-	else if ( _tcsnicmp( pszAddress, _T("gnutella1:host:"), 15 ) == 0 )
+	else if ( _tcsnicmp( pszAddress, _PT( DSGnutellaTCP ) ) == 0 )
 		return TRUE;
-	else if ( _tcsnicmp( pszAddress, _T("gnutella2:host:"), 15 ) == 0 )
+	else if ( _tcsnicmp( pszAddress, _PT( DSGnutella2TCP ) ) == 0 )
 		return TRUE;
-	else if ( _tcsnicmp( pszAddress, _T("uhc:"), 4 ) == 0 )
+	else if ( _tcsnicmp( pszAddress, _PT( DSGnutellaUDPHC ) ) == 0 )
 		return TRUE;
-	else if ( _tcsnicmp( pszAddress, _T("ukhl:"), 5 ) == 0 )
+	else if ( _tcsnicmp( pszAddress, _PT( DSGnutella2UDPKHL ) ) == 0 )
 		return TRUE;
 	else
 		return FALSE;
@@ -387,7 +391,7 @@ CDiscoveryService* CDiscoveryServices::GetByAddress(LPCTSTR pszAddress) const
 	return NULL;
 }
 
-CDiscoveryService* CDiscoveryServices::GetByAddress(const IN_ADDR* pAddress, WORD nPort, CDiscoveryService::SubType nSubType )
+CDiscoveryService* CDiscoveryServices::GetByAddress(const IN_ADDR* pAddress, WORD nPort, CDiscoveryService::SubType nSubType)
 {
 	ASSUME_LOCK( Network.m_pSection );
 
@@ -452,7 +456,7 @@ BOOL CDiscoveryServices::Load()
 				ar.Abort();
 				pFile.Abort();
 				pException->Delete();
-				theApp.Message( MSG_ERROR, _T("Failed to load discovery service list: %s"), strFile );
+				theApp.Message( MSG_ERROR, _T("Failed to load discovery service list: %s"), (LPCTSTR)strFile );
 			}
 			pFile.Close();
 		}
@@ -460,11 +464,11 @@ BOOL CDiscoveryServices::Load()
 		{
 			pFile.Abort();
 			pException->Delete();
-			theApp.Message( MSG_ERROR, _T("Failed to load discovery service list: %s"), strFile );
+			theApp.Message( MSG_ERROR, _T("Failed to load discovery service list: %s"), (LPCTSTR)strFile );
 		}
 	}
 	else
-		theApp.Message( MSG_ERROR, _T("Failed to load discovery service list: %s"), strFile );
+		theApp.Message( MSG_ERROR, _T("Failed to load discovery service list: %s"), (LPCTSTR)strFile );
 
 	// Check we have the minimum number of services (in case of file corruption, etc)
 	if ( ! EnoughServices() )
@@ -485,7 +489,7 @@ BOOL CDiscoveryServices::Save()
 	if ( ! pFile.Open( strTemp, CFile::modeWrite | CFile::modeCreate | CFile::shareExclusive | CFile::osSequentialScan ) )
 	{
 		DeleteFile( strTemp );
-		theApp.Message( MSG_ERROR, _T("Failed to save discovery service list: %s"), strTemp );
+		theApp.Message( MSG_ERROR, _T("Failed to save discovery service list: %s"), (LPCTSTR)strTemp );
 		return FALSE;
 	}
 
@@ -506,7 +510,7 @@ BOOL CDiscoveryServices::Save()
 			pFile.Abort();
 			pException->Delete();
 			DeleteFile( strTemp );
-			theApp.Message( MSG_ERROR, _T("Failed to save discovery service list: %s"), strTemp );
+			theApp.Message( MSG_ERROR, _T("Failed to save discovery service list: %s"), (LPCTSTR)strTemp );
 			return FALSE;
 		}
 		pFile.Close();
@@ -516,14 +520,14 @@ BOOL CDiscoveryServices::Save()
 		pFile.Abort();
 		pException->Delete();
 		DeleteFile( strTemp );
-		theApp.Message( MSG_ERROR, _T("Failed to save discovery service list: %s"), strTemp );
+		theApp.Message( MSG_ERROR, _T("Failed to save discovery service list: %s"), (LPCTSTR)strTemp );
 		return FALSE;
 	}
 
 	if ( ! MoveFileEx( strTemp, strFile, MOVEFILE_COPY_ALLOWED | MOVEFILE_REPLACE_EXISTING ) )
 	{
 		DeleteFile( strTemp );
-		theApp.Message( MSG_ERROR, _T("Failed to save discovery service list: %s"), strFile );
+		theApp.Message( MSG_ERROR, _T("Failed to save discovery service list: %s"), (LPCTSTR)strFile );
 		return FALSE;
 	}
 
@@ -545,7 +549,7 @@ void CDiscoveryServices::Serialize(CArchive& ar)
 	{
 		ar << nVersion;
 
-		ar.WriteCount( GetCount() );
+		ar.WriteCount( (DWORD)m_pList.GetCount() );
 
 		for ( POSITION pos = m_pList.GetHeadPosition() ; pos ; )
 		{
@@ -581,7 +585,7 @@ void CDiscoveryServices::Serialize(CArchive& ar)
 
 BOOL CDiscoveryServices::EnoughServices() const
 {
-	int nWebCacheCount = 0, nServerMetCount = 0;	// Types of services
+	int nWebCacheCount = 0, nServerMetCount = 0, nDCHubList = 0;	// Types of services
 	int nG1Count = 0, nG2Count = 0;					// Protocols
 
 	CSingleLock pLock( &Network.m_pSection, FALSE );
@@ -600,7 +604,11 @@ BOOL CDiscoveryServices::EnoughServices() const
 		}
 		else if ( pService->m_nType == CDiscoveryService::dsServerMet )
 		{
-			nServerMetCount ++;
+			nServerMetCount++;
+		}
+		else if ( pService->m_nType == CDiscoveryService::dsDCHubList )
+		{
+			nDCHubList++;
 		}
 		else if ( pService->m_nType == CDiscoveryService::dsGnutella )
 		{
@@ -612,7 +620,8 @@ BOOL CDiscoveryServices::EnoughServices() const
 	return ( ( nWebCacheCount   >= 1 ) &&	// At least 1 webcache
 			 ( nG2Count			>= 5 ) &&	// At least 5 G2 services
 			 ( nG1Count			>= 3 ) &&	// At least 3 G1 services
-			 ( nServerMetCount  >= 2 ) );	// At least 2 server.met
+			 ( nServerMetCount  >= 2 ) &&	// At least 2 server.met
+			 ( nDCHubList		>= 1 ) );	// At least 1 DC++ hub list
 }
 
 //////////////////////////////////////////////////////////////////////
@@ -620,57 +629,80 @@ BOOL CDiscoveryServices::EnoughServices() const
 
 void CDiscoveryServices::AddDefaults()
 {
-	CFile pFile;
 	CString strFile = Settings.General.Path + _T("\\Data\\DefaultServices.dat");
 
-	if (  pFile.Open( strFile, CFile::modeRead ) )			// Load default list from file if possible
+	CFile pFile;
+	if ( pFile.Open( strFile, CFile::modeRead ) )			// Load default list from file if possible
 	{
-		theApp.Message( MSG_NOTICE, _T("Loading default discovery service list") );
+		theApp.Message( MSG_NOTICE, _T("Loading default discovery service list: %s"), (LPCTSTR)strFile );
 
 		try
 		{
-			CString strService;
-			CString strLine;
-			CBuffer pBuffer;
-			TCHAR cType;
+			int nCount = 0;
 
+			CBuffer pBuffer;
 			pBuffer.EnsureBuffer( (DWORD)pFile.GetLength() );
 			pBuffer.m_nLength = (DWORD)pFile.GetLength();
 			pFile.Read( pBuffer.m_pBuffer, pBuffer.m_nLength );
-			pFile.Close();
 
+			CString strLine;
 			while ( pBuffer.ReadLine( strLine ) )
 			{
-				if ( strLine.GetLength() < 7 ) continue;									// Blank comment line
+				strLine.Trim( _T( " \t\r\n" ) );
+				if ( strLine.IsEmpty() )
+					// Blank comment line
+					continue;
 
-				cType = strLine.GetAt( 0 );
-				strService = strLine.Right( strLine.GetLength() - 2 );
+				const CString strService = strLine.Right( strLine.GetLength() - 2 );
 
-				switch( cType )
+				switch( strLine.GetAt( 0 ) )
 				{
-				case '1': Add( strService, CDiscoveryService::dsWebCache, PROTOCOL_G1 );	// G1 service
+				case '1':
+					if ( Add( strService, CDiscoveryService::dsWebCache, PROTOCOL_G1 ) )	// G1 service
+						nCount ++;
 					break;
-				case '2': Add( strService, CDiscoveryService::dsWebCache, PROTOCOL_G2 );	// G2 service
+				case '2':
+					if ( Add( strService, CDiscoveryService::dsWebCache, PROTOCOL_G2 ) )	// G2 service
+						nCount ++;
 					break;
-				case 'M': Add( strService, CDiscoveryService::dsWebCache );					// Multi-network service
+				case 'M':
+					if ( Add( strService, CDiscoveryService::dsWebCache ) )					// Multi-network service
+						nCount ++;
 					break;
-				case 'D': Add( strService, CDiscoveryService::dsServerMet, PROTOCOL_ED2K );	// eDonkey service
+				case 'D':
+					if ( Add( strService, CDiscoveryService::dsServerMet, PROTOCOL_ED2K ) )	// eDonkey service
+						nCount ++;
 					break;
-				case 'U': Add( strService, CDiscoveryService::dsGnutella );					// Bootstrap and UDP Discovery Service
+				case 'C':
+					if ( Add( strService, CDiscoveryService::dsDCHubList, PROTOCOL_DC ) )	// DC++ service
+						nCount ++;
 					break;
-				case 'X': Add( strService, CDiscoveryService::dsBlocked );					// Blocked service
+				case 'U':
+					if ( Add( strService, CDiscoveryService::dsGnutella ) )					// Bootstrap and UDP Discovery Service
+						nCount ++;
+					break;
+				case 'X':
+					if ( Add( strService, CDiscoveryService::dsBlocked ) )					// Blocked service
+						nCount ++;
 					break;
 				case '#':																	// Comment line
 					break;
+				default:
+					theApp.Message( MSG_ERROR, _T("Error line in discovery service list: %s"), (LPCTSTR)strLine );
 				}
 			}
+
+			theApp.Message( MSG_DEBUG, _T( "[DiscoveryServices] Loaded %d services." ), nCount );
 		}
 		catch ( CException* pException )
 		{
-			if (pFile.m_hFile != CFile::hFileNull) pFile.Close(); // Check if file is still open, if yes close
+			pFile.Abort();
 			pException->Delete();
+			theApp.Message( MSG_ERROR, _T("Failed to load discovery service list: %s"), (LPCTSTR)strFile );
 		}
 	}
+	else
+		theApp.Message( MSG_ERROR, _T("Failed to load discovery service list: %s"), (LPCTSTR)strFile );
 }
 
 //////////////////////////////////////////////////////////////////////
@@ -826,24 +858,14 @@ void CDiscoveryServices::MergeURLs()
 
 BOOL CDiscoveryServices::Update()
 {
-	const DWORD tNow = static_cast< DWORD >( time( NULL ) );
-
 	// Don't update too frequently
-	if ( tNow < Settings.Discovery.UpdatePeriod + m_tUpdated )
-		return FALSE;
-
-	if ( m_pRequest.IsPending() )
-		// Don't run concurrent request
-		return FALSE;
-
-	Stop();
-
-	CSingleLock pLock( &Network.m_pSection, FALSE );
-	if ( ! pLock.Lock( 250 ) )
+	const DWORD tNow = static_cast< DWORD >( time( NULL ) );
+	if ( tNow < Settings.Discovery.DefaultUpdate + m_tUpdated )
 		return FALSE;
 
 	// Must be up for two hours
-	if ( Network.GetStableTime() < 7200 ) return FALSE;
+	if ( Network.GetStableTime() < 2 * 60 * 60 )
+		return FALSE;
 
 	// Determine which network/protocol to update
 	PROTOCOLID nProtocol;
@@ -852,8 +874,10 @@ BOOL CDiscoveryServices::Update()
 		if ( Neighbours.IsG1Ultrapeer() )			// G2 and G1 are active
 		{
 			// Update the one we didn't update last time
-			if ( m_nLastUpdateProtocol == PROTOCOL_G2 ) nProtocol = PROTOCOL_G1;
-			else nProtocol = PROTOCOL_G2;
+			if ( m_nLastUpdateProtocol == PROTOCOL_G2 )
+				nProtocol = PROTOCOL_G1;
+			else
+				nProtocol = PROTOCOL_G2;
 		}
 		else										// Only G2 is active
 			nProtocol = PROTOCOL_G2;
@@ -870,19 +894,29 @@ BOOL CDiscoveryServices::Update()
 	if ( Neighbours.GetCount( nProtocol, -1, ntNode ) < 4 ) return FALSE;
 #endif // LAN_MODE
 
+	CSingleLock pLock( &Network.m_pSection, FALSE );
+	if ( ! pLock.Lock( 250 ) )
+		return FALSE;
+
+	if ( m_pRequest.IsPending() )
+		// Don't run concurrent request
+		return FALSE;
+
+	Stop();
+
 	// Select a random webcache of the appropriate sort
-	CDiscoveryService* pService = GetRandomWebCache(nProtocol, TRUE, NULL, TRUE );
+	CDiscoveryService* pService = GetRandomWebCache( nProtocol, TRUE, NULL, TRUE );
 	if ( pService == NULL ) return FALSE;
 
 	// Make the update request
-	return RequestWebCache( pService, wcmUpdate, nProtocol );
+	return RequestWebCache( FALSE, pService, wcmUpdate, nProtocol );
 }
 
 //////////////////////////////////////////////////////////////////////
 // CDiscoveryServices execute
 
 // This is called when trying to connect to a network, and at intervals while connected.
-// Makes sure you have hosts available to connect to. Be very careful not to be agressive here.
+// Makes sure you have hosts available to connect to. Be very careful not to be aggressive here.
 // You should never query server.met files, because of the load it would create.
 // This is public, and will be called quite regularly.
 
@@ -894,9 +928,6 @@ BOOL CDiscoveryServices::Execute(BOOL bDiscovery, PROTOCOLID nProtocol, USHORT n
 			FALSE	- Want Bootstrap connection.
 		nProtocol:
 			PROTOCOL_NULL	- Auto Detection
-			PROTOCOL_G1		- Execute entry for G1
-			PROTOCOL_G2		- Execute entry for G2
-			PROTOCOL_ED2K	- Execute entry for ED2K
 		nForceDiscovery:
 			FALSE - Normal discovery. There is a time limit and a check if it is needed
 			1 - Forced discovery. Partial time limit and withOUT check if it is needed ( Used inside CNeighboursWithConnect::Maintain() )
@@ -922,29 +953,29 @@ BOOL CDiscoveryServices::Execute(BOOL bDiscovery, PROTOCOLID nProtocol, USHORT n
 #ifdef LAN_MODE
 		BOOL	bG1Required = FALSE;
 
-		BOOL	bG2Required =
-			( nProtocol == PROTOCOL_NULL || nProtocol == PROTOCOL_G2) &&
-			( nForceDiscovery == 1 || HostCache.Gnutella2.CountHosts(TRUE) < 1 );
+		BOOL	bG2Required = Settings.Gnutella2.EnableToday &&
+			( nProtocol == PROTOCOL_NULL || nProtocol == PROTOCOL_G2 ) &&
+			( nForceDiscovery == 1 || HostCache.Gnutella2.CountHosts( TRUE ) == 0 );
 
 		BOOL	bEdRequired = FALSE;
+		BOOL	bDCRequired = FALSE;
 #else // LAN_MODE
 		BOOL	bG1Required = Settings.Gnutella1.EnableToday &&
-			( nProtocol == PROTOCOL_NULL || nProtocol == PROTOCOL_G1) &&
-			( nForceDiscovery == 1 || HostCache.Gnutella1.CountHosts(TRUE) < 20 );
+			( nProtocol == PROTOCOL_NULL || nProtocol == PROTOCOL_G1 ) &&
+			( nForceDiscovery == 1 || ! HostCache.EnoughServers( PROTOCOL_G1 ) );
 
 		BOOL	bG2Required = Settings.Gnutella2.EnableToday &&
-			( nProtocol == PROTOCOL_NULL || nProtocol == PROTOCOL_G2) &&
-			( nForceDiscovery == 1 || HostCache.Gnutella2.CountHosts(TRUE) < 25 );
+			( nProtocol == PROTOCOL_NULL || nProtocol == PROTOCOL_G2 ) &&
+			( nForceDiscovery == 1 || ! HostCache.EnoughServers( PROTOCOL_G2 ) );
 
-		BOOL	bEdRequired = Settings.eDonkey.EnableToday &&
+		BOOL	bEdRequired = Settings.eDonkey.EnableToday && Settings.eDonkey.AutoDiscovery &&
 			( nProtocol == PROTOCOL_NULL || nProtocol == PROTOCOL_ED2K ) &&
-			Settings.eDonkey.MetAutoQuery &&
-			( m_tMetQueried == 0 || tNow - m_tMetQueried >= 60 * 60 ) &&
-			( nForceDiscovery == 1 || !HostCache.EnoughServers( PROTOCOL_ED2K ) );
-#endif // LAN_MODE
+			( nForceDiscovery == 1 || ! HostCache.EnoughServers( PROTOCOL_ED2K ) );
 
-		if ( bEdRequired )
-			m_tMetQueried = tNow;	// Execute this maximum one time each 60 min only when the number of eDonkey servers is too low (Very important).
+		BOOL	bDCRequired = Settings.DC.EnableToday && Settings.DC.AutoDiscovery &&
+			( nProtocol == PROTOCOL_NULL || nProtocol == PROTOCOL_DC ) &&
+			( nForceDiscovery == 1 || ! HostCache.EnoughServers( PROTOCOL_DC ) );
+#endif // LAN_MODE
 
 		// Broadcast discovery
 		static bool bBroadcast = true;	// test, broadcast, cache, broadcast, cache, ...
@@ -954,20 +985,22 @@ BOOL CDiscoveryServices::Execute(BOOL bDiscovery, PROTOCOLID nProtocol, USHORT n
 			theApp.Message( MSG_NOTICE, IDS_DISCOVERY_QUERY, _T("BROADCAST") );
 			SOCKADDR_IN addr = { AF_INET, Network.m_pHost.sin_port };
 			addr.sin_addr.S_un.S_addr = INADDR_NONE;
-			return Datagrams.Send( &addr,
-				CG2Packet::New( G2_PACKET_DISCOVERY ), TRUE, 0, FALSE );
+			return Datagrams.Send( &addr, CG2Packet::New( G2_PACKET_DISCOVERY ), TRUE, 0, FALSE );
 		}
 
-		if ( nProtocol == PROTOCOL_NULL )	// G1 + G2 + Ed hosts are wanted
+		if ( nProtocol == PROTOCOL_NULL )	// All hosts are wanted
 			return  ( ! bG1Required || RequestRandomService( PROTOCOL_G1 ) ) &&
 					( ! bG2Required || RequestRandomService( PROTOCOL_G2 ) ) &&
-					( ! bEdRequired || RequestRandomService( PROTOCOL_ED2K ) );
+					( ! bEdRequired || RequestRandomService( PROTOCOL_ED2K ) ) &&
+					( ! bDCRequired || RequestRandomService( PROTOCOL_DC ) );
 		else if ( bG1Required )	// Only G1
 			return RequestRandomService( PROTOCOL_G1 );
 		else if ( bG2Required )	// Only G2
 			return RequestRandomService( PROTOCOL_G2 );
 		else if ( bEdRequired )	// Only Ed
 			return RequestRandomService( PROTOCOL_ED2K );
+		else if ( bDCRequired )	// Only DC++
+			return RequestRandomService( PROTOCOL_DC );
 		else
 			return TRUE;	// No Discovery needed
 	}
@@ -998,10 +1031,6 @@ int CDiscoveryServices::ExecuteBootstraps(int nCount, BOOL bUDP, PROTOCOLID nPro
 
 	switch(nProtocol)
 	{
-		case PROTOCOL_NULL:
-			bGnutella1 = TRUE;
-			bGnutella2 = TRUE;
-			break;
 		case PROTOCOL_G1:
 			bGnutella1 = TRUE;
 			bGnutella2 = FALSE;
@@ -1011,9 +1040,8 @@ int CDiscoveryServices::ExecuteBootstraps(int nCount, BOOL bUDP, PROTOCOLID nPro
 			bGnutella2 = TRUE;
 			break;
 		default:
-			bGnutella1 = FALSE;
-			bGnutella2 = FALSE;
-			break;
+			bGnutella1 = TRUE;
+			bGnutella2 = TRUE;
 	}
 
 	if ( nCount < 1 )
@@ -1028,7 +1056,7 @@ int CDiscoveryServices::ExecuteBootstraps(int nCount, BOOL bUDP, PROTOCOLID nPro
 		CDiscoveryService* pService = m_pList.GetNext( pos );
 		if ( pService->m_nType == CDiscoveryService::dsGnutella &&
 			( ( bGnutella1 && bGnutella2 ) || ( bGnutella1 == pService->m_bGnutella1 && bGnutella2 == pService->m_bGnutella2 ) ) &&
-			( ( ( pService->m_nSubType == CDiscoveryService::dsGnutellaUDPHC || pService->m_nSubType == CDiscoveryService::dsGnutella2UDPKHL ) && bUDP && ( tNow - pService->m_tAccessed >= 300 ) ) ||
+			( ( ( pService->m_nSubType == CDiscoveryService::dsGnutellaUDPHC || pService->m_nSubType == CDiscoveryService::dsGnutella2UDPKHL ) && bUDP && ( tNow >= 300 + pService->m_tAccessed ) ) ||
 			( ( pService->m_nSubType == CDiscoveryService::dsOldBootStrap || pService->m_nSubType == CDiscoveryService::dsGnutellaTCP || pService->m_nSubType == CDiscoveryService::dsGnutella2TCP ) && ! bUDP ) ) )
 				pRandom.Add( pService );
 	}
@@ -1039,7 +1067,7 @@ int CDiscoveryServices::ExecuteBootstraps(int nCount, BOOL bUDP, PROTOCOLID nPro
 		CDiscoveryService* pService = pRandom.GetAt( nRandom );
 		pRandom.RemoveAt( nRandom );
 
-		if ( pService->ResolveGnutella() )
+		if ( pService->ResolveGnutella( FALSE ) )
 		{
 			++nSuccess;
 			--nCount;
@@ -1059,17 +1087,19 @@ BOOL CDiscoveryServices::RequestRandomService(PROTOCOLID nProtocol)
 {
 	if ( CDiscoveryService* pService = GetRandomService( nProtocol ) )
 	{
-		if ( pService->m_nType == CDiscoveryService::dsGnutella )
+		switch ( pService->m_nType )
 		{
-			return pService->ResolveGnutella();
-		}
-		else if ( pService->m_nType == CDiscoveryService::dsServerMet )
-		{
-			return RequestWebCache( pService, wcmServerMet, nProtocol );
-		}
-		else
-		{
-			return RequestWebCache( pService, wcmHosts, nProtocol );
+		case CDiscoveryService::dsGnutella:
+			return pService->ResolveGnutella( FALSE );
+
+		case CDiscoveryService::dsServerMet:
+			return RequestWebCache( FALSE, pService, wcmServerMet );
+
+		case CDiscoveryService::dsDCHubList:
+			return RequestWebCache( FALSE, pService, wcmDCHubList );
+
+		default:
+			return RequestWebCache( FALSE, pService, wcmHosts, nProtocol );
 		}
 	}
 	return FALSE;
@@ -1097,27 +1127,36 @@ CDiscoveryService* CDiscoveryServices::GetRandomService(PROTOCOLID nProtocol)
 		{
 		case PROTOCOL_G1:
 			if ( ( pService->m_nType == CDiscoveryService::dsWebCache ) && ( pService->m_bGnutella1 ) &&
-				( tNow - pService->m_tAccessed > pService->m_nAccessPeriod ) )
+				( tNow > pService->m_nAccessPeriod + pService->m_tAccessed ) )
 				pServices.Add( pService );
 			else if ( ( pService->m_nType == CDiscoveryService::dsGnutella ) && ( pService->m_nSubType == CDiscoveryService::dsGnutellaUDPHC ) &&
-				tNow - pService->m_tAccessed >= 300 )
+				tNow >= 300 + pService->m_tAccessed )
 				pServices.Add( pService );
 			break;
+
 		case PROTOCOL_G2:
 			if ( ( pService->m_nType == CDiscoveryService::dsWebCache ) && ( pService->m_bGnutella2 ) &&
-				( tNow - pService->m_tAccessed > pService->m_nAccessPeriod ) )
+				( tNow > pService->m_nAccessPeriod + pService->m_tAccessed ) )
 				pServices.Add( pService );
 			else if ( ( pService->m_nType == CDiscoveryService::dsGnutella ) && ( pService->m_nSubType == CDiscoveryService::dsGnutella2UDPKHL ) &&
-				tNow - pService->m_tAccessed >= 300 )
+				tNow >= 300 + pService->m_tAccessed )
 				pServices.Add( pService );
 			break;
+
 		case PROTOCOL_ED2K:
 			if ( pService->m_nType == CDiscoveryService::dsServerMet  &&
-				( tNow - pService->m_tAccessed > pService->m_nAccessPeriod ) )
+				( tNow > pService->m_nAccessPeriod + pService->m_tAccessed ) )
 				pServices.Add( pService );
 			break;
-		default:
+
+		case PROTOCOL_DC:
+			if ( pService->m_nType == CDiscoveryService::dsDCHubList &&
+				( tNow > pService->m_nAccessPeriod + pService->m_tAccessed ) )
+				pServices.Add( pService );
 			break;
+
+		default:
+			;
 		}
 	}
 
@@ -1153,9 +1192,9 @@ CDiscoveryService* CDiscoveryServices::GetRandomWebCache(PROTOCOLID nProtocol, B
 		{
 			if ( ! bWorkingOnly || ( pService->m_nAccesses > 0 && pService->m_nFailures == 0 ) )
 			{
-				if ( tNow - pService->m_tAccessed > pService->m_nAccessPeriod )
+				if ( tNow > pService->m_nAccessPeriod + pService->m_tAccessed )
 				{
-					if ( ! bForUpdate || tNow - pService->m_tUpdated > pService->m_nUpdatePeriod )
+					if ( ! bForUpdate || tNow > pService->m_nUpdatePeriod + pService->m_tUpdated )
 					{
 						switch ( nProtocol )
 						{
@@ -1193,8 +1232,12 @@ CDiscoveryService* CDiscoveryServices::GetRandomWebCache(PROTOCOLID nProtocol, B
 //////////////////////////////////////////////////////////////////////
 // CDiscoveryServices webcache request control
 
-BOOL CDiscoveryServices::RequestWebCache(CDiscoveryService* pService, Mode nMode, PROTOCOLID nProtocol)
+BOOL CDiscoveryServices::RequestWebCache(BOOL bForced, CDiscoveryService* pService, Mode nMode, PROTOCOLID nProtocol)
 {
+	ASSERT( pService != NULL );
+	if ( pService == NULL )
+		return FALSE;
+
 	Stop();
 
 	CSingleLock pLock( &Network.m_pSection, FALSE );
@@ -1204,86 +1247,78 @@ BOOL CDiscoveryServices::RequestWebCache(CDiscoveryService* pService, Mode nMode
 	const DWORD tNow = static_cast< DWORD >( time( NULL ) );
 	DWORD nHosts = 0;
 
+	if ( nMode == wcmServerMet )
+		nProtocol = PROTOCOL_ED2K;
+	else if ( nMode == wcmDCHubList )
+		nProtocol = PROTOCOL_DC;
+
 	switch ( nProtocol )
 	{
 	case PROTOCOL_G1:
 		nHosts = HostCache.Gnutella1.GetCount();
+		ASSERT( nMode != wcmServerMet && nMode != wcmDCHubList );
 		break;
+
 	case PROTOCOL_G2:
 		nHosts = HostCache.Gnutella2.GetCount();
+		ASSERT( nMode != wcmServerMet && nMode != wcmDCHubList );
 		break;
+
 	case PROTOCOL_ED2K:
 		nHosts = HostCache.eDonkey.GetCount();
 		break;
+
+	case PROTOCOL_DC:
+		nHosts = HostCache.DC.GetCount();
+		break;
+
 	default:
+		ASSERT( FALSE );
 		return FALSE;
 	}
 
-	if ( pService != NULL )
-	{
-		if ( tNow - pService->m_tAccessed < pService->m_nAccessPeriod && nHosts )
-			return FALSE;
-	}
+	if ( ! bForced && nHosts && ( tNow < pService->m_nAccessPeriod + pService->m_tAccessed ) )
+		return FALSE;
 
-	m_pWebCache	= pService;
 	m_nWebCache	= nMode;
 
 	switch ( nMode )
 	{
 	case wcmHosts:
 	case wcmCaches:
-		if ( m_pWebCache != NULL )
-		{
-			theApp.Message( MSG_NOTICE, IDS_DISCOVERY_QUERY, (LPCTSTR)m_pWebCache->m_sAddress );
-			// Update the 'last queried' settings
-			m_tQueried = tNow;
-			m_nLastQueryProtocol = nProtocol;
-		}
+	case wcmServerMet:
+	case wcmDCHubList:
+		m_pWebCache	= pService;
+		theApp.Message( MSG_NOTICE, IDS_DISCOVERY_QUERY, (LPCTSTR)pService->m_sAddress );
+		// Update the 'last queried' settings
+		m_tQueried = tNow;
+		m_nLastQueryProtocol = nProtocol;
 		break;
 
 	case wcmUpdate:
-		m_pSubmit	= GetRandomWebCache( nProtocol, TRUE, m_pWebCache, FALSE );
-		if ( m_pWebCache != NULL )
-		{
-			theApp.Message( MSG_NOTICE, IDS_DISCOVERY_UPDATING, (LPCTSTR)m_pWebCache->m_sAddress );
-			// Update the 'last updated' settings
-			m_tUpdated = tNow;
-			m_nLastUpdateProtocol = nProtocol;
-		}
+		m_pSubmit = GetRandomWebCache( nProtocol, TRUE, pService, FALSE );
+		m_pWebCache	= pService;
+		theApp.Message( MSG_NOTICE, IDS_DISCOVERY_UPDATING, (LPCTSTR)pService->m_sAddress );
+		// Update the 'last updated' settings
+		m_tUpdated = tNow;
+		m_nLastUpdateProtocol = nProtocol;
 		break;
 
 	case wcmSubmit:
-		m_pSubmit	= m_pWebCache;
-		m_pWebCache	= GetRandomWebCache( nProtocol, FALSE, m_pSubmit, TRUE );
-		if ( m_pWebCache != NULL )
-		{
-			theApp.Message( MSG_NOTICE, IDS_DISCOVERY_SUBMIT, (LPCTSTR)m_pSubmit->m_sAddress );
-			// Update the 'last updated' settings
-			m_tUpdated = tNow;
-			m_nLastUpdateProtocol = nProtocol;
-		}
+		m_pSubmit = pService;
+		m_pWebCache = GetRandomWebCache( nProtocol, FALSE, pService, TRUE );
+		if ( m_pWebCache == NULL )
+				return FALSE;
+		theApp.Message( MSG_NOTICE, IDS_DISCOVERY_SUBMIT, (LPCTSTR)pService->m_sAddress );
+		// Update the 'last updated' settings
+		m_tUpdated = tNow;
+		m_nLastUpdateProtocol = nProtocol;
 		break;
 
-	case wcmServerMet:
-		if ( nProtocol != PROTOCOL_ED2K )
-		{
-			ASSERT ( FALSE );
-			return FALSE;
-		}
-		else if ( m_pWebCache != NULL )
-		{
-			theApp.Message( MSG_NOTICE, IDS_DISCOVERY_QUERY, (LPCTSTR)m_pWebCache->m_sAddress );
-			// Update the 'last queried' settings
-			m_tQueried = tNow;
-			m_nLastQueryProtocol = nProtocol;
-		}
-		break;
 	default:
 		ASSERT ( FALSE );
 		return FALSE;
 	}
-
-	if ( m_pWebCache == NULL ) return FALSE;
 
 	m_pRequest.Clear();
 
@@ -1300,21 +1335,16 @@ void CDiscoveryServices::OnRun()
 
 	BOOL bSuccess = TRUE;
 
-	if ( m_nWebCache == wcmServerMet )
+	switch ( m_nWebCache )
 	{
-		bSuccess = RunServerMet();
-	}
-	else if ( m_nWebCache == wcmHosts )
-	{
+	case wcmHosts:
 		bSuccess = RunWebCacheGet( FALSE );
-
-		CSingleLock pLock( &Network.m_pSection, FALSE );
-		if ( pLock.Lock( 250 ) )
+		if ( bSuccess )
 		{
-			if ( bSuccess )
+			CSingleLock pLock( &Network.m_pSection, FALSE );
+			if ( pLock.Lock( 250 ) )
 			{
-				if ( m_bFirstTime || ( GetCount( CDiscoveryService::dsWebCache ) <
-					(int)Settings.Discovery.Lowpoint ) )
+				if ( m_bFirstTime || ( GetCount( CDiscoveryService::dsWebCache ) < Settings.Discovery.Lowpoint ) )
 				{
 					m_bFirstTime = FALSE;
 					pLock.Unlock();
@@ -1323,18 +1353,24 @@ void CDiscoveryServices::OnRun()
 				}
 			}
 		}
-	}
-	else if ( m_nWebCache == wcmCaches )
-	{
+		break;
+
+	case wcmCaches:
 		bSuccess = RunWebCacheGet( TRUE );
-	}
-	else if ( m_nWebCache == wcmUpdate )
-	{
+		break;
+
+	case wcmUpdate:
 		bSuccess = RunWebCacheUpdate();
-	}
-	else if ( m_nWebCache == wcmSubmit )
-	{
+		break;
+
+	case wcmSubmit:
 		bSuccess = RunWebCacheUpdate();
+		break;
+
+	case wcmServerMet:
+	case wcmDCHubList:
+		bSuccess = RunWebCacheFile();
+		break;
 	}
 
 	if ( ! bSuccess )
@@ -1400,9 +1436,11 @@ BOOL CDiscoveryServices::RunWebCacheGet(BOOL bCaches)
 
 	pLock.Unlock();
 
-	CString strOutput;
-	if ( ! SendWebCacheRequest( strURL, strOutput ) )
+	if ( ! SendWebCacheRequest( strURL ) )
 		return FALSE;
+
+	CString strOutput = m_pRequest.GetResponseString();
+	theApp.Message( MSG_DEBUG | MSG_FACILITY_INCOMING, _T( "[DiscoveryServices] Response:\n%s" ), (LPCTSTR)strOutput );
 
 	const DWORD tNow = static_cast< DWORD >( time( NULL ) );
 
@@ -1541,8 +1579,8 @@ BOOL CDiscoveryServices::RunWebCacheGet(BOOL bCaches)
 						nCaches++;
 					}
 				}
-				else if ( ( _tcsnicmp( oParts[ 1 ], _T("uhc://") , 6 ) == 0 && m_nLastQueryProtocol != PROTOCOL_G2 ) ||
-						  ( _tcsnicmp( oParts[ 1 ], _T("ukhl://"), 7 ) == 0 && m_nLastQueryProtocol == PROTOCOL_G2 ) )
+				else if ( ( _tcsnicmp( oParts[ 1 ], _PT( DSGnutellaUDPHC   ) ) == 0 && m_nLastQueryProtocol != PROTOCOL_G2 ) ||
+						  ( _tcsnicmp( oParts[ 1 ], _PT( DSGnutella2UDPKHL ) ) == 0 && m_nLastQueryProtocol == PROTOCOL_G2 ) )
 				{
 					if ( Add( oParts[ 1 ], CDiscoveryService::dsGnutella, m_nLastQueryProtocol ) )
 					{
@@ -1756,6 +1794,8 @@ BOOL CDiscoveryServices::RunWebCacheGet(BOOL bCaches)
 
 	if ( nHosts || nCaches )
 	{
+		theApp.Message( MSG_DEBUG, _T( "[DiscoveryServices] Retrived %d hosts, %d caches." ), nHosts, nCaches );
+
 		m_pWebCache->OnSuccess();
 		return TRUE;
 	}
@@ -1833,12 +1873,11 @@ BOOL CDiscoveryServices::RunWebCacheUpdate()
 
 	pLock.Unlock();
 
-	if ( strURL.IsEmpty() )
+	if ( ! SendWebCacheRequest( strURL ) )
 		return FALSE;
 
-	CString strOutput;
-	if ( ! SendWebCacheRequest( strURL, strOutput ) )
-		return FALSE;
+	CString strOutput = m_pRequest.GetResponseString();
+	theApp.Message( MSG_DEBUG | MSG_FACILITY_INCOMING, _T( "[DiscoveryServices] Response:\n%s" ), (LPCTSTR)strOutput );
 
 	const DWORD tNow = static_cast< DWORD >( time( NULL ) );
 
@@ -1866,25 +1905,33 @@ BOOL CDiscoveryServices::RunWebCacheUpdate()
 		}
 		else if ( _tcsistr( strLine, _T("i|warning|client|early") ) != NULL || _tcsistr( strLine, _T("i|warning|You came back too early") ) != NULL || _tcsistr( strLine, _T("WARNING: You came back too early") ) != NULL )
 		{
-			//Did we flood a gwc? It's always nice to know. :)
+			// Did we flood a gwc? It's always nice to know. :)
 			return FALSE;
 		}
 		else if ( _tcsistr( strLine, _T("ERROR") ) != NULL )
 		{
 			if ( _tcsistr( strLine, _T("ERROR: Client returned too early") ) != NULL )
 			{
-				//GhostWhiteCrab type flood warning.
+				// GhostWhiteCrab type flood warning.
 			}
 			// else Misc error. (Often CGI limits error)
 			return FALSE;
 		}
 		else if ( _tcsnicmp( strLine, _T("i|access|period|"), 16 ) == 0 )
 		{
-			_stscanf( (LPCTSTR)strLine + 16, _T("%u"), &m_pWebCache->m_nAccessPeriod );
+			DWORD nAccessPeriod;
+			if ( _stscanf( (LPCTSTR)strLine + 16, _T("%u"), &nAccessPeriod ) == 1 )
+			{
+				m_pWebCache->m_nAccessPeriod = nAccessPeriod;
+			}
 		}
 		else if ( _tcsnicmp( strLine, _T("i|update|period|"), 16 ) == 0 )
 		{
-			_stscanf( (LPCTSTR)strLine + 16, _T("%u"), &m_pWebCache->m_nUpdatePeriod );
+			DWORD nUpdatePeriod;
+			if ( _stscanf( (LPCTSTR)strLine + 16, _T("%u"), &nUpdatePeriod ) == 1 )
+			{
+				m_pWebCache->m_nUpdatePeriod = nUpdatePeriod;
+			}
 		}
 		else if ( strLine == _T("i|force|remove") )
 		{
@@ -1899,39 +1946,45 @@ BOOL CDiscoveryServices::RunWebCacheUpdate()
 //////////////////////////////////////////////////////////////////////
 // CDiscoveryServices HTTP request
 
-BOOL CDiscoveryServices::SendWebCacheRequest(CString strURL, CString& strOutput)
+BOOL CDiscoveryServices::SendWebCacheRequest(const CString& strURL)
 {
-	strOutput.Empty();
-
 	if ( ! m_pRequest.SetURL( strURL ) )
 		return FALSE;
 
-	theApp.Message( MSG_DEBUG | MSG_FACILITY_OUTGOING, _T("[DiscoveryServices] Request: %s"), (LPCTSTR)strURL );
+	theApp.Message( MSG_DEBUG | MSG_FACILITY_OUTGOING, _T( "[DiscoveryServices] Request: %s" ), (LPCTSTR)strURL );
 
-	if ( ! m_pRequest.Execute( false ) )
-		return FALSE;
+	bool bSuccess = m_pRequest.Execute( false );
 
-	int nStatusCode = m_pRequest.GetStatusCode();
-	if ( nStatusCode < 200 || nStatusCode > 299 )
-		return FALSE;
+	theApp.Message( MSG_DEBUG | MSG_FACILITY_INCOMING, _T( "[DiscoveryServices] Request status: %d %s" ), m_pRequest.GetStatusCode(), (LPCTSTR)m_pRequest.GetStatusString() );
 
-	strOutput = m_pRequest.GetResponseString();
-
-	theApp.Message( MSG_DEBUG | MSG_FACILITY_INCOMING, _T("[DiscoveryServices] Response: %s"), (LPCTSTR)strOutput );
-
-	return TRUE;
+	return ( bSuccess ? TRUE : FALSE );
 }
 
 //////////////////////////////////////////////////////////////////////
 // CDiscoveryServices execute server.met request
 
-BOOL CDiscoveryServices::RunServerMet()
+BOOL CDiscoveryServices::RunWebCacheFile()
 {
 	CSingleLock pLock( &Network.m_pSection, FALSE );
 	if ( ! pLock.Lock( 250 ) )
 		return FALSE;
 
-	if ( ! Check( m_pWebCache, CDiscoveryService::dsServerMet ) )
+	CDiscoveryService::Type nType;
+	switch ( m_nWebCache )
+	{
+	case wcmServerMet:
+		nType = CDiscoveryService::dsServerMet;
+		break;
+
+	case wcmDCHubList:
+		nType = CDiscoveryService::dsDCHubList;
+		break;
+
+	default:
+		return FALSE;
+	}
+
+	if ( ! Check( m_pWebCache, nType ) )
 		return FALSE;
 
 	m_pWebCache->OnAccess();
@@ -1941,10 +1994,7 @@ BOOL CDiscoveryServices::RunServerMet()
 
 	pLock.Unlock();
 
-	if ( ! m_pRequest.SetURL( strURL ) )
-		return FALSE;
-
-	if ( ! m_pRequest.Execute( false ) )
+	if ( ! SendWebCacheRequest( strURL ) )
 		return FALSE;
 
 	const CBuffer* pBuffer = m_pRequest.GetResponseBuffer();
@@ -1956,43 +2006,60 @@ BOOL CDiscoveryServices::RunServerMet()
 	if ( ! pLock.Lock( 250 ) )
 		return FALSE;
 
-	if ( ! Check( m_pWebCache, CDiscoveryService::dsServerMet ) )
+	if ( ! Check( m_pWebCache, nType ) )
 		return FALSE;
 
-	int nCount = HostCache.ImportMET( &pFile );
+	int nHosts;
+	switch ( m_nWebCache )
+	{
+	case wcmServerMet:
+		nHosts = HostCache.ImportMET( &pFile );
+		break;
 
-	if ( ! nCount )
+	case wcmDCHubList:
+		nHosts = HostCache.ImportHubList( &pFile );
+		break;
+
+	default:
 		return FALSE;
+	}
+
+	if ( ! nHosts )
+		return FALSE;
+
+	theApp.Message( MSG_DEBUG, _T( "[DiscoveryServices] Retrived %d hosts." ), nHosts );
 
 	HostCache.Save();
-	m_pWebCache->OnHostAdd( nCount );
+	m_pWebCache->OnHostAdd( nHosts );
 	m_pWebCache->OnSuccess();
 
 	return TRUE;
 }
 
 //////////////////////////////////////////////////////////////////////
-// CDiscoveryServices execute
+// CDiscoveryServices query
 
-// Note: This is used by wndDiscovery only
-BOOL CDiscoveryServices::Execute(CDiscoveryService* pService, Mode nMode)
+BOOL CDiscoveryServices::Query(CDiscoveryService* pService, Mode nMode)
 {
-	if ( pService->m_nType == CDiscoveryService::dsGnutella )
-	{
-		return pService->ResolveGnutella();
-	}
-	else if ( pService->m_nType == CDiscoveryService::dsWebCache )
-	{
-		return RequestWebCache( pService,
-			nMode, pService->m_bGnutella2 ? PROTOCOL_G2 : PROTOCOL_G1 );
-	}
-	else if ( pService->m_nType == CDiscoveryService::dsServerMet )
-	{
-		return RequestWebCache( pService,
-			CDiscoveryServices::wcmServerMet, PROTOCOL_ED2K );
-	}
+	// Note: This is used by CDiscoveryWnd only
 
-	return FALSE;
+	switch ( pService->m_nType )
+	{
+	case CDiscoveryService::dsGnutella:
+		return pService->ResolveGnutella( TRUE );
+
+	case CDiscoveryService::dsWebCache:
+		return RequestWebCache( TRUE, pService, nMode, pService->m_bGnutella2 ? PROTOCOL_G2 : PROTOCOL_G1 );
+
+	case CDiscoveryService::dsServerMet:
+		return RequestWebCache( TRUE, pService, CDiscoveryServices::wcmServerMet );
+
+	case CDiscoveryService::dsDCHubList:
+		return RequestWebCache( TRUE, pService, CDiscoveryServices::wcmDCHubList );
+
+	default:
+		return FALSE;
+	}
 }
 
 void CDiscoveryServices::OnResolve(PROTOCOLID nProtocol, LPCTSTR szAddress, const IN_ADDR* pAddress, WORD nPort)
@@ -2000,7 +2067,7 @@ void CDiscoveryServices::OnResolve(PROTOCOLID nProtocol, LPCTSTR szAddress, cons
 	// code to invoke UDPHC/UDPKHL Sender.
 	if ( nProtocol == PROTOCOL_G1 || nProtocol == PROTOCOL_G2 )
 	{
-		CString strAddress( ( nProtocol == PROTOCOL_G1 ) ? _T("uhc:") : _T("ukhl:") );
+		CString strAddress( ( nProtocol == PROTOCOL_G1 ) ? _T( DSGnutellaUDPHC ) : _T( DSGnutella2UDPKHL ) );
 		strAddress += szAddress;
 
 		CSingleLock pLock( &Network.m_pSection, TRUE );
@@ -2069,7 +2136,7 @@ CDiscoveryService::CDiscoveryService(Type nType, LPCTSTR pszAddress) :
 	m_nURLs			( 0 ),
 	m_nTotalURLs	( 0 ),
 	m_nFailures		( 0 ),
-	m_nAccessPeriod	( max( Settings.Discovery.UpdatePeriod, 1800ul ) ),
+	m_nAccessPeriod	( Settings.Discovery.AccessPeriod ),
 	m_nUpdatePeriod	( Settings.Discovery.DefaultUpdate ),
 	m_nSubType		( dsOldBootStrap ),
 	m_pAddress		(),
@@ -2142,25 +2209,25 @@ void CDiscoveryService::Serialize(CArchive& ar, int nVersion)
 		}
 
 		// Check it has a valid protocol
-		if ( _tcsnicmp( m_sAddress, _T("gnutella1:host:"),  15 ) == 0 )
+		if ( _tcsnicmp( m_sAddress, _PT( DSGnutellaTCP ) ) == 0 )
 		{
 			m_bGnutella1 = TRUE;
 			m_bGnutella2 = FALSE;
 			m_nSubType = dsGnutellaTCP;
 		}
-		else if ( _tcsnicmp( m_sAddress, _T("gnutella2:host:"), 15 ) == 0 )
+		else if ( _tcsnicmp( m_sAddress, _PT( DSGnutella2TCP ) ) == 0 )
 		{
 			m_bGnutella1 = FALSE;
 			m_bGnutella2 = TRUE;
 			m_nSubType = dsGnutella2TCP;
 		}
-		else if ( _tcsnicmp( m_sAddress, _T("uhc:"), 4 ) == 0 )
+		else if ( _tcsnicmp( m_sAddress, _PT( DSGnutellaUDPHC ) ) == 0 )
 		{
 			m_bGnutella1 = TRUE;
 			m_bGnutella2 = FALSE;
 			m_nSubType = dsGnutellaUDPHC;
 		}
-		else if ( _tcsnicmp( m_sAddress, _T("ukhl:"), 5 ) == 0 )
+		else if ( _tcsnicmp( m_sAddress, _PT( DSGnutella2UDPKHL ) ) == 0 )
 		{
 			m_bGnutella1 = FALSE;
 			m_bGnutella2 = TRUE;
@@ -2172,12 +2239,14 @@ void CDiscoveryService::Serialize(CArchive& ar, int nVersion)
 //////////////////////////////////////////////////////////////////////
 // CDiscoveryService resolve a gnutella node
 
-BOOL CDiscoveryService::ResolveGnutella()
+BOOL CDiscoveryService::ResolveGnutella(BOOL bForced)
 {
-	if ( ! Network.Connect( FALSE ) ) return FALSE;
+	if ( ! Network.Connect( FALSE ) )
+		return FALSE;
 
 	const DWORD tNow = static_cast< DWORD >( time( NULL ) );
-	if ( tNow < 300 + m_tAccessed ) return FALSE;
+	if ( ! bForced && tNow < 300 + m_tAccessed )
+		return FALSE;
 
 	CString strHost	= m_sAddress;
 	int nSkip = 0;
@@ -2185,7 +2254,7 @@ BOOL CDiscoveryService::ResolveGnutella()
 	OnGivenHosts();
 
 	// Check it has a valid protocol
-	if ( _tcsnicmp( strHost, _T("gnutella1:host:"),  15 ) == 0 )
+	if ( _tcsnicmp( strHost, _PT( DSGnutellaTCP ) ) == 0 )
 	{
 		m_nSubType = dsGnutellaTCP;
 		nSkip = 15;
@@ -2193,7 +2262,7 @@ BOOL CDiscoveryService::ResolveGnutella()
 		m_bGnutella2 = FALSE;
 		nPort = protocolPorts[ PROTOCOL_G1 ];
 	}
-	else if ( _tcsnicmp( strHost, _T("gnutella2:host:"), 15 ) == 0 )
+	else if ( _tcsnicmp( strHost, _PT( DSGnutella2TCP ) ) == 0 )
 	{
 		m_nSubType = dsGnutella2TCP;
 		nSkip = 15;
@@ -2201,7 +2270,7 @@ BOOL CDiscoveryService::ResolveGnutella()
 		m_bGnutella2 = TRUE;
 		nPort = protocolPorts[ PROTOCOL_G2 ];
 	}
-	else if ( _tcsnicmp( strHost, _T("uhc:"), 4 ) == 0 )
+	else if ( _tcsnicmp( strHost, _PT( DSGnutellaUDPHC ) ) == 0 )
 	{
 		m_nSubType = dsGnutellaUDPHC;
 		nSkip = 4;
@@ -2209,7 +2278,7 @@ BOOL CDiscoveryService::ResolveGnutella()
 		m_bGnutella2 = FALSE;
 		nPort = 9999;
 	}
-	else if ( _tcsnicmp( strHost, _T("ukhl:"), 5 ) == 0 )
+	else if ( _tcsnicmp( strHost, _PT( DSGnutella2UDPKHL ) ) == 0 )
 	{
 		m_nSubType = dsGnutella2UDPKHL;
 		nSkip = 5;
@@ -2329,10 +2398,11 @@ void CDiscoveryService::OnSuccess()
 {
 	m_nFailures = 0;
 
-	if ( m_nType == dsWebCache || m_nType == dsServerMet )
+	if ( m_nType == CDiscoveryService::dsWebCache ||
+		 m_nType == CDiscoveryService::dsServerMet ||
+		 m_nType == CDiscoveryService::dsDCHubList )
 	{
-		theApp.Message( MSG_INFO, IDS_DISCOVERY_WEB_SUCCESS,
-			(LPCTSTR)m_sAddress );
+		theApp.Message( MSG_INFO, IDS_DISCOVERY_WEB_SUCCESS, (LPCTSTR)m_sAddress );
 	}
 }
 
@@ -2340,13 +2410,11 @@ void CDiscoveryService::OnFailure()
 {
 	m_nFailures++;
 
-	theApp.Message( MSG_ERROR, IDS_DISCOVERY_FAILED,
-		(LPCTSTR)m_sAddress, m_nFailures );
+	theApp.Message( MSG_ERROR, IDS_DISCOVERY_FAILED, (LPCTSTR)m_sAddress, m_nFailures );
 
 	if ( m_nFailures >= Settings.Discovery.FailureLimit )
 	{
-		theApp.Message( MSG_ERROR, IDS_DISCOVERY_FAIL_REMOVE,
-			(LPCTSTR)m_sAddress, m_nFailures );
+		theApp.Message( MSG_ERROR, IDS_DISCOVERY_FAIL_REMOVE, (LPCTSTR)m_sAddress, m_nFailures );
 		Remove();
 	}
 }

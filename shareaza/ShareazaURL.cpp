@@ -1,7 +1,7 @@
 //
 // ShareazaURL.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2014.
+// Copyright (c) Shareaza Development Team, 2002-2015.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -22,7 +22,6 @@
 #include "StdAfx.h"
 #include "Shareaza.h"
 #include "BTInfo.h"
-#include "DiscoveryServices.h"
 #include "Network.h"
 #include "QuerySearch.h"
 #include "Settings.h"
@@ -223,10 +222,10 @@ BOOL CShareazaURL::ParseRoot(LPCTSTR pszURL, BOOL bResolve)
 		return ParsePiolet( SkipSlashes( pszURL, 5 ) );
 	}
 	else if ( _tcsnicmp( pszURL, _T("gwc:"), 4 ) == 0 ||
-			  _tcsnicmp( pszURL, _T("uhc:"), 4 ) == 0 ||
-			  _tcsnicmp( pszURL, _T("ukhl:"), 5 ) == 0 ||
-			  _tcsnicmp( pszURL, _T("gnutella1:"), 10 ) == 0 ||
-			  _tcsnicmp( pszURL, _T("gnutella2:"), 10 ) == 0 )
+			  _tcsnicmp( pszURL, _PT( DSGnutellaUDPHC ) ) == 0 ||
+			  _tcsnicmp( pszURL, _PT( DSGnutella2UDPKHL ) ) == 0 ||
+			  _tcsnicmp( pszURL, _PT( DSGnutellaTCP ) ) == 0 ||
+			  _tcsnicmp( pszURL, _PT( DSGnutella2TCP ) ) == 0 )
 	{
 		return ParseShareaza( pszURL );
 	}
@@ -753,10 +752,10 @@ BOOL CShareazaURL::ParseShareaza(LPCTSTR pszURL)
 	{
 		return ParseDiscovery( SkipSlashes( pszURL, 7 ), CDiscoveryService::dsServerMet );
 	}
-	else if ( _tcsnicmp( pszURL, _T("uhc:"), 4 ) == 0 ||
-			  _tcsnicmp( pszURL, _T("ukhl:"), 5 ) == 0 ||
-			  _tcsnicmp( pszURL, _T("gnutella1:host:"), 15 ) == 0 ||
-			  _tcsnicmp( pszURL, _T("gnutella2:host:"), 15 ) == 0 )
+	else if ( _tcsnicmp( pszURL, _PT( DSGnutellaUDPHC ) ) == 0 ||
+			  _tcsnicmp( pszURL, _PT( DSGnutella2UDPKHL ) ) == 0 ||
+			  _tcsnicmp( pszURL, _PT( DSGnutellaTCP ) ) == 0 ||
+			  _tcsnicmp( pszURL, _PT( DSGnutella2TCP ) ) == 0 )
 	{
 		return ParseDiscovery( pszURL, CDiscoveryService::dsGnutella );
 	}
@@ -1150,10 +1149,10 @@ BOOL CShareazaURL::ParseDiscovery(LPCTSTR pszURL, int nType)
 {
 	if ( _tcsncmp( pszURL, _T("http://"), 7 ) != 0 &&
 		 _tcsncmp( pszURL, _T("https://"), 8 ) != 0 &&
-		 _tcsncmp( pszURL, _T("uhc:"), 4 ) != 0 &&
-		 _tcsncmp( pszURL, _T("ukhl:"), 5 ) != 0 &&
-		 _tcsncmp( pszURL, _T("gnutella1:host:"), 15 ) != 0 &&
-		 _tcsncmp( pszURL, _T("gnutella2:host:"), 15 ) != 0 ) return FALSE;
+		 _tcsncmp( pszURL, _PT( DSGnutellaUDPHC ) ) != 0 &&
+		 _tcsncmp( pszURL, _PT( DSGnutella2UDPKHL ) ) != 0 &&
+		 _tcsncmp( pszURL, _PT( DSGnutellaTCP ) ) != 0 &&
+		 _tcsncmp( pszURL, _PT( DSGnutella2TCP ) ) != 0 ) return FALSE;
 
 	int nPos;
 	CString strURL, strNets, strTemp = pszURL;

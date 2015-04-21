@@ -8921,8 +8921,8 @@ msgid "Discovery Service Type:"
 msgstr "揭示服務類型:"
 
 #: cdiscoveryservicedlg;control;4
-msgid "Gnutella Bootstrap|G1 GWebCache|G2 GWebCache|G1/G2 GWebCache|Server.met URL|Blocked"
-msgstr "Gnutella Bootstrap|GWeb 快取|Server.met URL"
+msgid "Gnutella Bootstrap|G1 GWebCache|G2 GWebCache|G1/G2 GWebCache|Server.met URL|DC++ Hub List URL|Blocked"
+msgstr "Gnutella Bootstrap|G1 快取|G2 快取|G1/G2 快取|Server.met URL|DC++ Hub List URL|Blocked"
 
 #: dialog;cdownloadmonitordlg
 msgid "Download : Shareaza"

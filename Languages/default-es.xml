@@ -4109,7 +4109,7 @@ puede comenzar a transferir en cualquier momento.</text>
 			<control caption="Dirección _del servicio:"/>
 			<control/>
 			<control caption="Tipo de servicio de descubrimiento:"/>
-			<control caption="Gnutella Bootstrap|G1 GWebCache|G2 GWebCache|G1/G2 GWebCache|Server.met URL|Bloqueado"/>
+			<control caption="Gnutella Bootstrap|G1 GWebCache|G2 GWebCache|G1/G2 GWebCache|Server.met URL|DC++ Hub List URL|Bloqueado"/>
 			<control caption="Aceptar"/>
 			<control caption="Cancelar"/>
 		</dialog>

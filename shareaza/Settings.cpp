@@ -61,6 +61,7 @@ CSettings::CSettings()
 	Live.AdultWarning				= false;
 	Live.QueueLimitWarning			= false;
 	Live.DefaultED2KServersLoaded	= false;
+	Live.DefaultDCServersLoaded		= false;
 	Live.DonkeyServerWarning		= false;
 	Live.UploadLimitWarning			= false;
 	Live.DiskSpaceStop				= false;
@@ -328,7 +329,7 @@ void CSettings::Load()
 	Add( _T("Discovery"), _T("DefaultUpdate"), &Discovery.DefaultUpdate, 60*60, 60, 1, 60*24, _T(" m") );
 	Add( _T("Discovery"), _T("FailureLimit"), &Discovery.FailureLimit, 2, 1, 1, 512 );
 	Add( _T("Discovery"), _T("Lowpoint"), &Discovery.Lowpoint, 10, 1, 1, 512 );
-	Add( _T("Discovery"), _T("UpdatePeriod"), &Discovery.UpdatePeriod, 30*60, 60, 1, 60*24, _T(" m") );
+	Add( _T("Discovery"), _T("AccessPeriod"), &Discovery.AccessPeriod, 30*60, 60, 1, 60*24, _T(" m") );
 
 	Add( _T("Gnutella"), _T("ConnectFactor"), &Gnutella.ConnectFactor, 4, 1, 1, 20, _T("x") );
 	Add( _T("Gnutella"), _T("ConnectThrottle"), &Gnutella.ConnectThrottle, 30, 1, 0, 60*60, _T(" s") );
@@ -424,7 +425,6 @@ void CSettings::Load()
 	Add( _T("eDonkey"), _T("MaxLinks"), &eDonkey.MaxLinks, 200, 1, 1, 2048 );
 	Add( _T("eDonkey"), _T("MaxResults"), &eDonkey.MaxResults, 100, 1, 1, 200 );
 	Add( _T("eDonkey"), _T("MaxShareCount"), &eDonkey.MaxShareCount, 1000, 1, 25, 20000 );
-	Add( _T("eDonkey"), _T("MetAutoQuery"), &eDonkey.MetAutoQuery, true );
 	Add( _T("eDonkey"), _T("MinServerFileSize"), &eDonkey.MinServerFileSize, 0, 1, 0, 50, _T(" MB") );
 	Add( _T("eDonkey"), _T("NumServers"), &eDonkey.NumServers, 1, 1, 0, 1 );
 	Add( _T("eDonkey"), _T("PacketThrottle"), &eDonkey.PacketThrottle, 500, 1, 250, 5000, _T(" ms") );
@@ -441,12 +441,14 @@ void CSettings::Load()
 	Add( _T("eDonkey"), _T("SourceThrottle"), &eDonkey.SourceThrottle, 1000, 1, 250, 5000, _T(" ms") );
 	Add( _T("eDonkey"), _T("StatsGlobalThrottle"), &eDonkey.StatsGlobalThrottle, 30*60*1000, 60*1000, 30, 120, _T(" m") );
 	Add( _T("eDonkey"), _T("StatsServerThrottle"), &eDonkey.StatsServerThrottle, 4*60*60, 60, 1, 7*24*60, _T(" m") );
+	Add( _T("eDonkey"), _T("AutoDiscovery"), &eDonkey.AutoDiscovery, true );
 
 	Add( _T("DC"), _T("DequeueTime"), &DC.DequeueTime, 5*60*1000, 1000, 2*60, 60*60, _T(" s") );
 	Add( _T("DC"), _T("EnableAlways"), &DC.EnableAlways, false );
 	Add( _T("DC"), _T("NumServers"), &DC.NumServers, 1, 1, 0, 5 );
 	Add( _T("DC"), _T("QueryThrottle"), &DC.QueryThrottle, 2*60, 1, 30, 60*60, _T(" s") );
 	Add( _T("DC"), _T("ReAskTime"), &DC.ReAskTime, 60*1000, 1000, 30, 60*60, _T(" s") );
+	Add( _T("DC"), _T("AutoDiscovery"), &DC.AutoDiscovery, true );
 
 	Add( _T("BitTorrent"), _T("AutoClear"), &BitTorrent.AutoClear, false );
 	Add( _T("BitTorrent"), _T("AutoMerge"), &BitTorrent.AutoMerge, true );
@@ -970,11 +972,6 @@ void CSettings::SmartUpgrade()
 		{
 			Gnutella2.NumHubs = 2;
 			General.ItWasLimited = true;
-		}
-
-		if ( General.SmartVersion < 43 )
-		{
-			eDonkey.MetAutoQuery = true;
 		}
 
 		if ( General.SmartVersion < 44 )

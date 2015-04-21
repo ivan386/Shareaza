@@ -1711,17 +1711,22 @@ void CMainWnd::LocalSystemChecks()
 		}
 	}
 
-	// Check we have donkey servers
-	if ( Settings.Live.DefaultED2KServersLoaded == FALSE )
+	// Check we have minimum servers
+	if ( ! Settings.Live.DefaultED2KServersLoaded )
 	{
-		Settings.Live.DefaultED2KServersLoaded  = TRUE;
-		HostCache.CheckMinimumServers( PROTOCOL_ED2K );
+		Settings.Live.DefaultED2KServersLoaded = true;
+		if ( Settings.eDonkey.EnableToday ) HostCache.CheckMinimumServers( PROTOCOL_ED2K );
+	}
+	if ( ! Settings.Live.DefaultDCServersLoaded )
+	{
+		Settings.Live.DefaultDCServersLoaded = true;
+		if ( Settings.DC.EnableToday ) HostCache.CheckMinimumServers( PROTOCOL_DC );
 	}
 
-	if ( ( Settings.Live.DonkeyServerWarning == FALSE ) && ( Settings.eDonkey.EnableToday ) )
+	if ( ! Settings.Live.DonkeyServerWarning && Settings.eDonkey.EnableToday )
 	{
-		Settings.Live.DonkeyServerWarning = TRUE;
-		if ( ( ! Settings.eDonkey.MetAutoQuery ) && ( HostCache.eDonkey.CountHosts(TRUE) < 1 ) )
+		Settings.Live.DonkeyServerWarning = true;
+		if ( ! Settings.eDonkey.AutoDiscovery && ! HostCache.EnoughServers( PROTOCOL_ED2K ) )
 			PostMessage( WM_COMMAND, ID_HELP_DONKEYSERVERS );
 	}
 }

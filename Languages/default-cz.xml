@@ -4116,7 +4116,7 @@
 			<control caption="_Adresa služby:"/>
 			<control/>
 			<control caption="Typ vyhledávací služby:"/>
-			<control caption="Gnutella Bootstrap|G1 GWebCache|G2 GWebCache|G1/G2 GWebCache|Server.met URL|Blocked"/>
+			<control caption="Gnutella Bootstrap|G1 GWebCache|G2 GWebCache|G1/G2 GWebCache|Server.met URL|DC++ Hub List URL|Blocked"/>
 			<control caption="OK"/>
 			<control caption="Zrušit"/>
 		</dialog>

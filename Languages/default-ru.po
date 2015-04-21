@@ -8904,8 +8904,8 @@ msgid "Discovery Service Type:"
 msgstr "Тип ресурса соединений:"
 
 #: cdiscoveryservicedlg;control;4
-msgid "Gnutella Bootstrap|G1 GWebCache|G2 GWebCache|G1/G2 GWebCache|Server.met URL|Blocked"
-msgstr "Gnutella загрузчик|G1 веб-кеш|G2 веб-кеш|G1/G2 веб-кеш|Server.met ссылка|Блокировано"
+msgid "Gnutella Bootstrap|G1 GWebCache|G2 GWebCache|G1/G2 GWebCache|Server.met URL|DC++ Hub List URL|Blocked"
+msgstr "Gnutella загрузчик|G1 веб-кеш|G2 веб-кеш|G1/G2 веб-кеш|Server.met ссылка|DC++ хаб-лист ссылка|Блокировано"
 
 #: dialog;cdownloadmonitordlg
 msgid "Download : Shareaza"

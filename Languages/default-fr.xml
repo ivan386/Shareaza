@@ -4111,7 +4111,7 @@
 			<control caption="_Adresse du service :"/>
 			<control/>
 			<control caption="Type de service :"/>
-			<control caption="Amorçage Gnutella|GWebCache G1|GWebCache G2|GWebCache G1/G2|Server.met URL|Bloqué"/>
+			<control caption="Amorçage Gnutella|GWebCache G1|GWebCache G2|GWebCache G1/G2|Server.met URL|DC++ Hub List URL|Bloqué"/>
 			<control caption="Valider"/>
 			<control caption="Annuler"/>
 		</dialog>

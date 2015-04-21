@@ -4117,7 +4117,7 @@ pasta dos arquivos baixados a sua biblioteca agora?"/>
 			<control caption="Endereço do _Serviço:"/>
 			<control/>
 			<control caption="Tipo de Serviço de Descobrimento:"/>
-			<control caption="Gnutella Bootstrap|G1 GWebCache|G2 GWebCache|G1/G2 GWebCache|Server.met URL|Bloqueado"/>
+			<control caption="Gnutella Bootstrap|G1 GWebCache|G2 GWebCache|G1/G2 GWebCache|Server.met URL|DC++ Hub List URL|Bloqueado"/>
 			<control caption="OK"/>
 			<control caption="Cancelar"/>
 		</dialog>

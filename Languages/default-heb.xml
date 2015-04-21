@@ -4114,7 +4114,7 @@
 			<control caption=":כתובת השירות"/>
 			<control/>
 			<control caption=":סוג שירות המשאבי חיבור"/>
-			<control caption="Gnutella Bootstrap|G1 GWebCache|G2 GWebCache|G1/G2 GWebCache|Server.met URL|Blocked"/>
+			<control caption="Gnutella Bootstrap|G1 GWebCache|G2 GWebCache|G1/G2 GWebCache|Server.met URL|DC++ Hub List URL|Blocked"/>
 			<control caption="אישור"/>
 			<control caption="ביטול"/>
 		</dialog>

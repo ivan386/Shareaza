@@ -4113,7 +4113,7 @@
 			<control caption="Adres serwisu:"/>
 			<control/>
 			<control caption="Typ serwisu Discovery:"/>
-			<control caption="Gnutella Bootstrap|G1 GWebCache|G2 GWebCache|G1/G2 GWebCache|Server.met URL|Blocked"/>
+			<control caption="Gnutella Bootstrap|G1 GWebCache|G2 GWebCache|G1/G2 GWebCache|Server.met URL|DC++ Hub List URL|Zablokowany"/>
 			<control caption="OK"/>
 			<control caption="Anuluj"/>
 		</dialog>

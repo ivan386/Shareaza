@@ -4113,7 +4113,7 @@
 			<control caption="服務位址:"/>
 			<control/>
 			<control caption="揭示服務類型:"/>
-			<control caption="Gnutella Bootstrap|G1 GWebCache|G2 GWebCache|G1/G2 GWebCache|Server.met URL|Blocked"/>
+			<control caption="Gnutella Bootstrap|G1 快取|G2 快取|G1/G2 快取|Server.met URL|DC++ Hub List URL|Blocked"/>
 			<control caption="確定"/>
 			<control caption="取消"/>
 		</dialog>
