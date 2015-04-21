@@ -13,6 +13,10 @@ D http://peerates.net/servers.php
 D http://upd.emule-security.org/server.met
 D http://www.gruk.org/server.met
 
+C http://dchublist.com/hublist.xml.bz2
+C http://dchublist.ru/hublist.xml.bz2
+C http://www.hublista.hu/hublist.xml.bz2
+
 # Hacked:
 X http://gweb.dwbo.nl/
 
@@ -59,16 +63,20 @@ X http://www.myfoxy.net/gwc/cgi-bin/fc
 
 #
 # Keep these comments at the end
-# Last updated Jul 2014
+# Last updated 20 Apr 2015
 #
 # Make sure the different lists are kept sorted in alphabetical order.
 #
 # Be sure to have at least one link to a .met file and four gwebcache links
 # or else they'll keep getting added every time they're removed
 #
-# A letter and space must precede each link to indicate the type of service
-# D = eDonkey server.met file, M = multinetwork gwebcache,
-# 2 = Gnutella 2 gwebcache, 1 = Gnutella gwebcache (obsolete)
-# X = banned, U = BootStrap(uhc, ukhl, gnutella1 host, gnutella2 host)
+# A letter and space must precede each link to indicate the type of service:
+# D = eDonkey server.met file
+# C = DC++ hublist.xml.bz2 file
+# M = multi-network gwebcache
+# 2 = Gnutella 2 gwebcache
+# 1 = Gnutella 1 gwebcache (obsolete)
+# U = BootStrap (uhc, ukhl, gnutella1 host, gnutella2 host)
+# X = banned
 #
 # Get latest version at https://svn.code.sf.net/p/shareaza/code/trunk/Data/DefaultServices.dat
