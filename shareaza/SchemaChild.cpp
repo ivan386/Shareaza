@@ -1,7 +1,7 @@
 //
 // SchemaChild.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2007.
+// Copyright (c) Shareaza Development Team, 2002-2015.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -37,9 +37,9 @@ static char THIS_FILE[]=__FILE__;
 // CSchemaChild construction
 
 CSchemaChild::CSchemaChild(CSchemaPtr pSchema)
+	: m_pSchema	( pSchema )
+	, m_nType	( CSchema::stFile )
 {
-	m_pSchema	= pSchema;
-	m_nType		= CSchema::stFile;
 }
 
 CSchemaChild::~CSchemaChild()
@@ -50,7 +50,7 @@ CSchemaChild::~CSchemaChild()
 //////////////////////////////////////////////////////////////////////
 // CSchemaChild load
 
-BOOL CSchemaChild::Load(CXMLElement* pXML)
+BOOL CSchemaChild::Load(const CXMLElement* pXML)
 {
 	m_sURI = pXML->GetAttributeValue( _T("location") );
 	if ( m_sURI.IsEmpty() ) return FALSE;
@@ -103,7 +103,7 @@ void CSchemaChild::Clear()
 //////////////////////////////////////////////////////////////////////
 // CSchemaChild member copy
 
-BOOL CSchemaChild::MemberCopy(CXMLElement* pLocal, CXMLElement* pRemote, BOOL bToRemote, BOOL bAggressive)
+BOOL CSchemaChild::MemberCopy(CXMLElement* pLocal, CXMLElement* pRemote, BOOL bToRemote, BOOL bAggressive) const
 {
 	if ( ! pLocal || ! pRemote ) return FALSE;
 
@@ -111,7 +111,7 @@ BOOL CSchemaChild::MemberCopy(CXMLElement* pLocal, CXMLElement* pRemote, BOOL bT
 
 	for ( POSITION pos = m_pMap.GetHeadPosition() ; pos ; )
 	{
-		CSchemaChildMap* pMap		= m_pMap.GetNext( pos );
+		const CSchemaChildMap* pMap = m_pMap.GetNext( pos );
 		CXMLAttribute* pAttribute1	= NULL;
 		CXMLAttribute* pAttribute2	= NULL;
 
@@ -148,17 +148,14 @@ BOOL CSchemaChild::MemberCopy(CXMLElement* pLocal, CXMLElement* pRemote, BOOL bT
 // CSchemaChildMap construction
 
 CSchemaChildMap::CSchemaChildMap()
-{
-}
-
-CSchemaChildMap::~CSchemaChildMap()
+	: m_bIdentity ( FALSE )
 {
 }
 
 //////////////////////////////////////////////////////////////////////
 // CSchemaChildMap operation
 
-BOOL CSchemaChildMap::Load(CXMLElement* pXML)
+BOOL CSchemaChildMap::Load(const CXMLElement* pXML)
 {
 	if ( pXML->IsNamed( _T("identity") ) )
 		m_bIdentity = TRUE;

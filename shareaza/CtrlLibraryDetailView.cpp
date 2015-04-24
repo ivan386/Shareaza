@@ -1,7 +1,7 @@
 //
 // CtrlLibraryDetailView.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2014.
+// Copyright (c) Shareaza Development Team, 2002-2015.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -180,7 +180,7 @@ int CLibraryDetailView::OnCreate(LPCREATESTRUCT lpCreateStruct)
 
 	if ( CSchemaPtr pSchema = SchemaCache.Get( strSchemaURI ) )
 	{
-		CList< CSchemaMember* > pColumns;
+		CSchemaMemberList pColumns;
 		CSchemaColumnsDlg::LoadColumns( pSchema, &pColumns );
 		SetViewSchema( pSchema, &pColumns, FALSE, FALSE );
 	}
@@ -227,7 +227,7 @@ void CLibraryDetailView::OnDestroy()
 /////////////////////////////////////////////////////////////////////////////
 // CLibraryDetailView schema setup
 
-void CLibraryDetailView::SetViewSchema(CSchemaPtr pSchema, CList< CSchemaMember* >* pColumns, BOOL bSave, BOOL bUpdate)
+void CLibraryDetailView::SetViewSchema(CSchemaPtr pSchema, CSchemaMemberList* pColumns, BOOL bSave, BOOL bUpdate)
 {
 	GET_LIST();
 
@@ -259,7 +259,7 @@ void CLibraryDetailView::SetViewSchema(CSchemaPtr pSchema, CList< CSchemaMember*
 
 	for ( POSITION pos = m_pColumns.GetHeadPosition() ; pos ; nColumn++ )
 	{
-		CSchemaMember* pMember = m_pColumns.GetNext( pos );
+		CSchemaMemberPtr pMember = m_pColumns.GetNext( pos );
 		pList->InsertColumn( nColumn, pMember->m_sTitle, pMember->m_nColumnAlign, pMember->m_nColumnWidth, nColumn - 1 );
 	}
 
@@ -300,7 +300,7 @@ void CLibraryDetailView::Update()
 			{
 				if ( CSchemaPtr pSchema = SchemaCache.Get( strURI ) )
 				{
-					CList< CSchemaMember* > pColumns;
+					CSchemaMemberList pColumns;
 					CSchemaColumnsDlg::LoadColumns( pSchema, &pColumns );
 					SetViewSchema( pSchema, &pColumns, TRUE, FALSE );
 				}
@@ -481,7 +481,7 @@ void CLibraryDetailView::CacheItem(int nItem)
 
 	for ( POSITION pos = m_pColumns.GetHeadPosition() ; pos ; nColumn++ )
 	{
-		CSchemaMember* pMember = m_pColumns.GetNext( pos );
+		CSchemaMemberPtr pMember = m_pColumns.GetNext( pos );
 
 		if ( pMember->m_sName.CompareNoCase( _T("SHA1") ) == 0 )
 		{
@@ -680,7 +680,7 @@ int CLibraryDetailView::ListCompare(LPCVOID pA, LPCVOID pB)
 				if ( nColumn >= m_pThis->m_pColumns.GetCount() ) return 0;
 				POSITION pos = m_pThis->m_pColumns.FindIndex( nColumn );
 				if ( pos == NULL ) return 0;
-				CSchemaMember* pMember = m_pThis->m_pColumns.GetAt( pos );
+				CSchemaMemberPtr pMember = m_pThis->m_pColumns.GetAt( pos );
 
 				CString strA, strB;
 				if ( pfA->m_pMetadata )
@@ -1015,7 +1015,7 @@ void CLibraryDetailView::OnContextMenu(CWnd* pWnd, CPoint point)
 	}
 	else if ( nCmd )
 	{
-		CList< CSchemaMember* > pColumns;
+		CSchemaMemberList pColumns;
 		CSchemaColumnsDlg::ToggleColumnHelper( m_pSchema, &m_pColumns, &pColumns, nCmd, TRUE );
 		SetViewSchema( m_pSchema, &pColumns, TRUE, TRUE );
 	}

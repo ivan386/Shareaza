@@ -1,7 +1,7 @@
 //
 // AlbumFolder.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2013.
+// Copyright (c) Shareaza Development Team, 2002-2015.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -193,9 +193,9 @@ BOOL CAlbumFolder::CheckFolder(CAlbumFolder* pFolder, BOOL bRecursive) const
 //////////////////////////////////////////////////////////////////////
 // CAlbumFolder search for objects
 
-CAlbumFolder* CAlbumFolder::GetTarget(CSchemaMember* pMember, LPCTSTR pszValue) const
+CAlbumFolder* CAlbumFolder::GetTarget(CSchemaMemberPtr pMember, LPCTSTR pszValue) const
 {
-	if ( m_pSchema == pMember->m_pSchema )
+	if ( pMember->IsEqual( m_pSchema ) )
 	{
 		if ( pszValue == NULL )
 		{
@@ -539,7 +539,7 @@ BOOL CAlbumFolder::MetaFromFile(CLibraryFile* pFile)
 {
 	if ( m_pSchema == NULL || pFile->m_pMetadata == NULL ) return FALSE;
 
-	CSchemaChild* pChild = m_pSchema->GetContained( pFile->m_pSchema->GetURI() );
+	CSchemaChildPtr pChild = m_pSchema->GetContained( pFile->m_pSchema->GetURI() );
 	if ( pChild == NULL ) return FALSE;
 
 	if ( m_pXML == NULL ) m_pXML = new CXMLElement( NULL, m_pSchema->m_sSingular );
@@ -562,7 +562,7 @@ BOOL CAlbumFolder::MetaToFiles(BOOL bAggressive)
 
 		if ( pFile->m_pMetadata && pFile->m_pSchema )
 		{
-			if ( CSchemaChild* pChild = m_pSchema->GetContained( pFile->m_pSchema->GetURI() ) )
+			if ( CSchemaChildPtr pChild = m_pSchema->GetContained( pFile->m_pSchema->GetURI() ) )
 			{
 				CXMLElement* pXML = pFile->m_pMetadata->Clone();
 

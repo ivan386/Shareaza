@@ -1,7 +1,7 @@
 //
 // QuerySearch.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2014.
+// Copyright (c) Shareaza Development Team, 2002-2015.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -1586,7 +1586,7 @@ TRISTATE CQuerySearch::MatchMetadata(LPCTSTR pszSchemaURI, const CXMLElement* pX
 
 	for ( POSITION pos = m_pSchema->GetMemberIterator() ; pos ; )
 	{
-		const CSchemaMember* pMember = m_pSchema->GetNextMember( pos );
+		CSchemaMemberPtr pMember = m_pSchema->GetNextMember( pos );
 
 		CString strSearch = pMember->GetValueFrom( pRoot );
 		CString strTarget = pMember->GetValueFrom( pXML );
@@ -1624,7 +1624,7 @@ BOOL CQuerySearch::MatchMetadataShallow(LPCTSTR pszSchemaURI, const CXMLElement*
 	{
 		for ( POSITION pos = pSchema->GetMemberIterator() ; pos ; )
 		{
-			CSchemaMember* pMember = pSchema->GetNextMember( pos );
+			CSchemaMemberPtr pMember = pSchema->GetNextMember( pos );
 
 			if ( pMember->m_bSearched )
 			{

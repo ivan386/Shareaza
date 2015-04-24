@@ -1,7 +1,7 @@
 //
 // MatchObjects.h
 //
-// Copyright (c) Shareaza Development Team, 2002-2012.
+// Copyright (c) Shareaza Development Team, 2002-2015.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -28,7 +28,6 @@
 #include "ShareazaFile.h"
 #include "Schema.h"
 
-class CSchemaMember;
 class CQuerySearch;
 class CQueryHit;
 class CMatchFile;
@@ -97,7 +96,7 @@ protected:
 	CMatchFile**	m_pMapBTH;
 	CMatchFile**	m_pMapMD5;
 	LPTSTR			m_pszFilter;
-	CSchemaMember**	m_pColumns;
+	CSchemaMemberPtr* m_pColumns;
 	int				m_nColumns;
 	CBaseMatchWnd*	m_pParent;
 
@@ -123,7 +122,7 @@ public:
 	BOOL		ClearSelection();
 	void		Filter();
 	CString		CreateRegExpFilter(const CString& strPattern);
-	void		SelectSchema(CSchemaPtr pSchema, CList< CSchemaMember* >* pColumns);
+	void		SelectSchema(CSchemaPtr pSchema, CSchemaMemberList* pColumns);
 	void		SetSortColumn(int nColumn = -1, BOOL bDirection = FALSE);
 	void		UpdateRange(DWORD nMin = 0, DWORD nMax = 0xFFFFFFFF);
 	void		ClearUpdated();

@@ -1,7 +1,7 @@
 //
 // PageFileMetadata.h
 //
-// Copyright (c) Shareaza Development Team, 2002-2007.
+// Copyright (c) Shareaza Development Team, 2002-2015.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -19,22 +19,20 @@
 // Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 //
 
-#if !defined(AFX_PAGEFILEMETADATA_H__77265CC6_6566_4120_BF95_563EADCC326D__INCLUDED_)
-#define AFX_PAGEFILEMETADATA_H__77265CC6_6566_4120_BF95_563EADCC326D__INCLUDED_
-
 #pragma once
 
 #include "DlgFilePropertiesPage.h"
 #include "CtrlSchema.h"
 #include "CtrlSchemaCombo.h"
 
+
 class CFileMetadataPage : public CFilePropertiesPage
 {
+	DECLARE_DYNCREATE( CFileMetadataPage )
+
 public:
 	CFileMetadataPage();
-	virtual ~CFileMetadataPage();
 
-	DECLARE_DYNCREATE(CFileMetadataPage)
 	enum { IDD = IDD_FILE_METADATA };
 
 	CSchemaCombo	m_wndSchemas;
@@ -42,9 +40,11 @@ public:
 	CXMLElement*	m_pXML;
 
 protected:
-	CXMLElement*	m_pSchemaContainer;
+	CAutoPtr< CXMLElement > m_pSchemaContainer;
 
 	void AddCrossAttributes(CXMLElement* pXML, LPCTSTR pszTargetURI);
+	DWORD UpdateFileData(BOOL bRealSave);
+
 	virtual void DoDataExchange(CDataExchange* pDX);    // DDX/DDV support
 	virtual void OnOK();
 	virtual BOOL OnInitDialog();
@@ -55,5 +55,3 @@ protected:
 };
 
 #define IDC_METADATA	100
-
-#endif // !defined(AFX_PAGEFILEMETADATA_H__77265CC6_6566_4120_BF95_563EADCC326D__INCLUDED_)

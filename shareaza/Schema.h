@@ -1,7 +1,7 @@
 //
 // Schema.h
 //
-// Copyright (c) Shareaza Development Team, 2002-2014.
+// Copyright (c) Shareaza Development Team, 2002-2015.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -22,11 +22,11 @@
 #pragma once
 
 class CSchema;
-class CSchemaMember;
 class CSchemaChild;
 class CXMLElement;
 
 typedef const CSchema* CSchemaPtr;
+typedef const CSchemaChild* CSchemaChildPtr;
 
 #ifdef _WIN64
 
@@ -44,18 +44,21 @@ class CSchema
 {
 public:
 	CSchema();
-	virtual ~CSchema();
+	~CSchema();
 	
-	int			m_nType;
+	enum Type { stAny = -1, stFile, stFolder };
+	enum Availability { saDefault, saAdvanced, saSystem, saMax };
+	
+	Type		m_nType;
 	CString		m_sTitle;
 	CString		m_sPlural;
 	CString		m_sSingular;
-	int			m_nAvailability;
+	Availability m_nAvailability;
 	BOOL		m_bPrivate;
 	CString		m_sDonkeyType;
 
 	CList< CSchemaMember* >	m_pMembers;
-	CList< CString >	m_pExtends;
+	CList< CString >		m_pExtends;
 	CList< CSchemaChild* >	m_pContains;
 	CString		m_sDefaultColumns;
 	CString		m_sLibraryView;
@@ -68,9 +71,6 @@ public:
 	int			m_nIcon16;
 	int			m_nIcon32;
 	int			m_nIcon48;
-	
-	enum { stFile, stFolder };
-	enum { saDefault, saAdvanced, saSystem, saMax };
 
 	POSITION		GetFilterIterator() const;
 	void			GetNextFilter(POSITION& pos, CString& sType, BOOL& bResult) const;
@@ -78,14 +78,14 @@ public:
 	CString			GetFilterSet() const;
 
 	POSITION		GetMemberIterator() const;
-	CSchemaMember*	GetNextMember(POSITION& pos) const;
-	CSchemaMember*	GetMember(LPCTSTR pszName) const;
+	CSchemaMemberPtr GetNextMember(POSITION& pos) const;
+	CSchemaMemberPtr GetMember(LPCTSTR pszName) const;
 	INT_PTR			GetMemberCount() const;
 	CString			GetFirstMemberName() const;
 	void			Clear();
 	BOOL			Load(LPCTSTR pszName);
-	CSchemaChild*	GetContained(LPCTSTR pszURI) const;
-	CString			GetContainedURI(int nType) const;
+	CSchemaChildPtr	GetContained(LPCTSTR pszURI) const;
+	CString			GetContainedURI(Type nType) const;
 	CXMLElement*	Instantiate(BOOL bNamespace = FALSE) const;
 	BOOL			Validate(CXMLElement* pXML, BOOL bFix) const;
 	CString			GetIndexedWords(CXMLElement* pXML) const;
@@ -98,18 +98,20 @@ protected:
 	CSBMap			m_pTypeFilters;
 
 	BOOL			LoadSchema(LPCTSTR pszFile);
-	BOOL			LoadPrimary(CXMLElement* pRoot, CXMLElement* pType);
-	CXMLElement*	GetType(CXMLElement* pRoot, LPCTSTR pszName) const;
+	BOOL			LoadPrimary(const CXMLElement* pRoot, const CXMLElement* pType);
+	CXMLElement*	GetType(const CXMLElement* pRoot, LPCTSTR pszName) const;
 	BOOL			LoadDescriptor(LPCTSTR pszFile);
-	void			LoadDescriptorTitles(CXMLElement* pElement);
-	void			LoadDescriptorIcons(CXMLElement* pElement);
-	void			LoadDescriptorMembers(CXMLElement* pElement);
-	void			LoadDescriptorTypeFilter(CXMLElement* pElement);
-	void			LoadDescriptorExtends(CXMLElement* pElement);
-	void			LoadDescriptorContains(CXMLElement* pElement);
-	void			LoadDescriptorHeaderContent(CXMLElement* pElement);
-	void			LoadDescriptorViewContent(CXMLElement* pElement);
+	void			LoadDescriptorTitles(const CXMLElement* pElement);
+	void			LoadDescriptorIcons(const CXMLElement* pElement);
+	void			LoadDescriptorMembers(const CXMLElement* pElement);
+	void			LoadDescriptorTypeFilter(const CXMLElement* pElement);
+	void			LoadDescriptorExtends(const CXMLElement* pElement);
+	void			LoadDescriptorContains(const CXMLElement* pElement);
+	void			LoadDescriptorHeaderContent(const CXMLElement* pElement);
+	void			LoadDescriptorViewContent(const CXMLElement* pElement);
 	BOOL			LoadIcon();
+
+	CSchemaMember*	GetWritableMember(LPCTSTR pszName) const;
 
 // Inlines
 public:
@@ -129,7 +131,7 @@ public:
 		if ( m_sURI.CompareNoCase( pszURI ) == 0 ) return true;
 		for ( POSITION pos = m_pExtends.GetHeadPosition() ; pos ; )
 		{
-			CString strURI = m_pExtends.GetNext( pos );
+			const CString strURI = m_pExtends.GetNext( pos );
 			if ( strURI.CompareNoCase( pszURI ) == 0 ) return true;
 		}
 		return false;
@@ -188,3 +190,6 @@ private:
 	CSchema(const CSchema&);
 	CSchema& operator=(const CSchema&);
 };
+
+#define NO_VALUE		(_T("(~ns~)"))
+#define MULTI_VALUE		(_T("(~mt~)"))

@@ -1,7 +1,7 @@
 //
 // DlgHitColumns.h
 //
-// Copyright (c) Shareaza Development Team, 2002-2007.
+// Copyright (c) Shareaza Development Team, 2002-2015.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -28,44 +28,27 @@
 
 class CSchemaColumnsDlg : public CSkinDialog
 {
-// Construction
 public:
-	CSchemaColumnsDlg(CWnd* pParent = NULL);   // standard constructor
+	CSchemaColumnsDlg(CWnd* pParent = NULL);
 
-// Dialog Data
-public:
-	//{{AFX_DATA(CSchemaColumnsDlg)
 	enum { IDD = IDD_SCHEMA_COLUMNS };
-	CListCtrl	m_wndColumns;
-	CSchemaCombo	m_wndSchemas;
-	//}}AFX_DATA
 
-// Attributes
-public:
-	CSchemaPtr	m_pSchema;
-	CList< CSchemaMember* >	m_pColumns;
+	CListCtrl			m_wndColumns;
+	CSchemaCombo		m_wndSchemas;
+	CSchemaPtr			m_pSchema;
+	CSchemaMemberList	m_pColumns;
 
-// Operations
-public:
-	static BOOL		LoadColumns(CSchemaPtr pSchema, CList< CSchemaMember* >* pColumns);
-	static BOOL		SaveColumns(CSchemaPtr pSchema, CList< CSchemaMember* >* pColumns);
-	static CMenu*	BuildColumnMenu(CSchemaPtr pSchema, CList< CSchemaMember* >* pColumns = NULL);
-	static BOOL		ToggleColumnHelper(CSchemaPtr pSchema, CList< CSchemaMember* >* pSource, CList< CSchemaMember* >* pTarget, UINT nToggleID, BOOL bSave = FALSE);
+	static BOOL		LoadColumns(CSchemaPtr pSchema, CSchemaMemberList* pColumns);
+	static BOOL		SaveColumns(CSchemaPtr pSchema, CSchemaMemberList* pColumns);
+	static CMenu*	BuildColumnMenu(CSchemaPtr pSchema, CSchemaMemberList* pColumns = NULL);
+	static BOOL		ToggleColumnHelper(CSchemaPtr pSchema, CSchemaMemberList* pSource, CSchemaMemberList* pTarget, UINT nToggleID, BOOL bSave = FALSE);
 
-// Overrides
-public:
-	//{{AFX_VIRTUAL(CSchemaColumnsDlg)
-	protected:
-	virtual void DoDataExchange(CDataExchange* pDX);    // DDX/DDV support
-	//}}AFX_VIRTUAL
-
-// Implementation
 protected:
-	//{{AFX_MSG(CSchemaColumnsDlg)
+	virtual void DoDataExchange(CDataExchange* pDX);    // DDX/DDV support
 	virtual BOOL OnInitDialog();
-	afx_msg void OnSelChangeSchemas();
 	virtual void OnOK();
-	//}}AFX_MSG
-	DECLARE_MESSAGE_MAP()
 
+	afx_msg void OnSelChangeSchemas();
+
+	DECLARE_MESSAGE_MAP()
 };

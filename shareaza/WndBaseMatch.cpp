@@ -1,7 +1,7 @@
 //
 // WndBaseMatch.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2014.
+// Copyright (c) Shareaza Development Team, 2002-2015.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -226,7 +226,7 @@ void CBaseMatchWnd::OnContextMenu(CWnd* pWnd, CPoint point)
 		}
 		else if ( nCmd )
 		{
-			CList< CSchemaMember* > pColumns;
+			CSchemaMemberList pColumns;
 			CSchemaColumnsDlg::ToggleColumnHelper( m_wndList.m_pSchema,
 				&m_wndList.m_pColumns, &pColumns, nCmd, TRUE );
 			m_wndList.SelectSchema( m_wndList.m_pSchema, &pColumns );
@@ -906,7 +906,7 @@ void CBaseMatchWnd::Serialize(CArchive& ar)
 		ar >> strSchema;
 		if ( CSchemaPtr pSchema = SchemaCache.Get( strSchema ) )
 		{
-			CList< CSchemaMember* > pColumns;
+			CSchemaMemberList pColumns;
 			CSchemaColumnsDlg::LoadColumns( pSchema, &pColumns );
 			m_wndList.SelectSchema( pSchema, &pColumns );
 		}

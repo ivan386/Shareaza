@@ -1,7 +1,7 @@
 //
 // CtrlSchema.h
 //
-// Copyright (c) Shareaza Development Team, 2002-2007.
+// Copyright (c) Shareaza Development Team, 2002-2015.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -21,9 +21,7 @@
 
 #pragma once
 
-#define NO_VALUE		(_T("(~ns~)"))
-#define MULTI_VALUE		(_T("(~mt~)"))
-
+#include "XML.h"
 #include "Schema.h"
 
 class CXMLElement;
@@ -47,12 +45,17 @@ protected:
 	CArray< CString >	m_pCaptions;
 	int				m_nScroll;
 	int				m_nScrollWheelLines;
-	CString			strMultipleString;
+	CString			m_strMultipleString;
+
+	// Additional items for schema members
+	typedef CMap< CSchemaMemberPtr, CSchemaMemberPtr, CList< CString >*, CList< CString >* > CItemMap;
+	CItemMap		m_pItems;
 
 // Operations
 public:
 	void		SetSchema(CSchemaPtr pSchema, BOOL bPromptOnly = FALSE);
-	BOOL		UpdateData(CXMLElement* pBase, BOOL bSaveAndValidate);
+	DWORD		UpdateData(CXMLElement* pBase, BOOL bSaveAndValidate, BOOL bRealSave = TRUE);
+	void		AddItem(CSchemaMemberPtr pMember, const CString& strItem); 
 	CString		GetSchemaURI() const;
 	void		Disable();
 	void		Enable();
@@ -61,7 +64,6 @@ public:
 
 protected:
 	void		Layout();
-	virtual BOOL OnCommand(WPARAM wParam, LPARAM lParam);
 
 	afx_msg BOOL OnEraseBkgnd(CDC* pDC);
 	afx_msg void OnDestroy();

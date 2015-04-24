@@ -1,7 +1,7 @@
 //
 // CtrlLibraryDetailView.h
 //
-// Copyright (c) Shareaza Development Team, 2002-2009.
+// Copyright (c) Shareaza Development Team, 2002-2015.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -42,14 +42,14 @@ protected:
 	virtual DWORD_PTR		HitTestIndex(const CPoint& point) const;
 	virtual HBITMAP			CreateDragImage(const CPoint& ptMouse, CPoint& ptOffset);
 	virtual void			OnSkinChange();
-	void	SetViewSchema(CSchemaPtr pSchema, CList< CSchemaMember* >* pColumns, BOOL bSave, BOOL bUpdate);
+	void	SetViewSchema(CSchemaPtr pSchema, CSchemaMemberList* pColumns, BOOL bSave, BOOL bUpdate);
 	void	CacheItem(int nItem);
 	void	SortItems(int nColumn = -1);
 
 protected:
 	UINT		m_nStyle;
 	CSchemaPtr	m_pSchema;
-	CList< CSchemaMember* >	m_pColumns;
+	CSchemaMemberList	m_pColumns;
 	CCoolMenu*	m_pCoolMenu;
 	BOOL		m_bCreateDragImage;
 

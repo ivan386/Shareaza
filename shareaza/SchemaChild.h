@@ -1,7 +1,7 @@
 //
 // SchemaChild.h
 //
-// Copyright (c) Shareaza Development Team, 2002-2007.
+// Copyright (c) Shareaza Development Team, 2002-2015.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -19,58 +19,47 @@
 // Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 //
 
-#if !defined(AFX_SCHEMACHILD_H__8CDBBB11_8165_478F_9E52_1B1E298CA72E__INCLUDED_)
-#define AFX_SCHEMACHILD_H__8CDBBB11_8165_478F_9E52_1B1E298CA72E__INCLUDED_
-
 #pragma once
 
-#include "Schema.h"
-
+class CSchema;
+class CSchemaChild;
 class CSchemaChildMap;
 class CXMLElement;
 
 
+#include "Schema.h"
+
+
 class CSchemaChild
 {
-// Construction
 public:
 	CSchemaChild(CSchemaPtr pSchema);
-	virtual ~CSchemaChild();
+	~CSchemaChild();
 
-// Attributes
-public:
-	CSchemaPtr	m_pSchema;
-	int			m_nType;
-	CString		m_sURI;
-public:
-	CList< CSchemaChildMap* >	m_pMap;
+	CSchema::Type	m_nType;
+	CString			m_sURI;
 
-// Operations
-public:
-	BOOL		Load(CXMLElement* pXML);
+	inline INT_PTR GetCount() const { return m_pMap.GetCount(); }
+
+	BOOL		Load(const CXMLElement* pXML);
+	BOOL		MemberCopy(CXMLElement* pLocal, CXMLElement* pRemote, BOOL bToRemote = FALSE, BOOL bAggressive = FALSE) const;
+
+protected:
+	CSchemaPtr						m_pSchema;
+	CList< const CSchemaChildMap* >	m_pMap;
+
 	void		Clear();
-	BOOL		MemberCopy(CXMLElement* pLocal, CXMLElement* pRemote, BOOL bToRemote = FALSE, BOOL bAggressive = FALSE);
-
 };
 
 
 class CSchemaChildMap
 {
-// Construction
 public:
 	CSchemaChildMap();
-	virtual ~CSchemaChildMap();
 
-// Attributes
-public:
 	BOOL		m_bIdentity;
 	CString		m_sLocal;
 	CString		m_sRemote;
 
-// Operations
-public:
-	BOOL		Load(CXMLElement* pXML);
-
+	BOOL		Load(const CXMLElement* pXML);
 };
-
-#endif // !defined(AFX_SCHEMACHILD_H__8CDBBB11_8165_478F_9E52_1B1E298CA72E__INCLUDED_)

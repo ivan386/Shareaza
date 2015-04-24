@@ -1,7 +1,7 @@
 //
 // CtrlSearchPanel.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2014.
+// Copyright (c) Shareaza Development Team, 2002-2015.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -290,14 +290,14 @@ void CSearchPanel::OnSchemaChange()
 	CBaseMatchWnd* pMainSearchFrame = static_cast< CBaseMatchWnd* >(GetParent());
 	if ( pMainSearchFrame )
 	{
-		CList< CSchemaMember* > pColumns;
+		CSchemaMemberList pColumns;
 
 		if ( pSchema )
 		{
 			CString strMembers = pSchema->m_sDefaultColumns;
 			for ( POSITION pos = pSchema->GetMemberIterator() ; pos ; )
 			{
-				CSchemaMember* pMember = pSchema->GetNextMember( pos );
+				CSchemaMemberPtr pMember = pSchema->GetNextMember( pos );
 
 				if ( strMembers.Find( _T("|") + pMember->m_sName + _T("|") ) >= 0 )
 					pColumns.AddTail( pMember );

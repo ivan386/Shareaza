@@ -1,7 +1,7 @@
 //
 // CtrlMatch.h
 //
-// Copyright (c) Shareaza Development Team, 2002-2007.
+// Copyright (c) Shareaza Development Team, 2002-2015.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -45,7 +45,7 @@ public:
 	CMatchList*		m_pMatches;
 	LPCTSTR			m_sType;
 	CSchemaPtr		m_pSchema;
-	CList< CSchemaMember* > m_pColumns;
+	CSchemaMemberList m_pColumns;
 protected:
 	CHeaderCtrl		m_wndHeader;
 	CMatchTipCtrl	m_wndTip;
@@ -72,7 +72,7 @@ protected:
 public:
 	void	Update();
 	void	DestructiveUpdate();
-	void	SelectSchema(CSchemaPtr pSchema, CList< CSchemaMember* >* pColumns);
+	void	SelectSchema(CSchemaPtr pSchema, CSchemaMemberList* pColumns);
 	void	SetBrowseMode();
 	BOOL	HitTestHeader(const CPoint& point);
 	void	SetSortColumn(int nColumn = -1, BOOL bDirection = FALSE);

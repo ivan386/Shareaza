@@ -1,7 +1,7 @@
 //
 // MatchObjects.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2014.
+// Copyright (c) Shareaza Development Team, 2002-2015.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -879,7 +879,7 @@ BOOL CMatchList::FilterHit(CQueryHit* pHit)
 //////////////////////////////////////////////////////////////////////
 // CMatchList schema selection
 
-void CMatchList::SelectSchema(CSchemaPtr pSchema, CList< CSchemaMember* >* pColumns)
+void CMatchList::SelectSchema(CSchemaPtr pSchema, CSchemaMemberList* pColumns)
 {
 	CSingleLock pLock( &m_pSection, TRUE );
 
@@ -902,7 +902,7 @@ void CMatchList::SelectSchema(CSchemaPtr pSchema, CList< CSchemaMember* >* pColu
 
 	if ( ! pSchema || ! pColumns ) return;
 
-	m_pColumns = new CSchemaMember*[ pColumns->GetCount() ];
+	m_pColumns = new CSchemaMemberPtr[ pColumns->GetCount() ];
 
 	for ( POSITION pos = pColumns->GetHeadPosition() ; pos ; )
 	{
@@ -1716,7 +1716,7 @@ void CMatchFile::Added(CQueryHit* pHit)
 			m_pColumns = new CString[ m_nColumns ];
 		}
 
-		CSchemaMember** pMember = m_pList->m_pColumns;
+		CSchemaMemberPtr* pMember = m_pList->m_pColumns;
 		CString strValue;
 
 		for ( int nCount = 0 ; nCount < m_nColumns ; nCount ++, pMember ++ )
