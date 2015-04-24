@@ -1,7 +1,7 @@
 //
 // XML.h
 //
-// Copyright (c) Shareaza Development Team, 2002-2013.
+// Copyright (c) Shareaza Development Team, 2002-2015.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -55,7 +55,7 @@ public:
 	virtual void	SetName(LPCTSTR pszValue);
 	BOOL			IsNamed(LPCTSTR pszName) const;
 	CString			GetValue() const;
-	void			SetValue(LPCTSTR pszValue);
+	void			SetValue(const CString& strValue);
 	static void		UniformString(CString& str);
 
 	friend class	CXMLElement;
