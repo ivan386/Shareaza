@@ -158,8 +158,10 @@ CString CSchemaMember::GetValueFrom(const CXMLElement* pBase, LPCTSTR pszDefault
 		{
 			float nMinutes = 0;
 			if ( _stscanf( strValue, L"%f", &nMinutes ) == 1 )
-				strValue.Format( L"%.2u:%.2u:%.2u", (DWORD)nMinutes / 60,
-					(DWORD)nMinutes % 60, (DWORD)( ( nMinutes - (DWORD)nMinutes ) * 60 ) );
+			{
+				DWORD nSeconds = (DWORD)roundf( nMinutes * 60 );
+				strValue.Format( L"%.2u:%.2u:%.2u", nSeconds / 3600, ( nSeconds / 60 ) % 60, nSeconds % 60 );
+			}
 			else
 				strValue = ( pszDefault ? pszDefault : _T("") );
 		}

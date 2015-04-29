@@ -236,7 +236,7 @@ DWORD CSchemaCtrl::UpdateData(CXMLElement* pBase, BOOL bSaveAndValidate, BOOL bR
 		
 			if ( pMember == NULL ) break;
 		
-			const CString strValue = pMember->GetValueFrom( pBase, NO_VALUE, FALSE, TRUE );
+			const CString strValue = pMember->GetValueFrom( pBase, NO_VALUE, TRUE, TRUE );
 
 			if ( bSaveAndValidate )
 			{

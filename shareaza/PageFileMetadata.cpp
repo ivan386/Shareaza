@@ -115,8 +115,8 @@ BOOL CFileMetadataPage::OnInitDialog()
 					for ( POSITION pos2 = pSchema->GetMemberIterator(); pos2; )
 					{
 						CSchemaMemberPtr pMember = pSchema->GetNextMember( pos2 );
-						CString strOld = pMember->GetValueFrom( m_pXML, NO_VALUE, TRUE, TRUE );
-						CString strNew = pMember->GetValueFrom( pFile->m_pMetadata, _T(""), TRUE );
+						CString strOld = pMember->GetValueFrom( m_pXML, NO_VALUE, FALSE, TRUE );
+						CString strNew = pMember->GetValueFrom( pFile->m_pMetadata, _T(""), FALSE );
 						if ( strOld != MULTI_VALUE )
 						{
 							if ( strOld == NO_VALUE )
@@ -125,13 +125,13 @@ BOOL CFileMetadataPage::OnInitDialog()
 							}
 							else if ( strOld != strNew )
 							{
-								m_wndData.AddItem( pMember, strOld );
-								m_wndData.AddItem( pMember, strNew );
+								m_wndData.AddItem( pMember, pMember->GetValueFrom( m_pXML, _T(""), TRUE, TRUE ) );
+								m_wndData.AddItem( pMember, pMember->GetValueFrom( pFile->m_pMetadata, _T(""), TRUE ) );
 								m_pXML->AddAttribute( pMember->m_sName, MULTI_VALUE );
 							}
 						}
 						else
-							m_wndData.AddItem( pMember, strNew );
+							m_wndData.AddItem( pMember, pMember->GetValueFrom( pFile->m_pMetadata, _T(""), TRUE ) );
 					}
 				}
 			}
