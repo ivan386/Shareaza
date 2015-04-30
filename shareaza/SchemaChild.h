@@ -26,6 +26,7 @@ class CSchemaChild;
 class CSchemaChildMap;
 class CXMLElement;
 
+typedef const CSchemaChildMap* CSchemaChildMapPtr;
 
 #include "Schema.h"
 
@@ -45,10 +46,14 @@ public:
 	BOOL		MemberCopy(CXMLElement* pLocal, CXMLElement* pRemote, BOOL bToRemote = FALSE, BOOL bAggressive = FALSE) const;
 
 protected:
-	CSchemaPtr						m_pSchema;
-	CList< const CSchemaChildMap* >	m_pMap;
+	CSchemaPtr					m_pSchema;
+	CList< CSchemaChildMapPtr >	m_pMap;
 
 	void		Clear();
+
+private:
+	CSchemaChild(const CSchemaChild&);
+	CSchemaChild& operator=(const CSchemaChild&);
 };
 
 
@@ -62,4 +67,8 @@ public:
 	CString		m_sRemote;
 
 	BOOL		Load(const CXMLElement* pXML);
+
+private:
+	CSchemaChildMap(const CSchemaChildMap&);
+	CSchemaChildMap& operator=(const CSchemaChildMap&);
 };

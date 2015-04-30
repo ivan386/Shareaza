@@ -111,9 +111,9 @@ BOOL CSchemaChild::MemberCopy(CXMLElement* pLocal, CXMLElement* pRemote, BOOL bT
 
 	for ( POSITION pos = m_pMap.GetHeadPosition() ; pos ; )
 	{
-		const CSchemaChildMap* pMap = m_pMap.GetNext( pos );
-		CXMLAttribute* pAttribute1	= NULL;
-		CXMLAttribute* pAttribute2	= NULL;
+		CSchemaChildMapPtr pMap = m_pMap.GetNext( pos );
+		const CXMLAttribute* pAttribute1	= NULL;
+		const CXMLAttribute* pAttribute2	= NULL;
 
 		if ( bToRemote )
 		{

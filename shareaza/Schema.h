@@ -59,7 +59,7 @@ public:
 
 	CList< CSchemaMember* >	m_pMembers;
 	CList< CString >		m_pExtends;
-	CList< CSchemaChild* >	m_pContains;
+	CList< CSchemaChildPtr >m_pContains;
 	CString		m_sDefaultColumns;
 	CString		m_sLibraryView;
 	CString		m_sHeaderTitle;
@@ -88,8 +88,8 @@ public:
 	CString			GetContainedURI(Type nType) const;
 	CXMLElement*	Instantiate(BOOL bNamespace = FALSE) const;
 	BOOL			Validate(CXMLElement* pXML, BOOL bFix) const;
-	CString			GetIndexedWords(CXMLElement* pXML) const;
-	CString			GetVisibleWords(CXMLElement* pXML) const;
+	CString			GetIndexedWords(const CXMLElement* pXML) const;
+	CString			GetVisibleWords(const CXMLElement* pXML) const;
 	void			ResolveTokens(CString& str, CXMLElement* pXML) const;
 
 protected:

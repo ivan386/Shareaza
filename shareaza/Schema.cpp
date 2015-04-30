@@ -727,7 +727,7 @@ BOOL CSchema::Validate(CXMLElement* pXML, BOOL bFix) const
 //////////////////////////////////////////////////////////////////////
 // CSchema indexed words
 
-CString CSchema::GetIndexedWords(CXMLElement* pXML) const
+CString CSchema::GetIndexedWords(const CXMLElement* pXML) const
 {
 	CString str;
 	
@@ -752,7 +752,7 @@ CString CSchema::GetIndexedWords(CXMLElement* pXML) const
 	return str;
 }
 
-CString CSchema::GetVisibleWords(CXMLElement* pXML) const
+CString CSchema::GetVisibleWords(const CXMLElement* pXML) const
 {
 	CString str;
 	
