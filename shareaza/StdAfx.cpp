@@ -1,7 +1,7 @@
 //
 // StdAfx.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2014.
+// Copyright (c) Shareaza Development Team, 2002-2015.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -18,6 +18,10 @@
 // along with Shareaza; if not, write to the Free Software
 // Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 //
+
+#pragma warning ( disable : 4201 )	// nonstandard extension used : nameless struct / union
+#pragma warning ( disable : 4574 )	// '...' is defined to be '0': did you mean to use '#if ...'?
+#pragma warning ( disable : 4986 )	// exception specification does not match previous declaration
 
 #include "StdAfx.h"
 
