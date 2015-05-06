@@ -1,7 +1,7 @@
 //
 // CtrlMediaFrame.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2014.
+// Copyright (c) Shareaza Development Team, 2002-2015.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -129,6 +129,7 @@ END_MESSAGE_MAP()
 #define SPEED_FACTOR	100
 #define ONE_SECOND		10000000
 
+CMediaFrame* CMediaFrame::m_wndMediaFrame = NULL;
 
 /////////////////////////////////////////////////////////////////////////////
 // CMediaFrame construction
@@ -168,18 +169,7 @@ CMediaFrame::~CMediaFrame()
 
 CMediaFrame* CMediaFrame::GetMediaFrame()
 {
-	if ( CMainWnd* pMainWnd = theApp.SafeMainWnd() )
-	{
-		if ( CMediaWnd* pMediaWnd = static_cast< CMediaWnd* >( pMainWnd->m_pWindows.Find( RUNTIME_CLASS(CMediaWnd) ) ) )
-		{
-			if ( CMediaFrame* pMediaFrame = static_cast< CMediaFrame* >( pMediaWnd->GetWindow( GW_CHILD ) ) )
-			{
-				ASSERT_KINDOF( CMediaFrame, pMediaFrame );
-				return pMediaFrame;
-			}
-		}
-	}
-	return NULL;
+	return m_wndMediaFrame;
 }
 
 /////////////////////////////////////////////////////////////////////////////
@@ -188,13 +178,15 @@ CMediaFrame* CMediaFrame::GetMediaFrame()
 BOOL CMediaFrame::Create(CWnd* pParentWnd)
 {
 	CRect rect;
-	return CWnd::Create( NULL, _T("CMediaFrame"), WS_CHILD | WS_VISIBLE,
-		rect, pParentWnd, 0, NULL );
+	return CWnd::Create( NULL, _T("CMediaFrame"), WS_CHILD | WS_VISIBLE, rect, pParentWnd, 0, NULL );
 }
 
 int CMediaFrame::OnCreate(LPCREATESTRUCT lpCreateStruct)
 {
-	if ( CWnd::OnCreate( lpCreateStruct ) == -1 ) return -1;
+	if ( CWnd::OnCreate( lpCreateStruct ) == -1 )
+		return -1;
+
+	m_wndMediaFrame = this;
 
 	CRect rectDefault;
 	SetOwner( GetParent() );
@@ -270,6 +262,8 @@ void CMediaFrame::OnDestroy()
 	Cleanup();
 
 	EnableScreenSaver();
+
+	m_wndMediaFrame = NULL;
 
 	CWnd::OnDestroy();
 }
