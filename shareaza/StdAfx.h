@@ -1,7 +1,7 @@
 //
 // StdAfx.h
 //
-// Copyright (c) Shareaza Development Team, 2002-2014.
+// Copyright (c) Shareaza Development Team, 2002-2015.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -125,6 +125,7 @@
 // ATL
 //
 
+#include <atlcoll.h>		// Collection classes
 #include <atlfile.h>		// Thin file classes
 #include <atltime.h>		// Time classes
 #include <atlsafe.h>		// CComSafeArray class
@@ -231,10 +232,29 @@ using augment::IUnknownImplementation;
 typedef CString StringType;
 
 //! \brief Hash function needed for CMap with const CString& as ARG_KEY.
+
 template<>
-AFX_INLINE UINT AFXAPI HashKey(const CString& key)
+AFX_INLINE UINT AFXAPI HashKey(const CStringW& key)
 {
-	return HashKey< LPCTSTR >( key );
+	UINT nHash = 0;
+	const wchar_t* pszKey = key;
+	for ( int nSize = key.GetLength(); nSize; ++pszKey, --nSize )
+	{
+		nHash = ( nHash << 5 ) + nHash + *pszKey;
+	}
+	return nHash;
+}
+
+template<>
+AFX_INLINE UINT AFXAPI HashKey(const CStringA& key)
+{
+	UINT nHash = 0;
+	const char* pszKey = key;
+	for ( int nSize = key.GetLength(); nSize; ++pszKey, --nSize )
+	{
+		nHash = ( nHash << 5 ) + nHash + *pszKey;
+	}
+	return nHash;
 }
 
 template<>
