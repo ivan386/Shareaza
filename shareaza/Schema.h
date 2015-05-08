@@ -81,6 +81,7 @@ public:
 	CSchemaMemberPtr GetNextMember(POSITION& pos) const;
 	CSchemaMemberPtr GetMember(LPCTSTR pszName) const;
 	INT_PTR			GetMemberCount() const;
+	const CXMLElement* GetType(const CXMLElement* pRoot, LPCTSTR pszName) const;
 	CString			GetFirstMemberName() const;
 	void			Clear();
 	BOOL			Load(LPCTSTR pszName);
@@ -94,12 +95,11 @@ public:
 
 protected:
 	CString			m_sURI;
-	typedef CMap < CString, const CString&, BOOL, BOOL& > CSBMap;
+	typedef CAtlMap < CString, BOOL, CStringElementTraitsI< CString > > CSBMap;
 	CSBMap			m_pTypeFilters;
 
 	BOOL			LoadSchema(LPCTSTR pszFile);
 	BOOL			LoadPrimary(const CXMLElement* pRoot, const CXMLElement* pType);
-	CXMLElement*	GetType(const CXMLElement* pRoot, LPCTSTR pszName) const;
 	BOOL			LoadDescriptor(LPCTSTR pszFile);
 	void			LoadDescriptorTitles(const CXMLElement* pElement);
 	void			LoadDescriptorIcons(const CXMLElement* pElement);
@@ -183,8 +183,6 @@ public:
 	static LPCTSTR	uriGhostFolder;
 	static LPCTSTR	uriComments;
 	static LPCTSTR	uriBitTorrent;
-
-	friend class CSchemaMember;
 
 private:
 	CSchema(const CSchema&);

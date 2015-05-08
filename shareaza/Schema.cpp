@@ -77,10 +77,8 @@ BOOL CSchema::FilterType(LPCTSTR pszFile) const
 	if ( ! *pszExt )
 		return FALSE;
 
-	const CSBMap::CPair* pPair = m_pTypeFilters.PLookup(
-		CString( pszExt + 1 ).MakeLower() );
-
-	return pPair && pPair->value;
+	BOOL bValue;
+	return m_pTypeFilters.Lookup( pszExt + 1, bValue ) ? bValue : FALSE;
 }
 
 CString CSchema::GetFilterSet() const
@@ -97,7 +95,7 @@ CString CSchema::GetFilterSet() const
 			sFilters += _T('|');
 		}
 	}
-	return sFilters;
+	return sFilters.MakeLower();
 }
 
 POSITION CSchema::GetMemberIterator() const
@@ -147,8 +145,7 @@ CString CSchema::GetFirstMemberName() const
 		return pMember->m_sName;
 	}
 
-	CString str( _T("title") );
-	return str;
+	return CString( _T("title") );
 }
 
 //////////////////////////////////////////////////////////////////////
@@ -208,24 +205,24 @@ BOOL CSchema::Load(LPCTSTR pszFile)
 
 BOOL CSchema::LoadSchema(LPCTSTR pszFile)
 {
-	CXMLElement* pRoot = CXMLElement::FromFile( pszFile );
+	const CXMLElement* pRoot = CXMLElement::FromFile( pszFile );
 	if ( NULL == pRoot ) return FALSE;
 
 	BOOL bResult = FALSE;
 
 	m_sURI = pRoot->GetAttributeValue( _T("targetNamespace"), _T("") );
 
-	CXMLElement* pPlural = pRoot->GetElementByName( _T("element") );
+	const CXMLElement* pPlural = pRoot->GetElementByName( _T("element") );
 
 	if ( pPlural && m_sURI.GetLength() )
 	{
 		m_sPlural = pPlural->GetAttributeValue( _T("name") );
 
-		CXMLElement* pComplexType = pPlural->GetFirstElement();
+		const CXMLElement* pComplexType = pPlural->GetFirstElement();
 		
 		if ( pComplexType && pComplexType->IsNamed( _T("complexType") ) && m_sPlural.GetLength() )
 		{
-			CXMLElement* pElement = pComplexType->GetFirstElement();
+			const CXMLElement* pElement = pComplexType->GetFirstElement();
 
 			if ( pElement && pElement->IsNamed( _T("element") ) )
 			{
@@ -237,7 +234,7 @@ BOOL CSchema::LoadSchema(LPCTSTR pszFile)
 				}
 				else
 				{
-					CString strType = pElement->GetAttributeValue( _T("type") );
+					const CString strType = pElement->GetAttributeValue( _T("type") );
 					bResult = LoadPrimary( pRoot, GetType( pRoot, strType ) );
 				}
 
@@ -246,17 +243,15 @@ BOOL CSchema::LoadSchema(LPCTSTR pszFile)
 		}
 	}
 	
-	CXMLElement* pMapping = pRoot->GetElementByName( _T("mapping") );
-	if ( pMapping )
+	if ( const CXMLElement* pMapping = pRoot->GetElementByName( _T("mapping") ) )
 	{
 		for ( POSITION pos = pMapping->GetElementIterator() ; pos ; )
 		{
-			CXMLElement* pNetwork = pMapping->GetNextElement( pos );
-			if ( pNetwork )
+			if ( const CXMLElement* pNetwork = pMapping->GetNextElement( pos ) )
 			{
 				BOOL bFound = pNetwork->IsNamed( _T("network") );
 
-				CString strName = pNetwork->GetAttributeValue( _T("name") );
+				const CString strName = pNetwork->GetAttributeValue( _T("name") );
 				if ( ! bFound || strName != _T("ed2k") )
 					continue;
 				else
@@ -282,8 +277,8 @@ BOOL CSchema::LoadPrimary(const CXMLElement* pRoot, const CXMLElement* pType)
 
 	for ( POSITION pos = pType->GetElementIterator() ; pos ; )
 	{
-		CXMLElement* pElement	= pType->GetNextElement( pos );
-		CString strElement		= pElement->GetName();
+		const CXMLElement* pElement	= pType->GetNextElement( pos );
+		const CString strElement = pElement->GetName();
 
 		if ( strElement.CompareNoCase( _T("attribute") ) == 0 ||
 			 strElement.CompareNoCase( _T("element") ) == 0 )
@@ -309,15 +304,15 @@ BOOL CSchema::LoadPrimary(const CXMLElement* pRoot, const CXMLElement* pType)
 	return TRUE;
 }
 
-CXMLElement* CSchema::GetType(const CXMLElement* pRoot, LPCTSTR pszName) const
+const CXMLElement* CSchema::GetType(const CXMLElement* pRoot, LPCTSTR pszName) const
 {
 	if ( ! pszName || ! *pszName ) return NULL;
 
 	for ( POSITION pos = pRoot->GetElementIterator() ; pos ; )
 	{
-		CXMLElement* pElement = pRoot->GetNextElement( pos );
+		const CXMLElement* pElement = pRoot->GetNextElement( pos );
 
-		CString strElement = pElement->GetName();
+		const CString strElement = pElement->GetName();
 
 		if ( strElement.CompareNoCase( _T("simpleType") ) == 0 ||
 			 strElement.CompareNoCase( _T("complexType") ) == 0 )
@@ -353,20 +348,16 @@ BOOL CSchema::LoadDescriptor(LPCTSTR pszFile)
 		
 		if ( pElement->IsNamed( _T("object") ) )
 		{
-			CString strType = pElement->GetAttributeValue( _T("type") );
-			ToLower( strType );
-			
-			if ( strType == _T("file") )
+			const CString strType = pElement->GetAttributeValue( _T("type") );
+			if ( strType.CompareNoCase( _T("file") ) == 0 )
 				m_nType = stFile;
-			else if ( strType == _T("folder") || strType == _T("album") )
+			else if ( strType.CompareNoCase( _T("folder") ) == 0 || strType.CompareNoCase( _T("album") ) == 0 )
 				m_nType = stFolder;
 			
-			strType = pElement->GetAttributeValue( _T("availability") );
-			ToLower( strType );
-			
-			if ( strType == _T("system") )
+			const CString strAvailability = pElement->GetAttributeValue( _T("availability") );
+			if ( strAvailability.CompareNoCase( _T("system") ) == 0 )
 				m_nAvailability = saSystem;
-			else if ( strType == _T("advanced") )
+			else if ( strAvailability.CompareNoCase( _T("advanced") ) == 0 )
 				m_nAvailability = saAdvanced;
 			else
 				m_nAvailability = saDefault;
@@ -463,7 +454,7 @@ void CSchema::LoadDescriptorMembers(const CXMLElement* pElement)
 		
 		if ( pDisplay->IsNamed( _T("member") ) )
 		{
-			CString strMember = pDisplay->GetAttributeValue( _T("name") );
+			const CString strMember = pDisplay->GetAttributeValue( _T("name") );
 			
 			if ( CSchemaMember* pMember = GetWritableMember( strMember ) )
 			{
@@ -525,12 +516,7 @@ void CSchema::LoadDescriptorTypeFilter(const CXMLElement* pElement)
 
 		if ( pType->GetName().CompareNoCase( _T("type") ) == 0 )
 		{
-			CString strExt = pType->GetAttributeValue( _T("extension") );
-			BOOL bResult = TRUE;
-
-			ASSERT( strExt.GetLength() );
-
-			m_pTypeFilters.SetAt( strExt.MakeLower(), bResult );
+			m_pTypeFilters.SetAt( pType->GetAttributeValue( _T("extension") ), TRUE );
 		}
 	}
 }
