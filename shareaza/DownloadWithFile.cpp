@@ -1,7 +1,7 @@
 //
 // DownloadWithFile.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2014.
+// Copyright (c) Shareaza Development Team, 2002-2015.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -208,8 +208,13 @@ void CDownloadWithFile::ClearFile()
 
 void CDownloadWithFile::AttachFile(CFragmentedFile* pFile)
 {
-	m_pFile.reset( pFile );
-	if ( m_pFile.get() ) m_pFile->SetDownload( static_cast< CDownload*>( this ) );
+	if ( pFile && m_pFile.get() == pFile )
+		pFile->Release();
+	else
+		m_pFile.reset( pFile );
+
+	if ( m_pFile.get() )
+		m_pFile->SetDownload( static_cast< CDownload*>( this ) );
 }
 
 //////////////////////////////////////////////////////////////////////

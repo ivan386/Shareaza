@@ -1,7 +1,7 @@
 //
 // UploadTransfer.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2014.
+// Copyright (c) Shareaza Development Team, 2002-2015.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -62,7 +62,6 @@ CUploadTransfer::CUploadTransfer(PROTOCOLID nProtocol)
 	, m_nAveragePos		( 0 )
 	, m_tRatingTime		( 0 )
 	, m_nMaxRate		( 0 )
-	, m_pFile			( NULL )
 {
 	m_nBandwidth		= Settings.Bandwidth.Request;
 	m_nOffset			= 0; // ?
@@ -461,11 +460,11 @@ BOOL CUploadTransfer::RequestPartial(CDownload* pDownload)
 	m_bFilePartial = TRUE;
 
 	// Try to get existing file object from download
-	auto_ptr< CFragmentedFile > pDownloadFile( pDownload->GetFile() );
-	if ( ! pDownloadFile.get() )
+	auto_ptr< CFragmentedFile > pFile( pDownload->GetFile() );
+	if ( ! pFile.get() )
 		return FALSE;
 
-	AttachFile( pDownloadFile );
+	AttachFile( pFile.release() );
 
 	if ( m_oSHA1 && !pDownload->m_oSHA1 )
 	{
@@ -533,7 +532,7 @@ void CUploadTransfer::AllocateBaseFile()
 
 BOOL CUploadTransfer::IsFileOpen() const
 {
-	return ( m_pFile.get() != NULL );
+	return m_pFile.get() && m_pFile->IsOpen();
 }
 
 BOOL CUploadTransfer::OpenFile()
@@ -544,9 +543,12 @@ BOOL CUploadTransfer::OpenFile()
 	auto_ptr< CFragmentedFile > pFile( new CFragmentedFile );
 	if ( pFile.get() && pFile->Open( this, FALSE ) )
 	{
-		AttachFile( pFile );
+		AttachFile( pFile.release() );
 		return TRUE;
 	}
+
+	theApp.Message( MSG_ERROR, IDS_UPLOAD_CANTOPEN, (LPCTSTR)m_sName, (LPCTSTR)m_sAddress );
+
 	return FALSE;
 }
 
@@ -571,7 +573,10 @@ BOOL CUploadTransfer::ReadFile(QWORD nOffset, LPVOID pData, QWORD nLength, QWORD
 	return m_pFile->Read( nOffset, pData, nLength, pnRead );
 }
 
-void CUploadTransfer::AttachFile(auto_ptr< CFragmentedFile >& pFile)
+void CUploadTransfer::AttachFile(CFragmentedFile* pFile)
 {
-	m_pFile = pFile;
+	if ( pFile && m_pFile.get() == pFile )
+		pFile->Release();
+	else
+		m_pFile.reset( pFile );
 }

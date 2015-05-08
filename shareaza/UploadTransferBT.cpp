@@ -1,7 +1,7 @@
 //
 // UploadTransferBT.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2014.
+// Copyright (c) Shareaza Development Team, 2002-2015.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -274,11 +274,11 @@ BOOL CUploadTransferBT::OpenFile()
 
 	if ( m_pClient && Downloads.Check( m_pClient->m_pDownload ) )
 	{
-		// Try to get existing file object from download
+		// TODO: Change to CUploadTransfer::RequestPartial(CDownload* pDownload) ?
 		auto_ptr< CFragmentedFile > pFile( m_pClient->m_pDownload->GetFile() );
 		if ( pFile.get() )
 		{
-			AttachFile( pFile );
+			AttachFile( pFile.release() );
 			return TRUE;
 		}
 
@@ -290,7 +290,7 @@ BOOL CUploadTransferBT::OpenFile()
 			{
 				if ( pFile->Open( m_pClient->m_pDownload->m_pTorrent, FALSE ) )
 				{
-					AttachFile( pFile );
+					AttachFile( pFile.release() );
 					return TRUE;
 				}
 			}

@@ -1,7 +1,7 @@
 //
 // UploadTransferHTTP.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2014.
+// Copyright (c) Shareaza Development Team, 2002-2015.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -1128,8 +1128,6 @@ BOOL CUploadTransferHTTP::OpenFileSendHeaders()
 {
 	if ( ! OpenFile() )
 	{
-		theApp.Message( MSG_ERROR, IDS_UPLOAD_CANTOPEN, (LPCTSTR)m_sName, (LPCTSTR)m_sAddress );
-
 		SendResponse( IDR_HTML_FILENOTFOUND );
 
 		return TRUE;

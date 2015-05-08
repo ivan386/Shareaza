@@ -1,7 +1,7 @@
 //
 // UploadTransfer.h
 //
-// Copyright (c) Shareaza Development Team, 2002-2014.
+// Copyright (c) Shareaza Development Team, 2002-2015.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -95,13 +95,13 @@ protected:
 	BOOL		RequestPartial(CDownload* pDownload);
 	void		StartSending(int nState);
 	void		AllocateBaseFile();
+	void		AttachFile(CFragmentedFile* pFile);
 
 	virtual BOOL	IsFileOpen() const;
 	virtual BOOL	OpenFile();
 	virtual void	CloseFile();
 	virtual BOOL	WriteFile(QWORD nOffset, LPCVOID pData, QWORD nLength, QWORD* pnWritten = NULL);
 	virtual BOOL	ReadFile(QWORD nOffset, LPVOID pData, QWORD nLength, QWORD* pnRead = NULL);
-	void	AttachFile(auto_ptr< CFragmentedFile >& pFile);
 };
 
 enum UserRating
