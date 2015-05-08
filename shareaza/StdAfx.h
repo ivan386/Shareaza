@@ -231,6 +231,9 @@ using augment::IUnknownImplementation;
 
 typedef CString StringType;
 
+// Case insensitive string to string map
+typedef CAtlMap< CString, CString, CStringElementTraitsI< CString > > CStringIMap;
+
 //! \brief Hash function needed for CMap with const CString& as ARG_KEY.
 
 template<>

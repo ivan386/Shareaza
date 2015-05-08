@@ -1,7 +1,7 @@
 //
 // SkinWindow.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2014.
+// Copyright (c) Shareaza Development Team, 2002-2015.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -385,14 +385,12 @@ BOOL CSkinWindow::Parse(CXMLElement* pBase, const CString& strPath)
 			}
 
 			str = pGroup->GetAttributeValue( _T("type") );
-			ToLower( str );
-
-			if ( str == _T("watermark") || str == _T("water") )
+			if ( str.CompareNoCase( _T("watermark") ) == 0 || str.CompareNoCase( _T("water") ) == 0 )
 			{
 				if ( m_bmWatermark.m_hObject != NULL ) m_bmWatermark.DeleteObject();
 				m_bmWatermark.Attach( hBitmap );
 			}
-			else if ( str == _T("alpha") )
+			else if ( str.CompareNoCase( _T("alpha") ) == 0 )
 			{
 				if ( m_bmAlpha.m_hObject != NULL ) m_bmAlpha.DeleteObject();
 				m_bmAlpha.Attach( hBitmap );

@@ -1,7 +1,7 @@
 //
 // Remote.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2012.
+// Copyright (c) Shareaza Development Team, 2002-2015.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -149,8 +149,7 @@ BOOL CRemote::OnHeadersComplete()
 	
 	m_sHandshake = m_sHandshake.Mid( 4 ).SpanExcluding( _T(" \t") );
 	
-	CString strPath = m_sHandshake.SpanExcluding( _T("?&") );
-	ToLower( strPath );
+	const CString strPath = m_sHandshake.SpanExcluding( _T("?&") );
 	
 	m_sRedirect.Empty();
 	m_sHeader.Empty();
@@ -248,15 +247,10 @@ BOOL CRemote::CheckCookie()
 	{
 		if ( m_pHeaderName.GetAt( nHeader ).CompareNoCase( _T("Cookie") ) == 0 )
 		{
-			CString strValue( m_pHeaderValue.GetAt( nHeader ) );
-			ToLower( strValue );
-			
-			int nPos = strValue.Find( _T("shareazaremote=") );
-			
-			if ( nPos >= 0 )
+			if ( LPCTSTR szPos = _tcsistr( m_pHeaderValue.GetAt( nHeader ), _T("shareazaremote=") ) )
 			{
 				int nCookie = 0;
-				_stscanf( strValue.Mid( nPos + 15 ), _T("%i"), &nCookie );
+				_stscanf( szPos + 15, _T("%i"), &nCookie );
 				if ( m_pCookies.Find( nCookie ) != NULL ) return FALSE;
 			}
 		}
@@ -274,15 +268,10 @@ BOOL CRemote::RemoveCookie()
 	{
 		if ( m_pHeaderName.GetAt( nHeader ).CompareNoCase( _T("Cookie") ) == 0 )
 		{
-			CString strValue( m_pHeaderValue.GetAt( nHeader ) );
-			ToLower( strValue );
-			
-			int nPos = strValue.Find( _T("shareazaremote=") );
-			
-			if ( nPos >= 0 )
+			if ( LPCTSTR szPos = _tcsistr( m_pHeaderValue.GetAt( nHeader ), _T("shareazaremote=") ) )
 			{
 				int nCookie = 0;
-				_stscanf( strValue.Mid( nPos + 15 ), _T("%i"), &nCookie );
+				_stscanf( szPos + 15, _T("%i"), &nCookie );
 				POSITION pos = m_pCookies.Find( nCookie );
 				if ( pos != NULL ) 
 				{
@@ -312,6 +301,7 @@ void CRemote::Prepare(LPCTSTR pszPrefix)
 		{
 			CString strKey, strValue;
 			m_pKeys.GetNextAssoc( pos, strKey, strValue );
+			strKey.MakeLower();
 			if ( strKey.Find( pszPrefix ) == 0 ) m_pKeys.RemoveKey( strKey );
 		}
 	}
@@ -322,10 +312,7 @@ void CRemote::Prepare(LPCTSTR pszPrefix)
 
 void CRemote::Add(LPCTSTR pszKey, LPCTSTR pszValue)
 {
-	CString strKey( pszKey );
-	ToLower( strKey );
-
-	m_pKeys.SetAt( strKey, pszValue );
+	m_pKeys.SetAt( pszKey, pszValue );
 }
 
 /////////////////////////////////////////////////////////////////////////////
@@ -378,7 +365,6 @@ void CRemote::Output(LPCTSTR pszName)
 		
 		strKey.TrimLeft();
 		strKey.TrimRight();
-		ToLower( strKey );
 		
 		if ( strKey.IsEmpty() )
 		{
@@ -422,49 +408,49 @@ void CRemote::Output(LPCTSTR pszName)
 /////////////////////////////////////////////////////////////////////////////
 // CRemote page switch
 
-void CRemote::PageSwitch(CString& strPath)
+void CRemote::PageSwitch(const CString& strPath)
 {
-	if ( strPath == _T("/remote") )
+	if ( strPath.CompareNoCase( _T("/remote") ) == 0 )
 	{
 		m_sRedirect = _T("/remote/");
 	}
-	else if ( strPath == _T("/remote/") )
+	else if ( strPath.CompareNoCase( _T("/remote/") ) == 0 )
 	{
 		PageLogin();
 	}
-	else if ( strPath == _T("/remote/logout") )
+	else if ( strPath.CompareNoCase( _T("/remote/logout") ) == 0 )
 	{
 		PageLogout();
 	}
-	else if ( strPath == _T("/remote/home") )
+	else if ( strPath.CompareNoCase( _T("/remote/home") ) == 0 )
 	{
 		PageHome();
 	}
-	else if ( strPath == _T("/remote/search") )
+	else if ( strPath.CompareNoCase( _T("/remote/search") ) == 0 )
 	{
 		PageSearch();
 	}
-	else if ( strPath == _T("/remote/newsearch") )
+	else if ( strPath.CompareNoCase( _T("/remote/newsearch") ) == 0 )
 	{
 		PageNewSearch();
 	}
-	else if ( strPath == _T("/remote/downloads") )
+	else if ( strPath.CompareNoCase( _T("/remote/downloads") ) == 0 )
 	{
 		PageDownloads();
 	}
-	else if ( strPath == _T("/remote/newdownload") )
+	else if ( strPath.CompareNoCase( _T("/remote/newdownload") ) == 0 )
 	{
 		PageNewDownload();
 	}
-	else if ( strPath == _T("/remote/uploads") )
+	else if ( strPath.CompareNoCase( _T("/remote/uploads") ) == 0 )
 	{
 		PageUploads();
 	}
-	else if ( strPath == _T("/remote/network") )
+	else if ( strPath.CompareNoCase( _T("/remote/network") ) == 0 )
 	{
 		PageNetwork();
 	}
-	else if ( strPath.Find( _T("/remote/images/") ) == 0 )
+	else if ( strPath.Left( 15 ).CompareNoCase( _T("/remote/images/") ) == 0 )
 	{
 		PageImage( strPath );
 	}
@@ -913,33 +899,32 @@ void CRemote::PageDownloads()
 		
 		if ( GetKey( _T("modify_id") ) == download_id )
 		{
-			CString action = GetKey( _T("modify_action") );
-			action.MakeLower();
+			const CString action = GetKey( _T("modify_action") );
 			
-			if ( action == _T("expand") && CDownloadsCtrl::IsExpandable( pDownload ) )
+			if ( action.CompareNoCase( _T("expand") ) == 0 && CDownloadsCtrl::IsExpandable( pDownload ) )
 			{
 				pDownload->m_bExpanded = TRUE;
 			}
-			else if ( action == _T("collapse") && CDownloadsCtrl::IsExpandable( pDownload ) )
+			else if ( action.CompareNoCase( _T("collapse") ) == 0 && CDownloadsCtrl::IsExpandable( pDownload ) )
 			{
 				pDownload->m_bExpanded = FALSE;
 			}
-			else if ( action == _T("resume") )
+			else if ( action.CompareNoCase( _T("resume") ) == 0 )
 			{
 				pDownload->Resume();
 			}
-			else if ( action == _T("pause") )
+			else if ( action.CompareNoCase( _T("pause") ) == 0 )
 			{
 				if ( ! pDownload->IsPaused() && ! pDownload->IsTasking() )
 					pDownload->Pause();
 			}
-			else if ( action == _T("cancel") )
+			else if ( action.CompareNoCase( _T("cancel") ) == 0 )
 			{
 				if ( ! pDownload->IsTasking() )
 					pDownload->Remove();
 				continue;
 			}
-			else if ( action == _T("clear") )
+			else if ( action.CompareNoCase( _T("clear") ) == 0 )
 			{
 				if ( pDownload->IsCompleted() && ! pDownload->IsPreviewVisible() )
 				{
@@ -948,7 +933,7 @@ void CRemote::PageDownloads()
 				}
 			}
 			// roo_koo_too improvement
-			else if ( action == _T("more_sources"))
+			else if ( action.CompareNoCase( _T("more_sources") ) == 0 )
 			{ 
 				pDownload->FindMoreSources();
 			}
@@ -1009,10 +994,9 @@ void CRemote::PageDownloads()
 
 				if ( GetKey( _T("modify_id") ) == source_id )
 				{
-					CString modify_action = GetKey( _T("modify_action") );
-					modify_action.MakeLower();
+					const CString modify_action = GetKey( _T("modify_action") );
 
-					if ( modify_action == _T("access") )
+					if ( modify_action.CompareNoCase( _T("access") ) == 0 )
 					{
 						// Only create a new Transfer if there isn't already one
 						if ( pSource->IsIdle()
@@ -1033,7 +1017,7 @@ void CRemote::PageDownloads()
 							}
 						}
 					}
-					else if ( modify_action == _T("forget") )
+					else if ( modify_action.CompareNoCase( _T("forget") ) == 0 )
 					{
 						pSource->Remove( TRUE, TRUE );
 						continue;
@@ -1376,7 +1360,7 @@ void CRemote::PageNetworkNetwork(int nID, bool* pbConnect, LPCTSTR pszName)
 /////////////////////////////////////////////////////////////////////////////
 // CRemote page : banner
 
-void CRemote::PageBanner(CString& strPath)
+void CRemote::PageBanner(const CString& strPath)
 {
 	ResourceRequest( strPath, m_pResponse, m_sHeader );
 }
@@ -1384,19 +1368,12 @@ void CRemote::PageBanner(CString& strPath)
 /////////////////////////////////////////////////////////////////////////////
 // CRemote page : image server
 
-void CRemote::PageImage(CString& strPath)
+void CRemote::PageImage(const CString& strPath)
 {
 	if ( CheckCookie() ) return;
 	
-	strPath = strPath.Mid( 15 );
-	if ( strPath.Find( '%' ) >= 0 ) return;
-	if ( strPath.Find( '/' ) >= 0 ) return;
-	if ( strPath.Find( '\\' ) >= 0 ) return;
-	
 	CFile hFile;
-	strPath = Settings.General.Path + _T("\\Remote\\images\\") + strPath;
-	
-	if ( hFile.Open( strPath, CFile::modeRead ) )
+	if ( hFile.Open( Settings.General.Path + _T("\\Remote\\images\\") + SafeFilename( strPath.Mid( 15 ) ), CFile::modeRead ) )
 	{
 		m_pResponse.EnsureBuffer( (DWORD)hFile.GetLength() );
 		hFile.Read( m_pResponse.m_pBuffer, (UINT)hFile.GetLength() );

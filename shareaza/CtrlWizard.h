@@ -1,7 +1,7 @@
 //
 // CtrlWizard.h
 //
-// Copyright (c) Shareaza Development Team, 2002-2013.
+// Copyright (c) Shareaza Development Team, 2002-2015.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -45,7 +45,7 @@ public:
 	CArray< CString >	m_pFilePaths;	// all file paths
 	CArray< CString >	m_pImagePaths;
 	CArray< CString >	m_pTemplatePaths;
-	CMap< CString, const CString&, CString, const CString& >	m_pItems;
+	CStringIMap			m_pItems;
 
 protected:
 	int					m_nCaptionWidth;

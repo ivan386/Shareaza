@@ -1,7 +1,7 @@
 //
 // VersionChecker.h
 //
-// Copyright (c) Shareaza Development Team, 2002-2011.
+// Copyright (c) Shareaza Development Team, 2002-2015.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -41,7 +41,7 @@ public:
 protected:
 	bool			m_bVerbose;
 	CHttpRequest	m_pRequest;
-	CMap< CString, const CString&, CString, CString& >	m_pResponse;
+	CStringIMap		m_pResponse;
 
 // Operations
 public:

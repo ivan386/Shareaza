@@ -1,7 +1,7 @@
 //
 // Remote.h
 //
-// Copyright (c) Shareaza Development Team, 2002-2007.
+// Copyright (c) Shareaza Development Team, 2002-2015.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -41,7 +41,7 @@ protected:
 	CString				m_sHeader;
 	CString				m_sResponse;
 	CBuffer				m_pResponse;
-	CMap< CString, const CString&, CString, const CString& >	m_pKeys;
+	CStringIMap			m_pKeys;
 	static CList<int>	m_pCookies;
 
 // Operations
@@ -60,7 +60,7 @@ protected:
 
 // Page Handlers
 protected:
-	void	PageSwitch(CString& strPath);
+	void	PageSwitch(const CString& strPath);
 	void	PageLogin();
 	void	PageLogout();
 	void	PageHome();
@@ -70,8 +70,8 @@ protected:
 	void	PageNewDownload();
 	void	PageUploads();
 	void	PageNetwork();
-	void	PageBanner(CString& strPath);
-	void	PageImage(CString& strPath);
+	void	PageBanner(const CString& strPath);
+	void	PageImage(const CString& strPath);
 
 // Utilities
 protected:

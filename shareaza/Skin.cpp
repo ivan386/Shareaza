@@ -1,7 +1,7 @@
 //
 // Skin.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2014.
+// Copyright (c) Shareaza Development Team, 2002-2015.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -458,17 +458,15 @@ BOOL CSkin::LoadFromXML(CXMLElement* pXML, const CString& strPath)
 		}
 		else if ( pSub->IsNamed( _T("manifest") ) )
 		{
-			CString strType = pSub->GetAttributeValue( _T("type") );
-			ToLower( strType );
-
-			if ( strType == _T("language") )
+			const CString strType = pSub->GetAttributeValue( _T("type") );
+			if ( strType.CompareNoCase( _T("language") ) == 0 )
 			{
 				Settings.General.Language = pSub->GetAttributeValue( _T("language"), _T("en") );
 				Settings.General.LanguageRTL = ( pSub->GetAttributeValue( _T("dir"), _T("ltr") ) == "rtl" );
 				TRACE( _T("Loading language: %s\r\n"), Settings.General.Language );
 				TRACE( _T("RTL: %d\r\n"), Settings.General.LanguageRTL );
 			}
-			else if ( strType == _T("skin") )
+			else if ( strType.CompareNoCase( _T("skin") ) == 0 )
 			{
 				CString strSkinName = pSub->GetAttributeValue( _T("name"), _T("") );
 				theApp.Message( MSG_NOTICE, IDS_SKIN_LOAD, strSkinName );

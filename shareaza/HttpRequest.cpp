@@ -1,7 +1,7 @@
 //
 // HttpRequest.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2012.
+// Copyright (c) Shareaza Development Team, 2002-2015.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -151,9 +151,8 @@ CString CHttpRequest::GetStatusString() const
 
 CString CHttpRequest::GetHeader(LPCTSTR pszName) const
 {
-	CString strIn( pszName ), strOut;
-	ToLower( strIn );
-	return ( ! IsPending() && m_pResponseHeaders.Lookup( strIn, strOut ) ) ? strOut : _T("");
+	CString strOut;
+	return ( ! IsPending() && m_pResponseHeaders.Lookup( pszName, strOut ) ) ? strOut : _T("");
 }
 
 CString CHttpRequest::GetResponseString(UINT nCodePage) const
@@ -294,8 +293,7 @@ void CHttpRequest::OnRun()
 							if ( nColon > 0 )
 							{
 								CString strValue, strName = strHeader.Left( nColon );
-								strName.Trim(); 
-								ToLower( strName );
+								strName.Trim();
 								while ( m_pResponseHeaders.Lookup( strName, strValue ) )
 									strName += _T('_');
 								strValue = strHeader.Mid( nColon + 1 );
