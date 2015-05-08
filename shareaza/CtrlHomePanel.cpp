@@ -1,7 +1,7 @@
 //
 // CtrlHomePanel.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2012.
+// Copyright (c) Shareaza Development Team, 2002-2015.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -231,7 +231,7 @@ void CHomeDownloadsBox::OnSkinChange()
 
 	m_pDocument = new CRichDocument();
 	
-	CMap< CString, const CString&, CRichElement*, CRichElement* > pMap;
+	CElementMap pMap;
 	if ( ! m_pDocument->LoadXML( pXML, &pMap ) ) return;
 	
 	pMap.Lookup( _T("DownloadsNone"), m_pdDownloadsNone );
@@ -623,7 +623,7 @@ void CHomeLibraryBox::OnSkinChange()
 	
 	m_pDocument = new CRichDocument();
 	
-	CMap< CString, const CString&, CRichElement*, CRichElement* > pMap;
+	CElementMap pMap;
 	if ( ! m_pDocument->LoadXML( pXML, &pMap ) ) return;
 	
 	pMap.Lookup( _T("LibraryFiles"), m_pdLibraryFiles );
@@ -989,7 +989,7 @@ void CHomeUploadsBox::OnSkinChange()
 	
 	m_pDocument = new CRichDocument();
 	
-	CMap< CString, const CString&, CRichElement*, CRichElement* > pMap;
+	CElementMap pMap;
 	if ( ! m_pDocument->LoadXML( pXML, &pMap ) ) return;
 	
 	pMap.Lookup( _T("UploadsNone"), m_pdUploadsNone );
@@ -1123,7 +1123,7 @@ void CHomeConnectionBox::OnSkinChange()
 	
 	m_pDocument = new CRichDocument();
 	
-	CMap< CString, const CString&, CRichElement*, CRichElement* > pMap;
+	CElementMap pMap;
 	if ( ! m_pDocument->LoadXML( pXML, &pMap ) ) return;
 	
 	pMap.Lookup( _T("ConnectedHours"), m_pdConnectedHours );
@@ -1327,7 +1327,7 @@ void CHomeTorrentsBox::OnSkinChange()
 
 	m_pDocument = new CRichDocument();
 	
-	CMap< CString, const CString&, CRichElement*, CRichElement* > pMap;
+	CElementMap pMap;
 	if ( ! m_pDocument->LoadXML( pXML, &pMap ) ) return;
 	
 	pMap.Lookup( _T("TorrentsNone"), m_pdTorrentsNone );
