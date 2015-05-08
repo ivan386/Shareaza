@@ -1766,8 +1766,8 @@ BOOL CQuerySearch::NumberMatch(const CString& strValue, const CString& strRange)
 
 void CQuerySearch::BuildWordList(bool bExpression, bool /* bLocal */ )
 {
-	m_sSearch.Trim();
 	ToLower( m_sSearch );
+	m_sSearch.Trim();
 
 	// Parse "download-like" searches
 	if ( 0 == _tcsncmp( m_sSearch, _T("magnet:?"), 8 ) )
