@@ -23,10 +23,11 @@
 
 class CNeighbour;
 class CG1Packet;
-class CVendor;
 class CHostCacheHost;
 class CHostCacheList;
 class CHostCache;
+
+#include "VendorCache.h"
 
 // History:
 // 14 - Added m_sCountry
@@ -50,7 +51,7 @@ public:
 	IN_ADDR		m_pAddress;			// Host IP address
 	WORD		m_nPort;			// Host TCP port number
 	WORD		m_nUDPPort;			// Host UDP port number
-	CVendor*	m_pVendor;			// Vendor handler from VendorCache
+	CVendorPtr	m_pVendor;			// Vendor handler from VendorCache
 	BOOL		m_bPriority;		// Host cannot be removed on failure
 	DWORD		m_nUserCount;		// G2 leaf count / ED2K user count
 	DWORD		m_nUserLimit;		// G2 leaf limit / ED2K user limit

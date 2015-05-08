@@ -1506,7 +1506,7 @@ BOOL CDiscoveryServices::RunWebCacheGet(BOOL bCaches)
 					}
 
 					// Get vendor field
-					CVendor* pVendor = NULL;
+					CVendorPtr pVendor = NULL;
 					if ( oParts.GetCount() >= 6 && ! oParts[ 5 ].IsEmpty() )
 					{
 						CString sVendor = oParts[ 5 ].Left( 4 );

@@ -1,7 +1,7 @@
 //
 // VendorCache.h
 //
-// Copyright (c) Shareaza Development Team, 2002-2007.
+// Copyright (c) Shareaza Development Team, 2002-2015.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -19,54 +19,51 @@
 // Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 //
 
-#if !defined(AFX_VENDORCACHE_H__D5534D6B_0819_4C8F_B62B_9DD5CB3468AD__INCLUDED_)
-#define AFX_VENDORCACHE_H__D5534D6B_0819_4C8F_B62B_9DD5CB3468AD__INCLUDED_
-
 #pragma once
 
 class CVendor;
 class CXMLElement;
+
+typedef const CVendor* CVendorPtr;
 
 
 class CVendorCache
 {
 public:
 	CVendorCache();
-	virtual ~CVendorCache();
+	~CVendorCache();
 
-public:
-	CVendor*		m_pNull;
+	CVendorPtr		m_pNull;
 
-public:
 	// Lookup 4-bytes vendor code (ASCII without terminating null)
-	inline CVendor* Lookup(LPCSTR pszCode) const
+	inline CVendorPtr Lookup(LPCSTR pszCode) const
 	{
 		ASSERT( pszCode );
-		if ( pszCode )
+		if ( pszCode && pszCode[ 0 ] && pszCode[ 1 ] && pszCode[ 2 ] && pszCode[ 3 ] )
 		{
 			WCHAR szCode[5] = { pszCode[0], pszCode[1], pszCode[2], pszCode[3], 0 };
-			return Lookup( szCode );
+			CVendorPtr pVendor;
+			if ( m_pCodeMap.Lookup( szCode, pVendor ) )
+				return pVendor;
 		}
 		return NULL;
 	}
 
 	// Lookup 4-chars vendor code (with terminating null)
-	inline CVendor* Lookup(LPCWSTR pszCode) const
+	inline CVendorPtr Lookup(LPCWSTR pszCode) const
 	{
 		ASSERT( pszCode );
 		if ( pszCode && pszCode[0] && pszCode[1] && pszCode[2] && pszCode[3] && ! pszCode[4] )
 		{
-			CVendor* pVendor;
+			CVendorPtr pVendor;
 			if ( m_pCodeMap.Lookup( pszCode, pVendor ) )
 				return pVendor;
-			else
-				return NULL;
 		}
 		return NULL;
 	}
 
 	// Lookup by code or by name
-	CVendor*		LookupByName(LPCTSTR pszName) const;
+	CVendorPtr		LookupByName(LPCTSTR pszName) const;
 
 	// Load data from Vendors.xml
 	BOOL			Load();
@@ -75,13 +72,15 @@ public:
 	bool			IsExtended(LPCTSTR pszCode) const;
 
 protected:
+	typedef CAtlMap< CString, CVendorPtr, CStringElementTraitsI< CString > > CVendorMap;
+
 	// Vendor code map
-	CMap< CString, const CString&, CVendor*, CVendor* > m_pCodeMap;
-	// Name map (lowercased)
-	CMap< CString, const CString&, CVendor*, CVendor* > m_pNameMap;
+	CVendorMap m_pCodeMap;
+	// Name map
+	CVendorMap m_pNameMap;
 
 	void			Clear();
-	BOOL			LoadFrom(CXMLElement* pXML);
+	BOOL			LoadFrom(const CXMLElement* pXML);
 };
 
 
@@ -90,9 +89,7 @@ class CVendor
 public:
 	CVendor();
 	CVendor(LPCTSTR pszCode);
-	virtual ~CVendor();
 
-public:
 	CString		m_sCode;
 	CString		m_sName;
 	CString		m_sLink;
@@ -101,12 +98,9 @@ public:
 	bool		m_bExtended;		// Shareaza-powered
 
 protected:
-	BOOL		LoadFrom(CXMLElement* pXML);
+	BOOL		LoadFrom(const CXMLElement* pXML);
 
 	friend class CVendorCache;
 };
 
 extern CVendorCache VendorCache;
-
-
-#endif // !defined(AFX_VENDORCACHE_H__D5534D6B_0819_4C8F_B62B_9DD5CB3468AD__INCLUDED_)

@@ -1,7 +1,7 @@
 //
 // HostBrowser.h
 //
-// Copyright (c) Shareaza Development Team, 2002-2014.
+// Copyright (c) Shareaza Development Team, 2002-2015.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -21,8 +21,6 @@
 
 #pragma once
 
-#include "Transfer.h"
-
 class CBrowseHostWnd;
 class CBuffer;
 class CEDPacket;
@@ -31,8 +29,10 @@ class CG2Packet;
 class CGProfile;
 class CLibraryFile;
 class CQueryHit;
-class CVendor;
 class CXMLElement;
+
+#include "Transfer.h"
+#include "VendorCache.h"
 
 
 class CHostBrowser : public CTransfer
@@ -74,7 +74,7 @@ protected:
 	BOOL			m_bNewBrowse;
 	Hashes::Guid	m_oPushID;
 	BOOL			m_bCanPush;
-	CVendor*		m_pVendor;
+	CVendorPtr		m_pVendor;
 	BOOL			m_bDeflate;
 	DWORD			m_nReceived;
 	CBuffer*		m_pBuffer;
