@@ -16,10 +16,8 @@
 // Neutral resources
 
 #if !defined(AFX_RESOURCE_DLL) || defined(AFX_TARG_NEU)
-#ifdef _WIN32
 LANGUAGE LANG_NEUTRAL, SUBLANG_NEUTRAL
 #pragma code_page(1251)
-#endif //_WIN32
 
 /////////////////////////////////////////////////////////////////////////////
 //
@@ -59,13 +57,14 @@ BEGIN
     PUSHBUTTON      "&Close",IDOK,240,114,45,15
 END
 
+
 /////////////////////////////////////////////////////////////////////////////
 //
 // Version
 //
 
 VS_VERSION_INFO VERSIONINFO
- FILEVERSION 1,0,12,7
+ FILEVERSION 1,0,12,8
  PRODUCTVERSION 2,7,8,0
  FILEFLAGSMASK 0x3fL
 #ifdef _DEBUG
@@ -84,9 +83,9 @@ BEGIN
             VALUE "Comments", "Shareaza Skin Installer"
             VALUE "CompanyName", "Shareaza Development Team"
             VALUE "FileDescription", "Shareaza Skin Installer"
-            VALUE "FileVersion", "1.0.12.7"
+            VALUE "FileVersion", "1.0.12.8"
             VALUE "InternalName", "skin-installer"
-            VALUE "LegalCopyright", "Copyright © Shareaza Development Team, 2002-2010. All rights reserved."
+            VALUE "LegalCopyright", "Copyright © Shareaza Development Team, 2002-2015. All rights reserved."
             VALUE "OriginalFilename", "skin.exe"
             VALUE "ProductName", "Shareaza"
             VALUE "ProductVersion", "2.7.8.0"
@@ -106,10 +105,8 @@ END
 // German (Germany) resources
 
 #if !defined(AFX_RESOURCE_DLL) || defined(AFX_TARG_DEU)
-#ifdef _WIN32
 LANGUAGE LANG_GERMAN, SUBLANG_GERMAN
 #pragma code_page(1252)
-#endif //_WIN32
 
 #ifdef APSTUDIO_INVOKED
 /////////////////////////////////////////////////////////////////////////////

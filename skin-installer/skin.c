@@ -43,11 +43,11 @@ int WINAPI wWinMain(HINSTANCE hInst, HINSTANCE hPrevInst, LPWSTR cmdParam, int c
 		ExtractSkinFile(cmdParam);
 
 	// free up memory from globals
-	if (szName) free(szName);
-	if (szVersion) free(szVersion);
-	if (szAuthor) free(szAuthor);
-	if (szUpdates) free(szUpdates);
-	if (szXML) free(szXML);
+	free(szName);
+	free(szVersion);
+	free(szAuthor);
+	free(szUpdates);
+	free(szXML);
 
 	return rtn;
 }
