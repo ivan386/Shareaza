@@ -106,13 +106,10 @@ CLibraryFile* CLibraryMaps::LookupFileByName(LPCTSTR pszName, QWORD nSize, BOOL 
 	ASSERT_VALID( this );
 	ASSERT( pszName && *pszName );
 
-	CString strName = PathFindFileName( pszName );
-	ToLower( strName );
-
 	CQuickLock oLock( Library.m_pSection );
 
 	CLibraryFile* pFile;
-	return ( m_pNameMap.Lookup( strName, pFile ) && pFile->CheckFileAttributes(
+	return ( m_pNameMap.Lookup( PathFindFileName( pszName ), pFile ) && pFile->CheckFileAttributes(
 		nSize, bSharedOnly, bAvailableOnly ) ) ? pFile : NULL;
 }
 
@@ -121,13 +118,10 @@ CLibraryFile* CLibraryMaps::LookupFileByPath(LPCTSTR pszPath, BOOL bSharedOnly, 
 	ASSERT_VALID( this );
 	ASSERT( pszPath && *pszPath );
 
-	CString strPath( pszPath );
-	ToLower( strPath );
-
 	CQuickLock oLock( Library.m_pSection );
 
 	CLibraryFile* pFile;
-	return ( m_pPathMap.Lookup( strPath, pFile ) && pFile->CheckFileAttributes(
+	return ( m_pPathMap.Lookup( pszPath, pFile ) && pFile->CheckFileAttributes(
 		SIZE_UNKNOWN, bSharedOnly, bAvailableOnly ) ) ? pFile : NULL;
 }
 
@@ -542,13 +536,11 @@ void CLibraryMaps::OnFileAdd(CLibraryFile* pFile)
 		m_nFiles ++;
 	}
 
-	m_pNameMap.SetAt( pFile->GetNameLC(), pFile );
+	m_pNameMap.SetAt( pFile->m_sName, pFile );
 
 	if ( pFile->IsAvailable() )
 	{
-		CString strPath( pFile->GetPath() );
-		ToLower( strPath );
-		m_pPathMap.SetAt( strPath, pFile );
+		m_pPathMap.SetAt( pFile->GetPath(), pFile );
 	}
 	else if ( m_pDeleted.Find( pFile ) == NULL )
 	{
@@ -607,14 +599,13 @@ void CLibraryMaps::OnFileRemove(CLibraryFile* pFile)
 		}
 	}
 
-	CString strName( pFile->GetNameLC() );
+	const CString strName( pFile->m_sName );
 	pOld = LookupFileByName( strName, pFile->m_nSize );
 	if ( pOld == pFile ) VERIFY( m_pNameMap.RemoveKey( strName ) );
 
 	if ( pFile->IsAvailable() )
 	{
-		CString strPath( pFile->GetPath() );
-		ToLower( strPath );
+		const CString strPath( pFile->GetPath() );
 		pOld = LookupFileByPath( strPath );
 		if ( pOld == pFile ) VERIFY( m_pPathMap.RemoveKey( strPath ) );
 	}

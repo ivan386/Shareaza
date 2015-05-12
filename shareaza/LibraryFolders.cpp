@@ -175,30 +175,33 @@ CLibraryFolder* CLibraryFolders::GetFolderByName(LPCTSTR pszName) const
 {
 	ASSUME_LOCK( Library.m_pSection );
 
-	CString strName( pszName );
-	ToLower( strName );
-
-	CString strNextName;
-	int nPos = strName.FindOneOf( _T("\\/") );
-	if ( nPos != -1 )
+	LPCTSTR szNextName = _tcschr( pszName, _T( '\\' ) );
+	if ( szNextName )
 	{
-		strNextName = strName.Mid( nPos + 1 );
-		strName = strName.Left( nPos );
-	}
+		CString strName( pszName, szNextName - pszName );
 
-	for ( POSITION pos = GetFolderIterator() ; pos; )
-	{
-		CLibraryFolder* pFolder = GetNextFolder( pos );
-
-		if ( pFolder->m_sName.CompareNoCase( strName ) == 0 )
+		for ( POSITION pos = GetFolderIterator(); pos; )
 		{
-			if ( ! strNextName.IsEmpty() )
-				pFolder = pFolder->GetFolderByName( strNextName );
+			CLibraryFolder* pFolder = GetNextFolder( pos );
 
-			return pFolder;
+			if ( _tcsicmp( pFolder->m_sName, strName ) == 0 )
+			{
+				return pFolder->GetFolderByName( szNextName + 1 );
+			}
 		}
 	}
+	else
+	{
+		for ( POSITION pos = GetFolderIterator(); pos; )
+		{
+			CLibraryFolder* pFolder = GetNextFolder( pos );
 
+			if ( _tcsicmp( pFolder->m_sName, pszName ) == 0 )
+			{
+				return pFolder;
+			}
+		}
+	}
 	return NULL;
 }
 
@@ -230,7 +233,7 @@ CLibraryFolder* CLibraryFolders::AddFolder(LPCTSTR pszPath)
 	{
 		POSITION posAdd = pos;
 
-		if ( GetNextFolder( pos )->m_sName.CompareNoCase( pFolder->m_sName ) >= 0 )
+		if ( _tcsicmp( GetNextFolder( pos )->m_sName, pFolder->m_sName ) >= 0 )
 		{
 			m_pFolders.InsertBefore( posAdd, pFolder );
 			bAdded = TRUE;
@@ -271,8 +274,10 @@ bool CLibraryFolders::AddSharedFolder(CListCtrl& oList)
 
 	// Let user select a path to share
 	CString strPath( BrowseForFolder( _T("Select folder to share:"), strLastPath ) );
-
-	if ( strPath.IsEmpty() )
+	strPath.Trim();
+	strPath.TrimRight( _T("\\") );
+	const int nLength = strPath.GetLength();
+	if ( ! nLength )
 		return false;
 
 	strLastPath = strPath;
@@ -284,31 +289,29 @@ bool CLibraryFolders::AddSharedFolder(CListCtrl& oList)
 		return false;
 	}
 
-	// Convert path to lowercase
-	CString strPathLC( strPath );
-	ToLower( strPathLC );
-
 	// Check if path is already shared
-	bool bForceAdd( false );
-	for ( int nItem( 0 ) ; nItem < oList.GetItemCount() ; ++nItem )
+	bool bForceAdd = false;
+	for ( int nItem = 0 ; nItem < oList.GetItemCount() ; ++nItem )
 	{
-		bool bSubFolder( false );
-		CString strOldLC( oList.GetItemText( nItem, 0 ) );
-		ToLower( strOldLC );
+		bool bSubFolder = false;
+		const CString strOld = oList.GetItemText( nItem, 0 );
+		const int nOldLength = strOld.GetLength();
 
-		if ( strPathLC == strOldLC )
+		if ( nLength == nOldLength && strPath.CompareNoCase( strOld ) == 0 )
 		{
 			// Matches exactly
 		}
-		else if ( strPathLC.GetLength() > strOldLC.GetLength() )
+		else if ( nLength > nOldLength )
 		{
-			if ( strPathLC.Left( strOldLC.GetLength() + 1 ) != strOldLC + '\\' )
+			if ( strPath.GetAt( nOldLength ) != _T('\\') ||
+				 strPath.Left( nOldLength ).CompareNoCase( strOld ) != 0 )
 				continue;
 		}
-		else if ( strPathLC.GetLength() < strOldLC.GetLength() )
+		else if ( nLength < nOldLength )
 		{
 			bSubFolder = true;
-			if ( strOldLC.Left( strPathLC.GetLength() + 1 ) != strPathLC + _T('\\') )
+			if ( strOld.GetAt( nLength ) != _T('\\') ||
+				 strOld.Left( nLength ).CompareNoCase( strPath ) != 0 )
 				continue;
 		}
 		else
@@ -338,7 +341,7 @@ bool CLibraryFolders::AddSharedFolder(CListCtrl& oList)
 		else
 		{
 			CString strMessage;
-			strMessage.Format( LoadString( IDS_WIZARD_SHARE_ALREADY ), strOldLC );
+			strMessage.Format( LoadString( IDS_WIZARD_SHARE_ALREADY ), strOld );
 			AfxMessageBox( strMessage, MB_ICONINFORMATION );
 			return false;
 		}
@@ -382,27 +385,23 @@ CLibraryFolder* CLibraryFolders::IsFolderShared(const CString& strPath) const
 {
 	CQuickLock oLock( Library.m_pSection );
 
-	// Convert path to lowercase
-	CString strPathLC( strPath );
-	ToLower( strPathLC );
+	const int nLength = strPath.GetLength();
 
 	for ( POSITION pos = GetFolderIterator() ; pos ; )
 	{
 		CLibraryFolder* pFolder = GetNextFolder( pos );
 
-		CString strOldLC( pFolder->m_sPath );
-		ToLower( strOldLC );
-
-		if ( strPathLC.GetLength() > strOldLC.GetLength() )
+		const int nOldLength = pFolder->m_sPath.GetLength();
+		if ( nLength > nOldLength )
 		{
-			int nLength = strOldLC.GetLength();
-			if ( strPathLC.Left( nLength ) == strOldLC &&
-				 strPathLC.GetAt( nLength ) == _T('\\') )
+			if ( strPath.GetAt( nOldLength ) == _T('\\') &&
+				 strPath.Left( nOldLength ).CompareNoCase( pFolder->m_sPath ) == 0 )
 				return pFolder;
 		}
 		else
 		{
-			if ( strPathLC == strOldLC ) return pFolder;
+			if ( nLength == nOldLength && strPath.CompareNoCase( pFolder->m_sPath ) == 0 )
+				return pFolder;
 		}
 	}
 
@@ -416,23 +415,18 @@ CLibraryFolder* CLibraryFolders::IsSubFolderShared(const CString& strPath) const
 {
 	CQuickLock oLock( Library.m_pSection );
 
-	// Convert path to lowercase
-	CString strPathLC( strPath );
-	ToLower( strPathLC );
+	const int nLength = strPath.GetLength();
 
 	for ( POSITION pos = GetFolderIterator() ; pos ; )
 	{
 		CLibraryFolder* pFolder = GetNextFolder( pos );
 
-		CString strOldLC( pFolder->m_sPath );
-		ToLower( strOldLC );
-
-		if ( strPathLC.GetLength() < strOldLC.GetLength() )
+		const int nOldLength = pFolder->m_sPath.GetLength();
+		if ( nLength < nOldLength )
 		{
-			int nLength = strPathLC.GetLength();
-			if ( strOldLC.Left( nLength ) == strPathLC &&
-				 strOldLC.GetAt( nLength ) == _T('\\') )
-				 return pFolder;
+			if ( pFolder->m_sPath.GetAt( nLength ) == _T('\\') &&
+				 pFolder->m_sPath.Left( nLength ).CompareNoCase( strPath ) == 0 )
+				return pFolder;
 		}
 	}
 

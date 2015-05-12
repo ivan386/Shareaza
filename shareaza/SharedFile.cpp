@@ -1,7 +1,7 @@
 //
 // SharedFile.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2014.
+// Copyright (c) Shareaza Development Team, 2002-2015.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -119,8 +119,6 @@ CLibraryFile::CLibraryFile(CLibraryFolder* pFolder, LPCTSTR pszName) :
 
 CLibraryFile::~CLibraryFile()
 {
-	ASSERT_VALID( this );
-
 	Library.RemoveFile( this );
 
 	delete m_pMetadata;
@@ -139,7 +137,6 @@ CLibraryFile::~CLibraryFile()
 const CLibraryFolder* CLibraryFile::GetFolderPtr() const
 {
 	ASSUME_LOCK( Library.m_pSection );
-	ASSERT_VALID( this );
 
 	return m_pFolder;
 }

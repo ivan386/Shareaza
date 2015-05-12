@@ -58,6 +58,9 @@ public:
 	CLibraryFile*	LookupFileByMD5(const Hashes::Md5Hash& oMD5, BOOL bSharedOnly = FALSE, BOOL bAvailableOnly = FALSE) const;
 
 protected:
+	typedef CAtlMap< DWORD, CLibraryFile* > CIndexMap;
+	typedef CAtlMap< CString, CLibraryFile*, CStringElementTraitsI< CString > > CFileMap;
+
 	CIndexMap			m_pIndexMap;
 	CFileMap			m_pNameMap;
 	CFileMap			m_pPathMap;

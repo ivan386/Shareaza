@@ -1,7 +1,7 @@
 //
 // SharedFile.h
 //
-// Copyright (c) Shareaza Development Team, 2002-2014.
+// Copyright (c) Shareaza Development Team, 2002-2015.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -145,12 +145,6 @@ public:
 	// Unknown variables will be replaced by "N/A" string.
 	BOOL			PrepareDoc(LPCTSTR pszTemplate, CArray< CString >& oDocs) const;
 
-	inline CString GetNameLC() const
-	{
-		CString str( m_sName );
-		return ToLower( str );
-	}
-
 	inline QWORD GetBase() const
 	{
 		return ( m_nVirtualSize ) ? m_nVirtualBase : 0;
@@ -209,8 +203,7 @@ protected:
 };
 
 typedef CList< CLibraryFile* > CFileList;
-typedef CMap< DWORD_PTR, DWORD_PTR, CLibraryFile*, CLibraryFile* > CIndexMap;
-typedef CMap< CString, const CString&, CLibraryFile*, CLibraryFile* > CFileMap;
+
 
 class CSharedSource
 {
