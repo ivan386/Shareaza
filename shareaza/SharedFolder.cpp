@@ -764,7 +764,6 @@ BOOL CLibraryFolder::OnFileDelete(CLibraryFile* pRemovingFile)
 	CLibraryFile* pFile;
 	if ( m_pFiles.Lookup( pRemovingFile->m_sName, pFile ) )
 	{
-		ASSERT( pFile == pRemovingFile );
 		if ( pFile == pRemovingFile )
 		{
 			m_nFiles --;
