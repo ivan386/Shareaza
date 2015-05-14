@@ -294,16 +294,17 @@ void CLibraryFile::SetShared(bool bShared, bool bOverride)
 		bNewShare = TRI_FALSE;
 
 	// Don't share private torrents
-	if ( IsPrivateTorrent() )
+	if ( bNewShare != TRI_FALSE && IsPrivateTorrent() )
 		bNewShare = TRI_FALSE;
 
-	bool bFolderShared = ! m_pFolder || m_pFolder->IsShared();
-
 	if ( bNewShare == TRI_UNKNOWN )
+	{
 		// Use folder default shared flag
+		bool bFolderShared = ! m_pFolder || m_pFolder->IsShared();
 		bNewShare = bShared ?
 			( bFolderShared ? TRI_UNKNOWN : TRI_TRUE ) :
 			( bFolderShared ? TRI_FALSE : TRI_UNKNOWN );
+	}
 
 	if ( m_bShared != bNewShare )
 	{
@@ -522,7 +523,8 @@ void CLibraryFile::UpdateMetadata(const CDownload* pDownload)
 	// Disable sharing of incomplete files
 	if ( pDownload->m_bVerify == TRI_FALSE )
 	{
-		m_bVerify = m_bShared = TRI_FALSE;
+		m_bVerify = TRI_FALSE;
+		SetShared( false );
 		m_bBogus = TRUE;
 	}
 
@@ -765,7 +767,7 @@ CSharedSource* CLibraryFile::AddAlternateSources(LPCTSTR pszURLs)
 	return pFirst;
 }
 
-CSharedSource* CLibraryFile::AddAlternateSource(LPCTSTR pszURL, FILETIME* tSeen)
+CSharedSource* CLibraryFile::AddAlternateSource(LPCTSTR pszURL, const FILETIME* tSeen)
 {
 	if ( pszURL == NULL ) return NULL;
 	if ( *pszURL == 0 ) return NULL;
@@ -773,15 +775,8 @@ CSharedSource* CLibraryFile::AddAlternateSource(LPCTSTR pszURL, FILETIME* tSeen)
 	CString strURL( pszURL );
 	CShareazaURL pURL;
 
-	BOOL bSeen;
-	FILETIME tSeenLocal = { 0, 0 };
-	if ( tSeen && tSeen->dwLowDateTime && tSeen->dwHighDateTime )
-		bSeen = TRUE;
-	else
-	{
-		tSeen = &tSeenLocal;
-		bSeen = FALSE;
-	}
+	FILETIME tSeenLocal = {};
+	BOOL bSeen = tSeen && tSeen->dwLowDateTime && tSeen->dwHighDateTime;
 
 	int nPos = strURL.ReverseFind( ' ' );
 	if ( nPos > 0 )
@@ -789,7 +784,11 @@ CSharedSource* CLibraryFile::AddAlternateSource(LPCTSTR pszURL, FILETIME* tSeen)
 		CString strTime = strURL.Mid( nPos + 1 );
 		strURL = strURL.Left( nPos );
 		strURL.TrimRight();
-		bSeen = TimeFromString( strTime, tSeen );
+		if ( TimeFromString( strTime, &tSeenLocal ) )
+		{
+			bSeen = TRUE;
+			tSeen = &tSeenLocal;
+		}
 	}
 
 	if ( ! pURL.Parse( strURL ) ) return NULL;
@@ -1158,11 +1157,9 @@ void CLibraryFile::OnDelete(BOOL bDeleteGhost, TRISTATE bCreateGhost)
 		{
 			if ( ! IsRated() )
 			{
-				m_bShared = TRI_FALSE;
-
-				CString strTransl;
-				CString strUntransl = L"Ghost File";
-				LoadString( strTransl, IDS_LIBRARY_GHOST_FILE );
+				CString strTransl = LoadString( IDS_LIBRARY_GHOST_FILE );
+				CString strUntransl;
+				strUntransl.LoadString( IDS_LIBRARY_GHOST_FILE );
 				if ( strTransl == strUntransl )
 				{
 					m_sComments = strUntransl;
@@ -1442,7 +1439,7 @@ BOOL CLibraryFile::PrepareDoc(LPCTSTR pszTemplate, CArray< CString >& oDocs) con
 //////////////////////////////////////////////////////////////////////
 // CSharedSource construction
 
-CSharedSource::CSharedSource(LPCTSTR pszURL, FILETIME* pTime)
+CSharedSource::CSharedSource(LPCTSTR pszURL, const FILETIME* pTime)
 {
 	ZeroMemory( &m_pTime, sizeof( m_pTime ) );
 
@@ -1477,7 +1474,7 @@ void CSharedSource::Serialize(CArchive& ar, int nVersion)
 	}
 }
 
-void CSharedSource::Freshen(FILETIME* pTime)
+void CSharedSource::Freshen(const FILETIME* pTime)
 {
 	SYSTEMTIME tNow1;
 	GetSystemTime( &tNow1 );
@@ -1504,7 +1501,7 @@ void CSharedSource::Freshen(FILETIME* pTime)
 	}
 }
 
-BOOL CSharedSource::IsExpired(FILETIME& tNow)
+BOOL CSharedSource::IsExpired(FILETIME& tNow) const
 {
 	LONGLONG nElapse = *((LONGLONG*)&tNow) - *((LONGLONG*)&m_pTime);
 	return nElapse > (LONGLONG)Settings.Library.SourceExpire * 10000000;

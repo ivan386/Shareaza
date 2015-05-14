@@ -378,7 +378,7 @@ void CLibraryFolder::Serialize(CArchive& ar, int nVersion)
 
 		UINT nCount = (UINT)ar.ReadCount();
 
-		m_pFolders.InitHashTable( GetBestHashTableSize( nCount ), FALSE );
+		m_pFolders.InitHashTable( GetBestHashTableSize( nCount ) );
 
 		for ( ; nCount > 0 ; nCount-- )
 		{
@@ -396,7 +396,7 @@ void CLibraryFolder::Serialize(CArchive& ar, int nVersion)
 		}
 
 		nCount = (UINT)ar.ReadCount();
-		m_pFiles.InitHashTable( GetBestHashTableSize( nCount ), FALSE );
+		m_pFiles.InitHashTable( GetBestHashTableSize( nCount ) );
 
 		for ( ; nCount > 0 ; nCount-- )
 		{
@@ -460,11 +460,10 @@ BOOL CLibraryFolder::ThreadScan(DWORD nScanCookie)
 					if ( _tcsicmp( pFolder->m_sName, pFind.cFileName ) != 0 )
 					{
 						VERIFY( m_pFolders.RemoveKey( pFolder->m_sName ) );
-						pFolder->OnDelete();
+						pFolder->OnDelete( Settings.Library.CreateGhosts ? TRI_TRUE : TRI_FALSE );
 						pFolder = new CLibraryFolder( this, m_sPath + _T("\\") + pFind.cFileName );
 						m_pFolders.SetAt( pFolder->m_sName, pFolder );
 						bChanged = TRUE;
-						m_nUpdateCookie++;
 					}
 				}
 				else
@@ -472,7 +471,6 @@ BOOL CLibraryFolder::ThreadScan(DWORD nScanCookie)
 					pFolder = new CLibraryFolder( this, m_sPath + _T("\\") + pFind.cFileName );
 					m_pFolders.SetAt( pFolder->m_sName, pFolder );
 					bChanged = TRUE;
-					m_nUpdateCookie++;
 				}
 
 				if ( pFolder->ThreadScan( nScanCookie ) )
@@ -545,7 +543,7 @@ BOOL CLibraryFolder::ThreadScan(DWORD nScanCookie)
 		m_nVolume	-= pFolder->m_nVolume;
 
 		VERIFY( m_pFolders.RemoveKey( pFolder->m_sName ) );
-		pFolder->OnDelete();
+		pFolder->OnDelete( Settings.Library.CreateGhosts ? TRI_TRUE : TRI_FALSE );
 
 		bChanged = TRUE;
 	}
@@ -554,7 +552,7 @@ BOOL CLibraryFolder::ThreadScan(DWORD nScanCookie)
 	{
 		CLibraryFile* pFile = pExtraFiles.GetNext( pos );
 
-		pFile->OnDelete( TRUE );
+		pFile->OnDelete( TRUE, Settings.Library.CreateGhosts ? TRI_TRUE : TRI_FALSE );
 
 		bChanged = TRUE;
 	}

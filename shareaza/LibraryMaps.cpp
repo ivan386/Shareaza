@@ -25,6 +25,7 @@
 #include "LibraryMaps.h"
 #include "Application.h"
 #include "QuerySearch.h"
+#include "XML.h"
 
 #ifdef _DEBUG
 #undef THIS_FILE
@@ -535,7 +536,12 @@ void CLibraryMaps::OnFileAdd(CLibraryFile* pFile)
 		m_nFiles ++;
 	}
 
-	m_pNameMap.SetAt( pFile->m_sName, pFile );
+	// Prefer real files
+	CLibraryFile* pDupNameFile;
+	if ( ! m_pNameMap.Lookup( pFile->m_sName, pDupNameFile ) || ! pDupNameFile->IsAvailable() )
+	{
+		m_pNameMap.SetAt( pFile->m_sName, pFile );
+	}
 
 	if ( pFile->IsAvailable() )
 	{
@@ -598,9 +604,8 @@ void CLibraryMaps::OnFileRemove(CLibraryFile* pFile)
 		}
 	}
 
-	const CString strName( pFile->m_sName );
-	pOld = LookupFileByName( strName, pFile->m_nSize );
-	if ( pOld == pFile ) VERIFY( m_pNameMap.RemoveKey( strName ) );
+	pOld = LookupFileByName( pFile->m_sName, pFile->m_nSize );
+	if ( pOld == pFile ) VERIFY( m_pNameMap.RemoveKey( pFile->m_sName ) );
 
 	if ( pFile->IsAvailable() )
 	{
@@ -709,9 +714,94 @@ void CLibraryMaps::CullDeletedFiles(CLibraryFile* pMatch)
 	{
 		for ( POSITION pos = pList->GetHeadPosition() ; pos ; )
 		{
-			CLibraryFile* pFile = const_cast< CLibraryFile* >( pList->GetNext( pos ) );
+			CLibraryFile* pFile = pList->GetNext( pos );
 			if ( ! pFile->IsAvailable() )
 			{
+				// Restore metadata from the ghost file
+				BOOL bRestored = FALSE;
+
+				for ( POSITION pos = pFile->m_pSources.GetHeadPosition(); pos; )
+				{
+					const CSharedSource* pSource = pFile->m_pSources.GetNext( pos );
+					if ( pMatch->AddAlternateSource( pSource->m_sURL, &pSource->m_pTime ) )
+					{
+						bRestored = TRUE;
+					}
+				}
+
+				if ( pFile->m_oBTH && ! pMatch->m_oBTH )
+				{
+					pMatch->m_oBTH = pFile->m_oBTH;
+					bRestored = TRUE;
+				}
+
+				if ( pFile->m_bVerify == TRI_FALSE && pMatch->m_bVerify != TRI_FALSE )
+				{
+					pMatch->m_bVerify = TRI_FALSE;
+					pFile->SetShared( false );
+					bRestored = TRUE;
+				}
+
+				if ( pFile->m_bBogus && ! pMatch->m_bBogus )
+				{
+					pMatch->m_bBogus = TRUE;
+					bRestored = TRUE;
+				}
+
+				if ( pFile->m_nHitsToday || pFile->m_nHitsTotal || pFile->m_nUploadsToday || pFile->m_nUploadsTotal )
+				{
+					pMatch->m_nHitsToday += pFile->m_nHitsToday;
+					pMatch->m_nHitsTotal += pFile->m_nHitsTotal;
+					pMatch->m_nUploadsToday += pFile->m_nUploadsToday;
+					pMatch->m_nUploadsTotal += pFile->m_nUploadsTotal;
+					bRestored = TRUE;
+				}
+
+				if ( pFile->m_pSchema && ! pMatch->m_pSchema )
+				{
+					pMatch->m_pSchema = pFile->m_pSchema;
+					bRestored = TRUE;
+				}
+
+				if ( pFile->m_pMetadata )
+				{
+					CAutoPtr< CXMLElement > pXML( pFile->m_pMetadata->Clone() );
+					if ( ! pMatch->m_pMetadata || pXML->Merge( pMatch->m_pMetadata, TRUE ) )
+					{
+						delete pMatch->m_pMetadata;
+						pMatch->m_pMetadata = pXML.Detach();
+						pMatch->m_bMetadataAuto = pFile->m_bMetadataAuto;
+						bRestored = TRUE;
+					}
+				}
+
+				if ( pFile->m_nRating && ! pMatch->m_nRating )
+				{
+					pMatch->m_nRating = pFile->m_nRating;
+					bRestored = TRUE;
+				}
+
+				if ( ! pFile->m_sComments.IsEmpty() && pMatch->m_sComments.IsEmpty() )
+				{
+					CString strUntransl;
+					strUntransl.LoadString( IDS_LIBRARY_GHOST_FILE );
+					if ( _tcsistr( pFile->m_sComments, strUntransl ) == NULL )
+					{
+						pMatch->m_sComments = pFile->m_sComments;
+						bRestored = TRUE;
+					}
+				}
+
+				if ( ! pFile->m_sShareTags.IsEmpty() && pMatch->m_sShareTags.IsEmpty() )
+				{
+					pMatch->m_sShareTags = pFile->m_sShareTags;
+					bRestored = TRUE;
+				}
+
+				if ( bRestored )
+					pMatch->ModifyMetadata();
+
+				// Delete ghost file
 				pFile->Delete( TRUE );
 			}
 		}
@@ -832,8 +922,13 @@ void CLibraryMaps::Serialize2(CArchive& ar, int nVersion)
 
 			pFile->Serialize( ar, nVersion );
 
-			if ( ! LibraryMaps.LookupFileByHash( pFile ) )
+			const CLibraryFile* pRealFile = LibraryMaps.LookupFileByHash( pFile );
+			if ( ! pRealFile )
 				Library.AddFile( pFile.Detach() );
+			else
+			{
+				TRACE( "Ignored ghost file \"%s\" (%I64u bytes) due real file \"%s\" (%I64u bytes)\n", (LPCSTR)CT2A( (LPCTSTR)pFile->m_sName ), pFile->m_nSize, (LPCSTR)CT2A( (LPCTSTR)pRealFile->m_sName ), pRealFile->m_nSize );
+			}
 		}
 	}
 }
