@@ -159,6 +159,7 @@ void CSettings::Load()
 	Add( _T("Fonts"), _T("FontSize"), &Fonts.FontSize, 11, 1, 8, 48, _T(" px") );
 
 	Add( _T("Library"), _T("CreateGhosts"), &Library.CreateGhosts, true );
+	Add( _T("Library"), _T("GhostLimit"), &Library.GhostLimit, 1000, 1, 0, 100000, _T(" files") );
 	Add( _T("Library"), _T("FilterURI"), &Library.FilterURI );
 	Add( _T("Library"), _T("HashWindow"), &Library.HashWindow, true );
 	Add( _T("Library"), _T("HighPriorityHash"), &Library.HighPriorityHash, false );

@@ -156,6 +156,7 @@ public:
 		bool		HighPriorityHash;			// Use high priority hashing
 		bool		HashWindow;					// Display annoying hashing window
 		bool		CreateGhosts;				// Default action in the delete file dialog
+		DWORD		GhostLimit;					// Maximum amount of ghost files
 		DWORD		HighPriorityHashing;		// desired speed in MB/s when hashing with hi priority
 		DWORD		LowPriorityHashing;			// desired speed in MB/s when hashing with low priority
 		DWORD		MaxMaliciousFileSize;		// Size for which to trigger malicious software search

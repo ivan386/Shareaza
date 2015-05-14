@@ -678,7 +678,7 @@ void CLibraryFolders::Clear()
 	m_pFolders.RemoveAll();
 }
 
-void CLibraryFolders::ClearGhosts()
+void CLibraryFolders::ClearGhosts(BOOL bAll)
 {
 	ASSUME_LOCK( Library.m_pSection );
 
@@ -686,11 +686,41 @@ void CLibraryFolders::ClearGhosts()
 	{
 		if ( CAlbumFolder* pGhosts = m_pAlbumRoot->GetFolderByURI( CSchema::uriGhostFolder ) )
 		{
-			for ( POSITION pos = pGhosts->GetFileIterator(); pos; )
+			const DWORD nLimit = bAll ? 0 : Settings.Library.GhostLimit;
+
+			if ( pGhosts->GetFileCount() > nLimit )
 			{
-				CLibraryFile* pFile = pGhosts->GetNextFile( pos );
-				ASSERT( ! pFile->IsAvailable() );
-				pFile->Delete( TRUE );
+				std::list< CLibraryFile* > pList;
+
+				for ( POSITION pos = pGhosts->GetFileIterator(); pos; )
+				{
+					CLibraryFile* pFile = pGhosts->GetNextFile( pos );
+					ASSERT( !pFile->IsAvailable() );
+					pList.push_back( pFile );
+				}
+
+				if ( ! bAll )
+				{
+					pList.sort( Earlier() );
+				}
+
+				while ( pList.size() > nLimit )
+				{
+					CLibraryFile* pFile = pList.front();
+					pList.pop_front();
+#ifdef _DEBUG
+					CString strDate, strTime;
+					SYSTEMTIME pTime;
+					FileTimeToSystemTime( &pFile->m_pTime, &pTime );
+					SystemTimeToTzSpecificLocalTime( NULL, &pTime, &pTime );
+					GetDateFormat( LOCALE_USER_DEFAULT, DATE_LONGDATE, &pTime, NULL, strDate.GetBuffer( 64 ), 64 );
+					GetTimeFormat( LOCALE_USER_DEFAULT, TIME_FORCE24HOURFORMAT, &pTime, NULL, strTime.GetBuffer( 64 ), 64 );
+					strDate.ReleaseBuffer();
+					strTime.ReleaseBuffer();
+					TRACE( "Removed extra ghost file \"%s\" %s %s\n", (LPCSTR)CT2A( (LPCTSTR)pFile->m_sName ), (LPCSTR)CT2A( (LPCTSTR)strDate ), (LPCSTR)CT2A( (LPCTSTR)strTime ) );
+#endif
+					pFile->Delete( TRUE );
+				}
 			}
 		}
 	}

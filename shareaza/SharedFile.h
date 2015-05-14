@@ -116,7 +116,7 @@ public:
 	void			ModifyMetadata();		// Mark metadata as modified
 	CTigerTree*		GetTigerTree();
 	CED2K*			GetED2K();
-	CSharedSource*	AddAlternateSource(LPCTSTR pszURL, FILETIME* tSeen = NULL);
+	CSharedSource*	AddAlternateSource(LPCTSTR pszURL, const FILETIME* tSeen = NULL);
 	CSharedSource*	AddAlternateSources(LPCTSTR pszURL);
 	CString			GetAlternateSources(CList< CString >* pState, int nMaximum, PROTOCOLID nProtocol);
 	BOOL			OnVerifyDownload(const CLibraryRecent* pRecent);
@@ -204,12 +204,20 @@ protected:
 
 typedef CList< CLibraryFile* > CFileList;
 
+struct Earlier : public std::binary_function < CLibraryFile*, CLibraryFile*, bool >
+{
+	inline bool operator()( const CLibraryFile* _Left, const CLibraryFile* _Right ) const
+	{
+		return CompareFileTime( &_Left->m_pTime, &_Right->m_pTime ) < 0;
+	}
+};
+
 
 class CSharedSource
 {
 // Construction
 public:
-	CSharedSource(LPCTSTR pszURL = NULL, FILETIME* pTime = NULL);
+	CSharedSource(LPCTSTR pszURL = NULL, const FILETIME* pTime = NULL);
 
 // Attributes
 public:
@@ -219,7 +227,7 @@ public:
 // Operations
 public:
 	void	Serialize(CArchive& ar, int nVersion);
-	void	Freshen(FILETIME* pTime = NULL);
-	BOOL	IsExpired(FILETIME& tNow);
+	void	Freshen(const FILETIME* pTime = NULL);
+	BOOL	IsExpired(FILETIME& tNow) const;
 
 };

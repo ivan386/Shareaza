@@ -1,7 +1,7 @@
 //
 // LibraryFolders.h
 //
-// Copyright (c) Shareaza Development Team, 2002-2014.
+// Copyright (c) Shareaza Development Team, 2002-2015.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -76,7 +76,7 @@ public:
 	BOOL			OnFileDelete(CLibraryFile* pFile, BOOL bDeleteGhost = FALSE);
 	CAlbumFolder* 	CreateAlbumTree();
 	// Remove all ghost files
-	void			ClearGhosts();
+	void			ClearGhosts(BOOL bAll = TRUE);
 	// Get total amount of ghost files
 	DWORD			GetGhostCount() const;
 

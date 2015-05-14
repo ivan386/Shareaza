@@ -1,7 +1,7 @@
 //
 // Library.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2014.
+// Copyright (c) Shareaza Development Team, 2002-2015.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -485,14 +485,15 @@ BOOL CLibrary::ThreadScan()
 
 	// If folders not watched then scan them at periodic basis
 	// (default is one time per 5 seconds)
+	const DWORD nNow = GetTickCount();
 	BOOL bPeriodicScan = ! Settings.Library.WatchFolders &&
-		( m_nScanTime <  GetTickCount() - Settings.Library.WatchFoldersTimeout * 1000 );
+		( nNow < m_nScanTime || nNow - m_nScanTime > Settings.Library.WatchFoldersTimeout * 1000 );
 
 	BOOL bChanged = LibraryFolders.ThreadScan( bPeriodicScan || bForcedScan );
 
 	if ( bPeriodicScan || bForcedScan || bChanged )
 	{
-		m_nScanTime =  GetTickCount();
+		m_nScanTime =  nNow;
 
 		// Mark library as changed
 		if ( bChanged )
@@ -503,8 +504,9 @@ BOOL CLibrary::ThreadScan()
 
 	// Save library changes but not frequently
 	// (one time per 30 seconds)
-	if ( m_nUpdateCookie != m_nSaveCookie && GetTickCount() - m_nSaveTime > 30000 )
+	if ( m_nUpdateCookie != m_nSaveCookie && ( nNow < m_nSaveTime || nNow - m_nSaveTime > 30000 ) )
 	{
+		LibraryFolders.ClearGhosts( FALSE );
 		Save();
 	}
 
