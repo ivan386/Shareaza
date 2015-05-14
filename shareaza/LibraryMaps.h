@@ -27,7 +27,7 @@ class CLibrary;
 class CQuerySearch;
 
 #define FILE_HASH_SIZE	512
-#define FILE_HASH_MASK	0x1FF
+#define FILE_INDEX(x)	( *(WORD*)(&(x)[0]) & 511 )
 
 
 class CLibraryMaps : public CComObject
