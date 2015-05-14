@@ -1,7 +1,7 @@
 //
 // CoolInterface.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2014.
+// Copyright (c) Shareaza Development Team, 2002-2015.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -43,7 +43,7 @@ CCoolInterface::CCoolInterface()
 	m_czBuffer = CSize( 0, 0 );
 
 	// experimental values
-	m_pNameMap.InitHashTable( 509 );
+	m_pNameMap.InitHashTable( 631 );
 	m_pImageMap16.InitHashTable( 347 );
 	m_pImageMap32.InitHashTable( 61 );
 	m_pImageMap48.InitHashTable( 61 );
