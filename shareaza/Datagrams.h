@@ -1,7 +1,7 @@
 //
 // Datagrams.h
 //
-// Copyright (c) Shareaza Development Team, 2002-2011.
+// Copyright (c) Shareaza Development Team, 2002-2015.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -20,6 +20,9 @@
 //
 
 #pragma once
+
+#define DATAGRAM_HASH_SIZE		32
+#define DATAGRAM_HASH_MASK		31
 
 #pragma pack(push,1)
 
@@ -112,14 +115,14 @@ protected:
 	CDatagramIn*	m_pInputFree;
 	CDatagramIn*	m_pInputFirst;
 	CDatagramIn*	m_pInputLast;
-	CDatagramIn*	m_pInputHash[32];
+	CDatagramIn*	m_pInputHash[ DATAGRAM_HASH_SIZE ];
 
 	CDatagramOut*	m_pOutputBuffer;
 	DWORD			m_nOutputBuffer;
 	CDatagramOut*	m_pOutputFree;
 	CDatagramOut*	m_pOutputFirst;
 	CDatagramOut*	m_pOutputLast;
-	CDatagramOut*	m_pOutputHash[32];
+	CDatagramOut*	m_pOutputHash[ DATAGRAM_HASH_SIZE ];
 
 	UDPBandwidthMeter	m_mInput;
 	UDPBandwidthMeter	m_mOutput;
