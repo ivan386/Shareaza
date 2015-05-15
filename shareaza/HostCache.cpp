@@ -1064,11 +1064,11 @@ bool CHostCache::CheckMinimumServers(PROTOCOLID nProtocol)
 
 	const static CString sRootPathes[] =
 	{
-		{ theApp.GetProgramFilesFolder().Left( 2 ) },	// System disk
-		{ theApp.GetProgramFilesFolder() },
-		{ theApp.GetProgramFilesFolder64() },
-		{ theApp.GetLocalAppDataFolder() },
-		{ theApp.GetAppDataFolder() }
+		theApp.GetProgramFilesFolder().Left( 2 ),	// System disk
+		theApp.GetProgramFilesFolder(),
+		theApp.GetProgramFilesFolder64(),
+		theApp.GetLocalAppDataFolder(),
+		theApp.GetAppDataFolder()
 	};
 
 	// Get the server list from eMule (mods) if possible
