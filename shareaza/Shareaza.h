@@ -93,6 +93,7 @@ public:
 	volatile bool		m_bLive;					// Shareaza fully initialized
 	volatile bool		m_bClosing;					// Shareaza begins closing
 	bool				m_bIsVistaOrNewer;			// Is OS Vista or newer
+	bool				m_bIs7OrNewer;				// Is OS 7 or newer
 	bool				m_bLimitedConnections;		// Networking is limited (XP SP2)
 	BOOL				m_bMenuWasVisible;			// For the menus in media player window
 	DWORD				m_nLastInput;				// Time of last input event (in secs)
@@ -233,7 +234,6 @@ private:
 };
 
 extern CShareazaApp			theApp;						// Shareaza Application
-extern OSVERSIONINFOEX		Windows;					// Windows Version
 extern SYSTEM_INFO			System;						// System Information
 
 

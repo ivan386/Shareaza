@@ -192,7 +192,8 @@ CShareazaApp::CShareazaApp() :
 ,	m_bLive					( false )
 ,	m_bClosing				( false )
 ,	m_bIsVistaOrNewer		( false )
-,	m_bLimitedConnections	( true )
+,	m_bIs7OrNewer			( false )
+,	m_bLimitedConnections	( false )
 ,	m_bMenuWasVisible		( FALSE )
 ,	m_nLastInput			( 0ul )
 ,	m_hHookKbd				( NULL )
@@ -238,7 +239,57 @@ CShareazaApp::CShareazaApp() :
 
 {
 	// Determine the version of Windows
-	GetVersionEx( (OSVERSIONINFO*)&Windows );
+	OSVERSIONINFOEX osvi = { sizeof( osvi ) };
+	const DWORDLONG dwlMajorMinorPack = VerSetConditionMask( VerSetConditionMask( VerSetConditionMask( 0, VER_MAJORVERSION, VER_GREATER_EQUAL ),
+		VER_MINORVERSION, VER_GREATER_EQUAL ), VER_SERVICEPACKMAJOR, VER_GREATER_EQUAL );
+
+	// Windows Vista
+	osvi.dwMajorVersion = 6;
+	osvi.dwMinorVersion = 0;
+	m_bIsVistaOrNewer = VerifyVersionInfo( &osvi, VER_MAJORVERSION | VER_MINORVERSION | VER_SERVICEPACKMAJOR, dwlMajorMinorPack ) != FALSE;
+
+	// Windows 7
+	osvi.dwMajorVersion = 6;
+	osvi.dwMinorVersion = 1;
+	m_bIs7OrNewer = VerifyVersionInfo( &osvi, VER_MAJORVERSION | VER_MINORVERSION | VER_SERVICEPACKMAJOR, dwlMajorMinorPack ) != FALSE;
+	
+	// Half-Open limit from Windows XP SP2 to Windows Vista SP1
+	bool bCanBeRegistryPatched = false;
+	osvi.dwMajorVersion = 5;
+	osvi.dwMinorVersion = 1;
+	osvi.wServicePackMajor = 2;
+	if ( VerifyVersionInfo( &osvi, VER_MAJORVERSION | VER_MINORVERSION | VER_SERVICEPACKMAJOR, dwlMajorMinorPack ) )
+	{
+		// >= Windows XP SP2
+		osvi.dwMajorVersion = 6;
+		osvi.dwMinorVersion = 0;
+		osvi.wServicePackMajor = 2;
+		if ( VerifyVersionInfo( &osvi, VER_MAJORVERSION | VER_MINORVERSION | VER_SERVICEPACKMAJOR, dwlMajorMinorPack ) )
+			// >= Windows Vista SP2
+			bCanBeRegistryPatched = true;
+		else
+			// < Windows Vista SP2
+			m_bLimitedConnections = true;
+	}
+	// No limit on Windows Server
+	osvi.wProductType = VER_NT_WORKSTATION;
+	if ( ! VerifyVersionInfo( &osvi, VER_PRODUCT_TYPE, VerSetConditionMask( 0, VER_PRODUCT_TYPE, VER_EQUAL ) ) )
+	{
+		m_bLimitedConnections = false;
+	}
+	if ( bCanBeRegistryPatched )
+	{
+		HKEY hKey;
+		if ( RegOpenKeyEx( HKEY_LOCAL_MACHINE, L"SYSTEM\\CurrentControlSet\\Services\\Tcpip\\Parameters", 0, KEY_QUERY_VALUE, &hKey ) == ERROR_SUCCESS )
+		{
+			DWORD nSize = sizeof( DWORD ), nResult = 0, nType = REG_NONE;
+			if ( ( RegQueryValueEx( hKey, L"EnableConnectionRateLimiting", NULL, &nType, (LPBYTE)&nResult, &nSize ) == ERROR_SUCCESS ) &&
+				nType == REG_DWORD && nResult == 1 )
+				m_bLimitedConnections = true;
+			RegCloseKey( hKey );
+		}
+	}
+
 	GetSystemInfo( (SYSTEM_INFO*)&System );
 
 	ZeroMemory( m_nVersion, sizeof( m_nVersion ) );
@@ -685,7 +736,7 @@ BOOL CShareazaApp::Register()
 
 	CShareazaURL::Register( TRUE, TRUE );
 
-	if ( Windows.dwMajorVersion > 6 || ( Windows.dwMajorVersion == 6 && Windows.dwMinorVersion >= 1 ) )
+	if ( theApp.m_bIs7OrNewer )
 	{
 		// For VS2010:
 		//	CJumpList oTasks;
@@ -1032,70 +1083,6 @@ void CShareazaApp::InitResources()
 	m_pBTVersion[ 1 ] = BT_ID2;
 	m_pBTVersion[ 2 ] = (BYTE)m_nVersion[ 0 ];
 	m_pBTVersion[ 3 ] = (BYTE)m_nVersion[ 1 ];
-
-	// Most supported windows versions have network limiting
-	m_bLimitedConnections = true;
-	TCHAR* sp = _tcsstr( Windows.szCSDVersion, _T("Service Pack") );
-
-	// Set some variables for different Windows OSes
-	if ( Windows.dwMajorVersion == 5 )
-	{
-		if ( Windows.dwMinorVersion == 1 )	// Windows XP
-		{
-			// 10 Half-open concurrent TCP connections limit was introduced in SP2
-			// Windows Server will never compare this value though.
-			if ( !sp || sp[ 13 ] == '1' )
-				m_bLimitedConnections = false;
-		}
-		else if ( Windows.dwMinorVersion == 2 )	// Windows 2003 or Windows XP64
-		{
-			if ( !sp )
-				m_bLimitedConnections = false;
-		}
-	}
-	else if ( Windows.dwMajorVersion >= 6 ) 
-	{
-		// Used for GUI improvement
-		m_bIsVistaOrNewer = true;
-		bool bCanBeRegistryPatched = true;
-
-		if ( Windows.dwMinorVersion == 0 )
-		{
-			if ( !sp || sp[ 13 ] == '1' )
-			{
-				// Has TCP connections limit
-				bCanBeRegistryPatched = false;
-			} 
-			else
-			{
-				m_bLimitedConnections = false;
-			}
-		}
-
-		// Server versions can be limited too
-		if ( bCanBeRegistryPatched ) 
-		{
-			HKEY hKey;
-			if ( RegOpenKeyEx( HKEY_LOCAL_MACHINE, 
-							   L"SYSTEM\\CurrentControlSet\\Services\\Tcpip\\Parameters", 
-							   0, KEY_QUERY_VALUE, &hKey ) == ERROR_SUCCESS )
-			{
-				DWORD nSize = sizeof( DWORD ), nResult = 0, nType = REG_NONE;
-				if ( ( RegQueryValueEx( hKey, L"EnableConnectionRateLimiting", 
-									    NULL, &nType, (LPBYTE)&nResult, &nSize ) == ERROR_SUCCESS ) &&
-					 nType == REG_DWORD && nResult == 1 )
-					m_bLimitedConnections = true;
-				RegCloseKey( hKey );
-				if ( nResult == 1 )
-					return; // Don't check if that was a server
-			}
-		}
-	}
-
-	// Windows Small Business Server allows 74 simultaneous
-	// connections and any full Server version allows unlimited connections
-	if ( Windows.wProductType == VER_NT_SERVER && ( Windows.wSuiteMask & VER_SUITE_SMALLBUSINESS ) == 0 )
-		m_bLimitedConnections = false;
 
 	// Get pointers to some functions that require Windows Vista or greater
 	if ( HMODULE hKernel32 = GetModuleHandle( _T("kernel32.dll") ) )
