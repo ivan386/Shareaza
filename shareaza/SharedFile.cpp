@@ -515,6 +515,94 @@ BOOL CLibraryFile::Delete(BOOL bDeleteGhost)
 	return TRUE;
 }
 
+BOOL CLibraryFile::AddMetadata(const CLibraryFile* pFile)
+{
+	BOOL bAdded = FALSE;
+
+	for ( POSITION pos = pFile->m_pSources.GetHeadPosition(); pos; )
+	{
+		const CSharedSource* pSource = pFile->m_pSources.GetNext( pos );
+		if ( AddAlternateSource( pSource->m_sURL, &pSource->m_pTime ) )
+		{
+			bAdded = TRUE;
+		}
+	}
+
+	if ( pFile->m_oBTH && ! m_oBTH )
+	{
+		m_oBTH = pFile->m_oBTH;
+		bAdded = TRUE;
+	}
+
+	if ( pFile->m_bVerify == TRI_FALSE && m_bVerify != TRI_FALSE )
+	{
+		m_bVerify = TRI_FALSE;
+		SetShared( false );
+		bAdded = TRUE;
+	}
+
+	if ( pFile->m_bBogus && ! m_bBogus )
+	{
+		m_bBogus = TRUE;
+		bAdded = TRUE;
+	}
+
+	if ( pFile->m_nHitsToday || pFile->m_nHitsTotal || pFile->m_nUploadsToday || pFile->m_nUploadsTotal )
+	{
+		m_nHitsToday += pFile->m_nHitsToday;
+		m_nHitsTotal += pFile->m_nHitsTotal;
+		m_nUploadsToday += pFile->m_nUploadsToday;
+		m_nUploadsTotal += pFile->m_nUploadsTotal;
+		bAdded = TRUE;
+	}
+
+	if ( pFile->m_pSchema && ! m_pSchema )
+	{
+		m_pSchema = pFile->m_pSchema;
+		bAdded = TRUE;
+	}
+
+	if ( pFile->m_pMetadata )
+	{
+		CAutoPtr< CXMLElement > pXML( pFile->m_pMetadata->Clone() );
+		if ( ! m_pMetadata || pXML->Merge( m_pMetadata, TRUE ) )
+		{
+			delete m_pMetadata;
+			m_pMetadata = pXML.Detach();
+			m_bMetadataAuto = pFile->m_bMetadataAuto;
+			bAdded = TRUE;
+		}
+	}
+
+	if ( pFile->m_nRating && ! m_nRating )
+	{
+		m_nRating = pFile->m_nRating;
+		bAdded = TRUE;
+	}
+
+	if ( ! pFile->m_sComments.IsEmpty() && m_sComments.IsEmpty() )
+	{
+		CString strUntransl;
+		strUntransl.LoadString( IDS_LIBRARY_GHOST_FILE );
+		if ( _tcsistr( pFile->m_sComments, strUntransl ) == NULL )
+		{
+			m_sComments = pFile->m_sComments;
+			bAdded = TRUE;
+		}
+	}
+
+	if ( ! pFile->m_sShareTags.IsEmpty() && m_sShareTags.IsEmpty() )
+	{
+		m_sShareTags = pFile->m_sShareTags;
+		bAdded = TRUE;
+	}
+
+	if ( bAdded )
+		ModifyMetadata();
+
+	return bAdded;
+}
+
 //////////////////////////////////////////////////////////////////////
 // CLibraryFile metadata access
 

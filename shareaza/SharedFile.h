@@ -107,6 +107,8 @@ public:
 	BOOL			Rebuild();
 	BOOL			Rename(LPCTSTR pszName);
 	BOOL			Delete(BOOL bDeleteGhost = FALSE);
+	// Get any useful data (i.e. metadata, sources, hashes etc.) from specified file
+	BOOL			AddMetadata(const CLibraryFile* pFile);
 	void			UpdateMetadata(const CDownload* pDownload);
 	BOOL			SetMetadata(CXMLElement*& pXML, BOOL bMerge = FALSE, BOOL bOverwrite = FALSE);
 	BOOL			MergeMetadata(CXMLElement*& pXML, BOOL bOverwrite);
@@ -200,9 +202,15 @@ protected:
 	friend class CLibraryFolder;
 	friend class CLibraryMaps;
 	friend class CDeleteFileDlg;
+
+private:
+	CLibraryFile(const CLibraryFile& pFile);
+	CLibraryFile& operator=(const CLibraryFile& pFile);
 };
 
+
 typedef CList< CLibraryFile* > CFileList;
+
 
 struct Earlier : public std::binary_function < CLibraryFile*, CLibraryFile*, bool >
 {
