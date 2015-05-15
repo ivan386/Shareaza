@@ -178,7 +178,7 @@ CLibraryFolder* CLibraryFolders::GetFolderByName(LPCTSTR pszName) const
 	LPCTSTR szNextName = _tcschr( pszName, _T( '\\' ) );
 	if ( szNextName )
 	{
-		CString strName( pszName, szNextName - pszName );
+		CString strName( pszName, (int)( szNextName - pszName ) );
 
 		for ( POSITION pos = GetFolderIterator(); pos; )
 		{
@@ -808,7 +808,7 @@ void CLibraryFolders::Maintain()
 	CQuickLock oLock( Library.m_pSection );
 
 	CComPtr< IShellLibrary > pIShellLib;
-	if ( ( Windows.dwMajorVersion > 6 || ( Windows.dwMajorVersion == 6 && Windows.dwMinorVersion >= 1 ) ) && Settings.Library.UseWindowsLibrary )
+	if ( theApp.m_bIs7OrNewer && Settings.Library.UseWindowsLibrary )
 		pIShellLib.CoCreateInstance( CLSID_ShellLibrary );
 
 	for ( POSITION pos = GetFolderIterator() ; pos ; )

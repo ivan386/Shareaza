@@ -85,3 +85,13 @@ private:
 typedef const CSchemaMember* CSchemaMemberPtr;
 
 typedef CList< CSchemaMemberPtr > CSchemaMemberList;
+
+#ifdef _WIN64
+
+template<>
+AFX_INLINE UINT AFXAPI HashKey( CSchemaMemberPtr key )
+{
+	return HashKey< __int64 >( (__int64)key );
+}
+
+#endif // _WIN64

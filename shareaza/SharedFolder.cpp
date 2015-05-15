@@ -162,7 +162,7 @@ CLibraryFolder* CLibraryFolder::GetFolderByName(LPCTSTR pszName) const
 	LPCTSTR szNextName = _tcschr( pszName, _T( '\\' ) );
 	if ( szNextName )
 	{
-		CString strName( pszName, szNextName - pszName );
+		CString strName( pszName, (int)( szNextName - pszName ) );
 		if ( m_pFolders.Lookup( strName, pOutput ) )
 			return pOutput->GetFolderByName( szNextName + 1 );
 	}
