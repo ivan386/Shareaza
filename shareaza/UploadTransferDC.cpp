@@ -494,7 +494,7 @@ BOOL CUploadTransferDC::SendFile()
 	{
 		CString sAnswer;
 		sAnswer.Format( _T("$ADCSND file TTH/%s %I64u %I64u|"),
-			m_oTiger.toString(), m_nOffset, m_nLength );
+			(LPCTSTR)m_oTiger.toString(), m_nOffset, m_nLength );
 
 		m_pClient->SendCommand( sAnswer );
 	}
@@ -555,7 +555,7 @@ BOOL CUploadTransferDC::RequestTigerTree(CLibraryFile* pFile, QWORD nOffset, QWO
 
 	CString sAnswer;
 	sAnswer.Format( _T("$ADCSND tthl TTH/%s %I64u %I64u|"),
-		m_oTiger.toString(), nOffset, nLength );
+		(LPCTSTR)m_oTiger.toString(), nOffset, nLength );
 
 	m_pClient->SendCommand( sAnswer );
 	

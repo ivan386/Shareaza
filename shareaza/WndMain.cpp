@@ -1596,9 +1596,9 @@ void CMainWnd::UpdateMessages()
 		{
 			m_pTaskbar->SetProgressState( hWnd, TBPF_NORMAL );
 			m_pTaskbar->SetProgressValue( hWnd, nComplete, nTotal );
-			sAppBarTip.Format( _T("%s\r\n%s %.2f%%\r\n%s %s"), Settings.SmartAgent(),
-				LoadString( IDS_DLM_VOLUME_DOWNLOADED ), float( ( 10000 * nComplete ) / nTotal ) / 100.f,
-				LoadString( IDS_DLM_TOTAL_SPEED ), Settings.SmartSpeed( CGraphItem::GetValue( GRC_TOTAL_BANDWIDTH_IN ), bits ) );
+			sAppBarTip.Format( _T("%s\r\n%s %.2f%%\r\n%s %s"), (LPCTSTR)Settings.SmartAgent(),
+				(LPCTSTR)LoadString( IDS_DLM_VOLUME_DOWNLOADED ), float( ( 10000 * nComplete ) / nTotal ) / 100.f,
+				(LPCTSTR)LoadString( IDS_DLM_TOTAL_SPEED ), (LPCTSTR)Settings.SmartSpeed( CGraphItem::GetValue( GRC_TOTAL_BANDWIDTH_IN ), bits ) );
 		}
 		else
 		{
@@ -3199,7 +3199,7 @@ bool CMainWnd::SnarlNotify(const CString& sText, const CString& sTitle, DWORD dw
 
 	CStringA sCommand;
 	sCommand.Format( "notify?app-sig=app/%s&timeout=%u&title=%s&text=%s",
-		CLIENT_NAME, uTimeout, UTF8Encode( sSafeTitle ), UTF8Encode( sSafeText ) );
+		CLIENT_NAME, uTimeout, (LPCSTR)UTF8Encode( sSafeTitle ), (LPCSTR)UTF8Encode( sSafeText ) );
 
 	switch ( dwIcon & NIIF_ICON_MASK )
 	{

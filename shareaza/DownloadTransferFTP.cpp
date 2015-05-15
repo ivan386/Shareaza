@@ -49,8 +49,8 @@ inline void MakePORTArgs(const SOCKADDR_IN& host, CString& strValue)
 		unsigned( host.sin_addr.S_un.S_un_b.s_b2 ),
 		unsigned( host.sin_addr.S_un.S_un_b.s_b3 ),
 		unsigned( host.sin_addr.S_un.S_un_b.s_b4 ),
-		host.sin_port & 0xff,
-		(host.sin_port >> 8) & 0xff );
+		(BYTE)(   host.sin_port       & 0xff ),
+		(BYTE)( ( host.sin_port >> 8) & 0xff ) );
 }
 
 inline bool ParsePASVArgs(const CString& args, SOCKADDR_IN& host)

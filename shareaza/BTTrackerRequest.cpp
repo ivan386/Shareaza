@@ -200,7 +200,7 @@ CString CBTTrackerPacket::GetType() const
 		break;
 
 	default:
-		sType.Format( _T("%d"), m_nAction );
+		sType.Format( _T("%lu"), m_nAction );
 	}
 	return sType;
 }

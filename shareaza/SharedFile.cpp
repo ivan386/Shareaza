@@ -1507,7 +1507,7 @@ BOOL CLibraryFile::PrepareDoc(LPCTSTR pszTemplate, CArray< CString >& oDocs) con
 		ReplaceNoCase( strDoc, _T("$meta:comments$"), m_sComments );
 
 	CString strNumber;
-	strNumber.Format( _T("%d"), oDocs.GetCount() + 1 );
+	strNumber.Format( _T("%d"), (int)oDocs.GetCount() + 1 );
 	ReplaceNoCase( strDoc, _T("$meta:number$"), strNumber );
 
 	// Replace all "$meta:xxx$" which were left in the file to "N/A"

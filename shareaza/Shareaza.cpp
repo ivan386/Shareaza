@@ -1893,7 +1893,7 @@ CString	TimeToString(FILETIME* pTime)
 
 	FileTimeToSystemTime( pTime, &pOut );
 
-	str.Format( _T("%.4i-%.2i-%.2iT%.2i:%.2iZ"),
+	str.Format( _T("%.4u-%.2u-%.2uT%.2u:%.2uZ"),
 		pOut.wYear, pOut.wMonth, pOut.wDay,
 		pOut.wHour, pOut.wMinute );
 
@@ -2792,7 +2792,7 @@ CString LoadRichHTML(UINT nResourceID, CString& strResponse, CShareazaFile* pFil
 		{
 			if ( Network.IsListening() )
 			{
-				strReplace.Format( _T("%s:%i"),
+				strReplace.Format( _T("%s:%u"),
 					(LPCTSTR)CString( inet_ntoa( Network.m_pHost.sin_addr ) ),
 					htons( Network.m_pHost.sin_port ) );
 			}

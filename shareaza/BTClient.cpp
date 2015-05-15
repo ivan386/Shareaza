@@ -840,10 +840,10 @@ void CBTClient::DetermineUserAgent( const Hashes::BtGuid& oGUID )
 	{	
 		// BitLord
 		if  ( oGUID[6] == 'L' && oGUID[7] == 'O' && oGUID[8] == 'R' && oGUID[9] == 'D' )
-			sUserAgent.Format( _T("BitLord %i.%02i"), oGUID[4], oGUID[5] );
+			sUserAgent.Format( _T("BitLord %u.%02u"), oGUID[4], oGUID[5] );
 		// Old BitComet
 		else 
-			sUserAgent.Format( _T("BitComet %i.%02i"), oGUID[4], oGUID[5] );
+			sUserAgent.Format( _T("BitComet %u.%02u"), oGUID[4], oGUID[5] );
 	}
 	else if  ( ( oGUID[0] == 'B' && oGUID[1] == 'S' ) || ( oGUID[2] == 'B' && oGUID[3] == 'S' ) )
 	{	// BitSpirit

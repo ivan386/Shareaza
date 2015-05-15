@@ -1539,14 +1539,14 @@ CString CHostCacheHost::ToString(const bool bLong) const
 		tm time = {};
 		if ( gmtime_s( &time, &tSeen ) == 0 )
 		{
-			str.Format( _T("%s:%i %.4i-%.2i-%.2iT%.2i:%.2iZ"),
+			str.Format( _T("%s:%u %.4i-%.2i-%.2iT%.2i:%.2iZ"),
 				(LPCTSTR)CString( inet_ntoa( m_pAddress ) ), m_nPort,
 				time.tm_year + 1900, time.tm_mon + 1, time.tm_mday,
 				time.tm_hour, time.tm_min ); // 2002-04-30T08:30Z
 			return str;
 		}
 	}
-	str.Format( _T("%s:%i"),
+	str.Format( _T("%s:%u"),
 		(LPCTSTR)CString( inet_ntoa( m_pAddress ) ), m_nPort );
 	return str;
 }

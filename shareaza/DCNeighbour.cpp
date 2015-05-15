@@ -251,9 +251,9 @@ BOOL CDCNeighbour::SendUserInfo()
 		// Number of connected hubs as regular user
 		Neighbours.GetCount( PROTOCOL_DC, nrsConnected, ntHub ),
 		// Number of connected hubs as VIP
-		0,
+		0u,
 		// Number of connected hubs as operator
-		0,
+		0u,
 		// Number of upload slots
 		nUploadSlots,
 		// Upload speed (Mbit/s)

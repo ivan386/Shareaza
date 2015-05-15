@@ -1631,15 +1631,15 @@ void CQueryHit::ReadEDPacket(CEDPacket* pPacket, const SOCKADDR_IN* pServer, BOO
 
 			if ( pTag.m_sValue.GetLength() < 3 )
 			{
-				_stscanf( pTag.m_sValue, _T("%i"), &nSecs );
+				_stscanf( pTag.m_sValue, _T("%lu"), &nSecs );
 			}
 			else if ( pTag.m_sValue.GetLength() < 6 )
 			{
-				_stscanf( pTag.m_sValue, _T("%i:%i"), &nMins, &nSecs );
+				_stscanf( pTag.m_sValue, _T("%lu:%lu"), &nMins, &nSecs );
 			}
 			else
 			{
-				_stscanf( pTag.m_sValue, _T("%i:%i:%i"), &nHours, &nMins, &nSecs );
+				_stscanf( pTag.m_sValue, _T("%lu:%lu:%lu"), &nHours, &nMins, &nSecs );
 			}
 
 			nLength = (nHours * 60 * 60) + (nMins * 60) + (nSecs);

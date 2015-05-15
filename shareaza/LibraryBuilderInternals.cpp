@@ -337,7 +337,7 @@ bool CLibraryBuilderInternals::ExtractProperties(DWORD nIndex, const CString& st
 						if ( PropGetValue( pStore, PKEY_Document_PageCount, nPages ) && nPages > 0 )
 						{
 							CString strItem;
-							strItem.Format( _T("%lu"), nPages );
+							strItem.Format( _T("%ld"), nPages );
 							pXML->AddAttribute( _T("pages"), strItem );
 						}
 
@@ -4320,7 +4320,7 @@ bool CLibraryBuilderInternals::ReadCHM(DWORD nIndex, HANDLE hFile, LPCTSTR pszPa
 	TCHAR *pszBuffer = NULL;
 	UINT nCodePage = CP_ACP;
 	DWORD nCwc;
-	DWORD_PTR charSet = DEFAULT_CHARSET;
+	DWORD charSet = DEFAULT_CHARSET;
 	bool bHasTitle = false;
 
 	// Find default ANSI codepage for given LCID
@@ -4332,7 +4332,7 @@ bool CLibraryBuilderInternals::ReadCHM(DWORD nIndex, HANDLE hFile, LPCTSTR pszPa
 		strTemp = pszBuffer;
 		strTemp = strTemp.Left( nCwc - 1 );
 		_stscanf( strTemp, _T("%lu"), &charSet );
-		if ( TranslateCharsetInfo( (LPDWORD)charSet, &csInfo, TCI_SRCCODEPAGE ) )
+		if ( TranslateCharsetInfo( (LPDWORD)(DWORD_PTR)charSet, &csInfo, TCI_SRCCODEPAGE ) )
 			nCodePage = csInfo.ciACP;
 	}
 	SetFilePointer( hFile, nPos, NULL, FILE_BEGIN );

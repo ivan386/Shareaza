@@ -455,7 +455,7 @@ bool CDownloadWithFile::GetAvailableRanges(CString& strRanges) const
 	for ( ; pItr != pEnd && strRanges.GetLength() < HTTP_HEADER_MAX_LINE - 256
 		; ++pItr )
 	{
-		strRange.Format( _T("%I64i-%I64i,"), pItr->begin(), pItr->end() - 1 );
+		strRange.Format( _T("%I64u-%I64u,"), pItr->begin(), pItr->end() - 1 );
 		strRanges += strRange;
 	}
 

@@ -767,7 +767,7 @@ BOOL CShareazaURL::ParseShareaza(LPCTSTR pszURL)
 	{
 		if ( ParseShareazaHost( SkipSlashes( pszURL, 7 ), FALSE, PROTOCOL_BT ) )
 		{
-			m_sAddress.Format( _T("%s:%u"), m_sName, m_nPort );
+			m_sAddress.Format( _T("%s:%u"), (LPCTSTR)m_sName, m_nPort );
 			return TRUE;
 		}
 		return FALSE;
@@ -799,7 +799,7 @@ BOOL CShareazaURL::ParseShareazaHost(LPCTSTR pszURL, BOOL bBrowse, PROTOCOLID nP
 
 	if ( nPos >= 0 )
 	{
-		_stscanf( m_sName.Mid( nPos + 1 ), _T("%i"), &m_nPort );
+		_stscanf( m_sName.Mid( nPos + 1 ), _T("%hu"), &m_nPort );
 		m_sName = m_sName.Left( nPos );
 	}
 
@@ -1049,7 +1049,7 @@ BOOL CShareazaURL::ParseDonkeyFile(LPCTSTR pszURL)
 
 		// Now we have the source in x.x.x.x:port format.
 		CString strEDFTP;
-		strEDFTP.Format( _T("ed2kftp://%s/%s/%I64u/"), strPart, (LPCTSTR)m_oED2K.toString(), m_nSize );
+		strEDFTP.Format( _T("ed2kftp://%s/%s/%I64u/"), (LPCTSTR)strPart, (LPCTSTR)m_oED2K.toString(), m_nSize );
 		SafeString( strEDFTP );
 		if ( m_sURL.GetLength() ) m_sURL += _T(", ");
 		m_sURL += strEDFTP;
@@ -1066,7 +1066,7 @@ BOOL CShareazaURL::ParseDonkeyServer(LPCTSTR pszURL)
 	LPCTSTR pszPort = _tcschr( pszURL, '|' );
 	if ( pszPort == NULL ) return FALSE;
 
-	if ( _stscanf( pszPort + 1, _T("%i"), &m_nPort ) != 1 ) return FALSE;
+	if ( _stscanf( pszPort + 1, _T("%hu"), &m_nPort ) != 1 ) return FALSE;
 
 	m_sName = pszURL;
 	m_sName = m_sName.Left( static_cast< int >( pszPort - pszURL ) );
@@ -1075,7 +1075,7 @@ BOOL CShareazaURL::ParseDonkeyServer(LPCTSTR pszURL)
 	m_sName.TrimRight();
 	if ( m_sName.IsEmpty() ) return FALSE;
 
-	m_sAddress.Format( _T("%s:%u"), m_sName, m_nPort );
+	m_sAddress.Format( _T("%s:%u"), (LPCTSTR)m_sName, m_nPort );
 
 	m_nProtocol = PROTOCOL_ED2K;
 	m_nAction	= uriHost;
@@ -1470,7 +1470,7 @@ BOOL CShareazaURL::RegisterShellType(LPCTSTR pszRoot, LPCTSTR pszProtocol, LPCTS
 		{
 			if ( RegCreateKey( hSub2, _T("command"), &hSub3 ) == ERROR_SUCCESS )
 			{
-				strValue.Format( _T("\"%s\" \"%%%c\""), theApp.m_strBinaryPath, bProtocol ? _T('L') : _T('1') );
+				strValue.Format( _T("\"%s\" \"%%%c\""), (LPCTSTR)theApp.m_strBinaryPath, bProtocol ? _T('L') : _T('1') );
 				RegSetValueEx( hSub3, NULL, 0, REG_STRING( strValue ) );
 				RegCloseKey( hSub3 );
 			}
@@ -1706,7 +1706,7 @@ BOOL CShareazaURL::RegisterMagnetHandler(LPCTSTR pszID, LPCTSTR pszName, LPCTSTR
 	CString strIcon, strCommand;
 
 	strIcon = Skin.GetImagePath( nIDIcon );
-	strCommand.Format( _T("\"%s\" \"%%URL\""), theApp.m_strBinaryPath );
+	strCommand.Format( _T("\"%s\" \"%%URL\""), (LPCTSTR)theApp.m_strBinaryPath );
 
 	RegSetValueEx( hHandler, _T(""), 0, REG_STRING( pszName ) );
 	RegSetValueEx( hHandler, _T("Description"), 0, REG_STRING( pszDescription ) );

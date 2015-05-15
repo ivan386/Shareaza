@@ -439,7 +439,7 @@ BOOL CDownloadTransferHTTP::SendRequest()
 			{
 				if ( m_pSource->m_nGnutella < 2 )
 				{
-					strLine.Format( _T("%s:%i"),
+					strLine.Format( _T("%s:%u"),
 						(LPCTSTR)CString( inet_ntoa( Network.m_pHost.sin_addr ) ),
 						htons( Network.m_pHost.sin_port ) );
 					Write( _P("X-Alt: ") );
@@ -1501,7 +1501,7 @@ BOOL CDownloadTransferHTTP::ReadTiger(bool bDropped)
 						if ( CXMLElement* pxFile = pXML->GetElementByName( _T("file") ) )
 						{
 							QWORD nSize = 0;
-							_stscanf( pxFile->GetAttributeValue( _T("size") ), _T("%I64i"), &nSize );
+							_stscanf( pxFile->GetAttributeValue( _T("size") ), _T("%I64u"), &nSize );
 							bSize = ( nSize == m_pDownload->m_nSize );
 						}
 						if ( CXMLElement* pxDigest = pXML->GetElementByName( _T("digest") ) )

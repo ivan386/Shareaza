@@ -520,7 +520,7 @@ BOOL CHostBrowser::LoadDCDirectory(CXMLElement* pRoot, CQueryHit*& pHits)
 
 			CString sName = pElement->GetAttributeValue( _T("Name") );
 			QWORD nSize;
-			if ( _stscanf( pElement->GetAttributeValue( _T("Size") ), _T("%I64i"), &nSize ) != 1 )
+			if ( _stscanf( pElement->GetAttributeValue( _T("Size") ), _T("%I64u"), &nSize ) != 1 )
 				nSize = SIZE_UNKNOWN;
 			CString sTiger = pElement->GetAttributeValue( _T("TTH") );
 

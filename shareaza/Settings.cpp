@@ -1432,7 +1432,7 @@ void CSettings::SetStartup(BOOL bStartup)
 	if ( bStartup )
 	{
 		CString strCommand;
-		strCommand.Format( _T("\"%s\" -tray"), theApp.m_strBinaryPath );
+		strCommand.Format( _T("\"%s\" -tray"), (LPCTSTR)theApp.m_strBinaryPath );
 		RegSetValueEx( hKey, CLIENT_NAME_T, 0, REG_SZ, (const BYTE*)(LPCTSTR)strCommand,
 			( strCommand.GetLength() + 1 ) * sizeof(TCHAR) );
 	}
@@ -1485,17 +1485,17 @@ const CString CSettings::SmartSpeed(QWORD nVolume, int nVolumeUnits, bool bTrunc
 
 	// bits - Bytes
 	case 1:
-		strVolume.Format( _T("%I64u %s"), nVolume, strUnit );
+		strVolume.Format( _T("%I64u %s"), nVolume, (LPCTSTR)strUnit );
 		break;
 
 	// Kilobits - KiloBytes
 	case 2:
-		strVolume.Format( _T("%.2lf K%s"), nVolume / fKilo, strUnit );
+		strVolume.Format( _T("%.2lf K%s"), nVolume / fKilo, (LPCTSTR)strUnit );
 		break;
 
 	// Megabits - MegaBytes
 	case 3:
-		strVolume.Format( _T("%.2lf M%s"), nVolume / fMega, strUnit );
+		strVolume.Format( _T("%.2lf M%s"), nVolume / fMega, (LPCTSTR)strUnit );
 		break;
 
 	default:

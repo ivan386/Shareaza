@@ -248,7 +248,7 @@ typename RangeT::size_type List< RangeT, TraitsT, ContainerT >::insert(const Ran
 	{
 //		throw ListException( value, limit() );
 		CString msg;
-		msg.Format( _T( "ListError - insert - size: %u - limit: %I64u - sum: %I64u - " )
+		msg.Format( _T( "ListError - insert - size: %I64u - limit: %I64u - sum: %I64u - " )
 			_T( "Range - begin: %I64u - end: %I64u" ),
 			size(), limit(), Traits::length_sum(), value.begin(), value.end() );
 		theApp.Message( MSG_ERROR, msg );
@@ -269,7 +269,7 @@ typename RangeT::size_type List< RangeT, TraitsT, ContainerT >::insert(
 	{
 //		throw ListException( value, limit() );
 		CString msg;
-		msg.Format( _T( "ListError - insert(h) - size: %u - limit: %I64u - sum: %I64u - " )
+		msg.Format( _T( "ListError - insert(h) - size: %I64u - limit: %I64u - sum: %I64u - " )
 			_T( "Range - begin: %I64u - end: %I64u" ),
 			size(), limit(), Traits::length_sum(), value.begin(), value.end() );
 		theApp.Message( MSG_ERROR, msg );
@@ -290,8 +290,8 @@ typename RangeT::size_type List< RangeT, TraitsT, ContainerT >::erase(const Rang
 	{
 //		throw ListException( value, limit() );
 		CString msg;
-		msg.Format( _T( "ListError - erase - size: %u - limit: %I64u - sum: %I64u - " )
-			_T( "Range - begin: %I64i - end: %I64u" ),
+		msg.Format( _T( "ListError - erase - size: %I64u - limit: %I64u - sum: %I64u - " )
+			_T( "Range - begin: %I64u - end: %I64u" ),
 			size(), limit(), Traits::length_sum(), value.begin(), value.end() );
 		theApp.Message( MSG_ERROR, msg );
 		return 0;

@@ -484,14 +484,14 @@ BOOL CSecureRule::FromXML(CXMLElement* pXML)
 		m_nType = srAddress;
 
 		CString strAddress = pXML->GetAttributeValue( _T("address") );
-		if ( _stscanf( strAddress, _T("%lu.%lu.%lu.%lu"), &x[0], &x[1], &x[2], &x[3] ) == 4 )
+		if ( _stscanf( strAddress, _T("%d.%d.%d.%d"), &x[0], &x[1], &x[2], &x[3] ) == 4 )
 		{
 			m_nIP[0] = (BYTE)x[0]; m_nIP[1] = (BYTE)x[1];
 			m_nIP[2] = (BYTE)x[2]; m_nIP[3] = (BYTE)x[3];
 		}
 
 		CString strMask = pXML->GetAttributeValue( _T("mask") );
-		if ( _stscanf( strMask, _T("%lu.%lu.%lu.%lu"), &x[0], &x[1], &x[2], &x[3] ) == 4 )
+		if ( _stscanf( strMask, _T("%d.%d.%d.%d"), &x[0], &x[1], &x[2], &x[3] ) == 4 )
 		{
 			m_nMask[0] = (BYTE)x[0]; m_nMask[1] = (BYTE)x[1];
 			m_nMask[2] = (BYTE)x[2]; m_nMask[3] = (BYTE)x[3];
@@ -596,7 +596,7 @@ BOOL CSecureRule::FromGnucleusString(CString& str)
 	CString strAddress = str.Left( nPos );
 	str = str.Mid( nPos + 1 );
 
-	if ( _stscanf( strAddress, _T("%lu.%lu.%lu.%lu"), &x[0], &x[1], &x[2], &x[3] ) != 4 )
+	if ( _stscanf( strAddress, _T("%d.%d.%d.%d"), &x[0], &x[1], &x[2], &x[3] ) != 4 )
 		return FALSE;
 
 	m_nIP[0] = (BYTE)x[0]; m_nIP[1] = (BYTE)x[1];
@@ -608,7 +608,7 @@ BOOL CSecureRule::FromGnucleusString(CString& str)
 	{
 		strAddress = strAddress.Mid( nPos + 1 );
 
-		if ( _stscanf( strAddress, _T("%lu.%lu.%lu.%lu"), &x[0], &x[1], &x[2], &x[3] ) != 4 )
+		if ( _stscanf( strAddress, _T("%d.%d.%d.%d"), &x[0], &x[1], &x[2], &x[3] ) != 4 )
 			return FALSE;
 
 		for ( int nByte = 0 ; nByte < 4 ; nByte++ )

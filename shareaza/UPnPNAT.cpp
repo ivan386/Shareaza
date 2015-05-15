@@ -144,12 +144,12 @@ void CUPnPNAT::OnRun()
 				CString strInfo;
 				for ( int i = 0; IsThreadEnabled() && i < 5; ++i )
 				{
-					strInfo.Format( _T("%s at %s:%u"), CLIENT_NAME_T _T(" TCP"), strLocalIP, nPort );
+					strInfo.Format( _T("%s at %s:%u"), CLIENT_NAME_T _T(" TCP"), (LPCTSTR)strLocalIP, nPort );
 					m_nExternalTCPPort = MapPort( pCollection, strLocalIP, nPort, L"TCP", strInfo );
 					if ( m_nExternalTCPPort  )
 						theApp.Message( MSG_DEBUG, _T("UPnP successfully mapped TCP port %u."), m_nExternalTCPPort );
 
-					strInfo.Format( _T("%s at %s:%u"), CLIENT_NAME_T _T(" UDP"), strLocalIP, nPort );
+					strInfo.Format( _T("%s at %s:%u"), CLIENT_NAME_T _T(" UDP"), (LPCTSTR)strLocalIP, nPort );
 					m_nExternalUDPPort = MapPort( pCollection, strLocalIP, nPort, L"UDP", strInfo );
 					if ( m_nExternalUDPPort  )
 						theApp.Message( MSG_DEBUG, _T("UPnP successfully mapped UDP port %u."), m_nExternalUDPPort );

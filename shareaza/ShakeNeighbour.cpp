@@ -720,7 +720,7 @@ BOOL CShakeNeighbour::OnHeaderLine(CString& strHeader, CString& strValue)
 			// Mid clips the strValue text from beyond the colon to the end
 			// _stscanf is like scanf, and %1u means read the text as a long unsigned number
 			// The If block makes sure that _stscanf successfully reads 1 item, and the number it read isn't 0
-			if (_stscanf( strValue.Mid( nColon + 1 ), _T("%lu"), &nPort ) == 1 && nPort != 0 )
+			if (_stscanf( strValue.Mid( nColon + 1 ), _T("%d"), &nPort ) == 1 && nPort != 0 )
 			{
 				// Save the remote computer port number in the connection object's m_pHost member variable
 				m_pHost.sin_port = htons( u_short( nPort ) ); // Call htons to go from PC little-endian to Internet big-endian byte order

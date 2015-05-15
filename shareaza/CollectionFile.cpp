@@ -574,7 +574,7 @@ BOOL CCollectionFile::File::Parse(CXMLElement* pRoot)
 			}
 			if ( CXMLElement* pSize = pXML->GetElementByName( _T("size") ) )
 			{
-				if ( _stscanf( pSize->GetValue(), _T("%I64i"), &m_nSize ) != 1 )
+				if ( _stscanf( pSize->GetValue(), _T("%I64u"), &m_nSize ) != 1 )
 					return FALSE;
 			}
 		}
@@ -596,7 +596,7 @@ BOOL CCollectionFile::File::Parse(CXMLElement* pRoot)
 	if ( m_sName.IsEmpty() && ! m_oTiger && m_nSize == SIZE_UNKNOWN )
 	{
 		m_sName = pRoot->GetAttributeValue( _T("Name") );
-		_stscanf( pRoot->GetAttributeValue( _T("Size") ), _T("%I64i"), &m_nSize );
+		_stscanf( pRoot->GetAttributeValue( _T("Size") ), _T("%I64u"), &m_nSize );
 		m_oTiger.fromString( pRoot->GetAttributeValue( _T("TTH") ) );
 	}
 

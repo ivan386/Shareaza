@@ -245,7 +245,7 @@ void CRichElement::PrePaintIcon(CDC* /*pDC*/)
 	if ( m_hImage != NULL || m_sText.IsEmpty() ) return;
 
 	UINT nID = 0, nWidth = 16, nHeight = 16;
-	_stscanf( m_sText, _T("%lu.%i.%i"), &nID, &nWidth, &nHeight );
+	_stscanf( m_sText, _T("%u.%u.%u"), &nID, &nWidth, &nHeight );
 	ASSERT( ( nWidth == 16 && nHeight == 16 ) || ( nWidth == 32 && nHeight == 32 ) );
 
 	m_hImage = CoolInterface.ExtractIcon( nID, Settings.General.LanguageRTL,
@@ -262,7 +262,7 @@ CSize CRichElement::GetSize() const
 
 	if ( m_nType == retGap )
 	{
-		_stscanf( m_sText, _T("%lu"), &sz.cx );
+		_stscanf( m_sText, _T("%ld"), &sz.cx );
 	}
 	else if ( m_nType == retBitmap && m_hImage != NULL )
 	{

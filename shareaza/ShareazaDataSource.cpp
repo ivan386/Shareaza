@@ -1451,11 +1451,11 @@ void CShareazaDataSource::FillBuffer(const CLibraryList* pList, LPTSTR& buf_HDRO
 						CString sTemp;
 						sTemp.Format(
 							_T("magnet:?xt=urn:bitprint:%s.%s&xt=%s&xl=%I64u&dn=%s"),
-							pFile->m_oSHA1.toString(),
-							pFile->m_oTiger.toString(),
-							pFile->m_oED2K.toUrn(),
+							(LPCTSTR)pFile->m_oSHA1.toString(),
+							(LPCTSTR)pFile->m_oTiger.toString(),
+							(LPCTSTR)pFile->m_oED2K.toUrn(),
 							pFile->m_nSize,
-							URLEncode( pFile->m_sName ) );
+							(LPCTSTR)URLEncode( pFile->m_sName ) );
 						if ( buf_Text.GetLength() )
 							buf_Text += _T("\r\n\r\n");
 						buf_Text += sTemp;

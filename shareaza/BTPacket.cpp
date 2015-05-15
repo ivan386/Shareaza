@@ -603,7 +603,7 @@ CString CBTPacket::GetType() const
 		sType = _T("Keep-Alive");
 		break;
 	default:
-		sType.Format( _T("%d"), m_nType );
+		sType.Format( _T("%u"), m_nType );
 	}
 	return sType;
 }

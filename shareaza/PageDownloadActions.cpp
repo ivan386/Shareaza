@@ -169,8 +169,8 @@ void CDownloadActionsPage::OnErase()
 {
 	QWORD nFrom = 0, nTo = 0;
 	if ( ! UpdateData() ||
-		 _stscanf( m_sEraseFrom, _T("%I64i"), &nFrom ) != 1 ||
-		 _stscanf( m_sEraseTo, _T("%I64i"), &nTo ) != 1 ||
+		 _stscanf( m_sEraseFrom, _T("%I64u"), &nFrom ) != 1 ||
+		 _stscanf( m_sEraseTo, _T("%I64u"), &nTo ) != 1 ||
 		 nTo < nFrom )
 	{
 		AfxMessageBox( IDS_DOWNLOAD_EDIT_BAD_RANGE, MB_ICONEXCLAMATION );

@@ -2057,7 +2057,7 @@ CString CQuerySearch::BuildRegExp(const CString& strPattern) const
 					for ( CQuerySearch::const_iterator i = begin(); i != end(); ++i )
 					{
 						strFilter.AppendFormat( L"%s\\s*", 
-							CString( i->first, (int)( i->second ) ) );
+							(LPCTSTR)CString( i->first, (int)( i->second ) ) );
 					}
 				}
 				else
@@ -2075,7 +2075,7 @@ CString CQuerySearch::BuildRegExp(const CString& strPattern) const
 						if ( nWord == nNumber )
 						{
 							strFilter.AppendFormat( L"%s\\s*", 
-								CString( i->first, (int)( i->second ) ) );
+								(LPCTSTR)CString( i->first, (int)( i->second ) ) );
 							break;
 						}
 					}

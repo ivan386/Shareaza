@@ -1224,7 +1224,7 @@ void CRemote::PageNetwork()
 	if ( ! pLock.Lock( 1000 ) ) return;
 	
 	DWORD nNeighbourID = 0;
-	_stscanf( GetKey( _T("drop") ), _T("%i"), &nNeighbourID );
+	_stscanf( GetKey( _T("drop") ), _T("%lu"), &nNeighbourID );
 	
 	if ( nNeighbourID != 0 )
 	{

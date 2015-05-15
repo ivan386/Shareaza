@@ -239,13 +239,13 @@ BOOL CUploadTransferHTTP::OnHeaderLine(CString& strHeader, CString& strValue)
 	{
 		QWORD nFrom = 0, nTo = 0;
 		
-		if ( _stscanf( strValue, _T("bytes=%I64i-%I64i"), &nFrom, &nTo ) == 2 )
+		if ( _stscanf( strValue, _T("bytes=%I64u-%I64u"), &nFrom, &nTo ) == 2 )
 		{
 			m_nOffset	= nFrom;
 			m_nLength	= nTo + 1 - nFrom;
 			m_bRange	= TRUE;
 		}
-		else if ( _stscanf( strValue, _T("bytes=%I64i-"), &nFrom ) == 1 )
+		else if ( _stscanf( strValue, _T("bytes=%I64u-"), &nFrom ) == 1 )
 		{
 			m_nOffset	= nFrom;
 			m_nLength	= SIZE_UNKNOWN;
@@ -552,7 +552,7 @@ BOOL CUploadTransferHTTP::OnHeadersComplete()
 
 		if ( LPCTSTR pszDepth = _tcsistr( m_sRequest, _T("depth=") ) )
 		{
-			_stscanf( pszDepth + 6, _T("%i"), &nDepth );
+			_stscanf( pszDepth + 6, _T("%lu"), &nDepth );
 		}
 
 		BOOL bHashset = ( _tcsistr( m_sRequest, _T("ed2k=1") ) != NULL );
@@ -1078,8 +1078,8 @@ void CUploadTransferHTTP::SendFileHeaders()
 	if ( m_bTigerTree && Settings.Uploads.ShareTiger )
 	{
 		CString strTigerURL;
-		strTigerURL.Format( _T("X-Thex-URI: /gnutella/thex/v1?%s&depth=%u&ed2k=%u;%s\r\n"),
-			m_oTiger.toUrn(), Settings.Library.TigerHeight, ( m_bHashset ? 1 : 0 ), m_oTiger.toString() );
+		strTigerURL.Format( _T("X-Thex-URI: /gnutella/thex/v1?%s&depth=%u&ed2k=%d;%s\r\n"),
+			(LPCTSTR)m_oTiger.toUrn(), Settings.Library.TigerHeight, ( m_bHashset ? 1 : 0 ), (LPCTSTR)m_oTiger.toString() );
 		Write( strTigerURL );
 	}
 
