@@ -2788,9 +2788,8 @@ send_error(const struct sockaddr *sa, int salen,
     char buf[512];
     int i = 0, rc, message_len;
 
-	message_len = (int)strlen(message);
-    rc = snprintf(buf + i, 512 - i, "d1:eli%de%d:",
-                  code, message_len);
+    message_len = (int)strlen(message);
+    rc = snprintf(buf + i, 512 - i, "d1:eli%de%d:", code, message_len);
     INC(i, rc, 512);
     COPY(buf, i, message, message_len, 512);
     rc = snprintf(buf + i, 512 - i, "e1:t%d:", tid_len); INC(i, rc, 512);
