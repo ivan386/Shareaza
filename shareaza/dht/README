@@ -1,9 +1,3 @@
-Sources: https://github.com/jech/dht
-Info: http://www.pps.univ-paris-diderot.fr/~jch/software/bittorrent/
-
-Description
-**************
-
 The files dht.c and dht.h implement the variant of the Kademlia Distributed
 Hash Table (DHT) used in the Bittorrent network (``mainline'' variant).
 

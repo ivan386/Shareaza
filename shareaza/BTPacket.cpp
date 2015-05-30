@@ -1,7 +1,7 @@
 //
 // BTPacket.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2014.
+// Copyright (c) Shareaza Development Team, 2002-2015.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -46,9 +46,18 @@ CDHT DHT;
 
 extern "C"
 {
+	// Sources: https ://github.com/jech/dht
+	// Info : http ://www.pps.univ-paris-diderot.fr/~jch/software/bittorrent/
+
 	#pragma warning(push,2)
+
+	#ifndef _CRT_SECURE_NO_WARNINGS
+		#define _CRT_SECURE_NO_WARNINGS
+	#endif
+
 	#include "dht/dht.h"
 	#include "dht/dht.c"
+
 	#pragma warning(pop)
 
 	// Callback functions:
@@ -86,7 +95,7 @@ extern "C"
 		return CryptGenRandom( theApp.m_hCryptProv, (DWORD)size, (BYTE*)buf ) ? 0 : -1;
 	}
 
-	int dht_sendto(int /*s*/, const char *buf, int len, int /*flags*/, const struct sockaddr *to, int tolen)
+	int dht_sendto(int /*s*/, const void *buf, int len, int /*flags*/, const struct sockaddr *to, int tolen)
 	{
 		if ( tolen != sizeof( SOCKADDR_IN ) )
 			// IPv6 not supported

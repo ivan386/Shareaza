@@ -31,36 +31,30 @@ THE SOFTWARE.
 /* For memmem. */
 #define _GNU_SOURCE
 
-#if defined(_MSC_VER)
-#define _CRT_SECURE_NO_WARNINGS
-#endif
-
 #include <stdio.h>
 #include <stdlib.h>
 #include <errno.h>
 #include <string.h>
 #include <stdarg.h>
-#include <fcntl.h>
 
-#ifndef WIN32
-    #include <unistd.h>
-    #include <sys/time.h>
-    #include <arpa/inet.h>
-    #include <sys/types.h>
-    #include <sys/socket.h>
-    #include <netinet/in.h>
+#ifndef _WIN32
+#include <unistd.h>
+#include <fcntl.h>
+#include <sys/time.h>
+
+#include <arpa/inet.h>
+#include <sys/types.h>
+#include <sys/socket.h>
+#include <netinet/in.h>
 #else
-    #include <ws2tcpip.h>
-    #if !defined(_MSC_VER)
-        #include <unistd.h>
-        #include <sys/time.h>
-        #include <w32api.h>
-        #define WINVER WindowsXP
-        extern const char *inet_ntop(int, const void *, char *, socklen_t);
-    #else
-        #define inet_ntop InetNtopA
-        #define snprintf _snprintf
-    #endif
+#ifndef _WIN32_WINNT
+#define _WIN32_WINNT 0x0501 /* Windows XP */
+#endif
+#ifndef WINVER
+#define WINVER _WIN32_WINNT
+#endif
+#include <ws2tcpip.h>
+#include <windows.h>
 #endif
 
 #include "dht.h"
@@ -75,78 +69,100 @@ THE SOFTWARE.
 #define MSG_CONFIRM 0
 #endif
 
-#ifdef WIN32
+#ifdef _WIN32
 
-#ifndef EAFNOSUPPORT
+#undef EAFNOSUPPORT
 #define EAFNOSUPPORT WSAEAFNOSUPPORT
-#endif
+
+static int
+set_nonblocking(int fd, int nonblocking)
+{
+/*
+    int rc;
+
+    unsigned long mode = !!nonblocking;
+    rc = ioctlsocket(fd, FIONBIO, &mode);
+    if(rc != 0)
+        errno = WSAGetLastError();
+    return (rc == 0 ? 0 : -1);
+*/
+	fd;
+	nonblocking;
+	return 0;
+}
 
 static int
 random(void)
 {
     return rand();
 }
-//extern const char *inet_ntop(int, const void *, char *, socklen_t);
 
-#if defined(_MSC_VER)
+/* Windows Vista and later already provide the implementation. */
+#if _WIN32_WINNT < 0x0600
+extern const char *inet_ntop(int, const void *, char *, socklen_t);
+#endif
 
-// Define gettimeofday() undefined in Win32
+#ifdef _MSC_VER
+/* There is no snprintf in MSVCRT. */
+#define snprintf _snprintf
+#endif
 
-#define DELTA_EPOCH_IN_MICROSECS  11644473600000000Ui64
-
-struct timeval64 {
-	__int64    tv_sec;         /* seconds */
-	__int64    tv_usec;        /* and microseconds */
-};
-
-struct timezone {
-	int  tz_minuteswest; /* minutes W of Greenwich */
-	int  tz_dsttime;     /* type of dst correction */
-};
+#else
 
 static int
-gettimeofday(struct timeval64 *tv, struct timezone *tz)
+set_nonblocking(int fd, int nonblocking)
 {
-    FILETIME ft;
-    unsigned __int64 tmpres = 0;
-    static int tzflag;
-    long zone = 0;
-    int daylight = 0;
+    int rc;
+    rc = fcntl(fd, F_GETFL, 0);
+    if(rc < 0)
+        return -1;
 
-    if(NULL != tv)
-    {
-        GetSystemTimeAsFileTime(&ft);
-
-        tmpres |= ft.dwHighDateTime;
-        tmpres <<= 32;
-        tmpres |= ft.dwLowDateTime;
-
-        /*converting file time to unix epoch*/
-        tmpres -= DELTA_EPOCH_IN_MICROSECS;
-        tmpres /= 10Ui64;  /*convert into microseconds*/
-        tv->tv_sec = (tmpres / 1000000Ui64);
-        tv->tv_usec = (tmpres % 1000000Ui64);
-    }
-
-    if(NULL != tz)
-    {
-        if(!tzflag)
-        {
-            _tzset();
-            tzflag++;
-        }
-
-        _get_timezone( &zone );
-        tz->tz_minuteswest = zone / 60;
-
-        _get_daylight( &daylight );
-        tz->tz_dsttime = daylight;
-    }
+    rc = fcntl(fd, F_SETFL, nonblocking?(rc | O_NONBLOCK):(rc & ~O_NONBLOCK));
+    if(rc < 0)
+        return -1;
 
     return 0;
 }
 
 #endif
+
+#if !defined(gettimeofday)	// Define gettimeofday() undefined in Win32
+
+struct timeval64 {
+	time_t tv_sec;		/* seconds */
+	time_t tv_usec;		/* and microseconds */
+};
+
+struct timezone {
+	int tz_minuteswest;	/* minutes W of Greenwich */
+	int tz_dsttime;		/* type of dst correction */
+};
+
+static int
+gettimeofday(struct timeval64 *tv, struct timezone *tz)
+{
+	FILETIME ft;
+	unsigned __int64 tmpres;
+	long zone = 0;
+	int daylight = 0;
+
+	if(tv) {
+		GetSystemTimeAsFileTime(&ft);
+		tmpres = ((((unsigned __int64)ft.dwHighDateTime << 32) | ft.dwLowDateTime) - 11644473600000000ULL) / 10ULL;
+		tv->tv_sec = (tmpres / 1000000ULL);
+		tv->tv_usec = (tmpres % 1000000ULL);
+	}
+
+	if(tz) {
+		_get_timezone(&zone);
+		tz->tz_minuteswest = zone / 60;
+
+		_get_daylight(&daylight);
+		tz->tz_dsttime = daylight;
+	}
+
+	return 0;
+}
 
 #endif
 
@@ -187,7 +203,7 @@ struct bucket {
     int af;
     unsigned char first[20];
     int count;                  /* number of nodes */
-    int time;                   /* time of last reply in this bucket */
+    time_t time;                /* time of last reply in this bucket */
     struct node *nodes;
     struct sockaddr_storage cached;  /* the address of a likely candidate */
     int cachedlen;
@@ -363,8 +379,6 @@ static time_t expire_stuff_time;
 static time_t token_bucket_time;
 static int token_bucket_tokens;
 
-#ifdef DHT_DEBUG
-
 FILE *dht_debug = NULL;
 
 #ifdef __GNUC__
@@ -399,14 +413,6 @@ print_hex(FILE *f, const unsigned char *buf, int buflen)
     for(i = 0; i < buflen; i++)
         fprintf(f, "%02x", buf[i]);
 }
-
-#else
-
-#define debugf  __noop // ATLTRACE
-#define debug_printable(x,y) __noop // ATLTRACE("%*s",y,x)
-#define print_hex __noop
-
-#endif // DHT_DEBUG
 
 static int
 is_martian(const struct sockaddr *sa)
@@ -465,8 +471,6 @@ lowbit(const unsigned char *id)
     return 8 * i + j;
 }
 
-#ifdef DHT_DEBUG
-
 /* Find how many bits two ids have in common. */
 static int
 common_bits(const unsigned char *id1, const unsigned char *id2)
@@ -491,8 +495,6 @@ common_bits(const unsigned char *id1, const unsigned char *id2)
 
     return 8 * i + j;
 }
-
-#endif // DHT_DEBUG
 
 /* Determine whether id1 or id2 is closer to ref */
 static int
@@ -1588,8 +1590,6 @@ dht_nodes(int af, int *good_return, int *dubious_return, int *cached_return,
     return good + dubious;
 }
 
-#ifdef DHT_DEBUG
-
 static void
 dump_bucket(FILE *f, struct bucket *b)
 {
@@ -1635,6 +1635,7 @@ dump_bucket(FILE *f, struct bucket *b)
         fprintf(f, "\n");
         n = n->next;
     }
+
 }
 
 void
@@ -1711,8 +1712,6 @@ dht_dump_tables(FILE *f)
     fflush(f);
 }
 
-#endif // DHT_DEBUG
-
 int
 dht_init(int s, int s6, const unsigned char *id, const unsigned char *v)
 {
@@ -1734,6 +1733,10 @@ dht_init(int s, int s6, const unsigned char *id, const unsigned char *v)
         if(buckets == NULL)
             return -1;
         buckets->af = AF_INET;
+
+        rc = set_nonblocking(s, 1);
+        if(rc < 0)
+            goto fail;
     }
 
     if(s6 >= 0) {
@@ -1741,6 +1744,10 @@ dht_init(int s, int s6, const unsigned char *id, const unsigned char *v)
         if(buckets6 == NULL)
             return -1;
         buckets6->af = AF_INET6;
+
+        rc = set_nonblocking(s6, 1);
+        if(rc < 0)
+            goto fail;
     }
 
     memcpy(myid, id, 20);
@@ -1782,6 +1789,8 @@ dht_init(int s, int s6, const unsigned char *id, const unsigned char *v)
  fail:
     free(buckets);
     buckets = NULL;
+    free(buckets6);
+    buckets6 = NULL;
     return -1;
 }
 
@@ -1980,9 +1989,9 @@ dht_periodic(const unsigned char *buf, size_t buflen,
     if(buflen > 0) {
         int message;
         unsigned char tid[16], id[20], info_hash[20], target[20];
-        unsigned char nodes[256], nodes6[1024], token[128];
+        unsigned char nodes[26*16], nodes6[38*16], token[128];
         int tid_len = 16, token_len = 128;
-        int nodes_len = 256, nodes6_len = 1024;
+        int nodes_len = 26*16, nodes6_len = 38*16;
         unsigned short port;
         unsigned char values[2048], values6[2048];
         int values_len = 2048, values6_len = 2048;
@@ -2419,7 +2428,7 @@ dht_ping_node(struct sockaddr *sa, int salen)
     }
 
 static int
-dht_send(const char *buf, size_t len, int flags,
+dht_send(const void *buf, size_t len, int flags,
          const struct sockaddr *sa, int salen)
 {
     int s;
@@ -2594,9 +2603,7 @@ insert_closest_node(unsigned char *nodes, int numnodes,
     else if(n->ss.ss_family == AF_INET6)
         size = 38;
     else
-	{
         abort();
-	}
 
     for(i = 0; i< numnodes; i++) {
         if(id_cmp(n->id, nodes + size * i) == 0)
@@ -2627,7 +2634,7 @@ insert_closest_node(unsigned char *nodes, int numnodes,
         memcpy(nodes + size * i + 36, &sin6->sin6_port, 2);
     } else {
         abort();
-   }
+    }
 
     return numnodes;
 }
@@ -2933,7 +2940,7 @@ parse_message(const unsigned char *buf, int buflen,
             long l;
             char *q;
             l = strtol((char*)p + 7, &q, 10);
-            if(q && *q == ':' && l > 0 && l < *nodes_len) {
+            if(q && *q == ':' && l > 0 && l <= *nodes_len) {
                 CHECK(q + 1, l);
                 memcpy(nodes_return, q + 1, l);
                 *nodes_len = l;
@@ -2949,7 +2956,7 @@ parse_message(const unsigned char *buf, int buflen,
             long l;
             char *q;
             l = strtol((char*)p + 8, &q, 10);
-            if(q && *q == ':' && l > 0 && l < *nodes6_len) {
+            if(q && *q == ':' && l > 0 && l <= *nodes6_len) {
                 CHECK(q + 1, l);
                 memcpy(nodes6_return, q + 1, l);
                 *nodes6_len = l;
