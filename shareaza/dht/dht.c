@@ -2320,7 +2320,7 @@ dht_get_nodes(struct sockaddr_in *sin, unsigned char* id, int *num,
     while(n && i < *num) {
         if(node_good(n)) {
             sin[i] = *(struct sockaddr_in*)&n->ss;
-			memcpy( &id[i * 20], n->id, 20 );
+			if(id) memcpy( &id[i * 20], n->id, 20 );
             i++;
         }
         n = n->next;
@@ -2333,7 +2333,7 @@ dht_get_nodes(struct sockaddr_in *sin, unsigned char* id, int *num,
             while(n && i < *num) {
                 if(node_good(n)) {
                     sin[i] = *(struct sockaddr_in*)&n->ss;
-					memcpy( &id[i * 20], n->id, 20 );
+					if(id) memcpy( &id[i * 20], n->id, 20 );
                     i++;
                 }
                 n = n->next;
@@ -2354,7 +2354,7 @@ dht_get_nodes(struct sockaddr_in *sin, unsigned char* id, int *num,
     while(n && j < *num6) {
         if(node_good(n)) {
             sin6[j] = *(struct sockaddr_in6*)&n->ss;
-			memcpy( &id6[i * 20], n->id, 20 );
+			if(id6) memcpy( &id6[i * 20], n->id, 20 );
             j++;
         }
         n = n->next;
@@ -2367,7 +2367,7 @@ dht_get_nodes(struct sockaddr_in *sin, unsigned char* id, int *num,
             while(n && j < *num6) {
                 if(node_good(n)) {
                     sin6[j] = *(struct sockaddr_in6*)&n->ss;
-					memcpy( &id6[i * 20], n->id, 20 );
+					if(id6) memcpy( &id6[i * 20], n->id, 20 );
                     j++;
                 }
                 n = n->next;
