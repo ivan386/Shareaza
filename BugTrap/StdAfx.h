@@ -98,4 +98,4 @@ struct _IMAGELIST { }; // unresolved typeref token
  #define MININT			((INT)~MAXINT)
 #endif
 
-#define countof(array) (sizeof(array) / sizeof((array)[0]))
+#define countof(array)	_countof(array)

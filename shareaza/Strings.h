@@ -1,7 +1,7 @@
 //
 // Strings.h 
 //
-// Copyright (c) Shareaza Development Team, 2010-2014.
+// Copyright (c) Shareaza Development Team, 2010-2015.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -26,7 +26,7 @@
 
 // Produces two arguments divided by comma, where first argument is a string itself
 // and second argument is a string length without null terminator
-#define _P(x)	(x),((sizeof(x))/sizeof((x)[0])-1)
+#define _P(x)	(x),(_countof(x)-1)
 #define _PT(x)	_P(_T(x))
 
 #define IsSpace(ch)	((ch) == _T(' ') || (ch) == _T('\t') || (ch) == _T('\r') || (ch) == _T('\n'))
