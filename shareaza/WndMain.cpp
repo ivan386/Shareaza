@@ -290,6 +290,7 @@ BEGIN_MESSAGE_MAP(CMainWnd, CMDIFrameWnd)
 	ON_WM_COPYDATA()
 	ON_UPDATE_COMMAND_UI(ID_PATH_EXPLORE, &CMainWnd::OnUpdatePathExplore)
 	ON_UPDATE_COMMAND_UI(ID_PATH_COPY, &CMainWnd::OnUpdatePathCopy)
+	ON_WM_QUERYENDSESSION()
 END_MESSAGE_MAP()
 
 /////////////////////////////////////////////////////////////////////////////
@@ -673,6 +674,15 @@ void CMainWnd::RemoveSkin()
 	CFilePreviewDlg::OnSkinChange( FALSE );
 	m_wndRemoteWnd.RemoveSkin();
 	m_wndNavBar.RemoveSkin();
+}
+
+BOOL CMainWnd::OnQueryEndSession()
+{
+	UpdateWindow();
+
+	CMDIFrameWnd::OnQueryEndSession();
+
+	return FALSE;
 }
 
 void CMainWnd::OnEndSession(BOOL bEnding)

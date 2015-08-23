@@ -131,7 +131,9 @@ public:
 
 	HINSTANCE			m_hUser32;
 	BOOL		(WINAPI *m_pfnChangeWindowMessageFilter)(UINT message, DWORD dwFlag);
-	
+	BOOL		(WINAPI *m_pfnShutdownBlockReasonCreate)(_In_ HWND hWnd, _In_ LPCWSTR pwszReason);
+	BOOL		(WINAPI *m_pfnShutdownBlockReasonDestroy)(_In_ HWND hWnd);
+
 	BOOL GetPropertyStoreFromParsingName( LPCWSTR pszPath, IPropertyStore**ppv );
 
 	// GeoIP - IP to Country lookup

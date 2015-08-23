@@ -183,60 +183,61 @@ SYSTEM_INFO			System = {};
 /////////////////////////////////////////////////////////////////////////////
 // CShareazaApp construction
 
-CShareazaApp::CShareazaApp() :
-	m_pMutex				( NULL )
-,	m_nFontQuality			( DEFAULT_QUALITY )
-,	m_pSafeWnd				( NULL )
-,	m_bBusy					( 0 )
-,	m_bInteractive			( false )
-,	m_bLive					( false )
-,	m_bClosing				( false )
-,	m_bIsVistaOrNewer		( false )
-,	m_bIs7OrNewer			( false )
-,	m_bLimitedConnections	( false )
-,	m_bMenuWasVisible		( FALSE )
-,	m_nLastInput			( 0ul )
-,	m_hHookKbd				( NULL )
-,	m_hHookMouse			( NULL )
-,	m_pPacketWnd			( NULL )
+CShareazaApp::CShareazaApp()
+	:	m_pMutex				( NULL )
+	,	m_nFontQuality			( DEFAULT_QUALITY )
+	,	m_pSafeWnd				( NULL )
+	,	m_bBusy					( 0 )
+	,	m_bInteractive			( false )
+	,	m_bLive					( false )
+	,	m_bClosing				( false )
+	,	m_bIsVistaOrNewer		( false )
+	,	m_bIs7OrNewer			( false )
+	,	m_bLimitedConnections	( false )
+	,	m_bMenuWasVisible		( FALSE )
+	,	m_nLastInput			( 0ul )
+	,	m_hHookKbd				( NULL )
+	,	m_hHookMouse			( NULL )
+	,	m_pPacketWnd			( NULL )
 
-,	m_hCryptProv			( NULL )
+	,	m_hCryptProv			( NULL )
 
-,	m_pRegisterApplicationRestart( NULL )
+	,	m_pRegisterApplicationRestart( NULL )
 
-,	m_hTheme				( NULL )
-,	m_pfnSetWindowTheme		( NULL )
-,	m_pfnIsThemeActive		( NULL )
-,	m_pfnOpenThemeData		( NULL )
-,	m_pfnCloseThemeData		( NULL )
-,	m_pfnDrawThemeBackground( NULL )
-,	m_pfnGetThemeSysFont	( NULL )
+	,	m_hTheme				( NULL )
+	,	m_pfnSetWindowTheme		( NULL )
+	,	m_pfnIsThemeActive		( NULL )
+	,	m_pfnOpenThemeData		( NULL )
+	,	m_pfnCloseThemeData		( NULL )
+	,	m_pfnDrawThemeBackground( NULL )
+	,	m_pfnGetThemeSysFont	( NULL )
 
-,	m_hShlWapi				( NULL )
-,	m_pfnAssocIsDangerous	( NULL )
+	,	m_hShlWapi				( NULL )
+	,	m_pfnAssocIsDangerous	( NULL )
 
-,	m_hShell32									( NULL )
-,	m_pfnSHGetFolderPathW						( NULL )
-,	m_pfnSHGetKnownFolderPath					( NULL )
-,	m_pfnSHCreateItemFromParsingName			( NULL )
-,	m_pfnSHGetPropertyStoreFromParsingName		( NULL )
-,	m_pfnSetCurrentProcessExplicitAppUserModelID( NULL )
-,	m_pfnSHGetImageList							( NULL )
+	,	m_hShell32									( NULL )
+	,	m_pfnSHGetFolderPathW						( NULL )
+	,	m_pfnSHGetKnownFolderPath					( NULL )
+	,	m_pfnSHCreateItemFromParsingName			( NULL )
+	,	m_pfnSHGetPropertyStoreFromParsingName		( NULL )
+	,	m_pfnSetCurrentProcessExplicitAppUserModelID( NULL )
+	,	m_pfnSHGetImageList							( NULL )
 
-,	m_hUser32									( NULL )
-,	m_pfnChangeWindowMessageFilter				( NULL )
+	,	m_hUser32									( NULL )
+	,	m_pfnChangeWindowMessageFilter				( NULL )
+	,	m_pfnShutdownBlockReasonCreate				( NULL )
+	,	m_pfnShutdownBlockReasonDestroy				( NULL )
 
-,	m_hGeoIP				( NULL )
-,	m_pGeoIP				( NULL )
-,	m_pfnGeoIP_cleanup		( NULL )
-,	m_pfnGeoIP_delete		( NULL )
-,	m_pfnGeoIP_country_code_by_ipnum( NULL )
-,	m_pfnGeoIP_country_name_by_ipnum( NULL )
+	,	m_hGeoIP				( NULL )
+	,	m_pGeoIP				( NULL )
+	,	m_pfnGeoIP_cleanup		( NULL )
+	,	m_pfnGeoIP_delete		( NULL )
+	,	m_pfnGeoIP_country_code_by_ipnum( NULL )
+	,	m_pfnGeoIP_country_name_by_ipnum( NULL )
 
-,	m_hLibGFL				( NULL )
+	,	m_hLibGFL				( NULL )
 
-,	m_dlgSplash				( NULL )
-
+	,	m_dlgSplash				( NULL )
 {
 	// Determine the version of Windows
 	OSVERSIONINFOEX osvi = { sizeof( osvi ) };
@@ -1120,6 +1121,8 @@ void CShareazaApp::InitResources()
 	if ( ( m_hUser32 = LoadLibrary( _T("user32.dll") ) ) != NULL )
 	{
 		(FARPROC&)m_pfnChangeWindowMessageFilter = GetProcAddress( m_hUser32, "ChangeWindowMessageFilter" );
+		(FARPROC&)m_pfnShutdownBlockReasonCreate = GetProcAddress( m_hUser32, "ShutdownBlockReasonCreate" );
+		(FARPROC&)m_pfnShutdownBlockReasonDestroy = GetProcAddress( m_hUser32, "ShutdownBlockReasonDestroy" );
 	}
 
 	// Windows Vista: Enable drag-n-drop and window control operations from application with lower security level
