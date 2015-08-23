@@ -1,7 +1,7 @@
 ;
 ; main.iss
 ;
-; Copyright (c) Shareaza Development Team, 2002-2014.
+; Copyright (c) Shareaza Development Team, 2002-2015.
 ; This file is part of SHAREAZA (shareaza.sourceforge.net)
 ;
 ; Shareaza is free software; you can redistribute it
@@ -100,6 +100,40 @@
   #define ConfigurationName "Debug"
 #endif
 
+; Test for VS2015
+#ifexist SourcePath + "..\..\vc14\Win32\Release\Shareaza.exe"
+  #ifdef Compiler
+    #error Found a few Shareaza.exe files, you need to leave only one
+  #endif
+  #define Compiler "vc14"
+  #define PlatformName "Win32"
+  #define ConfigurationName "Release"
+#endif
+#ifexist SourcePath + "..\..\vc14\x64\Release\Shareaza.exe"
+  #ifdef Compiler
+    #error Found a few Shareaza.exe files, you need to leave only one
+  #endif
+  #define Compiler "vc14"
+  #define PlatformName "x64"
+  #define ConfigurationName "Release"
+#endif
+#ifexist SourcePath + "..\..\vc14\Win32\Debug\Shareaza.exe"
+  #ifdef Compiler
+    #error Found a few Shareaza.exe files, you need to leave only one
+  #endif
+  #define Compiler "vc14"
+  #define PlatformName "Win32"
+  #define ConfigurationName "Debug"
+#endif
+#ifexist SourcePath + "..\..\vc14\x64\Debug\Shareaza.exe"
+  #ifdef Compiler
+    #error Found a few Shareaza.exe files, you need to leave only one
+  #endif
+  #define Compiler "vc14"
+  #define PlatformName "x64"
+  #define ConfigurationName "Debug"
+#endif
+
 #ifndef Compiler
   #error No Shareaza.exe files are found, compile some
 #endif
@@ -155,7 +189,7 @@
 #expr Exec( Zip, "a -y -mx=9 builds\" + symbols_name + " ""..\" + Compiler + "\" + PlatformName + "\" + ConfigurationName + "\*.pdb""", ".." )
 
 ; Pack sources
-#expr Exec( Zip, "a -y -mx=9 -r -x!.svn -x!setup\builds\*.exe -x!setup\builds\*.txt -x!setup\builds\*.iss -x!Win32 -x!x64 -x!ipch -x!*.7z -x!*.log -x!*.bak -x!*.tmp -x!*.sdf -x!*.suo -x!*.ncb -x!*.user -x!*.opensdf builds\" + source_name + " ..", ".." )
+#expr Exec( Zip, "a -y -mx=9 -r -x!.vs -x!.svn -x!setup\builds\*.exe -x!setup\builds\*.txt -x!setup\builds\*.iss -x!Win32 -x!x64 -x!ipch -x!*.7z -x!*.log -x!*.bak -x!*.tmp -x!*.sdf -x!*.suo -x!*.ncb -x!*.user -x!*.opensdf builds\" + source_name + " ..", ".." )
 
 [Setup]
 AppComments={#Description}
@@ -208,7 +242,9 @@ AppSupportURL=http://shareaza.sourceforge.net/?id=support
 AppUpdatesURL=http://shareaza.sourceforge.net/?id=download
 
 #if ConfigurationName == "Release"
-    #include SourcePath + "..\..\" + Compiler + "\vcredist\vcredist.iss"
+  #include SourcePath + "..\..\" + Compiler + "\vcredist\vcredist.iss"
+  #include "idp.iss"
+  #include "dep.iss"
 #endif
 
 [Tasks]
@@ -1090,7 +1126,23 @@ Begin
   if CurStep=ssDone then Reset := ResetLanguages;
 End;
 
-{ Pull in custom wizard pages }
-#include "pages.iss"
+#if ConfigurationName == "Release"
+procedure InitializeWizard();
+var
+  bWork: Boolean;
+begin
+  bWork := False;
+
+  if ( not MsiProduct( '{#vcredist_productcode}' ) ) then begin
+    AddProduct( '{#vcredist_exe}', '/quiet /norestart', '{#vcredist_title}', '{#vcredist_url}', false, false );
+    bWork := True;
+  end;
+
+  if bWork then begin
+    idpSetDetailedMode( True );
+    idpDownloadAfter( wpReady );
+  end;
+end;
+#endif
 
 #expr SaveToFile(SourcePath + "..\builds\Preprocessed.iss")
