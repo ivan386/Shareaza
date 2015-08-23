@@ -41,7 +41,7 @@ public:
 		ASSERT( pszCode );
 		if ( pszCode && pszCode[ 0 ] && pszCode[ 1 ] && pszCode[ 2 ] && pszCode[ 3 ] )
 		{
-			WCHAR szCode[5] = { pszCode[0], pszCode[1], pszCode[2], pszCode[3], 0 };
+			const WCHAR szCode[5] = { (WCHAR)pszCode[0], (WCHAR)pszCode[1], (WCHAR)pszCode[2], (WCHAR)pszCode[3], 0 };
 			CVendorPtr pVendor;
 			if ( m_pCodeMap.Lookup( szCode, pVendor ) )
 				return pVendor;

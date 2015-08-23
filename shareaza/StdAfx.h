@@ -63,6 +63,11 @@
 #pragma warning ( disable : 4710 )	// (Level 4)	'function' : function not inlined
 #pragma warning ( disable : 4820 )	// (Level 4)	'bytes' bytes padding added after construct 'member_name'
 
+#if _MSC_VER >= 1900 // VS 2015
+#pragma warning ( disable : 5026 )	// (Level 4)	'derived class' : move constructor was implicitly defined as deleted because a base class move constructor is inaccessible or deleted
+#pragma warning ( disable : 5027 )	// (Level 4)	'derived class' : move assignment operator was implicitly defined as deleted because a base class move assignment operator is inaccessible or deleted
+#endif
+
 #endif
 
 #include <sdkddkver.h>					// Setup versioning for windows SDK/DDK
@@ -205,10 +210,6 @@
 #include "../bzlib/bzlib.h"
 #include "../zlib/zlib.h"
 
-// Work-around for VC9 where a (pop) is ifdef'd out in stdio.h
-#if _MSC_VER >= 1500 && _MSC_VER < 1600
-	#pragma warning ( pop )
-#endif
 #pragma warning ( pop )
 
 #include "MinMax.hpp"
