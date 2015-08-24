@@ -32,7 +32,7 @@ static char THIS_FILE[]=__FILE__;
 #define new DEBUG_NEW
 #endif
 
-#define SMART_VERSION	60
+#define SMART_VERSION	61
 
 #define Kilo	( 1024 )
 #define Mega	( Kilo * 1024 )
@@ -170,7 +170,7 @@ void CSettings::Load()
 	Add( _T("Library"), _T("MarkFileAsDownload"), &Library.MarkFileAsDownload, true );
 	Add( _T("Library"), _T("MaxMaliciousFileSize"), &Library.MaxMaliciousFileSize, Kilo, 1, Kilo, 5*Kilo, _T(" B") );
 	Add( _T("Library"), _T("PanelSize"), &Library.PanelSize, 146, 1, 0, 1024, _T(" px") );
-	Add( _T("Library"), _T("PrivateTypes"), &Library.PrivateTypes, _T("|vbs|js|jc!|fb!|bc!|!ut|dbx|part|partial|crdownload|pst|reget|getright|pif|lnk|sd|url|wab|m4p|infodb|racestats|chk|tmp|temp|ini|inf|log|old|manifest|met|bak|$$$|---|~~~|###|__incomplete___|") );
+	Add( _T("Library"), _T("PrivateTypes"), &Library.PrivateTypes, _T("|dtapart|kdbx|ps1|ps1xml|ps2|ps2xml|psc1|psc2|ws|wsf|wsc|wsh|scf|vb|vbs|vbe|js|jse|hta|scr|application|jc!|fb!|bc!|!ut|dbx|part|partial|crdownload|pst|reget|getright|pif|lnk|sd|url|wab|infodb|racestats|chk|tmp|temp|ini|inf|log|old|manifest|met|bak|$$$|---|~~~|###|__incomplete___|") );
 	Add( _T("Library"), _T("QueryRouteSize"), &Library.QueryRouteSize, 20, 1, 8, 24 );
 	Add( _T("Library"), _T("SafeExecute"), &Library.SafeExecute, _T("") );
 	Add( _T("Library"), _T("ScanAPE"), &Library.ScanAPE, true );
@@ -1138,6 +1138,62 @@ void CSettings::SmartUpgrade()
 		if ( General.SmartVersion < 60 )
 		{
 			SetDefault( &eDonkey.ServerListURL );
+		}
+
+		if ( General.SmartVersion < 61 )
+		{
+			// DownThemAll for Firefox
+			if ( ! IsIn( Library.PrivateTypes, _T( "dtapart" ) ) )
+				Library.PrivateTypes.insert( _T( "dtapart" ) );
+			// KeePass database
+			if ( ! IsIn( Library.PrivateTypes, _T( "kdbx" ) ) )
+				Library.PrivateTypes.insert( _T( "kdbx" ) );
+			// Windows PowerShell script
+			if ( ! IsIn( Library.PrivateTypes, _T( "ps1" ) ) )
+				Library.PrivateTypes.insert( _T( "ps1" ) );
+			if ( ! IsIn( Library.PrivateTypes, _T( "ps1xml" ) ) )
+				Library.PrivateTypes.insert( _T( "ps1xml" ) );
+			if ( ! IsIn( Library.PrivateTypes, _T( "ps2" ) ) )
+				Library.PrivateTypes.insert( _T( "ps2" ) );
+			if ( ! IsIn( Library.PrivateTypes, _T( "ps2xml" ) ) )
+				Library.PrivateTypes.insert( _T( "ps2xml" ) );
+			if ( ! IsIn( Library.PrivateTypes, _T( "psc1" ) ) )
+				Library.PrivateTypes.insert( _T( "psc1" ) );
+			if ( ! IsIn( Library.PrivateTypes, _T( "psc2" ) ) )
+				Library.PrivateTypes.insert( _T( "psc2" ) );
+			// Windows Script
+			if ( ! IsIn( Library.PrivateTypes, _T( "ws" ) ) )
+				Library.PrivateTypes.insert( _T( "ws" ) );
+			if ( ! IsIn( Library.PrivateTypes, _T( "wsf" ) ) )
+				Library.PrivateTypes.insert( _T( "wsf" ) );
+			if ( ! IsIn( Library.PrivateTypes, _T( "wsc" ) ) )
+				Library.PrivateTypes.insert( _T( "wsc" ) );
+			if ( ! IsIn( Library.PrivateTypes, _T( "wsh" ) ) )
+				Library.PrivateTypes.insert( _T( "wsh" ) );
+			// Windows Explorer command file
+			if ( ! IsIn( Library.PrivateTypes, _T( "scf" ) ) )
+				Library.PrivateTypes.insert( _T( "scf" ) );
+			// VBScript
+			if ( ! IsIn( Library.PrivateTypes, _T( "vb" ) ) )
+				Library.PrivateTypes.insert( _T( "vb" ) );
+			if ( ! IsIn( Library.PrivateTypes, _T( "vbs" ) ) )
+				Library.PrivateTypes.insert( _T( "vbs" ) );
+			if ( ! IsIn( Library.PrivateTypes, _T( "vbe" ) ) )
+				Library.PrivateTypes.insert( _T( "vbe" ) );
+			// JavaScript
+			if ( ! IsIn( Library.PrivateTypes, _T( "js" ) ) )
+				Library.PrivateTypes.insert( _T( "js" ) );
+			if ( ! IsIn( Library.PrivateTypes, _T( "jse" ) ) )
+				Library.PrivateTypes.insert( _T( "jse" ) );
+			// HTML application
+			if ( ! IsIn( Library.PrivateTypes, _T( "hta" ) ) )
+				Library.PrivateTypes.insert( _T( "hta" ) );
+			// Windows screen saver
+			if ( ! IsIn( Library.PrivateTypes, _T( "scr" ) ) )
+				Library.PrivateTypes.insert( _T( "scr" ) );
+			// ClickOnce application
+			if ( ! IsIn( Library.PrivateTypes, _T( "application" ) ) )
+				Library.PrivateTypes.insert( _T( "application" ) );
 		}
 	}
 
