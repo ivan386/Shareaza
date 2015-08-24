@@ -224,7 +224,7 @@ IDB_BOX_MARK            BITMAP                  "Res\\BoxMark.bmp"
 IDD_SCHEDULE_TASK DIALOGEX 0, 0, 253, 163
 STYLE DS_SETFONT | WS_CHILD | WS_DISABLED | WS_CAPTION
 CAPTION "Action"
-FONT 8, "Tahoma", 400, 0, 0x0
+FONT 8, "MS Shell Dlg", 0, 0, 0x1
 BEGIN
     CONTROL         "",IDC_STATIC,"Static",SS_BLACKFRAME,19,57,53,20
     COMBOBOX        IDC_SCHEDULER_EVENTTYPE,15,20,231,80,CBS_DROPDOWNLIST | WS_VSCROLL | WS_TABSTOP
@@ -248,7 +248,7 @@ END
 IDD_CONNECT_TO DIALOGEX 0, 0, 242, 120
 STYLE DS_SETFONT | DS_MODALFRAME | WS_POPUP | WS_CAPTION | WS_SYSMENU
 CAPTION "Connect To|Browse User|Chat to User"
-FONT 8, "Tahoma", 0, 0, 0x1
+FONT 8, "MS Shell Dlg", 0, 0, 0x1
 BEGIN
     GROUPBOX        "Initiate a new connection to host or server:|Browse this user:|Chat to this user:",IDC_CONNECT_PROMPT,5,5,230,40
     COMBOBOX        IDC_CONNECT_HOST,15,20,170,140,CBS_DROPDOWN | CBS_SORT | WS_VSCROLL | WS_TABSTOP
@@ -263,7 +263,7 @@ END
 IDD_NEW_SEARCH DIALOGEX 0, 0, 238, 60
 STYLE DS_SETFONT | WS_POPUP | WS_CLIPCHILDREN | WS_CAPTION | WS_SYSMENU | WS_THICKFRAME
 CAPTION "New Search|Search Again|Find in Library"
-FONT 8, "Tahoma", 0, 0, 0x1
+FONT 8, "MS Shell Dlg", 0, 0, 0x1
 BEGIN
     EDITTEXT        IDC_SEARCH,5,5,225,12,ES_AUTOHSCROLL
     COMBOBOX        IDC_SCHEMAS,5,20,225,245,CBS_DROPDOWNLIST | CBS_OWNERDRAWVARIABLE | CBS_SORT | CBS_HASSTRINGS | WS_VSCROLL | WS_TABSTOP
@@ -274,7 +274,7 @@ END
 IDD_FILTER_SEARCH DIALOGEX 0, 0, 222, 257
 STYLE DS_SETFONT | DS_MODALFRAME | WS_POPUP | WS_CAPTION | WS_SYSMENU
 CAPTION "Filter Matches"
-FONT 8, "Tahoma", 0, 0, 0x1
+FONT 8, "MS Shell Dlg", 0, 0, 0x1
 BEGIN
     GROUPBOX        "Only show matches which include the &words:",IDC_STATIC,5,5,210,45,WS_GROUP
     EDITTEXT        IDC_FILTER,14,20,151,12,ES_AUTOHSCROLL
@@ -308,10 +308,10 @@ BEGIN
     PUSHBUTTON      "Cancel",IDCANCEL,165,237,50,14
 END
 
-IDD_SCHEMA_COLUMNS DIALOG 0, 0, 238, 142
+IDD_SCHEMA_COLUMNS DIALOGEX 0, 0, 238, 142
 STYLE DS_SETFONT | DS_MODALFRAME | WS_POPUP | WS_CLIPCHILDREN | WS_CAPTION | WS_SYSMENU
 CAPTION "Select Columns from Schema"
-FONT 8, "Tahoma"
+FONT 8, "MS Shell Dlg", 0, 0, 0x1
 BEGIN
     COMBOBOX        IDC_SCHEMAS,5,5,225,135,CBS_DROPDOWNLIST | CBS_OWNERDRAWVARIABLE | CBS_SORT | CBS_HASSTRINGS | WS_VSCROLL | WS_TABSTOP
     CONTROL         "List1",IDC_COLUMNS,"SysListView32",LVS_REPORT | LVS_NOCOLUMNHEADER | WS_BORDER | WS_TABSTOP,5,25,115,110
@@ -323,7 +323,7 @@ END
 IDD_SETTINGS_CONNECTION DIALOGEX 0, 0, 282, 220
 STYLE DS_SETFONT | WS_CHILD | WS_DISABLED | WS_CAPTION
 CAPTION "Connection"
-FONT 8, "Tahoma", 0, 0, 0x1
+FONT 8, "MS Shell Dlg", 0, 0, 0x1
 BEGIN
     GROUPBOX        "&Inbound Address:",IDC_STATIC,7,5,268,59
     LTEXT           "Address:",IDC_STATIC,15,22,35,12,SS_CENTERIMAGE
@@ -358,7 +358,7 @@ END
 IDD_SETTINGS_GNUTELLA DIALOGEX 0, 0, 282, 220
 STYLE DS_SETFONT | WS_CHILD | WS_DISABLED | WS_CAPTION
 CAPTION "Gnutella"
-FONT 8, "Tahoma", 0, 0, 0x1
+FONT 8, "MS Shell Dlg", 0, 0, 0x1
 BEGIN
     CONTROL         "Always connect to Gnutella2",IDC_G2_ALWAYS,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,13,25,120,8
     CONTROL         "Connect to Gnutella2 today",IDC_G2_TODAY,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,13,38,120,8
@@ -399,7 +399,7 @@ END
 IDD_SETTINGS_ADVANCED DIALOGEX 0, 0, 282, 220
 STYLE DS_SETFONT | WS_CHILD | WS_DISABLED | WS_CAPTION
 CAPTION "Advanced"
-FONT 8, "Tahoma", 0, 0, 0x1
+FONT 8, "MS Shell Dlg", 0, 0, 0x1
 BEGIN
     EDITTEXT        IDC_QUICKFILTER,160,7,100,14,ES_AUTOHSCROLL
     ICON            IDI_POINTER_ARROW,IDC_QUICKFILTER_ICON,264,8,16,16,SS_REALSIZEIMAGE
@@ -418,7 +418,7 @@ END
 IDD_SETTINGS_DOWNLOADS DIALOGEX 0, 0, 282, 220
 STYLE DS_SETFONT | WS_CHILD | WS_DISABLED | WS_CAPTION
 CAPTION "Downloads"
-FONT 8, "Tahoma", 0, 0, 0x1
+FONT 8, "MS Shell Dlg", 0, 0, 0x1
 BEGIN
     GROUPBOX        "Save Completed Files Here",IDC_STATIC,7,7,268,33,WS_GROUP
     COMBOBOX        IDC_DOWNLOADS_FOLDER,14,19,225,180,CBS_DROPDOWNLIST | CBS_AUTOHSCROLL | CBS_SORT | WS_VSCROLL | WS_TABSTOP
@@ -451,7 +451,7 @@ END
 IDD_SETTINGS_GENERAL DIALOGEX 0, 0, 282, 220
 STYLE DS_SETFONT | WS_CHILD | WS_DISABLED | WS_CAPTION
 CAPTION "General"
-FONT 8, "Tahoma", 0, 0, 0x1
+FONT 8, "MS Shell Dlg", 0, 0, 0x1
 BEGIN
     GROUPBOX        "&General:",IDC_STATIC,7,5,160,85,WS_GROUP
     CONTROL         "Auto-connect on Shareaza startup",IDC_AUTO_CONNECT,
@@ -489,24 +489,24 @@ BEGIN
     COMBOBOX        IDC_TRAY_MINIMISE,180,192,85,55,CBS_DROPDOWNLIST | WS_VSCROLL | WS_TABSTOP
 END
 
-IDD_ABOUT DIALOGEX 0, 0, 292, 150
+IDD_ABOUT DIALOGEX 0, 0, 293, 161
 STYLE DS_SETFONT | DS_MODALFRAME | WS_POPUP | WS_CAPTION | WS_SYSMENU
 CAPTION "About Shareaza"
-FONT 8, "Tahoma", 0, 0, 0x1
+FONT 8, "MS Shell Dlg", 0, 0, 0x1
 BEGIN
-    LTEXT           "Shareaza File Sharing Client ",IDC_TITLE,20,15,262,10,SS_CENTERIMAGE
-    LTEXT           "Copyright © Shareaza Development Team, 2002-",IDC_COPYRIGHT,20,30,262,12
-    LTEXT           "Shareaza is free software; you can redistribute it and/or modify it under the terms of the GNU General Public License as published by the Free Software Foundation; either version 2 of the License, or (at your option) any later version.",IDC_STATIC,20,45,262,24
-    LTEXT           "Logo by Kid at pakkeimak.com",IDC_STATIC,20,75,262,12
-    LTEXT           "http://shareaza.sourceforge.net/",IDC_WEB,20,112,125,10
-    DEFPUSHBUTTON   "OK",IDOK,225,127,60,16
-    LTEXT           "This product includes GeoLite data created by MaxMind, available from http://maxmind.com/",IDC_STATIC,20,90,262,18
+    LTEXT           "Shareaza File Sharing Client ",IDC_TITLE,7,15,279,10,SS_CENTERIMAGE
+    LTEXT           "Copyright © Shareaza Development Team, 2002-",IDC_COPYRIGHT,7,30,279,12
+    LTEXT           "Shareaza is free software; you can redistribute it and/or modify it under the terms of the GNU General Public License as published by the Free Software Foundation; either version 2 of the License, or (at your option) any later version.",IDC_STATIC,7,45,279,24
+    LTEXT           "Logo by Kid at pakkeimak.com",IDC_STATIC,7,75,279,12
+    LTEXT           "http://shareaza.sourceforge.net/",IDC_WEB,7,112,279,10
+    DEFPUSHBUTTON   "OK",IDOK,226,138,60,16
+    LTEXT           "This product includes GeoLite data created by MaxMind, available from http://maxmind.com/",IDC_STATIC,7,90,279,18
 END
 
 IDD_GRAPH_LIST DIALOGEX 0, 0, 247, 230
 STYLE DS_SETFONT | DS_MODALFRAME | WS_POPUP | WS_CAPTION | WS_SYSMENU
 CAPTION "Traffic Graphs"
-FONT 8, "Tahoma", 0, 0, 0x0
+FONT 8, "MS Shell Dlg", 0, 0, 0x1
 BEGIN
     CONTROL         "List1",IDC_GRAPH_ITEMS,"SysListView32",LVS_LIST | LVS_SHOWSELALWAYS | WS_BORDER | WS_TABSTOP,5,5,180,80
     PUSHBUTTON      "&Add...",IDC_GRAPH_ADD,5,90,50,14
@@ -530,7 +530,7 @@ END
 IDD_GRAPH_ITEM DIALOGEX 0, 0, 247, 129
 STYLE DS_SETFONT | DS_MODALFRAME | WS_POPUP | WS_CAPTION | WS_SYSMENU
 CAPTION "Graph Item Properties"
-FONT 8, "Tahoma", 0, 0, 0x1
+FONT 8, "MS Shell Dlg", 0, 0, 0x1
 BEGIN
     DEFPUSHBUTTON   "OK",IDOK,190,5,50,14,WS_DISABLED
     PUSHBUTTON      "Cancel",IDCANCEL,190,22,50,14
@@ -549,7 +549,7 @@ END
 IDD_WIZARD_WELCOME DIALOGEX 0, 0, 277, 174
 STYLE DS_SETFONT | WS_CHILD | WS_DISABLED | WS_CAPTION
 CAPTION "Welcome to Shareaza"
-FONT 8, "Tahoma", 0, 0, 0x1
+FONT 8, "MS Shell Dlg", 0, 0, 0x1
 BEGIN
     LTEXT           "Welcome to Shareaza!",IDC_STATIC,10,10,265,10
     LTEXT           "If you haven't used Shareaza or another P2P client before, this QuickStart wizard can help you configure your copy in a few simple steps.",IDC_STATIC,10,25,265,20
@@ -568,7 +568,7 @@ END
 IDD_WIZARD_CONNECTION DIALOGEX 0, 0, 277, 174
 STYLE DS_SETFONT | WS_CHILD | WS_DISABLED | WS_CAPTION
 CAPTION "Welcome to Shareaza (1/6)"
-FONT 8, "Tahoma", 0, 0, 0x1
+FONT 8, "MS Shell Dlg", 0, 0, 0x1
 BEGIN
     LTEXT           "For best performance, Shareaza needs to know a little bit about your connection to the Internet.",IDC_STATIC,7,10,263,18
     LTEXT           "Choose the type of your Internet connection:",IDC_STATIC,7,30,260,12
@@ -586,7 +586,7 @@ END
 IDD_WIZARD_SHARING DIALOGEX 0, 0, 277, 174
 STYLE DS_SETFONT | WS_CHILD | WS_DISABLED | WS_CAPTION
 CAPTION "Welcome to Shareaza (2/6)"
-FONT 8, "Tahoma", 0, 0, 0x1
+FONT 8, "MS Shell Dlg", 0, 0, 0x1
 BEGIN
     LTEXT           "P2P networks are only as good as the people who use them.  All of the content available for download is being shared by another user.",IDC_STATIC,10,10,260,27
     LTEXT           "You do not have to share content to use Shareaza, however some software will behave differently to users who are not sharing anything.",IDC_STATIC,10,37,260,27
@@ -600,7 +600,7 @@ END
 IDD_WIZARD_PROFILE DIALOGEX 0, 0, 277, 174
 STYLE DS_SETFONT | WS_CHILD | WS_DISABLED | WS_CAPTION
 CAPTION "Welcome to Shareaza (3/6)"
-FONT 8, "Tahoma", 0, 0, 0x1
+FONT 8, "MS Shell Dlg", 0, 0, 0x1
 BEGIN
     LTEXT           "Shareaza is a much friendlier place when everyone writes a few basic details about themselves.",IDC_STATIC,10,10,265,20
     RTEXT           "I use the name:",IDC_STATIC,12,48,60,12,SS_CENTERIMAGE
@@ -616,7 +616,7 @@ END
 IDD_WIZARD_INTERFACE DIALOGEX 0, 0, 277, 174
 STYLE DS_SETFONT | WS_CHILD | WS_DISABLED | WS_CAPTION
 CAPTION "Welcome to Shareaza (4/6)"
-FONT 8, "Tahoma", 0, 0, 0x1
+FONT 8, "MS Shell Dlg", 0, 0, 0x1
 BEGIN
     LTEXT           "Shareaza supports a flexible user interface, so you can choose what is most comfortable for you. You can change these options at any time.",IDC_STATIC,12,7,258,20
     GROUPBOX        "Please select user interface:",IDC_STATIC,7,27,269,83
@@ -632,7 +632,7 @@ END
 IDD_WIZARD_NETWORKS DIALOGEX 0, 0, 277, 174
 STYLE DS_SETFONT | WS_CHILD | WS_DISABLED | WS_CAPTION
 CAPTION "Welcome to Shareaza (5/6)"
-FONT 8, "Tahoma", 0, 0, 0x1
+FONT 8, "MS Shell Dlg", 0, 0, 0x1
 BEGIN
     LTEXT           "Shareaza is a general-purpose file-sharing application that can access many P2P networks at the same time.  Here you can select which networks you'd like to access.  Note that you can always select different networks later.",IDC_STATIC,10,10,260,32
     CONTROL         "Connect to Gnutella2 (Highly Recommended)",IDC_G2_ENABLE,
@@ -647,7 +647,7 @@ END
 IDD_WIZARD_FINISHED DIALOGEX 0, 0, 277, 174
 STYLE DS_SETFONT | WS_CHILD | WS_DISABLED | WS_CAPTION
 CAPTION "Welcome to Shareaza (6/6)"
-FONT 8, "Tahoma", 0, 0, 0x1
+FONT 8, "MS Shell Dlg", 0, 0, 0x1
 BEGIN
     LTEXT           "That's it!  Shareaza has been configured to work with your computer.",IDC_STATIC,10,10,265,10
     LTEXT           "If you ever need to change your settings, you can re-run this QuickStart wizard by selecting it from the Tools menu.",IDC_STATIC,10,25,265,20
@@ -664,7 +664,7 @@ END
 IDD_FOLDER_SCAN DIALOGEX 0, 0, 237, 49
 STYLE DS_SETFONT | DS_MODALFRAME | WS_POPUP | WS_CAPTION | WS_SYSMENU
 CAPTION "Scanning Folder..."
-FONT 8, "Tahoma", 0, 0, 0x1
+FONT 8, "MS Shell Dlg", 0, 0, 0x1
 BEGIN
     ICON            IDI_SEARCH_FOLDER,IDC_STATIC,10,7,20,20
     CONTROL         "...",IDC_SCAN_FILE,"Static",SS_LEFTNOWORDWRAP | SS_PATHELLIPSIS | WS_GROUP,40,7,190,10
@@ -678,7 +678,7 @@ END
 IDD_DOWNLOAD DIALOGEX 0, 0, 292, 220
 STYLE DS_SETFONT | DS_MODALFRAME | DS_3DLOOK | WS_POPUP | WS_CAPTION | WS_SYSMENU
 CAPTION "Download File or Torrent"
-FONT 8, "Tahoma", 0, 0, 0x1
+FONT 8, "MS Shell Dlg", 0, 0, 0x1
 BEGIN
     ICON            IDI_FILE,IDC_STATIC,6,6,20,20
     LTEXT           "Downloading any file with Shareaza is easy.  Simply type or paste the URL or URI describing the file into the box below and press Enter.",IDC_STATIC,36,8,249,18
@@ -693,7 +693,7 @@ END
 IDD_SECURE_RULE DIALOGEX 0, 0, 192, 220
 STYLE DS_SETFONT | DS_MODALFRAME | WS_POPUP | WS_CAPTION | WS_SYSMENU
 CAPTION "Security Rule"
-FONT 8, "Tahoma", 0, 0, 0x1
+FONT 8, "MS Shell Dlg", 0, 0, 0x1
 BEGIN
     GROUPBOX        "&Rule:",IDC_STATIC,5,5,180,55,WS_GROUP
     LTEXT           "Type:",IDC_STATIC,15,20,40,12,SS_CENTERIMAGE | NOT WS_GROUP
@@ -734,7 +734,7 @@ END
 IDD_FILE_COPY DIALOGEX 0, 0, 217, 194
 STYLE DS_SETFONT | DS_MODALFRAME | WS_POPUP | WS_CAPTION | WS_SYSMENU
 CAPTION "Copy Files|Move Files"
-FONT 8, "Tahoma", 0, 0, 0x0
+FONT 8, "MS Shell Dlg", 0, 0, 0x1
 BEGIN
     LTEXT           "You have selected %i file(s) to copy to the following folder:",IDC_MESSAGE_COPY,5,5,205,10,NOT WS_VISIBLE
     CONTROL         "",IDC_PLACEHOLDER,"Static",SS_BLACKFRAME | NOT WS_VISIBLE,7,20,203,105
@@ -749,7 +749,7 @@ END
 IDD_URL_ACTION DIALOGEX 0, 0, 331, 127
 STYLE DS_SETFONT | DS_MODALFRAME | DS_3DLOOK | DS_CENTER | WS_POPUP | WS_CAPTION | WS_SYSMENU
 CAPTION "Shareaza URI Manager"
-FONT 8, "Tahoma", 0, 0, 0x1
+FONT 8, "MS Shell Dlg", 0, 0, 0x1
 BEGIN
     LTEXT           "You have clicked on a Shareaza-powered URI which links to the following content on the network:",IDC_MESSAGE_1,7,7,317,20,NOT WS_VISIBLE
     LTEXT           "You have clicked on a Shareaza-powered URL which will connect you to the following host or server:",IDC_MESSAGE_2,7,7,317,23,NOT WS_VISIBLE
@@ -771,7 +771,7 @@ END
 IDD_URL_COPY DIALOGEX 0, 0, 292, 119
 STYLE DS_SETFONT | DS_MODALFRAME | WS_POPUP | WS_CAPTION | WS_SYSMENU
 CAPTION "Copy URI"
-FONT 8, "Tahoma", 0, 0, 0x1
+FONT 8, "MS Shell Dlg", 0, 0, 0x1
 BEGIN
     LTEXT           "You can copy a URI for the selected item in a variety of different formats.  Please choose the format you wish to use by clicking one of the URIs below:",IDC_MESSAGE,10,10,270,30
     CONTROL         "...",IDC_URL_MAGNET,"Static",SS_LEFTNOWORDWRAP | SS_NOPREFIX | SS_NOTIFY | SS_WORDELLIPSIS | WS_GROUP,10,40,270,10
@@ -785,14 +785,14 @@ END
 IDD_SPLASH DIALOGEX 0, 0, 292, 39
 STYLE DS_SETFONT | WS_POPUP | WS_CLIPCHILDREN
 EXSTYLE WS_EX_TOOLWINDOW
-FONT 8, "Tahoma", 0, 0, 0x1
+FONT 8, "MS Shell Dlg", 0, 0, 0x1
 BEGIN
 END
 
 IDD_DISCOVERY_SERVICE DIALOGEX 0, 0, 292, 115
 STYLE DS_SETFONT | DS_MODALFRAME | WS_POPUP | WS_CAPTION | WS_SYSMENU
 CAPTION "Discovery Service"
-FONT 8, "Tahoma", 0, 0, 0x1
+FONT 8, "MS Shell Dlg", 0, 0, 0x1
 BEGIN
     GROUPBOX        "Service &Address:",IDC_STATIC,7,9,278,60
     EDITTEXT        IDC_ADDRESS,14,25,264,12,ES_AUTOHSCROLL
@@ -802,10 +802,10 @@ BEGIN
     PUSHBUTTON      "Cancel",IDCANCEL,225,92,60,16
 END
 
-IDD_SETTINGS_BANDWIDTH DIALOG 0, 0, 282, 220
+IDD_SETTINGS_BANDWIDTH DIALOGEX 0, 0, 282, 220
 STYLE DS_SETFONT | WS_CHILD | WS_DISABLED | WS_CAPTION
 CAPTION "Bandwidth"
-FONT 8, "Tahoma"
+FONT 8, "MS Shell Dlg", 0, 0, 0x1
 BEGIN
     LTEXT           "Receive Bandwidth:",IDC_HEAD_RECEIVE,5,5,95,12,SS_CENTERIMAGE
     CTEXT           "Per Connect",IDC_STATIC,110,5,56,12,SS_CENTERIMAGE
@@ -869,7 +869,7 @@ END
 IDD_URL_EXPORT DIALOGEX 0, 0, 292, 99
 STYLE DS_SETFONT | DS_MODALFRAME | WS_POPUP | WS_CAPTION | WS_SYSMENU
 CAPTION "Export URIs"
-FONT 8, "Tahoma", 0, 0, 0x1
+FONT 8, "MS Shell Dlg", 0, 0, 0x1
 BEGIN
     LTEXT           "You have selected %lu files to export as Shareaza-powered URI references.  Please select the format for the URIs, and click Save:",IDC_MESSAGE,7,10,278,20
     EDITTEXT        IDC_URL_FORMAT,7,35,278,12,ES_AUTOHSCROLL
@@ -886,7 +886,7 @@ END
 IDD_UPGRADE DIALOGEX 0, 0, 292, 124
 STYLE DS_SETFONT | DS_MODALFRAME | DS_3DLOOK | DS_CENTER | WS_POPUP | WS_CAPTION | WS_SYSMENU
 CAPTION "Upgrade Alert"
-FONT 8, "Tahoma", 0, 0, 0x1
+FONT 8, "MS Shell Dlg", 0, 0, 0x1
 BEGIN
     LTEXT           "A new version of Shareaza is now available.  Would you like to upgrade?",IDC_MESSAGE,20,10,252,60
     LTEXT           "If you select Upgrade Now, Shareaza will add the upgrade to your download queue and automatically begin downloading it.",IDC_STATIC,20,75,252,20
@@ -898,7 +898,7 @@ END
 IDD_SETTINGS_COMMUNITY DIALOGEX 0, 0, 282, 220
 STYLE DS_SETFONT | WS_CHILD | WS_DISABLED | WS_CAPTION
 CAPTION "Community"
-FONT 8, "Tahoma", 0, 0, 0x1
+FONT 8, "MS Shell Dlg", 0, 0, 0x1
 BEGIN
     GROUPBOX        "My &Profile:",IDC_STATIC,5,5,270,63
     LTEXT           "You can use your Gnutella User Profile to share information about yourself, your interests and recommended files and websites with others.",IDC_STATIC,15,20,170,40
@@ -915,7 +915,7 @@ END
 IDD_DOWNLOAD_MONITOR DIALOGEX 0, 0, 252, 160
 STYLE DS_SETFONT | DS_MODALFRAME | WS_MINIMIZEBOX | WS_MAXIMIZEBOX | WS_POPUP | WS_CAPTION | WS_SYSMENU
 CAPTION "Download : Shareaza"
-FONT 8, "Tahoma", 0, 0, 0x1
+FONT 8, "MS Shell Dlg", 0, 0, 0x1
 BEGIN
     LTEXT           "Shareaza is downloading:",IDC_DOWNLOAD_STATUS,7,5,238,10
     CONTROL         "...",IDC_DOWNLOAD_FILE,"Static",SS_LEFTNOWORDWRAP | SS_CENTERIMAGE | SS_WORDELLIPSIS | WS_GROUP,7,15,238,15
@@ -941,7 +941,7 @@ END
 IDD_SETTINGS_SKINS DIALOGEX 0, 0, 282, 220
 STYLE DS_SETFONT | WS_CHILD | WS_DISABLED | WS_CAPTION
 CAPTION "Skins"
-FONT 8, "Tahoma", 0, 0, 0x0
+FONT 8, "MS Shell Dlg", 0, 0, 0x1
 BEGIN
     CONTROL         "List1",IDC_SKINS,"SysListView32",LVS_REPORT | LVS_SINGLESEL | LVS_SHOWSELALWAYS | LVS_SORTASCENDING | LVS_NOCOLUMNHEADER | WS_BORDER | WS_GROUP | WS_TABSTOP,5,5,270,120
     GROUPBOX        "Skin Information:",IDC_STATIC,5,130,270,65,WS_GROUP
@@ -959,7 +959,7 @@ END
 IDD_FILE_PREVIEW DIALOGEX 0, 0, 257, 86
 STYLE DS_SETFONT | DS_MODALFRAME | WS_MINIMIZEBOX | WS_POPUP | WS_CAPTION | WS_SYSMENU
 CAPTION "Smart Download Preview..."
-FONT 8, "Tahoma", 0, 0, 0x1
+FONT 8, "MS Shell Dlg", 0, 0, 0x1
 BEGIN
     ICON            IDR_DOWNLOADSFRAME,IDC_STATIC,10,7,20,20
     LTEXT           "Shareaza is creating a preview of the download:",IDC_STATIC,40,10,210,10
@@ -972,21 +972,21 @@ END
 IDD_LANGUAGE DIALOGEX 0, 0, 292, 154
 STYLE DS_SETFONT | DS_MODALFRAME | WS_POPUP | WS_CAPTION | WS_VSCROLL | WS_SYSMENU
 CAPTION "Select Language"
-FONT 8, "Tahoma", 0, 0, 0x1
+FONT 8, "MS Shell Dlg", 0, 0, 0x1
 BEGIN
 END
 
-IDD_SETTINGS_RICH DIALOG 0, 0, 282, 220
+IDD_SETTINGS_RICH DIALOGEX 0, 0, 282, 220
 STYLE DS_SETFONT | WS_CHILD | WS_DISABLED | WS_CAPTION
 CAPTION "Rich"
-FONT 8, "Tahoma"
+FONT 8, "MS Shell Dlg", 0, 0, 0x1
 BEGIN
 END
 
 IDD_SETTINGS_PLUGINS DIALOGEX 0, 0, 282, 220
 STYLE DS_SETFONT | WS_CHILD | WS_DISABLED | WS_CAPTION
 CAPTION "Plugins"
-FONT 8, "Tahoma", 0, 0, 0x1
+FONT 8, "MS Shell Dlg", 0, 0, 0x1
 BEGIN
     CONTROL         "List1",IDC_PLUGINS,"SysListView32",LVS_REPORT | LVS_SINGLESEL | LVS_SHOWSELALWAYS | LVS_NOCOLUMNHEADER | WS_BORDER | WS_GROUP | WS_TABSTOP,5,5,270,120
     GROUPBOX        "Plugin Information:",IDC_STATIC,5,130,270,65,WS_GROUP
@@ -1001,7 +1001,7 @@ END
 IDD_FOLDER_PROPERTIES DIALOGEX 0, 0, 237, 204
 STYLE DS_SETFONT | WS_POPUP | WS_CLIPCHILDREN | WS_CAPTION | WS_SYSMENU | WS_THICKFRAME
 CAPTION "Album Folder Properties"
-FONT 8, "Tahoma", 0, 0, 0x1
+FONT 8, "MS Shell Dlg", 0, 0, 0x1
 BEGIN
     LTEXT           "Album Folder Title:",IDC_STATIC,75,7,155,10
     EDITTEXT        IDC_TITLE,75,17,155,12,ES_AUTOHSCROLL
@@ -1016,7 +1016,7 @@ END
 IDD_SETTINGS_MEDIA DIALOGEX 0, 0, 282, 220
 STYLE DS_SETFONT | WS_CHILD | WS_DISABLED | WS_CAPTION
 CAPTION "Media Player"
-FONT 8, "Tahoma", 0, 0, 0x1
+FONT 8, "MS Shell Dlg", 0, 0, 0x1
 BEGIN
     GROUPBOX        "&Options:",IDC_STATIC,5,5,270,48,WS_GROUP
     COMBOBOX        IDC_MEDIA_SERVICE,133,67,135,60,CBS_DROPDOWNLIST | WS_VSCROLL | WS_TABSTOP
@@ -1038,7 +1038,7 @@ END
 IDD_SETTINGS_LIBRARY DIALOGEX 0, 0, 282, 220
 STYLE DS_SETFONT | WS_CHILD | WS_DISABLED | WS_CAPTION
 CAPTION "Library"
-FONT 8, "Tahoma", 0, 0, 0x1
+FONT 8, "MS Shell Dlg", 0, 0, 0x1
 BEGIN
     GROUPBOX        "&Options:",IDC_STATIC,5,5,139,98,WS_GROUP
     CONTROL         "Remember folder views",IDC_STORE_VIEWS,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,15,17,126,12
@@ -1072,19 +1072,19 @@ BEGIN
                     "Button",BS_AUTOCHECKBOX | WS_TABSTOP,15,88,127,10
 END
 
-IDD_FILE_METADATA DIALOG 0, 0, 246, 218
+IDD_FILE_METADATA DIALOGEX 0, 0, 246, 218
 STYLE DS_SETFONT | WS_POPUP | WS_CLIPCHILDREN | WS_CAPTION | WS_SYSMENU
 CAPTION "Metadata"
-FONT 8, "Tahoma"
+FONT 8, "MS Shell Dlg", 0, 0, 0x1
 BEGIN
     COMBOBOX        IDC_SCHEMAS,5,40,235,245,CBS_DROPDOWNLIST | CBS_OWNERDRAWVARIABLE | CBS_SORT | CBS_HASSTRINGS | WS_VSCROLL | WS_TABSTOP
     EDITTEXT        IDC_FILE_NAME,45,12,195,10,ES_AUTOHSCROLL | ES_READONLY | NOT WS_BORDER
 END
 
-IDD_FILE_GENERAL DIALOG 0, 0, 246, 218
+IDD_FILE_GENERAL DIALOGEX 0, 0, 246, 218
 STYLE DS_SETFONT | WS_POPUP | WS_CLIPCHILDREN | WS_CAPTION | WS_SYSMENU
 CAPTION "General"
-FONT 8, "Tahoma"
+FONT 8, "MS Shell Dlg", 0, 0, 0x1
 BEGIN
     LTEXT           "Universal Resource Names (URNs)",IDC_STATIC,5,40,235,11,NOT WS_VISIBLE
     EDITTEXT        IDC_FILE_SHA1,10,56,230,10,ES_AUTOHSCROLL | ES_READONLY | NOT WS_BORDER
@@ -1104,10 +1104,10 @@ BEGIN
     EDITTEXT        IDC_FILE_NAME,45,12,195,10,ES_AUTOHSCROLL | ES_READONLY | NOT WS_BORDER
 END
 
-IDD_FILE_SOURCES DIALOG 0, 0, 246, 218
+IDD_FILE_SOURCES DIALOGEX 0, 0, 246, 218
 STYLE DS_SETFONT | WS_POPUP | WS_CLIPCHILDREN | WS_CAPTION | WS_SYSMENU
 CAPTION "Sources"
-FONT 8, "Tahoma"
+FONT 8, "MS Shell Dlg", 0, 0, 0x1
 BEGIN
     LTEXT           "Known Sources",IDC_STATIC,5,40,235,11,NOT WS_VISIBLE
     LTEXT           "Add New Source",IDC_STATIC,5,175,235,11,NOT WS_VISIBLE
@@ -1121,7 +1121,7 @@ END
 IDD_SETTINGS_WEB DIALOGEX 0, 0, 282, 220
 STYLE DS_SETFONT | WS_CHILD | WS_DISABLED | WS_CAPTION
 CAPTION "Web"
-FONT 8, "Tahoma", 0, 0, 0x1
+FONT 8, "MS Shell Dlg", 0, 0, 0x1
 BEGIN
     GROUPBOX        "&Peer to Peer Link Handling:",IDC_STATIC,5,5,270,85,WS_GROUP
     LTEXT           "Use Shareaza to open these types of links:",IDC_STATIC,15,20,250,10
@@ -1143,7 +1143,7 @@ END
 IDD_PROFILE_IDENTITY DIALOGEX 0, 0, 282, 159
 STYLE DS_SETFONT | WS_CHILD | WS_DISABLED | WS_CAPTION
 CAPTION "Identity"
-FONT 8, "Tahoma", 0, 0, 0x0
+FONT 8, "MS Shell Dlg", 0, 0, 0x1
 BEGIN
     GROUPBOX        "&Name:",IDC_STATIC,5,5,270,60,WS_GROUP
     RTEXT           "Screen Name:",IDC_STATIC,15,20,50,12,SS_CENTERIMAGE
@@ -1160,10 +1160,10 @@ BEGIN
                     "Button",BS_AUTOCHECKBOX | WS_TABSTOP,5,140,260,12
 END
 
-IDD_PROFILE_FAVOURITES DIALOG 0, 0, 282, 159
+IDD_PROFILE_FAVOURITES DIALOGEX 0, 0, 282, 159
 STYLE DS_SETFONT | WS_CHILD | WS_DISABLED | WS_CAPTION
 CAPTION "Favourites"
-FONT 8, "Tahoma"
+FONT 8, "MS Shell Dlg", 0, 0, 0x1
 BEGIN
     CONTROL         "List1",IDC_WEB_LIST,"SysListView32",LVS_REPORT | LVS_SORTASCENDING | WS_BORDER | WS_GROUP | WS_TABSTOP,5,5,270,90
     GROUPBOX        "&Edit:",IDC_STATIC,5,100,270,55,WS_GROUP
@@ -1178,7 +1178,7 @@ END
 IDD_PROFILE_PROFILE DIALOGEX 0, 0, 282, 159
 STYLE DS_SETFONT | WS_CHILD | WS_DISABLED | WS_CAPTION
 CAPTION "Profile"
-FONT 8, "Tahoma", 0, 0, 0x0
+FONT 8, "MS Shell Dlg", 0, 0, 0x1
 BEGIN
     GROUPBOX        "&Location:",IDC_STATIC,5,5,155,60
     LTEXT           "Country:",IDC_STATIC,15,23,35,12,SS_CENTERIMAGE
@@ -1200,7 +1200,7 @@ END
 IDD_PROFILE_CONTACT DIALOGEX 0, 0, 282, 159
 STYLE DS_SETFONT | WS_CHILD | WS_DISABLED | WS_CAPTION
 CAPTION "Contact"
-FONT 8, "Tahoma", 0, 0, 0x1
+FONT 8, "MS Shell Dlg", 0, 0, 0x1
 BEGIN
     GROUPBOX        "&Email Addresses:",IDC_STATIC,5,5,270,40
     LTEXT           "Primary:",IDC_STATIC,15,22,40,12,SS_CENTERIMAGE
@@ -1218,10 +1218,10 @@ BEGIN
     EDITTEXT        IDC_PROFILE_JABBER,132,136,90,12,ES_AUTOHSCROLL
 END
 
-IDD_PROFILE_BIO DIALOG 0, 0, 282, 159
+IDD_PROFILE_BIO DIALOGEX 0, 0, 282, 159
 STYLE DS_SETFONT | WS_CHILD | WS_DISABLED | WS_CAPTION
 CAPTION "Bio"
-FONT 8, "Tahoma"
+FONT 8, "MS Shell Dlg", 0, 0, 0x1
 BEGIN
     EDITTEXT        IDC_PROFILE_BIO,5,5,270,150,ES_MULTILINE | ES_AUTOVSCROLL | ES_WANTRETURN | WS_VSCROLL
 END
@@ -1229,7 +1229,7 @@ END
 IDD_PROFILE_FILES DIALOGEX 0, 0, 282, 159
 STYLE DS_SETFONT | WS_CHILD | WS_DISABLED | WS_CAPTION
 CAPTION "Files"
-FONT 8, "Tahoma", 0, 0, 0x0
+FONT 8, "MS Shell Dlg", 0, 0, 0x1
 BEGIN
     GROUPBOX        "&Favourite Files:",IDC_STATIC,5,5,270,145
     LTEXT           "Favourite files are recommended to users who browse your profile.  You can create favourite files by adding them to the ""Favourites"" library folder.",IDC_STATIC,15,20,250,25
@@ -1239,7 +1239,7 @@ END
 IDD_PROFILE_CERTIFICATE DIALOGEX 0, 0, 282, 159
 STYLE DS_SETFONT | WS_CHILD | WS_DISABLED | WS_CAPTION
 CAPTION "Certificate"
-FONT 8, "Tahoma", 0, 0, 0x1
+FONT 8, "MS Shell Dlg", 0, 0, 0x1
 BEGIN
     LTEXT           "Users are identified by a globally unique identifier and a corresponding public and private key pair.  Normally there is no need to generate a new ID, however Shareaza provides this option for advanced users.",IDC_STATIC,5,5,270,35,NOT WS_VISIBLE
     GROUPBOX        "&Globally Unique Identification Certificate:",IDC_STATIC,5,45,270,50
@@ -1253,7 +1253,7 @@ END
 IDD_SHARE_MANAGER DIALOGEX 0, 0, 292, 156
 STYLE DS_SETFONT | DS_MODALFRAME | DS_3DLOOK | DS_CENTER | WS_POPUP | WS_CAPTION | WS_SYSMENU
 CAPTION "Shared Folder Manager"
-FONT 8, "Tahoma", 0, 0, 0x1
+FONT 8, "MS Shell Dlg", 0, 0, 0x1
 BEGIN
     LTEXT           "This is a list of folders in your library.  You can add and remove folders using the buttons on the left.  When you add a new folder it is initially shared with other users, however you can unshare it from the Shareaza library if you wish.",IDC_STATIC,7,5,278,34
     CONTROL         "List1",IDC_SHARE_FOLDERS,"SysListView32",LVS_REPORT | LVS_SHAREIMAGELISTS | LVS_ALIGNLEFT | LVS_NOCOLUMNHEADER | WS_BORDER | WS_TABSTOP,7,42,278,83
@@ -1266,7 +1266,7 @@ END
 IDD_PROFILE_AVATAR DIALOGEX 0, 0, 282, 159
 STYLE DS_SETFONT | WS_CHILD | WS_DISABLED | WS_CAPTION
 CAPTION "Avatar"
-FONT 8, "Tahoma", 0, 0, 0x0
+FONT 8, "MS Shell Dlg", 0, 0, 0x1
 BEGIN
     GROUPBOX        "&Preview:",IDC_STATIC,5,5,115,105
     CONTROL         "",IDC_PREVIEW,"Static",SS_BLACKFRAME | NOT WS_VISIBLE,20,20,85,79
@@ -1279,7 +1279,7 @@ END
 IDD_MEDIA_VIS DIALOGEX 0, 0, 292, 169
 STYLE DS_SETFONT | DS_MODALFRAME | DS_3DLOOK | DS_CENTER | WS_POPUP | WS_CAPTION | WS_SYSMENU
 CAPTION "Select Visualisation"
-FONT 8, "Tahoma", 0, 0, 0x1
+FONT 8, "MS Shell Dlg", 0, 0, 0x1
 BEGIN
     GROUPBOX        "Select an audio visualisation from the list:",IDC_STATIC,5,5,280,140,WS_GROUP
     CONTROL         "List1",IDC_PLUGINS,"SysListView32",LVS_REPORT | LVS_SINGLESEL | LVS_SHOWSELALWAYS | LVS_SORTASCENDING | LVS_SHAREIMAGELISTS | LVS_ALIGNLEFT | LVS_NOCOLUMNHEADER | WS_BORDER | WS_TABSTOP,15,20,260,95
@@ -1292,7 +1292,7 @@ END
 IDD_SETTINGS_UPLOADS DIALOGEX 0, 0, 282, 220
 STYLE DS_SETFONT | WS_CHILD | WS_DISABLED | WS_CAPTION
 CAPTION "Uploads"
-FONT 8, "Tahoma", 0, 0, 0x1
+FONT 8, "MS Shell Dlg", 0, 0, 0x1
 BEGIN
     GROUPBOX        "&Options:",IDC_STATIC,5,5,135,96,WS_GROUP
     CONTROL         "Share NEW partial downloads",IDC_SHARE_PARTIALS,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,15,20,120,12
@@ -1321,7 +1321,7 @@ END
 IDD_FILE_COMMENTS DIALOGEX 0, 0, 246, 218
 STYLE DS_SETFONT | WS_POPUP | WS_CLIPCHILDREN | WS_CAPTION | WS_SYSMENU
 CAPTION "My Review"
-FONT 8, "Tahoma", 0, 0, 0x1
+FONT 8, "MS Shell Dlg", 0, 0, 0x1
 BEGIN
     LTEXT           "My Rating",IDC_STATIC,5,40,235,11,NOT WS_VISIBLE
     LTEXT           "I rate this file:",IDC_STATIC,15,55,70,13,SS_CENTERIMAGE
@@ -1334,7 +1334,7 @@ END
 IDD_WARNINGS DIALOGEX 0, 0, 292, 184
 STYLE DS_SETFONT | DS_MODALFRAME | WS_POPUP | WS_CAPTION | WS_SYSMENU
 CAPTION "Shareaza Respects its Users"
-FONT 8, "Tahoma", 0, 0, 0x1
+FONT 8, "MS Shell Dlg", 0, 0, 0x1
 BEGIN
     LTEXT           "Did you know Shareaza is a 100% free product?",IDC_TITLE,15,4,265,19,SS_CENTERIMAGE
     LTEXT           "Shareaza does NOT contain ANY ""spyware"", ""adware"" or other bundled software. It does NOT display any advertisements or ""popups"", ever.\n\nIf you ever see advertising or ""popups"" while using Shareaza, be assured that they are NOT coming from this program.",IDC_STATIC,15,26,265,50
@@ -1348,7 +1348,7 @@ END
 IDD_PROMOTE DIALOGEX 0, 0, 292, 155
 STYLE DS_SETFONT | DS_MODALFRAME | WS_POPUP | WS_CAPTION | WS_SYSMENU
 CAPTION "Spread the Word"
-FONT 8, "Tahoma", 0, 0, 0x1
+FONT 8, "MS Shell Dlg", 0, 0, 0x1
 BEGIN
     LTEXT           "Help Us Spread the Word",IDC_TITLE,15,15,265,10,SS_CENTERIMAGE
     LTEXT           "We hope you have enjoyed using Shareaza so far.  We believe it is the best file sharing application around.",IDC_STATIC,15,35,260,20
@@ -1362,7 +1362,7 @@ END
 IDD_EXISTING_FILE DIALOGEX 0, 0, 292, 176
 STYLE DS_SETFONT | DS_MODALFRAME | WS_POPUP | WS_CAPTION | WS_SYSMENU
 CAPTION "Existing File"
-FONT 8, "Tahoma", 0, 0, 0x1
+FONT 8, "MS Shell Dlg", 0, 0, 0x1
 BEGIN
     DEFPUSHBUTTON   "OK",IDOK,158,153,60,16,WS_GROUP
     PUSHBUTTON      "Cancel",IDCANCEL,225,153,60,16
@@ -1382,7 +1382,7 @@ END
 IDD_CLOSE_MODE DIALOGEX 0, 0, 292, 120
 STYLE DS_SETFONT | DS_MODALFRAME | WS_POPUP | WS_CAPTION | WS_SYSMENU
 CAPTION "Close Button"
-FONT 8, "Tahoma", 0, 0, 0x1
+FONT 8, "MS Shell Dlg", 0, 0, 0x1
 BEGIN
     LTEXT           "This is the first time you have clicked Shareaza's close button.  Please choose what action you would like Shareaza to take when clicking the close button from now on:",IDC_STATIC,15,10,260,30
     CONTROL         "Minimise to the tray area",IDC_CLOSE_0,"Button",BS_AUTORADIOBUTTON | WS_GROUP,30,45,245,10
@@ -1396,7 +1396,7 @@ END
 IDD_SETTINGS_DONKEY DIALOGEX 0, 0, 282, 220
 STYLE DS_SETFONT | WS_CHILD | WS_DISABLED | WS_CAPTION
 CAPTION "eDonkey"
-FONT 8, "Tahoma", 0, 0, 0x1
+FONT 8, "MS Shell Dlg", 0, 0, 0x1
 BEGIN
     CONTROL         "Always connect to eDonkey",IDC_ENABLE_ALWAYS,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,15,20,126,12
     CONTROL         "Connect to eDonkey today",IDC_ENABLE_TODAY,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,15,34,125,12
@@ -1423,7 +1423,7 @@ END
 IDD_SETTINGS_NETWORKS DIALOGEX 0, 0, 282, 220
 STYLE DS_SETFONT | WS_CHILD | WS_DISABLED | WS_CAPTION
 CAPTION "Networks"
-FONT 8, "Tahoma", 0, 0, 0x1
+FONT 8, "MS Shell Dlg", 0, 0, 0x1
 BEGIN
     LTEXT           "Shareaza is a general-purpose file-sharing application that can access many P2P networks at the same time. On this page you can select which networks you want to connect to, and then adjust specific settings for each network.",IDC_STATIC,5,5,270,34
     GROUPBOX        "Gnutella2 Network:",IDC_STATIC,5,39,270,55,WS_GROUP
@@ -1443,7 +1443,7 @@ END
 IDD_SETTINGS_PROTOCOLS DIALOGEX 0, 0, 282, 220
 STYLE DS_SETFONT | WS_CHILD | WS_DISABLED | WS_CAPTION
 CAPTION "Protocols"
-FONT 8, "Tahoma", 0, 0, 0x0
+FONT 8, "MS Shell Dlg", 0, 0, 0x1
 BEGIN
     GROUPBOX        "Shareaza Common Architecture Protocol Explorer:",IDC_STATIC,5,5,270,210,WS_GROUP
     CONTROL         "Tree1",IDC_PROTOCOLS,"SysTreeView32",TVS_HASBUTTONS | TVS_HASLINES | TVS_LINESATROOT | TVS_DISABLEDRAGDROP | TVS_SHOWSELALWAYS | WS_BORDER | WS_TABSTOP,15,20,250,185
@@ -1452,7 +1452,7 @@ END
 IDD_QUEUE_PROPERTIES DIALOGEX 0, 0, 382, 252
 STYLE DS_SETFONT | DS_MODALFRAME | WS_POPUP | WS_CAPTION | WS_SYSMENU
 CAPTION "Upload Queue Properties"
-FONT 8, "Tahoma", 0, 0, 0x1
+FONT 8, "MS Shell Dlg", 0, 0, 0x1
 BEGIN
     GROUPBOX        "&Name:",IDC_STATIC,5,5,180,40,WS_GROUP
     EDITTEXT        IDC_NAME,15,20,160,12,ES_AUTOHSCROLL
@@ -1499,7 +1499,7 @@ END
 IDD_DONKEY_SERVERS DIALOGEX 0, 0, 292, 96
 STYLE DS_SETFONT | DS_MODALFRAME | WS_POPUP | WS_CAPTION | WS_SYSMENU
 CAPTION "Download Server.met File"
-FONT 8, "Tahoma", 0, 0, 0x1
+FONT 8, "MS Shell Dlg", 0, 0, 0x1
 BEGIN
     LTEXT           "You can download an eDonkey server.met file from the web to refresh your local list of servers.",IDC_STATIC,7,10,278,20
     EDITTEXT        IDC_URL,7,35,278,12,ES_AUTOHSCROLL
@@ -1511,7 +1511,7 @@ END
 IDD_FILE_SHARING DIALOGEX 0, 0, 246, 218
 STYLE DS_SETFONT | WS_POPUP | WS_CLIPCHILDREN | WS_CAPTION | WS_SYSMENU
 CAPTION "Sharing"
-FONT 8, "Tahoma", 0, 0, 0x1
+FONT 8, "MS Shell Dlg", 0, 0, 0x1
 BEGIN
     LTEXT           "Simple Sharing",IDC_STATIC,5,40,235,11,NOT WS_VISIBLE
     CONTROL         "Share this file if the parent folder is shared",IDC_SHARE_OVERRIDE_0,
@@ -1530,7 +1530,7 @@ END
 IDD_DONKEY_IMPORT DIALOGEX 0, 0, 292, 139
 STYLE DS_SETFONT | DS_MODALFRAME | WS_POPUP | WS_CAPTION | WS_SYSMENU
 CAPTION "Import eDonkey Downloads"
-FONT 8, "Tahoma", 0, 0, 0x1
+FONT 8, "MS Shell Dlg", 0, 0, 0x1
 BEGIN
     LTEXT           "Shareaza has detected that you have another eDonkey program installed on your computer.  Would you like to import any unfinished downloads into Shareaza?",IDC_STATIC,15,10,260,30
     DEFPUSHBUTTON   "Yes",IDC_IMPORT,15,43,60,16
@@ -1542,7 +1542,7 @@ END
 IDD_DOWNLOAD_GROUP DIALOGEX 0, 0, 280, 254
 STYLE DS_SETFONT | DS_MODALFRAME | WS_POPUP | WS_CAPTION | WS_SYSMENU
 CAPTION "Download Group Properties"
-FONT 8, "Tahoma", 0, 0, 0x1
+FONT 8, "MS Shell Dlg", 0, 0, 0x1
 BEGIN
     DEFPUSHBUTTON   "OK",IDOK,167,233,50,14
     PUSHBUTTON      "Cancel",IDCANCEL,223,233,50,14
@@ -1564,7 +1564,7 @@ END
 IDD_HELP DIALOGEX 0, 0, 292, 150
 STYLE DS_SETFONT | DS_MODALFRAME | WS_POPUP | WS_CAPTION | WS_SYSMENU
 CAPTION "Shareaza Help"
-FONT 8, "Tahoma", 0, 0, 0x0
+FONT 8, "MS Shell Dlg", 0, 0, 0x1
 BEGIN
     DEFPUSHBUTTON   "Close",IDOK,225,127,60,16
 END
@@ -1572,7 +1572,7 @@ END
 IDD_DELETE_FILE DIALOGEX 0, 0, 292, 202
 STYLE DS_SETFONT | DS_MODALFRAME | WS_POPUP | WS_CAPTION | WS_SYSMENU
 CAPTION "Delete File"
-FONT 8, "Tahoma", 0, 0, 0x1
+FONT 8, "MS Shell Dlg", 0, 0, 0x1
 BEGIN
     LTEXT           "Are you sure that you want to delete:",IDC_STATIC,12,6,273,12,SS_CENTERIMAGE
     CONTROL         "Filename.ext",IDC_FILE_NAME,"Static",SS_LEFTNOWORDWRAP | SS_CENTERIMAGE | SS_WORDELLIPSIS | WS_GROUP,19,20,266,12
@@ -1593,7 +1593,7 @@ END
 IDD_COLLECTION_EXPORT DIALOGEX 0, 0, 355, 249
 STYLE DS_SETFONT | DS_MODALFRAME | DS_3DLOOK | WS_POPUP | WS_CAPTION | WS_SYSMENU
 CAPTION "Collection Export"
-FONT 8, "Tahoma", 400, 0, 0x1
+FONT 8, "MS Shell Dlg", 0, 0, 0x1
 BEGIN
     LTEXT           "This feature is used to export the contents of a folder or playlist as a rich collection file.  Please select a template and press Next to continue.|Customize your collection by entering data below.",IDC_TEMPLATES_EXPLAIN,7,6,341,24
     CONTROL         "",IDC_TEMPLATES,"SysListView32",LVS_REPORT | LVS_SINGLESEL | LVS_SHOWSELALWAYS | LVS_SORTASCENDING | LVS_NOCOLUMNHEADER | WS_BORDER | WS_GROUP | WS_TABSTOP,7,31,193,186
@@ -1612,7 +1612,7 @@ END
 IDD_TORRENT_SEED DIALOGEX 0, 0, 292, 99
 STYLE DS_SETFONT | DS_MODALFRAME | DS_3DLOOK | WS_POPUP | WS_CAPTION | WS_SYSMENU
 CAPTION "Open Torrent File"
-FONT 8, "Tahoma", 0, 0, 0x1
+FONT 8, "MS Shell Dlg", 0, 0, 0x1
 BEGIN
     LTEXT           "You have opened a BitTorrent torrent file.  Would you like to download its contents, or re-seed it?",IDC_STATIC,7,6,278,18
     DEFPUSHBUTTON   "Download",IDC_DOWNLOAD,47,31,60,16,WS_GROUP
@@ -1625,7 +1625,7 @@ END
 IDD_DOWNLOAD_EDIT DIALOGEX 0, 0, 300, 220
 STYLE DS_SETFONT | DS_3DLOOK | WS_CHILD | WS_DISABLED | WS_CAPTION
 CAPTION "Download Properties"
-FONT 8, "Tahoma", 0, 0, 0x1
+FONT 8, "MS Shell Dlg", 0, 0, 0x1
 BEGIN
     EDITTEXT        IDC_NAME,80,40,206,12,ES_AUTOHSCROLL
     EDITTEXT        IDC_FILESIZE,222,59,64,12,ES_RIGHT | ES_AUTOHSCROLL
@@ -1656,7 +1656,7 @@ END
 IDD_SETTINGS_REMOTE DIALOGEX 0, 0, 282, 220
 STYLE DS_SETFONT | WS_CHILD | WS_DISABLED | WS_CAPTION
 CAPTION "Remote Access"
-FONT 8, "Tahoma", 0, 0, 0x1
+FONT 8, "MS Shell Dlg", 0, 0, 0x1
 BEGIN
     GROUPBOX        "&Guide:",IDC_STATIC,6,6,270,74,WS_GROUP
     LTEXT           "Shareaza Remote Access allows you to leave Shareaza running on your PC, and control it remotely using a web browser.  You will need to be able to accept incoming connections to use this feature (i.e. properly configured router, etc).",IDC_STATIC,18,24,246,48
@@ -1674,7 +1674,7 @@ END
 IDD_SETTINGS_BITTORRENT DIALOGEX 0, 0, 282, 220
 STYLE DS_SETFONT | WS_CHILD | WS_DISABLED | WS_CAPTION
 CAPTION "BitTorrent"
-FONT 8, "Tahoma", 0, 0, 0x1
+FONT 8, "MS Shell Dlg", 0, 0, 0x1
 BEGIN
     CONTROL         "Always connect to BitTorrent",IDC_ENABLE_ALWAYS,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,15,15,250,12
     CONTROL         "Connect to BitTorrent today",IDC_ENABLE_TODAY,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,15,27,250,12
@@ -1708,7 +1708,7 @@ END
 IDD_FILTER_SAVE_AS DIALOGEX 0, 0, 205, 46
 STYLE DS_SETFONT | DS_MODALFRAME | DS_3DLOOK | WS_POPUP | WS_CAPTION | WS_SYSMENU
 CAPTION "Save filter as"
-FONT 8, "Tahoma", 0, 0, 0x1
+FONT 8, "MS Shell Dlg", 0, 0, 0x1
 BEGIN
     EDITTEXT        IDC_NAME,7,19,128,14,ES_AUTOHSCROLL
     DEFPUSHBUTTON   "OK",IDOK,148,7,50,14
@@ -1719,7 +1719,7 @@ END
 IDD_DOWNLOAD_REVIEWS DIALOGEX 0, 0, 362, 172
 STYLE DS_SETFONT | DS_MODALFRAME | DS_3DLOOK | WS_POPUP | WS_CAPTION | WS_SYSMENU
 CAPTION "Download Reviews"
-FONT 8, "Tahoma", 0, 0, 0x1
+FONT 8, "MS Shell Dlg", 0, 0, 0x1
 BEGIN
     DEFPUSHBUTTON   "OK",IDOK,295,149,60,16
     CONTROL         "",IDC_REVIEWS,"SysListView32",LVS_REPORT | LVS_SHAREIMAGELISTS | WS_BORDER | WS_TABSTOP,7,9,348,134
@@ -1729,7 +1729,7 @@ END
 IDD_CODEPAGES DIALOGEX 0, 0, 186, 190
 STYLE DS_SETFONT | DS_MODALFRAME | WS_POPUP | WS_CAPTION | WS_SYSMENU
 CAPTION "Metadata Localisation"
-FONT 8, "Tahoma", 0, 0, 0x1
+FONT 8, "MS Shell Dlg", 0, 0, 0x1
 BEGIN
     LTEXT           "Please select the method of re-encoding:",IDC_STATIC,7,7,172,18
     COMBOBOX        IDC_CODEPAGES,7,26,172,141,CBS_DROPDOWNLIST | WS_VSCROLL | WS_TABSTOP
@@ -1745,7 +1745,7 @@ END
 IDD_SETTINGS_IRC DIALOGEX 0, 0, 282, 220
 STYLE DS_SETFONT | WS_CHILD | WS_DISABLED | WS_CAPTION
 CAPTION "Chat"
-FONT 8, "Tahoma", 0, 0, 0x0
+FONT 8, "MS Shell Dlg", 0, 0, 0x1
 BEGIN
     GROUPBOX        "Client &Options:",IDC_STATIC,7,7,145,100
     CONTROL         "Show chat  integration",IDC_IRC_SHOW,"Button",BS_AUTOCHECKBOX | WS_DISABLED | WS_TABSTOP,13,19,132,9
@@ -1786,7 +1786,7 @@ END
 IDD_IRC_INPUTBOX DIALOGEX 0, 0, 205, 46
 STYLE DS_SETFONT | DS_MODALFRAME | DS_3DLOOK | WS_POPUP | WS_CAPTION | WS_SYSMENU
 CAPTION "Channel Name|Why reason"
-FONT 8, "Tahoma", 0, 0, 0x1
+FONT 8, "MS Shell Dlg", 0, 0, 0x1
 BEGIN
     EDITTEXT        IDC_IRC_INPUT,7,18,128,14,ES_AUTOHSCROLL
     DEFPUSHBUTTON   "OK",IDOK,148,7,50,14
@@ -1797,7 +1797,7 @@ END
 IDD_TORRENT_GENERAL DIALOGEX 0, 0, 300, 220
 STYLE DS_SETFONT | DS_3DLOOK | WS_CHILD | WS_DISABLED | WS_CAPTION
 CAPTION "Download Properties"
-FONT 8, "Tahoma", 0, 0, 0x1
+FONT 8, "MS Shell Dlg", 0, 0, 0x1
 BEGIN
     EDITTEXT        IDC_TORRENT_NAME,60,14,226,12,ES_AUTOHSCROLL | ES_READONLY
     EDITTEXT        IDC_TORRENT_CREATIONDATE,60,34,74,12,ES_AUTOHSCROLL | ES_READONLY
@@ -1820,7 +1820,7 @@ END
 IDD_TORRENT_TRACKERS DIALOGEX 0, 0, 300, 220
 STYLE DS_SETFONT | DS_3DLOOK | WS_CHILD | WS_DISABLED | WS_CAPTION
 CAPTION "Download Properties"
-FONT 8, "Tahoma", 0, 0, 0x1
+FONT 8, "MS Shell Dlg", 0, 0, 0x1
 BEGIN
     EDITTEXT        IDC_TORRENT_TRACKER,100,14,186,12,ES_AUTOHSCROLL | ES_READONLY | NOT WS_TABSTOP
     EDITTEXT        IDC_TORRENT_COMPLETED,100,34,58,12,ES_CENTER | ES_AUTOHSCROLL | ES_READONLY | NOT WS_TABSTOP
@@ -1841,7 +1841,7 @@ END
 IDD_TORRENT_FILES DIALOGEX 0, 0, 300, 220
 STYLE DS_SETFONT | DS_3DLOOK | WS_CHILD | WS_DISABLED | WS_CAPTION
 CAPTION "Download Properties"
-FONT 8, "Tahoma", 0, 0, 0x1
+FONT 8, "MS Shell Dlg", 0, 0, 0x1
 BEGIN
     CONTROL         "",IDC_TORRENT_FILES,"SysListView32",LVS_REPORT | LVS_SHAREIMAGELISTS | WS_BORDER | WS_TABSTOP,7,7,286,206
 END
@@ -1849,7 +1849,7 @@ END
 IDD_PLUGIN_EXT_SETUP DIALOGEX 0, 0, 100, 150
 STYLE DS_SETFONT | DS_MODALFRAME | DS_FIXEDSYS | WS_POPUP | WS_CAPTION | WS_SYSMENU
 CAPTION "Setup"
-FONT 8, "MS Shell Dlg", 400, 0, 0x1
+FONT 8, "MS Shell Dlg", 0, 0, 0x1
 BEGIN
     DEFPUSHBUTTON   "OK",IDOK,19,126,60,16
     CONTROL         "",IDC_ASSOCIATIONS,"SysListView32",LVS_REPORT | LVS_SINGLESEL | LVS_SORTASCENDING | LVS_ALIGNLEFT | LVS_NOCOLUMNHEADER | WS_BORDER | WS_TABSTOP,19,7,60,112,WS_EX_CLIENTEDGE
@@ -1858,7 +1858,7 @@ END
 IDD_DOWNLOAD_ACTIONS DIALOGEX 0, 0, 300, 222
 STYLE DS_SETFONT | DS_3DLOOK | WS_CHILD | WS_DISABLED | WS_CAPTION
 CAPTION "Download Properties"
-FONT 8, "Tahoma", 0, 0, 0x1
+FONT 8, "MS Shell Dlg", 0, 0, 0x1
 BEGIN
     LTEXT           "Forget current verification status and reverify",IDC_FORGET_VERIFY,14,41,272,8
     LTEXT           "Assume file is 100% complete and reverify",IDC_COMPLETE_AND_VERIFY,14,55,272,8
@@ -1878,7 +1878,7 @@ END
 IDD_SELECT DIALOGEX 0, 0, 257, 70
 STYLE DS_SETFONT | DS_MODALFRAME | WS_MINIMIZEBOX | WS_POPUP | WS_CAPTION | WS_SYSMENU
 CAPTION "Select"
-FONT 8, "Tahoma", 0, 0, 0x1
+FONT 8, "MS Shell Dlg", 0, 0, 0x1
 BEGIN
     LTEXT           "Please select:",IDC_STATIC,7,7,243,10
     PUSHBUTTON      "OK",IDOK,143,49,50,14
@@ -1889,7 +1889,7 @@ END
 IDD_MESSAGE DIALOGEX 0, 0, 300, 112
 STYLE DS_SETFONT | DS_MODALFRAME | WS_MINIMIZEBOX | WS_POPUP | WS_CLIPSIBLINGS | WS_CLIPCHILDREN | WS_CAPTION | WS_SYSMENU
 CAPTION "Shareaza"
-FONT 8, "Tahoma", 0, 0, 0x1
+FONT 8, "MS Shell Dlg", 0, 0, 0x1
 BEGIN
     PUSHBUTTON      "3",IDC_INFO_BUTTON3,101,65,60,16
     PUSHBUTTON      "2",IDC_INFO_BUTTON2,167,65,60,16
@@ -1904,7 +1904,7 @@ END
 IDD_PROGRESSBAR DIALOGEX 0, 0, 250, 97
 STYLE DS_SETFONT | DS_MODALFRAME | WS_POPUP | WS_CAPTION
 CAPTION "Progress Bar Title"
-FONT 8, "Tahoma", 0, 0, 0x0
+FONT 8, "MS Shell Dlg", 0, 0, 0x1
 BEGIN
     LTEXT           "Action:",IDC_LABEL_ACTION,8,6,234,8,SS_CENTERIMAGE
     LTEXT           "Event",IDC_LABEL_EVENT,8,20,234,8,SS_CENTERIMAGE | SS_PATHELLIPSIS
@@ -1918,7 +1918,7 @@ END
 IDD_DEBUG_HEX DIALOGEX 0, 0, 316, 184
 STYLE DS_SETFONT | DS_MODALFRAME | DS_FIXEDSYS | WS_POPUP | WS_CAPTION | WS_SYSMENU
 CAPTION "Enter hexadecimal string"
-FONT 8, "MS Shell Dlg", 400, 0, 0x1
+FONT 8, "MS Shell Dlg", 0, 0, 0x1
 BEGIN
     DEFPUSHBUTTON   "OK",IDOK,183,161,60,16
     PUSHBUTTON      "Cancel",IDCANCEL,249,161,60,16
@@ -2031,9 +2031,9 @@ BEGIN
     IDD_ABOUT, DIALOG
     BEGIN
         LEFTMARGIN, 7
-        RIGHTMARGIN, 285
+        RIGHTMARGIN, 286
         TOPMARGIN, 7
-        BOTTOMMARGIN, 143
+        BOTTOMMARGIN, 154
     END
 
     IDD_GRAPH_LIST, DIALOG
