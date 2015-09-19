@@ -16,7 +16,6 @@ TCHAR* szAuthor;
 TCHAR* szUpdates;
 TCHAR* szXML;
 TCHAR skins_dir[MAX_PATH];
-BOOL  bRunningOnNT;
 
 int WINAPI wWinMain(HINSTANCE hInst, HINSTANCE hPrevInst, LPWSTR cmdParam, int cmdShow)
 {
@@ -31,7 +30,6 @@ int WINAPI wWinMain(HINSTANCE hInst, HINSTANCE hPrevInst, LPWSTR cmdParam, int c
 	szAuthor  = NULL;
 	szUpdates = NULL;
 	szXML     = NULL;
-	bRunningOnNT = ( ( GetVersion() & 0x80000000 ) != 0x80000000 );
 
 	if ( *cmdParam == 0 )
 		MessageBox(NULL,L"Shareaza Skin Installer " VERSION L"\n\nDouble-click on a Shareaza Skin File to use the Shareaza Skin Installer.",L"Shareaza Skin Installer",MB_OK | MB_ICONINFORMATION);

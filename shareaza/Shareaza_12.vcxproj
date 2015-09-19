@@ -136,6 +136,9 @@
     <Manifest />
     <PostBuildEvent />
     <PostBuildEvent />
+    <Manifest>
+      <AdditionalManifestFiles>compatibility.manifest</AdditionalManifestFiles>
+    </Manifest>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <PreBuildEvent>
@@ -183,6 +186,9 @@
     </Bscmake>
     <PostBuildEvent />
     <PostBuildEvent />
+    <Manifest>
+      <AdditionalManifestFiles>compatibility.manifest</AdditionalManifestFiles>
+    </Manifest>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <PreBuildEvent>
@@ -237,6 +243,9 @@
     </Bscmake>
     <PostBuildEvent />
     <PostBuildEvent />
+    <Manifest>
+      <AdditionalManifestFiles>compatibility.manifest</AdditionalManifestFiles>
+    </Manifest>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <PreBuildEvent>
@@ -291,6 +300,9 @@
     </Bscmake>
     <PostBuildEvent />
     <PostBuildEvent />
+    <Manifest>
+      <AdditionalManifestFiles>compatibility.manifest</AdditionalManifestFiles>
+    </Manifest>
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="AlbumFolder.cpp" />

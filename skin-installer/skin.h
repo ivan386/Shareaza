@@ -36,7 +36,6 @@ extern TCHAR* szAuthor;
 extern TCHAR* szUpdates;
 extern TCHAR* szXML;
 extern TCHAR skins_dir[MAX_PATH];	// Full path to Skin folder
-extern BOOL bRunningOnNT;
 
 // extract.c
 void ExtractSkinFile(LPCTSTR pszFile);
