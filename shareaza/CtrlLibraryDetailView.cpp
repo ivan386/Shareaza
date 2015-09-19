@@ -278,11 +278,11 @@ void CLibraryDetailView::Update()
 {
 //	GET_LIST();
 
-	CSchemaPtr pSchema	= SchemaCache.Get( Settings.Library.FilterURI );
+	CSchemaPtr pSchema1	= SchemaCache.Get( Settings.Library.FilterURI );
 	DWORD nCookie		= GetFolderCookie();
 	BOOL bGhostFolder	= FALSE;
 
-	if ( Settings.Library.ShowVirtual ) pSchema = NULL;
+	if ( Settings.Library.ShowVirtual ) pSchema1 = NULL;
 
 	CLibraryTreeItem* pTree = GetFolderSelection();
 
@@ -298,11 +298,11 @@ void CLibraryDetailView::Update()
 
 			if ( strURI.GetLength() && ( m_pSchema == NULL || ! m_pSchema->CheckURI( strURI ) ) )
 			{
-				if ( CSchemaPtr pSchema = SchemaCache.Get( strURI ) )
+				if ( CSchemaPtr pSchema2 = SchemaCache.Get( strURI ) )
 				{
 					CSchemaMemberList pColumns;
-					CSchemaColumnsDlg::LoadColumns( pSchema, &pColumns );
-					SetViewSchema( pSchema, &pColumns, TRUE, FALSE );
+					CSchemaColumnsDlg::LoadColumns( pSchema2, &pColumns );
+					SetViewSchema( pSchema2, &pColumns, TRUE, FALSE );
 				}
 			}
 		}
@@ -315,8 +315,8 @@ void CLibraryDetailView::Update()
 		CLibraryFile* pFile = Library.LookupFile( pItem->nIndex );
 
 		if ( pFile && pFile->m_nSelectCookie == nCookie && ( pFile->IsAvailable() || bGhostFolder ) &&
-			 ( ! pSchema || pSchema->Equals( pFile->m_pSchema ) ||
-			 ( ! pFile->m_pMetadata && pSchema->FilterType( pFile->m_sName ) ) ) )
+			 ( ! pSchema1 || pSchema1->Equals( pFile->m_pSchema ) ||
+			 ( ! pFile->m_pMetadata && pSchema1->FilterType( pFile->m_sName ) ) ) )
 		{
 			pFile->m_nListCookie = nCookie;
 		}
@@ -337,8 +337,8 @@ void CLibraryDetailView::Update()
 		if ( pFile->m_nSelectCookie == nCookie &&
 			 pFile->m_nListCookie != nCookie &&
 			 ( pFile->IsAvailable() || bGhostFolder ) &&
-			 ( ! pSchema || pSchema->Equals( pFile->m_pSchema ) ||
-			 ( ! pFile->m_pMetadata && pSchema->FilterType( pFile->m_sName ) ) ) )
+			 ( ! pSchema1 || pSchema1->Equals( pFile->m_pSchema ) ||
+			 ( ! pFile->m_pMetadata && pSchema1->FilterType( pFile->m_sName ) ) ) )
 		{
 			if ( m_nList == m_nBuffer )	// MUST EQUAL
 			{

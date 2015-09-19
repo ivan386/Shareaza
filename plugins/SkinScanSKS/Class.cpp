@@ -199,14 +199,14 @@ BOOL CSkinScanSKS::ScanFile(LPCSTR pszXML, ISXMLElement* pOutput)
 	// Add the plural <shareazaSkins> element
 	CComPtr< ISXMLElement > pPlural;
 	{
-		CComPtr< ISXMLElements > pElements;
-		if ( FAILED( pOutput->get_Elements( &pElements ) ) ||
-			pElements == NULL )
+		CComPtr< ISXMLElements > pOutputElements;
+		if ( FAILED( pOutput->get_Elements( &pOutputElements ) ) ||
+			pOutputElements == NULL )
 		{
 			pFile->Delete();
 			return FALSE;
 		}
-		pElements->Create( CComBSTR( _T("shareazaSkins") ), &pPlural );
+		pOutputElements->Create( CComBSTR( _T("shareazaSkins") ), &pPlural );
 	}
 
 	// Add xsi:noNamespaceSchemaLocation="http://www.shareaza.com/schemas/shareazaSkin.xsd"
@@ -225,9 +225,9 @@ BOOL CSkinScanSKS::ScanFile(LPCSTR pszXML, ISXMLElement* pOutput)
 	// output XML document
 	pManifest->Detach();
 	{
-		CComPtr< ISXMLElements > pElements;
-		pPlural->get_Elements( &pElements );
-		pElements->Attach( pManifest );
+		CComPtr< ISXMLElements > pPluralElements;
+		pPlural->get_Elements( &pPluralElements );
+		pPluralElements->Attach( pManifest );
 	}
 
 	pFile->Delete();

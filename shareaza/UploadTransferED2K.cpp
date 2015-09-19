@@ -101,9 +101,9 @@ BOOL CUploadTransferED2K::Request(const Hashes::Ed2kHash& oED2K)
 		if ( bLocked )
 			oLock.Unlock();
 
-		if ( CDownload* pFile = Downloads.FindByED2K( oED2K, TRUE ) )
+		if ( CDownload* pDownload = Downloads.FindByED2K( oED2K, TRUE ) )
 		{
-			RequestPartial( pFile );
+			RequestPartial( pDownload );
 		}
 		else
 		{

@@ -92,7 +92,8 @@ void CSkin::Apply()
 	}
 	else if ( m_crPanelBack == RGB( 60, 60, 60 ) )
 	{
-		if ( HBITMAP hPanelMark = LoadBitmap( IDB_PANEL_MARK, TRUE ) )
+		hPanelMark = LoadBitmap( IDB_PANEL_MARK, TRUE );
+		if ( hPanelMark )
 		{
 			m_bmPanelMark.Attach( hPanelMark );
 		}
@@ -822,8 +823,12 @@ BOOL CSkin::CreateToolBar(LPCTSTR pszName, CCoolBarCtrl* pBar)
 		{
 			if ( HBITMAP hBitmap = GetWatermark( sName + _T(".Toolbar") ) )
 				pBar->SetWatermark( hBitmap );
-			else if ( HBITMAP hBitmap = GetWatermark( sClassName + _T(".Toolbar") ) )
-				pBar->SetWatermark( hBitmap );
+			else
+			{
+				hBitmap = GetWatermark( sClassName + _T(".Toolbar") );
+				if ( hBitmap )
+					pBar->SetWatermark( hBitmap );
+			}
 			pBar->Copy( pBase );
 			return TRUE;
 		}

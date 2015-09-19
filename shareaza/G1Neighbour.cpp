@@ -1,7 +1,7 @@
 //
 // G1Neighbour.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2014.
+// Copyright (c) Shareaza Development Team, 2002-2015.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -948,11 +948,11 @@ BOOL CG1Neighbour::OnVendor(CG1Packet* pPacket)
 			if ( nVersion <= 1 && pPacket->GetRemaining() >= 8 )
 			{
 				// Read those 8 bytes (do)
-				WORD nVersion[4];
-				nVersion[0] = pPacket->ReadShortLE();
-				nVersion[1] = pPacket->ReadShortLE();
-				nVersion[2] = pPacket->ReadShortLE();
-				nVersion[3] = pPacket->ReadShortLE();
+				WORD nFooVersion[4];
+				nFooVersion[0] = pPacket->ReadShortLE();
+				nFooVersion[1] = pPacket->ReadShortLE();
+				nFooVersion[2] = pPacket->ReadShortLE();
+				nFooVersion[3] = pPacket->ReadShortLE();
 			}
 
 			break;

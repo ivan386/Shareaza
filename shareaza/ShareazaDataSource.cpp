@@ -1,7 +1,7 @@
 //
 // ShareazaDataSource.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2014.
+// Copyright (c) Shareaza Development Team, 2002-2015.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -1365,9 +1365,9 @@ void CShareazaDataSource::GetTotalLength(const CLibraryList* pList, size_t& size
 				if ( pAlbum && bRoot &&
 					! CheckURI( pAlbum->m_sSchemaURI, CSchema::uriGhostFolder ) )
 				{
-					CLibraryListPtr pList( new CLibraryList() );
-					pAlbum->GetFileList( pList, TRUE );
-					GetTotalLength( pList, size_HDROP, size_Archive, size_Files, FALSE );
+					CLibraryListPtr pNewList( new CLibraryList() );
+					pAlbum->GetFileList( pNewList, TRUE );
+					GetTotalLength( pNewList, size_HDROP, size_Archive, size_Files, FALSE );
 
 					size_Archive++;
 				}
@@ -1485,9 +1485,9 @@ void CShareazaDataSource::FillBuffer(const CLibraryList* pList, LPTSTR& buf_HDRO
 				if ( pAlbum && bRoot &&
 					! CheckURI( pAlbum->m_sSchemaURI, CSchema::uriGhostFolder ) )
 				{
-					CLibraryListPtr pList( new CLibraryList() );
-					pAlbum->GetFileList( pList, TRUE );
-					FillBuffer( pList, buf_HDROP, buf_Archive, buf_Files, buf_Text, FALSE, pAlbum->m_oGUID );
+					CLibraryListPtr pNewList( new CLibraryList() );
+					pAlbum->GetFileList( pNewList, TRUE );
+					FillBuffer( pNewList, buf_HDROP, buf_Archive, buf_Files, buf_Text, FALSE, pAlbum->m_oGUID );
 
 					pAlbum->Serialize( buf_Archive, LIBRARY_SER_VERSION );
 				}

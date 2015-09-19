@@ -1,7 +1,7 @@
 //
 // WndDownloads.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2014.
+// Copyright (c) Shareaza Development Team, 2002-2015.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -752,26 +752,26 @@ void CDownloadsWnd::OnDownloadsClear()
 
 	while ( ! pList.IsEmpty() )
 	{
-		CDownload* pDownload = pList.GetHead();
+		CDownload* pDownload1 = pList.GetHead();
 
 		CDeleteFileDlg dlg;
 		dlg.m_bAll = ( pList.GetCount() > 1 );
 
 		{
 			CQuickLock pTransfersLock( Transfers.m_pSection ); // Can clear uploads and downloads
-			if ( ! Downloads.Check( pDownload ) || pDownload->IsTasking() || pDownload->IsPreviewVisible() )
+			if ( ! Downloads.Check( pDownload1 ) || pDownload1->IsTasking() || pDownload1->IsPreviewVisible() )
 			{
 				pList.RemoveHead();
 				continue;
 			}
-			else if ( pDownload->IsCompleted() || ! pDownload->IsStarted() )
+			else if ( pDownload1->IsCompleted() || ! pDownload1->IsStarted() )
 			{
 				pList.RemoveHead();
-				pDownload->Remove();
+				pDownload1->Remove();
 				continue;
 			}
 
-			dlg.m_sName = pDownload->m_sName;
+			dlg.m_sName = pDownload1->m_sName;
 		}
 
 		if ( dlg.DoModal() != IDOK )
@@ -782,20 +782,20 @@ void CDownloadsWnd::OnDownloadsClear()
 		for ( INT_PTR nProcess = dlg.m_bAll ? pList.GetCount() : 1 ;
 			nProcess > 0 && pList.GetCount() > 0 ; nProcess-- )
 		{
-			CDownload* pDownload = pList.RemoveHead();
+			CDownload* pDownload2 = pList.RemoveHead();
 
 			CQuickLock pTransfersLock( Transfers.m_pSection ); // Can clear uploads and downloads
 			{
-				if ( Downloads.Check( pDownload ) && ! pDownload->IsTasking() && ! pDownload->IsPreviewVisible() )
+				if ( Downloads.Check( pDownload2 ) && ! pDownload2->IsTasking() && ! pDownload2->IsPreviewVisible() )
 				{
-					dlgProgress.Progress( pDownload->m_sName, nTotal - pList.GetCount(), nTotal );
+					dlgProgress.Progress( pDownload2->m_sName, nTotal - pList.GetCount(), nTotal );
 
-					if ( ! pDownload->IsCompleted() && pDownload->IsStarted() )
+					if ( ! pDownload2->IsCompleted() && pDownload2->IsStarted() )
 					{
 						CQuickLock pLibraryLock( Library.m_pSection );
-						dlg.Apply( pDownload, pDownload->IsShared() );
+						dlg.Apply( pDownload2, pDownload2->IsShared() );
 					}
-					pDownload->Remove();
+					pDownload2->Remove();
 				}
 			}
 		}
@@ -830,7 +830,7 @@ void CDownloadsWnd::OnDownloadsClearIncomplete()
 
 	while ( ! pList.IsEmpty() )
 	{
-		CDownload* pDownload = pList.GetHead();
+		CDownload* pDownload1 = pList.GetHead();
 
 		CDeleteFileDlg dlg;
 		dlg.m_bAll = ( pList.GetCount() > 1 );
@@ -838,19 +838,19 @@ void CDownloadsWnd::OnDownloadsClearIncomplete()
 		{
 			CQuickLock pTransfersLock( Transfers.m_pSection ); // Can clear uploads and downloads
 
-			if ( ! Downloads.Check( pDownload ) || pDownload->IsTasking() || pDownload->IsPreviewVisible() || pDownload->IsCompleted() )
+			if ( ! Downloads.Check( pDownload1 ) || pDownload1->IsTasking() || pDownload1->IsPreviewVisible() || pDownload1->IsCompleted() )
 			{
 				pList.RemoveHead();
 				continue;
 			}
-			else if ( ! pDownload->IsStarted() )
+			else if ( ! pDownload1->IsStarted() )
 			{
 				pList.RemoveHead();
-				pDownload->Remove();
+				pDownload1->Remove();
 				continue;
 			}
 
-			dlg.m_sName = pDownload->m_sName;
+			dlg.m_sName = pDownload1->m_sName;
 		}
 
 		if ( dlg.DoModal() != IDOK )
@@ -861,20 +861,20 @@ void CDownloadsWnd::OnDownloadsClearIncomplete()
 		for ( INT_PTR nProcess = dlg.m_bAll ? pList.GetCount() : 1 ;
 			nProcess > 0 && pList.GetCount() > 0 ; nProcess-- )
 		{
-			CDownload* pDownload = pList.RemoveHead();
+			CDownload* pDownload2 = pList.RemoveHead();
 
 			CQuickLock pTransfersLock( Transfers.m_pSection ); // Can clear uploads and downloads
 			{
-				if ( Downloads.Check( pDownload ) && ! pDownload->IsTasking() && ! pDownload->IsPreviewVisible() && ! pDownload->IsCompleted() )
+				if ( Downloads.Check( pDownload2 ) && ! pDownload2->IsTasking() && ! pDownload2->IsPreviewVisible() && ! pDownload2->IsCompleted() )
 				{
-					dlgProgress.Progress( pDownload->m_sName, nTotal - pList.GetCount(), nTotal );
+					dlgProgress.Progress( pDownload2->m_sName, nTotal - pList.GetCount(), nTotal );
 
-					if ( pDownload->IsStarted() )
+					if ( pDownload2->IsStarted() )
 					{
 						CQuickLock pLibraryLock( Library.m_pSection );
-						dlg.Apply( pDownload, pDownload->IsShared() );
+						dlg.Apply( pDownload2, pDownload2->IsShared() );
 					}
-					pDownload->Remove();
+					pDownload2->Remove();
 				}
 			}
 		}

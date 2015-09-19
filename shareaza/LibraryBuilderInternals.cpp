@@ -1,7 +1,7 @@
 //
 // LibraryBuilderInternals.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2014.
+// Copyright (c) Shareaza Development Team, 2002-2015.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -4372,13 +4372,13 @@ bool CLibraryBuilderInternals::ReadCHM(DWORD nIndex, HANDLE hFile, LPCTSTR pszPa
 		strLine.ReleaseBuffer();
 		strLine.Trim();
 
-		int nPos;
+		int n;
 
 		switch ( nCount )
 		{
 		case 1: // version number
-			nPos = strLine.ReverseFind( ' ' );
-			strLine = strLine.Mid( nPos + 1 );
+			n = strLine.ReverseFind( ' ' );
+			strLine = strLine.Mid( n + 1 );
 			if ( !bBook )
 				pXML->AddAttribute( _T("formatVersion"), strLine );
 			break;
@@ -4388,11 +4388,11 @@ bool CLibraryBuilderInternals::ReadCHM(DWORD nIndex, HANDLE hFile, LPCTSTR pszPa
 			ToLower( strLine );
 			if ( strLine.Left( 7 ) == _T("ms-its:") )
 			{
-				nPos = strLine.Find( _T("::"), 7 );
+				n = strLine.Find( _T("::"), 7 );
 				strTemp = _tcsrchr( pszPath, '\\' );
 				strTemp = strTemp.Mid( 1 );
 				ToLower( strTemp );
-				if ( strLine.Mid( 7, nPos - 7 ).Trim() != strTemp )
+				if ( strLine.Mid( 7, n - 7 ).Trim() != strTemp )
 					bCorrupted = true; // it requires additional file
 			}
 			else if ( strLine.Left( 7 ) == _T("http://") )
@@ -4401,8 +4401,8 @@ bool CLibraryBuilderInternals::ReadCHM(DWORD nIndex, HANDLE hFile, LPCTSTR pszPa
 		case 4: // title
 			if ( strLine.IsEmpty() )
 				break;
-			nPos = strLine.Find( ',' );
-			strTemp = strLine.Left( nPos );
+			n = strLine.Find( ',' );
+			strTemp = strLine.Left( n );
 			ToLower( strTemp );
 			if ( strLine.CompareNoCase( _T("htmlhelp") ) != 0 &&
 				 strTemp != _T("arial") && strTemp != _T("tahoma") &&
@@ -4410,8 +4410,8 @@ bool CLibraryBuilderInternals::ReadCHM(DWORD nIndex, HANDLE hFile, LPCTSTR pszPa
 				 strLine.CompareNoCase( _T("windows") ) != 0 )
 			{
 				bHasTitle = true;
-				nPos = strLine.ReverseFind( '\\' ); // remove paths in title
-				strLine = strLine.Mid( nPos + 1 );
+				n = strLine.ReverseFind( '\\' ); // remove paths in title
+				strLine = strLine.Mid( n + 1 );
 				pXML->AddAttribute( _T("title"), strLine );
 			}
 			break;

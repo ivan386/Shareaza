@@ -965,7 +965,7 @@ void CMatchCtrl::DrawItem(CDC& dc, CRect& rcRow, CMatchFile* pFile, CQueryHit* p
 						{
 							strText.Format( _T("%u %s"), pFile->m_nFiltered, (LPCTSTR)strSource );
 						}
-						_sntprintf( szBuffer, sizeof( szBuffer ) / sizeof( TCHAR ), strText, pFile->m_nFiltered );
+						_sntprintf( szBuffer, sizeof( szBuffer ) / sizeof( TCHAR ), (LPCTSTR)strText, pFile->m_nFiltered );
 						szBuffer[ sizeof( szBuffer ) / sizeof( TCHAR ) - 1 ] = 0;
 					}
 					else
@@ -989,7 +989,7 @@ void CMatchCtrl::DrawItem(CDC& dc, CRect& rcRow, CMatchFile* pFile, CQueryHit* p
 				{
 					strText.Format( _T("%u %s"), pFile->m_nFiltered, (LPCTSTR)strSource );
 				}
-				_sntprintf( szBuffer, sizeof( szBuffer ) / sizeof( TCHAR ), strText, pFile->m_nFiltered );
+				_sntprintf( szBuffer, sizeof( szBuffer ) / sizeof( TCHAR ), (LPCTSTR)strText, pFile->m_nFiltered );
 				szBuffer[ sizeof( szBuffer ) / sizeof( TCHAR ) - 1 ] = 0;
 			}
 			pszText = szBuffer;
