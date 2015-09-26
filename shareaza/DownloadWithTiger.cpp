@@ -907,9 +907,11 @@ Fragments::List CDownloadWithTiger::GetHashableFragmentList() const
 
 Fragments::List CDownloadWithTiger::GetWantedFragmentList() const
 {
-	CQuickLock oLock( m_pTigerSection );
+	CSingleLock oLock( &m_pTigerSection );
+	if ( ! oLock.Lock( 100 ) )
+		return Fragments::List();
 
-	QWORD nNow = GetVolumeComplete();
+	const QWORD nNow = GetVolumeComplete();
 	if ( nNow != m_nWFLCookie || nNow == 0 )
 	{
 		m_nWFLCookie = nNow;
