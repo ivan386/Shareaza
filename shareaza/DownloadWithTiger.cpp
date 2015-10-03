@@ -909,7 +909,7 @@ Fragments::List CDownloadWithTiger::GetWantedFragmentList() const
 {
 	CSingleLock oLock( &m_pTigerSection );
 	if ( ! oLock.Lock( 100 ) )
-		return Fragments::List();
+		return Fragments::List( 0 );
 
 	const QWORD nNow = GetVolumeComplete();
 	if ( nNow != m_nWFLCookie || nNow == 0 )
