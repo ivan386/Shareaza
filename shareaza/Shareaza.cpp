@@ -301,7 +301,7 @@ CShareazaApp::CShareazaApp()
 	BT_SetFlags( BTF_INTERCEPTSUEF | BTF_SHOWADVANCEDUI | BTF_DESCRIBEERROR | BTF_DETAILEDMODE | BTF_ATTACHREPORT | BTF_EDITMAIL );
 	BT_SetExitMode( BTEM_CONTINUESEARCH );
 	BT_SetDumpType( 0x00001851 /* MiniDumpWithDataSegs | MiniDumpScanMemory | MiniDumpWithIndirectlyReferencedMemory | MiniDumpWithFullMemoryInfo | MiniDumpWithThreadInfo */ );
-	BT_SetSupportEMail( _T("shareaza-bugtrap@lists.sourceforge.net") );
+	BT_SetSupportEMail( _T("shareaza@cherubicsoft.com") );
 	BT_SetSupportURL( WEB_SITE_T _T("?id=support") );
 	BT_AddRegFile( _T("settings.reg"), _T("HKEY_CURRENT_USER\\") REGISTRY_KEY );
 	BT_InstallSehFilter();
