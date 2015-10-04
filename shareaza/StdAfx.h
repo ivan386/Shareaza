@@ -70,7 +70,7 @@
 
 #endif
 
-#include <sdkddkver.h>					// Setup versioning for windows SDK/DDK
+#include "targetver.h"					// Setup versioning for windows SDK/DDK
 
 #ifndef _SECURE_ATL
 #define _SECURE_ATL 1
@@ -98,6 +98,7 @@
 
 #define _ATL_NO_COM_SUPPORT					// Prevents ATL COM-related code from being compiled
 #define _ATL_CSTRING_EXPLICIT_CONSTRUCTORS	// Makes certain ATL CString constructors explicit, preventing any unintentional conversions
+#define _ATL_CSTRING_NO_CRT
 
 #pragma warning ( push )			// Suppress Microsoft warnings
 

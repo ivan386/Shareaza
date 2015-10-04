@@ -7,7 +7,11 @@
 //
 // Generated from the TEXTINCLUDE 2 resource.
 //
+#ifndef APSTUDIO_INVOKED
+#include "targetver.h"
+#endif
 #include "afxres.h"
+#include "verrsrc.h"
 
 /////////////////////////////////////////////////////////////////////////////
 #undef APSTUDIO_READONLY_SYMBOLS
@@ -266,7 +270,11 @@ END
 
 2 TEXTINCLUDE 
 BEGIN
+    "#ifndef APSTUDIO_INVOKED\r\n"
+    "#include ""targetver.h""\r\n"
+    "#endif\r\n"
     "#include ""afxres.h""\r\n"
+    "#include ""verrsrc.h""\r\n"
     "\0"
 END
 
@@ -297,7 +305,7 @@ END
 
 VS_VERSION_INFO VERSIONINFO
  FILEVERSION 1,3,0,1
- PRODUCTVERSION 2,7,8,0
+ PRODUCTVERSION 2,7,9,0
  FILEFLAGSMASK 0x3fL
 #ifdef _DEBUG
  FILEFLAGS 0x1L
@@ -316,10 +324,10 @@ BEGIN
             VALUE "FileDescription", "Shareaza Torrent Wizard"
             VALUE "FileVersion", "1.3.0.1"
             VALUE "InternalName", "TorrentWizard"
-            VALUE "LegalCopyright", "Copyright © Shareaza Development Team, 2003-2014. All rights reserved."
+            VALUE "LegalCopyright", "Copyright © Shareaza Development Team, 2003-2015. All rights reserved."
             VALUE "OriginalFilename", "TorrentWizard.exe"
             VALUE "ProductName", "Shareaza"
-            VALUE "ProductVersion", "2.7.8.0"
+            VALUE "ProductVersion", "2.7.9.0"
         END
     END
     BLOCK "VarFileInfo"

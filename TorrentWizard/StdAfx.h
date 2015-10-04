@@ -1,7 +1,7 @@
 //
 // StdAfx.h
 //
-// Copyright (c) Shareaza Development Team, 2002-2014.
+// Copyright (c) Shareaza Development Team, 2002-2015.
 // This file is part of Shareaza Torrent Wizard (shareaza.sourceforge.net).
 //
 // Shareaza Torrent Wizard is free software; you can redistribute it
@@ -21,8 +21,7 @@
 
 #pragma once
 
-#define _WIN32_WINNT 0x0501
-#include <SDKDDKVer.h>
+#include "targetver.h"
 
 #ifndef _SECURE_ATL
 #define _SECURE_ATL 1
@@ -39,8 +38,9 @@
 #define _CRT_SECURE_CPP_OVERLOAD_STANDARD_NAMES 1		// Enable secure template overloads
 #define _CRT_SECURE_CPP_OVERLOAD_STANDARD_NAMES_COUNT 1	// Enable secure template overloads
 
-#define _ATL_NO_COM_SUPPORT					// Prevents ATL COM-related code from being compiled
 #define _ATL_CSTRING_EXPLICIT_CONSTRUCTORS	// Makes certain ATL CString constructors explicit, preventing any unintentional conversions
+#define _ATL_CSTRING_NO_CRT
+#define _ATL_NO_COM_SUPPORT					// Prevents ATL COM-related code from being compiled
 
 #include <afxwin.h>         // MFC core and standard components
 #include <afxext.h>         // MFC extensions
