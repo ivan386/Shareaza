@@ -1,5 +1,5 @@
 ; Installing Visual Studio 2010 SP1 C++ CRT Libraries
-#ifndef WIN64
+#if PlatformName == "Win32"
   #define vcredist_exe          "vcredist_x86.exe"
   #define vcredist_title        "Microsoft Visual C++ 2010 SP1 Redistributable (x86)"
   #define vcredist_url          "http://download.microsoft.com/download/C/6/D/C6D0FD4E-9E53-4897-9B91-836EBA2AACD3/" + vcredist_exe

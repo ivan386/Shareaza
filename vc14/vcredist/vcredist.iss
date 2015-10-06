@@ -1,5 +1,5 @@
 ; Installing Visual Studio 2015 C++ CRT Libraries
-#ifndef WIN64
+#if PlatformName == "Win32"
   #define vcredist_exe          "vc_redist.x86.exe"
   #define vcredist_title        "Microsoft Visual C++ 2015 Redistributable (x86)"
   #define vcredist_url          "http://download.microsoft.com/download/9/3/F/93FCF1E7-E6A4-478B-96E7-D4B285925B00/" + vcredist_exe
