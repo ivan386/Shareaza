@@ -170,8 +170,8 @@ ID_NETWORK_DC           ICON                    "Res\\Network_DC.ico"
 //
 
 VS_VERSION_INFO VERSIONINFO
- FILEVERSION 2,7,9,0
- PRODUCTVERSION 2,7,9,0
+ FILEVERSION 2,7,9,1
+ PRODUCTVERSION 2,7,9,1
  FILEFLAGSMASK 0x1fL
 #ifdef _DEBUG
  FILEFLAGS 0x1L
@@ -189,12 +189,12 @@ BEGIN
             VALUE "Comments", "Shareaza Ultimate File Sharing"
             VALUE "CompanyName", "Shareaza Development Team"
             VALUE "FileDescription", "Shareaza Ultimate File Sharing"
-            VALUE "FileVersion", "2.7.9.0"
+            VALUE "FileVersion", "2.7.9.1"
             VALUE "InternalName", "Shareaza"
             VALUE "LegalCopyright", "Copyright © Shareaza Development Team, 2002-2015. All rights reserved."
             VALUE "OriginalFilename", "Shareaza.exe"
             VALUE "ProductName", "Shareaza"
-            VALUE "ProductVersion", "2.7.9.0"
+            VALUE "ProductVersion", "2.7.9.1"
         END
     END
     BLOCK "VarFileInfo"
