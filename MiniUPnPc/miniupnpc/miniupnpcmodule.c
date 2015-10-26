@@ -1,4 +1,4 @@
-/* $Id: miniupnpcmodule.c,v 1.25 2014/09/06 08:08:25 nanard Exp $*/
+/* $Id: miniupnpcmodule.c,v 1.28 2015/10/08 16:15:48 nanard Exp $*/
 /* Project : miniupnp
  * Author : Thomas BERNARD
  * website : http://miniupnp.tuxfamily.org/
@@ -42,6 +42,7 @@ typedef struct {
 	struct UPNPUrls urls;
 	struct IGDdatas data;
 	unsigned int discoverdelay;	/* value passed to upnpDiscover() */
+	unsigned int localport;		/* value passed to upnpDiscover() */
 	char lanaddr[40];	/* our ip address on the LAN */
 	char * multicastif;
 	char * minissdpdsocket;
@@ -54,21 +55,62 @@ static PyMemberDef UPnP_members[] = {
 	{"discoverdelay", T_UINT, offsetof(UPnPObject, discoverdelay),
 	 0/*READWRITE*/, "value in ms used to wait for SSDP responses"
 	},
+	{"localport", T_UINT, offsetof(UPnPObject, localport),
+	 0/*READWRITE*/,
+	    "If localport is set to UPNP_LOCAL_PORT_SAME(1) "
+	    "SSDP packets will be sent from the source port "
+	    "1900 (same as destination port), if set to "
+	    "UPNP_LOCAL_PORT_ANY(0) system assign a source "
+	    "port, any other value will be attempted as the "
+	    "source port"
+	},
 	/* T_STRING is allways readonly :( */
 	{"multicastif", T_STRING, offsetof(UPnPObject, multicastif),
 	 0, "IP of the network interface to be used for multicast operations"
 	},
-	{"minissdpdsocket", T_STRING, offsetof(UPnPObject, multicastif),
+	{"minissdpdsocket", T_STRING, offsetof(UPnPObject, minissdpdsocket),
 	 0, "path of the MiniSSDPd unix socket"
 	},
 	{NULL}
 };
+
+
+static int UPnP_init(UPnPObject *self, PyObject *args, PyObject *kwds)
+{
+	char* multicastif = NULL;
+	char* minissdpdsocket = NULL;
+	static char *kwlist[] = {
+		"multicastif", "minissdpdsocket", "discoverdelay",
+		"localport", NULL
+	};
+
+	if(!PyArg_ParseTupleAndKeywords(args, kwds, "|zzII", kwlist,
+					&multicastif,
+					&minissdpdsocket,
+					&self->discoverdelay,
+					&self->localport))
+		return -1;
+
+	if(self->localport>1 &&
+	   (self->localport>65534||self->localport<1024)) {
+	    PyErr_SetString(PyExc_Exception, "Invalid localport value");
+	    return -1;
+	}
+	if(multicastif)
+		self->multicastif = strdup(multicastif);
+	if(minissdpdsocket)
+		self->minissdpdsocket = strdup(minissdpdsocket);
+
+	return 0;
+}
 
 static void
 UPnPObject_dealloc(UPnPObject *self)
 {
 	freeUPNPDevlist(self->devlist);
 	FreeUPNPUrls(&self->urls);
+	free(self->multicastif);
+	free(self->minissdpdsocket);
 	Py_TYPE(self)->tp_free((PyObject*)self);
 }
 
@@ -85,10 +127,11 @@ UPnP_discover(UPnPObject *self)
 	}
 	Py_BEGIN_ALLOW_THREADS
 	self->devlist = upnpDiscover((int)self->discoverdelay/*timeout in ms*/,
-	                             0/* multicast if*/,
-	                             0/*minissdpd socket*/,
-								 0/*sameport flag*/,
+	                             self->multicastif,
+	                             self->minissdpdsocket,
+	                             (int)self->localport,
 	                             0/*ip v6*/,
+	                             2/* TTL */,
 	                             0/*error */);
 	Py_END_ALLOW_THREADS
 	/* Py_RETURN_NONE ??? */
@@ -554,7 +597,7 @@ static PyTypeObject UPnPType = {
     0,                         /* tp_descr_get */
     0,                         /* tp_descr_set */
     0,                         /* tp_dictoffset */
-    0,/*(initproc)UPnP_init,*/      /* tp_init */
+    (initproc)UPnP_init,       /* tp_init */
     0,                         /* tp_alloc */
 #ifndef _WIN32
     PyType_GenericNew,/*UPnP_new,*/      /* tp_new */

@@ -175,16 +175,18 @@
   <ItemGroup>
     <ClInclude Include="miniupnpcstrings.h" />
     <ClInclude Include="miniupnpc\connecthostport.h" />
-    <ClInclude Include="miniupnpc\declspec.h" />
     <ClInclude Include="miniupnpc\igd_desc_parse.h" />
     <ClInclude Include="miniupnpc\minisoap.h" />
+    <ClInclude Include="miniupnpc\minissdpc.h" />
     <ClInclude Include="miniupnpc\miniupnpc.h" />
     <ClInclude Include="miniupnpc\miniupnpctypes.h" />
+    <ClInclude Include="miniupnpc\miniupnpc_declspec.h" />
     <ClInclude Include="miniupnpc\miniwget.h" />
     <ClInclude Include="miniupnpc\minixml.h" />
     <ClInclude Include="miniupnpc\portlistingparse.h" />
     <ClInclude Include="miniupnpc\receivedata.h" />
     <ClInclude Include="miniupnpc\upnpcommands.h" />
+    <ClInclude Include="miniupnpc\upnpdev.h" />
     <ClInclude Include="miniupnpc\upnperrors.h" />
     <ClInclude Include="miniupnpc\upnpreplyparse.h" />
     <ClInclude Include="resource.h" />
@@ -195,12 +197,14 @@
     <ClCompile Include="miniupnpc\connecthostport.c" />
     <ClCompile Include="miniupnpc\igd_desc_parse.c" />
     <ClCompile Include="miniupnpc\minisoap.c" />
+    <ClCompile Include="miniupnpc\minissdpc.c" />
     <ClCompile Include="miniupnpc\miniupnpc.c" />
     <ClCompile Include="miniupnpc\miniwget.c" />
     <ClCompile Include="miniupnpc\minixml.c" />
     <ClCompile Include="miniupnpc\portlistingparse.c" />
     <ClCompile Include="miniupnpc\receivedata.c" />
     <ClCompile Include="miniupnpc\upnpcommands.c" />
+    <ClCompile Include="miniupnpc\upnpdev.c" />
     <ClCompile Include="miniupnpc\upnperrors.c" />
     <ClCompile Include="miniupnpc\upnpreplyparse.c" />
   </ItemGroup>

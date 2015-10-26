@@ -2,7 +2,7 @@ cmake_minimum_required (VERSION 2.6)
 
 project (miniupnpc C)
 set (MINIUPNPC_VERSION 1.9)
-set (MINIUPNPC_API_VERSION 12)
+set (MINIUPNPC_API_VERSION 15)
 
 if (NOT CMAKE_BUILD_TYPE)
   if (WIN32)
@@ -30,7 +30,7 @@ endif (NO_GETADDRINFO)
 
 if (NOT WIN32)
   add_definitions (-DMINIUPNPC_SET_SOCKET_TIMEOUT)
-  add_definitions (-D_BSD_SOURCE -D_POSIX_C_SOURCE=200112L)
+  add_definitions (-D_BSD_SOURCE -D_DEFAULT_SOURCE -D_POSIX_C_SOURCE=200112L)
 else (NOT WIN32)
   add_definitions (-D_WIN32_WINNT=0x0501) # XP or higher for getnameinfo and friends
 endif (NOT WIN32)
@@ -70,9 +70,11 @@ set (MINIUPNPC_SOURCES
   miniupnpc.c
   minixml.c
   minisoap.c
+  minissdpc.c
   miniwget.c
   upnpc.c
   upnpcommands.c
+  upnpdev.c
   upnpreplyparse.c
   upnperrors.c
   connecthostport.c
@@ -86,8 +88,7 @@ endif (NOT WIN32 AND NOT CMAKE_SYSTEM_NAME STREQUAL "AmigaOS")
 
 if (WIN32)
   set_source_files_properties (${MINIUPNPC_SOURCES} PROPERTIES
-                                                    COMPILE_DEFINITIONS MINIUPNP_STATICLIB
-                                                    COMPILE_DEFINITIONS MINIUPNP_EXPORTS
+                                                    COMPILE_DEFINITIONS "MINIUPNP_STATICLIB;MINIUPNP_EXPORTS"
   )
 endif (WIN32)
 
@@ -165,9 +166,10 @@ install (FILES
   igd_desc_parse.h
   upnpreplyparse.h
   upnperrors.h
+  upnpdev.h
   miniupnpctypes.h
   portlistingparse.h
-  declspec.h
+  miniupnpc_declspec.h
   DESTINATION include/miniupnpc
 )
 

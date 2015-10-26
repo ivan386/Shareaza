@@ -54,13 +54,19 @@
     <ClInclude Include="miniupnpc\receivedata.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="miniupnpc\declspec.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="miniupnpc\miniupnpctypes.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="miniupnpcstrings.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="miniupnpc\miniupnpc_declspec.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="miniupnpc\upnpdev.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="miniupnpc\minissdpc.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
@@ -99,6 +105,12 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="miniupnpc\receivedata.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="miniupnpc\upnpdev.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="miniupnpc\minissdpc.c">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

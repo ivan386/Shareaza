@@ -1,5 +1,5 @@
-/* $Id: upnperrors.h,v 1.5 2014/06/10 09:41:48 nanard Exp $ */
-/* (c) 2007 Thomas Bernard
+/* $Id: upnperrors.h,v 1.6 2015/07/21 13:16:55 nanard Exp $ */
+/* (c) 2007-2015 Thomas Bernard
  * All rights reserved.
  * MiniUPnP Project.
  * http://miniupnp.free.fr/ or http://miniupnp.tuxfamily.org/
@@ -8,7 +8,7 @@
 #ifndef UPNPERRORS_H_INCLUDED
 #define UPNPERRORS_H_INCLUDED
 
-#include "declspec.h"
+#include "miniupnpc_declspec.h"
 
 #ifdef __cplusplus
 extern "C" {
