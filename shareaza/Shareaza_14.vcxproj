@@ -1116,14 +1116,18 @@
     <None Include="Res\Network_NULL.ico" />
     <None Include="Res\out.ico" />
     <CustomBuild Include="Res\style.css">
-      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">gzip -c "%(RootDir)%(Directory)%(Filename)%(Extension)" &gt;"%(RootDir)%(Directory)%(Filename)%(Extension).gz"</Command>
-      <Command Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">gzip -c "%(RootDir)%(Directory)%(Filename)%(Extension)" &gt;"%(RootDir)%(Directory)%(Filename)%(Extension).gz"</Command>
-      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">gzip -c "%(RootDir)%(Directory)%(Filename)%(Extension)" &gt;"%(RootDir)%(Directory)%(Filename)%(Extension).gz"</Command>
-      <Command Condition="'$(Configuration)|$(Platform)'=='Release|x64'">gzip -c "%(RootDir)%(Directory)%(Filename)%(Extension)" &gt;"%(RootDir)%(Directory)%(Filename)%(Extension).gz"</Command>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">cmd.exe /s /c ""$(ProjectDir)..\7z.cmd" "%(RootDir)%(Directory)%(Filename)%(Extension)" "%(RootDir)%(Directory)%(Filename)%(Extension).gz""</Command>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">cmd.exe /s /c ""$(ProjectDir)..\7z.cmd" "%(RootDir)%(Directory)%(Filename)%(Extension)" "%(RootDir)%(Directory)%(Filename)%(Extension).gz""</Command>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">cmd.exe /s /c ""$(ProjectDir)..\7z.cmd" "%(RootDir)%(Directory)%(Filename)%(Extension)" "%(RootDir)%(Directory)%(Filename)%(Extension).gz""</Command>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Release|x64'">cmd.exe /s /c ""$(ProjectDir)..\7z.cmd" "%(RootDir)%(Directory)%(Filename)%(Extension)" "%(RootDir)%(Directory)%(Filename)%(Extension).gz""</Command>
       <Outputs Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">%(RootDir)%(Directory)%(Filename)%(Extension).gz;%(Outputs)</Outputs>
       <Outputs Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">%(RootDir)%(Directory)%(Filename)%(Extension).gz;%(Outputs)</Outputs>
       <Outputs Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">%(RootDir)%(Directory)%(Filename)%(Extension).gz;%(Outputs)</Outputs>
       <Outputs Condition="'$(Configuration)|$(Platform)'=='Release|x64'">%(RootDir)%(Directory)%(Filename)%(Extension).gz;%(Outputs)</Outputs>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Compressing %(FullPath)...</Message>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Compressing %(FullPath)...</Message>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Compressing %(FullPath)...</Message>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Compressing %(FullPath)...</Message>
     </CustomBuild>
     <None Include="Res\style.css.gz" />
     <None Include="Res\user.ico" />
@@ -1131,18 +1135,18 @@
     <None Include="XML.inl" />
     <None Include="Hashes\Hashes.dox" />
     <CustomBuild Include="Res\About.htm">
-      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">gzip -c "%(RootDir)%(Directory)%(Filename)%(Extension)" &gt;"%(RootDir)%(Directory)%(Filename)%(Extension).gz"
-</Command>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">cmd.exe /s /c ""$(ProjectDir)..\7z.cmd" "%(RootDir)%(Directory)%(Filename)%(Extension)" "%(RootDir)%(Directory)%(Filename)%(Extension).gz""</Command>
       <Outputs Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">%(RootDir)%(Directory)%(Filename)%(Extension).gz;%(Outputs)</Outputs>
-      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">gzip -c "%(RootDir)%(Directory)%(Filename)%(Extension)" &gt;"%(RootDir)%(Directory)%(Filename)%(Extension).gz"
-</Command>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">cmd.exe /s /c ""$(ProjectDir)..\7z.cmd" "%(RootDir)%(Directory)%(Filename)%(Extension)" "%(RootDir)%(Directory)%(Filename)%(Extension).gz""</Command>
       <Outputs Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">%(RootDir)%(Directory)%(Filename)%(Extension).gz;%(Outputs)</Outputs>
-      <Command Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">gzip -c "%(RootDir)%(Directory)%(Filename)%(Extension)" &gt;"%(RootDir)%(Directory)%(Filename)%(Extension).gz"
-</Command>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">cmd.exe /s /c ""$(ProjectDir)..\7z.cmd" "%(RootDir)%(Directory)%(Filename)%(Extension)" "%(RootDir)%(Directory)%(Filename)%(Extension).gz""</Command>
       <Outputs Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">%(RootDir)%(Directory)%(Filename)%(Extension).gz;%(Outputs)</Outputs>
-      <Command Condition="'$(Configuration)|$(Platform)'=='Release|x64'">gzip -c "%(RootDir)%(Directory)%(Filename)%(Extension)" &gt;"%(RootDir)%(Directory)%(Filename)%(Extension).gz"
-</Command>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Release|x64'">cmd.exe /s /c ""$(ProjectDir)..\7z.cmd" "%(RootDir)%(Directory)%(Filename)%(Extension)" "%(RootDir)%(Directory)%(Filename)%(Extension).gz""</Command>
       <Outputs Condition="'$(Configuration)|$(Platform)'=='Release|x64'">%(RootDir)%(Directory)%(Filename)%(Extension).gz;%(Outputs)</Outputs>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Compressing %(FullPath)...</Message>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Compressing %(FullPath)...</Message>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Compressing %(FullPath)...</Message>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Compressing %(FullPath)...</Message>
     </CustomBuild>
     <None Include="Res\About.htm.gz" />
     <None Include="Res\BadRange.htm" />
@@ -1151,18 +1155,18 @@
     <None Include="Res\BoxMark.bmp" />
     <None Include="Res\Browse.ico" />
     <CustomBuild Include="Res\Browser.htm">
-      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">gzip -c "%(RootDir)%(Directory)%(Filename)%(Extension)" &gt;"%(RootDir)%(Directory)%(Filename)%(Extension).gz"
-</Command>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">cmd.exe /s /c ""$(ProjectDir)..\7z.cmd" "%(RootDir)%(Directory)%(Filename)%(Extension)" "%(RootDir)%(Directory)%(Filename)%(Extension).gz""</Command>
       <Outputs Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">%(RootDir)%(Directory)%(Filename)%(Extension).gz;%(Outputs)</Outputs>
-      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">gzip -c "%(RootDir)%(Directory)%(Filename)%(Extension)" &gt;"%(RootDir)%(Directory)%(Filename)%(Extension).gz"
-</Command>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">cmd.exe /s /c ""$(ProjectDir)..\7z.cmd" "%(RootDir)%(Directory)%(Filename)%(Extension)" "%(RootDir)%(Directory)%(Filename)%(Extension).gz""</Command>
       <Outputs Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">%(RootDir)%(Directory)%(Filename)%(Extension).gz;%(Outputs)</Outputs>
-      <Command Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">gzip -c "%(RootDir)%(Directory)%(Filename)%(Extension)" &gt;"%(RootDir)%(Directory)%(Filename)%(Extension).gz"
-</Command>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">cmd.exe /s /c ""$(ProjectDir)..\7z.cmd" "%(RootDir)%(Directory)%(Filename)%(Extension)" "%(RootDir)%(Directory)%(Filename)%(Extension).gz""</Command>
       <Outputs Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">%(RootDir)%(Directory)%(Filename)%(Extension).gz;%(Outputs)</Outputs>
-      <Command Condition="'$(Configuration)|$(Platform)'=='Release|x64'">gzip -c "%(RootDir)%(Directory)%(Filename)%(Extension)" &gt;"%(RootDir)%(Directory)%(Filename)%(Extension).gz"
-</Command>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Release|x64'">cmd.exe /s /c ""$(ProjectDir)..\7z.cmd" "%(RootDir)%(Directory)%(Filename)%(Extension)" "%(RootDir)%(Directory)%(Filename)%(Extension).gz""</Command>
       <Outputs Condition="'$(Configuration)|$(Platform)'=='Release|x64'">%(RootDir)%(Directory)%(Filename)%(Extension).gz;%(Outputs)</Outputs>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Compressing %(FullPath)...</Message>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Compressing %(FullPath)...</Message>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Compressing %(FullPath)...</Message>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Compressing %(FullPath)...</Message>
     </CustomBuild>
     <None Include="Res\Browser.htm.gz" />
     <None Include="Res\Busy.htm" />
@@ -1188,34 +1192,34 @@
     <None Include="Res\Copy.cur" />
     <None Include="Res\CopyVista.cur" />
     <CustomBuild Include="Res\Default.xml">
-      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">gzip -c "%(RootDir)%(Directory)%(Filename)%(Extension)" &gt;"%(RootDir)%(Directory)%(Filename)%(Extension).gz"
-</Command>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">cmd.exe /s /c ""$(ProjectDir)..\7z.cmd" "%(RootDir)%(Directory)%(Filename)%(Extension)" "%(RootDir)%(Directory)%(Filename)%(Extension).gz""</Command>
       <Outputs Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">%(RootDir)%(Directory)%(Filename)%(Extension).gz;%(Outputs)</Outputs>
-      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">gzip -c "%(RootDir)%(Directory)%(Filename)%(Extension)" &gt;"%(RootDir)%(Directory)%(Filename)%(Extension).gz"
-</Command>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">cmd.exe /s /c ""$(ProjectDir)..\7z.cmd" "%(RootDir)%(Directory)%(Filename)%(Extension)" "%(RootDir)%(Directory)%(Filename)%(Extension).gz""</Command>
       <Outputs Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">%(RootDir)%(Directory)%(Filename)%(Extension).gz;%(Outputs)</Outputs>
-      <Command Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">gzip -c "%(RootDir)%(Directory)%(Filename)%(Extension)" &gt;"%(RootDir)%(Directory)%(Filename)%(Extension).gz"
-</Command>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">cmd.exe /s /c ""$(ProjectDir)..\7z.cmd" "%(RootDir)%(Directory)%(Filename)%(Extension)" "%(RootDir)%(Directory)%(Filename)%(Extension).gz""</Command>
       <Outputs Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">%(RootDir)%(Directory)%(Filename)%(Extension).gz;%(Outputs)</Outputs>
-      <Command Condition="'$(Configuration)|$(Platform)'=='Release|x64'">gzip -c "%(RootDir)%(Directory)%(Filename)%(Extension)" &gt;"%(RootDir)%(Directory)%(Filename)%(Extension).gz"
-</Command>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Release|x64'">cmd.exe /s /c ""$(ProjectDir)..\7z.cmd" "%(RootDir)%(Directory)%(Filename)%(Extension)" "%(RootDir)%(Directory)%(Filename)%(Extension).gz""</Command>
       <Outputs Condition="'$(Configuration)|$(Platform)'=='Release|x64'">%(RootDir)%(Directory)%(Filename)%(Extension).gz;%(Outputs)</Outputs>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Compressing %(FullPath)...</Message>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Compressing %(FullPath)...</Message>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Compressing %(FullPath)...</Message>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Compressing %(FullPath)...</Message>
     </CustomBuild>
     <None Include="Res\Default.xml.gz" />
     <None Include="Res\DefaultServices.dat" />
     <CustomBuild Include="Res\Definitions.xml">
-      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">gzip -c "%(RootDir)%(Directory)%(Filename)%(Extension)" &gt;"%(RootDir)%(Directory)%(Filename)%(Extension).gz"
-</Command>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">cmd.exe /s /c ""$(ProjectDir)..\7z.cmd" "%(RootDir)%(Directory)%(Filename)%(Extension)" "%(RootDir)%(Directory)%(Filename)%(Extension).gz""</Command>
       <Outputs Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">%(RootDir)%(Directory)%(Filename)%(Extension).gz;%(Outputs)</Outputs>
-      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">gzip -c "%(RootDir)%(Directory)%(Filename)%(Extension)" &gt;"%(RootDir)%(Directory)%(Filename)%(Extension).gz"
-</Command>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">cmd.exe /s /c ""$(ProjectDir)..\7z.cmd" "%(RootDir)%(Directory)%(Filename)%(Extension)" "%(RootDir)%(Directory)%(Filename)%(Extension).gz""</Command>
       <Outputs Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">%(RootDir)%(Directory)%(Filename)%(Extension).gz;%(Outputs)</Outputs>
-      <Command Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">gzip -c "%(RootDir)%(Directory)%(Filename)%(Extension)" &gt;"%(RootDir)%(Directory)%(Filename)%(Extension).gz"
-</Command>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">cmd.exe /s /c ""$(ProjectDir)..\7z.cmd" "%(RootDir)%(Directory)%(Filename)%(Extension)" "%(RootDir)%(Directory)%(Filename)%(Extension).gz""</Command>
       <Outputs Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">%(RootDir)%(Directory)%(Filename)%(Extension).gz;%(Outputs)</Outputs>
-      <Command Condition="'$(Configuration)|$(Platform)'=='Release|x64'">gzip -c "%(RootDir)%(Directory)%(Filename)%(Extension)" &gt;"%(RootDir)%(Directory)%(Filename)%(Extension).gz"
-</Command>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Release|x64'">cmd.exe /s /c ""$(ProjectDir)..\7z.cmd" "%(RootDir)%(Directory)%(Filename)%(Extension)" "%(RootDir)%(Directory)%(Filename)%(Extension).gz""</Command>
       <Outputs Condition="'$(Configuration)|$(Platform)'=='Release|x64'">%(RootDir)%(Directory)%(Filename)%(Extension).gz;%(Outputs)</Outputs>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Compressing %(FullPath)...</Message>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Compressing %(FullPath)...</Message>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Compressing %(FullPath)...</Message>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Compressing %(FullPath)...</Message>
     </CustomBuild>
     <None Include="Res\Definitions.xml.gz" />
     <None Include="Res\Disabled.htm" />
@@ -1283,18 +1287,18 @@
     <None Include="Res\Scheduler.bmp" />
     <None Include="Res\Scheduler.ico" />
     <CustomBuild Include="Res\SchemaMappings.xml">
-      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">gzip -c "%(RootDir)%(Directory)%(Filename)%(Extension)" &gt;"%(RootDir)%(Directory)%(Filename)%(Extension).gz"
-</Command>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">cmd.exe /s /c ""$(ProjectDir)..\7z.cmd" "%(RootDir)%(Directory)%(Filename)%(Extension)" "%(RootDir)%(Directory)%(Filename)%(Extension).gz""</Command>
       <Outputs Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">%(RootDir)%(Directory)%(Filename)%(Extension).gz;%(Outputs)</Outputs>
-      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">gzip -c "%(RootDir)%(Directory)%(Filename)%(Extension)" &gt;"%(RootDir)%(Directory)%(Filename)%(Extension).gz"
-</Command>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">cmd.exe /s /c ""$(ProjectDir)..\7z.cmd" "%(RootDir)%(Directory)%(Filename)%(Extension)" "%(RootDir)%(Directory)%(Filename)%(Extension).gz""</Command>
       <Outputs Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">%(RootDir)%(Directory)%(Filename)%(Extension).gz;%(Outputs)</Outputs>
-      <Command Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">gzip -c "%(RootDir)%(Directory)%(Filename)%(Extension)" &gt;"%(RootDir)%(Directory)%(Filename)%(Extension).gz"
-</Command>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">cmd.exe /s /c ""$(ProjectDir)..\7z.cmd" "%(RootDir)%(Directory)%(Filename)%(Extension)" "%(RootDir)%(Directory)%(Filename)%(Extension).gz""</Command>
       <Outputs Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">%(RootDir)%(Directory)%(Filename)%(Extension).gz;%(Outputs)</Outputs>
-      <Command Condition="'$(Configuration)|$(Platform)'=='Release|x64'">gzip -c "%(RootDir)%(Directory)%(Filename)%(Extension)" &gt;"%(RootDir)%(Directory)%(Filename)%(Extension).gz"
-</Command>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Release|x64'">cmd.exe /s /c ""$(ProjectDir)..\7z.cmd" "%(RootDir)%(Directory)%(Filename)%(Extension)" "%(RootDir)%(Directory)%(Filename)%(Extension).gz""</Command>
       <Outputs Condition="'$(Configuration)|$(Platform)'=='Release|x64'">%(RootDir)%(Directory)%(Filename)%(Extension).gz;%(Outputs)</Outputs>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Compressing %(FullPath)...</Message>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Compressing %(FullPath)...</Message>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Compressing %(FullPath)...</Message>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Compressing %(FullPath)...</Message>
     </CustomBuild>
     <None Include="Res\SchemaMappings.xml.gz" />
     <None Include="Res\Search.ico" />
@@ -1331,23 +1335,23 @@
     <None Include="revision.js" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\BugTrap\BugTrap_12.vcxproj">
+    <ProjectReference Include="..\BugTrap\BugTrap_14.vcxproj">
       <Project>{e8cf1ada-264a-4127-86c2-fd7057d3792c}</Project>
       <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
     </ProjectReference>
-    <ProjectReference Include="..\GeoIP\GeoIP_12.vcxproj">
+    <ProjectReference Include="..\GeoIP\GeoIP_14.vcxproj">
       <Project>{dfab04e0-9275-42fb-bcbb-2f153eb7d253}</Project>
       <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
     </ProjectReference>
-    <ProjectReference Include="..\HashLib\HashLib_12.vcxproj">
+    <ProjectReference Include="..\HashLib\HashLib_14.vcxproj">
       <Project>{196c99fc-9a4e-421f-b44c-8e3fd177122f}</Project>
       <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
     </ProjectReference>
-    <ProjectReference Include="..\sqlite3\sqlite3_12.vcxproj">
+    <ProjectReference Include="..\sqlite3\sqlite3_14.vcxproj">
       <Project>{0a0b10c7-cdf6-4a48-8f7b-b66a88154aae}</Project>
       <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
     </ProjectReference>
-    <ProjectReference Include="..\zlib\zlibwapi_12.vcxproj">
+    <ProjectReference Include="..\zlib\zlibwapi_14.vcxproj">
       <Project>{39f34f2c-d42a-41d2-a0bc-54d7972e2bc5}</Project>
       <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
     </ProjectReference>
