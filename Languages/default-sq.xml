@@ -3808,7 +3808,9 @@
 			<control caption="_Ndërto..."/>
 			<control caption="Gjej më Shumë"/>
 		</dialog>
-		<dialog name="CAdvancedSettingsPage" cookie="SyEdmsBuBuStStEdBuCo" caption="Avancuar">
+		<dialog name="CAdvancedSettingsPage" cookie="EdStSyEdmsBuBuStStEdBuCo" caption="Avancuar">
+			<control/>
+			<control/>
 			<control/>
 			<control/>
 			<control/>
@@ -4111,7 +4113,7 @@
 			<control caption="_Adresa e Shërbimit:"/>
 			<control/>
 			<control caption="Lloji i Shërbimit të Zbulimit:"/>
-			<control caption="Gnutella Bootstrap|G1 GWebCache|G2 GWebCache|G1/G2 GWebCache|URL e Server.met|Bllokuar"/>
+			<control caption="Gnutella Bootstrap|G1 GWebCache|G2 GWebCache|G1/G2 GWebCache|URL e Server.met|DC++ Hub List URL|Bllokuar"/>
 			<control caption="OK"/>
 			<control caption="Anulo"/>
 		</dialog>

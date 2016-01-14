@@ -81,8 +81,6 @@ private:
 		BOOL bCleanup = FALSE;
 		if (nNestedLevel == 0)
 		{
-			if (! g_bWinNT)
-				return;
 			HMODULE hMainModule = GetModuleHandle(NULL);
 			if (hModule == NULL)
 				hModule = hMainModule;

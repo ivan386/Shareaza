@@ -1,7 +1,7 @@
 //
 // QuerySearch.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2014.
+// Copyright (c) Shareaza Development Team, 2002-2015.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -1593,7 +1593,7 @@ TRISTATE CQuerySearch::MatchMetadata(LPCTSTR pszSchemaURI, const CXMLElement* pX
 
 	for ( POSITION pos = m_pSchema->GetMemberIterator() ; pos ; )
 	{
-		const CSchemaMember* pMember = m_pSchema->GetNextMember( pos );
+		CSchemaMemberPtr pMember = m_pSchema->GetNextMember( pos );
 
 		CString strSearch = pMember->GetValueFrom( pRoot );
 		CString strTarget = pMember->GetValueFrom( pXML );
@@ -1631,7 +1631,7 @@ BOOL CQuerySearch::MatchMetadataShallow(LPCTSTR pszSchemaURI, const CXMLElement*
 	{
 		for ( POSITION pos = pSchema->GetMemberIterator() ; pos ; )
 		{
-			CSchemaMember* pMember = pSchema->GetNextMember( pos );
+			CSchemaMemberPtr pMember = pSchema->GetNextMember( pos );
 
 			if ( pMember->m_bSearched )
 			{
@@ -1773,8 +1773,8 @@ BOOL CQuerySearch::NumberMatch(const CString& strValue, const CString& strRange)
 
 void CQuerySearch::BuildWordList(bool bExpression, bool /* bLocal */ )
 {
-	m_sSearch.Trim();
 	ToLower( m_sSearch );
+	m_sSearch.Trim();
 
 	// Parse "download-like" searches
 	if ( 0 == _tcsncmp( m_sSearch, _T("magnet:?"), 8 ) )
@@ -2064,7 +2064,7 @@ CString CQuerySearch::BuildRegExp(const CString& strPattern) const
 					for ( CQuerySearch::const_iterator i = begin(); i != end(); ++i )
 					{
 						strFilter.AppendFormat( L"%s\\s*", 
-							CString( i->first, (int)( i->second ) ) );
+							(LPCTSTR)CString( i->first, (int)( i->second ) ) );
 					}
 				}
 				else
@@ -2082,7 +2082,7 @@ CString CQuerySearch::BuildRegExp(const CString& strPattern) const
 						if ( nWord == nNumber )
 						{
 							strFilter.AppendFormat( L"%s\\s*", 
-								CString( i->first, (int)( i->second ) ) );
+								(LPCTSTR)CString( i->first, (int)( i->second ) ) );
 							break;
 						}
 					}

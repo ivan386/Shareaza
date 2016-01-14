@@ -1,7 +1,7 @@
 //
 // SharedFolder.h
 //
-// Copyright (c) Shareaza Development Team, 2002-2014.
+// Copyright (c) Shareaza Development Team, 2002-2015.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -29,30 +29,31 @@ class CXMLElement;
 
 class CLibraryFolder : public CComObject
 {
-// Construction
-public:
-	CLibraryFolder(CLibraryFolder* pParent, LPCTSTR pszPath = NULL);
-	virtual ~CLibraryFolder();
+	DECLARE_DYNAMIC( CLibraryFolder )
 
-	DECLARE_DYNAMIC(CLibraryFolder)
+public:
+	CLibraryFolder(CLibraryFolder* pParent, LPCTSTR pszPath = _T("") );
+	virtual ~CLibraryFolder();
 
 // Attributes
 public:
 	DWORD			m_nUpdateCookie;
 	DWORD			m_nSelectCookie;
 	CLibraryFolder*	m_pParent;
-	CString			m_sName;
 	CString			m_sPath;
+	LPCTSTR			m_sName;			// Points to name part of m_sPath
 	BOOL			m_bExpanded;
 	DWORD			m_nFiles;
 	QWORD			m_nVolume;
 
 protected:
+	typedef CAtlMap< CString, CLibraryFile*, CStringElementTraitsI< CString > > CFileMap;
+	typedef CAtlMap< CString, CLibraryFolder*, CStringElementTraitsI< CString > > CFolderMap;
+
 	DWORD			m_nScanCookie;
-	CString			m_sNameLC;
 	TRISTATE		m_bShared;
-	CMap< CString, const CString&, CLibraryFile*, CLibraryFile* >		m_pFiles;
-	CMap< CString, const CString&, CLibraryFolder*, CLibraryFolder* >	m_pFolders;
+	CFileMap		m_pFiles;
+	CFolderMap		m_pFolders;
 	HANDLE			m_hMonitor;
 	BOOL			m_bForceScan;		// TRUE - next scan forced (root folder only)
 	BOOL			m_bOffline;			// TRUE - folder absent (root folder only)
@@ -100,7 +101,6 @@ protected:
 	// Disable change notification monitor
 	void			CloseMonitor();
 	void			Clear();
-	void			PathToName();
 	bool			operator==(const CLibraryFolder& val) const;
 	void			RenewGUID();
 

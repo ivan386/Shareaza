@@ -36,7 +36,7 @@ public:
 	virtual ~CCollectionFile();
 	DECLARE_DYNAMIC(CCollectionFile)
 
-	enum CollectionType { ShareazaCollection, SimpleCollection };
+	enum CollectionType { ShareazaCollection, SimpleCollection, DCCollection };
 
 // Member File Class
 public:

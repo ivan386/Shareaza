@@ -1,7 +1,7 @@
 //
 // StdAfx.h
 //
-// Copyright (c) Shareaza Development Team, 2002-2014.
+// Copyright (c) Shareaza Development Team, 2002-2015.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -63,9 +63,14 @@
 #pragma warning ( disable : 4710 )	// (Level 4)	'function' : function not inlined
 #pragma warning ( disable : 4820 )	// (Level 4)	'bytes' bytes padding added after construct 'member_name'
 
+#if _MSC_VER >= 1900 // VS 2015
+#pragma warning ( disable : 5026 )	// (Level 4)	'derived class' : move constructor was implicitly defined as deleted because a base class move constructor is inaccessible or deleted
+#pragma warning ( disable : 5027 )	// (Level 4)	'derived class' : move assignment operator was implicitly defined as deleted because a base class move assignment operator is inaccessible or deleted
 #endif
 
-#include <sdkddkver.h>					// Setup versioning for windows SDK/DDK
+#endif
+
+#include "targetver.h"					// Setup versioning for windows SDK/DDK
 
 #ifndef _SECURE_ATL
 #define _SECURE_ATL 1
@@ -93,6 +98,7 @@
 
 #define _ATL_NO_COM_SUPPORT					// Prevents ATL COM-related code from being compiled
 #define _ATL_CSTRING_EXPLICIT_CONSTRUCTORS	// Makes certain ATL CString constructors explicit, preventing any unintentional conversions
+#define _ATL_CSTRING_NO_CRT
 
 #pragma warning ( push )			// Suppress Microsoft warnings
 
@@ -125,6 +131,7 @@
 // ATL
 //
 
+#include <atlcoll.h>		// Collection classes
 #include <atlfile.h>		// Thin file classes
 #include <atltime.h>		// Time classes
 #include <atlsafe.h>		// CComSafeArray class
@@ -205,10 +212,6 @@
 #include "../bzlib/bzlib.h"
 #include "../zlib/zlib.h"
 
-// Work-around for VC9 where a (pop) is ifdef'd out in stdio.h
-#if _MSC_VER >= 1500 && _MSC_VER < 1600
-	#pragma warning ( pop )
-#endif
 #pragma warning ( pop )
 
 #include "MinMax.hpp"
@@ -231,11 +234,33 @@ using augment::IUnknownImplementation;
 
 typedef CString StringType;
 
+// Case insensitive string to string map
+typedef CAtlMap< CString, CString, CStringElementTraitsI< CString > > CStringIMap;
+
 //! \brief Hash function needed for CMap with const CString& as ARG_KEY.
+
 template<>
-AFX_INLINE UINT AFXAPI HashKey(const CString& key)
+AFX_INLINE UINT AFXAPI HashKey(const CStringW& key)
 {
-	return HashKey< LPCTSTR >( key );
+	UINT nHash = 0;
+	const wchar_t* pszKey = key;
+	for ( int nSize = key.GetLength(); nSize; ++pszKey, --nSize )
+	{
+		nHash = ( nHash << 5 ) + nHash + *pszKey;
+	}
+	return nHash;
+}
+
+template<>
+AFX_INLINE UINT AFXAPI HashKey(const CStringA& key)
+{
+	UINT nHash = 0;
+	const char* pszKey = key;
+	for ( int nSize = key.GetLength(); nSize; ++pszKey, --nSize )
+	{
+		nHash = ( nHash << 5 ) + nHash + *pszKey;
+	}
+	return nHash;
 }
 
 template<>

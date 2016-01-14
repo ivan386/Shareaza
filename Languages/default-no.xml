@@ -3808,7 +3808,9 @@
 			<control caption="_Innstaller..."/>
 			<control caption="Finn flere..."/>
 		</dialog>
-		<dialog name="CAdvancedSettingsPage" cookie="SyEdmsBuBuStStEdBuCo" caption="Avansert">
+		<dialog name="CAdvancedSettingsPage" cookie="EdStSyEdmsBuBuStStEdBuCo" caption="Avansert">
+			<control/>
+			<control/>
 			<control/>
 			<control/>
 			<control/>
@@ -4111,7 +4113,7 @@
 			<control caption="Tjenesteadresse:"/>
 			<control/>
 			<control caption="Oppdagelsestjeneste-type:"/>
-			<control caption="Gnutella Bootstrap|G1 GWebCache|G2 GWebCache|G1/G2 GWebCache|Server.met URL|Blocked"/>
+			<control caption="Gnutella Bootstrap|G1 GWebCache|G2 GWebCache|G1/G2 GWebCache|Server.met URL|DC++ Hub List URL|Blocked"/>
 			<control caption="OK"/>
 			<control caption="Avbryt"/>
 		</dialog>

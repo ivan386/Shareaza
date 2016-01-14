@@ -1,7 +1,7 @@
 //
 // PageDownloadEdit.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2014.
+// Copyright (c) Shareaza Development Team, 2002-2015.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -218,12 +218,12 @@ BOOL CDownloadEditPage::OnApply()
 		pLock.Lock();
 		pDownload = pSheet->GetDownload();
 		if ( ! pDownload ) return CPropertyPageAdv::OnApply();
-		pDownload->m_nSize = nNewSize;
+		pDownload->Resize( nNewSize );
 		pDownload->CloseTransfers();
 		pDownload->ClearVerification();
 		bCriticalChange = true;
 	}
-
+	
 	QWORD nNewBitrate = 0;
 	if ( _stscanf( m_sBitrate, _T("%I64u"), &nNewBitrate ) == 1 )
 		pDownload->m_nBitrate = nNewBitrate;

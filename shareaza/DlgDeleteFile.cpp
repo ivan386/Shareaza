@@ -1,7 +1,7 @@
 //
 // DlgDeleteFile.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2014.
+// Copyright (c) Shareaza Development Team, 2002-2015.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -169,7 +169,8 @@ void CDeleteFileDlg::Apply(CLibraryFile* pFile)
 	else if ( m_bCreateGhost )
 	{
 		CString strTransl = LoadString( IDS_LIBRARY_GHOST_FILE );
-		CString strUntransl = L"Ghost File";
+		CString strUntransl;
+		strUntransl.LoadString( IDS_LIBRARY_GHOST_FILE );
 		if ( strTransl == strUntransl )
 		{
 			pFile->m_sComments	= m_sComments = strUntransl;
@@ -178,7 +179,6 @@ void CDeleteFileDlg::Apply(CLibraryFile* pFile)
 		{
 			pFile->m_sComments	= m_sComments = strTransl + L" (" + strUntransl + L")";
 		}
-		pFile->m_bShared = TRI_FALSE;
 		pFile->ModifyMetadata();
 	}
 }

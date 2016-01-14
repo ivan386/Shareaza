@@ -1,7 +1,7 @@
 //
 // DlgSplash.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2014.
+// Copyright (c) Shareaza Development Team, 2002-2015.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -33,11 +33,9 @@ static char THIS_FILE[]=__FILE__;
 #define new DEBUG_NEW
 #endif
 
-IMPLEMENT_DYNAMIC(CSplashDlg, CDialog)
-
 BEGIN_MESSAGE_MAP(CSplashDlg, CDialog)
 	ON_WM_PAINT()
-	ON_MESSAGE(WM_PRINTCLIENT, OnPrintClient)
+	ON_WM_QUERYENDSESSION()
 END_MESSAGE_MAP()
 
 #ifndef WS_EX_LAYERED
@@ -55,19 +53,17 @@ CBitmap CSplashDlg::m_bmSplash;
 /////////////////////////////////////////////////////////////////////////////
 // CSplashDlg construction
 
-CSplashDlg::CSplashDlg(int nMax, bool bClosing) :
-	CDialog( CSplashDlg::IDD, GetDesktopWindow() ),
-	m_nPos( 0 ),
-	m_nMax( nMax ),
-	m_bClosing( bClosing ),
-	m_sState( Settings.SmartAgent() ),
-	m_pfnAnimateWindow( NULL )
+CSplashDlg::CSplashDlg(int nMax, bool bClosing)
+	: CDialog		( CSplashDlg::IDD, GetDesktopWindow() )
+	, m_nPos		( 0 )
+	, m_nMax		( nMax )
+	, m_bClosing	( bClosing )
+	, m_sState		( Settings.SmartAgent() )
 {
-	Create( IDD, GetDesktopWindow() );
-}
+	if ( ! m_bmSplash.m_hObject )
+		m_bmSplash.Attach( CImageFile::LoadBitmapFromFile( Settings.General.Path + L"\\Data\\Splash.png" ) );
 
-CSplashDlg::~CSplashDlg()
-{
+	Create( IDD, GetDesktopWindow() );
 }
 
 void CSplashDlg::DoDataExchange(CDataExchange* pDX)
@@ -86,15 +82,6 @@ BOOL CSplashDlg::OnInitDialog()
 
 	SetWindowText( m_sState );
 
-	CClientDC dcScreen( this );
-
-	if ( ! m_bmSplash.m_hObject )
-		m_bmSplash.Attach( CImageFile::LoadBitmapFromFile( Settings.General.Path + L"\\Data\\Splash.png" ) );
-
-	m_bmBuffer.CreateCompatibleBitmap( &dcScreen, SPLASH_WIDTH, SPLASH_HEIGHT );
-	m_dcBuffer1.CreateCompatibleDC( &dcScreen );
-	m_dcBuffer2.CreateCompatibleDC( &dcScreen );
-
 	SetWindowPos( NULL, 0, 0, SPLASH_WIDTH, SPLASH_HEIGHT, SWP_NOMOVE );
 	CenterWindow();
 
@@ -109,6 +96,15 @@ BOOL CSplashDlg::OnInitDialog()
 	return TRUE;
 }
 
+BOOL CSplashDlg::OnQueryEndSession()
+{
+	UpdateWindow();
+
+	CDialog::OnQueryEndSession();
+
+	return FALSE;
+}
+
 void CSplashDlg::Step(LPCTSTR pszText)
 {
 	// Check if m_nMax was set high enough during construction to allow another
@@ -118,6 +114,9 @@ void CSplashDlg::Step(LPCTSTR pszText)
 	m_nPos ++;
 	m_sState.Format( m_bClosing ? _T("%s...") : _T("Starting %s..."), pszText );
 	SetWindowText( m_sState );
+
+	if ( theApp.m_pfnShutdownBlockReasonCreate )
+		theApp.m_pfnShutdownBlockReasonCreate( m_hWnd, m_sState );
 
 	CClientDC dc( this );
 	DoPaint( &dc );
@@ -139,27 +138,21 @@ void CSplashDlg::Hide(BOOL bAbort)
 		// steps were run
 		ASSERT( m_nPos == m_nMax );
 
-		m_sState = _T("Ready");
+		LoadString( m_sState, AFX_IDS_IDLEMESSAGE );
 		SetWindowText( m_sState );
 		Invalidate();
 
-		if ( m_pfnAnimateWindow != NULL )
+		if ( GetSystemMetrics( SM_REMOTESESSION ) == 0 )
 		{
-			(*m_pfnAnimateWindow)( GetSafeHwnd(), 250, AW_HIDE|AW_BLEND );
+			AnimateWindow( 250, AW_HIDE | AW_BLEND );
 		}
 	}
+
+	if ( theApp.m_pfnShutdownBlockReasonDestroy )
+		theApp.m_pfnShutdownBlockReasonDestroy( m_hWnd );
+
 	::DestroyWindow( m_hWnd );
 	delete this;
-}
-
-LRESULT CSplashDlg::OnPrintClient(WPARAM wParam, LPARAM /*lParam*/)
-{
-	LRESULT lResult = Default();
-
-	CDC* pDC = CDC::FromHandle( (HDC)wParam );
-	DoPaint( pDC );
-
-	return lResult;
 }
 
 void CSplashDlg::OnPaint()
@@ -170,37 +163,44 @@ void CSplashDlg::OnPaint()
 
 void CSplashDlg::DoPaint(CDC* pDC)
 {
-	CBitmap* pOld1 = (CBitmap*)m_dcBuffer1.SelectObject( &m_bmSplash );
-	CBitmap* pOld2 = (CBitmap*)m_dcBuffer2.SelectObject( &m_bmBuffer );
+	CDC dcSplash;
+	dcSplash.CreateCompatibleDC( pDC );
+	CBitmap* pOld1 = (CBitmap*)dcSplash.SelectObject( &m_bmSplash );
 
-	m_dcBuffer2.BitBlt( 0, 0, SPLASH_WIDTH, SPLASH_HEIGHT, &m_dcBuffer1, 0, 0, SRCCOPY );
+	CDC dcMemory;
+	dcMemory.CreateCompatibleDC( pDC );
+	CBitmap bmBuffer;
+	bmBuffer.CreateCompatibleBitmap( pDC, SPLASH_WIDTH, SPLASH_HEIGHT );
+	CBitmap* pOld2 = (CBitmap*)dcMemory.SelectObject( &bmBuffer );
 
-	CFont* pOld3 = (CFont*)m_dcBuffer2.SelectObject( &theApp.m_gdiFontBold );
-	m_dcBuffer2.SetBkMode( TRANSPARENT );
-	m_dcBuffer2.SetTextColor( RGB( 0, 0, 0 ) );
+	dcMemory.BitBlt( 0, 0, SPLASH_WIDTH, SPLASH_HEIGHT, &dcSplash, 0, 0, SRCCOPY );
+
+	CFont* pOld3 = (CFont*)dcMemory.SelectObject( &theApp.m_gdiFontBold );
+	dcMemory.SetBkMode( TRANSPARENT );
+	dcMemory.SetTextColor( RGB( 0, 0, 0 ) );
 
 	CRect rc( 8, 201, 520, SPLASH_HEIGHT );
 	UINT nFormat = DT_LEFT|DT_SINGLELINE|DT_VCENTER|DT_NOPREFIX;
 
 	rc.OffsetRect( -1, 0 );
-	m_dcBuffer2.DrawText( m_sState, &rc, nFormat );
+	dcMemory.DrawText( m_sState, &rc, nFormat );
 	rc.OffsetRect( 2, 0 );
-	m_dcBuffer2.DrawText( m_sState, &rc, nFormat );
+	dcMemory.DrawText( m_sState, &rc, nFormat );
 	rc.OffsetRect( -1, -1 );
-	m_dcBuffer2.DrawText( m_sState, &rc, nFormat );
+	dcMemory.DrawText( m_sState, &rc, nFormat );
 	rc.OffsetRect( 0, 2 );
-	m_dcBuffer2.DrawText( m_sState, &rc, nFormat );
+	dcMemory.DrawText( m_sState, &rc, nFormat );
 	rc.OffsetRect( 0, -1 );
 
-	m_dcBuffer2.SetTextColor( RGB( 255, 255, 255 ) );
-	m_dcBuffer2.DrawText( m_sState, &rc, nFormat );
+	dcMemory.SetTextColor( RGB( 255, 255, 255 ) );
+	dcMemory.DrawText( m_sState, &rc, nFormat );
 
-	m_dcBuffer2.SelectObject( pOld3 );
+	dcMemory.SelectObject( pOld3 );
 
 	rc.SetRect( 440, 223, 522, 231 );
-	m_dcBuffer2.Draw3dRect( &rc, RGB( 0x40, 0x40, 0x40 ), RGB( 0x40, 0x40, 0x40 ) );
+	dcMemory.Draw3dRect( &rc, RGB( 0x40, 0x40, 0x40 ), RGB( 0x40, 0x40, 0x40 ) );
 	rc.DeflateRect( 1, 1 );
-	m_dcBuffer2.FillSolidRect( &rc, RGB( 0x25, 0x25, 0x25 ) );
+	dcMemory.FillSolidRect( &rc, RGB( 0x25, 0x25, 0x25 ) );
 
 	int nOffset;
 	if ( Settings.General.LanguageRTL )
@@ -208,12 +208,11 @@ void CSplashDlg::DoPaint(CDC* pDC)
 	else
 		nOffset = 0;
 
-	CFragmentBar::DrawFragment( &m_dcBuffer2, &rc, m_nMax, nOffset, min( m_nPos, m_nMax ),
-		RGB( 0x20, 0xB0, 0x20 ), true );
-	m_dcBuffer2.SelectClipRgn( NULL );
+	CFragmentBar::DrawFragment( &dcMemory, &rc, m_nMax, nOffset, min( m_nPos, m_nMax ), RGB( 0x20, 0xB0, 0x20 ), true );
+	dcMemory.SelectClipRgn( NULL );
 
-	pDC->BitBlt( 0, 0, SPLASH_WIDTH, SPLASH_HEIGHT, &m_dcBuffer2, 0, 0, SRCCOPY );
+	pDC->BitBlt( 0, 0, SPLASH_WIDTH, SPLASH_HEIGHT, &dcMemory, 0, 0, SRCCOPY );
 
-	m_dcBuffer2.SelectObject( pOld2 );
-	m_dcBuffer1.SelectObject( pOld1 );
+	dcMemory.SelectObject( pOld2 );
+	dcSplash.SelectObject( pOld1 );
 }

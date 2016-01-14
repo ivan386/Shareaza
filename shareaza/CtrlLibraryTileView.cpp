@@ -1,7 +1,7 @@
 //
 // CtrlLibraryTileView.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2014.
+// Copyright (c) Shareaza Development Team, 2002-2015.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -1212,7 +1212,8 @@ void CLibraryTileView::OnLibraryAlbumProperties()
 		{
 			if ( oLock.Lock( 100 ) )
 			{
-				if ( CAlbumFolder* pFolder = pTile->GetAlbum() )
+				pFolder = pTile->GetAlbum();
+				if ( pFolder )
 				{
 					GetFrame()->Display( pFolder );
 				}

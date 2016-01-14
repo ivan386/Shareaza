@@ -1,7 +1,7 @@
 //
 // DownloadWithSources.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2014.
+// Copyright (c) Shareaza Development Team, 2002-2015.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -483,7 +483,7 @@ BOOL CDownloadWithSources::AddSourceBT(const Hashes::BtGuid& oGUID, const IN_ADD
 //////////////////////////////////////////////////////////////////////
 // CDownloadWithSources add a single URL source
 
-BOOL CDownloadWithSources::AddSourceURL(LPCTSTR pszURL, FILETIME* pLastSeen, int nRedirectionCount, BOOL bFailed, BOOL bForce)
+BOOL CDownloadWithSources::AddSourceURL(LPCTSTR pszURL, FILETIME* pLastSeen, int nRedirectionCount, BOOL bFailed, BOOL bForce, BOOL bPartialSame )
 {
 	if ( pszURL == NULL || *pszURL == 0 )
 		return FALSE;
@@ -554,7 +554,7 @@ BOOL CDownloadWithSources::AddSourceURL(LPCTSTR pszURL, FILETIME* pLastSeen, int
 //////////////////////////////////////////////////////////////////////
 // CDownloadWithSources add several URL sources
 
-int CDownloadWithSources::AddSourceURLs(LPCTSTR pszURLs, BOOL bFailed)
+int CDownloadWithSources::AddSourceURLs(LPCTSTR pszURLs, BOOL bFailed, BOOL bPartialSame)
 {
 	int nCount = 0;
 
@@ -567,7 +567,7 @@ int CDownloadWithSources::AddSourceURLs(LPCTSTR pszURLs, BOOL bFailed)
 		FILETIME tSeen = {};
 		oUrls.GetNextAssoc( pos, strURL, tSeen );
 		
-		if ( AddSourceURL( strURL, ( tSeen.dwLowDateTime | tSeen.dwHighDateTime ) ? &tSeen : NULL, 0, bFailed ) )
+		if ( AddSourceURL( strURL, ( tSeen.dwLowDateTime | tSeen.dwHighDateTime ) ? &tSeen : NULL, 0, bFailed, 0, bPartialSame ) )
 		{
 			if ( bFailed )
 			{
@@ -830,11 +830,15 @@ CString CDownloadWithSources::GetSourceURLs(CList< CString >* pState, int nMaxim
 CString	CDownloadWithSources::GetTopFailedSources(int nMaximum, PROTOCOLID nProtocol)
 {
 	// Currently we return only the string for G1, in X-NAlt format
-	if ( nProtocol != PROTOCOL_G1 ) return CString();
+	if ( nProtocol != PROTOCOL_G1 )
+		return CString();
+
+	CSingleLock oLock( &Transfers.m_pSection );
+	if ( ! oLock.Lock( 100 ) )
+		return CString();
 
 	CString strSources, str;
 	CFailedSource* pResult = NULL;
-	CQuickLock pLock( Transfers.m_pSection );
 
 	for ( POSITION pos = m_pFailedSources.GetHeadPosition() ; pos ; )
 	{
@@ -884,7 +888,9 @@ BOOL CDownloadWithSources::OnQueryHits(const CQueryHit* pHits)
 
 void CDownloadWithSources::RemoveOverlappingSources(QWORD nOffset, QWORD nLength)
 {
-	CQuickLock pLock( Transfers.m_pSection );
+	CSingleLock oLock( &Transfers.m_pSection );
+	if ( ! oLock.Lock( 100 ) )
+		return;
 
 	for ( POSITION posSource = GetIterator() ; posSource ; )
 	{
@@ -917,7 +923,10 @@ void CDownloadWithSources::RemoveOverlappingSources(QWORD nOffset, QWORD nLength
 // votes compose 2/3 of the total number of votes.
 CFailedSource* CDownloadWithSources::LookupFailedSource(LPCTSTR pszUrl, bool bReliable)
 {
-	CQuickLock pLock( Transfers.m_pSection );
+	CSingleLock oLock( &Transfers.m_pSection );
+	if ( ! oLock.Lock( 100 ) )
+		return NULL;
+
 	CFailedSource* pResult = NULL;
 
 	for ( POSITION pos = m_pFailedSources.GetHeadPosition() ; pos ; )
@@ -966,7 +975,7 @@ void CDownloadWithSources::AddFailedSource(const CDownloadSource* pSource, bool 
 
 void CDownloadWithSources::AddFailedSource(LPCTSTR pszUrl, bool bLocal, bool bOffline)
 {
-	CQuickLock pLock( Transfers.m_pSection );
+	ASSUME_LOCK( Transfers.m_pSection );
 
 	if ( LookupFailedSource( pszUrl ) == NULL )
 	{
@@ -991,7 +1000,7 @@ void CDownloadWithSources::VoteSource(LPCTSTR pszUrl, bool bPositively)
 
 void CDownloadWithSources::ExpireFailedSources()
 {
-	CQuickLock pLock( Transfers.m_pSection );
+	ASSUME_LOCK( Transfers.m_pSection );
 
 	DWORD tNow = GetTickCount();
 	for ( POSITION pos = m_pFailedSources.GetHeadPosition() ; pos ; )
@@ -1013,7 +1022,7 @@ void CDownloadWithSources::ExpireFailedSources()
 
 void CDownloadWithSources::ClearFailedSources()
 {
-	CQuickLock pLock( Transfers.m_pSection );
+	ASSUME_LOCK( Transfers.m_pSection );
 
 	for ( POSITION pos = m_pFailedSources.GetHeadPosition() ; pos ; )
 	{
@@ -1189,28 +1198,30 @@ COLORREF CDownloadWithSources::GetSourceColour()
 			( abs( r - g ) < 24 && abs( r - b ) < 24 ) );	// Too gray
 		int d = min( min( r, g ), b );
 
-		CQuickLock pLock( Transfers.m_pSection );
-
-		for ( POSITION posSource = GetIterator() ; posSource ; )
+		CSingleLock oLock( &Transfers.m_pSection );
+		if ( oLock.Lock( 100 ) )
 		{
-			CDownloadSource* pSource = GetNext( posSource );
-
-			if ( pSource->m_crColour )
+			for ( POSITION posSource = GetIterator() ; posSource ; )
 			{
-				int sr = GetRValue( pSource->m_crColour );
-				int sg = GetGValue( pSource->m_crColour );
-				int sb = GetBValue( pSource->m_crColour );
-				int sd = min( min( sr, sg ), sb );
-				sr -= sd;
-				sg -= sd;
-				sb -= sd;
-				if ( abs( r - d - sr ) < 24 &&
-					 abs( g - d - sg ) < 24 &&
-					 abs( b - d - sb ) < 24 )
+				CDownloadSource* pSource = GetNext( posSource );
+
+				if ( pSource->m_crColour )
 				{
-					// Too similar
-					bGood = FALSE;
-					break;
+					int sr = GetRValue( pSource->m_crColour );
+					int sg = GetGValue( pSource->m_crColour );
+					int sb = GetBValue( pSource->m_crColour );
+					int sd = min( min( sr, sg ), sb );
+					sr -= sd;
+					sg -= sd;
+					sb -= sd;
+					if ( abs( r - d - sr ) < 24 &&
+						 abs( g - d - sg ) < 24 &&
+						 abs( b - d - sb ) < 24 )
+					{
+						// Too similar
+						bGood = FALSE;
+						break;
+					}
 				}
 			}
 		}

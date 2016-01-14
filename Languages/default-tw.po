@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Shareaza\n"
-"Report-Msgid-Bugs-To: ryo-oh-ki <ryo-oh-ki@narod.ru>\n"
-"POT-Creation-Date: 2014-01-27 13:47+0000\n"
+"Report-Msgid-Bugs-To: shareaza <shareaza@cherubicsoft.com>\n"
+"POT-Creation-Date: 2015-02-24 08:37+0000\n"
 "PO-Revision-Date: \n"
 "Last-Translator: ryo-oh-ki <ryo-oh-ki@narod.ru>\n"
 "Language-Team: Shareaza Development Team\n"
@@ -1191,19 +1191,6 @@ msgstr "同一個系列的 Episodes"
 msgid "_Web Services"
 msgstr "網際網路服務"
 
-#: csearchwnd.basic;30;item;id_library_bitzi_web
-#: csearchwnd;32;item;id_library_bitzi_web
-#: cbrowsehostwnd.basic;34;item;id_library_bitzi_web
-#: cbrowsehostwnd;36;item;id_library_bitzi_web
-#: chitmonitorwnd;38;item;id_library_bitzi_web
-#: clibraryfileview.physical.basic;41;item;id_library_bitzi_web
-#: clibraryfileview.physical;44;item;id_library_bitzi_web
-#: clibraryfileview.virtual.basic;47;item;id_library_bitzi_web
-#: clibraryfileview.virtual;50;item;id_library_bitzi_web
-#: webservices.list.menu;item;id_library_bitzi_web
-msgid "View _Bitzi Ticket"
-msgstr "檢視 Bitzi 標籤"
-
 #: csearchwnd;item;id_search_downloadnow
 #: cbrowsehostwnd.basic;item;id_search_downloadnow
 #: cbrowsehostwnd;item;id_search_downloadnow
@@ -1489,6 +1476,7 @@ msgstr "顯示歷程記錄"
 
 #: clibrarytree.physical.basic;item;id_library_explore
 #: clibrarytree.physical;item;id_library_explore
+#: path.menu;item;id_path_explore
 msgid "_Explore"
 msgstr "探索"
 
@@ -1574,14 +1562,6 @@ msgstr "新增資料夾..."
 #: clibrarytileview;item;id_library_album_open
 msgid "_Open"
 msgstr "開啟"
-
-#: clibraryfileview.physical.basic;41;item;id_library_bitzi_download
-#: clibraryfileview.physical;44;item;id_library_bitzi_download
-#: clibraryfileview.virtual.basic;47;item;id_library_bitzi_download
-#: clibraryfileview.virtual;50;item;id_library_bitzi_download
-#: webservices.list.menu;item;id_library_bitzi_download
-msgid "_Download Metadata"
-msgstr "下載解釋資料"
 
 #: clibraryfileview.physical.basic;41;item;id_webservices_musicbrainz
 #: clibraryfileview.physical;44;item;id_webservices_musicbrainz
@@ -1816,7 +1796,8 @@ msgstr ""
 msgid "Timestam_p"
 msgstr "時間郵戳"
 
-#: csystemwnd;item;id_system_copy curlexportdlg;control;7
+#: csystemwnd;item;id_system_copy path.menu;item;id_path_copy
+#: curlexportdlg;control;7
 msgid "_Copy"
 msgstr "複製"
 
@@ -3570,14 +3551,6 @@ msgstr "開啟選擇的專輯資料夾."
 msgid "View and edit the properties of the selected album folder..."
 msgstr "檢視與編輯選擇的專輯資料夾的屬性..."
 
-#: message;id_library_bitzi_download
-msgid "Download metadata for the selected file(s) from Bitzi(TM)..."
-msgstr "正在從 Bitzi(TM) 為選擇的檔案下載解釋資料..."
-
-#: message;id_library_bitzi_web
-msgid "View the Bitzi(TM) ticket for the selected file on the web."
-msgstr "View the Bitzi(TM) ticket for the selected file on the web."
-
 #: message;id_library_columns message;id_search_columns
 msgid "Select metadata columns to be displayed..."
 msgstr "選擇要顯示的解釋資料欄位..."
@@ -4073,6 +4046,14 @@ msgstr "回到這個播放清單的上一個檔案."
 #, fuzzy
 msgid "Previous Pane"
 msgstr "上一個檔案"
+
+#: message;id_path_copy
+msgid "Copy this path to clipboard."
+msgstr ""
+
+#: message;id_path_explore
+msgid "Explore this path."
+msgstr ""
 
 #: message;id_scheduler_activate
 #, fuzzy
@@ -5165,6 +5146,10 @@ msgstr "不可靠的"
 msgid "Free:"
 msgstr "Created:"
 
+#: string;12999
+msgid "Client %s has a prohibited user agent \"%s\", banning."
+msgstr ""
+
 #: string;13000
 msgid "Are you sure you want to delete the selected security rules? This cannot be undone."
 msgstr ""
@@ -5964,14 +5949,6 @@ msgstr "您即將修改這個檔案的解釋資料: %i , 您要繼續嗎?"
 msgid "Editing metadata of %i files."
 msgstr "正在編輯檔案 %i 的解釋資料."
 
-#: string;16387
-msgid "The file \"%s\" has not yet been hashed. Please wait for the file to be hashed, and then try again."
-msgstr "這個檔案 \"%s\" 尚未切細.  請等到檔案完成切細後,再試一次."
-
-#: string;16388
-msgid "This option uses services provided by Bitzi.com for recognising and sharing information about selected files.\\n\\nShareaza will transmit the SHA1 hash code for the selected file(s) in order to query the Bitzi database. If you are concerned about privacy, you may wish to consult the Bitzi.com privacy policy.\\n\\nWould you like to proceed?"
-msgstr "This option uses services provided by Bitzi.com for recognising and sharing information about selected files.\\n\\nShareaza will transmit the SHA1 hash code for the selected file(s) in order to query the Bitzi database.  If you are concerned about privacy, you may wish to consult the Bitzi.com privacy policy.\\n\\nWould you like to proceed?"
-
 #: string;16389
 msgid "Are you sure you want to permanently delete the %i selected file(s) ?\\n\\nThe files will be moved to your \"recycle bin\" if it is enabled."
 msgstr "您要永久刪除%i 個選擇的檔案嗎?\\n\\n這些檔案將移至 \"資訊回收筒\", 如果您有啟用它的話."
@@ -6261,22 +6238,6 @@ msgstr "類型:"
 #: string;16780
 msgid "Unspecified"
 msgstr "沒有特別指定"
-
-#: string;16781
-msgid "Requesting..."
-msgstr "要求..."
-
-#: string;16782
-msgid "Success!"
-msgstr "成功!"
-
-#: string;16783
-msgid "Finished, click Close"
-msgstr "完成, 請點選 關閉"
-
-#: string;16784
-msgid "&Close"
-msgstr "&關閉"
 
 #: string;16785
 msgid "(No Visualisation)"
@@ -7336,12 +7297,11 @@ msgstr "確定"
 #: cgraphlistdlg;control;17 cgraphitemdlg;control;2
 #: cschemacolumnsdlg;control;4 csecureruledlg;control;34
 #: csharemanagerdlg;control;6 curlcopydlg;control;6 curlexportdlg;control;10
-#: curlactiondlg;control;11 cbitzidownloaddlg;control;4
-#: cfilepreviewdlg;control;6 cexistingfiledlg;control;2
-#: cclosemodedlg;control;6 cdonkeyserversdlg;control;5
-#: cdeletefiledlg;control;5 ctorrentseeddlg;control;4
-#: cdownloadgroupdlg;control;2 cmediavisdlg;control;6
-#: cdecodemetadatadlg;control;9 circinputdlg;control;3
+#: curlactiondlg;control;11 cfilepreviewdlg;control;6
+#: cexistingfiledlg;control;2 cclosemodedlg;control;6
+#: cdonkeyserversdlg;control;5 cdeletefiledlg;control;5
+#: ctorrentseeddlg;control;4 cdownloadgroupdlg;control;2
+#: cmediavisdlg;control;6 cdecodemetadatadlg;control;9 circinputdlg;control;3
 msgid "Cancel"
 msgstr "取消"
 
@@ -7463,6 +7423,22 @@ msgstr "評分"
 msgid "No Tasks Currently Scheduled"
 msgstr ""
 
+#: string;20268 cdownloadssettingspage;control;1
+msgid "Save Completed Files Here"
+msgstr "請將下載完成的檔案存放在這裡"
+
+#: string;20269 cdownloadssettingspage;control;23
+msgid "Store Temporary Incomplete Files Here"
+msgstr "請將暫存的未完成檔案放在這裡"
+
+#: string;20270 cbittorrentsettingspage;control;20
+msgid "Store Torrents Here"
+msgstr "Torrents 存放於此"
+
+#: string;20271 clibrarysettingspage;control;24
+msgid "Store Collections Here"
+msgstr "將組檔存放在這個位置"
+
 #: csettingsheet;control;4 cprofilemanagerdlg;control;4
 msgid "Apply"
 msgstr "套用"
@@ -7499,9 +7475,9 @@ msgstr "下載:"
 msgid "Expand new downloads by default"
 msgstr "自動展開新增的下載"
 
-#: cgeneralsettingspage;control;9
-msgid "Display simple progress bar"
-msgstr "顯示簡易進度棒"
+#: cgeneralsettingspage;control;9 curlactiondlg;control;13
+msgid "Open a download _monitor window"
+msgstr "開啟一個下載監控視窗"
 
 #: cgeneralsettingspage;control;10
 msgid "_Search:"
@@ -7613,10 +7589,6 @@ msgstr "新增"
 #: clibrarysettingspage;control;20
 msgid "_Never Share:"
 msgstr "絕不分享:"
-
-#: clibrarysettingspage;control;24
-msgid "Store _Collections Here:"
-msgstr "將組檔存放在這個位置:"
 
 #: clibrarysettingspage;control;27
 msgid "Create ghost files when deleting"
@@ -7854,11 +7826,6 @@ msgstr "逾時:"
 msgid "Handshake:"
 msgstr "信號交換:"
 
-#: cdownloadssettingspage;control;1
-#, fuzzy
-msgid "Save Completed Files Here"
-msgstr "請將下載完成的檔案存放在這裡:"
-
 #: cdownloadssettingspage;control;4
 msgid "Scan every completed file with AntiVirus"
 msgstr ""
@@ -7901,11 +7868,6 @@ msgstr "最大排隊長度:"
 #: cdownloadssettingspage;control;22
 msgid "Only download and upload to networks which are connected."
 msgstr "只與您連線的網路下載與上傳."
-
-#: cdownloadssettingspage;control;23
-#, fuzzy
-msgid "Store Temporary Incomplete Files Here"
-msgstr "請將暫存的未完成檔案放在這裡:"
 
 #: cuploadssettingspage;control;2
 msgid "Share NEW partial downloads"
@@ -8227,10 +8189,6 @@ msgstr ""
 msgid "_Download Connections:"
 msgstr "下載連線:"
 
-#: cbittorrentsettingspage;control;20
-msgid "_Store Torrents Here:"
-msgstr "Torrents 存放於此:"
-
 #: cbittorrentsettingspage;control;21
 msgid "Torrents at once"
 msgstr "同時進行...個 Torrent"
@@ -8282,7 +8240,7 @@ msgid "Author:"
 msgstr "作者:"
 
 #: cskinssettingspage;control;7 cpluginssettingspage;control;5
-#: cadvancedsettingspage;control;7 ccollectionexportdlg;control;8
+#: cadvancedsettingspage;control;9 ccollectionexportdlg;control;8
 msgid "Description:"
 msgstr "敘述:"
 
@@ -8306,15 +8264,15 @@ msgstr "外掛資訊:"
 msgid "_Setup..."
 msgstr "設定..."
 
-#: cadvancedsettingspage;control;4
+#: cadvancedsettingspage;control;6
 msgid "Set Default"
 msgstr "Set Default"
 
-#: cadvancedsettingspage;control;5
+#: cadvancedsettingspage;control;7
 msgid "Setting Properties:"
 msgstr "敘述:"
 
-#: cadvancedsettingspage;control;6
+#: cadvancedsettingspage;control;8
 msgid "Value:"
 msgstr "設定的屬性:"
 
@@ -8963,8 +8921,8 @@ msgid "Discovery Service Type:"
 msgstr "揭示服務類型:"
 
 #: cdiscoveryservicedlg;control;4
-msgid "Gnutella Bootstrap|G1 GWebCache|G2 GWebCache|G1/G2 GWebCache|Server.met URL|Blocked"
-msgstr "Gnutella Bootstrap|GWeb 快取|Server.met URL"
+msgid "Gnutella Bootstrap|G1 GWebCache|G2 GWebCache|G1/G2 GWebCache|Server.met URL|DC++ Hub List URL|Blocked"
+msgstr "Gnutella Bootstrap|G1 快取|G2 快取|G1/G2 快取|Server.met URL|DC++ Hub List URL|Blocked"
 
 #: dialog;cdownloadmonitordlg
 msgid "Download : Shareaza"
@@ -9302,25 +9260,9 @@ msgstr "尋找檔案"
 msgid "_Remember my selection next time"
 msgstr "下次記住我的選擇"
 
-#: curlactiondlg;control;13
-msgid "Open a download _monitor window"
-msgstr "開啟一個下載監控視窗"
-
 #: curlactiondlg;control;14
 msgid "You have clicked on a Shareaza-powered URI which will add the following Discovery Service to your Discovery Services cache."
 msgstr "您點選了由 Shareaza 驅動的 URI, 將會新增以下的揭示服務至您的揭示服務快取."
-
-#: dialog;cbitzidownloaddlg
-msgid "Downloading Metadata..."
-msgstr "正在下載解釋資料..."
-
-#: cbitzidownloaddlg;control;2
-msgid "Shareaza is attempting to download metadata from Bitzi(TM)..."
-msgstr "Shareaza 正在嘗試從 Bitzi (TM) 下載解釋資料..."
-
-#: cbitzidownloaddlg;control;6
-msgid "www.bitzi.com"
-msgstr "www.bitzi.com"
 
 #: dialog;cfilepreviewdlg
 msgid "Smart Download Preview..."
@@ -9987,6 +9929,54 @@ msgstr "TigerTree"
 #, fuzzy
 msgid "NextRun"
 msgstr "下一個"
+
+#~ msgid "Store _Collections Here:"
+#~ msgstr "將組檔存放在這個位置:"
+
+#~ msgid "_Store Torrents Here:"
+#~ msgstr "Torrents 存放於此:"
+
+#~ msgid "Display simple progress bar"
+#~ msgstr "顯示簡易進度棒"
+
+#~ msgid "Requesting..."
+#~ msgstr "要求..."
+
+#~ msgid "Success!"
+#~ msgstr "成功!"
+
+#~ msgid "Finished, click Close"
+#~ msgstr "完成, 請點選 關閉"
+
+#~ msgid "&Close"
+#~ msgstr "&關閉"
+
+#~ msgid "The file \"%s\" has not yet been hashed. Please wait for the file to be hashed, and then try again."
+#~ msgstr "這個檔案 \"%s\" 尚未切細.  請等到檔案完成切細後,再試一次."
+
+#~ msgid "View _Bitzi Ticket"
+#~ msgstr "檢視 Bitzi 標籤"
+
+#~ msgid "_Download Metadata"
+#~ msgstr "下載解釋資料"
+
+#~ msgid "Download metadata for the selected file(s) from Bitzi(TM)..."
+#~ msgstr "正在從 Bitzi(TM) 為選擇的檔案下載解釋資料..."
+
+#~ msgid "View the Bitzi(TM) ticket for the selected file on the web."
+#~ msgstr "View the Bitzi(TM) ticket for the selected file on the web."
+
+#~ msgid "This option uses services provided by Bitzi.com for recognising and sharing information about selected files.\\n\\nShareaza will transmit the SHA1 hash code for the selected file(s) in order to query the Bitzi database. If you are concerned about privacy, you may wish to consult the Bitzi.com privacy policy.\\n\\nWould you like to proceed?"
+#~ msgstr "This option uses services provided by Bitzi.com for recognising and sharing information about selected files.\\n\\nShareaza will transmit the SHA1 hash code for the selected file(s) in order to query the Bitzi database.  If you are concerned about privacy, you may wish to consult the Bitzi.com privacy policy.\\n\\nWould you like to proceed?"
+
+#~ msgid "Downloading Metadata..."
+#~ msgstr "正在下載解釋資料..."
+
+#~ msgid "Shareaza is attempting to download metadata from Bitzi(TM)..."
+#~ msgstr "Shareaza 正在嘗試從 Bitzi (TM) 下載解釋資料..."
+
+#~ msgid "www.bitzi.com"
+#~ msgstr "www.bitzi.com"
 
 #, fuzzy
 #~ msgid "This option uses services provided by ShareMonkey.com for recognising information about selected files.\\n\\nShareaza will transmit file details and your location in order to query the ShareMonkey database.  If you are concerned about privacy, you may wish to consult the ShareMonkey.com privacy policy.\\n\\nWould you like to proceed?"

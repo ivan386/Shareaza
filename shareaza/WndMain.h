@@ -308,6 +308,7 @@ protected:
 	afx_msg BOOL OnCopyData(CWnd* pWnd,COPYDATASTRUCT* pCopyDataStruct);
 	afx_msg void OnUpdatePathExplore(CCmdUI* pCmdUI);
 	afx_msg void OnUpdatePathCopy(CCmdUI* pCmdUI);
+	afx_msg BOOL OnQueryEndSession();
 
 	DECLARE_MESSAGE_MAP()
 	DECLARE_DROP()

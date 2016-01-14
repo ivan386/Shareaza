@@ -358,10 +358,10 @@ void CDownloadTransfer::ChunkifyRequest(QWORD* pnOffset, QWORD* pnLength, DWORD 
 
 		QWORD nNonRandomEnd = this->m_pDownload->GetNonRandomEnd();
 		if (*pnOffset >= nNonRandomEnd)
-			nCount = GetRandomNum( 0ui64, nCount - 1 );
+		nCount = GetRandomNum( 0ui64, nCount - 1 );
 		else
 			nCount = 0;
-		
+
 		QWORD nStart = *pnOffset + nChunk * nCount;
 		*pnLength = min( (QWORD)nChunk, *pnOffset + *pnLength - nStart );
 		*pnOffset = nStart;

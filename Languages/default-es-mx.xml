@@ -3808,7 +3808,9 @@
 			<control caption="_Configurar..."/>
 			<control caption="Buscar más..."/>
 		</dialog>
-		<dialog name="CAdvancedSettingsPage" cookie="SyEdmsBuBuStStEdBuCo" caption="Avanzado">
+		<dialog name="CAdvancedSettingsPage" cookie="EdStSyEdmsBuBuStStEdBuCo" caption="Avanzado">
+			<control/>
+			<control/>
 			<control/>
 			<control/>
 			<control/>
@@ -4111,7 +4113,7 @@
 			<control caption="Dirección _del servicio:"/>
 			<control/>
 			<control caption="Tipo de servicio de descubrimiento:"/>
-			<control caption="Gnutella Bootstrap|G1 GWebCache|G2 GWebCache|G1/G2 GWebCache|Server.met URL|Blocked"/>
+			<control caption="Gnutella Bootstrap|G1 GWebCache|G2 GWebCache|G1/G2 GWebCache|Server.met URL|DC++ Hub List URL|Bloqueado"/>
 			<control caption="Aceptar"/>
 			<control caption="Cancelar"/>
 		</dialog>

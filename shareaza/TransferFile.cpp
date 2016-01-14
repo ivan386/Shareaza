@@ -1,7 +1,7 @@
 //
 // TransferFile.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2014.
+// Copyright (c) Shareaza Development Team, 2002-2015.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -44,7 +44,8 @@ CTransferFiles::CTransferFiles()
 
 CTransferFiles::~CTransferFiles()
 {
-	Close();
+	ASSERT( m_pMap.IsEmpty() );
+	ASSERT( m_pDeferred.IsEmpty() );
 }
 
 //////////////////////////////////////////////////////////////////////
@@ -79,28 +80,6 @@ CTransferFile* CTransferFiles::Open(LPCTSTR pszFile, BOOL bWrite)
 	}
 
 	return pFile;
-}
-
-//////////////////////////////////////////////////////////////////////
-// CTransferFiles close all files
-
-void CTransferFiles::Close()
-{
-	CSingleLock pLock( &m_pSection, TRUE );
-
-	for ( POSITION pos = m_pMap.GetStartPosition() ; pos ; )
-	{
-		CTransferFile* pFile;
-		CString strPath;
-		m_pMap.GetNextAssoc( pos, strPath, pFile );
-
-		TRACE( "Transfer Files : Closed \"%s\"\n", (LPCSTR)CT2A( strPath ) );
-
-		pFile->Release();
-	}
-
-	m_pMap.RemoveAll();
-	m_pDeferred.RemoveAll();
 }
 
 //////////////////////////////////////////////////////////////////////

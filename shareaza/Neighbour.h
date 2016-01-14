@@ -1,7 +1,7 @@
 //
 // Neighbour.h
 //
-// Copyright (c) Shareaza Development Team, 2002-2014.
+// Copyright (c) Shareaza Development Team, 2002-2015.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -21,15 +21,15 @@
 
 #pragma once
 
-#include "Connection.h"
-#include "zlib.h"
-
 class CBuffer;
 class CPacket;
-class CVendor;
 class CGProfile;
 class CQuerySearch;
 class CQueryHashTable;
+
+#include "Connection.h"
+#include "VendorCache.h"
+#include "zlib.h"
 
 // Keep track of what stage of communications we are in with the remote computer
 typedef enum NeighbourStateEnum
@@ -73,7 +73,7 @@ protected:
 public:
 	DWORD			m_nRunCookie;		// The number of times this neighbour has been run, CNeighboursBase::OnRun uses this to run each neighbour in the list once
 	NrsState		m_nState;			// Neighbour state, like connecting, handshake 1, 2, or 3, or rejected
-	CVendor*		m_pVendor;
+	CVendorPtr		m_pVendor;
 	CString			m_sServerName;		// Server name primarily for eD2K and DC++ hubs
 	Hashes::Guid	m_oGUID;
 	CGProfile*		m_pProfile;

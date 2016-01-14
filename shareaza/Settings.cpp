@@ -1,7 +1,7 @@
 //
 // Settings.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2014.
+// Copyright (c) Shareaza Development Team, 2002-2015.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -32,7 +32,7 @@ static char THIS_FILE[]=__FILE__;
 #define new DEBUG_NEW
 #endif
 
-#define SMART_VERSION	60
+#define SMART_VERSION	61
 
 #define Kilo	( 1024 )
 #define Mega	( Kilo * 1024 )
@@ -61,6 +61,7 @@ CSettings::CSettings()
 	Live.AdultWarning				= false;
 	Live.QueueLimitWarning			= false;
 	Live.DefaultED2KServersLoaded	= false;
+	Live.DefaultDCServersLoaded		= false;
 	Live.DonkeyServerWarning		= false;
 	Live.UploadLimitWarning			= false;
 	Live.DiskSpaceStop				= false;
@@ -158,6 +159,7 @@ void CSettings::Load()
 	Add( _T("Fonts"), _T("FontSize"), &Fonts.FontSize, 11, 1, 8, 48, _T(" px") );
 
 	Add( _T("Library"), _T("CreateGhosts"), &Library.CreateGhosts, true );
+	Add( _T("Library"), _T("GhostLimit"), &Library.GhostLimit, 1000, 1, 0, 100000, _T(" files") );
 	Add( _T("Library"), _T("FilterURI"), &Library.FilterURI );
 	Add( _T("Library"), _T("HashWindow"), &Library.HashWindow, true );
 	Add( _T("Library"), _T("HighPriorityHash"), &Library.HighPriorityHash, false );
@@ -168,7 +170,7 @@ void CSettings::Load()
 	Add( _T("Library"), _T("MarkFileAsDownload"), &Library.MarkFileAsDownload, true );
 	Add( _T("Library"), _T("MaxMaliciousFileSize"), &Library.MaxMaliciousFileSize, Kilo, 1, Kilo, 5*Kilo, _T(" B") );
 	Add( _T("Library"), _T("PanelSize"), &Library.PanelSize, 146, 1, 0, 1024, _T(" px") );
-	Add( _T("Library"), _T("PrivateTypes"), &Library.PrivateTypes, _T("|vbs|js|jc!|fb!|bc!|!ut|dbx|part|partial|crdownload|pst|reget|getright|pif|lnk|sd|url|wab|m4p|infodb|racestats|chk|tmp|temp|ini|inf|log|old|manifest|met|bak|$$$|---|~~~|###|__incomplete___|") );
+	Add( _T("Library"), _T("PrivateTypes"), &Library.PrivateTypes, _T("|dtapart|kdbx|ps1|ps1xml|ps2|ps2xml|psc1|psc2|ws|wsf|wsc|wsh|scf|vb|vbs|vbe|js|jse|hta|scr|application|jc!|fb!|bc!|!ut|dbx|part|partial|crdownload|pst|reget|getright|pif|lnk|sd|url|wab|infodb|racestats|chk|tmp|temp|ini|inf|log|old|manifest|met|bak|$$$|---|~~~|###|__incomplete___|") );
 	Add( _T("Library"), _T("QueryRouteSize"), &Library.QueryRouteSize, 20, 1, 8, 24 );
 	Add( _T("Library"), _T("SafeExecute"), &Library.SafeExecute, _T("") );
 	Add( _T("Library"), _T("ScanAPE"), &Library.ScanAPE, true );
@@ -329,7 +331,7 @@ void CSettings::Load()
 	Add( _T("Discovery"), _T("DefaultUpdate"), &Discovery.DefaultUpdate, 60*60, 60, 1, 60*24, _T(" m") );
 	Add( _T("Discovery"), _T("FailureLimit"), &Discovery.FailureLimit, 2, 1, 1, 512 );
 	Add( _T("Discovery"), _T("Lowpoint"), &Discovery.Lowpoint, 10, 1, 1, 512 );
-	Add( _T("Discovery"), _T("UpdatePeriod"), &Discovery.UpdatePeriod, 30*60, 60, 1, 60*24, _T(" m") );
+	Add( _T("Discovery"), _T("AccessPeriod"), &Discovery.AccessPeriod, 30*60, 60, 1, 60*24, _T(" m") );
 
 	Add( _T("Gnutella"), _T("ConnectFactor"), &Gnutella.ConnectFactor, 4, 1, 1, 20, _T("x") );
 	Add( _T("Gnutella"), _T("ConnectThrottle"), &Gnutella.ConnectThrottle, 30, 1, 0, 60*60, _T(" s") );
@@ -425,7 +427,6 @@ void CSettings::Load()
 	Add( _T("eDonkey"), _T("MaxLinks"), &eDonkey.MaxLinks, 200, 1, 1, 2048 );
 	Add( _T("eDonkey"), _T("MaxResults"), &eDonkey.MaxResults, 100, 1, 1, 200 );
 	Add( _T("eDonkey"), _T("MaxShareCount"), &eDonkey.MaxShareCount, 1000, 1, 25, 20000 );
-	Add( _T("eDonkey"), _T("MetAutoQuery"), &eDonkey.MetAutoQuery, true );
 	Add( _T("eDonkey"), _T("MinServerFileSize"), &eDonkey.MinServerFileSize, 0, 1, 0, 50, _T(" MB") );
 	Add( _T("eDonkey"), _T("NumServers"), &eDonkey.NumServers, 1, 1, 0, 1 );
 	Add( _T("eDonkey"), _T("PacketThrottle"), &eDonkey.PacketThrottle, 500, 1, 250, 5000, _T(" ms") );
@@ -442,12 +443,14 @@ void CSettings::Load()
 	Add( _T("eDonkey"), _T("SourceThrottle"), &eDonkey.SourceThrottle, 1000, 1, 250, 5000, _T(" ms") );
 	Add( _T("eDonkey"), _T("StatsGlobalThrottle"), &eDonkey.StatsGlobalThrottle, 30*60*1000, 60*1000, 30, 120, _T(" m") );
 	Add( _T("eDonkey"), _T("StatsServerThrottle"), &eDonkey.StatsServerThrottle, 4*60*60, 60, 1, 7*24*60, _T(" m") );
+	Add( _T("eDonkey"), _T("AutoDiscovery"), &eDonkey.AutoDiscovery, true );
 
 	Add( _T("DC"), _T("DequeueTime"), &DC.DequeueTime, 5*60*1000, 1000, 2*60, 60*60, _T(" s") );
 	Add( _T("DC"), _T("EnableAlways"), &DC.EnableAlways, false );
 	Add( _T("DC"), _T("NumServers"), &DC.NumServers, 1, 1, 0, 5 );
 	Add( _T("DC"), _T("QueryThrottle"), &DC.QueryThrottle, 2*60, 1, 30, 60*60, _T(" s") );
 	Add( _T("DC"), _T("ReAskTime"), &DC.ReAskTime, 60*1000, 1000, 30, 60*60, _T(" s") );
+	Add( _T("DC"), _T("AutoDiscovery"), &DC.AutoDiscovery, true );
 
 	Add( _T("BitTorrent"), _T("AutoClear"), &BitTorrent.AutoClear, false );
 	Add( _T("BitTorrent"), _T("AutoMerge"), &BitTorrent.AutoMerge, true );
@@ -528,6 +531,7 @@ void CSettings::Load()
 	Add( _T("Downloads"), _T("VerifyED2K"), &Downloads.VerifyED2K, true );
 	Add( _T("Downloads"), _T("VerifyFiles"), &Downloads.VerifyFiles, true );
 	Add( _T("Downloads"), _T("VerifyTiger"), &Downloads.VerifyTiger, true );
+	Add( _T("Downloads"), _T("VerifyTorrent"), &Downloads.VerifyTorrent, true );
 	Add( _T("Downloads"), _T("WebHookEnable"), &Downloads.WebHookEnable, false );
 	Add( _T("Downloads"), _T("WebHookExtensions"), &Downloads.WebHookExtensions, _T("|zip|7z|gz|rar|r0|tgz|ace|z|tar|arj|lzh|sit|hqx|fml|grs|mp3|iso|msi|exe|bin|") );
 
@@ -973,11 +977,6 @@ void CSettings::SmartUpgrade()
 			General.ItWasLimited = true;
 		}
 
-		if ( General.SmartVersion < 43 )
-		{
-			eDonkey.MetAutoQuery = true;
-		}
-
 		if ( General.SmartVersion < 44 )
 		{
 			BitTorrent.AutoSeed = true;
@@ -1141,6 +1140,62 @@ void CSettings::SmartUpgrade()
 		if ( General.SmartVersion < 60 )
 		{
 			SetDefault( &eDonkey.ServerListURL );
+		}
+
+		if ( General.SmartVersion < 61 )
+		{
+			// DownThemAll for Firefox
+			if ( ! IsIn( Library.PrivateTypes, _T( "dtapart" ) ) )
+				Library.PrivateTypes.insert( _T( "dtapart" ) );
+			// KeePass database
+			if ( ! IsIn( Library.PrivateTypes, _T( "kdbx" ) ) )
+				Library.PrivateTypes.insert( _T( "kdbx" ) );
+			// Windows PowerShell script
+			if ( ! IsIn( Library.PrivateTypes, _T( "ps1" ) ) )
+				Library.PrivateTypes.insert( _T( "ps1" ) );
+			if ( ! IsIn( Library.PrivateTypes, _T( "ps1xml" ) ) )
+				Library.PrivateTypes.insert( _T( "ps1xml" ) );
+			if ( ! IsIn( Library.PrivateTypes, _T( "ps2" ) ) )
+				Library.PrivateTypes.insert( _T( "ps2" ) );
+			if ( ! IsIn( Library.PrivateTypes, _T( "ps2xml" ) ) )
+				Library.PrivateTypes.insert( _T( "ps2xml" ) );
+			if ( ! IsIn( Library.PrivateTypes, _T( "psc1" ) ) )
+				Library.PrivateTypes.insert( _T( "psc1" ) );
+			if ( ! IsIn( Library.PrivateTypes, _T( "psc2" ) ) )
+				Library.PrivateTypes.insert( _T( "psc2" ) );
+			// Windows Script
+			if ( ! IsIn( Library.PrivateTypes, _T( "ws" ) ) )
+				Library.PrivateTypes.insert( _T( "ws" ) );
+			if ( ! IsIn( Library.PrivateTypes, _T( "wsf" ) ) )
+				Library.PrivateTypes.insert( _T( "wsf" ) );
+			if ( ! IsIn( Library.PrivateTypes, _T( "wsc" ) ) )
+				Library.PrivateTypes.insert( _T( "wsc" ) );
+			if ( ! IsIn( Library.PrivateTypes, _T( "wsh" ) ) )
+				Library.PrivateTypes.insert( _T( "wsh" ) );
+			// Windows Explorer command file
+			if ( ! IsIn( Library.PrivateTypes, _T( "scf" ) ) )
+				Library.PrivateTypes.insert( _T( "scf" ) );
+			// VBScript
+			if ( ! IsIn( Library.PrivateTypes, _T( "vb" ) ) )
+				Library.PrivateTypes.insert( _T( "vb" ) );
+			if ( ! IsIn( Library.PrivateTypes, _T( "vbs" ) ) )
+				Library.PrivateTypes.insert( _T( "vbs" ) );
+			if ( ! IsIn( Library.PrivateTypes, _T( "vbe" ) ) )
+				Library.PrivateTypes.insert( _T( "vbe" ) );
+			// JavaScript
+			if ( ! IsIn( Library.PrivateTypes, _T( "js" ) ) )
+				Library.PrivateTypes.insert( _T( "js" ) );
+			if ( ! IsIn( Library.PrivateTypes, _T( "jse" ) ) )
+				Library.PrivateTypes.insert( _T( "jse" ) );
+			// HTML application
+			if ( ! IsIn( Library.PrivateTypes, _T( "hta" ) ) )
+				Library.PrivateTypes.insert( _T( "hta" ) );
+			// Windows screen saver
+			if ( ! IsIn( Library.PrivateTypes, _T( "scr" ) ) )
+				Library.PrivateTypes.insert( _T( "scr" ) );
+			// ClickOnce application
+			if ( ! IsIn( Library.PrivateTypes, _T( "application" ) ) )
+				Library.PrivateTypes.insert( _T( "application" ) );
 		}
 	}
 
@@ -1435,7 +1490,7 @@ void CSettings::SetStartup(BOOL bStartup)
 	if ( bStartup )
 	{
 		CString strCommand;
-		strCommand.Format( _T("\"%s\" -tray"), theApp.m_strBinaryPath );
+		strCommand.Format( _T("\"%s\" -tray"), (LPCTSTR)theApp.m_strBinaryPath );
 		RegSetValueEx( hKey, CLIENT_NAME_T, 0, REG_SZ, (const BYTE*)(LPCTSTR)strCommand,
 			( strCommand.GetLength() + 1 ) * sizeof(TCHAR) );
 	}
@@ -1488,17 +1543,17 @@ const CString CSettings::SmartSpeed(QWORD nVolume, int nVolumeUnits, bool bTrunc
 
 	// bits - Bytes
 	case 1:
-		strVolume.Format( _T("%I64u %s"), nVolume, strUnit );
+		strVolume.Format( _T("%I64u %s"), nVolume, (LPCTSTR)strUnit );
 		break;
 
 	// Kilobits - KiloBytes
 	case 2:
-		strVolume.Format( _T("%.2lf K%s"), nVolume / fKilo, strUnit );
+		strVolume.Format( _T("%.2lf K%s"), nVolume / fKilo, (LPCTSTR)strUnit );
 		break;
 
 	// Megabits - MegaBytes
 	case 3:
-		strVolume.Format( _T("%.2lf M%s"), nVolume / fMega, strUnit );
+		strVolume.Format( _T("%.2lf M%s"), nVolume / fMega, (LPCTSTR)strUnit );
 		break;
 
 	default:

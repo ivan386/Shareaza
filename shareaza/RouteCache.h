@@ -1,7 +1,7 @@
 //
 // RouteCache.h
 //
-// Copyright (c) Shareaza Development Team, 2002-2012.
+// Copyright (c) Shareaza Development Team, 2002-2015.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -20,6 +20,9 @@
 //
 
 #pragma once
+
+#define ROUTE_HASH_SIZE		1024
+#define ROUTE_HASH_MASK		1023
 
 class CNeighbour;
 
@@ -46,7 +49,7 @@ public:
 
 // Attributes
 protected:
-	CRouteCacheItem*	m_pHash[1024];
+	CRouteCacheItem*	m_pHash[ ROUTE_HASH_SIZE ];
 	CRouteCacheItem*	m_pFree;
 	CRouteCacheItem*	m_pBuffer;
 	DWORD				m_nBuffer;

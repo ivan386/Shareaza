@@ -183,64 +183,116 @@ SYSTEM_INFO			System = {};
 /////////////////////////////////////////////////////////////////////////////
 // CShareazaApp construction
 
-CShareazaApp::CShareazaApp() :
-	m_pMutex				( NULL )
-,	m_nFontQuality			( DEFAULT_QUALITY )
-,	m_pSafeWnd				( NULL )
-,	m_bBusy					( 0 )
-,	m_bInteractive			( false )
-,	m_bLive					( false )
-,	m_bClosing				( false )
+CShareazaApp::CShareazaApp()
+	:	m_pMutex				( NULL )
+	,	m_nFontQuality			( DEFAULT_QUALITY )
+	,	m_pSafeWnd				( NULL )
+	,	m_bBusy					( 0 )
+	,	m_bInteractive			( false )
+	,	m_bLive					( false )
+	,	m_bClosing				( false )
 ,	m_bIsServer				( false )
 ,	m_bIsWin2000			( false )
-,	m_bIsVistaOrNewer		( false )
-,	m_bLimitedConnections	( true )
-,	m_bMenuWasVisible		( FALSE )
-,	m_nLastInput			( 0ul )
-,	m_hHookKbd				( NULL )
-,	m_hHookMouse			( NULL )
-,	m_pPacketWnd			( NULL )
+	,	m_bIsVistaOrNewer		( false )
+	,	m_bIs7OrNewer			( false )
+	,	m_bLimitedConnections	( false )
+	,	m_bMenuWasVisible		( FALSE )
+	,	m_nLastInput			( 0ul )
+	,	m_hHookKbd				( NULL )
+	,	m_hHookMouse			( NULL )
+	,	m_pPacketWnd			( NULL )
 
-,	m_hCryptProv			( NULL )
+	,	m_hCryptProv			( NULL )
 
-,	m_pRegisterApplicationRestart( NULL )
+	,	m_pRegisterApplicationRestart( NULL )
 
-,	m_hTheme				( NULL )
-,	m_pfnSetWindowTheme		( NULL )
-,	m_pfnIsThemeActive		( NULL )
-,	m_pfnOpenThemeData		( NULL )
-,	m_pfnCloseThemeData		( NULL )
-,	m_pfnDrawThemeBackground( NULL )
-,	m_pfnGetThemeSysFont	( NULL )
+	,	m_hTheme				( NULL )
+	,	m_pfnSetWindowTheme		( NULL )
+	,	m_pfnIsThemeActive		( NULL )
+	,	m_pfnOpenThemeData		( NULL )
+	,	m_pfnCloseThemeData		( NULL )
+	,	m_pfnDrawThemeBackground( NULL )
+	,	m_pfnGetThemeSysFont	( NULL )
 
-,	m_hShlWapi				( NULL )
-,	m_pfnAssocIsDangerous	( NULL )
+	,	m_hShlWapi				( NULL )
+	,	m_pfnAssocIsDangerous	( NULL )
 
-,	m_hShell32									( NULL )
-,	m_pfnSHGetFolderPathW						( NULL )
-,	m_pfnSHGetKnownFolderPath					( NULL )
-,	m_pfnSHCreateItemFromParsingName			( NULL )
-,	m_pfnSHGetPropertyStoreFromParsingName		( NULL )
-,	m_pfnSetCurrentProcessExplicitAppUserModelID( NULL )
-,	m_pfnSHGetImageList							( NULL )
+	,	m_hShell32									( NULL )
+	,	m_pfnSHGetFolderPathW						( NULL )
+	,	m_pfnSHGetKnownFolderPath					( NULL )
+	,	m_pfnSHCreateItemFromParsingName			( NULL )
+	,	m_pfnSHGetPropertyStoreFromParsingName		( NULL )
+	,	m_pfnSetCurrentProcessExplicitAppUserModelID( NULL )
+	,	m_pfnSHGetImageList							( NULL )
 
-,	m_hUser32									( NULL )
-,	m_pfnChangeWindowMessageFilter				( NULL )
+	,	m_hUser32									( NULL )
+	,	m_pfnChangeWindowMessageFilter				( NULL )
+	,	m_pfnShutdownBlockReasonCreate				( NULL )
+	,	m_pfnShutdownBlockReasonDestroy				( NULL )
 
-,	m_hGeoIP				( NULL )
-,	m_pGeoIP				( NULL )
-,	m_pfnGeoIP_cleanup		( NULL )
-,	m_pfnGeoIP_delete		( NULL )
-,	m_pfnGeoIP_country_code_by_ipnum( NULL )
-,	m_pfnGeoIP_country_name_by_ipnum( NULL )
+	,	m_hGeoIP				( NULL )
+	,	m_pGeoIP				( NULL )
+	,	m_pfnGeoIP_cleanup		( NULL )
+	,	m_pfnGeoIP_delete		( NULL )
+	,	m_pfnGeoIP_country_code_by_ipnum( NULL )
+	,	m_pfnGeoIP_country_name_by_ipnum( NULL )
 
-,	m_hLibGFL				( NULL )
+	,	m_hLibGFL				( NULL )
 
-,	m_dlgSplash				( NULL )
-
+	,	m_dlgSplash				( NULL )
 {
 	// Determine the version of Windows
-	GetVersionEx( (OSVERSIONINFO*)&Windows );
+	OSVERSIONINFOEX osvi = { sizeof( osvi ) };
+	const DWORDLONG dwlMajorMinorPack = VerSetConditionMask( VerSetConditionMask( VerSetConditionMask( 0, VER_MAJORVERSION, VER_GREATER_EQUAL ),
+		VER_MINORVERSION, VER_GREATER_EQUAL ), VER_SERVICEPACKMAJOR, VER_GREATER_EQUAL );
+
+	// Windows Vista
+	osvi.dwMajorVersion = 6;
+	osvi.dwMinorVersion = 0;
+	m_bIsVistaOrNewer = VerifyVersionInfo( &osvi, VER_MAJORVERSION | VER_MINORVERSION | VER_SERVICEPACKMAJOR, dwlMajorMinorPack ) != FALSE;
+
+	// Windows 7
+	osvi.dwMajorVersion = 6;
+	osvi.dwMinorVersion = 1;
+	m_bIs7OrNewer = VerifyVersionInfo( &osvi, VER_MAJORVERSION | VER_MINORVERSION | VER_SERVICEPACKMAJOR, dwlMajorMinorPack ) != FALSE;
+	
+	// Half-Open limit from Windows XP SP2 to Windows Vista SP1
+	bool bCanBeRegistryPatched = false;
+	osvi.dwMajorVersion = 5;
+	osvi.dwMinorVersion = 1;
+	osvi.wServicePackMajor = 2;
+	if ( VerifyVersionInfo( &osvi, VER_MAJORVERSION | VER_MINORVERSION | VER_SERVICEPACKMAJOR, dwlMajorMinorPack ) )
+	{
+		// >= Windows XP SP2
+		osvi.dwMajorVersion = 6;
+		osvi.dwMinorVersion = 0;
+		osvi.wServicePackMajor = 2;
+		if ( VerifyVersionInfo( &osvi, VER_MAJORVERSION | VER_MINORVERSION | VER_SERVICEPACKMAJOR, dwlMajorMinorPack ) )
+			// >= Windows Vista SP2
+			bCanBeRegistryPatched = true;
+		else
+			// < Windows Vista SP2
+			m_bLimitedConnections = true;
+	}
+	// No limit on Windows Server
+	osvi.wProductType = VER_NT_WORKSTATION;
+	if ( ! VerifyVersionInfo( &osvi, VER_PRODUCT_TYPE, VerSetConditionMask( 0, VER_PRODUCT_TYPE, VER_EQUAL ) ) )
+	{
+		m_bLimitedConnections = false;
+	}
+	if ( bCanBeRegistryPatched )
+	{
+		HKEY hKey;
+		if ( RegOpenKeyEx( HKEY_LOCAL_MACHINE, L"SYSTEM\\CurrentControlSet\\Services\\Tcpip\\Parameters", 0, KEY_QUERY_VALUE, &hKey ) == ERROR_SUCCESS )
+		{
+			DWORD nSize = sizeof( DWORD ), nResult = 0, nType = REG_NONE;
+			if ( ( RegQueryValueEx( hKey, L"EnableConnectionRateLimiting", NULL, &nType, (LPBYTE)&nResult, &nSize ) == ERROR_SUCCESS ) &&
+				nType == REG_DWORD && nResult == 1 )
+				m_bLimitedConnections = true;
+			RegCloseKey( hKey );
+		}
+	}
+
 	GetSystemInfo( (SYSTEM_INFO*)&System );
 
 	ZeroMemory( m_nVersion, sizeof( m_nVersion ) );
@@ -251,7 +303,7 @@ CShareazaApp::CShareazaApp() :
 	BT_SetFlags( BTF_INTERCEPTSUEF | BTF_SHOWADVANCEDUI | BTF_DESCRIBEERROR | BTF_DETAILEDMODE | BTF_ATTACHREPORT | BTF_EDITMAIL );
 	BT_SetExitMode( BTEM_CONTINUESEARCH );
 	BT_SetDumpType( 0x00001851 /* MiniDumpWithDataSegs | MiniDumpScanMemory | MiniDumpWithIndirectlyReferencedMemory | MiniDumpWithFullMemoryInfo | MiniDumpWithThreadInfo */ );
-	BT_SetSupportEMail( _T("shareaza-bugtrap@lists.sourceforge.net") );
+	BT_SetSupportEMail( _T("shareaza@cherubicsoft.com") );
 	BT_SetSupportURL( WEB_SITE_T _T("?id=support") );
 	BT_AddRegFile( _T("settings.reg"), _T("HKEY_CURRENT_USER\\") REGISTRY_KEY );
 	BT_InstallSehFilter();
@@ -687,7 +739,7 @@ BOOL CShareazaApp::Register()
 
 	CShareazaURL::Register( TRUE, TRUE );
 
-	if ( Windows.dwMajorVersion > 6 || ( Windows.dwMajorVersion == 6 && Windows.dwMinorVersion >= 1 ) )
+	if ( theApp.m_bIs7OrNewer )
 	{
 		// For VS2010:
 		//	CJumpList oTasks;
@@ -753,16 +805,16 @@ void CShareazaApp::AddToRecentFileList(LPCTSTR lpszPathName)
 /*/ 
 	if ( Windows.dwMajorVersion > 6 || ( Windows.dwMajorVersion == 6 && Windows.dwMinorVersion >= 1 ) )
 	{
-		if ( m_pfnSHCreateItemFromParsingName )
+	if ( m_pfnSHCreateItemFromParsingName )
+	{
+		CComPtr< IShellItem > pItem;
+		if ( SUCCEEDED( m_pfnSHCreateItemFromParsingName( lpszPathName, NULL, IID_IShellItem, (LPVOID*)&pItem ) ) )
 		{
-			CComPtr< IShellItem > pItem;
-			if ( SUCCEEDED( m_pfnSHCreateItemFromParsingName( lpszPathName, NULL, IID_IShellItem, (LPVOID*)&pItem ) ) )
-			{
-				SHARDAPPIDINFO info = { pItem, CLIENT_NAME_T };
-				SHAddToRecentDocs( SHARD_APPIDINFO, &info );
-			}
+			SHARDAPPIDINFO info = { pItem, CLIENT_NAME_T };
+			SHAddToRecentDocs( SHARD_APPIDINFO, &info );
 		}
 	}
+}
 //*/
 }
 
@@ -1040,75 +1092,6 @@ void CShareazaApp::InitResources()
 	m_pBTVersion[ 2 ] = (BYTE)m_nVersion[ 0 ];
 	m_pBTVersion[ 3 ] = (BYTE)m_nVersion[ 1 ];
 
-	// Determine if it's a server
-	m_bIsServer = Windows.wProductType != VER_NT_WORKSTATION;
-
-	// Most supported windows versions have network limiting
-	m_bLimitedConnections = true;
-	TCHAR* sp = _tcsstr( Windows.szCSDVersion, _T("Service Pack") );
-
-	// Set some variables for different Windows OSes
-	if ( Windows.dwMajorVersion == 5 )
-	{
-		if ( Windows.dwMinorVersion == 0 )		// Windows 2000
-			m_bIsWin2000 = true;
-		else if ( Windows.dwMinorVersion == 1 )	// Windows XP
-		{
-			// 10 Half-open concurrent TCP connections limit was introduced in SP2
-			// Windows Server will never compare this value though.
-			if ( !sp || sp[ 13 ] == '1' )
-				m_bLimitedConnections = false;
-		}
-		else if ( Windows.dwMinorVersion == 2 )	// Windows 2003 or Windows XP64
-		{
-			if ( !sp )
-				m_bLimitedConnections = false;
-		}
-	}
-	else if ( Windows.dwMajorVersion >= 6 ) 
-	{
-		// Used for GUI improvement
-		m_bIsVistaOrNewer = true;
-		bool bCanBeRegistryPatched = true;
-
-		if ( Windows.dwMinorVersion == 0 )
-		{
-			if ( !sp || sp[ 13 ] == '1' )
-			{
-				// Has TCP connections limit
-				bCanBeRegistryPatched = false;
-			} 
-			else
-			{
-				m_bLimitedConnections = false;
-			}
-		}
-
-		// Server versions can be limited too
-		if ( bCanBeRegistryPatched ) 
-		{
-			HKEY hKey;
-			if ( RegOpenKeyEx( HKEY_LOCAL_MACHINE, 
-							   L"SYSTEM\\CurrentControlSet\\Services\\Tcpip\\Parameters", 
-							   0, KEY_QUERY_VALUE, &hKey ) == ERROR_SUCCESS )
-			{
-				DWORD nSize = sizeof( DWORD ), nResult = 0, nType = REG_NONE;
-				if ( ( RegQueryValueEx( hKey, L"EnableConnectionRateLimiting", 
-									    NULL, &nType, (LPBYTE)&nResult, &nSize ) == ERROR_SUCCESS ) &&
-					 nType == REG_DWORD && nResult == 1 )
-					m_bLimitedConnections = true;
-				RegCloseKey( hKey );
-				if ( nResult == 1 )
-					return; // Don't check if that was a server
-			}
-		}
-	}
-
-	// Windows Small Business Server allows 74 simultaneous
-	// connections and any full Server version allows unlimited connections
-	if ( Windows.wProductType == VER_NT_SERVER && ( Windows.wSuiteMask & VER_SUITE_SMALLBUSINESS ) == 0 )
-		m_bLimitedConnections = false;
-
 	// Get pointers to some functions that require Windows Vista or greater
 	if ( HMODULE hKernel32 = GetModuleHandle( _T("kernel32.dll") ) )
 	{
@@ -1145,6 +1128,8 @@ void CShareazaApp::InitResources()
 	if ( ( m_hUser32 = LoadLibrary( _T("user32.dll") ) ) != NULL )
 	{
 		(FARPROC&)m_pfnChangeWindowMessageFilter = GetProcAddress( m_hUser32, "ChangeWindowMessageFilter" );
+		(FARPROC&)m_pfnShutdownBlockReasonCreate = GetProcAddress( m_hUser32, "ShutdownBlockReasonCreate" );
+		(FARPROC&)m_pfnShutdownBlockReasonDestroy = GetProcAddress( m_hUser32, "ShutdownBlockReasonDestroy" );
 	}
 
 	// Windows Vista: Enable drag-n-drop and window control operations from application with lower security level
@@ -1918,7 +1903,7 @@ CString	TimeToString(FILETIME* pTime)
 
 	FileTimeToSystemTime( pTime, &pOut );
 
-	str.Format( _T("%.4i-%.2i-%.2iT%.2i:%.2iZ"),
+	str.Format( _T("%.4u-%.2u-%.2uT%.2u:%.2uZ"),
 		pOut.wYear, pOut.wMonth, pOut.wDay,
 		pOut.wHour, pOut.wMinute );
 
@@ -2258,8 +2243,8 @@ CString CShareazaApp::GetProgramFilesFolder64() const
 	}
 
 	// 32-bit way
-	DWORD nRes = ExpandEnvironmentStrings( _T("%ProgramW6432%"), sProgramFiles.GetBuffer( MAX_PATH ), MAX_PATH );
-	sProgramFiles.ReleaseBuffer( nRes );
+	ExpandEnvironmentStrings( _T("%ProgramW6432%"), sProgramFiles.GetBuffer( MAX_PATH ), MAX_PATH );
+	sProgramFiles.ReleaseBuffer();
 	sProgramFiles.Trim();
 	sProgramFiles.TrimRight( _T( "\\" ) );
 	if ( ! sProgramFiles.IsEmpty() )
@@ -2817,7 +2802,7 @@ CString LoadRichHTML(UINT nResourceID, CString& strResponse, CShareazaFile* pFil
 		{
 			if ( Network.IsListening() )
 			{
-				strReplace.Format( _T("%s:%i"),
+				strReplace.Format( _T("%s:%u"),
 					(LPCTSTR)CString( inet_ntoa( Network.m_pHost.sin_addr ) ),
 					htons( Network.m_pHost.sin_port ) );
 			}

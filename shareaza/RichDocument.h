@@ -1,7 +1,7 @@
 //
 // RichDocument.h
 //
-// Copyright (c) Shareaza Development Team, 2002-2011.
+// Copyright (c) Shareaza Development Team, 2002-2015.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -23,6 +23,8 @@
 
 class CRichElement;
 class CXMLElement;
+
+typedef CAtlMap< CString, CRichElement*, CStringRefElementTraits< CString > > CElementMap;
 
 
 class CRichDocument  
@@ -60,7 +62,7 @@ public:
 	void			ShowGroupRange(int nMin, int nMax, BOOL bShow = TRUE);
 	void			SetModified();
 	void			Clear();
-	BOOL			LoadXML(CXMLElement* pBase, CMap< CString, const CString&, CRichElement*, CRichElement* >* pMap = NULL, int nGroup = 0);
+	BOOL			LoadXML(CXMLElement* pBase, CElementMap* pMap = NULL, int nGroup = 0);
 	void			CreateFonts(const LOGFONT* lpLogFont = NULL, const LOGFONT* lpHeading = NULL);
 
 protected:

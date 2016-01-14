@@ -1,7 +1,7 @@
 //
 // HostCache.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2014.
+// Copyright (c) Shareaza Development Team, 2002-2015.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -794,38 +794,58 @@ void CHostCacheList::Serialize(CArchive& ar, int nVersion)
 
 int CHostCache::Import(LPCTSTR pszFile, BOOL bFreshOnly)
 {
-	LPCTSTR szExt = PathFindExtension( pszFile );
-
-	// Ignore too old file
-	if ( bFreshOnly && ! IsFileNewerThan( pszFile, 90ull * 24 * 60 * 60 * 1000 ) ) // 90 days
-		return 0;
-
-	CFile pFile;
-	if ( ! pFile.Open( pszFile, CFile::modeRead | CFile::shareDenyWrite | CFile::osSequentialScan ) )
-		return 0;
-
 	int nImported = 0;
 
-	if ( _tcsicmp( szExt, _T(".bz2") ) == 0 )
+	theApp.Message( MSG_DEBUG, _T( "Looking for: %s" ), pszFile );
+
+	CFileFind ff;
+	BOOL res = ff.FindFile( pszFile );
+	while ( res )
 	{
-		theApp.Message( MSG_NOTICE, _T("Importing HubList file: %s"), pszFile );
+		res = ff.FindNextFile();
 
-		nImported = ImportHubList( &pFile );
+		if ( ff.IsDirectory() )
+			continue;
+
+		const CString strPath = ff.GetFilePath();
+		LPCTSTR szExt = PathFindExtension( strPath );
+
+		// Ignore too old file
+		if ( bFreshOnly && ! IsFileNewerThan( strPath, 90ull * 24 * 60 * 60 * 1000 ) ) // 90 days
+		{
+			theApp.Message( MSG_DEBUG, _T( "Ignoring too old file: %s" ), (LPCTSTR)strPath );
+			continue;
+		}
+
+		CFile pFile;
+		if ( ! pFile.Open( strPath, CFile::modeRead | CFile::shareDenyWrite | CFile::osSequentialScan ) )
+		{
+			theApp.Message( MSG_DEBUG, _T( "Failed to open file: %s" ), (LPCTSTR)strPath );
+			continue;
+		}
+
+		if ( _tcsicmp( szExt, _T( ".bz2" ) ) == 0 )
+		{
+			theApp.Message( MSG_NOTICE, _T( "Importing DC++ Hub List file: %s" ), (LPCTSTR)strPath );
+
+			nImported = ImportHubList( &pFile );
+		}
+		else if ( _tcsicmp( szExt, _T( ".met" ) ) == 0 )
+		{
+			theApp.Message( MSG_NOTICE, _T( "Importing Server.met file: %s" ), (LPCTSTR)strPath );
+
+			nImported = ImportMET( &pFile );
+		}
+		else if ( _tcsicmp( szExt, _T( ".dat" ) ) == 0 )
+		{
+			theApp.Message( MSG_NOTICE, _T( "Importing Kademlia Nodes file: %s" ), (LPCTSTR)strPath );
+
+			nImported = ImportNodes( &pFile );
+		}
 	}
-	else if ( _tcsicmp( szExt, _T(".met") ) == 0 )
-	{
-		theApp.Message( MSG_NOTICE, _T("Importing MET file: %s"), pszFile );
 
-		nImported = ImportMET( &pFile );
-	}
-	else if ( _tcsicmp( szExt, _T(".dat") ) == 0 )
-	{
-		theApp.Message( MSG_NOTICE, _T("Importing Nodes file: %s"), pszFile );
-
-		nImported = ImportNodes( &pFile );
-	}
-
-	Save();
+	if ( nImported )
+		Save();
 
 	return nImported;
 }
@@ -1045,43 +1065,57 @@ bool CHostCache::CheckMinimumServers(PROTOCOLID nProtocol)
 		return true;
 
 	// Load default server list (if necessary)
-	LoadDefaultServers( nProtocol );
+	int nImported = LoadDefaultServers( nProtocol );
+
+	const static CString sRootPathes[] =
+	{
+		theApp.GetProgramFilesFolder().Left( 2 ),	// System disk
+		theApp.GetProgramFilesFolder(),
+		theApp.GetProgramFilesFolder64(),
+		theApp.GetLocalAppDataFolder(),
+		theApp.GetAppDataFolder()
+	};
 
 	// Get the server list from eMule (mods) if possible
 	if ( nProtocol == PROTOCOL_ED2K )
 	{
-		const LPCTSTR sServerMetPathes[ 8 ] =
+		const static LPCTSTR sServerMetPathes[] =
 		{
-			{ _T("\\eMule\\config\\server.met") },
-			{ _T("\\eMule\\server.met") },
-			{ _T("\\Neo Mule\\config\\server.met") },
-			{ _T("\\Neo Mule\\server.met") },
-			{ _T("\\hebMule\\config\\server.met") },
-			{ _T("\\hebMule\\server.met") },
-			{ _T("\\aMule\\config\\server.met") },
-			{ _T("\\aMule\\server.met") }
-		};
-
-		CString sRootPathes[ 4 ] =
-		{
-			theApp.GetProgramFilesFolder(),
-			theApp.GetProgramFilesFolder64(),
-			theApp.GetLocalAppDataFolder(),
-			theApp.GetAppDataFolder()
+			{ _T( "\\Neo Mule\\config\\server.met" ) },
+			{ _T( "\\Neo Mule\\server.met" ) },
+			{ _T( "\\aMule\\config\\server.met" ) },
+			{ _T( "\\aMule\\server.met" ) },
+			{ _T( "\\eMule\\config\\server.met" ) },
+			{ _T( "\\eMule\\server.met" ) },
+			{ _T( "\\hebMule\\config\\server.met" ) },
+			{ _T( "\\hebMule\\server.met" ) }
 		};
 
 		for ( int i = 0; i < _countof( sRootPathes ); ++i )
 			for ( int j = 0; j < _countof( sServerMetPathes ); ++j )
-				Import( sRootPathes[ i ] + sServerMetPathes[ j ], TRUE );
+				nImported += Import( sRootPathes[ i ] + sServerMetPathes[ j ], TRUE );
+	}
+	// Get the hub list from DC++ (mods) if possible
+	else if ( nProtocol == PROTOCOL_DC )
+	{
+		const static LPCTSTR sHubListPathes[] =
+		{
+			{ _T( "\\AirDC++\\HubLists\\*.xml.bz2" ) },
+			{ _T( "\\ApexDC++\\HubLists\\*.xml.bz2" ) },
+			{ _T( "\\DC++\\HubLists\\*.xml.bz2" ) },
+			{ _T( "\\EiskaltDC++\\HubLists\\*.xml.bz2" ) },
+			{ _T( "\\FlylinkDC++\\HubLists\\*.xml.bz2" ) },
+			{ _T( "\\PeLinkDC\\Settings\\HubLists\\*.xml.bz2" ) }
+		};
+
+		for ( int i = 0; i < _countof( sRootPathes ); ++i )
+			for ( int j = 0; j < _countof( sHubListPathes ); ++j )
+				nImported += Import( sRootPathes[ i ] + sHubListPathes[ j ], TRUE );
 	}
 
-	if ( EnoughServers( nProtocol ) )
-		return true;
+	theApp.Message( MSG_NOTICE, _T( "Imported %d new servers." ), nImported );
 
-	// Get server list from Web
-	DiscoveryServices.Execute( TRUE, nProtocol, TRUE );
-
-	return false;
+	return EnoughServers( nProtocol );
 }
 
 //////////////////////////////////////////////////////////////////////
@@ -1510,14 +1544,14 @@ CString CHostCacheHost::ToString(const bool bLong) const
 		tm time = {};
 		if ( gmtime_s( &time, &tSeen ) == 0 )
 		{
-			str.Format( _T("%s:%i %.4i-%.2i-%.2iT%.2i:%.2iZ"),
+			str.Format( _T("%s:%u %.4i-%.2i-%.2iT%.2i:%.2iZ"),
 				(LPCTSTR)CString( inet_ntoa( m_pAddress ) ), m_nPort,
 				time.tm_year + 1900, time.tm_mon + 1, time.tm_mday,
 				time.tm_hour, time.tm_min ); // 2002-04-30T08:30Z
 			return str;
 		}
 	}
-	str.Format( _T("%s:%i"),
+	str.Format( _T("%s:%u"),
 		(LPCTSTR)CString( inet_ntoa( m_pAddress ) ), m_nPort );
 	return str;
 }

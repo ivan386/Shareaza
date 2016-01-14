@@ -1,12 +1,12 @@
 #! /usr/bin/python
-# $Id: setup.py,v 1.10 2014/05/19 22:31:52 nanard Exp $
+# $Id: setup.py,v 1.11 2015/07/09 12:43:29 nanard Exp $
 # the MiniUPnP Project (c) 2007-2014 Thomas Bernard
 # http://miniupnp.tuxfamily.org/ or http://miniupnp.free.fr/
 #
 # python script to build the miniupnpc module under unix
 #
 # replace libminiupnpc.a by libminiupnpc.so for shared library usage
-from distutils.core import setup, Extension
+from setuptools import setup, Extension
 from distutils import sysconfig
 sysconfig.get_config_vars()["OPT"] = ''
 sysconfig.get_config_vars()["CFLAGS"] = ''

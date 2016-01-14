@@ -1,7 +1,7 @@
 //
 // DlgDiscoveryService.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2007.
+// Copyright (c) Shareaza Development Team, 2002-2015.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -33,21 +33,20 @@ static char THIS_FILE[] = __FILE__;
 #endif
 
 BEGIN_MESSAGE_MAP(CDiscoveryServiceDlg, CSkinDialog)
-	//{{AFX_MSG_MAP(CDiscoveryServiceDlg)
-	ON_EN_CHANGE(IDC_ADDRESS, OnChangeAddress)
-	ON_CBN_SELCHANGE(IDC_SERVICE_TYPE, OnSelChangeServiceType)
-	//}}AFX_MSG_MAP
+	ON_EN_CHANGE(IDC_ADDRESS, &CDiscoveryServiceDlg::OnChangeAddress)
+	ON_CBN_SELCHANGE(IDC_SERVICE_TYPE, &CDiscoveryServiceDlg::OnSelChangeServiceType)
 END_MESSAGE_MAP()
 
 
 /////////////////////////////////////////////////////////////////////////////
 // CDiscoveryServiceDlg dialog
 
-CDiscoveryServiceDlg::CDiscoveryServiceDlg(CWnd* pParent, CDiscoveryService* pService) : CSkinDialog(CDiscoveryServiceDlg::IDD, pParent)
+CDiscoveryServiceDlg::CDiscoveryServiceDlg(CWnd* pParent, CDiscoveryService* pService)
+	: CSkinDialog	( CDiscoveryServiceDlg::IDD, pParent )
+	, m_nType		( -1 )
+	, m_pService	( pService )
+	, m_bNew		( FALSE )
 {
-	m_nType = -1;
-	m_pService	= pService;
-	m_bNew		= FALSE;
 }
 
 CDiscoveryServiceDlg::~CDiscoveryServiceDlg()
@@ -58,11 +57,10 @@ CDiscoveryServiceDlg::~CDiscoveryServiceDlg()
 void CDiscoveryServiceDlg::DoDataExchange(CDataExchange* pDX)
 {
 	CSkinDialog::DoDataExchange(pDX);
-	//{{AFX_DATA_MAP(CDiscoveryServiceDlg)
+
 	DDX_Control(pDX, IDOK, m_wndOK);
 	DDX_Text(pDX, IDC_ADDRESS, m_sAddress);
 	DDX_CBIndex(pDX, IDC_SERVICE_TYPE, m_nType);
-	//}}AFX_DATA_MAP
 }
 
 /////////////////////////////////////////////////////////////////////////////
@@ -80,23 +78,28 @@ BOOL CDiscoveryServiceDlg::OnInitDialog()
 	if ( m_bNew ) m_pService = new CDiscoveryService();
 
 	m_sAddress	= m_pService->m_sAddress;
-	m_nType		= m_pService->m_nType - 1;
 	
-	//Reassigning the combo-box placeholder:
-	if ( m_nType == 1 )
+	switch ( m_pService->m_nType )
 	{
+	case CDiscoveryService::dsGnutella:
+		m_nType = 0;
+		break;
+	case CDiscoveryService::dsWebCache:
 		if ( m_pService->m_bGnutella1 && m_pService->m_bGnutella2 )
-		{
 			m_nType = 3;
-		}
 		else if ( m_pService->m_bGnutella2 )
-		{
 			m_nType = 2;
-		}
-	}
-	else if ( m_nType > 1 ) 
-	{
-		m_nType += 2;
+		else
+			m_nType = 1;
+		break;
+	case CDiscoveryService::dsServerMet:
+		m_nType = 4;
+		break;
+	case CDiscoveryService::dsDCHubList:
+		m_nType = 5;
+		break;
+	default:
+		m_nType = 6;
 	}
 
 	if ( m_bNew ) m_nType = 1;
@@ -134,6 +137,7 @@ void CDiscoveryServiceDlg::OnOK()
 		m_pService = new CDiscoveryService();
 
 	m_pService->m_sAddress	= m_sAddress;
+
 	switch( m_nType )
 	{
 	case 0:
@@ -157,31 +161,34 @@ void CDiscoveryServiceDlg::OnOK()
 	case 4:
 		m_pService->m_nType = CDiscoveryService::dsServerMet;
 		break;
+	case 5:
+		m_pService->m_nType = CDiscoveryService::dsDCHubList;
+		break;
 	default:
 		m_pService->m_nType = CDiscoveryService::dsBlocked;
 	}
 
 	if ( m_pService->m_nType == CDiscoveryService::dsGnutella )
 	{
-		if ( _tcsnicmp( m_sAddress, _T("gnutella1:host:"),  15 ) == 0 )
+		if ( _tcsnicmp( m_sAddress, _PT( DSGnutellaTCP ) ) == 0 )
 		{
 			m_pService->m_bGnutella1 = TRUE;
 			m_pService->m_bGnutella2 = FALSE;
 			m_pService->m_nSubType = CDiscoveryService::dsGnutellaTCP;
 		}
-		else if ( _tcsnicmp( m_sAddress, _T("gnutella2:host:"), 15 ) == 0 )
+		else if ( _tcsnicmp( m_sAddress, _PT( DSGnutella2TCP ) ) == 0 )
 		{
 			m_pService->m_bGnutella1 = FALSE;
 			m_pService->m_bGnutella2 = TRUE;
 			m_pService->m_nSubType = CDiscoveryService::dsGnutella2TCP;
 		}
-		else if ( _tcsnicmp( m_sAddress, _T("uhc:"), 4 ) == 0 )
+		else if ( _tcsnicmp( m_sAddress, _PT( DSGnutellaUDPHC ) ) == 0 )
 		{
 			m_pService->m_bGnutella1 = TRUE;
 			m_pService->m_bGnutella2 = FALSE;
 			m_pService->m_nSubType = CDiscoveryService::dsGnutellaUDPHC;
 		}
-		else if ( _tcsnicmp( m_sAddress, _T("ukhl:"), 5 ) == 0 )
+		else if ( _tcsnicmp( m_sAddress, _PT( DSGnutella2UDPKHL ) ) == 0 )
 		{
 			m_pService->m_bGnutella1 = FALSE;
 			m_pService->m_bGnutella2 = TRUE;

@@ -1,7 +1,7 @@
 //
 // DownloadWithFile.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2014.
+// Copyright (c) Shareaza Development Team, 2002-2015.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -208,8 +208,13 @@ void CDownloadWithFile::ClearFile()
 
 void CDownloadWithFile::AttachFile(CFragmentedFile* pFile)
 {
-	m_pFile.reset( pFile );
-	if ( m_pFile.get() ) m_pFile->SetDownload( static_cast< CDownload*>( this ) );
+	if ( pFile && m_pFile.get() == pFile )
+		pFile->Release();
+	else
+		m_pFile.reset( pFile );
+
+	if ( m_pFile.get() )
+		m_pFile->SetDownload( static_cast< CDownload*>( this ) );
 }
 
 //////////////////////////////////////////////////////////////////////
@@ -450,7 +455,7 @@ bool CDownloadWithFile::GetAvailableRanges(CString& strRanges) const
 	for ( ; pItr != pEnd && strRanges.GetLength() < HTTP_HEADER_MAX_LINE - 256
 		; ++pItr )
 	{
-		strRange.Format( _T("%I64i-%I64i,"), pItr->begin(), pItr->end() - 1 );
+		strRange.Format( _T("%I64u-%I64u,"), pItr->begin(), pItr->end() - 1 );
 		strRanges += strRange;
 	}
 

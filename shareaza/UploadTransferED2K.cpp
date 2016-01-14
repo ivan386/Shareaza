@@ -1,7 +1,7 @@
 //
 // UploadTransferED2K.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2014.
+// Copyright (c) Shareaza Development Team, 2002-2015.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -101,9 +101,9 @@ BOOL CUploadTransferED2K::Request(const Hashes::Ed2kHash& oED2K)
 		if ( bLocked )
 			oLock.Unlock();
 
-		if ( CDownload* pFile = Downloads.FindByED2K( oED2K, TRUE ) )
+		if ( CDownload* pDownload = Downloads.FindByED2K( oED2K, TRUE ) )
 		{
-			RequestPartial( pFile );
+			RequestPartial( pDownload );
 		}
 		else
 		{
@@ -504,8 +504,6 @@ BOOL CUploadTransferED2K::ServeRequests()
 
 		if ( ! OpenFile() )
 		{
-			theApp.Message( MSG_ERROR, IDS_UPLOAD_CANTOPEN, (LPCTSTR)m_sName, (LPCTSTR)m_sAddress );
-
 			CEDPacket* pReply = CEDPacket::New( ED2K_C2C_FILENOTFOUND );
 			pReply->Write( m_oED2K );
 			Send( pReply );

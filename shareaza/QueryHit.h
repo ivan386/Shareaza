@@ -1,7 +1,7 @@
 //
 // QueryHit.h
 //
-// Copyright (c) Shareaza Development Team, 2002-2011.
+// Copyright (c) Shareaza Development Team, 2002-2015.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -21,10 +21,6 @@
 
 #pragma once
 
-#include "Schema.h"
-#include "ShareazaFile.h"
-
-class CVendor;
 class CMatchFile;
 class CXMLElement;
 class CQuerySearch;
@@ -32,6 +28,11 @@ class CG1Packet;
 class CG2Packet;
 class CEDPacket;
 class CDCPacket;
+
+#include "Schema.h"
+#include "ShareazaFile.h"
+#include "VendorCache.h"
+
 
 class CQueryHit : public CShareazaFile
 {
@@ -53,7 +54,7 @@ public:
 	WORD			m_nPort;
 	DWORD			m_nSpeed;
 	CString			m_sSpeed;
-	CVendor*		m_pVendor;
+	CVendorPtr		m_pVendor;
 	TRISTATE		m_bPush;
 	TRISTATE		m_bBusy;
 	TRISTATE		m_bStable;
@@ -107,7 +108,7 @@ public:
 	void		Resolve();
 	void		ReadEDPacket(CEDPacket* pPacket, const SOCKADDR_IN* pServer, BOOL bUnicode);
 protected:
-	void		ParseAttributes(const Hashes::Guid& pClientID, CVendor* pVendor, BYTE* nFlags, BOOL bChat, BOOL bBrowseHost);
+	void		ParseAttributes(const Hashes::Guid& pClientID, CVendorPtr pVendor, BYTE* nFlags, BOOL bChat, BOOL bBrowseHost);
 	void		ReadG1Packet(CG1Packet* pPacket);
 	void		ReadGGEP(CG1Packet* pPacket);
 	BOOL		CheckValid() const;

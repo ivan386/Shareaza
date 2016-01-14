@@ -1,7 +1,7 @@
 //
 // DlgSplash.h
 //
-// Copyright (c) Shareaza Development Team, 2002-2014.
+// Copyright (c) Shareaza Development Team, 2002-2015.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -24,11 +24,8 @@
 
 class CSplashDlg : public CDialog
 {
-	DECLARE_DYNAMIC(CSplashDlg)
-
 public:
 	CSplashDlg(int nMax, bool bClosing);
-	virtual ~CSplashDlg();
 
 	enum { IDD = IDD_SPLASH };
 
@@ -42,20 +39,16 @@ protected:
 	int			m_nMax;
 	bool		m_bClosing;
 	CString		m_sState;
-	CBitmap		m_bmBuffer;
-	CDC			m_dcBuffer1;
-	CDC			m_dcBuffer2;
 
 	static CBitmap m_bmSplash;
 
 	void		DoPaint(CDC* pDC);
-	BOOL		(WINAPI *m_pfnAnimateWindow)(HWND, DWORD, DWORD);
 
 	virtual BOOL OnInitDialog();
 	virtual void DoDataExchange(CDataExchange* pDX);    // DDX/DDV support
 
 	afx_msg void OnPaint();
-	afx_msg LRESULT OnPrintClient(WPARAM wParam, LPARAM lParam);
+	afx_msg BOOL OnQueryEndSession();
 
 	DECLARE_MESSAGE_MAP()
 };

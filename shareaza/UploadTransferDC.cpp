@@ -1,7 +1,7 @@
 //
 // UploadTransferDC.cpp 
 //
-// Copyright (c) Shareaza Development Team, 2010-2014.
+// Copyright (c) Shareaza Development Team, 2010-2015.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -483,8 +483,6 @@ BOOL CUploadTransferDC::SendFile()
 {
 	if ( ! OpenFile() )
 	{
-		theApp.Message( MSG_ERROR, IDS_UPLOAD_CANTOPEN, (LPCTSTR)m_sName , (LPCTSTR)m_sAddress);
-
 		m_pClient->SendCommand( FILE_NOT_AVAILABLE );
 
 		return FALSE;
@@ -496,7 +494,7 @@ BOOL CUploadTransferDC::SendFile()
 	{
 		CString sAnswer;
 		sAnswer.Format( _T("$ADCSND file TTH/%s %I64u %I64u|"),
-			m_oTiger.toString(), m_nOffset, m_nLength );
+			(LPCTSTR)m_oTiger.toString(), m_nOffset, m_nLength );
 
 		m_pClient->SendCommand( sAnswer );
 	}
@@ -557,7 +555,7 @@ BOOL CUploadTransferDC::RequestTigerTree(CLibraryFile* pFile, QWORD nOffset, QWO
 
 	CString sAnswer;
 	sAnswer.Format( _T("$ADCSND tthl TTH/%s %I64u %I64u|"),
-		m_oTiger.toString(), nOffset, nLength );
+		(LPCTSTR)m_oTiger.toString(), nOffset, nLength );
 
 	m_pClient->SendCommand( sAnswer );
 	

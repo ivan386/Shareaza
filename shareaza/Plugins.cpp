@@ -1,7 +1,7 @@
 //
 // Plugins.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2014.
+// Copyright (c) Shareaza Development Team, 2002-2015.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -243,11 +243,8 @@ void CPlugins::UnloadPlugin(REFCLSID pCLSID)
 
 BOOL CPlugins::LookupCLSID(LPCTSTR pszGroup, LPCTSTR pszKey, REFCLSID pCLSID) const
 {
-	CString strCLSID = theApp.GetProfileString(
-		CString( _T("Plugins\\") ) + pszGroup, pszKey, _T("") );
-	return ! strCLSID.IsEmpty() &&
-		Hashes::fromGuid( strCLSID, (CLSID*)&pCLSID ) &&
-		LookupEnable( pCLSID, pszKey );
+	const CString strCLSID = theApp.GetProfileString( CString( _T("Plugins\\") ) + pszGroup, pszKey, _T("") );
+	return ! strCLSID.IsEmpty() && Hashes::fromGuid( strCLSID, (CLSID*)&pCLSID ) && LookupEnable( pCLSID, pszKey );
 }
 
 BOOL CPlugins::LookupEnable(REFCLSID pCLSID, LPCTSTR pszExt) const
@@ -285,9 +282,7 @@ BOOL CPlugins::LookupEnable(REFCLSID pCLSID, LPCTSTR pszExt) const
 
 	if ( pszExt ) // Checking only a certain extension
 	{
-		CString strToFind;
-		strToFind.Format( _T("|%s|"), pszExt );
-		return strExtensions.Find( strToFind ) != -1;
+		return ( _tcsistr( strExtensions, CString( _T("|") ) + pszExt + _T("|") ) != NULL );
 	}
 
 	// For Settings page

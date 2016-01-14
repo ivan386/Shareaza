@@ -1,7 +1,7 @@
 //
 // MetaList.h
 //
-// Copyright (c) Shareaza Development Team, 2002-2012.
+// Copyright (c) Shareaza Development Team, 2002-2015.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -98,11 +98,11 @@ class CMetaItem : public CRect
 {
 // Construction
 public:
-	CMetaItem(CSchemaMember* pMember = NULL);
+	CMetaItem(CSchemaMemberPtr pMember = NULL);
 
 // Attributes
 public:
-	CSchemaMember*	m_pMember;
+	CSchemaMemberPtr m_pMember;
 	CString			m_sKey;
 	CString			m_sValue;
 	BOOL			m_bValueDefined;

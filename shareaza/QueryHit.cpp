@@ -1,7 +1,7 @@
 //
 // QueryHit.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2012.
+// Copyright (c) Shareaza Development Team, 2002-2015.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -159,7 +159,7 @@ CQueryHit* CQueryHit::FromG1Packet(CG1Packet* pPacket, int* pnHops)
 		}
 
 		// Read Vendor Code
-		CVendor* pVendor = VendorCache.m_pNull;
+		CVendorPtr pVendor = VendorCache.m_pNull;
 		if ( pPacket->GetRemaining() >= Hashes::Guid::byteCount + 4u )
 		{
 			CHAR szaVendor[ 4 ];
@@ -332,7 +332,7 @@ CQueryHit* CQueryHit::FromG2Packet(CG2Packet* pPacket, int* pnHops)
 	BOOL		bStable		= TRUE;
 	BOOL		bBrowseHost	= FALSE;
 	BOOL		bPeerChat	= FALSE;
-	CVendor*	pVendor		= VendorCache.m_pNull;
+	CVendorPtr	pVendor		= VendorCache.m_pNull;
 	bool		bSpam		= false;
 	CString		strNick;
 	DWORD		nGroupState[8][4] = {};
@@ -1262,7 +1262,7 @@ void CQueryHit::ReadGGEP(CG1Packet* pPacket)
 //////////////////////////////////////////////////////////////////////
 // CQueryHit G1 attributes suffix
 
-void CQueryHit::ParseAttributes(const Hashes::Guid& oClientID, CVendor* pVendor, BYTE* nFlags, BOOL bChat, BOOL bBrowseHost)
+void CQueryHit::ParseAttributes(const Hashes::Guid& oClientID, CVendorPtr pVendor, BYTE* nFlags, BOOL bChat, BOOL bBrowseHost)
 {
 	m_oClientID		= oClientID;
 	m_pVendor		= pVendor ? pVendor : VendorCache.m_pNull;
@@ -1631,15 +1631,15 @@ void CQueryHit::ReadEDPacket(CEDPacket* pPacket, const SOCKADDR_IN* pServer, BOO
 
 			if ( pTag.m_sValue.GetLength() < 3 )
 			{
-				_stscanf( pTag.m_sValue, _T("%i"), &nSecs );
+				_stscanf( pTag.m_sValue, _T("%lu"), &nSecs );
 			}
 			else if ( pTag.m_sValue.GetLength() < 6 )
 			{
-				_stscanf( pTag.m_sValue, _T("%i:%i"), &nMins, &nSecs );
+				_stscanf( pTag.m_sValue, _T("%lu:%lu"), &nMins, &nSecs );
 			}
 			else
 			{
-				_stscanf( pTag.m_sValue, _T("%i:%i:%i"), &nHours, &nMins, &nSecs );
+				_stscanf( pTag.m_sValue, _T("%lu:%lu:%lu"), &nHours, &nMins, &nSecs );
 			}
 
 			nLength = (nHours * 60 * 60) + (nMins * 60) + (nSecs);

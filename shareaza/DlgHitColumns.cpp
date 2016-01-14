@@ -1,7 +1,7 @@
 //
 // DlgHitColumns.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2009.
+// Copyright (c) Shareaza Development Team, 2002-2015.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -72,7 +72,7 @@ BOOL CSchemaColumnsDlg::OnInitDialog()
 	for ( int nMember = 0 ; nMember < m_wndColumns.GetItemCount() ; nMember++ )
 	{
 		bool bChecked = m_pColumns.Find(
-			reinterpret_cast< CSchemaMember* >( m_wndColumns.GetItemData( nMember ) ) ) != NULL;
+			reinterpret_cast< CSchemaMemberPtr >( m_wndColumns.GetItemData( nMember ) ) ) != NULL;
 		m_wndColumns.SetItemState( nMember, INDEXTOSTATEIMAGEMASK( bChecked ? 1 : 0 ), LVIS_STATEIMAGEMASK );
 	}
 
@@ -93,7 +93,7 @@ void CSchemaColumnsDlg::OnSelChangeSchemas()
 
 	for ( POSITION pos = pSchema->GetMemberIterator() ; pos ; )
 	{
-		CSchemaMember* pMember = pSchema->GetNextMember( pos );
+		CSchemaMemberPtr pMember = pSchema->GetNextMember( pos );
 
 		if ( !pMember->m_bHidden )
 		{
@@ -129,7 +129,7 @@ void CSchemaColumnsDlg::OnOK()
 		{
 			if ( ListView_GetCheckState( m_wndColumns.GetSafeHwnd(), nMember ) )
 			{
-				CSchemaMember* pMember = (CSchemaMember*)m_wndColumns.GetItemData( nMember );
+				CSchemaMemberPtr pMember = (CSchemaMemberPtr)m_wndColumns.GetItemData( nMember );
 				m_pColumns.AddTail( pMember );
 			}
 		}
@@ -143,7 +143,7 @@ void CSchemaColumnsDlg::OnOK()
 /////////////////////////////////////////////////////////////////////////////
 // CSchemaColumnsDlg load columns utility
 
-BOOL CSchemaColumnsDlg::LoadColumns(CSchemaPtr pSchema, CList< CSchemaMember* >* pColumns)
+BOOL CSchemaColumnsDlg::LoadColumns(CSchemaPtr pSchema, CSchemaMemberList* pColumns)
 {
 	if ( ! pSchema || ! pColumns ) return FALSE;
 	pColumns->RemoveAll();
@@ -155,7 +155,7 @@ BOOL CSchemaColumnsDlg::LoadColumns(CSchemaPtr pSchema, CList< CSchemaMember* >*
 
 	for ( POSITION pos = pSchema->GetMemberIterator() ; pos ; )
 	{
-		CSchemaMember* pMember = pSchema->GetNextMember( pos );
+		CSchemaMemberPtr pMember = pSchema->GetNextMember( pos );
 		if ( !pMember->m_bHidden && strMembers.Find( _T("|") + pMember->m_sName + _T("|") ) >= 0 )
 			pColumns->AddTail( pMember );
 	}
@@ -166,7 +166,7 @@ BOOL CSchemaColumnsDlg::LoadColumns(CSchemaPtr pSchema, CList< CSchemaMember* >*
 /////////////////////////////////////////////////////////////////////////////
 // CSchemaColumnsDlg save columns utility
 
-BOOL CSchemaColumnsDlg::SaveColumns(CSchemaPtr pSchema, CList< CSchemaMember* >* pColumns)
+BOOL CSchemaColumnsDlg::SaveColumns(CSchemaPtr pSchema, CSchemaMemberList* pColumns)
 {
 	if ( ! pSchema || ! pColumns ) return FALSE;
 
@@ -174,7 +174,7 @@ BOOL CSchemaColumnsDlg::SaveColumns(CSchemaPtr pSchema, CList< CSchemaMember* >*
 
 	for ( POSITION pos = pColumns->GetHeadPosition() ; pos ; )
 	{
-		CSchemaMember* pMember = (CSchemaMember*)pColumns->GetNext( pos );
+		CSchemaMemberPtr pMember = pColumns->GetNext( pos );
 		strMembers += '|';
 		strMembers += pMember->m_sName;
 		strMembers += '|';
@@ -189,7 +189,7 @@ BOOL CSchemaColumnsDlg::SaveColumns(CSchemaPtr pSchema, CList< CSchemaMember* >*
 /////////////////////////////////////////////////////////////////////////////
 // CSchemaColumnsDlg menu builder utility
 
-CMenu* CSchemaColumnsDlg::BuildColumnMenu(CSchemaPtr pSchema, CList< CSchemaMember* >* pColumns)
+CMenu* CSchemaColumnsDlg::BuildColumnMenu(CSchemaPtr pSchema, CSchemaMemberList* pColumns)
 {
 	if ( ! pSchema ) return NULL;
 
@@ -201,7 +201,7 @@ CMenu* CSchemaColumnsDlg::BuildColumnMenu(CSchemaPtr pSchema, CList< CSchemaMemb
 
 	for ( POSITION pos = pSchema->GetMemberIterator() ; pos ; nID++ )
 	{
-		CSchemaMember* pMember = pSchema->GetNextMember( pos );
+		CSchemaMemberPtr pMember = pSchema->GetNextMember( pos );
 
 		if ( !pMember->m_bHidden )
 		{
@@ -224,7 +224,7 @@ CMenu* CSchemaColumnsDlg::BuildColumnMenu(CSchemaPtr pSchema, CList< CSchemaMemb
 /////////////////////////////////////////////////////////////////////////////
 // CSchemaColumnsDlg column toggle utility
 
-BOOL CSchemaColumnsDlg::ToggleColumnHelper(CSchemaPtr pSchema, CList< CSchemaMember* >* pSource, CList< CSchemaMember* >* pTarget, UINT nToggleID, BOOL bSave)
+BOOL CSchemaColumnsDlg::ToggleColumnHelper(CSchemaPtr pSchema, CSchemaMemberList* pSource, CSchemaMemberList* pTarget, UINT nToggleID, BOOL bSave)
 {
 	if ( ! pSchema ) return FALSE;
 
@@ -235,7 +235,7 @@ BOOL CSchemaColumnsDlg::ToggleColumnHelper(CSchemaPtr pSchema, CList< CSchemaMem
 
 	for ( POSITION pos = pSchema->GetMemberIterator() ; pos ; nID++ )
 	{
-		CSchemaMember* pMember = pSchema->GetNextMember( pos );
+		CSchemaMemberPtr pMember = pSchema->GetNextMember( pos );
 
 		if ( pMember->m_bHidden )
 		{

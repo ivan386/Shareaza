@@ -552,7 +552,7 @@ void CRichViewCtrl::Layout(CDC* pDC, CRect* pRect)
 
 			int nGap = 0, nIndent = 0;
 
-			if ( _stscanf( pElement->m_sText, _T("%lu.%lu"), &nGap, &nIndent ) == 2 )
+			if ( _stscanf( pElement->m_sText, _T("%d.%d"), &nGap, &nIndent ) == 2 )
 			{
 				nLeftPoint	= pRect->left + nIndent;
 				nWidth		= pRect->right - nIndent;

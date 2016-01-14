@@ -1,7 +1,7 @@
 //
 // CtrlLibraryView.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2014.
+// Copyright (c) Shareaza Development Team, 2002-2015.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -280,7 +280,7 @@ CLibraryFile* CLibraryView::GetNextSelectedFile(POSITION& posSel, BOOL bSharedOn
 {
 	while ( posSel )
 	{
-		DWORD_PTR nIndex = m_pSelection->GetNext( posSel );
+		DWORD nIndex = m_pSelection->GetNext( posSel );
 		if ( CLibraryFile* pFile = Library.LookupFile( nIndex, bSharedOnly, bAvailableOnly ) )
 			return pFile;
 	}

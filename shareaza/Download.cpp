@@ -522,33 +522,33 @@ void CDownload::OnRun()
 
 			// Run the download
 			RunTorrent( tNow );
-				RunSearch( tNow );
-				RunValidation();
+			RunSearch( tNow );
+			RunValidation();
 
-				if ( IsSeeding() )
+			if ( IsSeeding() )
+			{
+				// Mark as collapsed to get correct heights when dragging files
+				if ( ! Settings.General.DebugBTSources && m_bExpanded )
+					m_bExpanded = FALSE;
+			}
+			else
+			{
+				if ( IsComplete() && IsFileOpen() )
 				{
-					// Mark as collapsed to get correct heights when dragging files
-					if ( ! Settings.General.DebugBTSources && m_bExpanded )
-						m_bExpanded = FALSE;
+					if ( IsFullyVerified() )
+						OnDownloaded();
 				}
-				else
+				else if ( CheckTorrentRatio() )
 				{
-					if ( IsComplete() && IsFileOpen() )
+					if ( Network.IsConnected() )
+						StartTransfersIfNeeded( tNow );
+					else
 					{
-						if ( IsFullyVerified() )
-							OnDownloaded();
-					}
-					else if ( CheckTorrentRatio() )
-					{
-						if ( Network.IsConnected() )
-							StartTransfersIfNeeded( tNow );
-						else
-						{
-							StopTrying();
-							return;
-						}
+						StopTrying();
+						return;
 					}
 				}
+			}
 
 			// Calculate the current downloading state
 			if ( HasActiveTransfers() )
@@ -962,7 +962,7 @@ BOOL CDownload::OnVerify(const CLibraryFile* pFile, TRISTATE bVerified)
 		{
 			theApp.Message( MSG_DEBUG, _T("Auto-starting torrent file: %s"), pFile->GetPath() );
 			theApp.OpenTorrent( pFile->GetPath(), TRUE );
-	}
+		}
 	}
 
 	return TRUE;

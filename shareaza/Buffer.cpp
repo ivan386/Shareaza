@@ -165,7 +165,7 @@ DWORD CBuffer::AddBuffer(CBuffer* pBuffer, const size_t nLength)
 	pBuffer->Remove( nMinLength );						// Remove the memory from the source buffer
 	return nMinLength;		// Report how many bytes we moved
 	
-}
+	}
 
 void CBuffer::Attach(CBuffer* pBuffer)
 {
@@ -211,7 +211,7 @@ bool CBuffer::EnsureBuffer(const size_t nLength) throw()
 	if ( m_nMBlock - m_nLength >= nLength )
 	{
 		// There is enough room to write nLength bytes without allocating anything
-		
+
 		if ( GetBufferFree() < nLength )
 			Align();
 

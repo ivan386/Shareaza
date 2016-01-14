@@ -1,7 +1,7 @@
 //
 // MiniUPnP.cpp
 //
-// Copyright (c) Shareaza Development Team, 2014.
+// Copyright (c) Shareaza Development Team, 2014-2015.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -26,7 +26,7 @@
 #include "MiniUPnP.h"
 
 // MiniUPnPc library
-// Copyright (c) 2005-2012 Thomas Bernard
+// Copyright (c) 2005-2015 Thomas Bernard
 #include "..\MiniUPnPc\miniupnpc\miniupnpc.h"
 #include "..\MiniUPnPc\miniupnpc\upnpcommands.h"
 #pragma comment( lib, "miniupnpc" )
@@ -97,7 +97,7 @@ void CMiniUPnP::OnRun()
 	BOOL bSuccess = FALSE;
 
 	int error = 0;
-	if ( UPNPDev* pDevList = upnpDiscover( Settings.Connection.UPnPTimeout, NULL, NULL, 0, 0, &error ) )
+	if ( UPNPDev* pDevList = upnpDiscover( Settings.Connection.UPnPTimeout, NULL, NULL, UPNP_LOCAL_PORT_ANY, FALSE, 2, &error ) )
 	{
 		for ( UPNPDev* pDevice = pDevList; ! bSuccess && pDevice && IsThreadEnabled(); pDevice = pDevice->pNext )
 		{
@@ -141,7 +141,9 @@ void CMiniUPnP::OnRun()
 						CStringA sPort;
 						sPort.Format( "%u", nPort );
 
-						result = UPNP_AddPortMapping( m_sControlURL, m_sServiceType, sPort, sPort, internalIPAddress, CLIENT_NAME, "TCP", NULL, NULL );
+						CString strInfo;
+						strInfo.Format( _T("%s at %s:%u"), CLIENT_NAME_T _T(" TCP"), (LPCTSTR)CA2T( internalIPAddress ), nPort );
+						result = UPNP_AddPortMapping( m_sControlURL, m_sServiceType, sPort, sPort, internalIPAddress, (LPCSTR)CT2A( strInfo ), "TCP", NULL, NULL );
 						if ( result == UPNPCOMMAND_SUCCESS )
 						{
 							char sRealPort[ 6 ] = {};
@@ -151,7 +153,8 @@ void CMiniUPnP::OnRun()
 								m_nExternalTCPPort = (WORD)atoi( sRealPort );
 								theApp.Message( MSG_DEBUG, _T("UPnP successfully mapped TCP port %u."), m_nExternalTCPPort );
 
-								result = UPNP_AddPortMapping( m_sControlURL, m_sServiceType, sPort, sPort, internalIPAddress, CLIENT_NAME, "UDP", NULL, NULL );
+								strInfo.Format( _T("%s at %s:%u"), CLIENT_NAME_T _T(" UDP"), (LPCTSTR)CA2T( internalIPAddress ), nPort );
+								result = UPNP_AddPortMapping( m_sControlURL, m_sServiceType, sPort, sPort, internalIPAddress, (LPCSTR)CT2A( strInfo ), "UDP", NULL, NULL );
 								if ( result == UPNPCOMMAND_SUCCESS )
 								{
 									*sRealPort = '\0';

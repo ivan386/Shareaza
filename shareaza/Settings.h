@@ -1,7 +1,7 @@
 //
 // Settings.h
 //
-// Copyright (c) Shareaza Development Team, 2002-2014.
+// Copyright (c) Shareaza Development Team, 2002-2015.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -156,6 +156,7 @@ public:
 		bool		HighPriorityHash;			// Use high priority hashing
 		bool		HashWindow;					// Display annoying hashing window
 		bool		CreateGhosts;				// Default action in the delete file dialog
+		DWORD		GhostLimit;					// Maximum amount of ghost files
 		DWORD		HighPriorityHashing;		// desired speed in MB/s when hashing with hi priority
 		DWORD		LowPriorityHashing;			// desired speed in MB/s when hashing with low priority
 		DWORD		MaxMaliciousFileSize;		// Size for which to trigger malicious software search
@@ -318,7 +319,7 @@ public:
 		DWORD		AccessThrottle;
 		DWORD		Lowpoint;
 		DWORD		FailureLimit;
-		DWORD		UpdatePeriod;
+		DWORD		AccessPeriod;
 		DWORD		DefaultUpdate;
 		DWORD		BootstrapCount;
 		DWORD		CacheCount;					// Limit ability to learn new caches
@@ -427,7 +428,6 @@ public:
 		DWORD		QueueRankThrottle;			// How frequently queue ranks are sent
 		DWORD		PacketThrottle;				// ED2K packet rate limiter
 		DWORD		SourceThrottle;				// ED2K source rate limiter
-		DWORD		MetAutoQuery;				// Auto query for a new server list
 		bool		LearnNewServers;			// Get new servers from servers
 		bool		LearnNewServersClient;		// Get new servers from clients
 		CString		ServerListURL;
@@ -443,6 +443,7 @@ public:
 		DWORD		DefaultServerFlags;			// Default server flags (for UDP searches)
 		bool		Endgame;					// Allow endgame mode when completing downloads. (Download same chunk from multiple sources)
 		bool		LargeFileSupport;			// Allow 64 bit file sizes
+		DWORD		AutoDiscovery;				// Auto query for a new server list using discovery services
 	} eDonkey;
 
 	struct sDC
@@ -453,6 +454,7 @@ public:
 		DWORD		QueryThrottle;				// Throttle for DC++ neighbor searches (s), default: two minutes delay
 		DWORD		ReAskTime;					// How often Shareaza re-ask a remote client about download (ms), default: every minute
 		DWORD		DequeueTime;				// Timeout for remote client confirmation of upload queue (ms), default: 5 min
+		DWORD		AutoDiscovery;				// Auto query for a new server list using discovery services
 	} DC;
 
 	struct sBitTorrent
@@ -521,6 +523,7 @@ public:
 		bool		VerifyFiles;
 		bool		VerifyTiger;
 		bool		VerifyED2K;
+		bool		VerifyTorrent;
 		bool		NeverDrop;					// Do not drop bad sources (may pollute source list with many dead sources)
 		bool		RequestHash;
 		bool		RequestHTTP11;
@@ -603,6 +606,7 @@ public:
 		bool		AdultWarning;				// Has the user been warned about the adult filter?
 		bool		QueueLimitWarning;			// Has the user been warned about limiting the max Q position accepted?
 		bool		DefaultED2KServersLoaded;	// Has Shareaza already loaded default ED2K servers?
+		bool		DefaultDCServersLoaded;		// Has Shareaza already loaded default DC++ servers?
 		bool		DonkeyServerWarning;		// Has the user been warned about having an empty server list?
 		bool		UploadLimitWarning;			// Has the user been warned about the ed2k/BT ratio?
 		bool		DiskSpaceStop;				// Has Shareaza paused all downloads due to critical disk space?

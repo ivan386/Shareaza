@@ -1,7 +1,7 @@
 //
 // SkinTranslate.cpp
 //
-// Copyright (c) Shareaza Development Team, 2009-2014.
+// Copyright (c) Shareaza Development Team, 2009-2015.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -190,32 +190,30 @@ bool CXMLLoader::LoadPO(LPCWSTR szFilename)
 					switch ( sLine[ 0 ] )
 					{
 					case '#':
-						if ( mode != mode_ref && mode != mode_start && mode != mode_msgstr )
+						if ( mode == mode_msgid )
 						{
 							_tprintf( _T("ERROR: Invalid .po-file line #%d: %s\n"), nLine, sOriginalLine );
 							return false;
 						}
+						if ( mode == mode_msgstr )
+						{
+							// Save previous string
+							item.SetTranslate( sString );
+
+							sString.Empty();
+
+							// Save previous non-empty string
+							if ( item.sRef != "" )
+							{
+								Add( item );
+							}
+
+							item.Clear();
+						}
 						if ( sLine[ 1 ] == ':' )
 						{
 							// Ref
-							if ( mode == mode_msgstr )
-							{
-								// Save previous string
-								item.SetTranslate( sString );
-
-								sString.Empty();
-
-								// Save previous non-empty string
-								if ( item.sRef != "" )
-								{
-									Add( item );
-								}
-
-								item.Clear();
-
-								mode = mode_ref;
-							}
-
+							mode = mode_ref;
 							if ( ! sString.IsEmpty() )
 								sString += " ";
 							sString += sLine.Mid( 2 ).Trim();

@@ -1,7 +1,7 @@
 //
 // CtrlBrowseProfile.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2010.
+// Copyright (c) Shareaza Development Team, 2002-2015.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -90,7 +90,7 @@ void CBrowseProfileCtrl::OnSkinChange()
 
 	if ( CXMLElement* pXML = Skin.GetDocument( _T("CBrowseHostProfile.1") ) )
 	{
-		CMap< CString, const CString&, CRichElement*, CRichElement* > pMap;
+		CElementMap pMap;
 		m_pDocument1->LoadXML( pXML, &pMap );
 
 		pMap.Lookup( _T("Nick"), m_pdNick );
@@ -118,7 +118,7 @@ void CBrowseProfileCtrl::OnSkinChange()
 
 	if ( CXMLElement* pXML = Skin.GetDocument( _T("CBrowseHostProfile.2") ) )
 	{
-		CMap< CString, const CString&, CRichElement*, CRichElement* > pMap;
+		CElementMap pMap;
 		m_pDocument2->LoadXML( pXML, &pMap );
 
 		pMap.Lookup( _T("Bookmarks"), m_pdBookmarks );

@@ -1,7 +1,7 @@
 //
 // RichDocument.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2011.
+// Copyright (c) Shareaza Development Team, 2002-2015.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -226,7 +226,7 @@ void CRichDocument::CreateFonts(const LOGFONT* lpDefault, const LOGFONT* lpHeadi
 //////////////////////////////////////////////////////////////////////
 // CRichDocument XML Load
 
-BOOL CRichDocument::LoadXML(CXMLElement* pBase, CMap< CString, const CString&, CRichElement*, CRichElement* >* pMap, int nGroup)
+BOOL CRichDocument::LoadXML(CXMLElement* pBase, CElementMap* pMap, int nGroup)
 {
 	CSingleLock pLock( &m_pSection, TRUE );
 	
@@ -375,16 +375,12 @@ BOOL CRichDocument::LoadXML(CXMLElement* pBase, CMap< CString, const CString&, C
 			theApp.Message( MSG_ERROR, IDS_SKIN_ERROR, _T("Bad [group] attribute in [document] element"), pXML->ToString() );
 		
 		strTemp = pXML->GetAttributeValue( _T("format") );
-		ToLower( strTemp );
-
-		if ( strTemp.Find( 'b' ) >= 0 )	pElement->m_nFlags |= retfBold;
-		if ( strTemp.Find( 'i' ) >= 0 )	pElement->m_nFlags |= retfItalic;
-		if ( strTemp.Find( 'u' ) >= 0 )	pElement->m_nFlags |= retfUnderline;
+		if ( strTemp.FindOneOf( _T( "bB" ) ) >= 0 )	pElement->m_nFlags |= retfBold;
+		if ( strTemp.FindOneOf( _T( "iI" ) ) >= 0 )	pElement->m_nFlags |= retfItalic;
+		if ( strTemp.FindOneOf( _T( "uU" ) ) >= 0 )	pElement->m_nFlags |= retfUnderline;
 		
 		strTemp = pXML->GetAttributeValue( _T("align") );
-		ToLower( strTemp );
-
-		if ( strTemp == _T("middle") ) pElement->m_nFlags |= retfMiddle;
+		if ( strTemp.CompareNoCase( _T("middle") ) == 0 ) pElement->m_nFlags |= retfMiddle;
 		
 		if ( CSkin::LoadColour( pXML, _T("colour"), &pElement->m_cColour ) ||
 			 CSkin::LoadColour( pXML, _T("color"),  &pElement->m_cColour ) )

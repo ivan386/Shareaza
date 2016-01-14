@@ -1579,8 +1579,7 @@ CXmlReader::XML_RESULT CXmlReader::CXmlParser::DtdEntityHandler(CXmlNode& /*rXml
 			CStrStream strEntityValue(128);
 			for (;;)
 			{
-				TCHAR arrChar[2];
-				size_t nCharSize = decInputStream.ReadChar(arrChar);
+				nCharSize = decInputStream.ReadChar(arrChar);
 				if (nCharSize == 0 || nCharSize == MAXSIZE_T)
 					break;
 				PutCharToStream(strEntityValue, arrChar, nCharSize);

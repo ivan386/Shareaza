@@ -89,7 +89,7 @@ BOOL CDownloadTransferHTTP::Initiate()
 	theApp.Message( MSG_INFO, IDS_DOWNLOAD_CONNECTING,
 		(LPCTSTR)CString( inet_ntoa( m_pSource->m_pAddress ) ), m_pSource->m_nPort,
 		(LPCTSTR)m_pDownload->GetDisplayName() );
-
+	
 	if ( m_pDownload->IsCompleted() )
 	{
 		m_pDownload->RemoveSource( m_pSource, FALSE );
@@ -403,71 +403,75 @@ BOOL CDownloadTransferHTTP::SendRequest()
 	
 	if ( ! m_bTigerFetch && ! m_bMetaFetch )
 	{
-		if ( m_pDownload->m_oSHA1 || m_pDownload->m_oTiger )
-		{
-			Write( _P("X-Content-URN: ") );
-			Write( m_pDownload->GetBitprint() );
-			Write( _P("\r\n") );
-		}
-		if ( m_pDownload->m_oED2K )
-		{
-			Write( _P("X-Content-URN: ") );
-			Write( m_pDownload->m_oED2K.toUrn() );
-			Write( _P("\r\n") );
-		}
-		if ( m_pDownload->m_oBTH )
-		{
-			Write( _P("X-Content-URN: ") );
-			Write( m_pDownload->m_oBTH.toUrn() );
-			Write( _P("\r\n") );
-		}
-		if ( m_pDownload->m_oMD5 )
-		{
-			Write( _P("X-Content-URN: ") );
-			Write( m_pDownload->m_oMD5.toUrn() );
-			Write( _P("\r\n") );
-		}
-		if ( m_pSource->m_bSHA1 && Settings.Library.SourceMesh )
-		{
-			strLine = m_pDownload->GetSourceURLs( &m_pSourcesSent, 15,
-				( m_pSource->m_nGnutella < 2 ) ? PROTOCOL_G1 : PROTOCOL_HTTP, m_pSource );
-			if ( strLine.GetLength() )
+		m_pSource->m_bPartialSame = pURL.m_oSHA1 && m_pDownload->m_oSHA1 && pURL.m_oSHA1 != m_pDownload->m_oSHA1;
+		
+		if ( ! m_pSource->m_bPartialSame ){
+			if ( m_pDownload->m_oSHA1 || m_pDownload->m_oTiger )
 			{
-				if ( m_pSource->m_nGnutella < 2 )
-					Write( _P("X-Alt: ") );
-				else
-					Write( _P("Alt-Location: ") );
-				Write( strLine );
+				Write( _P("X-Content-URN: ") );
+				Write( m_pDownload->GetBitprint() );
 				Write( _P("\r\n") );
 			}
-			
-			if ( m_pDownload->IsShared() && m_pDownload->IsStarted() && Network.IsStable() )
+			if ( m_pDownload->m_oED2K )
 			{
-				if ( m_pSource->m_nGnutella < 2 )
-				{
-					strLine.Format( _T("%s:%i"),
-						(LPCTSTR)CString( inet_ntoa( Network.m_pHost.sin_addr ) ),
-						htons( Network.m_pHost.sin_port ) );
-					Write( _P("X-Alt: ") );
-				}
-				else
-				{
-					strLine = m_pDownload->GetURL( Network.m_pHost.sin_addr,
-						htons( Network.m_pHost.sin_port ) ) + _T(" ") +
-						TimeToString( time( NULL ) - 180 );
-					Write( _P("Alt-Location: ") );
-				}
-				Write( strLine );
+				Write( _P("X-Content-URN: ") );
+				Write( m_pDownload->m_oED2K.toUrn() );
 				Write( _P("\r\n") );
-				
-				if ( m_pSource->m_nGnutella < 2 )
+			}
+			if ( m_pDownload->m_oBTH )
+			{
+				Write( _P("X-Content-URN: ") );
+				Write( m_pDownload->m_oBTH.toUrn() );
+				Write( _P("\r\n") );
+			}
+			if ( m_pDownload->m_oMD5 )
+			{
+				Write( _P("X-Content-URN: ") );
+				Write( m_pDownload->m_oMD5.toUrn() );
+				Write( _P("\r\n") );
+			}
+			if ( m_pSource->m_bSHA1 && Settings.Library.SourceMesh )
+			{
+				strLine = m_pDownload->GetSourceURLs( &m_pSourcesSent, 15,
+					( m_pSource->m_nGnutella < 2 ) ? PROTOCOL_G1 : PROTOCOL_HTTP, m_pSource );
+				if ( strLine.GetLength() )
 				{
-					strLine = m_pDownload->GetTopFailedSources( 15, PROTOCOL_G1 );
-					if ( strLine.GetLength() )
+					if ( m_pSource->m_nGnutella < 2 )
+						Write( _P("X-Alt: ") );
+					else
+						Write( _P("Alt-Location: ") );
+					Write( strLine );
+					Write( _P("\r\n") );
+				}
+				
+				if ( m_pDownload->IsShared() && m_pDownload->IsStarted() && Network.IsStable() )
+				{
+					if ( m_pSource->m_nGnutella < 2 )
 					{
-						Write( _P("X-NAlt: ") );
-						Write( strLine );
-						Write( _P("\r\n") );
+						strLine.Format( _T("%s:%u"),
+							(LPCTSTR)CString( inet_ntoa( Network.m_pHost.sin_addr ) ),
+							htons( Network.m_pHost.sin_port ) );
+						Write( _P("X-Alt: ") );
+					}
+					else
+					{
+						strLine = m_pDownload->GetURL( Network.m_pHost.sin_addr,
+							htons( Network.m_pHost.sin_port ) ) + _T(" ") +
+							TimeToString( time( NULL ) - 180 );
+						Write( _P("Alt-Location: ") );
+					}
+					Write( strLine );
+					Write( _P("\r\n") );
+					
+					if ( m_pSource->m_nGnutella < 2 )
+					{
+						strLine = m_pDownload->GetTopFailedSources( 15, PROTOCOL_G1 );
+						if ( strLine.GetLength() )
+						{
+							Write( _P("X-NAlt: ") );
+							Write( strLine );
+							Write( _P("\r\n") );
+						}
 					}
 				}
 			}
@@ -863,7 +867,7 @@ BOOL CDownloadTransferHTTP::OnHeaderLine(CString& strHeader, CString& strValue)
 		Hashes::BtHash oBTH;
 		Hashes::Md5Hash oMD5;
 		CString strURNs = strValue + ',';
-		for ( int nPos = strURNs.Find( ',' ); nPos >= 0; nPos = strURNs.Find( ',' ) )
+		for ( int nPos = strURNs.Find( ',' ); nPos >= 0 && ! m_pSource->m_bPartialSame; nPos = strURNs.Find( ',' ) )
 		{
 			strValue = strURNs.Left( nPos ).TrimLeft();
 			strURNs = strURNs.Mid( nPos + 1 );
@@ -915,7 +919,7 @@ BOOL CDownloadTransferHTTP::OnHeaderLine(CString& strHeader, CString& strValue)
 				strHeader.CompareNoCase( _T("X-Alt") ) == 0 )
 	{
 		if ( Settings.Library.SourceMesh )
-			m_pDownload->AddSourceURLs( strValue );
+			m_pDownload->AddSourceURLs( strValue, 0, m_pSource->m_bPartialSame );
 		m_pSource->SetGnutella( 1 );
 	}
 	else if ( strHeader.CompareNoCase( _T("X-Available-Ranges") ) == 0 )
@@ -1507,7 +1511,7 @@ BOOL CDownloadTransferHTTP::ReadTiger(bool bDropped)
 						if ( CXMLElement* pxFile = pXML->GetElementByName( _T("file") ) )
 						{
 							QWORD nSize = 0;
-							_stscanf( pxFile->GetAttributeValue( _T("size") ), _T("%I64i"), &nSize );
+							_stscanf( pxFile->GetAttributeValue( _T("size") ), _T("%I64u"), &nSize );
 							bSize = ( nSize == m_pDownload->m_nSize );
 						}
 						if ( CXMLElement* pxDigest = pXML->GetElementByName( _T("digest") ) )

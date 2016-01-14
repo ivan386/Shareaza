@@ -1,7 +1,7 @@
 //
 // DlgFilePreview.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2014.
+// Copyright (c) Shareaza Development Team, 2002-2015.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -332,10 +332,9 @@ BOOL CFilePreviewDlg::RunPlugin()
 
 	CSingleLock oLock( &m_pSection, TRUE );
 
-	CString strType = PathFindExtension( m_sTargetName );
-	strType.MakeLower();
+	LPCTSTR szType = PathFindExtension( m_sTargetName ); // ".ext"
 
-	m_pPlugin = Plugins.GetPlugin( _T("DownloadPreview"), strType );
+	m_pPlugin = Plugins.GetPlugin( _T("DownloadPreview"), szType );
 	if ( ! m_pPlugin )
 		return FALSE;
 

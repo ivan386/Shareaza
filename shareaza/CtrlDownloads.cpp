@@ -1101,7 +1101,7 @@ void CDownloadsCtrl::PaintDownload(CDC& dc, const CRect& rcRow, CDownload* pDown
 				rcCell.DeflateRect( 1, 1 );
 				dc.Draw3dRect( &rcCell, crBack, crBack );
 				rcCell.DeflateRect( 0, 1 );
-				
+
 				if ( Settings.Downloads.SimpleBar )
 					dc.Draw3dRect( &rcCell, crBorderSimple, crBorderSimple );
 				else
@@ -1124,13 +1124,13 @@ void CDownloadsCtrl::PaintDownload(CDC& dc, const CRect& rcRow, CDownload* pDown
 					dc.FillSolidRect(&rect, crBorder);
 				}
 
-				rcCell.DeflateRect( 1, 1 );
+					rcCell.DeflateRect( 1, 1 );
 
 				if ( Settings.Downloads.SimpleBar )
 					CFragmentBar::DrawDownloadSimple( &dc, &rcCell, pDownload, crNatural );
 				else
 					CFragmentBar::DrawDownload( &dc, &rcCell, pDownload, crNatural );
-			}
+				}
 			else if ( ( pDownload->m_nSize < SIZE_UNKNOWN ) && ( pDownload->m_nSize > 0 ) )
 				if ( rcCell.Width() > 50 )
 					strText.Format( _T("%.2f%%"), pDownload->GetProgress() );

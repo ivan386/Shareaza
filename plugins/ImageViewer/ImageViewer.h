@@ -4,7 +4,7 @@
 
 
  /* File created by MIDL compiler version 7.00.0500 */
-/* at Fri Nov 01 16:59:17 2013
+/* at Thu Sep 24 21:57:24 2015
  */
 /* Compiler settings for .\ImageViewer.idl:
     Oicf, W1, Zp8, env=Win32 (32b run)

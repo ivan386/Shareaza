@@ -168,14 +168,14 @@ CDownloadSource::CDownloadSource(const CDownload* pDownload,
 
 	if ( oGUID )
 	{
-		m_sURL.Format( _T("btc://%s:%i/%s/%s/"),
+		m_sURL.Format( _T("btc://%s:%u/%s/%s/"),
 			(LPCTSTR)CString( inet_ntoa( *pAddress ) ), nPort,
             (LPCTSTR)oGUID.toString(),
 			(LPCTSTR)pDownload->m_oBTH.toString() );
 	}
 	else
 	{
-		m_sURL.Format( _T("btc://%s:%i//%s/"),
+		m_sURL.Format( _T("btc://%s:%u//%s/"),
 			(LPCTSTR)CString( inet_ntoa( *pAddress ) ), nPort,
 			(LPCTSTR)pDownload->m_oBTH.toString() );
 	}
@@ -191,7 +191,7 @@ CDownloadSource::CDownloadSource(const CDownload* pDownload,
 // CDownloadSource construction from URL
 
 CDownloadSource::CDownloadSource(const CDownload* pDownload, LPCTSTR pszURL,
-	BOOL bHashAuth, FILETIME* pLastSeen, int nRedirectionCount)
+	BOOL bHashAuth, FILETIME* pLastSeen, int nRedirectionCount, BOOL bPartialSame)
 	: m_oAvailable		( pDownload->m_nSize )
 	, m_oPastFragments	( pDownload->m_nSize )
 {
@@ -201,6 +201,7 @@ CDownloadSource::CDownloadSource(const CDownload* pDownload, LPCTSTR pszURL,
 
 	m_sURL			= pszURL;
 	m_bHashAuth		= bHashAuth;
+	m_bPartialSame	= bPartialSame;
 
 	if ( pLastSeen )
 	{
@@ -235,6 +236,7 @@ void CDownloadSource::Construct(const CDownload* pDownload)
 	m_bED2K					= FALSE;
 	m_bBTH					= FALSE;
 	m_bMD5					= FALSE;
+	m_bPartialSame			= FALSE;
 	m_nSpeed				= 0;
 	m_bPushOnly				= FALSE;
 	m_bCloseConn			= FALSE;
@@ -945,7 +947,7 @@ void CDownloadSource::SetAvailableRanges(LPCTSTR pszRanges)
 		QWORD nFirst = 0, nLast = 0;
 		
 		// 0 - 0 has special meaning
-		if ( _stscanf( strRange, _T("%I64i-%I64i"), &nFirst, &nLast ) == 2 && nLast > nFirst )
+		if ( _stscanf( strRange, _T("%I64u-%I64u"), &nFirst, &nLast ) == 2 && nLast > nFirst )
 		{
             if( nFirst < m_oAvailable.limit() ) // Sanity check
             {

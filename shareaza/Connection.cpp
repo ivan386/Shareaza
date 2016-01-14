@@ -754,7 +754,7 @@ BOOL CConnection::OnHeaderLine(CString& strHeader, CString& strValue)
 		{
 			// Read the number after the colon into nPort
 			int nPort = protocolPorts[ PROTOCOL_G2 ];
-			if ( _stscanf( strValue.Mid( nColon + 1 ), _T("%lu"), &nPort ) == 1 // Make sure 1 number was found
+			if ( _stscanf( strValue.Mid( nColon + 1 ), _T("%d"), &nPort ) == 1 // Make sure 1 number was found
 				&& nPort != 0 ) // Make sure the found number isn't 0
 			{
 				// Save the found port number in m_pHost

@@ -4,7 +4,7 @@
 
 
  /* File created by MIDL compiler version 7.00.0500 */
-/* at Fri Nov 01 16:55:33 2013
+/* at Thu Sep 24 21:54:40 2015
  */
 /* Compiler settings for .\VirusTotal.idl:
     Oicf, W1, Zp8, env=Win32 (32b run)

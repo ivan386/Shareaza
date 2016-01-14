@@ -1,7 +1,7 @@
 //
 // DiscoveryServices.h
 //
-// Copyright (c) Shareaza Development Team, 2002-2012.
+// Copyright (c) Shareaza Development Team, 2002-2015.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -24,6 +24,11 @@
 #include "HttpRequest.h"
 
 
+#define DSGnutellaTCP		"gnutella1:host:"
+#define DSGnutella2TCP		"gnutella2:host:"
+#define DSGnutellaUDPHC		"uhc:"
+#define DSGnutella2UDPKHL	"ukhl:"
+
 // TODO: Remove Network locks
 // TODO: Add support for concurrent webcache requests
 
@@ -33,12 +38,21 @@ class CDiscoveryService
 public:
 	enum Type
 	{
-		dsNull, dsGnutella, dsWebCache, dsServerMet, dsBlocked
+		dsNull,
+		dsGnutella,			// 'U' - Bootstrap and UDP Discovery Service
+		dsWebCache,			// '1'/'2'/'M' - G1 service/G2 service/Multi-network service
+		dsServerMet,		// 'D' - eDonkey service
+		dsBlocked,			// 'X' - Blocked service
+		dsDCHubList			// 'C' - DC++ service
 	};
 
 	enum SubType
 	{
-		dsOldBootStrap, dsGnutellaTCP, dsGnutella2TCP, dsGnutellaUDPHC, dsGnutella2UDPKHL
+		dsOldBootStrap,
+		dsGnutellaTCP,		// "gnutella1:host:" - DSGnutellaTCP
+		dsGnutella2TCP,		// "gnutella2:host:" - DSGnutella2TCP
+		dsGnutellaUDPHC,	// "uhc:"			 - DSGnutellaUDPHC
+		dsGnutella2UDPKHL	// "ukhl:"			 - DSGnutella2UDPKHL
 	};
 
 	CDiscoveryService(Type nType = dsNull, LPCTSTR pszAddress = NULL);
@@ -70,13 +84,13 @@ public:
 	void		OnFailure();
 	void		OnCopyGiven();			//Used in Datagrams.cpp
 
-protected:
+private:
 	void		OnAccess();
 	void		OnGivenHosts();
 	void		OnHostAdd(int nCount = 1);
 	void		OnURLAdd(int nCount = 1);
 	void		Serialize(CArchive& ar, int nVersion);
-	BOOL		ResolveGnutella();
+	BOOL		ResolveGnutella(BOOL bForced);
 
 	friend class CDiscoveryServices;	
 };
@@ -89,7 +103,12 @@ public:
 	
 	enum Mode
 	{
-		wcmHosts, wcmCaches, wcmUpdate, wcmSubmit, wcmServerMet
+		wcmHosts,			// Query G1 service/G2 service/Multi-network service for hosts
+		wcmCaches,			// Query G1 service/G2 service/Multi-network service for caches
+		wcmUpdate,			// Update web cache (also includes advertising of a random web cache)
+		wcmSubmit,			// Advertise web cache to a random web cache
+		wcmServerMet,		// Query eDonkey service
+		wcmDCHubList		// Query DC++ service
 	};
 
 protected:
@@ -104,14 +123,13 @@ protected:
 	BOOL				m_bFirstTime;
 	DWORD				m_tExecute;					// Time the Execute() function was last run
 	DWORD				m_tQueried;					// Time a webcache/MET was last queried
-	DWORD				m_tMetQueried;				// Time a MET was last queried
 
 public:
 	POSITION			GetIterator() const;
 	CDiscoveryService*	GetNext(POSITION& pos) const;
-	BOOL				Check(CDiscoveryService* pService, CDiscoveryService::Type nType = CDiscoveryService::dsNull) const;
+	BOOL				Check(const CDiscoveryService* pService, CDiscoveryService::Type nType = CDiscoveryService::dsNull) const;
 	BOOL				Add(CDiscoveryService* pService);
-	BOOL				Add(LPCTSTR pszAddress, int nType, PROTOCOLID nProtocol = PROTOCOL_NULL);
+	BOOL				Add(LPCTSTR pszAddress, CDiscoveryService::Type nType, PROTOCOLID nProtocol = PROTOCOL_NULL);
 	BOOL				CheckMinimumServices();
 //	DWORD				MetQueried() const;
 	DWORD				LastExecute() const;
@@ -123,24 +141,24 @@ public:
 	BOOL				Execute(BOOL bDiscovery, PROTOCOLID nProtocol, USHORT nForceDiscovery);
 	void				Stop();
 	void				Clear();
-	BOOL				Execute(CDiscoveryService* pService, Mode nMode);
+	BOOL				Query(CDiscoveryService* pService, Mode nMode);
 	void				OnResolve(PROTOCOLID nProtocol, LPCTSTR szAddress, const IN_ADDR* pAddress = NULL, WORD nPort = 0);
 
 protected:
 	void				Remove(CDiscoveryService* pService, BOOL bCheck = TRUE);
-	DWORD				GetCount(int nType = 0, PROTOCOLID nProtocol = PROTOCOL_NULL) const;
+	DWORD				GetCount(CDiscoveryService::Type nType = CDiscoveryService::dsNull, PROTOCOLID nProtocol = PROTOCOL_NULL) const;
 	BOOL				CheckWebCacheValid(LPCTSTR pszAddress);
-	int					ExecuteBootstraps( int nCount, BOOL bUDP = FALSE, PROTOCOLID nProtocol = PROTOCOL_NULL );
+	int					ExecuteBootstraps(int nCount, BOOL bUDP = FALSE, PROTOCOLID nProtocol = PROTOCOL_NULL);
 	void				Serialize(CArchive& ar);
 	BOOL				RequestRandomService(PROTOCOLID nProtocol);	
 	CDiscoveryService*  GetRandomService(PROTOCOLID nProtocol);
 	CDiscoveryService*	GetRandomWebCache(PROTOCOLID nProtocol, BOOL bWorkingOnly, CDiscoveryService* pExclude = NULL, BOOL bForUpdate = FALSE);
-	BOOL				RequestWebCache(CDiscoveryService* pService, Mode nMode, PROTOCOLID nProtocol);
+	BOOL				RequestWebCache(BOOL bForced, CDiscoveryService* pService, Mode nMode, PROTOCOLID nProtocol = PROTOCOL_NULL);
 	void				OnRun();
 	BOOL				RunWebCacheGet(BOOL bCache);
 	BOOL				RunWebCacheUpdate();
-	BOOL				RunServerMet();
-	BOOL				SendWebCacheRequest(CString strURL, CString& strOutput);
+	BOOL				RunWebCacheFile();
+	BOOL				SendWebCacheRequest(const CString& strURL);
 	BOOL				EnoughServices() const;
 	void				AddDefaults();
 	void				MergeURLs();

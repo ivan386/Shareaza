@@ -4,7 +4,7 @@
 
 
  /* File created by MIDL compiler version 7.00.0500 */
-/* at Mon Nov 11 23:08:37 2013
+/* at Thu Sep 24 21:55:01 2015
  */
 /* Compiler settings for .\7ZipBuilder.idl:
     Oicf, W1, Zp8, env=Win32 (32b run)

@@ -549,8 +549,6 @@ void CHostCacheWnd::OnHostCacheRemove()
 		}
 	}
 
-	HostCache.CheckMinimumServers( m_nMode ? m_nMode : PROTOCOL_G2 );
-
 	m_wndList.ClearSelection();
 
 	Update();
@@ -673,20 +671,18 @@ BOOL CHostCacheWnd::PreTranslateMessage(MSG* pMsg)
 	}
 	else if ( pMsg->message == WM_KEYDOWN )
 	{
-		if ( GetAsyncKeyState( VK_CONTROL ) & 0x8000 )
+		if ( pMsg->wParam == 'A' && GetAsyncKeyState( VK_CONTROL ) & 0x8000 )
 		{
-			if ( pMsg->wParam == 'A' )
+			for ( int nItem = m_wndList.GetItemCount() - 1 ; nItem >= 0 ; nItem-- )
 			{
-				for ( int nItem = m_wndList.GetItemCount() - 1 ; nItem >= 0 ; nItem-- )
-				{
-					m_wndList.SetItemState( nItem, LVIS_SELECTED, LVIS_SELECTED );
-				}
-				return TRUE;
+				m_wndList.SetItemState( nItem, LVIS_SELECTED, LVIS_SELECTED );
 			}
+			return TRUE;
 		}
 		else if ( pMsg->wParam == VK_DELETE )
 		{
 			OnHostCacheRemove();
+			return TRUE;
 		}
 	}
 	else if ( pMsg->message == WM_MOUSEWHEEL )

@@ -316,7 +316,7 @@ BOOL CCollectionFile::LoadEMule(LPCTSTR pszFile)
 
 BOOL CCollectionFile::LoadDC(LPCTSTR pszFile)
 {
-	m_nType = SimpleCollection;
+	m_nType = DCCollection;
 
 	// TODO: Add schema detection
 	m_sThisURI = CSchema::uriFolder;
@@ -481,18 +481,18 @@ void CCollectionFile::Render(CBuffer& strBuffer) const
 
 	CString sHead;
 
-	sHead.Format( _T("<html>\n<head>\n")
+	sHead.Format( _T("<plaintext><html>\n<head>\n")
 		_T("<meta http-equiv=\"Content-Type\" content=\"text/html; charset=UTF-8\"/>\n")
 		_T("<title>%s</title>\n")
 		_T("<style type=\"text/css\">\n")
-		_T("body  { display: table; margin: 0px; padding: 0px; background-color: #ffffff; color: #000000; font-family: %s; font-size: %upx; }\n")
-		_T("h1    { display: table-caption; text-align: left; color: #ffffff; height: 64px; margin: 0px; padding: 20px; font-size: 10pt; font-weight: bold; background-image: url(res://shareaza.exe/#2/#221); }\n")
-		_T("a {display: table-row; font-size: 8pt; width: 100%%; }\n")
-		_T("span    {display: table-col; background-color: #e0e8f0; padding: 4px; }\n")
+		_T("body  { margin: 0px; padding: 0px; background-color: #ffffff; color: #000000; font-family: %s; font-size: %upx; }\n")
+		_T("h1    { text-align: left; color: #ffffff; height: 64px; margin: 0px; padding: 20px; font-size: 10pt; font-weight: bold; background-image: url(res://shareaza.exe/#2/#221); }\n")
+		_T("table { font-size: 8pt; width: 100%%; display: none}\n")
+		_T("td    { background-color: #e0e8f0; padding: 4px; }\n")
 		_T(".num  { width: 40px; text-align: center; }\n")
 		_T(".url  { text-align: left; cursor: hand; }\n")
 		_T(".size { width: 100px; text-align: center; }\n")
-		_T("</style>\n</head>\n<body>\n<h1>%s</h1>\n"),
+		_T("</style>\n</head>\n<body>\n<h1>%s</h1>\n<table>\n"),
 		(LPCTSTR)GetTitle(),
 		(LPCTSTR)Settings.Fonts.DefaultFont, Settings.Fonts.FontSize,
 		(LPCTSTR)GetTitle() );
@@ -526,17 +526,17 @@ void CCollectionFile::Render(CBuffer& strBuffer) const
 		}
 
 		CString strTemp;
-		strTemp.Format( _T("<a href=\"magnet:?xt=%s&br=%u&dn=%s\"><span class=\"num\">%u</span>")
-			_T("<span class=\"url\" >%s</span>")
-			_T("<span class=\"size\">%s</span></a>\n"),
-			(LPCTSTR)strURN, pFile->m_nBitrate, URLEncode( pFile->m_sName ) , i, (LPCTSTR)pFile->m_sName,
+		strTemp.Format( _T("<tr><td class=\"num\">%u</td>")
+			_T("<td class=\"url\" onclick=\"if ( ! window.external.open('%s') ) window.external.download('%s');\" onmouseover=\"window.external.hover('%s');\" onmouseout=\"window.external.hover('');\">%s</td>")
+			_T("<td class=\"size\">%s</td></tr>\n"),
+			i, (LPCTSTR)strURN, (LPCTSTR)strURN, (LPCTSTR)strURN, (LPCTSTR)pFile->m_sName,
 			(LPCTSTR)Settings.SmartVolume( pFile->m_nSize ) );
 
 		strBuffer.Print(strTemp, CP_UTF8);
 	}
 
 
-	CString strFoot = _T("</body>\n</html>");
+	CString strFoot = _T("<script>document.getElementsByTagName('table')[0].style.display='block'</script></body>\n</html>");
 
 	strBuffer.Print(strFoot, CP_UTF8); 
  }
@@ -581,7 +581,7 @@ BOOL CCollectionFile::File::Parse(CXMLElement* pRoot)
 			}
 			if ( CXMLElement* pSize = pXML->GetElementByName( _T("size") ) )
 			{
-				if ( _stscanf( pSize->GetValue(), _T("%I64i"), &m_nSize ) != 1 )
+				if ( _stscanf( pSize->GetValue(), _T("%I64u"), &m_nSize ) != 1 )
 					return FALSE;
 			}
 		}
@@ -603,7 +603,7 @@ BOOL CCollectionFile::File::Parse(CXMLElement* pRoot)
 	if ( m_sName.IsEmpty() && ! m_oTiger && m_nSize == SIZE_UNKNOWN )
 	{
 		m_sName = pRoot->GetAttributeValue( _T("Name") );
-		_stscanf( pRoot->GetAttributeValue( _T("Size") ), _T("%I64i"), &m_nSize );
+		_stscanf( pRoot->GetAttributeValue( _T("Size") ), _T("%I64u"), &m_nSize );
 		m_oTiger.fromString( pRoot->GetAttributeValue( _T("TTH") ) );
 	}
 

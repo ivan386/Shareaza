@@ -1,7 +1,7 @@
 //
 // CtrlBrowseFrame.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2009.
+// Copyright (c) Shareaza Development Team, 2002-2015.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -473,7 +473,7 @@ void CBrowseFrameCtrl::OnTreeSelection(NMHDR* /*pNotify*/, LRESULT* pResult)
 		{
 			if ( CSchemaPtr pSchema = SchemaCache.Get( strURI ) )
 			{
-				CList< CSchemaMember* > pColumns;
+				CSchemaMemberList pColumns;
 				CSchemaColumnsDlg::LoadColumns( pSchema, &pColumns );
 				m_wndList->SelectSchema( pSchema, &pColumns );
 			}

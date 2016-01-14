@@ -1,17 +1,17 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Shareaza\n"
-"Report-Msgid-Bugs-To: ryo-oh-ki <ryo-oh-ki@narod.ru>\n"
-"POT-Creation-Date: 2014-01-27 13:47+0000\n"
+"Report-Msgid-Bugs-To: shareaza <shareaza@cherubicsoft.com>\n"
+"POT-Creation-Date: 2015-04-21 10:23+0000\n"
 "PO-Revision-Date: \n"
-"Last-Translator: ryo-oh-ki <ryo-oh-ki@narod.ru>\n"
+"Last-Translator: \n"
 "Language-Team: Shareaza Development Team\n"
-"Language: \n"
+"Language: Fr\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Poedit-SourceCharset: utf-8\n"
-"X-Poedit-Language: Français\n"
+"X-Poedit-SourceCharset: UTF-8\n"
+"X-Generator: Poedit 1.5.4\n"
 
 #: manifest-name
 msgid "(translation language: English)"
@@ -39,7 +39,7 @@ msgstr "shareaza.fr(at)gmail.com"
 
 #: manifest-version
 msgid "(shareaza version)"
-msgstr "2.5.3.0"
+msgstr "2.7.8.0"
 
 #: manifest-language
 msgid "(translation language code: en)"
@@ -168,7 +168,7 @@ msgstr "Ouvrir ou lire"
 
 #: button;id_downloads_launch_copy
 msgid "Preview File"
-msgstr "Previsualiser"
+msgstr "Prévisualiser"
 
 #: button;id_downloads_file_delete dialog;cdeletefiledlg
 msgid "Delete File"
@@ -571,13 +571,13 @@ msgstr "Se connecter à _eDonkey"
 #: cmainwnd.tabbed;9;10;item;id_network_dc
 #: cmainwnd.windowed;18;19;item;id_network_dc
 msgid "Connect to _DC++"
-msgstr "Connect to _DC++"
+msgstr "Connexion à _DC++"
 
 #: cmainwnd.basic;1;2;item;id_network_bt
 #: cmainwnd.tabbed;9;10;item;id_network_bt
 #: cmainwnd.windowed;18;19;item;id_network_bt
 msgid "Connect to _BitTorrent"
-msgstr ""
+msgstr "Connexion à _BitTorrent"
 
 #: cmainwnd.basic;1;item;id_network_auto_close
 #: cmainwnd.tabbed;9;item;id_network_auto_close
@@ -1185,19 +1185,6 @@ msgstr "Épisodes de la même sér_ie"
 msgid "_Web Services"
 msgstr "Services _Web"
 
-#: csearchwnd.basic;30;item;id_library_bitzi_web
-#: csearchwnd;32;item;id_library_bitzi_web
-#: cbrowsehostwnd.basic;34;item;id_library_bitzi_web
-#: cbrowsehostwnd;36;item;id_library_bitzi_web
-#: chitmonitorwnd;38;item;id_library_bitzi_web
-#: clibraryfileview.physical.basic;41;item;id_library_bitzi_web
-#: clibraryfileview.physical;44;item;id_library_bitzi_web
-#: clibraryfileview.virtual.basic;47;item;id_library_bitzi_web
-#: clibraryfileview.virtual;50;item;id_library_bitzi_web
-#: webservices.list.menu;item;id_library_bitzi_web
-msgid "View _Bitzi Ticket"
-msgstr "Voir le billet _Bitzi"
-
 #: csearchwnd;item;id_search_downloadnow
 #: cbrowsehostwnd.basic;item;id_search_downloadnow
 #: cbrowsehostwnd;item;id_search_downloadnow
@@ -1483,6 +1470,7 @@ msgstr "Afficher « _Historique »"
 
 #: clibrarytree.physical.basic;item;id_library_explore
 #: clibrarytree.physical;item;id_library_explore
+#: path.menu;item;id_path_explore
 msgid "_Explore"
 msgstr "E_xplorer"
 
@@ -1535,9 +1523,8 @@ msgstr "_Propriétés du fichier"
 #: clibrarytree.virtual.basic;item;id_library_folder_enqueue
 #: clibrarytree.virtual;item;id_library_folder_enqueue
 #: clibraryfileview.virtual.basic;item;id_library_folder_enqueue
-#, fuzzy
 msgid "Play _Album"
-msgstr "Lire l'album"
+msgstr "Lire l'_album"
 
 #: clibrarytree.virtual.basic;item;id_library_folder_delete
 #: clibrarytree.virtual;item;id_library_folder_delete
@@ -1552,9 +1539,8 @@ msgstr "_Supprimer"
 
 #: clibrarytree.virtual.basic;item;id_library_folder_properties
 #: clibrarytree.virtual;item;id_library_folder_properties
-#, fuzzy
 msgid "Album _Properties"
-msgstr "Propriétés de l'_album"
+msgstr "_Propriétés de l'album"
 
 #: clibrarytree.virtual;item;id_library_export_collection
 #: cmedialist;item;id_media_export_collection
@@ -1568,14 +1554,6 @@ msgstr "_Nouveau dossier..."
 #: clibrarytileview;item;id_library_album_open
 msgid "_Open"
 msgstr "_Ouvrir"
-
-#: clibraryfileview.physical.basic;41;item;id_library_bitzi_download
-#: clibraryfileview.physical;44;item;id_library_bitzi_download
-#: clibraryfileview.virtual.basic;47;item;id_library_bitzi_download
-#: clibraryfileview.virtual;50;item;id_library_bitzi_download
-#: webservices.list.menu;item;id_library_bitzi_download
-msgid "_Download Metadata"
-msgstr "Télécharger les méta_données"
 
 #: clibraryfileview.physical.basic;41;item;id_webservices_musicbrainz
 #: clibraryfileview.physical;44;item;id_webservices_musicbrainz
@@ -1810,7 +1788,8 @@ msgstr "_Debug"
 msgid "Timestam_p"
 msgstr "_Horodateur"
 
-#: csystemwnd;item;id_system_copy curlexportdlg;control;7
+#: csystemwnd;item;id_system_copy path.menu;item;id_path_copy
+#: curlexportdlg;control;7
 msgid "_Copy"
 msgstr "_Copier"
 
@@ -1841,7 +1820,7 @@ msgstr "_DC++"
 
 #: cneighbourswnd;59;item;id_network_bt
 msgid "_BitTorrent"
-msgstr ""
+msgstr "_BitTorrent"
 
 #: cneighbourswnd;60
 msgid "_Monitor"
@@ -2022,7 +2001,7 @@ msgstr "Actions"
 
 #: circuserlist;63;item;id_irc_time
 msgid "_Time"
-msgstr "_Récuperer l'heure locale"
+msgstr "_Récupérer l'heure locale"
 
 #: circuserlist;63;item;id_irc_version
 msgid "_Version"
@@ -2444,7 +2423,7 @@ msgstr "Général :"
 
 #: cgeneralsettingsgroup;text;6
 msgid "Common user interface settings like tooltips, minimise behaviour, number formats, prompts, etc."
-msgstr "Réglages communs de l'interface utilisateur comme l'aide contextuelle, le comportement du mode réduit, l'affichage des unités de tranferts, les notifications, etc."
+msgstr "Réglages communs de l'interface utilisateur comme l'aide contextuelle, le comportement du mode réduit, l'affichage des unités de transferts, les notifications, etc."
 
 #: cgeneralsettingsgroup;link;7
 msgid "Library:"
@@ -3139,9 +3118,8 @@ msgid "Shareaza"
 msgstr "Shareaza"
 
 #: message;afx_ids_idlemessage
-#, fuzzy
 msgid "Ready"
-msgstr "Prêt..."
+msgstr "Prêt"
 
 #: message;afx_ids_mdichild
 msgid "Activate this window"
@@ -3149,51 +3127,47 @@ msgstr "Activer cette fenêtre"
 
 #: message;afx_ids_preview_close
 msgid "Close print preview mode"
-msgstr ""
+msgstr "Fermer le mode de prévisualisation d'impression"
 
 #: tip;afx_ids_preview_close
-#, fuzzy
 msgid "Cancel Preview"
-msgstr "Enregistrer la Prévisualisation"
+msgstr "Annuler la Prévisualisation"
 
 #: message;afx_ids_scclose
-#, fuzzy
 msgid "Close the active window and prompts to save the documents"
-msgstr "Agrandir la fenêtre active afin qu'elle remplisse la fenêtre."
+msgstr "Ferme la fenêtre et demande à enregistrer les documents"
 
 #: message;afx_ids_scmaximize
-#, fuzzy
 msgid "Enlarge the window to full size"
-msgstr "Agrandir la fenêtre active afin qu'elle remplisse la fenêtre."
+msgstr "Agrandir la fenêtre à pleine taille"
 
 #: message;afx_ids_scminimize
 msgid "Reduce the window to an icon"
-msgstr ""
+msgstr "Réduire la fenêtre à une icône"
 
 #: message;afx_ids_scmove
 msgid "Change the window position"
-msgstr ""
+msgstr "Modifier la position de la fenêtre"
 
 #: message;afx_ids_scnextwindow
 msgid "Switch to the next document window"
-msgstr ""
+msgstr "Basculer sur la fenêtre du document suivant"
 
 #: message;afx_ids_scprevwindow
 msgid "Switch to the previous document window"
-msgstr ""
+msgstr "Basculer sur la fenêtre du document précédent"
 
 #: message;afx_ids_screstore
 msgid "Restore the window to normal size"
-msgstr ""
+msgstr "Restaurer la fenêtre à sa taille normale"
 
 #: message;afx_ids_scsize
 msgid "Change the window size"
-msgstr ""
+msgstr "Modifier la taille de la fenêtre"
 
 #: message;afx_ids_sctasklist
-#, fuzzy
 msgid "Activate Task List"
-msgstr "Activer cette fenêtre"
+msgstr "Activer la liste des tâches"
 
 #: message;id_browse_files
 msgid "View the user's shared files"
@@ -3284,9 +3258,8 @@ msgid "Advertise the selected GWebCache service to a random existing GWebCache."
 msgstr "Faire connaître le service « GWebCache » sélectionné à un « GWebcache » existant aléatoire."
 
 #: message;id_discovery_blocked
-#, fuzzy
 msgid "Show blocked services in the Discovery window."
-msgstr "Afficher les services « GWebCache » dans la fenêtre « Découverte »."
+msgstr "Afficher les services bloqués dans la fenêtre Découverte."
 
 #: message;id_discovery_browse
 msgid "Browse statistics for the selected GWebCache service on the Web."
@@ -3366,7 +3339,7 @@ msgstr "Nettoyer les téléchargements terminés."
 
 #: message;id_downloads_clear_incomplete
 msgid "Cancel the selected incomplete download(s)."
-msgstr "Annuler cette sélection de téléchargements imcomplets."
+msgstr "Annuler cette sélection de téléchargements incomplets."
 
 #: message;id_downloads_clear_paused
 msgid "Clear downloads which have been paused."
@@ -3477,9 +3450,8 @@ msgid "Add a source URL to the selected download..."
 msgstr "Ajouter une nouvelle source URL au téléchargement sélectionné..."
 
 #: message;id_downloads_view_reviews
-#, fuzzy
 msgid "View reviews for the selected download."
-msgstr "Voir les revues pour le téléchargement sélectionné"
+msgstr "Voir les revues pour le téléchargement sélectionné."
 
 #: message;id_help_about
 msgid "Display the Shareaza about dialog..."
@@ -3543,9 +3515,8 @@ msgid "Search the network for the selected term."
 msgstr "Rechercher le réseau avec le terme sélectionné."
 
 #: message;id_hostcache_bt_cache
-#, fuzzy
 msgid "Show BitTorrent cached hosts."
-msgstr "Afficher les envois BitTorrent."
+msgstr "Afficher les hôtes BitTorrent en mémoire cache."
 
 #: message;id_hostcache_connect
 msgid "Connect to the selected host(s)."
@@ -3553,7 +3524,7 @@ msgstr "Se connecter à cette sélection d'hôtes."
 
 #: message;id_hostcache_dc_cache
 msgid "Show DC++ cached hubs."
-msgstr "Show DC++ cached hubs."
+msgstr "Afficher les hubs DC++ dans le cache."
 
 #: message;id_hostcache_disconnect
 msgid "Disconnect from the selected neighbour(s)."
@@ -3584,9 +3555,8 @@ msgid "Import a list of known hosts, such as a \"server.met\" file..."
 msgstr "Importer une liste d'hôtes connus, tel qu'un fichier « server.met »..."
 
 #: message;id_hostcache_kad_cache
-#, fuzzy
 msgid "Show Kademlia cached hosts."
-msgstr "Afficher les hôtes Gnutella1 en cache."
+msgstr "Afficher les hôtes Kademlia en mémoire cache."
 
 #: message;id_hostcache_priority
 msgid "Try to connect to this server before other servers."
@@ -3597,9 +3567,8 @@ msgid "Remove the selected hosts from the host cache."
 msgstr "Supprimer cette sélection d'hôtes du cache."
 
 #: message;id_import_downloads
-#, fuzzy
 msgid "Import eMule partial downloads..."
-msgstr "_Importer des téléchargements incomplets eMule..."
+msgstr "Importer des téléchargements incomplets eMule..."
 
 #: message;id_library_add
 msgid "Add a new folder to your library..."
@@ -3616,14 +3585,6 @@ msgstr "Ouvrir le dossier « album » sélectionné."
 #: message;id_library_album_properties message;id_library_folder_properties
 msgid "View and edit the properties of the selected album folder..."
 msgstr "Voir et modifier les propriétés du dossier « album » sélectionné."
-
-#: message;id_library_bitzi_download
-msgid "Download metadata for the selected file(s) from Bitzi(TM)..."
-msgstr "Télécharger les métadonnées depuis Bitzi(TM) pour cette sélection de fichiers..."
-
-#: message;id_library_bitzi_web
-msgid "View the Bitzi(TM) ticket for the selected file on the web."
-msgstr "Voir le billet Bitzi(TM) sur le web pour le fichier sélectionné."
 
 #: message;id_library_columns message;id_search_columns
 msgid "Select metadata columns to be displayed..."
@@ -3655,7 +3616,7 @@ msgstr "Exporter le dossier « album » sélectionné dans un fichier collecti
 
 #: message;id_library_file_rebuild
 msgid "Rebuild metadata and hashes for the selected file(s)."
-msgstr ""
+msgstr "Reconstruire les métadonnées et les hachages pour les fichiers sélectionnés."
 
 #: message;id_library_folder_download
 msgid "Download all files in the selected collection."
@@ -3714,9 +3675,8 @@ msgid "Refresh the library view."
 msgstr "Actualiser l'affichage de la bibliothèque."
 
 #: message;id_library_refresh_metadata
-#, fuzzy
 msgid "Refresh file metadata"
-msgstr "_Rafraîchir les métadonnées"
+msgstr "Rafraîchir les métadonnées du fichier"
 
 #: message;id_library_remove
 msgid "Remove the selected shared folders."
@@ -3856,7 +3816,7 @@ msgstr "Nettoyer la liste de lecture."
 
 #: message;id_media_close
 msgid "Close the current media file, freeing up memory."
-msgstr "Fermer le fichier média actuel, cela libèrera de la mémoire."
+msgstr "Fermer le fichier média actuel, cela libérera de la mémoire."
 
 #: message;id_media_export_collection
 msgid "Save the playlist as a collection file..."
@@ -3899,9 +3859,8 @@ msgid "Show or hide the playlist editor."
 msgstr "Afficher ou masquer l'éditeur de liste de lecture."
 
 #: message;id_media_position
-#, fuzzy
 msgid "Seek to a position in the media file."
-msgstr "Se déplacer dans le fichier média"
+msgstr "Se déplacer dans le fichier média."
 
 #: tip;id_media_position
 msgid "Seek"
@@ -3968,9 +3927,8 @@ msgid "Show the video at double its original (natural) size."
 msgstr "Afficher la vidéo dans une taille double à sa taille d'origine."
 
 #: message;id_media_speed
-#, fuzzy
 msgid "Adjust the speed of the media file."
-msgstr "Ajuster la vitesse du fichier média"
+msgstr "Ajuster la vitesse du fichier média."
 
 #: tip;id_media_speed column;speed
 msgid "Speed"
@@ -3989,9 +3947,8 @@ msgid "Select an audio visualisation plugin..."
 msgstr "Sélectionner une extension de visualisation audio."
 
 #: message;id_media_volume
-#, fuzzy
 msgid "Adjust the audio volume."
-msgstr "Ajuster le volume audio"
+msgstr "Ajuster le volume audio."
 
 #: tip;id_media_volume
 msgid "Volume"
@@ -4007,12 +3964,11 @@ msgstr "Fermer la fenêtre du moniteur."
 
 #: message;id_musicbrainz_albums
 msgid "Look at all albums for this artist."
-msgstr ""
+msgstr "Voir tous les albums pour cet artiste."
 
 #: message;id_musicbrainz_matches
-#, fuzzy
 msgid "Search for albums matching the selected file."
-msgstr "Rechercher d'autres copies du fichier sélectionné."
+msgstr "Rechercher des albums correspondants au fichier sélectionné."
 
 #: message;id_neighbours_chat message;id_search_chat message;id_transfers_chat
 #: message;id_uploads_chat
@@ -4053,7 +4009,7 @@ msgstr "Parcourir un utilisateur, voir son profil et ses fichiers partagés..."
 
 #: message;id_network_bt
 msgid "Connect to the BitTorrent network."
-msgstr ""
+msgstr "Connexion au réseau BitTorrent."
 
 #: message;id_network_chat_to
 msgid "Open a chat session with a user..."
@@ -4069,7 +4025,7 @@ msgstr "Se connecter manuellement à un hôte..."
 
 #: message;id_network_dc
 msgid "Connect to the DC++ network."
-msgstr "Connect to the DC++ network."
+msgstr "Connexion au réseau DC++."
 
 #: message;id_network_disconnect
 msgid "Disconnect from all networks, this will also stop all downloads and uploads."
@@ -4097,54 +4053,55 @@ msgstr "Commencer une nouvelle recherche sur le réseau..."
 
 #: message;id_next_pane
 msgid "Switch to the next window pane"
-msgstr ""
+msgstr "Basculer à l'onglet de fenêtre suivant"
 
 #: tip;id_next_pane
-#, fuzzy
 msgid "Next Pane"
-msgstr "Prochain dans la file d'attente"
+msgstr "Onglet suivant"
 
 #: message;id_open_downloads_folder
 msgid "Open my folder of completed Downloads"
 msgstr "Ouvrir mon dossier des téléchargements terminés"
 
 #: message;id_prev_pane
-#, fuzzy
 msgid "Switch back to the previous window pane"
-msgstr "Revenir au fichier précédent dans la liste de lecture actuelle."
+msgstr "Revenir à l'onglet précédent"
 
 #: tip;id_prev_pane
-#, fuzzy
 msgid "Previous Pane"
-msgstr "Fichier précédent"
+msgstr "Onglet précédent"
+
+#: message;id_path_copy
+msgid "Copy this path to clipboard."
+msgstr "Copier ce chemin dans le presse-papier"
+
+#: message;id_path_explore
+msgid "Explore this path."
+msgstr "Explorer ce chemin"
 
 #: message;id_scheduler_activate
-#, fuzzy
 msgid "Activates selected task(s) from the list."
-msgstr "Supprimer de la liste cette sélection d'envois."
+msgstr "Active les tâches sélectionnées de la liste."
 
 #: message;id_scheduler_add
 msgid "Adds a new task to scheduler list."
-msgstr ""
+msgstr "Ajouter une nouvelle tâche à la liste des tâches planifiées."
 
 #: message;id_scheduler_deactivate
-#, fuzzy
 msgid "Deactivates selected tasks."
-msgstr "Veuillez choisir une tâche."
+msgstr "Désactive la tâche sélectionnée."
 
 #: message;id_scheduler_edit
-#, fuzzy
 msgid "Edit the selected task..."
-msgstr "Éditer la règle de sécurité sélectionnée..."
+msgstr "Éditer la tâche sélectionnée..."
 
 #: message;id_scheduler_remove
-#, fuzzy
 msgid "Removes selected task(s) from the list."
-msgstr "Nettoyer de la liste cette sélection de téléchargements."
+msgstr "Enlève les tâches sélectionnées de la liste."
 
 #: message;id_scheduler_remove_all
 msgid "Removes all scheduled tasks."
-msgstr ""
+msgstr "Enlève toutes les tâches planifiées."
 
 #: message;id_search_clear
 msgid "Clear the search results."
@@ -4260,7 +4217,7 @@ msgstr "Nettoyer le journal de statut."
 
 #: message;id_system_copy
 msgid "Copy selected line(s) of status log."
-msgstr ""
+msgstr "Copier les lignes sélectionnées du journal d'état"
 
 #: message;id_system_timestamp
 msgid "Record a timestamp for each line."
@@ -4271,28 +4228,24 @@ msgid "Display a detailed system activity log."
 msgstr "Affiche un journal détaillé de l'activité du système."
 
 #: message;id_system_verbose_debug
-#, fuzzy
 msgid "Display all."
-msgstr "Afficher la légende."
+msgstr "Afficher tout."
 
 #: message;id_system_verbose_error
-#, fuzzy
 msgid "Display errors only."
-msgstr "Afficher la légende."
+msgstr "Afficher seulement les erreurs."
 
 #: message;id_system_verbose_info
-#, fuzzy
 msgid "Display infos and above."
-msgstr "Afficher les lignes de la grille."
+msgstr "Afficher les informations et les éléments au-dessus."
 
 #: message;id_system_verbose_notice
 msgid "Display notices and above."
-msgstr ""
+msgstr "Afficher les notifications et les éléments au-dessus."
 
 #: message;id_system_verbose_warning
-#, fuzzy
 msgid "Display warnings and above."
-msgstr "Afficher les lignes de la grille."
+msgstr "Afficher les avertissements et les éléments au-dessus."
 
 #: message;id_tab_connect
 msgid "Connect or disconnect from the network."
@@ -4468,7 +4421,7 @@ msgstr "Afficher ou masquer la fenêtre BIBLIOTHÈQUE."
 
 #: message;id_view_media
 msgid "Show or hide the MEDIA PLAYER window."
-msgstr "Afficher ou masquer la fenêtre LECTEUR MULTIMEDIA."
+msgstr "Afficher ou masquer la fenêtre LECTEUR MULTIMÉDIA."
 
 #: message;id_view_neighbours
 msgid "Show or hide the NEIGHBOURS window."
@@ -4483,9 +4436,8 @@ msgid "Show or hide the HIT MONITOR window."
 msgstr "Afficher ou masquer la fenêtre MONITEUR D'ACCÈS."
 
 #: message;id_view_scheduler
-#, fuzzy
 msgid "Show or hide SCHEDULER window."
-msgstr "Afficher ou masquer la fenêtre SÉCURITÉ."
+msgstr "Afficher ou masquer la fenêtre des PLANIFICATIONS."
 
 #: message;id_view_search_monitor
 msgid "Show or hide the SEARCH MONITOR window."
@@ -4520,17 +4472,16 @@ msgid "Choose the web service to get more information about the selected file."
 msgstr "Choisir le service Web pour chercher des informations supplémentaires sur le fichier sélectionné."
 
 #: message;id_webservices_musicbrainz
-#, fuzzy
 msgid "Search for the same artist songs using MusicBrainz service."
-msgstr "Chercher des informations sur le fichier en utilisant le service Sharemonkey."
+msgstr "Rechercher les morceaux du même artiste en utilisant le service MusicBrainz."
 
 #: message;id_window_arrange
 msgid "Arrange icons at the bottom of the window"
-msgstr ""
+msgstr "Disposer les icônes en bas de la fenêtre"
 
 #: tip;id_window_arrange
 msgid "Arrange Icons"
-msgstr ""
+msgstr "Disposer les icônes"
 
 #: message;id_window_cascade
 msgid "Expand all open windows to fill the screen."
@@ -4590,7 +4541,7 @@ msgstr "Entrez des expression régulières selon la syntaxe de Perl.{n}Les mots-
 
 #: tip;idc_share_partials
 msgid "This setting has no effect on downloads previously started, also this setting is ignored if the file have the eDonkey hash and the eDonkey network is enabled or if it is a torrent.{n}However this setting isn't ignored if the download is paused.{n}{n}ATTENTION: Use this option only in case of real necessity, if you abuse of the option you may be banned."
-msgstr "Cette configuration n'a pas d'effet sur les téléchargements commencés antérieurement ; de plus cette configuration est ignorée si le fichier a le hash eDonkey et que le reseau eDonkey est activé, ou si c'est un torrent.{n}Cette configuration n'est pas ignorée si le téléchargement est en pause.{n}{n}ATTENTION : N'utilisez cette option qu'en cas de vraie nécessité, si vous abusez de cette option vous pourriez être banni."
+msgstr "Cette configuration n'a pas d'effet sur les téléchargements commencés antérieurement ; de plus cette configuration est ignorée si le fichier a le hachage eDonkey et que le réseau eDonkey est activé, ou si c'est un torrent.{n}Cette configuration n'est pas ignorée si le téléchargement est en pause.{n}{n}ATTENTION : N'utilisez cette option qu'en cas de vraie nécessité, si vous abusez de cette option vous pourriez être banni."
 
 #: string;window_system
 msgid "System"
@@ -4682,7 +4633,7 @@ msgstr "Ce gabarit n'est pas spécialisé."
 
 #: string;7102
 msgid "Are you sure you want to delete the \"%s\" template?\\nThis cannot be undone."
-msgstr "Vous avez choisi de supprimer le gabarit, continuer ?"
+msgstr "Êtes-vous sûr de vouloir supprimer le gabarit « %s » ?\\nIl ne sera pas possible de revenir en arrière."
 
 #: string;8000 dialog;csettingsheet
 msgid "Shareaza Settings"
@@ -4710,7 +4661,7 @@ msgstr " (quitter à la fin des transferts)"
 
 #: string;8006
 msgid "You're not connected. Click the Connect button to get started."
-msgstr "Vous n'êtes pas connecté. Cliquez sur le boutton « Se connecter » pour commencer."
+msgstr "Vous n'êtes pas connecté. Cliquez sur le bouton « Se connecter » pour commencer."
 
 #: string;8007
 msgid "There are no active searches. Click here to search for files."
@@ -4966,7 +4917,7 @@ msgstr "La taille du fichier doit être"
 
 #: string;8181
 msgid " to (size from xx TO xx)"
-msgstr ""
+msgstr " à "
 
 #: string;8208
 msgid "Shareaza is creating hashes for %Iu file(s):"
@@ -5045,9 +4996,8 @@ msgid "Shareaza is checking the download for errors:"
 msgstr "Shareaza vérifie le téléchargement :"
 
 #: string;8243
-#, fuzzy
 msgid "Upload ratio:"
-msgstr "Zone des envois"
+msgstr "Ratio des envois :"
 
 #: string;8244
 msgid "Number of reviews:"
@@ -5139,7 +5089,7 @@ msgstr " (Aucun Hashset)"
 
 #: string;8320 cwizardconnectionpage;control;10
 msgid "Status:"
-msgstr "Statut :"
+msgstr "État :"
 
 #: string;8322 string;16778 cfavouritesprofilepage;control;5
 msgid "URL:"
@@ -5206,9 +5156,12 @@ msgid "Untrusted"
 msgstr "Non fiable"
 
 #: string;8338
-#, fuzzy
 msgid "Free:"
-msgstr "Créé :"
+msgstr "Libre :"
+
+#: string;12999
+msgid "Client %s has a prohibited user agent \"%s\", banning."
+msgstr "Le client %s a un user agent interdit « %s », bannissement."
 
 #: string;13000
 msgid "Are you sure you want to delete the selected security rules? This cannot be undone."
@@ -5287,9 +5240,8 @@ msgid "Are you sure you want to disconnect?"
 msgstr "Êtes-vous certain de vouloir vous déconnecter ?"
 
 #: string;16080
-#, fuzzy
 msgid "Would you like to always connect to this network?"
-msgstr "Vous n'êtes pas connecté au réseau."
+msgstr "Voulez-vous toujours vous connecter à ce réseau ?"
 
 #: string;16081
 msgid "Sending query for \"%s\" to %s."
@@ -5421,7 +5373,7 @@ msgstr "Fermeture d'une connexion avec le voisin non-Gnutella2 %s."
 
 #: string;16191
 msgid "Received a packet from %s for %s which excess query limits, ignoring."
-msgstr ""
+msgstr "Réception d'un paquet de %s pour %s qui dépasse les limites de requête, on l'ignore."
 
 #: string;16192
 msgid "Neighbour %s forwarded a packet of excessive size, dropping connection."
@@ -5433,7 +5385,7 @@ msgstr "Le voisin %s a fait suivre un paquet de TTL nul, on l'ignore."
 
 #: string;16194
 msgid "Neighbour %s forwarded a packet with excessive TTL, dropping packet (TTL=%i, Hops=%i)."
-msgstr "Le voisin %s a fait suivre un paquet de TTL excessif, paquet dérivé (TTL=%i, Hops=%i)."
+msgstr "Le voisin %s a fait suivre un paquet de TTL excessif, paquet abandonné (TTL=%i, Hops=%i)."
 
 #: string;16195
 msgid "Neighbour %s forwarded a ping packet with invalid length, ignoring."
@@ -5477,7 +5429,7 @@ msgstr "Réception inattendue d'une mise à jour de table de routage du voisin %
 
 #: string;16209
 msgid "Neighbour %s sent an invalid query routing table update, dropping connection."
-msgstr "Le voisin %s a envoyé une notification de mise à jour de table de routage invalide, connexion abondonée."
+msgstr "Le voisin %s a envoyé une notification de mise à jour de table de routage invalide, connexion abandonnée."
 
 #: string;16210
 msgid "Neighbour %s updated its query routing table (%i bit = %lu[%i], %i%% full)."
@@ -5541,7 +5493,7 @@ msgstr "La connexion de téléchargement à %s est établie."
 
 #: string;16267
 msgid "Requesting download fragment (%I64u-%I64u) of \"%s\" from %s."
-msgstr "Demande du fragment de téléchargement (%I64i-%I64i) de %s."
+msgstr "Demande du fragment de téléchargement (%I64u-%I64u) de « %s » depuis %s."
 
 #: string;16268
 msgid "No more download fragments, closing connection to %s."
@@ -5573,15 +5525,15 @@ msgstr "L'hôte de téléchargement %s a répondu avec %s (%s)."
 
 #: string;16275
 msgid "Download host %s's version of \"%s\" has a different URN, aborting."
-msgstr "La version de l'hôte de téléchargement %s a un SHA1 différent, abandon."
+msgstr "L'hôte de téléchargement %s avec la version « %s » a un URN différent, abandon."
 
 #: string;16276
 msgid "Download host %s's version of \"%s\" has a different length, aborting."
-msgstr "La version de l'hôte de téléchargement %s a une longueur différente, abandon."
+msgstr "L'hôte de téléchargement %s avec la version « %s » a une longueur différente, abandon."
 
 #: string;16277
 msgid "Download host %s responded with a useless byte range of \"%s\", pending."
-msgstr "L'hôte de téléchargement %s a répondu avec une série d'octets inutiles, suspension."
+msgstr "L'hôte de téléchargement %s a répondu avec une série d'octets inutiles « %s », suspension."
 
 #: string;16278
 msgid "Download connection to %s was lost."
@@ -5601,7 +5553,7 @@ msgstr "Voulez-vous vraiment supprimer « %s » ?\\n\\nUne fois un téléchar
 
 #: string;16282
 msgid "Aborting download of \"%s\" from %s (%s), network disabled."
-msgstr "Voulez-vous vraiment exécuter ce fichier téléchargé « %s » ?\\n\\nCertains fichiers exécutables peuvent endommager votre système s'ils incluent des virus."
+msgstr "Abandon du téléchargement de « %s » depuis %s (%s), le réseau a été désactivé."
 
 #: string;16283
 msgid "The file \"%s\" is already being downloaded, adding sources."
@@ -5629,7 +5581,7 @@ msgstr "Demande de plus de sources pour le téléchargement de « %s » sur %i
 
 #: string;16289
 msgid "Sending push request for download \"%s\"..."
-msgstr "Envoi d'une demande poussée pour le téléchargement de «%s »..."
+msgstr "Envoi d'une demande poussée pour le téléchargement de « %s »..."
 
 #: string;16290
 msgid "Download host %s responded with a different, but useful range (%I64i-%I64i) of \"%s\"."
@@ -5637,11 +5589,11 @@ msgstr "L'hôte de téléchargement %s a répondu avec un segment différent mai
 
 #: string;16291
 msgid "Moved \"%s\" to \"%s\", download complete."
-msgstr "Déplacement de « %s » vers «%s », téléchargement terminé."
+msgstr "Déplacement de « %s » vers « %s », téléchargement terminé."
 
 #: string;16292
 msgid "Couldn't move download \"%s\" to \"%s\". Check that the incomplete file is not in use, and that your downloads folder exists and is writable."
-msgstr "Impossible de déplacer le téléchargement vers « %s ». Vérifiez que ce fichier n'est pas utilisé et que votre dossier de téléchargement existe et qu'il est inscriptible."
+msgstr "Impossible de déplacer le téléchargement « %s » vers « %s ». Vérifiez que ce fichier incomplet n'est pas utilisé, que votre dossier de téléchargement existe et qu'il est inscriptible."
 
 #: string;16293
 msgid "Resolving \"%s\" to download \"%s\"..."
@@ -5665,7 +5617,7 @@ msgstr "ATTENTION : Le téléchargement « %s » a échoué au test de vérif
 
 #: string;16298
 msgid "Download host %s is busy, waiting in queue at position #%i of %i (\"%s\")."
-msgstr "L'hôte de téléchargement %s est occupé, attente dans la file à la position #%i de %i."
+msgstr "L'hôte de téléchargement %s est occupé, attente dans la file à la position #%i sur %i (« %s »)."
 
 #: string;16299
 msgid "Are you sure you want to clear all paused downloads? Once a download has been cleared from the Downloads window, it cannot be resumed."
@@ -5705,7 +5657,7 @@ msgstr "Fermeture de la connexion de téléchargement à %s, elle n'est plus req
 
 #: string;16308
 msgid "Download host %s sent unsolicited data, closing connection."
-msgstr "L'hôte de téléchargement %s a envoyé des données non solicitées, fermeture de la connexion."
+msgstr "L'hôte de téléchargement %s a envoyé des données non sollicitées, fermeture de la connexion."
 
 #: string;16309
 msgid "Requesting metadata for \"%s\" from %s..."
@@ -5781,16 +5733,15 @@ msgstr "L'hôte d'envoi %s a demandé « %s » avec un SHA1 différent."
 
 #: string;16327
 msgid "Refusing upload of \"%s\" to %s (%s), busy and client does not support queues."
-msgstr "Refus de l'envoi de « %s » à %s, occupé et le client ne supporte pas la mise en file d'attente."
+msgstr "Refus de l'envoi de « %s » à %s (%s), occupé et le client ne supporte pas la mise en file d'attente."
 
 #: string;16328
 msgid "Push connection to %s established, waiting for handshake..."
 msgstr "La connexion poussée à %s est établie, en attente de poignée de main..."
 
 #: string;16329
-#, fuzzy
 msgid "Can't open \"%s\" to upload to host %s due to disk or file error."
-msgstr "Impossible d'ouvrir « %s » pour l'envoi à l'hôte %s, erreur disque/fichier."
+msgstr "Impossible d'ouvrir « %s » pour l'envoi à l'hôte %s en raison d'une erreur de disque ou de fichier."
 
 #: string;16330
 msgid "Sending upload content range %I64i-%I64i from \"%s\" to host %s (%s)."
@@ -5986,16 +5937,15 @@ msgstr "Garde HTTP"
 
 #: string;16378
 msgid "Host \"%s\" sent a 416, without providing available ranges. Closing connection."
-msgstr ""
+msgstr "L'hôte « %s » a envoyé un 416 sans fournir les intervalles disponibles. Fermeture de la connexion."
 
 #: string;16379
 msgid "Library Files"
 msgstr "Fichiers de la bibliothèque"
 
 #: string;16380
-#, fuzzy
 msgid "DC++ Guard"
-msgstr "eDonkey garde"
+msgstr "Garde DC++"
 
 #: string;16384
 msgid "Are you sure you want to launch the file \"%s\" ?\\n\\nSome files can be harmful to your computer. Ensure you know what the file is before launching it."
@@ -6008,14 +5958,6 @@ msgstr "Vous allez modifier les métadonnées de %i fichiers, voulez-vous contin
 #: string;16386
 msgid "Editing metadata of %i files."
 msgstr "Édition des métadonnées de %i fichiers."
-
-#: string;16387
-msgid "The file \"%s\" has not yet been hashed. Please wait for the file to be hashed, and then try again."
-msgstr "Ce fichier « %s » n'a pas encore été haché. Prière d'attendre que le fichier soit haché et réessayer."
-
-#: string;16388
-msgid "This option uses services provided by Bitzi.com for recognising and sharing information about selected files.\\n\\nShareaza will transmit the SHA1 hash code for the selected file(s) in order to query the Bitzi database. If you are concerned about privacy, you may wish to consult the Bitzi.com privacy policy.\\n\\nWould you like to proceed?"
-msgstr "Cette option utilise les services de Bitzi.com pour la reconnaissance et le partage de l'information sur les fichiers sélectionnés.\\n\\nShareaza va transmettre le code SHA1 de ce(s) fichier(s) pour interroger la base de donnée de Bitzi. Si vous êtes préoccupé par votre vie privée, consultez la politique de confidentialité de Bitzi.com.\\n\\nVoulez-vous continuer ?"
 
 #: string;16389
 msgid "Are you sure you want to permanently delete the %i selected file(s) ?\\n\\nThe files will be moved to your \"recycle bin\" if it is enabled."
@@ -6226,14 +6168,12 @@ msgid "Gnutella Packets Lost"
 msgstr "Paquets Gnutella perdus"
 
 #: string;16528
-#, fuzzy
 msgid "Gnutella Incoming Queries"
-msgstr "Requêtes locales Gnutella"
+msgstr "Requêtes entrantes Gnutella"
 
 #: string;16529
-#, fuzzy
 msgid "Gnutella Processed Queries"
-msgstr "Requêtes locales Gnutella"
+msgstr "Requêtes traitées Gnutella"
 
 #: string;16532
 msgid "Total TCP Receive Bandwidth"
@@ -6306,22 +6246,6 @@ msgstr "Type :"
 #: string;16780
 msgid "Unspecified"
 msgstr "Non spécifié"
-
-#: string;16781
-msgid "Requesting..."
-msgstr "Demande..."
-
-#: string;16782
-msgid "Success!"
-msgstr "Succès !"
-
-#: string;16783
-msgid "Finished, click Close"
-msgstr "Terminé, cliquez sur Fermer"
-
-#: string;16784
-msgid "&Close"
-msgstr "&Fermer"
 
 #: string;16785
 msgid "(No Visualisation)"
@@ -6622,15 +6546,15 @@ msgstr "Envoi prioritaire établi pour l'hôte %s."
 
 #: string;17044
 msgid "Solve this CAPTCHA please:"
-msgstr ""
+msgstr "Veuillez résoudre ce CAPTCHA :"
 
 #: string;17045
 msgid "Wrong CAPTCHA."
-msgstr ""
+msgstr "Mauvais CAPTCHA."
 
 #: string;17046
 msgid "CAPTCHA accepted."
-msgstr ""
+msgstr "CAPTCHA accepté."
 
 #: string;17100
 msgid "Gnutella: Peer-to-Peer Connection"
@@ -6757,9 +6681,8 @@ msgid "eDonkey (HighID)"
 msgstr "eDonkey (HighID)"
 
 #: string;17131
-#, fuzzy
 msgid "DC++ Hub Connection"
-msgstr "Mes Connexions"
+msgstr "Connexion Hub DC++"
 
 #: string;17216
 msgid "Initiating connection to eDonkey server at %s..."
@@ -6922,9 +6845,8 @@ msgid "BitTorrent coupling with %s established for \"%s\"."
 msgstr "Le couplage BitTorrent avec %s établi pour « %s »."
 
 #: string;17480
-#, fuzzy
 msgid "BitTorrent coupling with %s requested an inactive file."
-msgstr "Le couplage BitTorrent avec %s a demandé un fichier inconnu."
+msgstr "Le couplage BitTorrent avec %s a demandé un fichier inactif."
 
 #: string;17481
 msgid "Received BitTorrent descriptor file: \"%s\""
@@ -6979,9 +6901,8 @@ msgid "Unable to create BitTorrent share file \"%s\"."
 msgstr "Impossible de créer un fichier de partage BitTorrent « %s »."
 
 #: string;17494
-#, fuzzy
 msgid "This torrent includes the file \"%s\", but Shareaza cannot find this file in your library. If possible, move the file to a shared folder and try again."
-msgstr "Ce torrent inclus le fichier « %s », mais Shareaza ne peut pas trouver ce fichier dans votre bibliothèque. Si possible, déplacez le fichier dans le même dossier que le torrent et recommencez."
+msgstr "Ce torrent inclut le fichier « %s », mais Shareaza ne peut pas trouver ce fichier dans votre bibliothèque. Si possible, déplacez le fichier dans un dossier partagé et recommencez."
 
 #: string;17495
 msgid "This torrent includes the file \"%s\" which should be %s, however your version of the file is %s."
@@ -7004,21 +6925,20 @@ msgid "Unable to communicate with tracker"
 msgstr "Impossible de communiquer avec le traqueur"
 
 #: string;17503
-#, fuzzy
 msgid "Trying next tracker (%i of %i)"
-msgstr "Échec de la connexion au traqueur - Essayons le prochain traqueur (%i of %i)"
+msgstr "Essai du prochain traqueur (%i sur %i)"
 
 #: string;17505
 msgid "BitTorrent connection to %s was dropped."
-msgstr "La connexion BitTorrent avec %s a été abandonée."
+msgstr "La connexion BitTorrent avec %s a été abandonnée."
 
 #: string;17506
 msgid "BitTorrent handshake with %s was dropped."
-msgstr "La négociation BitTorrent avec %s a été abandonée."
+msgstr "La négociation BitTorrent avec %s a été abandonnée."
 
 #: string;17507
 msgid "BitTorrent coupling with %s was dropped."
-msgstr "Le couplage BitTorrent avec %s a été abandoné."
+msgstr "Le couplage BitTorrent avec %s a été abandonné."
 
 #: string;17510
 msgid "BitTorrent coupling with %s not accepted, a connection to this client already exists."
@@ -7086,26 +7006,23 @@ msgstr "Êtes-vous certain de vouloir considérer ce téléchargement comme term
 
 #: string;18511
 msgid "You have made changes to the file size. Are you sure you want to change the file size for this download?"
-msgstr "Vous avez apporté des modificaiton à la taille du fichier. Êtes-vous certain de vouloir changer la taille de ce fichier ?"
+msgstr "Vous avez apporté des modifications à la taille du fichier. Êtes-vous certain de vouloir changer la taille de ce fichier ?"
 
 #: string;18512
-#, fuzzy
 msgid "Are you sure you want to cancel this download but save incomplete file(s)?"
-msgstr "Annuler le téléchargement mais enregistrer le ou les fichiers incomplets"
+msgstr "Êtes-vous sûr d'annuler ce téléchargement mais enregistrer le ou les fichiers incomplets ?"
 
 #: string;18513
-#, fuzzy
 msgid "You have typed an %s hash value, however it is invalid. Please check it and try again."
-msgstr "Vous avez tapez une valeur de hash eDonkey, cependant elle est invalide. Merci de la vérifier et de recommencer."
+msgstr "Vous avez tapez une valeur de hachage %s, cependant elle est invalide. Merci de la vérifier et de recommencer."
 
 #: string;18514
-#, fuzzy
 msgid "You have provided an %s hash value which is different to the one currently associated with this download. Are you sure you want to change the %s hash now?"
-msgstr "Vous avez fourni une valeur de hachage SHA1 qui est différente de celle actuellement associée avec ce téléchargement. Êtes-vous certain de vouloir changer le hachage SHA1 maintenant ?"
+msgstr "Vous avez fourni une valeur de hachage %s qui est différente de celle actuellement associée avec ce téléchargement. Êtes-vous certain de vouloir changer le hachage %s maintenant ?"
 
 #: string;18515
 msgid "The selected download item currently has some Task attached, please wait and do it later."
-msgstr ""
+msgstr "L'élément de téléchargement sélectionné a une tâche liée, veuillez attendre et recommencer plus tard."
 
 #: string;19000
 msgid "Remote access is disabled."
@@ -7120,9 +7037,8 @@ msgid "Unable to accept connections, URL unavailable."
 msgstr "Impossible d'accepter des connexions, URL indisponible."
 
 #: string;19105
-#, fuzzy
 msgid "Chat!"
-msgstr "Clavardage"
+msgstr "Chat !"
 
 #: string;20000
 msgid "No URN available"
@@ -7134,7 +7050,7 @@ msgstr "sur"
 
 #: string;20003
 msgid "Changing language requires application restart.\\nRestart now?"
-msgstr ""
+msgstr "Le changement de langue requière un redémarrage de l'application.\\nVoulez-vous redémarrer maintenant ?"
 
 #: string;20005
 msgid "No"
@@ -7381,12 +7297,11 @@ msgstr "Valider"
 #: cgraphlistdlg;control;17 cgraphitemdlg;control;2
 #: cschemacolumnsdlg;control;4 csecureruledlg;control;34
 #: csharemanagerdlg;control;6 curlcopydlg;control;6 curlexportdlg;control;10
-#: curlactiondlg;control;11 cbitzidownloaddlg;control;4
-#: cfilepreviewdlg;control;6 cexistingfiledlg;control;2
-#: cclosemodedlg;control;6 cdonkeyserversdlg;control;5
-#: cdeletefiledlg;control;5 ctorrentseeddlg;control;4
-#: cdownloadgroupdlg;control;2 cmediavisdlg;control;6
-#: cdecodemetadatadlg;control;9 circinputdlg;control;3
+#: curlactiondlg;control;11 cfilepreviewdlg;control;6
+#: cexistingfiledlg;control;2 cclosemodedlg;control;6
+#: cdonkeyserversdlg;control;5 cdeletefiledlg;control;5
+#: ctorrentseeddlg;control;4 cdownloadgroupdlg;control;2
+#: cmediavisdlg;control;6 cdecodemetadatadlg;control;9 circinputdlg;control;3
 msgid "Cancel"
 msgstr "Annuler"
 
@@ -7420,50 +7335,47 @@ msgstr "Nouveau dossier"
 
 #: string;20246
 msgid "Command-line options:\\n\\n-tray : Disable startup splash screen and send application to tray\\n-nosplash : Disable startup splash screen\\n-nowarn : Disable alpha (daily builds) version warning dialog\\n-wait : Wait for other application instance exit\\n\\nInterface modes:\\n\\n-basic : Start application in Basic interface mode\\n-tabbed : Start application in Tabbed interface mode\\n-windowed : Start application in Windowed interface mode\\n\\nSystem options:\\n\\n-RegServer : Register internal components for everyone\\n-UnRegServer : Un-register internal components for everyone\\n-RegServerPerUser : Register internal components for current user\\n-UnRegServerPerUser : Un-register internal components for current user"
-msgstr ""
+msgstr "Options de ligne de commande :\\n\\n-tray : désactiver la fenêtre de démarrage et envoyer l'application à la barre système\\n-nosplash : désactiver la fenêtre de démarrage\\n-nowarn : désactiver le dialogue d'avertissement des versions alpha\\n-wait : attendre la fermeture de l'autre instance de l'application\\n\\nModes d'interface :\\n\\n-basic : démarrer l'application en mode normal\\n-tabbed : démarrer l'application en mode tabulé\\n-windowed : démarrer l'application en mode fenêtrée\\n\\nOptions système :\\n\\n-RegServer : enregistrer les composants internes pour tout le monde\\n-UnRegServer : désenregistrer les composants internes pour tout le monde\\n-RegServerPerUser : enregistrer les composants internes pour l'utilisateur actuel\\n-UnRegServerPerUser : désenregistrer les composants internes pour l'utilisateur actuel"
 
 #: string;20247
 msgid "Failed to load metadata schemas. Please reinstall application."
-msgstr ""
+msgstr "Échec du chargement des schémas de métadonnées. Veuillez réinstaller l'application."
 
 #: string;20248
-#, fuzzy
 msgid "You selected %u files. Are you sure?"
-msgstr "Vous n'avez choisi aucun dossier à partager.\\n\\nÊtes-vous certain de vouloir continuer ?"
+msgstr "Vous avez sélectionné %u fichiers. Êtes-vous sûr ?"
 
 #: string;20249
 msgid "Off"
-msgstr ""
+msgstr "Désactivé"
 
 #: string;20250
 msgid "Low"
-msgstr ""
+msgstr "Faible"
 
 #: string;20251
-#, fuzzy
 msgid "Normal"
-msgstr "Mode _normal"
+msgstr "Normal"
 
 #: string;20252
 msgid "High"
-msgstr ""
+msgstr "Élevé"
 
 #: string;20253
 msgid "Skin load error: %s. Element: %s"
-msgstr ""
+msgstr "Erreur du chargement du thème : %s. Élément : %s"
 
 #: string;20254
 msgid "Loading skin: %s"
-msgstr ""
+msgstr "Chargement du thème : %s"
 
 #: string;20255
 msgid "Are you sure you want to remove all scheduled tasks? This cannot be undone."
 msgstr "Êtes-vous sûr de vouloir enlever toutes les tâches planifiées ? Ce choix ne pourra pas être annulé."
 
 #: string;20256
-#, fuzzy
 msgid "System: Start Shareaza"
-msgstr "Système : Quitter Shareaza"
+msgstr "Système : Démarrer Shareaza"
 
 #: string;20257
 msgid "Bandwidth: Full Speed"
@@ -7501,6 +7413,22 @@ msgstr "En attente..."
 msgid "No Tasks Currently Scheduled"
 msgstr "Aucune tâche n'est actuellement planifiée"
 
+#: string;20268 cdownloadssettingspage;control;1
+msgid "Save Completed Files Here"
+msgstr "Sauvegarder les fichiers terminés ici"
+
+#: string;20269 cdownloadssettingspage;control;23
+msgid "Store Temporary Incomplete Files Here"
+msgstr "Stocker les fichiers incomplets ici"
+
+#: string;20270 cbittorrentsettingspage;control;20
+msgid "Store Torrents Here"
+msgstr "Stocker les Torrents ici"
+
+#: string;20271 clibrarysettingspage;control;24
+msgid "Store Collections Here"
+msgstr "Stocker les collections ici"
+
 #: csettingsheet;control;4 cprofilemanagerdlg;control;4
 msgid "Apply"
 msgstr "Appliquer"
@@ -7537,9 +7465,9 @@ msgstr "_Téléchargements :"
 msgid "Expand new downloads by default"
 msgstr "Développer les nouveaux téléchargements"
 
-#: cgeneralsettingspage;control;9
-msgid "Display simple progress bar"
-msgstr "Afficher la barre de progression simple"
+#: cgeneralsettingspage;control;9 curlactiondlg;control;13
+msgid "Open a download _monitor window"
+msgstr "Nouvelle fenêtre de _moniteur de téléchargement"
 
 #: cgeneralsettingspage;control;10
 msgid "_Search:"
@@ -7651,10 +7579,6 @@ msgstr "_Ajouter"
 #: clibrarysettingspage;control;20
 msgid "_Never Share:"
 msgstr "Ne _jamais partager :"
-
-#: clibrarysettingspage;control;24
-msgid "Store _Collections Here:"
-msgstr "Stocker les _collections ici :"
 
 #: clibrarysettingspage;control;27
 msgid "Create ghost files when deleting"
@@ -7892,24 +7816,17 @@ msgstr "_Délai avant expiration :"
 msgid "Handshake:"
 msgstr "Poignée de m. :"
 
-#: cdownloadssettingspage;control;1
-#, fuzzy
-msgid "Save Completed Files Here"
-msgstr "_Sauvegarder les fichiers terminés ici :"
-
 #: cdownloadssettingspage;control;4
 msgid "Scan every completed file with AntiVirus"
-msgstr ""
+msgstr "Analyser chaque fichier terminé avec un antivirus"
 
 #: cdownloadssettingspage;control;5
-#, fuzzy
 msgid "Select AntiVirus:"
-msgstr "Présélection :"
+msgstr "Choisissez l'antivirus :"
 
 #: cdownloadssettingspage;control;7
-#, fuzzy
 msgid "Number of Downloads"
-msgstr "_Nombre de téléchargements :"
+msgstr "Nombre de téléchargements"
 
 #: cdownloadssettingspage;control;8
 msgid "Maximum Files:"
@@ -7924,9 +7841,8 @@ msgid "Transfers per File:"
 msgstr "Transferts par fichier :"
 
 #: cdownloadssettingspage;control;17
-#, fuzzy
 msgid "Limits"
-msgstr "Bande passante :"
+msgstr "Limites"
 
 #: cdownloadssettingspage;control;18
 msgid "Total Download Bandwidth:"
@@ -7939,11 +7855,6 @@ msgstr "Taille de la file d'attente :"
 #: cdownloadssettingspage;control;22
 msgid "Only download and upload to networks which are connected."
 msgstr "Télécharger et envoyer uniquement sur les réseaux connectés."
-
-#: cdownloadssettingspage;control;23
-#, fuzzy
-msgid "Store Temporary Incomplete Files Here"
-msgstr "Stocker les fichiers _incomplets ici   :"
 
 #: cuploadssettingspage;control;2
 msgid "Share NEW partial downloads"
@@ -8235,15 +8146,15 @@ msgstr "Télécharger la liste des serveurs ED2K sur le Web :"
 
 #: cbittorrentsettingspage;control;1
 msgid "Always connect to BitTorrent"
-msgstr ""
+msgstr "Toujours se connecter à BitTorrent"
 
 #: cbittorrentsettingspage;control;2
 msgid "Connect to BitTorrent today"
-msgstr ""
+msgstr "Connexion à BitTorrent aujourd'hui"
 
 #: cbittorrentsettingspage;control;3
 msgid "Enable BitTorrent DHT"
-msgstr ""
+msgstr "Activer la DHT BitTorrent"
 
 #: cbittorrentsettingspage;control;8
 msgid "Clear downloaded torrents     When the share ratio reaches:"
@@ -8259,15 +8170,11 @@ msgstr "Activer le mode Endgame à la finition des torrents"
 
 #: cbittorrentsettingspage;control;18
 msgid "_BitTorrent Network:"
-msgstr ""
+msgstr "Réseau _BitTorrent :"
 
 #: cbittorrentsettingspage;control;19
 msgid "_Download Connections:"
 msgstr "Connexions de _Téléchargement :"
-
-#: cbittorrentsettingspage;control;20
-msgid "_Store Torrents Here:"
-msgstr "_Stocker les Torrents ici :"
 
 #: cbittorrentsettingspage;control;21
 msgid "Torrents at once"
@@ -8320,7 +8227,7 @@ msgid "Author:"
 msgstr "Auteur :"
 
 #: cskinssettingspage;control;7 cpluginssettingspage;control;5
-#: cadvancedsettingspage;control;7 ccollectionexportdlg;control;8
+#: cadvancedsettingspage;control;9 ccollectionexportdlg;control;8
 msgid "Description:"
 msgstr "Description :"
 
@@ -8344,15 +8251,15 @@ msgstr "Informations sur l'extension :"
 msgid "_Setup..."
 msgstr "_Configurer..."
 
-#: cadvancedsettingspage;control;4
+#: cadvancedsettingspage;control;6
 msgid "Set Default"
 msgstr "Par défaut"
 
-#: cadvancedsettingspage;control;5
+#: cadvancedsettingspage;control;7
 msgid "Setting Properties:"
 msgstr "Paramètres de la propriété :"
 
-#: cadvancedsettingspage;control;6
+#: cadvancedsettingspage;control;8
 msgid "Value:"
 msgstr "Valeur :"
 
@@ -8856,7 +8763,7 @@ msgstr "Se connecter à|Parcourir l'hôte|Discuter avec"
 
 #: cconnecttodlg;control;1
 msgid "Initiate a new connection to host or server:|Browse this user:|Chat to this user:"
-msgstr "Établir une nouvelle connexion avec l'hôte ou le serveur :|Parcourir cet hôte :"
+msgstr "Établir une nouvelle connexion avec l'hôte ou le serveur :|Parcourir cet hôte :|Discuter avec cet utilisateur :"
 
 #: cconnecttodlg;control;4
 msgid "Network _Protocol:"
@@ -8999,8 +8906,8 @@ msgid "Discovery Service Type:"
 msgstr "Type de service :"
 
 #: cdiscoveryservicedlg;control;4
-msgid "Gnutella Bootstrap|G1 GWebCache|G2 GWebCache|G1/G2 GWebCache|Server.met URL|Blocked"
-msgstr "Amorçage Gnutella|GWebCache G1|GWebCache G2|GWebCache G1/G2|Server.met URL|Bloqué"
+msgid "Gnutella Bootstrap|G1 GWebCache|G2 GWebCache|G1/G2 GWebCache|Server.met URL|DC++ Hub List URL|Blocked"
+msgstr "Amorçage Gnutella|GWebCache G1|GWebCache G2|GWebCache G1/G2|Server.met URL|DC++ Hub List URL|Bloqué"
 
 #: dialog;cdownloadmonitordlg
 msgid "Download : Shareaza"
@@ -9148,11 +9055,11 @@ msgstr "Légende"
 
 #: cgraphlistdlg;control;9
 msgid "Sampling _Frequency:"
-msgstr "_Fréquence d'échantillonage :"
+msgstr "_Fréquence d’échantillonnage :"
 
 #: cgraphlistdlg;control;10
 msgid "Period between samples:"
-msgstr "Délai entre chaque échantillonage :"
+msgstr "Délai entre chaque échantillonnage :"
 
 #: cgraphlistdlg;control;13
 msgid "ms"
@@ -9292,7 +9199,7 @@ msgstr "« jeton »:"
 
 #: curlexportdlg;control;4
 msgid "Tiger Root|SHA1|MD5|ED2K (CMD4)|BitTorrent|Filename|Filename (URI)|Base Filename|File Extension|File Size|File Size (bytes)|Folder Path|Local Host|Local Port|Link|Link (URI)"
-msgstr "Tiger Root|SHA1|MD5|ED2K (CMD4)|Nom de fichier|Nom de fichier (URI)|Nom de fichier Base|Extension du fichier|Taille du fichier|Taille du fichier (octets)|Chemin du dossier|Hôte local|Port local"
+msgstr "Tiger Root|SHA1|MD5|ED2K (CMD4)|BitTorrent|Nom de fichier|Nom de fichier (URI)|Nom de fichier Base|Extension du fichier|Taille du fichier|Taille du fichier (octets)|Chemin du dossier|Hôte local|Port local|Lien|Lien (URI)"
 
 #: curlexportdlg;control;5
 msgid "Select preset:"
@@ -9338,25 +9245,9 @@ msgstr "_Chercher le fichier"
 msgid "_Remember my selection next time"
 msgstr "Se _rappeler de cette sélection"
 
-#: curlactiondlg;control;13
-msgid "Open a download _monitor window"
-msgstr "Nouvelle fenêtre de _moniteur de téléchargement"
-
 #: curlactiondlg;control;14
 msgid "You have clicked on a Shareaza-powered URI which will add the following Discovery Service to your Discovery Services cache."
 msgstr "Vous avez cliqué sur une URI Shareaza qui va ajouter le Service de Découverte suivant à votre cache de Services de Découverte."
-
-#: dialog;cbitzidownloaddlg
-msgid "Downloading Metadata..."
-msgstr "Téléchargement des metadonnées..."
-
-#: cbitzidownloaddlg;control;2
-msgid "Shareaza is attempting to download metadata from Bitzi(TM)..."
-msgstr "Shareaza essaye de télécharger les métadonnées à partir de Bitzi(TM)..."
-
-#: cbitzidownloaddlg;control;6
-msgid "www.bitzi.com"
-msgstr "www.bitzi.com"
 
 #: dialog;cfilepreviewdlg
 msgid "Smart Download Preview..."
@@ -9492,7 +9383,7 @@ msgstr "Shareaza peut mémoriser ce fichier et vous avertir si vous le rencontre
 
 #: cdeletefiledlg;control;8
 msgid "Create a ghost file"
-msgstr "Créér un fichier fantôme."
+msgstr "Créer un fichier fantôme."
 
 #: cdeletefiledlg;control;9
 msgid "The reason for deleting:"
@@ -9668,7 +9559,7 @@ msgstr "Traqueurs"
 
 #: ctorrenttrackerspage;control;4
 msgid "Disabled|Single Tracker|Multi-tracker|Multi-tracker (locked)"
-msgstr "Désactivé|Simple Traqueur|Multi-traquer|Multi-traqueur (vérouillé)"
+msgstr "Désactivé|Simple Traqueur|Multi-traquer|Multi-traqueur (verrouillé)"
 
 #: ctorrenttrackerspage;control;7
 msgid "Tracker:"
@@ -9779,13 +9670,12 @@ msgid "Action"
 msgstr "Action"
 
 #: cscheduletaskpage;control;10
-#, fuzzy
 msgid "eDoonkey2K"
-msgstr "eDonkey"
+msgstr "eDonkey2K"
 
 #: cscheduletaskpage;control;13
 msgid "Select the event type:"
-msgstr "Selectionnez le type de tâche :"
+msgstr "Sélectionnez le type de tâche :"
 
 #: cscheduletaskpage;control;14
 msgid "% of _download under limit"
@@ -10012,14 +9902,60 @@ msgid "Comments"
 msgstr "Commentaires"
 
 #: column;trigger
-#, fuzzy
 msgid "Trigger"
-msgstr "TigerTree"
+msgstr "Déclencheur"
 
 #: column;nextrun
-#, fuzzy
 msgid "NextRun"
-msgstr "Suivant"
+msgstr "Prochaine Exécution"
+
+#~ msgid "Store _Collections Here:"
+#~ msgstr "Stocker les _collections ici :"
+
+#~ msgid "_Store Torrents Here:"
+#~ msgstr "_Stocker les Torrents ici :"
+
+#~ msgid "Display simple progress bar"
+#~ msgstr "Afficher la barre de progression simple"
+
+#~ msgid "Requesting..."
+#~ msgstr "Demande..."
+
+#~ msgid "Success!"
+#~ msgstr "Succès !"
+
+#~ msgid "Finished, click Close"
+#~ msgstr "Terminé, cliquez sur Fermer"
+
+#~ msgid "&Close"
+#~ msgstr "&Fermer"
+
+#~ msgid "The file \"%s\" has not yet been hashed. Please wait for the file to be hashed, and then try again."
+#~ msgstr "Ce fichier « %s » n'a pas encore été haché. Prière d'attendre que le fichier soit haché et réessayer."
+
+#~ msgid "View _Bitzi Ticket"
+#~ msgstr "Voir le billet _Bitzi"
+
+#~ msgid "_Download Metadata"
+#~ msgstr "Télécharger les méta_données"
+
+#~ msgid "Download metadata for the selected file(s) from Bitzi(TM)..."
+#~ msgstr "Télécharger les métadonnées depuis Bitzi(TM) pour cette sélection de fichiers..."
+
+#~ msgid "View the Bitzi(TM) ticket for the selected file on the web."
+#~ msgstr "Voir le billet Bitzi(TM) sur le web pour le fichier sélectionné."
+
+#~ msgid "This option uses services provided by Bitzi.com for recognising and sharing information about selected files.\\n\\nShareaza will transmit the SHA1 hash code for the selected file(s) in order to query the Bitzi database. If you are concerned about privacy, you may wish to consult the Bitzi.com privacy policy.\\n\\nWould you like to proceed?"
+#~ msgstr "Cette option utilise les services de Bitzi.com pour la reconnaissance et le partage de l'information sur les fichiers sélectionnés.\\n\\nShareaza va transmettre le code SHA1 de ce(s) fichier(s) pour interroger la base de donnée de Bitzi. Si vous êtes préoccupé par votre vie privée, consultez la politique de confidentialité de Bitzi.com.\\n\\nVoulez-vous continuer ?"
+
+#~ msgid "Downloading Metadata..."
+#~ msgstr "Téléchargement des metadonnées..."
+
+#~ msgid "Shareaza is attempting to download metadata from Bitzi(TM)..."
+#~ msgstr "Shareaza essaye de télécharger les métadonnées à partir de Bitzi(TM)..."
+
+#~ msgid "www.bitzi.com"
+#~ msgstr "www.bitzi.com"
 
 #~ msgid "Get Data"
 #~ msgstr "Informations"

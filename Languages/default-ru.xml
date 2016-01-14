@@ -3805,7 +3805,9 @@
 			<control caption="_Установки..."/>
 			<control caption="_Хочу ещё..."/>
 		</dialog>
-		<dialog name="CAdvancedSettingsPage" cookie="SyEdmsBuBuStStEdBuCo" caption="Дополнительно">
+		<dialog name="CAdvancedSettingsPage" cookie="EdStSyEdmsBuBuStStEdBuCo" caption="Дополнительно">
+			<control/>
+			<control/>
 			<control/>
 			<control/>
 			<control/>
@@ -4108,7 +4110,7 @@
 			<control caption="Адрес службы:"/>
 			<control/>
 			<control caption="Тип ресурса соединений:"/>
-			<control caption="Gnutella загрузчик|G1 веб-кеш|G2 веб-кеш|G1/G2 веб-кеш|Server.met ссылка|Блокировано"/>
+			<control caption="Gnutella загрузчик|G1 веб-кеш|G2 веб-кеш|G1/G2 веб-кеш|Server.met ссылка|DC++ хаб-лист ссылка|Блокировано"/>
 			<control caption="OK"/>
 			<control caption="Отмена"/>
 		</dialog>

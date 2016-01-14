@@ -1,7 +1,7 @@
 //
 // LibraryBuilderPlugins.h
 //
-// Copyright (c) Shareaza Development Team, 2002-2010.
+// Copyright (c) Shareaza Development Team, 2002-2015.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -29,5 +29,4 @@ public:
 
 private:
 	static HRESULT SafeProcess(ILibraryBuilderPlugin* pPlugin, BSTR szPath, ISXMLElement* pElement);
-	static ILibraryBuilderPlugin* LoadPlugin(LPCTSTR pszType);
 };

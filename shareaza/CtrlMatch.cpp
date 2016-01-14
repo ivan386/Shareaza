@@ -1,7 +1,7 @@
 //
 // CtrlMatch.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2013.
+// Copyright (c) Shareaza Development Team, 2002-2015.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -209,7 +209,7 @@ void CMatchCtrl::DestructiveUpdate()
 	m_wndTip.Hide();
 }
 
-void CMatchCtrl::SelectSchema(CSchemaPtr pSchema, CList< CSchemaMember* >* pColumns)
+void CMatchCtrl::SelectSchema(CSchemaPtr pSchema, CSchemaMemberList* pColumns)
 {
 	SaveColumnState();
 	
@@ -225,7 +225,7 @@ void CMatchCtrl::SelectSchema(CSchemaPtr pSchema, CList< CSchemaMember* >* pColu
 		
 		for ( POSITION pos = m_pColumns.GetHeadPosition() ; pos ; nColumn++ )
 		{
-			CSchemaMember* pMember = m_pColumns.GetNext( pos );
+			CSchemaMemberPtr pMember = m_pColumns.GetNext( pos );
 			if ( !pMember->m_bHidden )
 				InsertColumn( nColumn, pMember->m_sTitle, pMember->m_nColumnAlign, pMember->m_nColumnWidth );
 			else
@@ -965,7 +965,7 @@ void CMatchCtrl::DrawItem(CDC& dc, CRect& rcRow, CMatchFile* pFile, CQueryHit* p
 						{
 							strText.Format( _T("%u %s"), pFile->m_nFiltered, (LPCTSTR)strSource );
 						}
-						_sntprintf( szBuffer, sizeof( szBuffer ) / sizeof( TCHAR ), strText, pFile->m_nFiltered );
+						_sntprintf( szBuffer, sizeof( szBuffer ) / sizeof( TCHAR ), (LPCTSTR)strText, pFile->m_nFiltered );
 						szBuffer[ sizeof( szBuffer ) / sizeof( TCHAR ) - 1 ] = 0;
 					}
 					else
@@ -989,7 +989,7 @@ void CMatchCtrl::DrawItem(CDC& dc, CRect& rcRow, CMatchFile* pFile, CQueryHit* p
 				{
 					strText.Format( _T("%u %s"), pFile->m_nFiltered, (LPCTSTR)strSource );
 				}
-				_sntprintf( szBuffer, sizeof( szBuffer ) / sizeof( TCHAR ), strText, pFile->m_nFiltered );
+				_sntprintf( szBuffer, sizeof( szBuffer ) / sizeof( TCHAR ), (LPCTSTR)strText, pFile->m_nFiltered );
 				szBuffer[ sizeof( szBuffer ) / sizeof( TCHAR ) - 1 ] = 0;
 			}
 			pszText = szBuffer;

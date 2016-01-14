@@ -1,7 +1,7 @@
 //
 // MetaList.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2012.
+// Copyright (c) Shareaza Development Team, 2002-2015.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -156,7 +156,7 @@ void CMetaList::Setup(CSchemaPtr pSchema, BOOL bClear)
 	
 	for ( POSITION pos = pSchema->GetMemberIterator() ; pos ; )
 	{
-		CSchemaMember* pMember = pSchema->GetNextMember( pos );
+		CSchemaMemberPtr pMember = pSchema->GetNextMember( pos );
 		m_pItems.AddTail( new CMetaItem( pMember ) );
 	}
 
@@ -565,7 +565,7 @@ BOOL CMetaList::OnClick(const CPoint& point)
 //////////////////////////////////////////////////////////////////////
 // CMetaItem construction
 
-CMetaItem::CMetaItem(CSchemaMember* pMember)
+CMetaItem::CMetaItem(CSchemaMemberPtr pMember)
 	: CRect()
 	, m_pMember( pMember )
 	, m_bLink( FALSE )

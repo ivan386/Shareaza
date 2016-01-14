@@ -794,7 +794,7 @@ BOOL CBTInfo::LoadTorrentTree(const CBENode* pRoot)
 				if ( pHost && pHost->IsType( CBENode::beString ) && pPort && pPort->IsType( CBENode::beInt ) )
 				{
 					CString sHost;
-					sHost.Format( _T("%s:%u"), pHost->GetString(), (WORD)pPort->GetInt() );
+					sHost.Format( _T("%s:%u"), (LPCTSTR)pHost->GetString(), (WORD)pPort->GetInt() );
 					m_oNodes.AddTail( sHost );
 				}
 			}

@@ -4,7 +4,7 @@
 
 
  /* File created by MIDL compiler version 7.00.0500 */
-/* at Fri Nov 01 16:58:52 2013
+/* at Thu Sep 24 21:57:14 2015
  */
 /* Compiler settings for ..\..\shareaza\Shareaza.idl:
     Oicf, W1, Zp8, env=Win32 (32b run)
@@ -395,6 +395,18 @@ typedef /* [public][public] */ struct __MIDL___MIDL_itf_Shareaza_0001_0190_0001
     BYTE nSpectrum[ 2 ][ 512 ];
     } 	SHAREAZAVISCHUNK;
 
+#define MSG_SEVERITY_MASK		0x000f
+#define MSG_ERROR				0x0000
+#define MSG_WARNING				0x0001
+#define MSG_NOTICE				0x0002
+#define MSG_INFO					0x0003
+#define MSG_DEBUG				0x0004
+#define MSG_FACILITY_MASK		0xff00
+#define MSG_FACILITY_DEFAULT		0x0000
+#define MSG_FACILITY_SEARCH		0x0100
+#define MSG_FACILITY_INCOMING	0x0200
+#define MSG_FACILITY_OUTGOING	0x0300
+#define MSG_TRAY					0x0010
 
 
 
@@ -487,6 +499,13 @@ EXTERN_C const IID IID_IApplication;
         virtual /* [propget][id] */ HRESULT STDMETHODCALLTYPE get_ImageService( 
             /* [retval][out] */ IImageServicePlugin **ppImageService) = 0;
         
+        virtual /* [propget][id] */ HRESULT STDMETHODCALLTYPE get_SmartAgent( 
+            /* [retval][out] */ BSTR *psSmartAgent) = 0;
+        
+        virtual /* [id] */ HRESULT STDMETHODCALLTYPE Message( 
+            /* [in] */ WORD nType,
+            /* [in] */ BSTR bsMessage) = 0;
+        
     };
     
 #else 	/* C style interface */
@@ -568,6 +587,15 @@ EXTERN_C const IID IID_IApplication;
             IApplication * This,
             /* [retval][out] */ IImageServicePlugin **ppImageService);
         
+        /* [propget][id] */ HRESULT ( STDMETHODCALLTYPE *get_SmartAgent )( 
+            IApplication * This,
+            /* [retval][out] */ BSTR *psSmartAgent);
+        
+        /* [id] */ HRESULT ( STDMETHODCALLTYPE *Message )( 
+            IApplication * This,
+            /* [in] */ WORD nType,
+            /* [in] */ BSTR bsMessage);
+        
         END_INTERFACE
     } IApplicationVtbl;
 
@@ -627,6 +655,12 @@ EXTERN_C const IID IID_IApplication;
 
 #define IApplication_get_ImageService(This,ppImageService)	\
     ( (This)->lpVtbl -> get_ImageService(This,ppImageService) ) 
+
+#define IApplication_get_SmartAgent(This,psSmartAgent)	\
+    ( (This)->lpVtbl -> get_SmartAgent(This,psSmartAgent) ) 
+
+#define IApplication_Message(This,nType,bsMessage)	\
+    ( (This)->lpVtbl -> Message(This,nType,bsMessage) ) 
 
 #endif /* COBJMACROS */
 
@@ -3796,7 +3830,7 @@ EXTERN_C const IID IID_IUserInterface;
         virtual /* [id] */ HRESULT STDMETHODCALLTYPE RegisterCommand( 
             /* [in] */ BSTR bsName,
             /* [in] */ HICON hIcon,
-            /* [retval][out] */ UINT *pnCommand) = 0;
+            /* [retval][out] */ UINT *pnCommandID) = 0;
         
         virtual /* [id] */ HRESULT STDMETHODCALLTYPE AddFromString( 
             /* [in] */ BSTR sXML) = 0;
@@ -3817,6 +3851,18 @@ EXTERN_C const IID IID_IUserInterface;
             /* [in] */ BSTR bsName,
             /* [in] */ VARIANT_BOOL bCreate,
             /* [retval][out] */ ISToolbar **ppToolbar) = 0;
+        
+        virtual /* [id] */ HRESULT STDMETHODCALLTYPE NameToID( 
+            /* [in] */ BSTR bsName,
+            /* [retval][out] */ UINT *pnCommandID) = 0;
+        
+        virtual /* [id] */ HRESULT STDMETHODCALLTYPE AddString( 
+            /* [in] */ UINT nStringID,
+            /* [in] */ BSTR sText) = 0;
+        
+        virtual /* [id] */ HRESULT STDMETHODCALLTYPE LoadString( 
+            /* [in] */ UINT nStringID,
+            /* [retval][out] */ BSTR *psText) = 0;
         
     };
     
@@ -3893,7 +3939,7 @@ EXTERN_C const IID IID_IUserInterface;
             IUserInterface * This,
             /* [in] */ BSTR bsName,
             /* [in] */ HICON hIcon,
-            /* [retval][out] */ UINT *pnCommand);
+            /* [retval][out] */ UINT *pnCommandID);
         
         /* [id] */ HRESULT ( STDMETHODCALLTYPE *AddFromString )( 
             IUserInterface * This,
@@ -3919,6 +3965,21 @@ EXTERN_C const IID IID_IUserInterface;
             /* [in] */ BSTR bsName,
             /* [in] */ VARIANT_BOOL bCreate,
             /* [retval][out] */ ISToolbar **ppToolbar);
+        
+        /* [id] */ HRESULT ( STDMETHODCALLTYPE *NameToID )( 
+            IUserInterface * This,
+            /* [in] */ BSTR bsName,
+            /* [retval][out] */ UINT *pnCommandID);
+        
+        /* [id] */ HRESULT ( STDMETHODCALLTYPE *AddString )( 
+            IUserInterface * This,
+            /* [in] */ UINT nStringID,
+            /* [in] */ BSTR sText);
+        
+        /* [id] */ HRESULT ( STDMETHODCALLTYPE *LoadString )( 
+            IUserInterface * This,
+            /* [in] */ UINT nStringID,
+            /* [retval][out] */ BSTR *psText);
         
         END_INTERFACE
     } IUserInterfaceVtbl;
@@ -3971,8 +4032,8 @@ EXTERN_C const IID IID_IUserInterface;
 #define IUserInterface_get_ActiveView(This,ppView)	\
     ( (This)->lpVtbl -> get_ActiveView(This,ppView) ) 
 
-#define IUserInterface_RegisterCommand(This,bsName,hIcon,pnCommand)	\
-    ( (This)->lpVtbl -> RegisterCommand(This,bsName,hIcon,pnCommand) ) 
+#define IUserInterface_RegisterCommand(This,bsName,hIcon,pnCommandID)	\
+    ( (This)->lpVtbl -> RegisterCommand(This,bsName,hIcon,pnCommandID) ) 
 
 #define IUserInterface_AddFromString(This,sXML)	\
     ( (This)->lpVtbl -> AddFromString(This,sXML) ) 
@@ -3988,6 +4049,15 @@ EXTERN_C const IID IID_IUserInterface;
 
 #define IUserInterface_GetToolbar(This,bsName,bCreate,ppToolbar)	\
     ( (This)->lpVtbl -> GetToolbar(This,bsName,bCreate,ppToolbar) ) 
+
+#define IUserInterface_NameToID(This,bsName,pnCommandID)	\
+    ( (This)->lpVtbl -> NameToID(This,bsName,pnCommandID) ) 
+
+#define IUserInterface_AddString(This,nStringID,sText)	\
+    ( (This)->lpVtbl -> AddString(This,nStringID,sText) ) 
+
+#define IUserInterface_LoadString(This,nStringID,psText)	\
+    ( (This)->lpVtbl -> LoadString(This,nStringID,psText) ) 
 
 #endif /* COBJMACROS */
 
@@ -4398,6 +4468,12 @@ EXTERN_C const IID IID_ISMenu;
             /* [in] */ BSTR sText,
             /* [retval][out] */ ISMenu **ppMenu) = 0;
         
+        virtual /* [propget][id] */ HRESULT STDMETHODCALLTYPE get_Position( 
+            /* [retval][out] */ LONG *pnCommandID) = 0;
+        
+        virtual /* [propget][id] */ HRESULT STDMETHODCALLTYPE get_Parent( 
+            /* [retval][out] */ ISMenu **ppMenu) = 0;
+        
     };
     
 #else 	/* C style interface */
@@ -4516,6 +4592,14 @@ EXTERN_C const IID IID_ISMenu;
             /* [in] */ BSTR sText,
             /* [retval][out] */ ISMenu **ppMenu);
         
+        /* [propget][id] */ HRESULT ( STDMETHODCALLTYPE *get_Position )( 
+            ISMenu * This,
+            /* [retval][out] */ LONG *pnCommandID);
+        
+        /* [propget][id] */ HRESULT ( STDMETHODCALLTYPE *get_Parent )( 
+            ISMenu * This,
+            /* [retval][out] */ ISMenu **ppMenu);
+        
         END_INTERFACE
     } ISMenuVtbl;
 
@@ -4599,6 +4683,12 @@ EXTERN_C const IID IID_ISMenu;
 
 #define ISMenu_InsertCommand(This,nPosition,nCommandID,sText,ppMenu)	\
     ( (This)->lpVtbl -> InsertCommand(This,nPosition,nCommandID,sText,ppMenu) ) 
+
+#define ISMenu_get_Position(This,pnCommandID)	\
+    ( (This)->lpVtbl -> get_Position(This,pnCommandID) ) 
+
+#define ISMenu_get_Parent(This,ppMenu)	\
+    ( (This)->lpVtbl -> get_Parent(This,ppMenu) ) 
 
 #endif /* COBJMACROS */
 
@@ -5019,6 +5109,9 @@ EXTERN_C const IID IID_IShareazaFile;
         virtual /* [propget][id] */ HRESULT STDMETHODCALLTYPE get_URL( 
             /* [retval][out] */ BSTR *psURL) = 0;
         
+        virtual /* [propget][id] */ HRESULT STDMETHODCALLTYPE get_Magnet( 
+            /* [retval][out] */ BSTR *psMagnet) = 0;
+        
     };
     
 #else 	/* C style interface */
@@ -5095,6 +5188,10 @@ EXTERN_C const IID IID_IShareazaFile;
             IShareazaFile * This,
             /* [retval][out] */ BSTR *psURL);
         
+        /* [propget][id] */ HRESULT ( STDMETHODCALLTYPE *get_Magnet )( 
+            IShareazaFile * This,
+            /* [retval][out] */ BSTR *psMagnet);
+        
         END_INTERFACE
     } IShareazaFileVtbl;
 
@@ -5148,6 +5245,9 @@ EXTERN_C const IID IID_IShareazaFile;
 
 #define IShareazaFile_get_URL(This,psURL)	\
     ( (This)->lpVtbl -> get_URL(This,psURL) ) 
+
+#define IShareazaFile_get_Magnet(This,psMagnet)	\
+    ( (This)->lpVtbl -> get_Magnet(This,psMagnet) ) 
 
 #endif /* COBJMACROS */
 
@@ -5301,6 +5401,10 @@ EXTERN_C const IID IID_ILibraryFile;
             ILibraryFile * This,
             /* [retval][out] */ BSTR *psURL);
         
+        /* [propget][id] */ HRESULT ( STDMETHODCALLTYPE *get_Magnet )( 
+            ILibraryFile * This,
+            /* [retval][out] */ BSTR *psMagnet);
+        
         /* [propget][id] */ HRESULT ( STDMETHODCALLTYPE *get_Application )( 
             ILibraryFile * This,
             /* [retval][out] */ IApplication **ppApplication);
@@ -5421,6 +5525,9 @@ EXTERN_C const IID IID_ILibraryFile;
 
 #define ILibraryFile_get_URL(This,psURL)	\
     ( (This)->lpVtbl -> get_URL(This,psURL) ) 
+
+#define ILibraryFile_get_Magnet(This,psMagnet)	\
+    ( (This)->lpVtbl -> get_Magnet(This,psMagnet) ) 
 
 
 #define ILibraryFile_get_Application(This,ppApplication)	\

@@ -1,7 +1,7 @@
 //
 // CtrlSchemaCombo.h
 //
-// Copyright (c) Shareaza Development Team, 2002-2007.
+// Copyright (c) Shareaza Development Team, 2002-2015.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -33,8 +33,8 @@ public:
 // Attributes
 public:
 	CString		m_sNoSchemaText;
-	int			m_nType;
-	int			m_nAvailability;
+	CSchema::Type m_nType;
+	CSchema::Availability m_nAvailability;
 protected:
 	HWND		m_hListBox;
 	WNDPROC		m_pWndProc;
@@ -43,7 +43,7 @@ protected:
 // Operations
 public:
 	void		SetEmptyString(UINT nID);
-	void		Load(LPCTSTR pszSelectURI = NULL, int nType = 0, int nAvailability = 0, BOOL bReset = TRUE);
+	void		Load(LPCTSTR pszSelectURI = NULL, CSchema::Type nType = CSchema::stFile, CSchema::Availability nAvailability = CSchema::saDefault, BOOL bReset = TRUE);
 	void		Select(LPCTSTR pszURI);
 	void		Select(CSchemaPtr pSchema);
 	CSchemaPtr	GetSelected() const;

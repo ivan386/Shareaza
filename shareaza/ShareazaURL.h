@@ -1,7 +1,7 @@
 //
 // ShareazaURL.h
 //
-// Copyright (c) Shareaza Development Team, 2002-2014.
+// Copyright (c) Shareaza Development Team, 2002-2015.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -21,6 +21,7 @@
 
 #pragma once
 
+#include "DiscoveryServices.h"
 #include "QuerySearch.h"
 
 class CBTInfo;
@@ -57,6 +58,11 @@ public:
 	BOOL	Parse(LPCTSTR pszURL, BOOL bResolve = TRUE);
 	// Construct CQuerySearch object
 	CQuerySearchPtr ToQuery() const;
+
+	CDiscoveryService::Type	GetDiscoveryService() const
+	{
+		return (CDiscoveryService::Type)(int)m_nSize;
+	}
 
 protected:
 	void	Clear();

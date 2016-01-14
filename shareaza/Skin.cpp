@@ -1,7 +1,7 @@
 //
 // Skin.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2014.
+// Copyright (c) Shareaza Development Team, 2002-2015.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -92,7 +92,8 @@ void CSkin::Apply()
 	}
 	else if ( m_crPanelBack == RGB( 60, 60, 60 ) )
 	{
-		if ( HBITMAP hPanelMark = LoadBitmap( IDB_PANEL_MARK, TRUE ) )
+		hPanelMark = LoadBitmap( IDB_PANEL_MARK, TRUE );
+		if ( hPanelMark )
 		{
 			m_bmPanelMark.Attach( hPanelMark );
 		}
@@ -458,17 +459,15 @@ BOOL CSkin::LoadFromXML(CXMLElement* pXML, const CString& strPath)
 		}
 		else if ( pSub->IsNamed( _T("manifest") ) )
 		{
-			CString strType = pSub->GetAttributeValue( _T("type") );
-			ToLower( strType );
-
-			if ( strType == _T("language") )
+			const CString strType = pSub->GetAttributeValue( _T("type") );
+			if ( strType.CompareNoCase( _T("language") ) == 0 )
 			{
 				Settings.General.Language = pSub->GetAttributeValue( _T("language"), _T("en") );
 				Settings.General.LanguageRTL = ( pSub->GetAttributeValue( _T("dir"), _T("ltr") ) == "rtl" );
 				TRACE( _T("Loading language: %s\r\n"), Settings.General.Language );
 				TRACE( _T("RTL: %d\r\n"), Settings.General.LanguageRTL );
 			}
-			else if ( strType == _T("skin") )
+			else if ( strType.CompareNoCase( _T("skin") ) == 0 )
 			{
 				CString strSkinName = pSub->GetAttributeValue( _T("name"), _T("") );
 				theApp.Message( MSG_NOTICE, IDS_SKIN_LOAD, strSkinName );
@@ -824,8 +823,12 @@ BOOL CSkin::CreateToolBar(LPCTSTR pszName, CCoolBarCtrl* pBar)
 		{
 			if ( HBITMAP hBitmap = GetWatermark( sName + _T(".Toolbar") ) )
 				pBar->SetWatermark( hBitmap );
-			else if ( HBITMAP hBitmap = GetWatermark( sClassName + _T(".Toolbar") ) )
-				pBar->SetWatermark( hBitmap );
+			else
+			{
+				hBitmap = GetWatermark( sClassName + _T(".Toolbar") );
+				if ( hBitmap )
+					pBar->SetWatermark( hBitmap );
+			}
 			pBar->Copy( pBase );
 			return TRUE;
 		}

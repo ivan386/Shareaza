@@ -290,6 +290,7 @@ BEGIN_MESSAGE_MAP(CMainWnd, CMDIFrameWnd)
 	ON_WM_COPYDATA()
 	ON_UPDATE_COMMAND_UI(ID_PATH_EXPLORE, &CMainWnd::OnUpdatePathExplore)
 	ON_UPDATE_COMMAND_UI(ID_PATH_COPY, &CMainWnd::OnUpdatePathCopy)
+	ON_WM_QUERYENDSESSION()
 END_MESSAGE_MAP()
 
 /////////////////////////////////////////////////////////////////////////////
@@ -673,6 +674,15 @@ void CMainWnd::RemoveSkin()
 	CFilePreviewDlg::OnSkinChange( FALSE );
 	m_wndRemoteWnd.RemoveSkin();
 	m_wndNavBar.RemoveSkin();
+}
+
+BOOL CMainWnd::OnQueryEndSession()
+{
+	UpdateWindow();
+
+	CMDIFrameWnd::OnQueryEndSession();
+
+	return FALSE;
 }
 
 void CMainWnd::OnEndSession(BOOL bEnding)
@@ -1596,9 +1606,9 @@ void CMainWnd::UpdateMessages()
 		{
 			m_pTaskbar->SetProgressState( hWnd, TBPF_NORMAL );
 			m_pTaskbar->SetProgressValue( hWnd, nComplete, nTotal );
-			sAppBarTip.Format( _T("%s\r\n%s %.2f%%\r\n%s %s"), Settings.SmartAgent(),
-				LoadString( IDS_DLM_VOLUME_DOWNLOADED ), float( ( 10000 * nComplete ) / nTotal ) / 100.f,
-				LoadString( IDS_DLM_TOTAL_SPEED ), Settings.SmartSpeed( CGraphItem::GetValue( GRC_TOTAL_BANDWIDTH_IN ), bits ) );
+			sAppBarTip.Format( _T("%s\r\n%s %.2f%%\r\n%s %s"), (LPCTSTR)Settings.SmartAgent(),
+				(LPCTSTR)LoadString( IDS_DLM_VOLUME_DOWNLOADED ), float( ( 10000 * nComplete ) / nTotal ) / 100.f,
+				(LPCTSTR)LoadString( IDS_DLM_TOTAL_SPEED ), (LPCTSTR)Settings.SmartSpeed( CGraphItem::GetValue( GRC_TOTAL_BANDWIDTH_IN ), bits ) );
 		}
 		else
 		{
@@ -1712,17 +1722,22 @@ void CMainWnd::LocalSystemChecks()
 		}
 	}
 
-	// Check we have donkey servers
-	if ( Settings.Live.DefaultED2KServersLoaded == FALSE )
+	// Check we have minimum servers
+	if ( ! Settings.Live.DefaultED2KServersLoaded )
 	{
-		Settings.Live.DefaultED2KServersLoaded  = TRUE;
-		HostCache.CheckMinimumServers( PROTOCOL_ED2K );
+		Settings.Live.DefaultED2KServersLoaded = true;
+		if ( Settings.eDonkey.EnableToday ) HostCache.CheckMinimumServers( PROTOCOL_ED2K );
+	}
+	if ( ! Settings.Live.DefaultDCServersLoaded )
+	{
+		Settings.Live.DefaultDCServersLoaded = true;
+		if ( Settings.DC.EnableToday ) HostCache.CheckMinimumServers( PROTOCOL_DC );
 	}
 
-	if ( ( Settings.Live.DonkeyServerWarning == FALSE ) && ( Settings.eDonkey.EnableToday ) )
+	if ( ! Settings.Live.DonkeyServerWarning && Settings.eDonkey.EnableToday )
 	{
-		Settings.Live.DonkeyServerWarning = TRUE;
-		if ( ( ! Settings.eDonkey.MetAutoQuery ) && ( HostCache.eDonkey.CountHosts(TRUE) < 1 ) )
+		Settings.Live.DonkeyServerWarning = true;
+		if ( ! Settings.eDonkey.AutoDiscovery && ! HostCache.EnoughServers( PROTOCOL_ED2K ) )
 			PostMessage( WM_COMMAND, ID_HELP_DONKEYSERVERS );
 	}
 }
@@ -3195,7 +3210,7 @@ bool CMainWnd::SnarlNotify(const CString& sText, const CString& sTitle, DWORD dw
 
 	CStringA sCommand;
 	sCommand.Format( "notify?app-sig=app/%s&timeout=%u&title=%s&text=%s",
-		CLIENT_NAME, uTimeout, UTF8Encode( sSafeTitle ), UTF8Encode( sSafeText ) );
+		CLIENT_NAME, uTimeout, (LPCSTR)UTF8Encode( sSafeTitle ), (LPCSTR)UTF8Encode( sSafeText ) );
 
 	switch ( dwIcon & NIIF_ICON_MASK )
 	{

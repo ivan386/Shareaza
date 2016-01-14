@@ -1,7 +1,7 @@
 //
 // CtrlHomeView.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2010.
+// Copyright (c) Shareaza Development Team, 2002-2015.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -92,7 +92,7 @@ void CHomeViewCtrl::OnSkinChange()
 	Skin.GetWatermark( &m_bmHeader2, _T("CHomeViewCtrl.Header2") );
 
 	CXMLElement* pXML = Skin.GetDocument( _T("CHomeViewCtrl") );
-	CMap< CString, const CString&, CRichElement*, CRichElement* > pMap;
+	CElementMap pMap;
 
 	if ( pXML == NULL || ! m_pDocument.LoadXML( pXML, &pMap ) )
 	{

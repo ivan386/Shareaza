@@ -1,7 +1,7 @@
 //
 // ShellIcons.h
 //
-// Copyright (c) Shareaza Development Team, 2002-2012.
+// Copyright (c) Shareaza Development Team, 2002-2015.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -42,8 +42,7 @@ public:
 	BOOL	Draw(CDC* pDC, int nIcon, int nSize, int nX, int nY, COLORREF crBack = CLR_NONE, BOOL bSelected = FALSE) const;
 
 private:
-	typedef CMap< CString, const CString&, int, int > CIconMap;
-	typedef CMap< CString, const CString&, CString, const CString& > CStringMap;
+	typedef CAtlMap< CString, int, CStringElementTraitsI< CString > > CIconMap;
 
 	CCriticalSection	m_pSection;
 	CImageList			m_i16;
@@ -52,8 +51,8 @@ private:
 	CIconMap			m_m16;
 	CIconMap			m_m32;
 	CIconMap			m_m48;
-	CStringMap			m_MIME;
-	CStringMap			m_Name;
+	CStringIMap			m_MIME;
+	CStringIMap			m_Name;
 
 	BOOL	Lookup(LPCTSTR pszType, HICON* phSmallIcon, HICON* phLargeIcon, CString* psName, CString* psMIME, HICON* phHugeIcon);
 

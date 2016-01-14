@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Shareaza 2.5.3.0\n"
-"Report-Msgid-Bugs-To: ryo-oh-ki <ryo-oh-ki@narod.ru>\n"
-"POT-Creation-Date: 2014-01-27 13:47+0000\n"
+"Report-Msgid-Bugs-To: shareaza <shareaza@cherubicsoft.com>\n"
+"POT-Creation-Date: 2015-04-21 10:23+0000\n"
 "PO-Revision-Date: \n"
 "Last-Translator: ryo-oh-ki <ryo-oh-ki@narod.ru>\n"
 "Language-Team: Felipe\n"
@@ -1185,19 +1185,6 @@ msgstr "_Episódios da mesma Série"
 msgid "_Web Services"
 msgstr "_Serviços da Web"
 
-#: csearchwnd.basic;30;item;id_library_bitzi_web
-#: csearchwnd;32;item;id_library_bitzi_web
-#: cbrowsehostwnd.basic;34;item;id_library_bitzi_web
-#: cbrowsehostwnd;36;item;id_library_bitzi_web
-#: chitmonitorwnd;38;item;id_library_bitzi_web
-#: clibraryfileview.physical.basic;41;item;id_library_bitzi_web
-#: clibraryfileview.physical;44;item;id_library_bitzi_web
-#: clibraryfileview.virtual.basic;47;item;id_library_bitzi_web
-#: clibraryfileview.virtual;50;item;id_library_bitzi_web
-#: webservices.list.menu;item;id_library_bitzi_web
-msgid "View _Bitzi Ticket"
-msgstr "Ver o _Ticket do Bitzi"
-
 #: csearchwnd;item;id_search_downloadnow
 #: cbrowsehostwnd.basic;item;id_search_downloadnow
 #: cbrowsehostwnd;item;id_search_downloadnow
@@ -1483,6 +1470,7 @@ msgstr "Mostrar _Histórico"
 
 #: clibrarytree.physical.basic;item;id_library_explore
 #: clibrarytree.physical;item;id_library_explore
+#: path.menu;item;id_path_explore
 msgid "_Explore"
 msgstr "_Explorar"
 
@@ -1566,14 +1554,6 @@ msgstr "_Nova Pasta..."
 #: clibrarytileview;item;id_library_album_open
 msgid "_Open"
 msgstr "_Abrir"
-
-#: clibraryfileview.physical.basic;41;item;id_library_bitzi_download
-#: clibraryfileview.physical;44;item;id_library_bitzi_download
-#: clibraryfileview.virtual.basic;47;item;id_library_bitzi_download
-#: clibraryfileview.virtual;50;item;id_library_bitzi_download
-#: webservices.list.menu;item;id_library_bitzi_download
-msgid "_Download Metadata"
-msgstr "_Baixar Metadata"
 
 #: clibraryfileview.physical.basic;41;item;id_webservices_musicbrainz
 #: clibraryfileview.physical;44;item;id_webservices_musicbrainz
@@ -1808,7 +1788,8 @@ msgstr "_Debug"
 msgid "Timestam_p"
 msgstr "Horário"
 
-#: csystemwnd;item;id_system_copy curlexportdlg;control;7
+#: csystemwnd;item;id_system_copy path.menu;item;id_path_copy
+#: curlexportdlg;control;7
 msgid "_Copy"
 msgstr "_Copiar"
 
@@ -3607,14 +3588,6 @@ msgstr "Abrir a pasta do álbum selecionada."
 msgid "View and edit the properties of the selected album folder..."
 msgstr "Ver e editar as propriedades da pasta do álbum selecionada..."
 
-#: message;id_library_bitzi_download
-msgid "Download metadata for the selected file(s) from Bitzi(TM)..."
-msgstr "Baixar metadata para o(s) arquivo(s) selecionado(s) do Bitzi(TM)..."
-
-#: message;id_library_bitzi_web
-msgid "View the Bitzi(TM) ticket for the selected file on the web."
-msgstr "Ver na rede o ticket Bitzi(TM) do arquivo selecionado."
-
 #: message;id_library_columns message;id_search_columns
 msgid "Select metadata columns to be displayed..."
 msgstr "Selecionar as colunas do metadata a serem exibidas..."
@@ -4099,6 +4072,14 @@ msgstr "Trocar de volta ao painel da janela anterior"
 #: tip;id_prev_pane
 msgid "Previous Pane"
 msgstr "Painel Anterior"
+
+#: message;id_path_copy
+msgid "Copy this path to clipboard."
+msgstr ""
+
+#: message;id_path_explore
+msgid "Explore this path."
+msgstr ""
 
 #: message;id_scheduler_activate
 msgid "Activates selected task(s) from the list."
@@ -5181,6 +5162,10 @@ msgstr "Não confiável"
 msgid "Free:"
 msgstr "Criado:"
 
+#: string;12999
+msgid "Client %s has a prohibited user agent \"%s\", banning."
+msgstr ""
+
 #: string;13000
 msgid "Are you sure you want to delete the selected security rules? This cannot be undone."
 msgstr "Você tem certeza de que você quer apagar as regras de segurança selecionadas?  Isto não pode ser desfeito."
@@ -5978,14 +5963,6 @@ msgstr "Você está prestes a modificar a metadata de %i arquivos. Você tem cer
 msgid "Editing metadata of %i files."
 msgstr "Editando metadata de %i arquivos."
 
-#: string;16387
-msgid "The file \"%s\" has not yet been hashed. Please wait for the file to be hashed, and then try again."
-msgstr "O arquivo \"%s\" ainda não possui informação de hash. Por favr espere que o arquivo tenha um hash, e então tente novamente."
-
-#: string;16388
-msgid "This option uses services provided by Bitzi.com for recognising and sharing information about selected files.\\n\\nShareaza will transmit the SHA1 hash code for the selected file(s) in order to query the Bitzi database. If you are concerned about privacy, you may wish to consult the Bitzi.com privacy policy.\\n\\nWould you like to proceed?"
-msgstr "Esta opção usa os serviços providenciados pelo Bitzi.com para identificação e compartilhamento sobre os arquivos selecionados.\\n\\nO Shareaza enviará o código de hash SHA1 para o(s) arquivo(s) selecionado(s) de modo a pesquisar o banco de dados do Bitzi. Se você está preocupado com sua privacidade, você pode desejar consultar a política de privacidade do Bitzi.com.\\n\\nVocê gostaria de prosseguir?"
-
 #: string;16389
 msgid "Are you sure you want to permanently delete the %i selected file(s) ?\\n\\nThe files will be moved to your \"recycle bin\" if it is enabled."
 msgstr "Você tem certeza que você quer apagar permanentemente o(s) %i arquivo(s) selecionados(s) ?\\n\\nOs arquivos serão movidos para a sua \"pasta recycle bin\" se ela estiver ativada."
@@ -6280,22 +6257,6 @@ msgstr "Tipo:"
 #: string;16780
 msgid "Unspecified"
 msgstr "Não Especificado"
-
-#: string;16781
-msgid "Requesting..."
-msgstr "Pedindo..."
-
-#: string;16782
-msgid "Success!"
-msgstr "Sucesso!"
-
-#: string;16783
-msgid "Finished, click Close"
-msgstr "Terminado, clique em Fechar"
-
-#: string;16784
-msgid "&Close"
-msgstr "&Fechar"
 
 #: string;16785
 msgid "(No Visualisation)"
@@ -7348,12 +7309,11 @@ msgstr "OK"
 #: cgraphlistdlg;control;17 cgraphitemdlg;control;2
 #: cschemacolumnsdlg;control;4 csecureruledlg;control;34
 #: csharemanagerdlg;control;6 curlcopydlg;control;6 curlexportdlg;control;10
-#: curlactiondlg;control;11 cbitzidownloaddlg;control;4
-#: cfilepreviewdlg;control;6 cexistingfiledlg;control;2
-#: cclosemodedlg;control;6 cdonkeyserversdlg;control;5
-#: cdeletefiledlg;control;5 ctorrentseeddlg;control;4
-#: cdownloadgroupdlg;control;2 cmediavisdlg;control;6
-#: cdecodemetadatadlg;control;9 circinputdlg;control;3
+#: curlactiondlg;control;11 cfilepreviewdlg;control;6
+#: cexistingfiledlg;control;2 cclosemodedlg;control;6
+#: cdonkeyserversdlg;control;5 cdeletefiledlg;control;5
+#: ctorrentseeddlg;control;4 cdownloadgroupdlg;control;2
+#: cmediavisdlg;control;6 cdecodemetadatadlg;control;9 circinputdlg;control;3
 msgid "Cancel"
 msgstr "Cancelar"
 
@@ -7465,6 +7425,22 @@ msgstr "Esperando..."
 msgid "No Tasks Currently Scheduled"
 msgstr "Sem Tarefas Agendadas Atualmente"
 
+#: string;20268 cdownloadssettingspage;control;1
+msgid "Save Completed Files Here"
+msgstr "Salvar Arquivos Completados Aqui"
+
+#: string;20269 cdownloadssettingspage;control;23
+msgid "Store Temporary Incomplete Files Here"
+msgstr "Armazenar Arquivos Incompletos Temporários Aqui"
+
+#: string;20270 cbittorrentsettingspage;control;20
+msgid "Store Torrents Here"
+msgstr "Armazenar Torrents Aqui"
+
+#: string;20271 clibrarysettingspage;control;24
+msgid "Store Collections Here"
+msgstr "Armazenar as Coleções Aqui"
+
 #: csettingsheet;control;4 cprofilemanagerdlg;control;4
 msgid "Apply"
 msgstr "Aplicar"
@@ -7501,9 +7477,9 @@ msgstr "_Downloads:"
 msgid "Expand new downloads by default"
 msgstr "Expandir novos downloads por padrão"
 
-#: cgeneralsettingspage;control;9
-msgid "Display simple progress bar"
-msgstr "Exibir barra de progresso simples"
+#: cgeneralsettingspage;control;9 curlactiondlg;control;13
+msgid "Open a download _monitor window"
+msgstr "Abrir uma janela do _monitor de downloads"
 
 #: cgeneralsettingspage;control;10
 msgid "_Search:"
@@ -7615,10 +7591,6 @@ msgstr "_Adicionar"
 #: clibrarysettingspage;control;20
 msgid "_Never Share:"
 msgstr "_Nunca Compartilhar:"
-
-#: clibrarysettingspage;control;24
-msgid "Store _Collections Here:"
-msgstr "Armazenar as _Coleções Aqui:"
 
 #: clibrarysettingspage;control;27
 msgid "Create ghost files when deleting"
@@ -7856,11 +7828,6 @@ msgstr "_Tempo para encerrar:"
 msgid "Handshake:"
 msgstr "Inicialização:"
 
-#: cdownloadssettingspage;control;1
-#, fuzzy
-msgid "Save Completed Files Here"
-msgstr "Salvar _Arquivos Completados Aqui:"
-
 #: cdownloadssettingspage;control;4
 msgid "Scan every completed file with AntiVirus"
 msgstr ""
@@ -7903,11 +7870,6 @@ msgstr "Tamanho Máximo da Fila:"
 #: cdownloadssettingspage;control;22
 msgid "Only download and upload to networks which are connected."
 msgstr "Só baixar e enviar para redes nas quais está conectado."
-
-#: cdownloadssettingspage;control;23
-#, fuzzy
-msgid "Store Temporary Incomplete Files Here"
-msgstr "Armazenar Arquivos _Incompletos Temporários Aqui:"
 
 #: cuploadssettingspage;control;2
 msgid "Share NEW partial downloads"
@@ -8229,10 +8191,6 @@ msgstr ""
 msgid "_Download Connections:"
 msgstr "_Conexões de Download:"
 
-#: cbittorrentsettingspage;control;20
-msgid "_Store Torrents Here:"
-msgstr "_Armazenar Torrents Aqui:"
-
 #: cbittorrentsettingspage;control;21
 msgid "Torrents at once"
 msgstr "Torrents de uma vez"
@@ -8284,7 +8242,7 @@ msgid "Author:"
 msgstr "Autor:"
 
 #: cskinssettingspage;control;7 cpluginssettingspage;control;5
-#: cadvancedsettingspage;control;7 ccollectionexportdlg;control;8
+#: cadvancedsettingspage;control;9 ccollectionexportdlg;control;8
 msgid "Description:"
 msgstr "Descrição:"
 
@@ -8308,15 +8266,15 @@ msgstr "Informação do Plugin:"
 msgid "_Setup..."
 msgstr "_Configuração..."
 
-#: cadvancedsettingspage;control;4
+#: cadvancedsettingspage;control;6
 msgid "Set Default"
 msgstr "Definir Padrão"
 
-#: cadvancedsettingspage;control;5
+#: cadvancedsettingspage;control;7
 msgid "Setting Properties:"
 msgstr "Propriedades da Configuração:"
 
-#: cadvancedsettingspage;control;6
+#: cadvancedsettingspage;control;8
 msgid "Value:"
 msgstr "Valor:"
 
@@ -8963,8 +8921,8 @@ msgid "Discovery Service Type:"
 msgstr "Tipo de Serviço de Descobrimento:"
 
 #: cdiscoveryservicedlg;control;4
-msgid "Gnutella Bootstrap|G1 GWebCache|G2 GWebCache|G1/G2 GWebCache|Server.met URL|Blocked"
-msgstr "Gnutella Bootstrap|G1 GWebCache|G2 GWebCache|G1/G2 GWebCache|Server.met URL|Bloqueado"
+msgid "Gnutella Bootstrap|G1 GWebCache|G2 GWebCache|G1/G2 GWebCache|Server.met URL|DC++ Hub List URL|Blocked"
+msgstr "Gnutella Bootstrap|G1 GWebCache|G2 GWebCache|G1/G2 GWebCache|Server.met URL|DC++ Hub List URL|Bloqueado"
 
 #: dialog;cdownloadmonitordlg
 msgid "Download : Shareaza"
@@ -9302,25 +9260,9 @@ msgstr "_Procurar Arquivo"
 msgid "_Remember my selection next time"
 msgstr "_Lembrar minha seleção da próxima vez"
 
-#: curlactiondlg;control;13
-msgid "Open a download _monitor window"
-msgstr "Abrir uma janela do _monitor de downloads"
-
 #: curlactiondlg;control;14
 msgid "You have clicked on a Shareaza-powered URI which will add the following Discovery Service to your Discovery Services cache."
 msgstr "Você clicou numa URI do Shareaza a qual adicionará o seguinte Serviço de Descobrimento ao seu cache de Serviços de Descobrimento."
-
-#: dialog;cbitzidownloaddlg
-msgid "Downloading Metadata..."
-msgstr "Baixando Metadata..."
-
-#: cbitzidownloaddlg;control;2
-msgid "Shareaza is attempting to download metadata from Bitzi(TM)..."
-msgstr "O Shareaza está tentando baixar o metadata do Bitzi(TM)..."
-
-#: cbitzidownloaddlg;control;6
-msgid "www.bitzi.com"
-msgstr "www.bitzi.com"
 
 #: dialog;cfilepreviewdlg
 msgid "Smart Download Preview..."
@@ -9981,6 +9923,54 @@ msgstr "Gatilho"
 #: column;nextrun
 msgid "NextRun"
 msgstr "PróximaExecução"
+
+#~ msgid "Store _Collections Here:"
+#~ msgstr "Armazenar as _Coleções Aqui:"
+
+#~ msgid "_Store Torrents Here:"
+#~ msgstr "_Armazenar Torrents Aqui:"
+
+#~ msgid "Display simple progress bar"
+#~ msgstr "Exibir barra de progresso simples"
+
+#~ msgid "Requesting..."
+#~ msgstr "Pedindo..."
+
+#~ msgid "Success!"
+#~ msgstr "Sucesso!"
+
+#~ msgid "Finished, click Close"
+#~ msgstr "Terminado, clique em Fechar"
+
+#~ msgid "&Close"
+#~ msgstr "&Fechar"
+
+#~ msgid "The file \"%s\" has not yet been hashed. Please wait for the file to be hashed, and then try again."
+#~ msgstr "O arquivo \"%s\" ainda não possui informação de hash. Por favr espere que o arquivo tenha um hash, e então tente novamente."
+
+#~ msgid "View _Bitzi Ticket"
+#~ msgstr "Ver o _Ticket do Bitzi"
+
+#~ msgid "_Download Metadata"
+#~ msgstr "_Baixar Metadata"
+
+#~ msgid "Download metadata for the selected file(s) from Bitzi(TM)..."
+#~ msgstr "Baixar metadata para o(s) arquivo(s) selecionado(s) do Bitzi(TM)..."
+
+#~ msgid "View the Bitzi(TM) ticket for the selected file on the web."
+#~ msgstr "Ver na rede o ticket Bitzi(TM) do arquivo selecionado."
+
+#~ msgid "This option uses services provided by Bitzi.com for recognising and sharing information about selected files.\\n\\nShareaza will transmit the SHA1 hash code for the selected file(s) in order to query the Bitzi database. If you are concerned about privacy, you may wish to consult the Bitzi.com privacy policy.\\n\\nWould you like to proceed?"
+#~ msgstr "Esta opção usa os serviços providenciados pelo Bitzi.com para identificação e compartilhamento sobre os arquivos selecionados.\\n\\nO Shareaza enviará o código de hash SHA1 para o(s) arquivo(s) selecionado(s) de modo a pesquisar o banco de dados do Bitzi. Se você está preocupado com sua privacidade, você pode desejar consultar a política de privacidade do Bitzi.com.\\n\\nVocê gostaria de prosseguir?"
+
+#~ msgid "Downloading Metadata..."
+#~ msgstr "Baixando Metadata..."
+
+#~ msgid "Shareaza is attempting to download metadata from Bitzi(TM)..."
+#~ msgstr "O Shareaza está tentando baixar o metadata do Bitzi(TM)..."
+
+#~ msgid "www.bitzi.com"
+#~ msgstr "www.bitzi.com"
 
 #~ msgid "Get Data"
 #~ msgstr "Obter Dados"

@@ -1,7 +1,7 @@
 //
 // DCNeighbour.cpp
 //
-// Copyright (c) Shareaza Development Team, 2010-2014.
+// Copyright (c) Shareaza Development Team, 2010-2015.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -258,9 +258,9 @@ BOOL CDCNeighbour::SendUserInfo()
 		// Number of connected hubs as regular user
 		Neighbours.GetCount( PROTOCOL_DC, nrsConnected, ntHub ),
 		// Number of connected hubs as VIP
-		0,
+		0u,
 		// Number of connected hubs as operator
-		0,
+		0u,
 		// Number of upload slots
 		nUploadSlots,
 		// Upload speed (Mbit/s)
@@ -535,7 +535,8 @@ BOOL CDCNeighbour::OnLock(LPSTR szParams)
 		else
 		{
 			// Bad way
-			if ( LPSTR szUserAgent = strchr( szParams, ' ' ) )
+			szUserAgent = strchr( szParams, ' ' );
+			if ( szUserAgent )
 			{
 				*szUserAgent++ = 0;
 				m_sUserAgent = UTF8Decode( szUserAgent );

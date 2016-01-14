@@ -1,7 +1,7 @@
 //
 // UPnPFinder.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2014.
+// Copyright (c) Shareaza Development Team, 2002-2015.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -280,8 +280,6 @@ void CUPnPFinder::RemoveDevice(CComBSTR bsUDN)
 
 bool CUPnPFinder::OnSearchComplete()
 {
-	ATLTRACE2( atlTraceCOM, 1, L"CUPnPFinder(%p)->OnSearchComplete\n", this );
-
 	if ( m_pDevices.empty() )
 	{
 		if ( m_bSecondTry )
@@ -712,10 +710,9 @@ void CUPnPFinder::CreatePortMappings(ServicePointer pService)
 	if ( m_sLocalIP.IsEmpty() || !m_bPortIsFree )
 		return;
 
-	CString strPort, strInArgs, strFormatString, strResult;
+	CString strPort, strInArgs, strResult;
 
-	strFormatString = L"|VT_BSTR=|VT_UI2=%s|VT_BSTR=%s|VT_UI2=%s|VT_BSTR=%s|"
-		L"VT_BOOL=True|VT_BSTR=Shareaza %s|VT_UI4=0|";
+	LPCTSTR szFormatString = L"|VT_BSTR=|VT_UI2=%s|VT_BSTR=%s|VT_UI2=%s|VT_BSTR=%s|VT_BOOL=True|VT_BSTR=%s at %s:%s|VT_UI4=0|";
 
 	if ( Settings.Connection.InPort == 0 ) // random port
 	{
@@ -724,12 +721,12 @@ void CUPnPFinder::CreatePortMappings(ServicePointer pService)
 	strPort.Format( L"%hu", Settings.Connection.InPort );
 
 	// First map UDP if some buggy router overwrites TCP on top
-	strInArgs.Format( strFormatString, strPort, L"UDP", strPort, m_sLocalIP, L"UDP" );
+	strInArgs.Format( szFormatString, strPort, L"UDP", strPort, m_sLocalIP, CLIENT_NAME_T _T(" UDP"), m_sLocalIP, strPort );
 	HRESULT hr = InvokeAction( pService, L"AddPortMapping", strInArgs, strResult );
 	if ( FAILED( hr ) )
 		return (void)UPnPMessage( hr );
 
-	strInArgs.Format( strFormatString, strPort, L"TCP", strPort, m_sLocalIP, L"TCP" );
+	strInArgs.Format( szFormatString, strPort, L"TCP", strPort, m_sLocalIP, CLIENT_NAME_T _T(" TCP"), m_sLocalIP, strPort );
 	hr = InvokeAction( pService, L"AddPortMapping", strInArgs, strResult );
 	if ( FAILED( hr ) )
 		return (void)UPnPMessage( hr );
@@ -1052,7 +1049,6 @@ void CUPnPFinder::DestroyVars(const INT_PTR nCount, VARIANT*** pppVars)
 // nFindData--AsyncFindHandle; pDevice--COM interface pointer of the device being added
 HRESULT CDeviceFinderCallback::DeviceAdded(LONG /*nFindData*/, IUPnPDevice* pDevice)
 {
-	ATLTRACE2( atlTraceCOM, 1, L"Device Added\n" );
 	m_instance.AddDevice( pDevice, true );
 	return S_OK;
 }
@@ -1061,7 +1057,6 @@ HRESULT CDeviceFinderCallback::DeviceAdded(LONG /*nFindData*/, IUPnPDevice* pDev
 // nFindData--AsyncFindHandle; bsUDN--UDN of the device being removed
 HRESULT CDeviceFinderCallback::DeviceRemoved(LONG /*nFindData*/, BSTR bsUDN)
 {
-	ATLTRACE2( atlTraceCOM, 1, "Device Removed: %s\n", bsUDN );
 	m_instance.RemoveDevice( bsUDN );
 	return S_OK;
 }

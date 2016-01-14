@@ -36,7 +36,7 @@ public:
 	CDownloadSource(const CDownload* pDownload, const CQueryHit* pHit);
 	CDownloadSource(const CDownload* pDownload, DWORD nClientID, WORD nClientPort, DWORD nServerIP, WORD nServerPort, const Hashes::Guid& oGUID);
     CDownloadSource(const CDownload* pDownload, const Hashes::BtGuid& oGUID, const IN_ADDR* pAddress, WORD nPort);
-	CDownloadSource(const CDownload* pDownload, LPCTSTR pszURL, BOOL bHashAuth = FALSE, FILETIME* pLastSeen = NULL, int nRedirectionCount = 0);
+	CDownloadSource(const CDownload* pDownload, LPCTSTR pszURL, BOOL bHashAuth = FALSE, FILETIME* pLastSeen = NULL, int nRedirectionCount = 0, BOOL bPartialSame = FALSE);
 	~CDownloadSource();
 
 private:
@@ -64,6 +64,7 @@ public:
 	BOOL				m_bED2K;
 	BOOL				m_bBTH;
 	BOOL				m_bMD5;
+	BOOL				m_bPartialSame;
 	CString				m_sServer;
 	CString				m_sNick;
 	DWORD				m_nSpeed;

@@ -422,6 +422,100 @@ HRESULT CIEProtocol::OnRequestCollection(LPCTSTR pszURL, CBuffer& oBuffer, CStri
 				}
 				return S_OK;
 			}
+			else if ( pCollFile && pCollFile->IsType( CCollectionFile::DCCollection ) )
+			{
+				if ( ! bParseOnly ){
+					if (strURL.Find(_T("/style.xsl")) > 0){
+						CString strTemp;
+						strTemp.Format(	_T("<?xml version=\"1.0\" encoding=\"utf-8\"?>")
+										_T("<xsl:stylesheet version=\"1.0\" xmlns:xsl=\"http://www.w3.org/1999/XSL/Transform\">")
+										_T("	<xsl:template match=\"/\">")
+										_T("		<html>")
+										_T("			<head>")
+										_T("				<title>Список фаилов</title>")
+										_T("				<style>")
+										_T("				body")
+										_T("				{")
+										_T("					font-family:verdana;")
+										_T("				}")
+										_T("				</style>")
+										_T("			</head>")
+										_T("			<body>")
+										_T("				<h1>Список фаилов</h1>")
+										_T("				<ul>")
+										_T("				<xsl:apply-templates/>")
+										_T("				</ul>")
+										_T("			</body>")
+										_T("		</html>")
+										_T("	</xsl:template>")
+										_T("	<xsl:template match=\"Directory\">")
+										_T("		<li>")
+										_T("			<xsl:value-of select=\"@Name\"/>")
+										_T("			<ul><xsl:apply-templates/></ul>")
+										_T("		</li>")
+										_T("		")
+										_T("		")
+										_T("	</xsl:template>")
+										_T("	<xsl:template match=\"File\">")
+										_T("		<li>")
+										_T("			<a>")
+										_T("				<xsl:attribute name=\"href\">")
+										_T("					")
+										_T("					magnet:?xl=<xsl:value-of select=\"@Size\"/>&amp;xs=urn:tree:tiger:<xsl:value-of select=\"@TTH\"/><xsl:apply-templates select=\"@BR\"/>&amp;dn=<xsl:value-of select=\"@Name\"/>")
+										_T("				</xsl:attribute>")
+										_T("				<xsl:value-of select=\"@Name\"/>")
+										_T("			</a>")
+										_T("		</li>")
+										_T("	</xsl:template>")
+										_T("	<xsl:template match=\"@BR\">")
+										_T("		&amp;br=<xsl:value-of select=\".\"/>000")
+										_T("	</xsl:template>")
+										_T("</xsl:stylesheet>")
+						);
+						oBuffer.Print( strTemp , CP_UTF8 );
+						return S_OK;
+					}
+
+					// Try to load as urn first
+					CLibraryFile* pDCCollFile = LibraryMaps.LookupFileByURN( strURN, FALSE, TRUE );
+					if ( ! pDCCollFile )
+					{
+						// else load as sha1
+						if ( ! oSHA1 )
+							return INET_E_INVALID_URL;
+						pDCCollFile = LibraryMaps.LookupFileBySHA1( oSHA1, FALSE, TRUE );
+						if ( ! pDCCollFile )
+							return INET_E_INVALID_URL;
+					}
+
+					CString strDCCollPath = pDCCollFile->GetPath();
+					CFile pDCFile = CFile(strDCCollPath, CFile::OpenFlags::modeRead);
+					ULONGLONG nInSize = pDCFile.GetLength();
+					
+					CBuffer pDCBuffer;
+
+					if ( ! pDCBuffer.EnsureBuffer( nInSize ) )
+						// Out of memory
+						return INET_E_CANNOT_LOAD_DATA;
+
+					if ( pDCFile.Read( pDCBuffer.GetData(), nInSize ) != nInSize )
+						// File read error
+						return INET_E_CANNOT_LOAD_DATA;
+					pDCBuffer.m_nLength = nInSize;
+
+					pDCFile.Close();
+
+					if ( ! pDCBuffer.UnBZip() )
+						// Decompression error
+						return INET_E_CANNOT_LOAD_DATA;
+
+					CString strTemp;
+					strTemp.Format(	_T("<?xml-stylesheet type=\"text/xsl\" href=\"style.xsl\"?>") );
+					oBuffer.Print( strTemp , CP_UTF8 );
+					oBuffer.AddBuffer( &pDCBuffer );
+					return S_OK;
+				}
+			}
 		}
 	}
 

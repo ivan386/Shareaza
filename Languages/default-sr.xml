@@ -3808,7 +3808,9 @@
 			<control caption="_Podesi..."/>
 			<control caption="Stavi Više"/>
 		</dialog>
-		<dialog name="CAdvancedSettingsPage" cookie="SyEdmsBuBuStStEdBuCo" caption="Napredno">
+		<dialog name="CAdvancedSettingsPage" cookie="EdStSyEdmsBuBuStStEdBuCo" caption="Napredno">
+			<control/>
+			<control/>
 			<control/>
 			<control/>
 			<control/>
@@ -4111,7 +4113,7 @@
 			<control caption="Service _Address:"/>
 			<control/>
 			<control caption="Discovery Service Type:"/>
-			<control caption="Gnutella Bootstrap|G1 GWebCache|G2 GWebCache|G1/G2 GWebCache|Server.met URL|Blocked"/>
+			<control caption="Gnutella Bootstrap|G1 GWebCache|G2 GWebCache|G1/G2 GWebCache|Server.met URL|DC++ Hub List URL|Blocked"/>
 			<control caption="OK"/>
 			<control caption="Odustani"/>
 		</dialog>

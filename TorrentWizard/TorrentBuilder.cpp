@@ -403,7 +403,7 @@ BOOL CTorrentBuilder::ProcessFiles()
 	delete [] m_pFileED2K;
 	m_pFileED2K = NULL;
 	if ( m_bED2K ) m_pFileED2K	= new CED2K[ m_pFiles.GetCount() ];
-
+	
 	delete [] m_pFileTTH;
 	m_pFileTTH = NULL;
 	if ( m_bTTH ) m_pFileTTH	= new CTigerTree[ m_pFiles.GetCount() ];
@@ -586,7 +586,7 @@ BOOL CTorrentBuilder::WriteOutput()
 				CTigerTree::TigerTreeDigest pFileTTH;
 				m_pFileTTH[ 0 ].GetRoot( (uchar*)&pFileTTH[ 0 ] );
 				pInfo->Add( "tiger" )->SetString( &pFileTTH, sizeof CTigerTree::TigerTreeDigest );
-			}
+		}
 		}
 		else
 		{
@@ -644,7 +644,7 @@ BOOL CTorrentBuilder::WriteOutput()
 						if ( CBENode* pPath = pFile->Add( "path" ) )
 						{
 							CString strFile = m_pFiles.GetNext( pos );
-							strFile = strFile.Mid( nCommonPath );			
+							strFile = strFile.Mid( nCommonPath );
 							while ( strFile.GetLength() )
 							{
 								CString strPart = strFile.SpanExcluding( _T("\\/") );
@@ -668,9 +668,9 @@ BOOL CTorrentBuilder::WriteOutput()
 							CTigerTree::TigerTreeDigest pFileTTH;
 							m_pFileTTH[ nFile ].GetRoot( (uchar*)&pFileTTH[ 0 ] );
 							pFile->Add( "tiger" )->SetString( &pFileTTH, sizeof CTigerTree::TigerTreeDigest );
-						}
 					}
 				}
+			}
 			}
 
 			pInfo->Add( "name" )->SetString( m_sName );

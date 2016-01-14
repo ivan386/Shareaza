@@ -95,6 +95,7 @@ public:
 	bool				m_bIsServer;				// Is OS a Server version
 	bool				m_bIsWin2000;				// Is OS Windows 2000
 	bool				m_bIsVistaOrNewer;			// Is OS Vista or newer
+	bool				m_bIs7OrNewer;				// Is OS 7 or newer
 	bool				m_bLimitedConnections;		// Networking is limited (XP SP2)
 	BOOL				m_bMenuWasVisible;			// For the menus in media player window
 	DWORD				m_nLastInput;				// Time of last input event (in secs)
@@ -132,7 +133,9 @@ public:
 
 	HINSTANCE			m_hUser32;
 	BOOL		(WINAPI *m_pfnChangeWindowMessageFilter)(UINT message, DWORD dwFlag);
-	
+	BOOL		(WINAPI *m_pfnShutdownBlockReasonCreate)(_In_ HWND hWnd, _In_ LPCWSTR pwszReason);
+	BOOL		(WINAPI *m_pfnShutdownBlockReasonDestroy)(_In_ HWND hWnd);
+
 	BOOL GetPropertyStoreFromParsingName( LPCWSTR pszPath, IPropertyStore**ppv );
 
 	// GeoIP - IP to Country lookup
@@ -235,7 +238,6 @@ private:
 };
 
 extern CShareazaApp			theApp;						// Shareaza Application
-extern OSVERSIONINFOEX		Windows;					// Windows Version
 extern SYSTEM_INFO			System;						// System Information
 
 

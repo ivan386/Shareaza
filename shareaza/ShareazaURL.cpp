@@ -1,7 +1,7 @@
 //
 // ShareazaURL.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2014.
+// Copyright (c) Shareaza Development Team, 2002-2015.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -22,7 +22,6 @@
 #include "StdAfx.h"
 #include "Shareaza.h"
 #include "BTInfo.h"
-#include "DiscoveryServices.h"
 #include "Network.h"
 #include "QuerySearch.h"
 #include "Settings.h"
@@ -223,10 +222,10 @@ BOOL CShareazaURL::ParseRoot(LPCTSTR pszURL, BOOL bResolve)
 		return ParsePiolet( SkipSlashes( pszURL, 5 ) );
 	}
 	else if ( _tcsnicmp( pszURL, _T("gwc:"), 4 ) == 0 ||
-			  _tcsnicmp( pszURL, _T("uhc:"), 4 ) == 0 ||
-			  _tcsnicmp( pszURL, _T("ukhl:"), 5 ) == 0 ||
-			  _tcsnicmp( pszURL, _T("gnutella1:"), 10 ) == 0 ||
-			  _tcsnicmp( pszURL, _T("gnutella2:"), 10 ) == 0 )
+			  _tcsnicmp( pszURL, _PT( DSGnutellaUDPHC ) ) == 0 ||
+			  _tcsnicmp( pszURL, _PT( DSGnutella2UDPKHL ) ) == 0 ||
+			  _tcsnicmp( pszURL, _PT( DSGnutellaTCP ) ) == 0 ||
+			  _tcsnicmp( pszURL, _PT( DSGnutella2TCP ) ) == 0 )
 	{
 		return ParseShareaza( pszURL );
 	}
@@ -691,7 +690,7 @@ BOOL CShareazaURL::ParseMagnet(LPCTSTR pszURL)
 			QWORD nBitrate;
 			if ( _stscanf( strValue, _T("%I64i"), &nBitrate ) == 1 )
 				m_nBitrate = nBitrate;
-		}
+	}
 	}
 
 	if ( m_oBTH && ! m_pTorrent )
@@ -760,10 +759,10 @@ BOOL CShareazaURL::ParseShareaza(LPCTSTR pszURL)
 	{
 		return ParseDiscovery( SkipSlashes( pszURL, 7 ), CDiscoveryService::dsServerMet );
 	}
-	else if ( _tcsnicmp( pszURL, _T("uhc:"), 4 ) == 0 ||
-			  _tcsnicmp( pszURL, _T("ukhl:"), 5 ) == 0 ||
-			  _tcsnicmp( pszURL, _T("gnutella1:host:"), 15 ) == 0 ||
-			  _tcsnicmp( pszURL, _T("gnutella2:host:"), 15 ) == 0 )
+	else if ( _tcsnicmp( pszURL, _PT( DSGnutellaUDPHC ) ) == 0 ||
+			  _tcsnicmp( pszURL, _PT( DSGnutella2UDPKHL ) ) == 0 ||
+			  _tcsnicmp( pszURL, _PT( DSGnutellaTCP ) ) == 0 ||
+			  _tcsnicmp( pszURL, _PT( DSGnutella2TCP ) ) == 0 )
 	{
 		return ParseDiscovery( pszURL, CDiscoveryService::dsGnutella );
 	}
@@ -775,7 +774,7 @@ BOOL CShareazaURL::ParseShareaza(LPCTSTR pszURL)
 	{
 		if ( ParseShareazaHost( SkipSlashes( pszURL, 7 ), FALSE, PROTOCOL_BT ) )
 		{
-			m_sAddress.Format( _T("%s:%u"), m_sName, m_nPort );
+			m_sAddress.Format( _T("%s:%u"), (LPCTSTR)m_sName, m_nPort );
 			return TRUE;
 		}
 		return FALSE;
@@ -807,7 +806,7 @@ BOOL CShareazaURL::ParseShareazaHost(LPCTSTR pszURL, BOOL bBrowse, PROTOCOLID nP
 
 	if ( nPos >= 0 )
 	{
-		_stscanf( m_sName.Mid( nPos + 1 ), _T("%i"), &m_nPort );
+		_stscanf( m_sName.Mid( nPos + 1 ), _T("%hu"), &m_nPort );
 		m_sName = m_sName.Left( nPos );
 	}
 
@@ -1057,7 +1056,7 @@ BOOL CShareazaURL::ParseDonkeyFile(LPCTSTR pszURL)
 
 		// Now we have the source in x.x.x.x:port format.
 		CString strEDFTP;
-		strEDFTP.Format( _T("ed2kftp://%s/%s/%I64u/"), strPart, (LPCTSTR)m_oED2K.toString(), m_nSize );
+		strEDFTP.Format( _T("ed2kftp://%s/%s/%I64u/"), (LPCTSTR)strPart, (LPCTSTR)m_oED2K.toString(), m_nSize );
 		SafeString( strEDFTP );
 		if ( m_sURL.GetLength() ) m_sURL += _T(", ");
 		m_sURL += strEDFTP;
@@ -1074,7 +1073,7 @@ BOOL CShareazaURL::ParseDonkeyServer(LPCTSTR pszURL)
 	LPCTSTR pszPort = _tcschr( pszURL, '|' );
 	if ( pszPort == NULL ) return FALSE;
 
-	if ( _stscanf( pszPort + 1, _T("%i"), &m_nPort ) != 1 ) return FALSE;
+	if ( _stscanf( pszPort + 1, _T("%hu"), &m_nPort ) != 1 ) return FALSE;
 
 	m_sName = pszURL;
 	m_sName = m_sName.Left( static_cast< int >( pszPort - pszURL ) );
@@ -1083,7 +1082,7 @@ BOOL CShareazaURL::ParseDonkeyServer(LPCTSTR pszURL)
 	m_sName.TrimRight();
 	if ( m_sName.IsEmpty() ) return FALSE;
 
-	m_sAddress.Format( _T("%s:%u"), m_sName, m_nPort );
+	m_sAddress.Format( _T("%s:%u"), (LPCTSTR)m_sName, m_nPort );
 
 	m_nProtocol = PROTOCOL_ED2K;
 	m_nAction	= uriHost;
@@ -1157,10 +1156,10 @@ BOOL CShareazaURL::ParseDiscovery(LPCTSTR pszURL, int nType)
 {
 	if ( _tcsncmp( pszURL, _T("http://"), 7 ) != 0 &&
 		 _tcsncmp( pszURL, _T("https://"), 8 ) != 0 &&
-		 _tcsncmp( pszURL, _T("uhc:"), 4 ) != 0 &&
-		 _tcsncmp( pszURL, _T("ukhl:"), 5 ) != 0 &&
-		 _tcsncmp( pszURL, _T("gnutella1:host:"), 15 ) != 0 &&
-		 _tcsncmp( pszURL, _T("gnutella2:host:"), 15 ) != 0 ) return FALSE;
+		 _tcsncmp( pszURL, _PT( DSGnutellaUDPHC ) ) != 0 &&
+		 _tcsncmp( pszURL, _PT( DSGnutella2UDPKHL ) ) != 0 &&
+		 _tcsncmp( pszURL, _PT( DSGnutellaTCP ) ) != 0 &&
+		 _tcsncmp( pszURL, _PT( DSGnutella2TCP ) ) != 0 ) return FALSE;
 
 	int nPos;
 	CString strURL, strNets, strTemp = pszURL;
@@ -1478,7 +1477,7 @@ BOOL CShareazaURL::RegisterShellType(LPCTSTR pszRoot, LPCTSTR pszProtocol, LPCTS
 		{
 			if ( RegCreateKey( hSub2, _T("command"), &hSub3 ) == ERROR_SUCCESS )
 			{
-				strValue.Format( _T("\"%s\" \"%%%c\""), theApp.m_strBinaryPath, bProtocol ? _T('L') : _T('1') );
+				strValue.Format( _T("\"%s\" \"%%%c\""), (LPCTSTR)theApp.m_strBinaryPath, bProtocol ? _T('L') : _T('1') );
 				RegSetValueEx( hSub3, NULL, 0, REG_STRING( strValue ) );
 				RegCloseKey( hSub3 );
 			}
@@ -1714,7 +1713,7 @@ BOOL CShareazaURL::RegisterMagnetHandler(LPCTSTR pszID, LPCTSTR pszName, LPCTSTR
 	CString strIcon, strCommand;
 
 	strIcon = Skin.GetImagePath( nIDIcon );
-	strCommand.Format( _T("\"%s\" \"%%URL\""), theApp.m_strBinaryPath );
+	strCommand.Format( _T("\"%s\" \"%%URL\""), (LPCTSTR)theApp.m_strBinaryPath );
 
 	RegSetValueEx( hHandler, _T(""), 0, REG_STRING( pszName ) );
 	RegSetValueEx( hHandler, _T("Description"), 0, REG_STRING( pszDescription ) );

@@ -1,7 +1,7 @@
 //
 // RouteCache.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2012.
+// Copyright (c) Shareaza Development Team, 2002-2015.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -28,11 +28,6 @@
 static char THIS_FILE[]=__FILE__;
 #define new DEBUG_NEW
 #endif
-
-#undef HASH_SIZE
-#undef HASH_MASK
-const unsigned HASH_SIZE = 1024u;
-const unsigned HASH_MASK = 0x3FF;
 
 const DWORD MIN_BUFFER_SIZE = 1024u;
 const DWORD MAX_BUFFER_SIZE = 40960u;
@@ -213,7 +208,7 @@ CRouteCacheItem* CRouteCacheTable::Find(const Hashes::Guid& oGUID)
 	WORD nGUID = 0, *ppGUID = (WORD*)&oGUID[ 0 ];
 	for ( int nIt = 8 ; nIt ; nIt-- ) nGUID = WORD( ( nGUID + *ppGUID++ ) & 0xffff );
 
-	CRouteCacheItem* pItem = *( m_pHash + ( nGUID & HASH_MASK ) );
+	CRouteCacheItem* pItem = *( m_pHash + ( nGUID & ROUTE_HASH_MASK ) );
 
 	for ( ; pItem ; pItem = pItem->m_pNext )
 	{
@@ -234,7 +229,7 @@ CRouteCacheItem* CRouteCacheTable::Add(const Hashes::Guid& oGUID, const CNeighbo
 	WORD *ppGUID = (WORD*)&oGUID[ 0 ];
 	for ( int nIt = 8 ; nIt ; nIt-- ) nGUID = WORD( ( nGUID + *ppGUID++ ) & 0xffff );
 
-	CRouteCacheItem** pHash = m_pHash + ( nGUID & HASH_MASK );
+	CRouteCacheItem** pHash = m_pHash + ( nGUID & ROUTE_HASH_MASK );
 
 	CRouteCacheItem* pItem = m_pFree;
 	m_pFree = m_pFree->m_pNext;
@@ -263,7 +258,7 @@ void CRouteCacheTable::Remove(CNeighbour* pNeighbour)
 {
 	CRouteCacheItem** pHash = m_pHash;
 
-	for ( int nHash = 0 ; nHash < HASH_SIZE ; nHash++, pHash++ )
+	for ( int nHash = 0 ; nHash < ROUTE_HASH_SIZE ; nHash++, pHash++ )
 	{
 		CRouteCacheItem** pLast = pHash;
 
@@ -317,7 +312,7 @@ void CRouteCacheTable::Resize(DWORD nSize)
 		}
 	}
 
-	ZeroMemory( m_pHash, sizeof(CRouteCacheItem*) * HASH_SIZE );
+	ZeroMemory( m_pHash, sizeof( m_pHash ) );
 
 	m_pFree		= m_pBuffer;
 	m_nUsed		= 0;

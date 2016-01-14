@@ -1,7 +1,7 @@
 //
 // SharedFile.h
 //
-// Copyright (c) Shareaza Development Team, 2002-2014.
+// Copyright (c) Shareaza Development Team, 2002-2015.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -107,6 +107,8 @@ public:
 	BOOL			Rebuild();
 	BOOL			Rename(LPCTSTR pszName);
 	BOOL			Delete(BOOL bDeleteGhost = FALSE);
+	// Get any useful data (i.e. metadata, sources, hashes etc.) from specified file
+	BOOL			AddMetadata(const CLibraryFile* pFile);
 	void			UpdateMetadata(const CDownload* pDownload);
 	BOOL			SetMetadata(CXMLElement*& pXML, BOOL bMerge = FALSE, BOOL bOverwrite = FALSE);
 	BOOL			MergeMetadata(CXMLElement*& pXML, BOOL bOverwrite);
@@ -116,7 +118,7 @@ public:
 	void			ModifyMetadata();		// Mark metadata as modified
 	CTigerTree*		GetTigerTree();
 	CED2K*			GetED2K();
-	CSharedSource*	AddAlternateSource(LPCTSTR pszURL, FILETIME* tSeen = NULL);
+	CSharedSource*	AddAlternateSource(LPCTSTR pszURL, const FILETIME* tSeen = NULL);
 	CSharedSource*	AddAlternateSources(LPCTSTR pszURL);
 	CString			GetAlternateSources(CList< CString >* pState, int nMaximum, PROTOCOLID nProtocol);
 	BOOL			OnVerifyDownload(const CLibraryRecent* pRecent);
@@ -144,12 +146,6 @@ public:
 	// $meta:number$	- file number in string array
 	// Unknown variables will be replaced by "N/A" string.
 	BOOL			PrepareDoc(LPCTSTR pszTemplate, CArray< CString >& oDocs) const;
-
-	inline CString GetNameLC() const
-	{
-		CString str( m_sName );
-		return ToLower( str );
-	}
 
 	inline QWORD GetBase() const
 	{
@@ -206,17 +202,30 @@ protected:
 	friend class CLibraryFolder;
 	friend class CLibraryMaps;
 	friend class CDeleteFileDlg;
+
+private:
+	CLibraryFile(const CLibraryFile& pFile);
+	CLibraryFile& operator=(const CLibraryFile& pFile);
 };
 
+
 typedef CList< CLibraryFile* > CFileList;
-typedef CMap< DWORD_PTR, DWORD_PTR, CLibraryFile*, CLibraryFile* > CIndexMap;
-typedef CMap< CString, const CString&, CLibraryFile*, CLibraryFile* > CFileMap;
+
+
+struct Earlier : public std::binary_function < CLibraryFile*, CLibraryFile*, bool >
+{
+	inline bool operator()( const CLibraryFile* _Left, const CLibraryFile* _Right ) const
+	{
+		return CompareFileTime( &_Left->m_pTime, &_Right->m_pTime ) < 0;
+	}
+};
+
 
 class CSharedSource
 {
 // Construction
 public:
-	CSharedSource(LPCTSTR pszURL = NULL, FILETIME* pTime = NULL);
+	CSharedSource(LPCTSTR pszURL = NULL, const FILETIME* pTime = NULL);
 
 // Attributes
 public:
@@ -226,7 +235,7 @@ public:
 // Operations
 public:
 	void	Serialize(CArchive& ar, int nVersion);
-	void	Freshen(FILETIME* pTime = NULL);
-	BOOL	IsExpired(FILETIME& tNow);
+	void	Freshen(const FILETIME* pTime = NULL);
+	BOOL	IsExpired(FILETIME& tNow) const;
 
 };
