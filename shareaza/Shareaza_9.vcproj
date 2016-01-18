@@ -3832,6 +3832,19 @@
 				>
 			</File>
 			<File
+				RelativePath=".\Res\DCFileListStyle.xsl"
+				>
+				<FileConfiguration
+					Name="Debug|Win32"
+					>
+					<Tool
+						Name="VCCustomBuildTool"
+						CommandLine="gzip -c &quot;$(InputDir)$(InputFileName)&quot; &gt;&quot;$(InputDir)$(InputFileName).gz&quot;"
+						Outputs="$(InputDir)$(InputFileName).gz"
+					/>
+				</FileConfiguration>
+			</File>
+			<File
 				RelativePath="Res\Default.xml"
 				>
 				<FileConfiguration

@@ -87,6 +87,7 @@ const LPCTSTR RT_BMP = _T("BMP");
 const LPCTSTR RT_JPEG = _T("JPEG");
 const LPCTSTR RT_PNG = _T("PNG");
 const LPCTSTR RT_GZIP = _T("GZIP");
+const LPCTSTR RT_XSL = _T("XSL");
 // double scaleX = 1;
 // double scaleY = 1;
 
@@ -2715,6 +2716,9 @@ CString LoadHTML(HINSTANCE hInstance, UINT nResourceID)
 	CString strBody;
 	BOOL bGZIP = FALSE;
 	HRSRC hRes = FindResource( hInstance, MAKEINTRESOURCE( nResourceID ), RT_HTML );
+	if ( ! hRes )
+		hRes = FindResource( hInstance, MAKEINTRESOURCE( nResourceID ), RT_XSL );
+
 	if ( ! hRes )
 	{
 		hRes = FindResource( hInstance, MAKEINTRESOURCE( nResourceID ), RT_GZIP );
