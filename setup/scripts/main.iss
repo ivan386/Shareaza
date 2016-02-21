@@ -1,7 +1,7 @@
 ;
 ; main.iss
 ;
-; Copyright (c) Shareaza Development Team, 2002-2015.
+; Copyright (c) Shareaza Development Team, 2002-2016.
 ; This file is part of SHAREAZA (shareaza.sourceforge.net)
 ;
 ; Shareaza is free software; you can redistribute it
@@ -189,7 +189,7 @@
 #expr Exec( Zip, "a -y -mx=9 builds\" + symbols_name + " ""..\" + Compiler + "\" + PlatformName + "\" + ConfigurationName + "\*.pdb""", ".." )
 
 ; Pack sources
-#expr Exec( Zip, "a -y -mx=9 -r -x!.vs -x!.svn -x!setup\builds\*.exe -x!setup\builds\*.txt -x!setup\builds\*.iss -x!Win32 -x!x64 -x!ipch -x!*.7z -x!*.log -x!*.bak -x!*.tmp -x!*.sdf -x!*.suo -x!*.ncb -x!*.user -x!*.opensdf builds\" + source_name + " ..", ".." )
+#expr Exec( Zip, "a -y -mx=9 -r -x!.vs -x!.svn -x!setup\builds\*.exe -x!setup\builds\*.txt -x!setup\builds\*.iss -x!Win32 -x!x64 -x!.vs -x!ipch -x!*.7z -x!*.log -x!*.bak -x!*.VC.db -x!*.VC.opendb -x!*.tmp -x!*.sdf -x!*.suo -x!*.ncb -x!*.user -x!*.opensdf builds\" + source_name + " ..", ".." )
 
 [Setup]
 AppComments={#Description}
