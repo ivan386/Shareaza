@@ -110,7 +110,6 @@
     </PreBuildEvent>
     <Midl>
       <PreprocessorDefinitions>_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <GenerateStublessProxies>true</GenerateStublessProxies>
       <HeaderFileName>ShareazaOM.h</HeaderFileName>
       <InterfaceIdentifierFileName>Shareaza_i.c</InterfaceIdentifierFileName>
     </Midl>
@@ -156,7 +155,6 @@
     <Midl>
       <PreprocessorDefinitions>_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <TargetEnvironment>X64</TargetEnvironment>
-      <GenerateStublessProxies>true</GenerateStublessProxies>
       <HeaderFileName>ShareazaOM.h</HeaderFileName>
       <InterfaceIdentifierFileName>Shareaza_i.c</InterfaceIdentifierFileName>
     </Midl>
@@ -205,7 +203,6 @@
     </PreBuildEvent>
     <Midl>
       <PreprocessorDefinitions>NDEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <GenerateStublessProxies>true</GenerateStublessProxies>
       <HeaderFileName>ShareazaOM.h</HeaderFileName>
       <InterfaceIdentifierFileName>Shareaza_i.c</InterfaceIdentifierFileName>
     </Midl>
@@ -267,7 +264,6 @@
     <Midl>
       <PreprocessorDefinitions>NDEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <TargetEnvironment>X64</TargetEnvironment>
-      <GenerateStublessProxies>true</GenerateStublessProxies>
       <HeaderFileName>ShareazaOM.h</HeaderFileName>
       <InterfaceIdentifierFileName>Shareaza_i.c</InterfaceIdentifierFileName>
     </Midl>
