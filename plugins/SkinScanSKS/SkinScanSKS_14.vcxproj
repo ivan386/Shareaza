@@ -380,7 +380,7 @@
     <ResourceCompile Include="SkinScanSKS.rc" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\zlib\zlibwapi_12.vcxproj">
+    <ProjectReference Include="..\..\zlib\zlibwapi_14.vcxproj">
       <Project>{39f34f2c-d42a-41d2-a0bc-54d7972e2bc5}</Project>
       <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
     </ProjectReference>
