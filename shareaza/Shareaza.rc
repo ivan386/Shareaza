@@ -75,94 +75,183 @@ END
 // Icon with lowest ID value placed first to ensure application icon
 // remains consistent on all systems.
 IDR_MAINFRAME           ICON                    "Res\\Shareaza.ico"
+
 IDI_NOTASK              ICON                    "Res\\Warning.ico"
+
 IDR_SYSTEMFRAME         ICON                    "Res\\System.ico"
+
 IDR_NEIGHBOURSFRAME     ICON                    "Res\\Neighbours.ico"
+
 IDR_PACKETFRAME         ICON                    "Res\\Packets.ico"
+
 IDR_HOSTCACHEFRAME      ICON                    "Res\\HostCache.ico"
+
 IDR_SEARCHMONITORFRAME  ICON                    "Res\\Search.ico"
+
 IDR_SEARCHFRAME         ICON                    "Res\\Search.ico"
+
 IDR_HITMONITORFRAME     ICON                    "Res\\HitMonitor.ico"
+
 IDR_DOWNLOADSFRAME      ICON                    "Res\\Downloads.ico"
+
 IDR_LIBRARYFRAME        ICON                    "Res\\Library.ico"
+
 IDR_UPLOADSFRAME        ICON                    "Res\\Uploads.ico"
+
 IDI_BROWSE              ICON                    "Res\\Browse.ico"
+
 IDR_TRAFFICFRAME        ICON                    "Res\\Traffic.ico"
+
 IDR_CHATFRAME           ICON                    "Res\\Chat.ico"
+
 IDI_PROPERTIES          ICON                    "Res\\Properties.ico"
+
 IDR_SECURITYFRAME       ICON                    "Res\\Security.ico"
+
 IDR_DISCOVERYFRAME      ICON                    "Res\\Discovery.ico"
+
 IDI_WEB_URL             ICON                    "Res\\WebURL.ico"
+
 IDR_BROWSEHOSTFRAME     ICON                    "Res\\Computer.ico"
+
 IDR_SCHEDULERFRAME      ICON                    "Res\\Scheduler.ico"
+
 IDR_HOMEFRAME           ICON                    "Res\\Home.ico"
+
 IDI_DOWNLOAD_MONITOR    ICON                    "Res\\DownloadMonitor.ico"
+
 IDI_SKIN                ICON                    "Res\\Skin.ico"
+
 IDI_POINTER_ARROW       ICON                    "Res\\PointerArrow.ico"
+
 IDI_COMPUTER            ICON                    "Res\\Computer.ico"
+
 IDI_WORLD               ICON                    "Res\\World.ico"
+
 IDI_FLAG_ENGLISH        ICON                    "Res\\FlagEnglish.ICO"
+
 IDI_CHECKMARK           ICON                    "Res\\Checkmark.ico"
+
 IDI_EXECUTABLE          ICON                    "Res\\Executable.ico"
+
 IDI_FILE                ICON                    "Res\\File.ico"
+
 IDR_MEDIAFRAME          ICON                    "Res\\Media.ico"
+
 IDR_SEARCHPADFRAME      ICON                    "Res\\Search.ico"
+
 IDI_MAIL                ICON                    "Res\\Mail.ico"
+
 IDI_CONTACT_YAHOO       ICON                    "Res\\ContactYahoo.ico"
+
 IDI_CONTACT_AOL         ICON                    "Res\\ContactAOL.ico"
+
 IDI_CONTACT_ICQ         ICON                    "Res\\ContactICQ.ico"
+
 IDI_CONTACT_JABBER      ICON                    "Res\\ContactJabber.ico"
+
 IDI_COMPUTER_GRAY       ICON                    "Res\\ComputerGray.ICO"
+
 IDI_DISCOVERY_GRAY      ICON                    "Res\\DiscoveryGray.ico"
+
 IDI_DISCOVERY_BLUE      ICON                    "Res\\DiscoveryBlue.ico"
+
 IDI_CONTACT_MSN         ICON                    "Res\\ContactMSN.ico"
+
 IDR_HELPFRAME           ICON                    "Res\\Help.ico"
+
 IDI_SEARCH_FOLDER       ICON                    "Res\\SearchFolder.ico"
+
 IDI_TOOLS_WIZARD        ICON                    "Res\\ToolsWizard.ico"
+
 IDI_PAINTBRUSHES        ICON                    "Res\\Paintbrushes.ICO"
+
 IDI_COLLECTION          ICON                    "Res\\Collection.ico"
+
 IDI_COLLECTION_MASK     ICON                    "Res\\CollectionMask.ico"
+
 IDI_FIREWALLED          ICON                    "Res\\Firewalled.ico"
+
 IDI_GRANTED             ICON                    "Res\\Granted.ico"
+
 IDI_COLORS              ICON                    "res\\colors.ico"
+
 IDI_UPDOWN_ARROW        ICON                    "Res\\UpDownArrow.ico"
+
 IDI_HASH                ICON                    "Res\\Hash.ico"
+
 IDR_IRCFRAME            ICON                    "Res\\irc.ico"
+
 IDR_USERSFRAME          ICON                    "Res\\users.ico"
+
 IDR_CHANSFRAME          ICON                    "Res\\channel.ico"
+
 IDI_PLUS                ICON                    "Res\\Plus.ico"
+
 IDI_MINUS               ICON                    "Res\\Minus.ico"
+
 IDI_PLUS_HOVER          ICON                    "Res\\PlusHover.ico"
+
 IDI_MINUS_HOVER         ICON                    "Res\\MinusHover.ico"
+
 IDI_TICK                ICON                    "Res\\Tick.ico"
+
 IDI_BUSY                ICON                    "Res\\Busy.ico"
+
 IDI_UNSTABLE            ICON                    "Res\\Warning.ico"
+
 IDI_FOLDER_CLOSED       ICON                    "Res\\FolderClosed.ico"
+
 IDI_FOLDER_OPEN         ICON                    "Res\\FolderOpen.ico"
+
 IDI_LOCKED              ICON                    "Res\\Locked.ico"
+
 IDI_PARTIAL             ICON                    "Res\\Partial.ico"
+
 IDI_CHEVRON             ICON                    "Res\\Chevron.ico"
+
 IDI_STAR                ICON                    "Res\\Star.ico"
+
 IDI_PREVIEW             ICON                    "Res\\Preview.ico"
+
 IDI_FAKE                ICON                    "Res\\Fake.ico"
+
 IDI_COMMERCIAL          ICON                    "Res\\Commercial.ico"
+
 IDI_RATING_FAKE         ICON                    "Res\\RatingFake.ico"
+
 IDI_RATING_AVERAGE      ICON                    "Res\\RatingAverage.ico"
+
 IDI_RATING_GOOD         ICON                    "Res\\RatingGood.ico"
+
 IDI_WIZARD_DOT          ICON                    "Res\\WizardDot.ico"
+
 IDI_INCOMING            ICON                    "Res\\in.ico"
+
 IDI_OUTGOING            ICON                    "Res\\out.ico"
+
 IDI_USER                ICON                    "Res\\user.ico"
+
 IDI_USER_ME             ICON                    "Res\\user_me.ico"
+
 ID_NETWORK_NULL         ICON                    "Res\\Network_NULL.ico"
+
 ID_NETWORK_G1           ICON                    "Res\\Network_G1.ico"
+
 ID_NETWORK_G2           ICON                    "Res\\Network_G2.ico"
+
 ID_NETWORK_ED2K         ICON                    "Res\\Network_ED2K.ico"
+
 ID_NETWORK_HTTP         ICON                    "Res\\Network_HTTP.ico"
+
 ID_NETWORK_FTP          ICON                    "Res\\Network_FTP.ico"
+
 ID_NETWORK_BT           ICON                    "Res\\Network_BT.ico"
+
 ID_NETWORK_KAD          ICON                    "Res\\Network_KAD.ico"
+
 ID_NETWORK_DC           ICON                    "Res\\Network_DC.ico"
+
 
 /////////////////////////////////////////////////////////////////////////////
 //
@@ -191,7 +280,7 @@ BEGIN
             VALUE "FileDescription", "Shareaza Ultimate File Sharing"
             VALUE "FileVersion", "2.7.9.1"
             VALUE "InternalName", "Shareaza"
-            VALUE "LegalCopyright", "Copyright © Shareaza Development Team, 2002-2015. All rights reserved."
+            VALUE "LegalCopyright", "Copyright © Shareaza Development Team, 2002-2016. All rights reserved."
             VALUE "OriginalFilename", "Shareaza.exe"
             VALUE "ProductName", "Shareaza"
             VALUE "ProductVersion", "2.7.9.1"
@@ -210,19 +299,33 @@ END
 //
 
 IDB_SORT_ASC            BITMAP                  "Res\\SortAsc.bmp"
+
 IDB_SORT_DESC           BITMAP                  "Res\\SortDesc.bmp"
+
 IDB_COLOURDOT           BITMAP                  "Res\\ColourDot.bmp"
+
 IDB_SMALL_STAR          BITMAP                  "Res\\SmallStar.bmp"
+
 IDB_BANNER_MARK         BITMAP                  "Res\\BannerMark.bmp"
+
 IDB_MEDIA_STATES        BITMAP                  "Res\\mediaStates.bmp"
+
 IDB_TASKPANEL_FOOTER    BITMAP                  "Res\\TaskPanelFooter.bmp"
+
 IDB_TASKBOX_CAPTION     BITMAP                  "Res\\TaskBoxCaption.bmp"
+
 IDB_PANEL_MARK          BITMAP                  "Res\\PanelMark.bmp"
+
 IDB_MUSICBRAINZ_LOGO    BITMAP                  "Res\\MusicBrainz.bmp"
+
 IDB_CHILDFRAME          BITMAP                  "Res\\ChildFrame.bmp"
+
 IDB_IRCICONS            BITMAP                  "Res\\IrcIcons.bmp"
+
 IDB_FONT_SYMBOLS        BITMAP                  "Res\\FontSymbols.bmp"
+
 IDB_BOX_MARK            BITMAP                  "Res\\BoxMark.bmp"
+
 
 /////////////////////////////////////////////////////////////////////////////
 //
@@ -2754,10 +2857,15 @@ END
 //
 
 IDR_HTML_FILENOTFOUND   HTML                    "Res\\FileNotFound.htm"
+
 IDR_HTML_HASHMISMATCH   HTML                    "Res\\HashMismatch.htm"
+
 IDR_HTML_BUSY           HTML                    "Res\\Busy.htm"
+
 IDR_HTML_BADRANGE       HTML                    "Res\\BadRange.htm"
+
 IDR_HTML_DISABLED       HTML                    "Res\\Disabled.htm"
+
 
 /////////////////////////////////////////////////////////////////////////////
 //
@@ -3157,13 +3265,21 @@ END
 //
 
 IDC_HAND                CURSOR                  "Res\\Hand.cur"
+
 IDC_COPY                CURSOR                  "Res\\Copy.cur"
+
 IDC_MOVE                CURSOR                  "Res\\Move.cur"
+
 IDC_COPY_VISTA          CURSOR                  "Res\\CopyVista.cur"
+
 IDC_MOVE_VISTA          CURSOR                  "Res\\MoveVista.cur"
+
 IDC_DOWN                CURSOR                  "Res\\sch-down.cur"
+
 IDC_RIGHT               CURSOR                  "Res\\sch-right.cur"
+
 IDC_LEFT                CURSOR                  "Res\\sch-left.cur"
+
 
 /////////////////////////////////////////////////////////////////////////////
 //
@@ -3172,20 +3288,30 @@ IDC_LEFT                CURSOR                  "Res\\sch-left.cur"
 
 IDR_LARGE_LOGO          JPEG                    "Res\\LogoLarge.jpg"
 
+
 /////////////////////////////////////////////////////////////////////////////
 //
 // PNG
 //
 
 IDR_HOME_HEADER_1       PNG                     "Res\\HomeHeader.1.png"
+
 IDR_HOME_HEADER_2       PNG                     "Res\\HomeHeader.2.png"
+
 IDB_REMOTE_SKIN         PNG                     "Res\\RemoteWnd.png"
+
 IDB_MENUBAR             PNG                     "Res\\MenuBar.png"
+
 IDB_BANNER              PNG                     "Res\\Wizard.png"
+
 IDB_NAVBAR_IMAGE        PNG                     "Res\\Navbar.png"
+
 IDB_NAVBAR_IMAGE_RTL    PNG                     "Res\\NavbarRTL.png"
+
 IDB_NAVBAR_ALPHA        PNG                     "Res\\NavbarAlpha.png"
+
 IDB_NAVBAR_ALPHA_RTL    PNG                     "Res\\NavbarAlphaRTL.png"
+
 
 /////////////////////////////////////////////////////////////////////////////
 //
