@@ -185,12 +185,6 @@
   #error The 7z utility is missing. Please go to https://sourceforge.net/projects/sevenzip/ and install 7-Zip.
 #endif
 
-; Pack symbols
-#expr Exec( Zip, "a -y -mx=9 builds\" + symbols_name + " ""..\" + Compiler + "\" + PlatformName + "\" + ConfigurationName + "\*.pdb""", ".." )
-
-; Pack sources
-#expr Exec( Zip, "a -y -mx=9 -r -x!.vs -x!.svn -x!setup\builds\*.exe -x!setup\builds\*.txt -x!setup\builds\*.iss -x!Win32 -x!x64 -x!.vs -x!ipch -x!*.7z -x!*.log -x!*.bak -x!*.VC.db -x!*.VC.opendb -x!*.tmp -x!*.sdf -x!*.suo -x!*.ncb -x!*.user -x!*.opensdf builds\" + source_name + " ..", ".." )
-
 [Setup]
 AppComments={#Description}
 AppId={#internal_name}
@@ -1133,8 +1127,13 @@ var
 begin
   bWork := False;
 
-  if ( not MsiProduct( '{#vcredist_productcode}' ) ) then begin
-    AddProduct( '{#vcredist_exe}', '/quiet /norestart', '{#vcredist_title}', '{#vcredist_url}', false, false );
+  if ( not MsiProduct( '{#vcredist32_productcode}' ) ) then begin
+    AddProduct( '{#vcredist32_exe}', '/quiet /norestart', '{#vcredist32_title}', '{#vcredist32_url}', false, false );
+    bWork := True;
+  end;
+
+  if IsWin64 and ( not MsiProduct( '{#vcredist64_productcode}' ) ) then begin
+    AddProduct( '{#vcredist64_exe}', '/quiet /norestart', '{#vcredist64_title}', '{#vcredist64_url}', false, false );
     bWork := True;
   end;
 
@@ -1146,3 +1145,5 @@ end;
 #endif
 
 #expr SaveToFile(SourcePath + "..\builds\Preprocessed.iss")
+#expr Exec( Zip, "a -y -mx=9 builds\" + symbols_name + " ""..\" + Compiler + "\" + PlatformName + "\" + ConfigurationName + "\*.pdb""", ".." )
+#expr Exec( Zip, "a -y -mx=9 -r -x!.vs -x!.svn -x!setup\builds\*.exe -x!setup\builds\*.txt -x!setup\builds\*.iss -x!Win32 -x!x64 -x!.vs -x!ipch -x!*.7z -x!*.log -x!*.bak -x!*.VC.db -x!*.VC.opendb -x!*.tmp -x!*.sdf -x!*.suo -x!*.ncb -x!*.user -x!*.opensdf builds\" + source_name + " ..", ".." )
