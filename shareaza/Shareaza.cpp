@@ -344,7 +344,9 @@ BOOL CShareazaApp::InitInstance()
 	if ( Settings.Live.FirstRun || ! pTest )
 	{
 		pTest.Release();
-		if ( ! Plugins.Register( Settings.General.Path ) )
+		Plugins.Register( Settings.General.Path );
+		pTest.Attach( Plugins.GetPlugin( _T( "ImageService" ), _T( ".png" ) ) );
+		if ( ! pTest )
 		{
 			Plugins.Register( m_strBinaryPath.Left( m_strBinaryPath.ReverseFind( _T('\\') ) ) );
 		}
@@ -2993,9 +2995,9 @@ BOOL SaveIcon(HICON hIcon, CBuffer& oBuffer, int colors)
 	};
 	ICONDIRENTRY ide =
 	{
-		( ( cx < 256 ) ? (BYTE)cx : 0 ),
-		( ( cx < 256 ) ? (BYTE)cx : 0 ),
-		( ( colors < 8 ) ? ( 1 << colors ) : 0 ),
+		(BYTE)( ( cx < 256 ) ? cx : 0 ),
+		(BYTE)( ( cx < 256 ) ? cx : 0 ),
+		(BYTE)( ( colors < 8 ) ? ( 1 << colors ) : 0 ),
 		0,
 		1,
 		(WORD)colors,
