@@ -1,10 +1,10 @@
-# $Id: Makefile.mingw,v 1.21 2015/09/18 12:45:16 nanard Exp $
+# $Id: Makefile.mingw,v 1.23 2016/01/19 09:56:03 nanard Exp $
 # Miniupnp project.
 # http://miniupnp.free.fr/ or http://miniupnp.tuxfamily.org/
 # (c) 2005-2015 Thomas Bernard
 # This Makefile is made for MinGW
 #
-CC = gcc
+CC ?= gcc
 #CFLAGS = -Wall -g -DDEBUG -D_WIN32_WINNT=0X501
 CFLAGS = -Wall -Os -DNDEBUG -D_WIN32_WINNT=0X501
 LDLIBS = -lws2_32 -liphlpapi
@@ -18,7 +18,8 @@ OBJS=miniwget.o minixml.o igd_desc_parse.o minisoap.o \
      upnpdev.o
 OBJSDLL=$(addprefix dll/, $(OBJS))
 
-all:	init upnpc-static upnpc-shared testminixml libminiupnpc.a miniupnpc.dll
+all:	init upnpc-static upnpc-shared testminixml libminiupnpc.a \
+	miniupnpc.dll listdevices
 
 init:
 	mkdir dll
@@ -46,16 +47,16 @@ miniupnpc.dll:	libminiupnpc.a $(OBJSDLL)
 	$(OBJSDLL) $(LDLIBS)
 
 miniupnpc.lib:	miniupnpc.dll
-	echo $@ generated with $<
+#	echo $@ generated with $<
 
 dll/upnpc.o:	upnpc.o
-	echo $@ generated with $<
+#	echo $@ generated with $<
 
 .c.o:
 	$(CC) $(CFLAGS) -DMINIUPNP_STATICLIB -c -o $@ $<
 	$(CC) $(CFLAGS) -DMINIUPNP_EXPORTS -c -o dll/$@ $<
 
-upnpc.o:
+upnpc.o:	upnpc.c
 	$(CC) $(CFLAGS) -DMINIUPNP_STATICLIB -c -o $@ $<
 	$(CC) $(CFLAGS) -c -o dll/$@ $<
 
@@ -64,6 +65,9 @@ upnpc-static:	upnpc.o libminiupnpc.a
 	$(CC) -o $@ $^ $(LDLIBS)
 
 upnpc-shared:	dll/upnpc.o miniupnpc.lib
+	$(CC) -o $@ $^ $(LDLIBS)
+
+listdevices: listdevices.o libminiupnpc.a
 	$(CC) -o $@ $^ $(LDLIBS)
 
 wingenminiupnpcstrings:	wingenminiupnpcstrings.o
@@ -75,7 +79,7 @@ miniupnpcstrings.h: miniupnpcstrings.h.in wingenminiupnpcstrings
 
 minixml.o:	minixml.c minixml.h
 
-upnpc.o:	upnpc.c miniwget.h minisoap.h miniupnpc.h igd_desc_parse.h
+upnpc.o:	miniwget.h minisoap.h miniupnpc.h igd_desc_parse.h
 upnpc.o:	upnpreplyparse.h upnpcommands.h upnperrors.h miniupnpcstrings.h
 
 miniwget.o:	miniwget.c miniwget.h miniupnpcstrings.h connecthostport.h

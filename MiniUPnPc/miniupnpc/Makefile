@@ -1,4 +1,4 @@
-# $Id: Makefile,v 1.131 2015/10/08 16:15:46 nanard Exp $
+# $Id: Makefile,v 1.133 2016/01/24 17:24:35 nanard Exp $
 # MiniUPnP Project
 # http://miniupnp.free.fr/
 # http://miniupnp.tuxfamily.org/
@@ -15,6 +15,7 @@ VERSION = $(shell cat VERSION)
 
 ifeq ($(OS), Darwin)
 JARSUFFIX=mac
+LIBTOOL ?= $(shell which libtool)
 endif
 ifeq ($(OS), Linux)
 JARSUFFIX=linux
@@ -65,7 +66,7 @@ ifeq (SunOS, $(OS))
 endif
 
 # APIVERSION is used to build SONAME
-APIVERSION = 15
+APIVERSION = 16
 
 SRCS = igd_desc_parse.c miniupnpc.c minixml.c minisoap.c miniwget.c \
        upnpc.c upnpcommands.c upnpreplyparse.c testminixml.c \
@@ -261,7 +262,11 @@ depend:
 	makedepend -Y -- $(CFLAGS) -- $(SRCS) 2>/dev/null
 
 $(LIBRARY):	$(LIBOBJS)
+ifeq ($(OS), Darwin)
+	$(LIBTOOL) -static -o $@ $?
+else
 	$(AR) crs $@ $?
+endif
 
 $(SHAREDLIBRARY):	$(LIBOBJS)
 ifeq ($(OS), Darwin)
@@ -272,13 +277,12 @@ else
 endif
 
 upnpc-static:	upnpc.o $(LIBRARY)
-	$(CC) $(LDFLAGS) -o $@ $^
+	$(CC) $(LDFLAGS) -o $@ $^ $(LOADLIBES) $(LDLIBS)
 
 upnpc-shared:	upnpc.o $(SHAREDLIBRARY)
-	$(CC) $(LDFLAGS) -o $@ $^
+	$(CC) $(LDFLAGS) -o $@ $^ $(LOADLIBES) $(LDLIBS)
 
-listdevices:	listdevices.o $(LIBRARY) $(LDLIBS)
-	$(CC) $(LDFLAGS) -o $@ $^
+listdevices:	listdevices.o $(LIBRARY)
 
 testminixml:	$(TESTMINIXMLOBJS)
 
