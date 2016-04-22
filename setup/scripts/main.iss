@@ -237,8 +237,6 @@ AppUpdatesURL=http://shareaza.sourceforge.net/?id=download
 
 #if ConfigurationName == "Release"
   #include SourcePath + "..\..\" + Compiler + "\vcredist\vcredist.iss"
-  #include "idp.iss"
-  #include "dep.iss"
 #endif
 
 [Tasks]
@@ -1122,22 +1120,8 @@ End;
 
 #if ConfigurationName == "Release"
 procedure InitializeWizard();
-var
-  bWork: Boolean;
 begin
-  bWork := False;
-
-  if ( not MsiProduct( '{#vcredist32_productcode}' ) ) then begin
-    AddProduct( '{#vcredist32_exe}', '/quiet /norestart', '{#vcredist32_title}', '{#vcredist32_url}', false, false );
-    bWork := True;
-  end;
-
-  if IsWin64 and ( not MsiProduct( '{#vcredist64_productcode}' ) ) then begin
-    AddProduct( '{#vcredist64_exe}', '/quiet /norestart', '{#vcredist64_title}', '{#vcredist64_url}', false, false );
-    bWork := True;
-  end;
-
-  if bWork then begin
+  if InstallVCRedist() then begin
     idpSetDetailedMode( True );
     idpDownloadAfter( wpReady );
   end;
