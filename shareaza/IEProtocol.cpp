@@ -417,8 +417,14 @@ HRESULT CIEProtocol::OnRequestCollection(LPCTSTR pszURL, CBuffer& oBuffer, CStri
 			{
 				if ( ! bParseOnly )
 				{
+					if (strURL.Find(_T("/shareaza_filelist_style.xsl")) > 0){
+						oBuffer.Print( LoadHTML( GetModuleHandle( NULL ), IDR_XSL_ShareazaFileListStyle ) );
+						sMimeType = _T("text/xsl");
+						return S_OK;
+					}
+
 					pCollFile->Render( oBuffer );
-					sMimeType = _T("text/html");
+					sMimeType = _T("text/xml");
 				}
 				return S_OK;
 			}
@@ -427,6 +433,7 @@ HRESULT CIEProtocol::OnRequestCollection(LPCTSTR pszURL, CBuffer& oBuffer, CStri
 				if ( ! bParseOnly ){
 					if (strURL.Find(_T("/dc_filelist_style.xsl")) > 0){
 						oBuffer.Print( LoadHTML( GetModuleHandle( NULL ), IDR_XSL_DCFileListStyle ) );
+						sMimeType = _T("text/xsl");
 						return S_OK;
 					}
 
@@ -467,6 +474,7 @@ HRESULT CIEProtocol::OnRequestCollection(LPCTSTR pszURL, CBuffer& oBuffer, CStri
 					strTemp.Format(	_T("<?xml-stylesheet type=\"text/xsl\" href=\"dc_filelist_style.xsl\"?>") );
 					oBuffer.Print( strTemp , CP_UTF8 );
 					oBuffer.AddBuffer( &pDCBuffer );
+					sMimeType = _T("text/xml");
 					return S_OK;
 				}
 			}

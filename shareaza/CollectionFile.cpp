@@ -481,21 +481,10 @@ void CCollectionFile::Render(CBuffer& strBuffer) const
 
 	CString sHead;
 
-	sHead.Format( _T("<plaintext><html>\n<head>\n")
-		_T("<meta http-equiv=\"Content-Type\" content=\"text/html; charset=UTF-8\"/>\n")
-		_T("<title>%s</title>\n")
-		_T("<style type=\"text/css\">\n")
-		_T("body  { margin: 0px; padding: 0px; background-color: #ffffff; color: #000000; font-family: %s; font-size: %upx; }\n")
-		_T("h1    { text-align: left; color: #ffffff; height: 64px; margin: 0px; padding: 20px; font-size: 10pt; font-weight: bold; background-image: url(res://shareaza.exe/#2/#221); }\n")
-		_T("table { font-size: 8pt; width: 100%%; display: none}\n")
-		_T("td    { background-color: #e0e8f0; padding: 4px; }\n")
-		_T(".num  { width: 40px; text-align: center; }\n")
-		_T(".url  { text-align: left; cursor: hand; }\n")
-		_T(".size { width: 100px; text-align: center; }\n")
-		_T("</style>\n</head>\n<body>\n<h1>%s</h1>\n<table>\n"),
+	sHead.Format(	_T("<?xml-stylesheet type=\"text/xsl\" href=\"shareaza_filelist_style.xsl\"?>\n")
+					_T("<FileList title=\"%s\" font=\"%s\" fontSize=\"%u\">\n"),
 		(LPCTSTR)GetTitle(),
-		(LPCTSTR)Settings.Fonts.DefaultFont, Settings.Fonts.FontSize,
-		(LPCTSTR)GetTitle() );
+		(LPCTSTR)Settings.Fonts.DefaultFont, Settings.Fonts.FontSize);
 	strBuffer.Print(sHead, CP_UTF8);
 
 	DWORD i = 1;
@@ -526,17 +515,15 @@ void CCollectionFile::Render(CBuffer& strBuffer) const
 		}
 
 		CString strTemp;
-		strTemp.Format( _T("<tr><td class=\"num\">%u</td>")
-			_T("<td class=\"url\" onclick=\"if ( ! window.external.open('%s') ) window.external.download('%s');\" onmouseover=\"window.external.hover('%s');\" onmouseout=\"window.external.hover('');\">%s</td>")
-			_T("<td class=\"size\">%s</td></tr>\n"),
-			i, (LPCTSTR)strURN, (LPCTSTR)strURN, (LPCTSTR)strURN, (LPCTSTR)pFile->m_sName,
+		strTemp.Format( _T("<File index=\"%u\" urn=\"%s\" path=\"%s\" name=\"%s\" size=\"%s\" />\n"),
+			i, (LPCTSTR)strURN, (LPCTSTR) pFile->m_sPath, (LPCTSTR)pFile->m_sName,
 			(LPCTSTR)Settings.SmartVolume( pFile->m_nSize ) );
 
 		strBuffer.Print(strTemp, CP_UTF8);
 	}
 
 
-	CString strFoot = _T("<script>document.getElementsByTagName('table')[0].style.display='block'</script></body>\n</html>");
+	CString strFoot = _T("</FileList>");
 
 	strBuffer.Print(strFoot, CP_UTF8); 
  }

@@ -17,7 +17,26 @@
 #undef APSTUDIO_READONLY_SYMBOLS
 
 /////////////////////////////////////////////////////////////////////////////
-// English resources
+// Russian resources
+
+#if !defined(AFX_RESOURCE_DLL) || defined(AFX_TARG_RUS)
+#ifdef _WIN32
+LANGUAGE LANG_RUSSIAN, SUBLANG_DEFAULT
+#pragma code_page(1251)
+#endif //_WIN32
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// XSL
+//
+
+IDR_XSL_ShareazaFileListStyle XSL                     "Res\\ShareazaFileListStyle.xsl"
+#endif    // Russian resources
+/////////////////////////////////////////////////////////////////////////////
+
+
+/////////////////////////////////////////////////////////////////////////////
+// English (Neutral) resources
 
 #if !defined(AFX_RESOURCE_DLL) || defined(AFX_TARG_ENU)
 #ifdef _WIN32
@@ -1953,7 +1972,7 @@ END
 //
 
 #ifdef APSTUDIO_INVOKED
-GUIDELINES DESIGNINFO
+GUIDELINES DESIGNINFO 
 BEGIN
     IDD_SCHEDULE_TASK, DIALOG
     BEGIN
@@ -2730,7 +2749,7 @@ END
 // Accelerator
 //
 
-IDR_MAINFRAME ACCELERATORS
+IDR_MAINFRAME ACCELERATORS 
 BEGIN
     VK_F1,          ID_HELP_FAQ,            VIRTKEY, NOINVERT
     VK_UP,          ID_LIBRARY_PARENT,      VIRTKEY, CONTROL, NOINVERT
@@ -3205,7 +3224,7 @@ IDB_NAVBAR_ALPHA_RTL    PNG                     "Res\\NavbarAlphaRTL.png"
 // String Table
 //
 
-STRINGTABLE
+STRINGTABLE 
 BEGIN
     IDR_MAINFRAME           "Shareaza"
     IDR_SYSTEMFRAME         "System"
@@ -3225,7 +3244,7 @@ BEGIN
     IDR_BROWSEHOSTFRAME     "Browse"
 END
 
-STRINGTABLE
+STRINGTABLE 
 BEGIN
     IDR_HOMEFRAME           "Shareaza Home"
     IDR_MEDIAFRAME          "Media Player"
@@ -3235,7 +3254,7 @@ BEGIN
     IDR_SCHEDULERFRAME      "Scheduler"
 END
 
-STRINGTABLE
+STRINGTABLE 
 BEGIN
     IDS_SECURITY_BANNED_USERAGENT 
                             "Client %s has a prohibited user agent ""%s"", banning."
@@ -3244,7 +3263,7 @@ BEGIN
     IDS_FOLDER_TIP          "Files shared over the Internet"
 END
 
-STRINGTABLE
+STRINGTABLE 
 BEGIN
     IDS_BT_CLIENT_DROP_CONNECTING "BitTorrent connection to %s was dropped."
     IDS_BT_CLIENT_DROP_HANDSHAKE "BitTorrent handshake with %s was dropped."
@@ -3260,7 +3279,7 @@ BEGIN
     IDS_SEARCH_TASK         "New Search"
 END
 
-STRINGTABLE
+STRINGTABLE 
 BEGIN
     IDS_GENERAL_RETRY       "Retry"
     IDS_GENERAL_IGNORE      "Ignore"
@@ -3281,7 +3300,7 @@ BEGIN
                             "Are you sure you want to remove all scheduled tasks? This cannot be undone."
 END
 
-STRINGTABLE
+STRINGTABLE 
 BEGIN
     IDS_SCHEDULER_SYSTEM_START "System: Start Shareaza"
     IDS_SCHEDULER_BANDWIDTH_FULLSPEED "Bandwidth: Full Speed"
@@ -3301,7 +3320,7 @@ BEGIN
     IDS_SELECT_FOLDER_COLLECTIONS "Store Collections Here"
 END
 
-STRINGTABLE
+STRINGTABLE 
 BEGIN
     IDS_LIBRARY_ALBUM_TRACK "#"
     IDS_LIBRARY_ALBUM_TITLE "Title"
@@ -3315,7 +3334,7 @@ BEGIN
     IDS_GENERAL_ABORT       "Abort"
 END
 
-STRINGTABLE
+STRINGTABLE 
 BEGIN
     IDS_FILTER_DELETE_CONFIRM "Are you sure you want to delete this filter ?"
     IDS_SCHEMAS             "&Schemas"
@@ -3325,7 +3344,7 @@ BEGIN
     IDS_FILTER_NO_NAME      "Please give your filter a name."
 END
 
-STRINGTABLE
+STRINGTABLE 
 BEGIN
     IDS_COLLECTION_WIZARD_NOTVALID "This template is invalid."
     IDS_COLLECTION_WIZARD_NOCUSTOM 
@@ -3333,7 +3352,7 @@ BEGIN
     IDS_TEMPLATE_DELETE     "Are you sure you want to delete the ""%s"" template?\nThis cannot be undone."
 END
 
-STRINGTABLE
+STRINGTABLE 
 BEGIN
     IDS_SETTINGS            "Shareaza Settings"
     IDS_WIZARD              "Welcome to Shareaza"
@@ -3351,7 +3370,7 @@ BEGIN
     IDS_DOWNLOAD_PROPERTIES "Download Properties"
 END
 
-STRINGTABLE
+STRINGTABLE 
 BEGIN
     IDS_STATUS_BAR_CONNECTED 
                             "Connected to %lu neighbour(s). %s in local library."
@@ -3365,7 +3384,7 @@ BEGIN
     IDS_NETWORK_DISCONNECT  "Disconnect"
 END
 
-STRINGTABLE
+STRINGTABLE 
 BEGIN
     IDS_SEARCH_DETAILS_EMPTY 
                             "This area shows more information about files you select."
@@ -3381,7 +3400,7 @@ BEGIN
                             "Unable to download preview content from ""%s""."
 END
 
-STRINGTABLE
+STRINGTABLE 
 BEGIN
     IDS_SEARCH_AGAIN        "Click here to search again"
     IDS_SEARCH_NONE         "No searches have been started in this window yet."
@@ -3399,7 +3418,7 @@ BEGIN
     IDS_SEARCH_PANEL_SEARCHING "Searching"
 END
 
-STRINGTABLE
+STRINGTABLE 
 BEGIN
     IDS_SEARCH_PANEL_START  "Search"
     IDS_SEARCH_PANEL_MORE   "More"
@@ -3420,7 +3439,7 @@ BEGIN
     IDS_SEARCH_PANEL_ADVANCED "Advanced"
 END
 
-STRINGTABLE
+STRINGTABLE 
 BEGIN
     IDS_BROWSE_CONNECTING   "Establishing a connection to host..."
     IDS_BROWSE_PUSHED       "Sent a push request, waiting for connection..."
@@ -3433,7 +3452,7 @@ BEGIN
     IDS_SEARCH_ALL_NETWORKS "All Networks"
 END
 
-STRINGTABLE
+STRINGTABLE 
 BEGIN
     IDS_SEARCH_PAD_HEADER   "Search Shareaza"
     IDS_SEARCH_PAD_WORDS    "Type some keywords to search for:"
@@ -3443,13 +3462,13 @@ BEGIN
     IDS_SEARCH_PANEL_INPUT_5 " to"
 END
 
-STRINGTABLE
+STRINGTABLE 
 BEGIN
     IDS_HASH_MESSAGE        "Shareaza is creating hashes for %Iu file(s):"
     IDS_DLM_TIME_DAH        "%i days and %i hours"
 END
 
-STRINGTABLE
+STRINGTABLE 
 BEGIN
     IDS_DLM_DOWNLOADING     "Shareaza is downloading:"
     IDS_DLM_PAUSED          "This download is paused:"
@@ -3468,7 +3487,7 @@ BEGIN
     IDS_DLM_COMPLETED_WORD  "Completed"
 END
 
-STRINGTABLE
+STRINGTABLE 
 BEGIN
     IDS_DLM_MOVING          "Shareaza is moving the download:"
     IDS_DLM_VERIFY          "Shareaza is checking the download for errors:"
@@ -3476,7 +3495,7 @@ BEGIN
     IDS_DLM_NUMBER_OF_REVIEWS "Number of reviews:"
 END
 
-STRINGTABLE
+STRINGTABLE 
 BEGIN
     IDS_LIBHEAD_HOME        "Exploring Your Shareaza Library"
     IDS_LIBHEAD_EXPLORE_FOLDER "Exploring "
@@ -3488,7 +3507,7 @@ BEGIN
     IDS_LIBPANEL_RATE_FILE  "Rate this file"
 END
 
-STRINGTABLE
+STRINGTABLE 
 BEGIN
     IDS_TIP_NA              "N/A"
     IDS_TIP_LOCATION        "Location"
@@ -3507,7 +3526,7 @@ BEGIN
     IDS_TIP_NOHASHSET       "No Hashset"
 END
 
-STRINGTABLE
+STRINGTABLE 
 BEGIN
     IDS_TIP_STATUS          "Status:"
     IDS_TIP_SPEED           "Speed:"
@@ -3527,14 +3546,14 @@ BEGIN
     IDS_TIP_FILE_FIREWALLED "Sources for this file are firewalled"
 END
 
-STRINGTABLE
+STRINGTABLE 
 BEGIN
     IDS_TIP_FILE_UNSTABLE   "Sources for this file may be unstable"
     IDS_TIP_UNTRUSTED       "Untrusted"
     IDS_TIP_FREE_SPACE      "Free:"
 END
 
-STRINGTABLE
+STRINGTABLE 
 BEGIN
     IDS_STATUS_BAR_CONNECTED_HUB_UP 
                             "Hub/Ultrapeer mode with %lu neighbour(s). %s in local library."
@@ -3545,12 +3564,12 @@ BEGIN
     IDS_STATUS_BAR_CONNECTED_SIMPLE "Connected. %s in local library."
 END
 
-STRINGTABLE
+STRINGTABLE 
 BEGIN
     IDS_NETWORK_UPNP_FAILED "UPnP port mapping failed after 10 attempts."
 END
 
-STRINGTABLE
+STRINGTABLE 
 BEGIN
     IDS_NETWORK_STARTUP     "Starting Shareaza network core..."
     IDS_NETWORK_CANT_LISTEN "Can't bind to %s port %i for incoming connections. Incoming connections will not be supported."
@@ -3573,7 +3592,7 @@ BEGIN
     IDS_NETWORK_DISCONNECT_CONFIRM "Are you sure you want to disconnect?"
 END
 
-STRINGTABLE
+STRINGTABLE 
 BEGIN
     IDS_NETWORK_ALWAYS      "Would you like to always connect to this network?"
     IDS_NETWORK_SEARCH_SENT "Sending query for ""%s"" to %s."
@@ -3583,7 +3602,7 @@ BEGIN
                             "Your outgoing bandwidth is too low to enable this network"
 END
 
-STRINGTABLE
+STRINGTABLE 
 BEGIN
     IDS_CONNECTION_ACCEPTED "Accepted an incoming connection from %s port %i."
     IDS_CONNECTION_ATTEMPTING 
@@ -3606,7 +3625,7 @@ BEGIN
                             "Closed connection with neighbour %s because it is not a hub."
 END
 
-STRINGTABLE
+STRINGTABLE 
 BEGIN
     IDS_HANDSHAKE_TIMEOUT   "Timed out handshaking with %s."
     IDS_HANDSHAKE_ONLINE    "Gnutella connection with neighbour %s established successfully (G%i.%i : %s)."
@@ -3627,12 +3646,12 @@ BEGIN
     IDS_HANDSHAKE_NOTG2     "Closing connection to non-Gnutella2 neighbour %s."
 END
 
-STRINGTABLE
+STRINGTABLE 
 BEGIN
     IDS_PROTOCOL_EXCESS     "Received a packet from %s for %s which excess query limits, ignoring."
 END
 
-STRINGTABLE
+STRINGTABLE 
 BEGIN
     IDS_PROTOCOL_TOO_LARGE  "Neighbour %s forwarded a packet of excessive size, dropping connection."
     IDS_PROTOCOL_NO_TTL     "Neighbour %s forwarded a packet with zero TTL, ignoring."
@@ -3649,7 +3668,7 @@ BEGIN
     IDS_PROTOCOL_SIZE_PUSH  "Neighbour %s forwarded a push packet with invalid length, ignoring."
 END
 
-STRINGTABLE
+STRINGTABLE 
 BEGIN
     IDS_DOWNLOAD_ADDED      "Added ""%s"" to download queue with %i source(s)."
     IDS_DOWNLOAD_COMPLETED  "Completed download of ""%s""."
@@ -3676,7 +3695,7 @@ BEGIN
                             "Closing download connection %s due to lack of traffic."
 END
 
-STRINGTABLE
+STRINGTABLE 
 BEGIN
     IDS_DOWNLOAD_FILENOTFOUND 
                             "Download host %s does not have the file ""%s""."
@@ -3701,7 +3720,7 @@ BEGIN
                             "Can't fetch more sources for download ""%s"" because there is no network connection."
 END
 
-STRINGTABLE
+STRINGTABLE 
 BEGIN
     IDS_DOWNLOAD_SOURCES    "Querying for more sources for download ""%s"" on %i connection(s)..."
     IDS_DOWNLOAD_PUSH_SENT  "Sending push request for download ""%s""..."
@@ -3727,7 +3746,7 @@ BEGIN
     IDS_DOWNLOAD_TIGER_RECV "Receiving tiger-tree volume from %s (%s)..."
 END
 
-STRINGTABLE
+STRINGTABLE 
 BEGIN
     IDS_PROTOCOL_QRP_UNEXPECTED 
                             "Receiving an unexpected query routing table update from neighbour %s."
@@ -3740,7 +3759,7 @@ BEGIN
     IDS_PROTOCOL_QRP_SENT   "Sending query routing table to neighbour %s (%i bit = %lu[%i], %i%% full)"
 END
 
-STRINGTABLE
+STRINGTABLE 
 BEGIN
     IDS_LIBRARY_CONFIRM_EXECUTE 
                             "Are you sure you want to launch the file ""%s"" ?\n\nSome files can be harmful to your computer. Ensure you know what the file is before launching it."
@@ -3763,7 +3782,7 @@ BEGIN
     IDS_LIBRARY_DELETE_FAIL "Shareaza could not delete the file:\n\n%s"
 END
 
-STRINGTABLE
+STRINGTABLE 
 BEGIN
     IDS_DOWNLOAD_TIGER_CORRUPT 
                             "Download host's tiger-tree data is corrupt or internally inconsistent, ignoring it."
@@ -3795,7 +3814,7 @@ BEGIN
                             "Dropping source %s (%s) for sending corrupted parts of ""%s"" (%I64i-%I64i)."
 END
 
-STRINGTABLE
+STRINGTABLE 
 BEGIN
     IDS_UPLOAD_NOHTTP       "Upload host %s sent an invalid HTTP request."
     IDS_UPLOAD_CONNECT      "Initiating a push connection to %s. %s"
@@ -3818,7 +3837,7 @@ BEGIN
     IDS_UPLOAD_REMOVE       "Removed upload of ""%s"" to %s."
 END
 
-STRINGTABLE
+STRINGTABLE 
 BEGIN
     IDS_UPLOAD_BROWSER      "Upload host %s is on the user-agent block list, denying request."
     IDS_UPLOAD_HEADERS      "Sending upload headers from ""%s"" to host %s (%s)."
@@ -3842,7 +3861,7 @@ BEGIN
     IDS_UPLOAD_BUSY_HOST    "Refusing upload of ""%s"" to %s (%s), too many concurrent from host."
 END
 
-STRINGTABLE
+STRINGTABLE 
 BEGIN
     IDS_UPLOAD_PREVIEW_SEND "Uploading a preview of ""%s"" to %s."
     IDS_UPLOAD_PREVIEW_BUSY "Refusing to upload a preview of ""%s"" to %s, too many preview connections."
@@ -3866,7 +3885,7 @@ BEGIN
     IDS_UPLOAD_QUEUE_ED2K_CORE "eDonkey Core"
 END
 
-STRINGTABLE
+STRINGTABLE 
 BEGIN
     IDS_UPLOAD_QUEUE_ED2K_PARTIALS "eDonkey Partials"
     IDS_UPLOAD_QUEUE_ED2K_GUARD "eDonkey Guard"
@@ -3884,7 +3903,7 @@ BEGIN
     IDS_UPLOAD_QUEUE_DC_GUARD "DC++ Guard"
 END
 
-STRINGTABLE
+STRINGTABLE 
 BEGIN
     IDS_LIBRARY_TARGET_EXISTS 
                             "Target file exists:\n\n%s\n\nWould you like to overwrite it?"
@@ -3908,7 +3927,7 @@ BEGIN
     IDS_DOWNLOAD_NEW_GROUP  "New Group"
 END
 
-STRINGTABLE
+STRINGTABLE 
 BEGIN
     IDS_CHAT_CONNECTED_X    "Connected to %s, handshaking..."
     IDS_CHAT_ONLINE_X       "Now chatting with %s (%s)."
@@ -3924,7 +3943,7 @@ BEGIN
     IDS_CHAT_UNCONNECTED_X  "You're not connected."
 END
 
-STRINGTABLE
+STRINGTABLE 
 BEGIN
     IDS_GRAPH_TOTAL_BANDWIDTH_IN "Total Generic Receive Bandwidth"
     IDS_GRAPH_TOTAL_BANDWIDTH_OUT "Total Generic Transmit Bandwidth"
@@ -3944,7 +3963,7 @@ BEGIN
     IDS_GRAPH_GNUTELLA_LOST "Gnutella Packets Lost"
 END
 
-STRINGTABLE
+STRINGTABLE 
 BEGIN
     IDS_GRAPH_GNUTELLA_QUERIES "Gnutella Incoming Queries"
     IDS_GRAPH_GNUTELLA_QUERIES_PROCESSED "Gnutella Processed Queries"
@@ -3957,7 +3976,7 @@ BEGIN
     IDS_GRAPH_CONNECTION_ERRORS "Connection Errors (%)"
 END
 
-STRINGTABLE
+STRINGTABLE 
 BEGIN
     IDS_URL_RECEIVED        "Received URL ""%s"""
     IDS_URL_PARSE_ERROR     "Unable to parse URL: Shareaza does not understand this URL."
@@ -3973,12 +3992,12 @@ BEGIN
     IDS_URL_UNSPECIFIED     "Unspecified"
 END
 
-STRINGTABLE
+STRINGTABLE 
 BEGIN
     IDS_MEDIAVIS_NOVIS      "(No Visualisation)"
 END
 
-STRINGTABLE
+STRINGTABLE 
 BEGIN
     IDS_WIZARD_NEED_SPEED   "You have not yet specified a connection speed. Before continuing, please either choose your Internet connection type, or type in a connection speed."
     IDS_WIZARD_SHARE_CONFIRM 
@@ -3998,7 +4017,7 @@ BEGIN
     IDS_UPNP_SERVICES_ERROR "UPnP Device Host Service is not running. This service is required to perform the setup.\nYou need to set the startup type of the service to automatic."
 END
 
-STRINGTABLE
+STRINGTABLE 
 BEGIN
     IDS_SETTINGS_WARN_QUEUELIMIT 
                             "The eDonkey network uses large queues with long wait times. By limiting the maximum queue position you will accept so strictly, you may have trouble getting downloads to begin.\nAre you sure you want to limit what queue positions you will accept?"
@@ -4010,7 +4029,7 @@ BEGIN
                             "The incomplete files folder should not be in the library, as it would reduce performance. Incomplete files may be shared directly from the transfers window."
 END
 
-STRINGTABLE
+STRINGTABLE 
 BEGIN
     IDS_DISCOVERY_BOOTSTRAP "Querying host discovery services..."
     IDS_DISCOVERY_QUERY     "Querying discovery service ""%s""..."
@@ -4022,7 +4041,7 @@ BEGIN
     IDS_DISCOVERY_SUBMIT    "Submitting GWebCache ""%s"" to a random GWebCache..."
 END
 
-STRINGTABLE
+STRINGTABLE 
 BEGIN
     IDS_BROWSE_CONNECTING_TO "Initiating a connection to %s to browse user..."
     IDS_BROWSE_CANT_CONNECT_TO 
@@ -4042,12 +4061,12 @@ BEGIN
     IDS_BROWSE_TITLE_FORMAT "Browsing %s"
 END
 
-STRINGTABLE
+STRINGTABLE 
 BEGIN
     IDS_BROWSE_INTRO_FORMAT "Found %i shared files in %s's library."
 END
 
-STRINGTABLE
+STRINGTABLE 
 BEGIN
     IDS_MEDIA_PLUGIN_CREATE "Shareaza could not instantiate its MediaServices plugin. Please reinstall Shareaza, and confirm that you have the necessary media codecs and output drivers installed."
     IDS_MEDIA_LOAD_FAIL     "Unable to load media file ""%s"""
@@ -4060,12 +4079,12 @@ BEGIN
     IDS_MEDIA_PLAYLIST      "P L A Y L I S T"
 END
 
-STRINGTABLE
+STRINGTABLE 
 BEGIN
     IDS_MEDIA_SMPLAYER      "Shareaza Media Player"
 END
 
-STRINGTABLE
+STRINGTABLE 
 BEGIN
     IDS_NEIGHBOUR_G1PP      "Gnutella: Peer-to-Peer Connection"
     IDS_NEIGHBOUR_G1LU      "Gnutella: Leaf-to-Ultrapeer Connection"
@@ -4073,7 +4092,7 @@ BEGIN
     IDS_NEIGHBOUR_G2HH      "Gnutella II: Hub-to-Hub Connection"
 END
 
-STRINGTABLE
+STRINGTABLE 
 BEGIN
     IDS_NEIGHBOUR_G2LH      "Gnutella II: Leaf-to-Hub Connection"
     IDS_NEIGHBOUR_G2HL      "Gnutella II: Hub-to-Leaf Connection"
@@ -4093,7 +4112,7 @@ BEGIN
     IDS_NEIGHBOUR_REJECTED  "Rejected"
 END
 
-STRINGTABLE
+STRINGTABLE 
 BEGIN
     IDS_NEIGHBOUR_CLOSING   "Closing"
     IDS_NEIGHBOUR_UNKNOWN   "Unknown"
@@ -4109,7 +4128,7 @@ BEGIN
     IDS_NEIGHBOUR_DCHUB     "DC++ Hub Connection"
 END
 
-STRINGTABLE
+STRINGTABLE 
 BEGIN
     IDS_IRC_INPUT_CAPTION   "Send:"
     IDS_IRC_PANEL_TITLE     "Welcome to Shareaza Chat!"
@@ -4120,7 +4139,7 @@ BEGIN
     IDS_IRC_PANEL_CHANS_CAPTION "Channels"
 END
 
-STRINGTABLE
+STRINGTABLE 
 BEGIN
     IDS_CHAT_CONNECTING_TO  "Initiating a connection to %s..."
     IDS_CHAT_CANT_CONNECT   "Unable to create a connection to %s."
@@ -4141,7 +4160,7 @@ BEGIN
     IDS_CHAT_CANT_PUSH      "Unable to request a push connection from %s, no route available."
 END
 
-STRINGTABLE
+STRINGTABLE 
 BEGIN
     IDS_CHAT_NOT_CONNECTED_1 
                             "Cannot send message, you are not connected. Shareaza is trying to connect..."
@@ -4154,7 +4173,7 @@ BEGIN
     IDS_CHAT_CAPTCHA_ACCEPTED "CAPTCHA accepted."
 END
 
-STRINGTABLE
+STRINGTABLE 
 BEGIN
     IDS_ED2K_SERVER_CONNECTING 
                             "Initiating connection to eDonkey server at %s..."
@@ -4180,7 +4199,7 @@ BEGIN
                             "eDonkey client %s has the wrong GUID, aborting handshake."
 END
 
-STRINGTABLE
+STRINGTABLE 
 BEGIN
     IDS_ED2K_CLIENT_CONNECT_TIMEOUT 
                             "Timed out connecting to eDonkey client %s."
@@ -4190,7 +4209,7 @@ BEGIN
                             "Refusing eDonkey client link from %s because eDonkey is disabled."
 END
 
-STRINGTABLE
+STRINGTABLE 
 BEGIN
     IDS_ED2K_EPI_START      "Starting eDonkey partial download import process..."
     IDS_ED2K_EPI_FINISHED   "Process complete, %i partial downloads imported successfully."
@@ -4208,7 +4227,7 @@ BEGIN
     IDS_ED2K_EPI_DISK_SPACE "Insufficient disk space to copy download file."
 END
 
-STRINGTABLE
+STRINGTABLE 
 BEGIN
     IDS_BT_CLIENT_ACCEPTED  "Incoming connection from %s is a BitTorrent coupling, negotiating..."
     IDS_BT_CLIENT_CONNECT_TIMEOUT 
@@ -4236,7 +4255,7 @@ BEGIN
                             "Established BitTorrent coupling with %s, handshaking..."
 END
 
-STRINGTABLE
+STRINGTABLE 
 BEGIN
     IDS_BT_TRACK_CHANGE     "You have changed the tracker URL for this torrent. Are you sure you want to save this change?\n\nAn invalid tracker URL may prevent further downloading."
     IDS_BT_CLIENT_EXTENDED  "BitTorrent coupling with %s is extended protocol, identified ""%s""."
@@ -4253,7 +4272,7 @@ BEGIN
     IDS_BT_TRACKER_MULTI    "Trying next tracker (%i of %i)"
 END
 
-STRINGTABLE
+STRINGTABLE 
 BEGIN
     IDS_DOWNLOAD_EDIT_RENAME 
                             "You have made changes to the name field. Are you sure you want to rename this download?"
@@ -4275,7 +4294,7 @@ BEGIN
                             "You have made changes to the file size. Are you sure you want to change the file size for this download?"
 END
 
-STRINGTABLE
+STRINGTABLE 
 BEGIN
     IDS_DOWNLOAD_EDIT_CANCEL_DOWNLOAD 
                             "Are you sure you want to cancel this download but save incomplete file(s)?"
@@ -4286,14 +4305,14 @@ BEGIN
     IDS_DOWNLOAD_EDIT_BUSY  "The selected download item currently has some Task attached, please wait and do it later."
 END
 
-STRINGTABLE
+STRINGTABLE 
 BEGIN
     IDS_REMOTE_DISABLED     "Remote access is disabled."
     IDS_REMOTE_ENABLED      "You must choose a username and password."
     IDS_REMOTE_UNAVAILABLE  "Unable to accept connections, URL unavailable."
 END
 
-STRINGTABLE
+STRINGTABLE 
 BEGIN
     IDS_GENERAL_NOURNAVAILABLE "No URN available"
     IDS_GENERAL_CLOSE       "Close"
@@ -4310,7 +4329,7 @@ BEGIN
     IDS_GENERAL_ALL         "All"
 END
 
-STRINGTABLE
+STRINGTABLE 
 BEGIN
     IDS_STATUS_CONNECTING   "Connecting"
     IDS_STATUS_REQUESTING   "Requesting"
@@ -4326,7 +4345,7 @@ BEGIN
     IDS_STATUS_COMPLETED    "Completed"
 END
 
-STRINGTABLE
+STRINGTABLE 
 BEGIN
     IDS_STATUS_SEEDING      "Seeding"
     IDS_STATUS_MOVING       "Moving"
@@ -4346,7 +4365,7 @@ BEGIN
     IDS_STATUS_SOURCE       "source"
 END
 
-STRINGTABLE
+STRINGTABLE 
 BEGIN
     IDS_STATUS_SOURCES      "sources"
     IDS_STATUS_SOURCESTENS  "sources"
@@ -4360,7 +4379,7 @@ BEGIN
     IDS_STATUS_SOURCESOF    "sources"
 END
 
-STRINGTABLE
+STRINGTABLE 
 BEGIN
     IDS_RATING_NORATING     "(No Rating)"
     IDS_RATING_1            "Fake / Corrupt"
@@ -4372,7 +4391,7 @@ BEGIN
     IDS_SELECT_ED2K_TEMP_FOLDER "Select the eDonkey/eMule temp folder:"
 END
 
-STRINGTABLE
+STRINGTABLE 
 BEGIN
     ID_HELP_ABOUT           "Display the Shareaza about dialog..."
     ID_HELP_VERSION_CHECK   "Check for new version"
@@ -4386,7 +4405,7 @@ BEGIN
     ID_VIEW_NEIGHBOURS      "Show or hide the NEIGHBOURS window."
 END
 
-STRINGTABLE
+STRINGTABLE 
 BEGIN
     ID_VIEW_TRAFFIC         "Show or hide a GRAPH window."
     ID_VIEW_LIBRARY         "Show or hide the LIBRARY window."
@@ -4408,7 +4427,7 @@ BEGIN
     ID_HOSTCACHE_DISCONNECT "Disconnect from the selected neighbour(s)."
 END
 
-STRINGTABLE
+STRINGTABLE 
 BEGIN
     ID_HOSTCACHE_REMOVE     "Remove the selected hosts from the host cache."
     ID_NETWORK_CONNECT_TO   "Manually connect to a host..."
@@ -4422,7 +4441,7 @@ BEGIN
     ID_HITMONITOR_PAUSE     "Pause hit monitoring."
 END
 
-STRINGTABLE
+STRINGTABLE 
 BEGIN
     ID_TRANSFERS_DISCONNECT "Disconnect the selected download transfer(s)."
     ID_TRANSFERS_FORGET     "Disconnect and forget the selected download source(s)."
@@ -4441,7 +4460,7 @@ BEGIN
     ID_TRAFFIC_AXIS         "Display Vertical Axis"
 END
 
-STRINGTABLE
+STRINGTABLE 
 BEGIN
     ID_TRAFFIC_LEGEND       "Display legend."
     ID_TRAFFIC_SETUP        "Select and configure items to graph..."
@@ -4458,7 +4477,7 @@ BEGIN
     ID_TRAY_OPEN            "Open the Shareaza window."
 END
 
-STRINGTABLE
+STRINGTABLE 
 BEGIN
     ID_SEARCHMONITOR_CLEAR  "Clear the search monitor buffer."
     ID_SEARCH_COPY          "Copy the URI of the selected file."
@@ -4477,7 +4496,7 @@ BEGIN
     ID_DOWNLOADS_CLEAR      "Clear/remove the selected download(s)."
 END
 
-STRINGTABLE
+STRINGTABLE 
 BEGIN
     ID_DOWNLOADS_PAUSE      "Pause the selected download(s)."
     ID_DOWNLOADS_VIEW_REVIEWS "View reviews for the selected download."
@@ -4497,7 +4516,7 @@ BEGIN
     ID_UPLOADS_CLEAR        "Clear the selected upload(s) from the list."
 END
 
-STRINGTABLE
+STRINGTABLE 
 BEGIN
     ID_NETWORK_AUTO_CLOSE   "Automatically close Shareaza when transfers have completed."
     ID_UPLOADS_AUTO_CLEAR   "Automatically clear uploads which have been completed."
@@ -4511,7 +4530,7 @@ BEGIN
     ID_VIEW_SECURITY        "Show or hide the SECURITY window."
 END
 
-STRINGTABLE
+STRINGTABLE 
 BEGIN
     ID_SECURITY_EDIT        "Edit the selected security rule..."
     ID_SECURITY_REMOVE      "Remove the selected security rules."
@@ -4528,7 +4547,7 @@ BEGIN
     ID_DOWNLOADS_ENQUEUE    "Add the selected download(s) to your media playlist."
 END
 
-STRINGTABLE
+STRINGTABLE 
 BEGIN
     ID_SECURITY_MOVE_UP     "Move the selected security rules up the precedence list."
     ID_SECURITY_MOVE_DOWN   "Move the selected security rules down the precedence list."
@@ -4545,7 +4564,7 @@ BEGIN
     ID_DISCOVERY_EDIT       "View the properties for the selected discovery service."
 END
 
-STRINGTABLE
+STRINGTABLE 
 BEGIN
     ID_DISCOVERY_QUERY      "Query the selected discovery services now."
     ID_DISCOVERY_REMOVE     "Remove the selected discovery services."
@@ -4565,7 +4584,7 @@ BEGIN
     ID_BROWSE_LAUNCH        "Browse the selected user's profile and shared files."
 END
 
-STRINGTABLE
+STRINGTABLE 
 BEGIN
     ID_SYSTEM_VERBOSE_ERROR "Display errors only."
     ID_SYSTEM_VERBOSE_WARNING "Display warnings and above."
@@ -4580,7 +4599,7 @@ BEGIN
     ID_SCHEDULER_ADD        "Adds a new task to scheduler list."
 END
 
-STRINGTABLE
+STRINGTABLE 
 BEGIN
     ID_DOWNLOADS_BOOST      "Boost the performance of the selected download by removing bandwidth limits."
     ID_TAB_HOME             "Return to the Shareaza Home page"
@@ -4597,7 +4616,7 @@ BEGIN
     ID_TOOLS_RESKIN         "Reload and apply your current skin selection."
 END
 
-STRINGTABLE
+STRINGTABLE 
 BEGIN
     ID_MONITOR_CLOSE        "Close the monitor window."
     ID_WINDOW_TOOLBAR       "Show or hide the toolbar."
@@ -4616,7 +4635,7 @@ BEGIN
     ID_DOWNLOADS_SETTINGS   "Configure download settings..."
 END
 
-STRINGTABLE
+STRINGTABLE 
 BEGIN
     ID_UPLOADS_SETTINGS     "Configure upload settings..."
     ID_DOWNLOADS_FILTER_ALL "Show all downloads."
@@ -4637,7 +4656,7 @@ BEGIN
     ID_LIBRARY_VIEW_THUMBNAIL "Show thumbnails for files\nThumbnail View"
 END
 
-STRINGTABLE
+STRINGTABLE 
 BEGIN
     ID_LIBRARY_PARENT       "Move up to the parent folder."
     ID_LIBRARY_PANEL        "Show or hide the library detail panel."
@@ -4659,7 +4678,7 @@ BEGIN
     ID_MEDIA_SIZE_FILL      "Choose the best size for the video based on its aspect ratio."
 END
 
-STRINGTABLE
+STRINGTABLE 
 BEGIN
     ID_MEDIA_SIZE_DISTORT   "Stretch the video to fill the window, potentially distorting it."
     ID_MEDIA_SIZE_ONE       "Show the video at its original (natural) size."
@@ -4679,7 +4698,7 @@ BEGIN
     ID_MEDIA_REMOVE         "Remove the selected media file from the playlist."
 END
 
-STRINGTABLE
+STRINGTABLE 
 BEGIN
     ID_HELP_FORUMS          "Visit the Shareaza Discussion Forums."
     ID_HELP_UPDATE          "Check for news and updates."
@@ -4691,14 +4710,14 @@ BEGIN
     ID_MEDIA_SPEED          "Adjust the speed of the media file.\nSpeed"
 END
 
-STRINGTABLE
+STRINGTABLE 
 BEGIN
     ID_MEDIA_VOLUME         "Adjust the audio volume.\nVolume"
     ID_MEDIA_PROPERTIES     "View and edit the properties of the selected files."
     ID_MEDIA_RATE           "Rate the selected files."
 END
 
-STRINGTABLE
+STRINGTABLE 
 BEGIN
     ID_MEDIA_CLEAR          "Clear (empty) the playlist."
     ID_MEDIA_SAVE           "Save the current playlist to a file..."
@@ -4719,7 +4738,7 @@ BEGIN
     ID_LIBRARY_FILE_REBUILD "Rebuild metadata and hashes for the selected file(s)."
 END
 
-STRINGTABLE
+STRINGTABLE 
 BEGIN
     ID_MEDIA_VIS            "Select an audio visualisation plugin..."
     ID_DOWNLOADS_LAUNCH_COMPLETE "Open or play the selected file(s)."
@@ -4737,7 +4756,7 @@ BEGIN
     ID_MEDIA_ADD_FOLDER     "Add a folder of media files to the playlist..."
 END
 
-STRINGTABLE
+STRINGTABLE 
 BEGIN
     ID_LIBRARY_FOLDER_FILE_PROPERTIES 
                             "View and edit the properties of all files in the selected folder(s)..."
@@ -4754,7 +4773,7 @@ BEGIN
     ID_SEARCH_FOR_ARTIST    "Search for music files by the same artist as the selected file."
 END
 
-STRINGTABLE
+STRINGTABLE 
 BEGIN
     ID_SEARCH_FOR_ALBUM     "Search for music files in the same album as the selected file."
     ID_SEARCH_FOR_SERIES    "Search for video files in the same series as the selected file."
@@ -4772,7 +4791,7 @@ BEGIN
     ID_VIEW_BASIC           "Use Shareaza in Basic mode."
 END
 
-STRINGTABLE
+STRINGTABLE 
 BEGIN
     ID_WINDOW_NAVBAR        "Show or hide the navigation bar."
     ID_DOWNLOADS_RATE       "Rate the selected download."
@@ -4792,7 +4811,7 @@ BEGIN
     ID_TOOLS_SEEDTORRENT    "Seed the selected Torrent on BitTorrent."
 END
 
-STRINGTABLE
+STRINGTABLE 
 BEGIN
     ID_LIBRARY_SEARCH_QUICK "Search your file library..."
     ID_DOWNLOAD_GROUP_NEW   "Create a new download group..."
@@ -4815,13 +4834,13 @@ BEGIN
                             "Create a .torrent for this file to upload to a website."
 END
 
-STRINGTABLE
+STRINGTABLE 
 BEGIN
     AFX_IDS_APP_TITLE       "Shareaza"
     AFX_IDS_IDLEMESSAGE     "Ready"
 END
 
-STRINGTABLE
+STRINGTABLE 
 BEGIN
     ID_WINDOW_ARRANGE       "Arrange icons at the bottom of the window\nArrange Icons"
     ID_WINDOW_CASCADE       "Expand all open windows to fill the screen."
@@ -4829,23 +4848,23 @@ BEGIN
     ID_WINDOW_TILE_VERT     "Arrange open windows as vertical, non-overlapping tiles."
 END
 
-STRINGTABLE
+STRINGTABLE 
 BEGIN
     IDS_IRC_HEADERTITLE     "Welcome to Shareaza Chat!"
 END
 
-STRINGTABLE
+STRINGTABLE 
 BEGIN
     IDS_IRC_HEADERSUBTITLE  "Please respect others while using this service"
     IDS_IRC_HEADERCHAT      "Chat!"
 END
 
-STRINGTABLE
+STRINGTABLE 
 BEGIN
     ID_TAB_IRC              "Show the IRC Chat window."
 END
 
-STRINGTABLE
+STRINGTABLE 
 BEGIN
     ID_WEBSERVICES_LIST     "Choose the web service to get more information about the selected file."
     ID_WEBSERVICES_MUSICBRAINZ 
@@ -4854,7 +4873,7 @@ BEGIN
     ID_MUSICBRAINZ_ALBUMS   "Look at all albums for this artist."
 END
 
-STRINGTABLE
+STRINGTABLE 
 BEGIN
     AFX_IDS_SCSIZE          "Change the window size"
     AFX_IDS_SCMOVE          "Change the window position"
@@ -4865,30 +4884,30 @@ BEGIN
     AFX_IDS_SCCLOSE         "Close the active window and prompts to save the documents"
 END
 
-STRINGTABLE
+STRINGTABLE 
 BEGIN
     AFX_IDS_SCRESTORE       "Restore the window to normal size"
     AFX_IDS_SCTASKLIST      "Activate Task List"
     AFX_IDS_MDICHILD        "Activate this window"
 END
 
-STRINGTABLE
+STRINGTABLE 
 BEGIN
     AFX_IDS_PREVIEW_CLOSE   "Close print preview mode\nCancel Preview"
 END
 
-STRINGTABLE
+STRINGTABLE 
 BEGIN
     ID_NEXT_PANE            "Switch to the next window pane\nNext Pane"
     ID_PREV_PANE            "Switch back to the previous window pane\nPrevious Pane"
 END
 
-STRINGTABLE
+STRINGTABLE 
 BEGIN
     ID_SCHEDULER_REMOVE_ALL "Removes all scheduled tasks."
 END
 
-#endif    // English resources
+#endif    // English (Neutral) resources
 /////////////////////////////////////////////////////////////////////////////
 
 

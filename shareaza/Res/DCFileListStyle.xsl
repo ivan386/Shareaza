@@ -29,8 +29,7 @@
 		<li>
 			<a>
 				<xsl:attribute name="href">
-					
-					magnet:?xl=<xsl:value-of select="@Size"/>&amp;xs=urn:tree:tiger:<xsl:value-of select="@TTH"/><xsl:apply-templates select="@BR"/>&amp;dn=<xsl:value-of select="@Name"/>
+					magnet:?xl=<xsl:value-of select="@Size"/>&amp;xt=urn:tree:tiger:<xsl:value-of select="@TTH"/><xsl:apply-templates select="@BR"/>&amp;dn=<xsl:value-of select="@Name"/>
 				</xsl:attribute>
 				<xsl:value-of select="@Name"/>
 			</a>
