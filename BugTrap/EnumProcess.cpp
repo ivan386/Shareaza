@@ -77,16 +77,7 @@ CEnumProcess::CEnumProcess(void) :
 		FGetModuleFileNameEx = (PFGetModuleFileNameEx)GetProcAddress(m_hPsApiDll, "GetModuleFileNameExA");
 #endif
 
-		OSVERSIONINFO osvi;
-		osvi.dwOSVersionInfoSize = sizeof(osvi);
-		GetVersionEx(&osvi);
-		if (osvi.dwMajorVersion >= 5) // Windows 2000 and newer
-			if (osvi.dwMinorVersion == 0)
-				m_dwSystemID = 2; // Windows 2000
-			else
-				m_dwSystemID = 4; // Windows XP and newer
-		else
-			m_dwSystemID = 8; // Windows NT
+		m_dwSystemID = 4; // Windows XP and newer
 	}
 
 	m_hKernelDll = GetModuleHandle(_T("KERNEL32.DLL"));

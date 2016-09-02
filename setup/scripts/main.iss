@@ -1,7 +1,7 @@
 ;
 ; main.iss
 ;
-; Copyright (c) Shareaza Development Team, 2002-2015.
+; Copyright (c) Shareaza Development Team, 2002-2016.
 ; This file is part of SHAREAZA (shareaza.sourceforge.net)
 ;
 ; Shareaza is free software; you can redistribute it
@@ -185,12 +185,6 @@
   #error The 7z utility is missing. Please go to https://sourceforge.net/projects/sevenzip/ and install 7-Zip.
 #endif
 
-; Pack symbols
-;#expr Exec( Zip, "a -y -mx=9 builds\" + symbols_name + " ""..\" + Compiler + "\" + PlatformName + "\" + ConfigurationName + "\*.pdb""", ".." )
-
-; Pack sources
-;#expr Exec( Zip, "a -y -mx=9 -r -x!.vs -x!.svn -x!.git -x!setup\builds\*.exe -x!setup\builds\*.txt -x!setup\builds\*.iss -x!Win32 -x!x64 -x!ipch -x!*.7z -x!*.log -x!*.bak -x!*.tmp -x!*.sdf -x!*.suo -x!*.ncb -x!*.user -x!*.opensdf builds\" + source_name + " ..", ".." )
-
 [Setup]
 AppComments={#Description}
 AppId={#internal_name}
@@ -243,8 +237,6 @@ AppUpdatesURL=http://shareaza.sourceforge.net/?id=download
 
 #if ConfigurationName == "Release"
   #include SourcePath + "..\..\" + Compiler + "\vcredist\vcredist.iss"
-  #include "idp.iss"
-  #include "dep.iss"
 #endif
 
 [Tasks]
@@ -1128,17 +1120,8 @@ End;
 
 #if ConfigurationName == "Release"
 procedure InitializeWizard();
-var
-  bWork: Boolean;
 begin
-  bWork := False;
-
-  if ( not MsiProduct( '{#vcredist_productcode}' ) ) then begin
-    AddProduct( '{#vcredist_exe}', '/quiet /norestart', '{#vcredist_title}', '{#vcredist_url}', false, false );
-    bWork := True;
-  end;
-
-  if bWork then begin
+  if InstallVCRedist() then begin
     idpSetDetailedMode( True );
     idpDownloadAfter( wpReady );
   end;
@@ -1146,3 +1129,5 @@ end;
 #endif
 
 #expr SaveToFile(SourcePath + "..\builds\Preprocessed.iss")
+#expr Exec( Zip, "a -y -mx=9 builds\" + symbols_name + " ""..\" + Compiler + "\" + PlatformName + "\" + ConfigurationName + "\*.pdb""", ".." )
+#expr Exec( Zip, "a -y -mx=9 -r -x!.vs -x!.svn -x!.git -x!setup\builds\*.exe -x!setup\builds\*.txt -x!setup\builds\*.iss -x!Win32 -x!x64 -x!.vs -x!ipch -x!*.7z -x!*.log -x!*.bak -x!*.VC.db -x!*.VC.opendb -x!*.tmp -x!*.sdf -x!*.suo -x!*.ncb -x!*.user -x!*.opensdf builds\" + source_name + " ..", ".." )

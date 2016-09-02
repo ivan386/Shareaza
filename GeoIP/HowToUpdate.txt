@@ -2,5 +2,6 @@ How To update GeoIP
 
 1) Download GeoIP-x.x.x.tar.gz from: http://geolite.maxmind.com/download/geoip/api/c/
 2) Unpack libGeoIP\GeoIP.h and libGeoIP\GeoIP.c only
-3) Download GeoIP.dat.gz from: http://geolite.maxmind.com/download/geoip/database/GeoLiteCountry/GeoIP.dat.gz
-4) Unpack GeoIP.dat
+3) For VS2015: rename all "fileno" to "_fileno" in GeoIP.c
+4) Download GeoIP.dat.gz from: http://geolite.maxmind.com/download/geoip/database/GeoLiteCountry/GeoIP.dat.gz
+5) Unpack GeoIP.dat

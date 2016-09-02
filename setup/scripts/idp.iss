@@ -1,50 +1,42 @@
-﻿#define IDPDLLDIR ExtractFilePath(__PATHFILENAME__)
+; Inno Download Plugin
+; (c)2013-2014 Mitrich Software
+; http://mitrichsoftware.wordpress.com/
+; https://code.google.com/p/inno-download-plugin/
 
-[CustomMessages]
-en.IDP_FormCaption           =Downloading additional files
-en.IDP_FormDescription       =Please wait, while setup downloading additional files...
-en.IDP_TotalProgress         =Total progress
-en.IDP_CurrentFile           =Current file
-en.IDP_File                  =File:
-en.IDP_Speed                 =Speed:
-en.IDP_Status                =Status:
-en.IDP_ElapsedTime           =Elapsed time:
-en.IDP_RemainingTime         =Remaining time:
-en.IDP_DetailsButton         =Details
-en.IDP_HideButton            =Hide
-en.IDP_RetryButton           =Retry
-en.IDP_IgnoreButton          =Ignore
-en.IDP_KBs                   =KB/s
-en.IDP_MBs                   =MB/s
-en.IDP_X_of_X                =%.2f of %.2f
-en.IDP_KB                    =KB
-en.IDP_MB                    =MB
-en.IDP_GB                    =GB
-en.IDP_Initializing          =Initializing...
-en.IDP_GettingFileInformation=Getting file information...
-en.IDP_StartingDownload      =Starting download...
-en.IDP_Connecting            =Connecting...
-en.IDP_Downloading           =Downloading...
-en.IDP_DownloadComplete      =Download complete
-en.IDP_DownloadFailed        =Download failed
-en.IDP_CannotConnect         =Cannot connect
-en.IDP_CancellingDownload    =Cancelling download...
-en.IDP_Unknown               =Unknown
-en.IDP_DownloadCancelled     =Download cancelled
-en.IDP_RetryNext             =Check your connection and click 'Retry' to try downloading the files again, or click 'Next' to continue installing anyway.
-en.IDP_RetryCancel           =Check your connection and click 'Retry' to try downloading the files again, or click 'Cancel' to terminate setup.
-en.IDP_FilesNotDownloaded    =The following files were not downloaded:
-en.IDP_HTTPError_X           =HTTP error %d
-en.IDP_400                   =Bad request (400)
-en.IDP_401                   =Access denied (401)
-en.IDP_404                   =File not found (404)
-en.IDP_407                   =Proxy authentication required (407)
-en.IDP_500                   =Server internal error (500)
-en.IDP_502                   =Bad gateway (502)
-en.IDP_503                   =Service temporaily unavailable (503)
+#define IDPROOT ExtractFilePath(__PATHFILENAME__)
+
+#ifdef UNICODE
+    #pragma include __INCLUDE__ + ";" + IDPROOT + "\unicode"
+#else
+    #pragma include __INCLUDE__ + ";" + IDPROOT + "\ansi"
+#endif
+
+; If IDP_DEBUG is defined before including idp.iss, script will use debug version of idp.dll (not included, you need to build it yourself).
+; Debug dll messages can be viewed with SysInternals DebugView (http://technet.microsoft.com/en-us/sysinternals/bb896647.aspx)
+#ifdef IDP_DEBUG
+    #define DBGSUFFIX " debug"
+#else
+    #define DBGSUFFIX
+#endif
+
+#ifdef UNICODE
+    #define IDPDLLDIR IDPROOT + "\unicode" + DBGSUFFIX
+#else
+    #define IDPDLLDIR IDPROOT + "\ansi" + DBGSUFFIX
+#endif
+
+#define IDP_VER_MAJOR         
+#define IDP_VER_MINOR
+#define IDP_VER_REV
+#define IDP_VER_BUILD
+
+#expr ParseVersion(IDPDLLDIR + "\idp.dll", IDP_VER_MAJOR, IDP_VER_MINOR, IDP_VER_REV, IDP_VER_BUILD)
+#define IDP_VER EncodeVer(IDP_VER_MAJOR, IDP_VER_MINOR, IDP_VER_REV, IDP_VER_BUILD)
+
+#define IDP_VER_STR GetFileVersion(IDPDLLDIR + "\idp.dll")
 
 [Files]
-Source: "{#IDPDLLDIR}\idp.dll"; Flags: dontcopy deleteafterinstall
+Source: "{#IDPDLLDIR}\idp.dll"; Flags: dontcopy;
 
 [Code]
 procedure idpAddFile(url, filename: String);                     external 'idpAddFile@files:idp.dll cdecl';
@@ -74,10 +66,18 @@ procedure idpSetDetailedMode(mode: Boolean);                     external 'idpSe
 procedure idpSetComponents(components: String);                  external 'idpSetComponents@files:idp.dll cdecl';
 procedure idpReportError;                                        external 'idpReportError@files:idp.dll cdecl';
 procedure idpTrace(text: String);                                external 'idpTrace@files:idp.dll cdecl';
+
+#if defined(UNICODE) && (Ver >= 0x05050300)
 procedure idpAddFileSize(url, filename: String; size: Int64);    external 'idpAddFileSize@files:idp.dll cdecl';
 procedure idpAddFileSizeComp(url, filename: String; size: Int64; components: String); external 'idpAddFileSize@files:idp.dll cdecl';
 function  idpGetFileSize(url: String; var size: Int64): Boolean; external 'idpGetFileSize@files:idp.dll cdecl';
 function  idpGetFilesSize(var size: Int64): Boolean;             external 'idpGetFilesSize@files:idp.dll cdecl';
+#else
+procedure idpAddFileSize(url, filename: String; size: Dword);    external 'idpAddFileSize32@files:idp.dll cdecl';
+procedure idpAddFileSizeComp(url, filename: String; size: Dword; components: String); external 'idpAddFileSize32@files:idp.dll cdecl';
+function  idpGetFileSize(url: String; var size: Dword): Boolean; external 'idpGetFileSize32@files:idp.dll cdecl';
+function  idpGetFilesSize(var size: Dword): Boolean;             external 'idpGetFilesSize32@files:idp.dll cdecl';
+#endif
 
 type TIdpForm = record
         Page              : TWizardPage;
@@ -658,3 +658,5 @@ begin
     idpConnectControls;
     idpInitMessages;
 end;
+
+#include <idplang\default.iss>

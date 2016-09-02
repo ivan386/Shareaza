@@ -1,7 +1,7 @@
 //
 // QueryHit.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2015.
+// Copyright (c) Shareaza Development Team, 2002-2016.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -434,7 +434,7 @@ CQueryHit* CQueryHit::FromG2Packet(CG2Packet* pPacket, int* pnHops)
 							strNick = pPacket->ReadString( nInner );
 							CT2A pszIP( (LPCTSTR)strNick );
 							ip = inet_addr( (LPCSTR)pszIP );
-							if ( ip != INADDR_NONE && strcmp( inet_ntoa( *(IN_ADDR*)&ip ), (LPCSTR)pszIP ) == 0 &&
+							if ( ip != INADDR_NONE && _tcscmp( (LPCTSTR)CString( inet_ntoa( *(IN_ADDR*)&ip ) ), strNick ) == 0 &&
 								nAddress != ip )
 								bSpam = true;
 							if ( ! strNick.CompareNoCase( _T( VENDOR_CODE ) ) )

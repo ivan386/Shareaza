@@ -1,15 +1,16 @@
 M http://cache.w3-hidden.cc/
 M http://disobscure.velum-ultra.com/skulls.php
+M http://gwc.gallaxial.com/beacon2/gwc.php
+M http://gwc.mccarragher.org/skulls/skulls.php
 M http://gwctest.zapto.org:1337/
 M http://gweb.4octets.co.uk/skulls.php
 M http://gweb.dwbo.nl/
 M http://gweb2.4octets.co.uk/gwc.php
 M http://tenafly5k.com/gwc/skulls.php
-M http://webcache.peerproject.org/
 
 2 http://cache.ce3c.be/
 2 http://cache.ibel.de/
-2 http://cache.peernix.com/gwc.php
+2 http://cachechu.navhost.com/skulls.php
 2 http://dkac.trillinux.org/dkac/dkac.php
 2 http://ping.pongwar.com/
 2 http://uk.gnutella.dyslexicfish.net:3559/
@@ -37,18 +38,21 @@ X http://fascination77.free.fr/cachechu/
 X http://p2p.findclan.org/
 
 # Duplicates:
-X http://peerproject.org/webcache/
+X http://gwc.gallaxial.com/beacon2/gwc
 
-# Died:
+# Died / Removed:
 X http://1.gc.1e400.net/
 X http://beacon.numberzero.org/gwc.php
 X http://bootdesu.appspot.com/
 X http://buriti2.serveftp.com:8080/skulls.php
 X http://cache.hxdsecurity.com/gwc/
 X http://cache.leite.us/
+X http://cache.peernix.com/gwc.php
 X http://cache.trillinux.org.nyud.net:8090/g2/bazooka.php
 X http://cache.wru.pl/skulls.php
+X http://cache2.bazookanetworks.com/g2/bazooka.php
 X http://cache2.leite.us/
+X http://cachechu.orgfree.com/
 X http://dogma.cloud.bishopston.net:33559/
 X http://fischaleck.net/cache/mcache.php
 X http://g2cache.zapto.org/skulls.php
@@ -63,6 +67,7 @@ X http://gwc.iblinx.com:2108/gwc/cgi-bin/fc
 X http://gwc.marksieklucki.com/skulls.php
 X http://gwc2.wodi.org/skulls.php
 X http://gwebcache.ns1.net/
+X http://gwebcache.spearforensics.com/
 X http://htmlhell.com/
 X http://jayl.de/gweb/g2/bazooka.php
 X http://karma.cloud.bishopston.net:33559/
@@ -72,10 +77,12 @@ X http://midian.jayl.de/g2/bazooka.php
 X http://news.gallaxial.com/cachechu/
 X http://news.mccarragher.org/cachechu/
 X http://news.spacesst.com/cachechu/
+X http://peerproject.org/webcache/
 X http://piz.noip.me/cachechu/
 X http://silvers.zyns.com/gwc/dkac.php
 X http://spacesst.com/cachechu/
 X http://timingsolution.com/curl/
+X http://webcache.peerproject.org/
 X http://witch.frodoslair.net/gwc/Beacon2/gwc.php
 X http://www.ak-electron.eu/Beacon2/gwc.php
 X http://www.gofoxy.net/gwc/cgi-bin/fc
@@ -85,7 +92,7 @@ X http://www.omhub.ru/mibew/view/
 
 #
 # Keep these comments at the end
-# Last updated 11 Jan 2016
+# Last updated 24 Apr 2016
 #
 # Make sure the different lists are kept sorted in alphabetical order.
 #

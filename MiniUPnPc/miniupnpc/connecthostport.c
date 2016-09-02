@@ -1,4 +1,4 @@
-/* $Id: connecthostport.c,v 1.14 2015/10/02 11:08:34 nanard Exp $ */
+/* $Id: connecthostport.c,v 1.15 2015/10/09 16:26:19 nanard Exp $ */
 /* Project : miniupnp
  * Author : Thomas Bernard
  * Copyright (c) 2010-2015 Thomas Bernard
@@ -116,7 +116,7 @@ int connecthostport(const char * host, unsigned short port,
 	/* EINTR The system call was interrupted by a signal that was caught
 	 * EINPROGRESS The socket is nonblocking and the connection cannot
 	 *             be completed immediately. */
-	while(n < 0 && (errno == EINTR || errno = EINPROGRESS))
+	while(n < 0 && (errno == EINTR || errno == EINPROGRESS))
 	{
 		socklen_t len;
 		fd_set wset;

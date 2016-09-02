@@ -1,7 +1,7 @@
 //
 // CtrlMatch.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2015.
+// Copyright (c) Shareaza Development Team, 2002-2016.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -947,7 +947,7 @@ void CMatchCtrl::DrawItem(CDC& dc, CRect& rcRow, CMatchFile* pFile, CQueryHit* p
 					}
 					else
 					{
-						MultiByteToWideChar( CP_ACP, 0, inet_ntoa( ppHit->m_pAddress ), -1, szBuffer, 64 );
+						_tcscpy( szBuffer, (LPCTSTR)CString( inet_ntoa( ppHit->m_pAddress ) ) );
 					}
 				}
 				else

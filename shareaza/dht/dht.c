@@ -1590,7 +1590,7 @@ dht_nodes(int af, int *good_return, int *dubious_return, int *cached_return,
     return good + dubious;
 }
 
-static void
+/*static void
 dump_bucket(FILE *f, struct bucket *b)
 {
     struct node *n = b->nodes;
@@ -1710,7 +1710,7 @@ dht_dump_tables(FILE *f)
 
     fprintf(f, "\n\n");
     fflush(f);
-}
+}*/
 
 int
 dht_init(int s, int s6, const unsigned char *id, const unsigned char *v)
