@@ -1270,9 +1270,9 @@ void CEDClient::DetermineUserAgent()
 					( ( m_nSoftwareVersion >> 17 ) & 0x7F ), ( ( m_nSoftwareVersion >> 10 ) & 0x7F ),
 					( ( m_nSoftwareVersion >>  7 ) & 0x07 ) + 'a' );
 				break;
-			case 80:		// PeerProject
+			case 80:		// Envy (and PeerProject)
 				//Note- 2nd last number (Beta build #) may be truncated, since it's only 3 bits.
-				m_sUserAgent.Format( _T("PeerProject %u.%u.%u.%u"),
+				m_sUserAgent.Format( _T("Envy %u.%u.%u.%u"),
 					( ( m_nSoftwareVersion >> 17 ) &0x7F ), ( ( m_nSoftwareVersion >> 10 ) &0x7F ),
 					( ( m_nSoftwareVersion >>  7 ) &0x07 ), ( ( m_nSoftwareVersion ) &0x7F ) );
 				break;
