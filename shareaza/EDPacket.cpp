@@ -1020,56 +1020,60 @@ void CEDPacket::Debug(LPCTSTR pszReason) const
 //////////////////////////////////////////////////////////////////////
 // CEDTag construction
 
-CEDTag::CEDTag() :
-	m_nType ( ED2K_TAG_NULL ),
-	m_nKey	( 0 )
+CEDTag::CEDTag()
+	: m_nType	( ED2K_TAG_NULL )
+	, m_nKey	( 0 )
+	, m_nValue	( 0 )
 {
 }
 
 CEDTag::CEDTag(const CEDTag& t)
-	: m_nType( t.m_nType )
-	, m_sKey( t.m_sKey )
-	, m_nKey( t.m_nKey )
-	, m_sValue( t.m_sValue )
-	, m_nValue( t.m_nValue )
-	, m_oValue( t.m_oValue )
+	: m_nType	( t.m_nType )
+	, m_sKey	( t.m_sKey )
+	, m_nKey	( t.m_nKey )
+	, m_sValue	( t.m_sValue )
+	, m_nValue	( t.m_nValue )
+	, m_oValue	( t.m_oValue )
 {
 }
 
-CEDTag::CEDTag(BYTE nKey, const Hashes::Ed2kHash& oHash) :
-	m_nType ( ED2K_TAG_HASH ),
-	m_nKey	( nKey ),
-	m_oValue( oHash )
+CEDTag::CEDTag(BYTE nKey, const Hashes::Ed2kHash& oHash)
+	: m_nType	( ED2K_TAG_HASH )
+	, m_nKey	( nKey )
+	, m_nValue	( 0 )
+	, m_oValue	( oHash )
 {
 }
 
-CEDTag::CEDTag(BYTE nKey, QWORD nValue) :
-	m_nType	( ED2K_TAG_INT ),
-	m_nKey	( nKey ),
-	m_nValue( nValue )
+CEDTag::CEDTag(BYTE nKey, QWORD nValue)
+	: m_nType	( ED2K_TAG_INT )
+	, m_nKey	( nKey )
+	, m_nValue	( nValue )
 {
 }
 
-CEDTag::CEDTag(BYTE nKey, LPCTSTR pszValue) :
-	m_nType	( ED2K_TAG_STRING ),
-	m_nKey	( nKey ),
-	m_sValue( pszValue )
+CEDTag::CEDTag(BYTE nKey, LPCTSTR pszValue)
+	: m_nType	( ED2K_TAG_STRING )
+	, m_nKey	( nKey )
+	, m_nValue	( 0 )
+	, m_sValue	( pszValue )
 {
 }
 
-CEDTag::CEDTag(LPCTSTR pszKey, QWORD nValue) :
-	m_nType	( ED2K_TAG_INT ),
-	m_sKey	( pszKey ),
-	m_nKey	( 0 ),
-	m_nValue( nValue )
+CEDTag::CEDTag(LPCTSTR pszKey, QWORD nValue)
+	: m_nType	( ED2K_TAG_INT )
+	, m_sKey	( pszKey )
+	, m_nKey	( 0 )
+	, m_nValue	( nValue )
 {
 }
 
-CEDTag::CEDTag(LPCTSTR pszKey, LPCTSTR pszValue) :
-	m_nType	( ED2K_TAG_STRING ),
-	m_sKey	( pszKey ),
-	m_nKey	( 0 ),
-	m_sValue( pszValue )
+CEDTag::CEDTag(LPCTSTR pszKey, LPCTSTR pszValue)
+	: m_nType	( ED2K_TAG_STRING )
+	, m_sKey	( pszKey )
+	, m_nKey	( 0 )
+	, m_nValue	( 0 )
+	, m_sValue	( pszValue )
 {
 }
 

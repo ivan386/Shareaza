@@ -37,6 +37,7 @@ static char THIS_FILE[]=__FILE__;
 
 CTransfer::CTransfer(PROTOCOLID nProtocol)
 	: CConnection		( nProtocol )
+	, m_pServer			( { AF_INET } )
 	, m_nRunCookie		( 0 )
 	, m_nState			( 0 )
 	, m_nBandwidth		( 0ul )
