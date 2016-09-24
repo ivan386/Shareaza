@@ -1405,7 +1405,7 @@ DWORD CLibraryBuilderInternals::GetBestLanguageId(LPVOID pBuffer)
 			{
 				DWORD nSublang = 0;
 				// Read the langid just after StringFileInfo block
-				swscanf_s( pLanguage, L"%4x%4x", &nLangCode, &nSublang );
+				swscanf_s( pLanguage, L"%4lx%4lx", &nLangCode, &nSublang );
 				nLangCode += ( nSublang << 16 );
 				return nLangCode;
 			}

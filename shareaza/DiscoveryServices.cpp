@@ -1676,7 +1676,7 @@ BOOL CDiscoveryServices::RunWebCacheGet(BOOL bCaches)
 					{
 						// "i|access|period|access period"
 						DWORD nAccessPeriod;
-						if ( _stscanf( oParts[ 3 ], _T("%u"), &nAccessPeriod ) == 1 )
+						if ( _stscanf( oParts[ 3 ], _T("%lu"), &nAccessPeriod ) == 1 )
 						{
 							m_pWebCache->m_nAccessPeriod = nAccessPeriod;
 						}
@@ -1920,7 +1920,7 @@ BOOL CDiscoveryServices::RunWebCacheUpdate()
 		else if ( _tcsnicmp( strLine, _T("i|access|period|"), 16 ) == 0 )
 		{
 			DWORD nAccessPeriod;
-			if ( _stscanf( (LPCTSTR)strLine + 16, _T("%u"), &nAccessPeriod ) == 1 )
+			if ( _stscanf( (LPCTSTR)strLine + 16, _T("%lu"), &nAccessPeriod ) == 1 )
 			{
 				m_pWebCache->m_nAccessPeriod = nAccessPeriod;
 			}
@@ -1928,7 +1928,7 @@ BOOL CDiscoveryServices::RunWebCacheUpdate()
 		else if ( _tcsnicmp( strLine, _T("i|update|period|"), 16 ) == 0 )
 		{
 			DWORD nUpdatePeriod;
-			if ( _stscanf( (LPCTSTR)strLine + 16, _T("%u"), &nUpdatePeriod ) == 1 )
+			if ( _stscanf( (LPCTSTR)strLine + 16, _T("%lu"), &nUpdatePeriod ) == 1 )
 			{
 				m_pWebCache->m_nUpdatePeriod = nUpdatePeriod;
 			}

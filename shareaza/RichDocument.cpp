@@ -264,11 +264,11 @@ BOOL CRichDocument::LoadXML(CXMLElement* pBase, CElementMap* pMap, int nGroup)
 		CSkin::LoadColour( pBase, _T("crHeading"), &m_crHeading );
 		
 		strTemp = pBase->GetAttributeValue( _T("leftMargin") );
-		if ( strTemp.GetLength() && _stscanf( strTemp, _T("%i"), &m_szMargin.cx ) != 1 )
+		if ( strTemp.GetLength() && _stscanf( strTemp, _T("%li"), &m_szMargin.cx ) != 1 )
 			theApp.Message( MSG_ERROR, IDS_SKIN_ERROR, _T("Bad [leftMargin] attribute in [document] element"), pBase->ToString() );
 
 		strTemp = pBase->GetAttributeValue( _T("topMargin") );
-		if ( strTemp.GetLength() && _stscanf( strTemp, _T("%i"), &m_szMargin.cy ) != 1 )
+		if ( strTemp.GetLength() && _stscanf( strTemp, _T("%li"), &m_szMargin.cy ) != 1 )
 			theApp.Message( MSG_ERROR, IDS_SKIN_ERROR, _T("Bad [topMargin] attribute in [document] element"), pBase->ToString() );
 	}
 	

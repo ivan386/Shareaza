@@ -229,7 +229,7 @@ void CRichElement::PrePaintBitmap(CDC* /*pDC*/)
 	if ( _tcsnicmp( m_sText, _T("res:"), 4 ) == 0 )
 	{
 		UINT nID = 0;
-		if ( _stscanf( (LPCTSTR)m_sText + 4, _T("%lu"), &nID ) != 1 )
+		if ( _stscanf( (LPCTSTR)m_sText + 4, _T("%u"), &nID ) != 1 )
 			return;
 
 		m_hImage = CImageFile::LoadBitmapFromResource( nID );
@@ -276,7 +276,7 @@ CSize CRichElement::GetSize() const
 	{
 		sz.cx = sz.cy = 16;
 		UINT nID = 0;
-		_stscanf( m_sText, _T("%lu.%i.%i"), &nID, &sz.cx, &sz.cy );
+		_stscanf( m_sText, _T("%u.%li.%li"), &nID, &sz.cx, &sz.cy );
 	}
 	else if ( m_nType == retEmoticon || m_nType == retCmdIcon )
 	{
@@ -285,7 +285,7 @@ CSize CRichElement::GetSize() const
 	else if ( m_nType == retAnchor )
 	{
 		sz.cx = sz.cy = 16;
-		_stscanf( m_sText, _T("%i.%i"), &sz.cx, &sz.cy );
+		_stscanf( m_sText, _T("%li.%li"), &sz.cx, &sz.cy );
 	}
 
 	return sz;

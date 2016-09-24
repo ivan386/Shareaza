@@ -376,13 +376,13 @@ BOOL CEmoticons::LoadTrillian(LPCTSTR pszFile)
 		CRect rc( 0, 0, 0, 0 );
 
 		strValue = pSource->GetAttributeValue( _T("left"), _T("0") );
-		_stscanf( strValue, _T("%i"), &rc.left );
+		_stscanf( strValue, _T("%li"), &rc.left );
 		strValue = pSource->GetAttributeValue( _T("top"), _T("0") );
-		_stscanf( strValue, _T("%i"), &rc.top );
+		_stscanf( strValue, _T("%li"), &rc.top );
 		strValue = pSource->GetAttributeValue( _T("right"), _T("0") );
-		_stscanf( strValue, _T("%i"), &rc.right );
+		_stscanf( strValue, _T("%li"), &rc.right );
 		strValue = pSource->GetAttributeValue( _T("bottom"), _T("0") );
-		_stscanf( strValue, _T("%i"), &rc.bottom );
+		_stscanf( strValue, _T("%li"), &rc.bottom );
 
 		BOOL bButton = pEmoticon->GetAttributeValue( _T("button") ).CompareNoCase( _T("yes") ) == 0;
 

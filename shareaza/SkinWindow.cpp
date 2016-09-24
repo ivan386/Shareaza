@@ -360,7 +360,7 @@ BOOL CSkinWindow::Parse(CXMLElement* pBase, const CString& strPath)
 			else if ( strRes.GetLength() > 0 )
 			{
 				UINT nResID = 0;
-				if ( _stscanf( strRes, _T("%lu"), &nResID ) != 1 )
+				if ( _stscanf( strRes, _T("%u"), &nResID ) != 1 )
 				{
 					theApp.Message( MSG_ERROR, IDS_SKIN_ERROR, _T("Unknown [res] attribute in [image] element"), pGroup->ToString() );
 					continue;
@@ -416,11 +416,11 @@ BOOL CSkinWindow::Parse(CXMLElement* pBase, const CString& strPath)
 		else if ( pGroup->IsNamed( _T("minimumSize") ) )
 		{
 			CString strWidth = pGroup->GetAttributeValue( _T("width") );
-			if ( strWidth.GetLength() && _stscanf( strWidth, _T("%i"), &m_szMinSize.cx ) != 1 )
+			if ( strWidth.GetLength() && _stscanf( strWidth, _T("%li"), &m_szMinSize.cx ) != 1 )
 				theApp.Message( MSG_ERROR, IDS_SKIN_ERROR, _T("Bad [width] attribute in [minimumSize] element"), pGroup->ToString() );
 
 			CString strHeight = pGroup->GetAttributeValue( _T("height") );
-			if ( strHeight.GetLength() && _stscanf( strHeight, _T("%i"), &m_szMinSize.cy ) != 1 )
+			if ( strHeight.GetLength() && _stscanf( strHeight, _T("%li"), &m_szMinSize.cy ) != 1 )
 				theApp.Message( MSG_ERROR, IDS_SKIN_ERROR, _T("Bad [height] attribute in [minimumSize] element"), pGroup->ToString() );
 		}
 		else
