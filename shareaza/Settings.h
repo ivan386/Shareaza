@@ -1,7 +1,7 @@
 //
 // Settings.h
 //
-// Copyright (c) Shareaza Development Team, 2002-2015.
+// Copyright (c) Shareaza Development Team, 2002-2016.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -442,7 +442,7 @@ public:
 		DWORD		DefaultServerFlags;			// Default server flags (for UDP searches)
 		bool		Endgame;					// Allow endgame mode when completing downloads. (Download same chunk from multiple sources)
 		bool		LargeFileSupport;			// Allow 64 bit file sizes
-		DWORD		AutoDiscovery;				// Auto query for a new server list using discovery services
+		bool		AutoDiscovery;				// Auto query for a new server list using discovery services
 	} eDonkey;
 
 	struct sDC
@@ -453,7 +453,7 @@ public:
 		DWORD		QueryThrottle;				// Throttle for DC++ neighbor searches (s), default: two minutes delay
 		DWORD		ReAskTime;					// How often Shareaza re-ask a remote client about download (ms), default: every minute
 		DWORD		DequeueTime;				// Timeout for remote client confirmation of upload queue (ms), default: 5 min
-		DWORD		AutoDiscovery;				// Auto query for a new server list using discovery services
+		bool		AutoDiscovery;				// Auto query for a new server list using discovery services
 	} DC;
 
 	struct sBitTorrent

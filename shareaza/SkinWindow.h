@@ -1,7 +1,7 @@
 //
 // SkinWindow.h
 //
-// Copyright (c) Shareaza Development Team, 2002-2009.
+// Copyright (c) Shareaza Development Team, 2002-2016.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -89,7 +89,7 @@ protected:
 
 	CSize		GetRegionSize();
 	void		Paint(CWnd* pWnd, TRISTATE bActive = TRI_UNKNOWN);
-	BOOL		ParseRect(CXMLElement* pXML, CRect* pRect);
+	BOOL		ParseRect(const CXMLElement* pXML, CRect* pRect);
 	void		ResolveAnchor(const CRect& rcClient, CRect& rcAnchor, int nAnchor);
 	void		SelectRegion(CWnd* pWnd);
 };
