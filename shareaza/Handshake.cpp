@@ -64,10 +64,9 @@ CHandshake::CHandshake()
 // Make a new CHanshake object given a socket, and a MFC SOCKADDR_IN structure which contains an IP address and port number
 // Uses AcceptFrom to make a new object with this socket and ip address
 CHandshake::CHandshake(SOCKET hSocket, SOCKADDR_IN* pHost)
+	: m_bPushing( FALSE )
+	, m_nIndex	( 0 )
 {
-	// We did not connect to the remote computer as part of a push
-	m_bPushing = FALSE;
-
 	// Call CConnection::AcceptFrom to setup this object with the socket and
 	AcceptFrom( hSocket, pHost );
 

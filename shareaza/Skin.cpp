@@ -768,7 +768,7 @@ BOOL CSkin::LoadNavBar(CXMLElement* pBase)
 	CString strValue = pBase->GetAttributeValue( _T("offset") );
 	if ( strValue.GetLength() )
 	{
-		if ( _stscanf( strValue, _T("%i,%i"),
+		if ( _stscanf( strValue, _T("%li,%li"),
 			&m_rcNavBarOffset.left, &m_rcNavBarOffset.top ) != 2 )
 		{
 			theApp.Message( MSG_ERROR, IDS_SKIN_ERROR, _T("Bad [offset] attribute in [navbar] element"), pBase->ToString() );
@@ -949,11 +949,11 @@ BOOL CSkin::CreateToolBar(CXMLElement* pBase)
 			if ( nID )
 			{
 				CString strWidth = pXML->GetAttributeValue( _T("width") );
-				if ( strWidth.GetLength() && _stscanf( strWidth, _T("%lu"), &nWidth ) != 1 )
+				if ( strWidth.GetLength() && _stscanf( strWidth, _T("%u"), &nWidth ) != 1 )
 					theApp.Message( MSG_ERROR, IDS_SKIN_ERROR, _T("Bad [width] attribute in [control] element"), pXML->ToString() );
 				
 				CString strHeight = pXML->GetAttributeValue( _T("height") );
-				if ( strHeight.GetLength() && _stscanf( strHeight, _T("%lu"), &nHeight ) != 1 )
+				if ( strHeight.GetLength() && _stscanf( strHeight, _T("%u"), &nHeight ) != 1 )
 					theApp.Message( MSG_ERROR, IDS_SKIN_ERROR, _T("Bad [height] attribute in [control] element"), pXML->ToString() );
 
 				CCoolBarItem* pItem = nWidth ? pBar->Add( nID, nWidth, nHeight ) : NULL;
@@ -1793,7 +1793,7 @@ BOOL CSkin::LoadResourceMap(CXMLElement* pBase)
 		{
 			CString strCode = pXML->GetAttributeValue( _T("code") );
 			UINT nID;
-			if ( _stscanf( strCode, _T("%lu"), &nID ) == 1 )
+			if ( _stscanf( strCode, _T("%u"), &nID ) == 1 )
 			{
 				CString strID = pXML->GetAttributeValue( _T("id") );
 				if ( ! strID.IsEmpty() )
@@ -2403,7 +2403,7 @@ HBITMAP CSkin::LoadBitmap(const CString& strName, BOOL bShared)
 		HINSTANCE hInstance;
 		UINT nID;
 		if ( _stscanf( (LPCTSTR)strName, _T("%p"), &hInstance ) == 1 &&
-			 _stscanf( (LPCTSTR)strName + nPos + 1, _T("%lu"), &nID ) == 1 )
+			 _stscanf( (LPCTSTR)strName + nPos + 1, _T("%u"), &nID ) == 1 )
 		{
 			hBitmap = CImageFile::LoadBitmapFromResource( nID, hInstance );
 		}

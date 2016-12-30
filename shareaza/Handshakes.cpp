@@ -93,8 +93,11 @@ BOOL CHandshakes::Listen()
 	SOCKADDR_IN saHost = Network.m_pHost; // This is the address of our computer as visible to remote computers on the Internet
 
 	// If the program connection settings disallow binding, zero the 4 bytes of the IP address
-	if ( ! Settings.Connection.InBind ) 
+	if ( ! Settings.Connection.InBind )
+	{
 		saHost.sin_addr.s_addr = INADDR_ANY; // s_addr is the IP address formatted as a single u_long
+		VERIFY( setsockopt( m_hSocket, SOL_SOCKET, SO_REUSEADDR, "\x01", 1 ) == 0 );
+	}
 	else
 	{
 		// Set the exclusive address option

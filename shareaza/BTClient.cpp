@@ -658,6 +658,8 @@ CString CBTClient::GetAzureusStyleUserAgent(const BYTE* pVendor, size_t nVendor)
 		{ STYLE_4_DIGITS, 'D', 'E', L"DelugeTorrent" },
 		{ STYLE_4_DIGITS, 'D', 'P', L"Propogate Data Client" },
 		{ STYLE_4_DIGITS, 'E', 'B', L"EBit" },
+		{ STYLE_4_DIGITS, 'E', 'N', L"Envy" },
+		{ STYLE_4_DIGITS, 'E', 'V', L"Envy" },
 		{ STYLE_3_DIGITS, 'E', 'S', L"Electric Sheep" },
 		{ STYLE_4_DIGITS, 'F', 'C', L"FileCroc" },
 		{ STYLE_4_DIGITS, 'F', 'T', L"FoxTorrent/RedSwoosh" },

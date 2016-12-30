@@ -255,7 +255,7 @@ void CFileMetadataPage::OnOK()
 
 	if ( nModified >= 10 )
 	{
-		CString strFormat, strMessage;
+		CString strMessage;
 		strMessage.Format( LoadString( IDS_LIBRARY_METADATA_MANY ), nModified );
 		if ( AfxMessageBox( strMessage, MB_YESNO|MB_ICONQUESTION ) != IDYES ) return;
 	}

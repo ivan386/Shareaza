@@ -43,8 +43,9 @@ CQueryHashMaster QueryHashMaster;
 // CQueryHashMaster construction
 
 CQueryHashMaster::CQueryHashMaster()
+	: m_nPerGroup	( 0 )
+	, m_bValid		( FALSE )
 {
-	m_nPerGroup = 0;
 }
 
 CQueryHashMaster::~CQueryHashMaster()

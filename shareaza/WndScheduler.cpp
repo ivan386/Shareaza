@@ -1,7 +1,7 @@
 //
 // WndScheduler.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2010.
+// Copyright (c) Shareaza Development Team, 2002-2016.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -81,6 +81,7 @@ END_MESSAGE_MAP()
 // CSchedulerWnd construction
 
 CSchedulerWnd::CSchedulerWnd()
+	: m_tLastUpdate ( 0 )
 {
 	Create( IDR_SCHEDULERFRAME );
 }
@@ -334,7 +335,7 @@ void CSchedulerWnd::Update(int nColumn, BOOL bSort)
 
 	pLiveList.Apply( &m_wndList, bSort );	//Putting items in the main list
 
-	tLastUpdate = GetTickCount();	// Update time after it's done doing its work
+	m_tLastUpdate = GetTickCount();	// Update time after it's done doing its work
 }
 
 CString CSchedulerWnd::GetItem(int nItem)
@@ -364,7 +365,7 @@ void CSchedulerWnd::OnTimer(UINT_PTR nIDEvent)
 	if ( nIDEvent == 1 && IsPartiallyVisible() )
 	{
 		DWORD tTicks = GetTickCount();
-		if ( ( tTicks - tLastUpdate ) > 1000ul )
+		if ( ( tTicks - m_tLastUpdate ) > 1000ul )
 		{
 			Update();
 		}

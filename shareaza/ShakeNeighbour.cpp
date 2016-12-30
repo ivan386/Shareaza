@@ -350,9 +350,8 @@ void CShakeNeighbour::SendPublicHeaders()
 	m_bSentAddress |= SendMyAddress(); // Returns true if the header is sent, set m_bSentAddress true once its sent
 
 	// Tell the remote computer what IP address it has from here with a header like "Remote-IP: 81.103.192.245"
-	Write( _P("Remote-IP: ") );
-	Write( CString( inet_ntoa( m_pHost.sin_addr ) ) );
-	Write( _P("\r\n") );
+	strHeader.Format( _T("Remote-IP: %s:%i\r\n"), (LPCTSTR)CString( inet_ntoa( m_pHost.sin_addr ) ), htons( m_pHost.sin_port ) );
+	Write( strHeader );
 
 	// Shareaza Settings allow us to exchange compressed data with this computer
 	if ( m_bCanDeflate )

@@ -427,7 +427,7 @@ CString URLDecodeANSI(const TCHAR* __restrict pszInput)
 				pszInput += 5;
 			}
 			else if ( pszInput[ 1 ] == '#' &&
-				_stscanf_s( &pszInput[ 2 ], _T("%lu;"), &nHex ) == 1 &&
+				_stscanf_s( &pszInput[ 2 ], _T("%d;"), &nHex ) == 1 &&
 				nHex > 0 )
 			{
 				*pszOutput++ = (CHAR)nHex;
@@ -516,7 +516,7 @@ CString URLDecodeUnicode(const TCHAR* __restrict pszInput)
 				pszInput += 5;
 			}
 			else if ( pszInput[ 1 ] == '#' &&
-				_stscanf_s( &pszInput[ 2 ], _T("%lu;"), &nHex ) == 1 &&
+				_stscanf_s( &pszInput[ 2 ], _T("%d;"), &nHex ) == 1 &&
 				nHex > 0 )
 			{
 				*pszOutput++ = (TCHAR)nHex;
@@ -1038,7 +1038,7 @@ CString Escape(const CString& strValue)
 		default:
 			if ( *pszValue < 32 || *pszValue > 127 )
 			{
-				int n = _stprintf_s( pszXML, nXMLLength, _T("&#%lu;"), *pszValue );
+				int n = _stprintf_s( pszXML, nXMLLength, _T("&#%u;"), *pszValue );
 				pszXML += n;
 				nXMLLength -= n;
 				bChanged = true;
@@ -1130,7 +1130,7 @@ CString Unescape(const TCHAR* __restrict pszXML, int nLength)
 				pszXML++;
 				if ( pszXML >= pszNull || ! *pszXML || ! _istdigit( *pszXML ) ) break;
 
-				if ( _stscanf_s( pszXML, _T("%lu;"), &nChar ) == 1 )
+				if ( _stscanf_s( pszXML, _T("%d;"), &nChar ) == 1 )
 				{
 					*pszOut++ = (TCHAR)nChar;
 					while ( *pszXML && *pszXML != ';' ) pszXML++;

@@ -582,8 +582,11 @@ BOOL CG2Neighbour::OnPong(CG2Packet* pPacket, BOOL bTCP)
 		}
 	}
 
-	if ( bRelayed && ! bTCP && ! Network.IsConnectedTo( &m_pHost.sin_addr ) )
-		Datagrams.SetStable();
+	
+	//if ( bRelayed && ! bTCP && ! Network.IsConnectedTo( &m_pHost.sin_addr ) )
+	//	Datagrams.SetStable();
+	
+
 
 	return TRUE;
 }
@@ -934,10 +937,10 @@ BOOL CG2Neighbour::ParseKHLPacket(CG2Packet* pPacket, const SOCKADDR_IN* pHost)
 					if ( nLength >= 10 ) tSeen = pPacket->ReadLongBE() + tAdjust;
 				}
 
+				BOOL bIgnoredCountry = FALSE;
+
 				if ( nPort &&
-					! Network.IsFirewalledAddress( (IN_ADDR*)&nAddress, TRUE ) &&
-					! Network.IsReserved( (IN_ADDR*)&nAddress ) &&
-					! Security.IsDenied( (IN_ADDR*)&nAddress ) )
+					! Security.IsDeniedComplexCheck( (IN_ADDR*)&nAddress ) )
 				{
 					CQuickLock oLock( HostCache.Gnutella2.m_pSection );
 
@@ -1085,9 +1088,7 @@ BOOL CG2Neighbour::OnHAW(CG2Packet* pPacket)
 	if ( pPacket->GetRemaining() < 2 + 16 ) return TRUE;
 
 	if ( ! nPort ||
-		Network.IsFirewalledAddress( (IN_ADDR*)&nAddress, TRUE ) ||
-		Network.IsReserved( (IN_ADDR*)&nAddress ) ||
-		Security.IsDenied( (IN_ADDR*)&nAddress ) ) return TRUE;
+		Security.IsDeniedComplexCheck( (IN_ADDR*)&nAddress ) ) return TRUE;
 
 	BYTE* pPtr	= pPacket->m_pBuffer + pPacket->m_nPosition;
 	BYTE nTTL	= pPacket->ReadByte();

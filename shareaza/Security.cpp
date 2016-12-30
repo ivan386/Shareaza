@@ -605,7 +605,7 @@ BOOL CSecurity::IsDenied(const CShareazaFile* pFile)
 BOOL CSecurity::IsIgnoredCountry(const CString& strCountry)
 {
 	if (strCountry.IsEmpty()) return FALSE;
-	return Settings.Connection.IgnoredCountry.find(strCountry) != Settings.Connection.IgnoredCountry.end();
+	return Settings.Connection.IgnoredCountry.find( strCountry ) != Settings.Connection.IgnoredCountry.end();
 }
 
 BOOL CSecurity::IsDenied(const CQuerySearch* pQuery, const CString& strContent)

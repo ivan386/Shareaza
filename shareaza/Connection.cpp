@@ -231,6 +231,21 @@ BOOL CConnection::ConnectTo(const IN_ADDR* pAddress, WORD nPort)
 				sizeof(SOCKADDR_IN) );	// Tell bind how many bytes it can read at the pointer
 		}
 	}
+	else // if ( m_bHolePunch )
+	{
+		// Experement. TCP Hole Punch.
+		SOCKADDR_IN pOutgoing;
+		pOutgoing.sin_family = AF_INET;
+		pOutgoing.sin_addr.S_un.S_addr = 0;
+		pOutgoing.sin_port = Network.m_pHost.sin_port;
+		
+		int Err = bind(
+				m_hSocket,				// Our socket
+				(SOCKADDR*)&pOutgoing,	// The IP address this computer appears to have on the Internet (do)
+				sizeof(SOCKADDR_IN) );	// Tell bind how many bytes it can read at the pointer
+	}
+
+
 
 	DestroyBuffers();
 

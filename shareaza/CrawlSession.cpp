@@ -207,6 +207,7 @@ CCrawlNode::CCrawlNode()
 	m_tDiscovered	= static_cast< DWORD >( time( NULL ) );
 	m_tCrawled		= 0;
 	m_tResponse		= 0;
+	m_nUnique		= 0;
 }
 
 CCrawlNode::~CCrawlNode()

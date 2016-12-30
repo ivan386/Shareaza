@@ -276,7 +276,7 @@ void CVersionChecker::ProcessResponse()
 	{
 		strValue.Trim();
 		theApp.Message( MSG_DEBUG, _T("[VersionChecker] %s = %s"), _T("NextCheck"), (LPCTSTR)strValue );
-		_stscanf( strValue, _T("%ld"), &nDays );
+		_stscanf( strValue, _T("%d"), &nDays );
 	}
 	
 	SetNextCheck( nDays );

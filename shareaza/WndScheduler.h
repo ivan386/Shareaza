@@ -1,7 +1,7 @@
 //
 // WndScheduler.h
 //
-// Copyright (c) Shareaza Development Team, 2002-2010.
+// Copyright (c) Shareaza Development Team, 2002-2016.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -43,7 +43,7 @@ protected:
 	CListCtrl		m_wndList;
 	CImageList		m_gdiImageList;
 	CLiveListSizer	m_pSizer;
-	DWORD			tLastUpdate;
+	DWORD			m_tLastUpdate;
 
 	BOOL IsTaskActive(LPCWSTR szTaskName) const;
 

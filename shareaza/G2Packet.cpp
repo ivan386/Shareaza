@@ -743,8 +743,17 @@ BOOL CG2Packet::OnPong(const SOCKADDR_IN* pHost)
 		m_nPosition = nOffset;
 	}
 
-	if ( bRelayed && ! Network.IsConnectedTo( &pHost->sin_addr ) )
-		Datagrams.SetStable();
+	
+
+	if ( bRelayed && ! Datagrams.IsStable() && ! Network.IsConnectedTo( &pHost->sin_addr ) ){
+		CHostCacheHostPtr pCache = HostCache.Gnutella2.Find( &pHost->sin_addr );
+		DWORD tNow = static_cast< DWORD >( time( NULL ) );
+		//If we firewaled than we can't get udp packed from host that we don't send it
+		if ( ! pCache )
+			Datagrams.SetStable();
+	}
+			
+	
 
 	return TRUE;
 }

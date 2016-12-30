@@ -37,6 +37,7 @@ static char THIS_FILE[]=__FILE__;
 
 CTransfer::CTransfer(PROTOCOLID nProtocol)
 	: CConnection		( nProtocol )
+	, m_pServer			( SOCKADDR_IN() )
 	, m_nRunCookie		( 0 )
 	, m_nState			( 0 )
 	, m_nBandwidth		( 0ul )
@@ -45,6 +46,7 @@ CTransfer::CTransfer(PROTOCOLID nProtocol)
 	, m_nPosition		( 0 )
 	, m_tRequest		( 0 )
 {
+	m_pServer.sin_family = AF_INET;
 }
 
 CTransfer::~CTransfer()

@@ -1038,7 +1038,7 @@ CString Escape(const CString& strValue)
 		default:
 			if ( *pszValue < 32 || *pszValue > 127 )
 			{
-				int n = _stprintf_s( pszXML, nXMLLength, _T("&#%lu;"), *pszValue );
+				int n = _stprintf_s( pszXML, nXMLLength, _T("&#%u;"), *pszValue );
 				pszXML += n;
 				nXMLLength -= n;
 				bChanged = true;

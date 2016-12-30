@@ -920,7 +920,7 @@ void CMatchCtrl::DrawItem(CDC& dc, CRect& rcRow, CMatchFile* pFile, CQueryHit* p
 					strTemp = ppHit->m_sNick;
 
 					if ( ppHit->GetSources() > 1 )
-						_sntprintf( szBuffer, sizeof( szBuffer ) / sizeof( TCHAR ), _T("%s+%u"), (LPCTSTR)strTemp, ppHit->GetSources() - 1 );
+						_sntprintf( szBuffer, sizeof( szBuffer ) / sizeof( TCHAR ), _T("%s+%lu"), (LPCTSTR)strTemp, ppHit->GetSources() - 1 );
 					else
 						_sntprintf( szBuffer, sizeof( szBuffer ) / sizeof( TCHAR ), _T("%s"), (LPCTSTR)strTemp );
 					szBuffer[ sizeof( szBuffer ) / sizeof( TCHAR ) - 1 ] = 0;
@@ -931,7 +931,7 @@ void CMatchCtrl::DrawItem(CDC& dc, CRect& rcRow, CMatchFile* pFile, CQueryHit* p
 					strTemp.Format( _T("(%s)"), (LPCTSTR)CString( inet_ntoa( (IN_ADDR&)*ppHit->m_oClientID.begin() ) ) );
 
 					if ( ppHit->GetSources() > 1 )
-						_sntprintf( szBuffer, sizeof( szBuffer ) / sizeof( TCHAR ), _T("%s+%u"), (LPCTSTR)strTemp, ppHit->GetSources() - 1 );
+						_sntprintf( szBuffer, sizeof( szBuffer ) / sizeof( TCHAR ), _T("%s+%lu"), (LPCTSTR)strTemp, ppHit->GetSources() - 1 );
 					else
 						_sntprintf( szBuffer, sizeof( szBuffer ) / sizeof( TCHAR ), _T("%s"), (LPCTSTR)strTemp );
 					szBuffer[ sizeof( szBuffer ) / sizeof( TCHAR ) - 1 ] = 0;
@@ -940,7 +940,7 @@ void CMatchCtrl::DrawItem(CDC& dc, CRect& rcRow, CMatchFile* pFile, CQueryHit* p
 				{
 					if ( ppHit->GetSources() > 1 )
 					{
-						_sntprintf( szBuffer, sizeof( szBuffer ) / sizeof( TCHAR ), _T("%s+%u"),
+						_sntprintf( szBuffer, sizeof( szBuffer ) / sizeof( TCHAR ), _T("%s+%lu"),
 							(LPCTSTR)CString( inet_ntoa( ppHit->m_pAddress ) ),
 							ppHit->GetSources() - 1 );
 						szBuffer[ sizeof( szBuffer ) / sizeof( TCHAR ) - 1 ] = 0;

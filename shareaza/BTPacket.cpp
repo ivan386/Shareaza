@@ -140,6 +140,15 @@ void CDHT::Connect()
 			}
 		}
 
+		if ( nCount == 0 ){
+			SOCKADDR_IN sa;
+			if ( Network.Resolve(_T("router.bittorrent.com:6881"), 0, &sa) ){
+				unsigned char tid[4];
+				make_tid(tid, "fn", 0);
+				send_find_node( (sockaddr*)&sa, sizeof( SOCKADDR_IN ), tid, 4, &oID[ 0 ], 1, 0 );
+			}
+		}
+
 		m_bConnected = true;
 	}
 }
@@ -301,9 +310,6 @@ void CDHT::OnEvent(void* /*closure*/, int evt, const unsigned char* info_hash, c
 	case DHT_EVENT_REPLY:
 		if ( data_len == sizeof( SOCKADDR_IN ) )
 		{
-			// Assume UDP is stable
-			Datagrams.SetStable();
-
 			const SOCKADDR_IN* pHost = (const SOCKADDR_IN*)data;
 
 			CQuickLock oLock( HostCache.BitTorrent.m_pSection );
@@ -656,6 +662,34 @@ BOOL CBTPacket::OnPacket(const SOCKADDR_IN* pHost)
 
 	if ( ! Settings.BitTorrent.EnableToday || ! Settings.BitTorrent.EnableDHT )
 		return TRUE;
+
+	const CBENode* pYourIPPort = m_pNode->GetNode( BT_DICT_YOURIPPORT );
+	if ( pYourIPPort && pYourIPPort->IsType( CBENode::beString ) )
+	{
+		if ( pYourIPPort->m_nValue == 6 )
+		{
+			// IPv4
+			Network.AcquireLocalAddress( *(const IN_ADDR*)pYourIPPort->m_pValue );
+
+			// Port
+			u_short* pPort = ( (u_short*) pYourIPPort->m_pValue ) + 2;
+
+			if ( Network.m_pHost.sin_port == *pPort && ! Datagrams.IsStable() )
+			{
+				CQuickLock oLock( HostCache.BitTorrent.m_pSection );
+				CHostCacheHostPtr pCache = HostCache.BitTorrent.Find( &pHost->sin_addr );
+				DWORD tNow = static_cast< DWORD >( time( NULL ) );
+				//If we firewaled than we can't get udp packed from host that we don't send it
+				if ( ! pCache )
+					Datagrams.SetStable();
+			}
+			else if ( Network.m_pHost.sin_port != *pPort )
+			{
+				Datagrams.SetStable( FALSE );
+			}
+		}
+	}
+
 
 	{
 		CQuickLock oLock( HostCache.BitTorrent.m_pSection );

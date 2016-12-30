@@ -122,6 +122,7 @@ const LPCSTR BT_DICT_UT_PEX			= "ut_pex";
 const LPCSTR BT_DICT_VALUES			= "values";
 const LPCSTR BT_DICT_VENDOR			= "v";					// Client name and version (as a utf-8 string)
 const LPCSTR BT_DICT_YOURIP			= "yourip";				// External IP (IPv4 or IPv6)
+const LPCSTR BT_DICT_YOURIPPORT		= "ip";				    // External IP Port (IPv4 or IPv6) http://www.rasterbar.com/products/libtorrent/dht_sec.html
 
 //
 // Packet
