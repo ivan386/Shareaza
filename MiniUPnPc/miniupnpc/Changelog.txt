@@ -1,5 +1,14 @@
-$Id: Changelog.txt,v 1.222 2016/01/24 17:24:35 nanard Exp $
+$Id: Changelog.txt,v 1.226 2016/12/16 08:57:19 nanard Exp $
 miniUPnP client Changelog.
+
+2016/11/11:
+  check strlen before memcmp in XML parsing portlistingparse.c
+  fix build under SOLARIS and CYGWIN
+
+2016/10/11:
+  Add python 3 compatibility to IGD test
+
+VERSION 2.0 : released 2016/04/19
 
 2016/01/24:
   change miniwget to return HTTP status code

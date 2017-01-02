@@ -1,7 +1,7 @@
-/* $Id: connecthostport.c,v 1.15 2015/10/09 16:26:19 nanard Exp $ */
+/* $Id: connecthostport.c,v 1.16 2016/12/16 08:57:53 nanard Exp $ */
 /* Project : miniupnp
  * Author : Thomas Bernard
- * Copyright (c) 2010-2015 Thomas Bernard
+ * Copyright (c) 2010-2016 Thomas Bernard
  * This software is subject to the conditions detailed in the
  * LICENCE file provided in this distribution. */
 
@@ -100,13 +100,13 @@ int connecthostport(const char * host, unsigned short port,
 	timeout.tv_usec = 0;
 	if(setsockopt(s, SOL_SOCKET, SO_RCVTIMEO, &timeout, sizeof(struct timeval)) < 0)
 	{
-		PRINT_SOCKET_ERROR("setsockopt");
+		PRINT_SOCKET_ERROR("setsockopt SO_RCVTIMEO");
 	}
 	timeout.tv_sec = 3;
 	timeout.tv_usec = 0;
 	if(setsockopt(s, SOL_SOCKET, SO_SNDTIMEO, &timeout, sizeof(struct timeval)) < 0)
 	{
-		PRINT_SOCKET_ERROR("setsockopt");
+		PRINT_SOCKET_ERROR("setsockopt SO_SNDTIMEO");
 	}
 #endif /* #ifdef MINIUPNPC_SET_SOCKET_TIMEOUT */
 	dest.sin_family = AF_INET;
