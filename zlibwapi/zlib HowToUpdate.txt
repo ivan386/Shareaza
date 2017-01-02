@@ -1,0 +1,3 @@
+1. Download latest file "zlib-*.zip" from here: http://www.zlib.net/
+2. Unpack all files to "zlib" sub-folder
+3. Update version information inside "zlibwapi.rc"

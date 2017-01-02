@@ -23,7 +23,6 @@
 
 #pragma once
 
-#define _CRT_SECURE_NO_DEPRECATE
 #define STRICT
 #define _WIN32_DCOM
 #define _ATL_FREE_THREADED
