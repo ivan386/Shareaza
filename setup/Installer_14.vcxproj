@@ -107,6 +107,9 @@
       <Project>{e8cf1ada-264a-4127-86c2-fd7057d3792c}</Project>
       <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
     </ProjectReference>
+    <ProjectReference Include="..\bzlib\bzlib_14.vcxproj">
+      <Project>{a14f5e46-c04c-4f32-9985-2e15819a722a}</Project>
+    </ProjectReference>
     <ProjectReference Include="..\GeoIP\GeoIP_14.vcxproj">
       <Project>{dfab04e0-9275-42fb-bcbb-2f153eb7d253}</Project>
       <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
@@ -114,6 +117,9 @@
     <ProjectReference Include="..\HashLib\HashLib_14.vcxproj">
       <Project>{196c99fc-9a4e-421f-b44c-8e3fd177122f}</Project>
       <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
+    </ProjectReference>
+    <ProjectReference Include="..\MiniUPnPc\MiniUPnPc_14.vcxproj">
+      <Project>{d6c8a99e-e770-4d48-be97-aa3cf262ee8b}</Project>
     </ProjectReference>
     <ProjectReference Include="..\plugins\7ZipBuilder\7ZipBuilder_14.vcxproj">
       <Project>{b69f80cd-fb15-45e8-b359-92a41cc571a7}</Project>
@@ -171,6 +177,9 @@
       <Project>{5386dff4-2e92-4932-8706-ab5bd79e04fe}</Project>
       <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
     </ProjectReference>
+    <ProjectReference Include="..\plugins\ShortURL\ShortURL_14.vcxproj">
+      <Project>{d7d7fe07-a029-4b4d-a92e-7a25503f08ee}</Project>
+    </ProjectReference>
     <ProjectReference Include="..\plugins\SkinScanSKS\SkinScanSKS_14.vcxproj">
       <Project>{a4f1e383-b493-4580-8db6-5cc89cbaac53}</Project>
       <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
@@ -191,6 +200,9 @@
       <Project>{2f74aa28-2498-4805-911a-04c39858d529}</Project>
       <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
     </ProjectReference>
+    <ProjectReference Include="..\RegExp\RegExp_14.vcxproj">
+      <Project>{71284d5b-49f0-46fa-9c8b-c887c119738d}</Project>
+    </ProjectReference>
     <ProjectReference Include="..\shareaza\Shareaza_14.vcxproj">
       <Project>{f9c719b3-35fb-427d-a795-91105dfecaaf}</Project>
       <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
@@ -207,9 +219,8 @@
       <Project>{f02ede36-e2ac-40e8-b6dc-76b1d53f9a5a}</Project>
       <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
     </ProjectReference>
-    <ProjectReference Include="..\zlib\zlibwapi_14.vcxproj">
+    <ProjectReference Include="..\zlibwapi\zlibwapi_14.vcxproj">
       <Project>{39f34f2c-d42a-41d2-a0bc-54d7972e2bc5}</Project>
-      <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

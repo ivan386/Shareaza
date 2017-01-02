@@ -27,7 +27,7 @@
 #include "Settings.h"
 #include "Network.h"
 #include "Packet.h"
-#include "ZLib.h"
+#include "ZLibWarp.h"
 #include "Buffer.h"
 #include "WndMain.h"
 #include "WndPacket.h"

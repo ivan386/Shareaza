@@ -25,7 +25,7 @@
 #include "SchemaCache.h"
 #include "Schema.h"
 #include "XML.h"
-#include "Zlib.h"
+#include "ZLibWarp.h"
 
 #ifdef _DEBUG
 #undef THIS_FILE

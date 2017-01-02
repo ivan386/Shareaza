@@ -208,8 +208,8 @@
 //
 
 #define BZ_NO_STDIO
-#include "../bzlib/bzlib.h"
-#include "../zlib/zlib.h"
+#include "bzlib.h"
+#include "zlib.h"
 
 #pragma warning ( pop )
 

@@ -29,7 +29,7 @@ class CQueryHashTable;
 
 #include "Connection.h"
 #include "VendorCache.h"
-#include "zlib.h"
+#include "ZLibWarp.h"
 
 // Keep track of what stage of communications we are in with the remote computer
 typedef enum NeighbourStateEnum

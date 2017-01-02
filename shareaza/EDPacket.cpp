@@ -33,7 +33,7 @@
 #include "SharedFile.h"
 #include "Statistics.h"
 #include "XML.h"
-#include "ZLib.h"
+#include "ZLibWarp.h"
 
 #ifdef _DEBUG
 #undef THIS_FILE
