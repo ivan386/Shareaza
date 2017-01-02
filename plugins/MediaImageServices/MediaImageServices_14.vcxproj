@@ -21,7 +21,7 @@
   <PropertyGroup Label="Globals">
     <ProjectName>MediaImageServices</ProjectName>
     <ProjectGuid>{4351215D-CBA6-4F34-A99E-2FA87F969CA5}</ProjectGuid>
-    <RootNamespace>MediaImageServices_9</RootNamespace>
+    <RootNamespace>MediaImageServices</RootNamespace>
     <Keyword>AtlProj</Keyword>
     <WindowsTargetPlatformVersion>8.1</WindowsTargetPlatformVersion>
   </PropertyGroup>

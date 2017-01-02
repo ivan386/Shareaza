@@ -21,7 +21,7 @@
   <PropertyGroup Label="Globals">
     <ProjectName>SWFPlugin</ProjectName>
     <ProjectGuid>{4491782A-4BD5-45E3-AD2F-F03EE6CE3F9E}</ProjectGuid>
-    <RootNamespace>SWFPlugin_9</RootNamespace>
+    <RootNamespace>SWFPlugin</RootNamespace>
     <Keyword>AtlProj</Keyword>
     <WindowsTargetPlatformVersion>8.1</WindowsTargetPlatformVersion>
   </PropertyGroup>
