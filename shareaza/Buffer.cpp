@@ -26,7 +26,7 @@
 #include "Buffer.h"
 
 #ifdef ZLIB_H
-	#include "ZLib.h"
+	#include "ZLibWarp.h"
 #endif // ZLIB_H
 
 #ifdef _DEBUG

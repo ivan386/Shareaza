@@ -21,7 +21,7 @@
   <PropertyGroup Label="Globals">
     <ProjectName>MediaLibraryBuilder</ProjectName>
     <ProjectGuid>{6591E1B2-D3E7-4B83-9A40-67AC0E98B255}</ProjectGuid>
-    <RootNamespace>MediaLibraryBuilder_9</RootNamespace>
+    <RootNamespace>MediaLibraryBuilder</RootNamespace>
     <Keyword>AtlProj</Keyword>
     <WindowsTargetPlatformVersion>8.1</WindowsTargetPlatformVersion>
   </PropertyGroup>

@@ -21,7 +21,7 @@
   <PropertyGroup Label="Globals">
     <ProjectName>GFLLibraryBuilder</ProjectName>
     <ProjectGuid>{76CC356F-EFFD-4926-8DB3-D54AF496D431}</ProjectGuid>
-    <RootNamespace>GFLLibraryBuilder_9</RootNamespace>
+    <RootNamespace>GFLLibraryBuilder</RootNamespace>
     <Keyword>AtlProj</Keyword>
     <WindowsTargetPlatformVersion>8.1</WindowsTargetPlatformVersion>
   </PropertyGroup>

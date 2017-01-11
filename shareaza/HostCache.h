@@ -317,6 +317,8 @@ public:
 			return eDonkey.CountHosts( TRUE ) > 0;
 		case PROTOCOL_DC:
 			return DC.CountHosts( TRUE ) > 0;
+		case PROTOCOL_BT:
+			return BitTorrent.CountHosts( TRUE ) > 0;
 		default:
 			return true;
 		}

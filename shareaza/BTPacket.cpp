@@ -140,14 +140,18 @@ void CDHT::Connect()
 			}
 		}
 
-		if ( nCount == 0 ){
-			SOCKADDR_IN sa;
-			if ( Network.Resolve(_T("router.bittorrent.com:6881"), 0, &sa) ){
-				unsigned char tid[4];
-				make_tid(tid, "fn", 0);
-				send_find_node( (sockaddr*)&sa, sizeof( SOCKADDR_IN ), tid, 4, &oID[ 0 ], 1, 0 );
+		if ( nCount == 0 )
+			for ( CHostCacheIterator i = HostCache.BitTorrent.Begin() ; i != HostCache.BitTorrent.End() && nCount < 100; ++i )
+			{
+				CHostCacheHostPtr pCache = (*i);
+
+				SOCKADDR_IN sa;
+				if ( Network.Resolve( pCache->Address(), pCache->m_nPort, &sa ) ){
+					unsigned char tid[4];
+					make_tid(tid, "fn", 0);
+					send_find_node( (sockaddr*)&sa, sizeof( SOCKADDR_IN ), tid, 4, &oID[ 0 ], 1, 0 );
+				}
 			}
-		}
 
 		m_bConnected = true;
 	}

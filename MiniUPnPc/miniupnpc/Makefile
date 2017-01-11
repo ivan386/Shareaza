@@ -1,9 +1,9 @@
-# $Id: Makefile,v 1.133 2016/01/24 17:24:35 nanard Exp $
+# $Id: Makefile,v 1.135 2016/12/16 08:57:20 nanard Exp $
 # MiniUPnP Project
 # http://miniupnp.free.fr/
 # http://miniupnp.tuxfamily.org/
 # https://github.com/miniupnp/miniupnp
-# (c) 2005-2015 Thomas Bernard
+# (c) 2005-2016 Thomas Bernard
 # to install use :
 # $ make DESTDIR=/tmp/dummylocation install
 # or
@@ -38,6 +38,9 @@ CFLAGS += -DMINIUPNPC_SET_SOCKET_TIMEOUT
 CFLAGS += -DMINIUPNPC_GET_SRC_ADDR
 CFLAGS += -D_BSD_SOURCE
 CFLAGS += -D_DEFAULT_SOURCE
+ifeq ($(OS), NetBSD)
+CFLAGS += -D_NETBSD_SOURCE
+endif
 ifneq ($(OS), FreeBSD)
 ifneq ($(OS), Darwin)
 #CFLAGS += -D_POSIX_C_SOURCE=200112L
@@ -63,6 +66,8 @@ JNAERATORBASEURL = https://repo1.maven.org/maven2/com/nativelibs4java/jnaerator/
 
 ifeq (SunOS, $(OS))
   LDFLAGS=-lsocket -lnsl -lresolv
+  CFLAGS += -D__EXTENSIONS__
+  CFLAGS += -std=c99
 endif
 
 # APIVERSION is used to build SONAME
@@ -82,7 +87,9 @@ LIBOBJS = miniwget.o minixml.o igd_desc_parse.o minisoap.o \
           connecthostport.o portlistingparse.o receivedata.o upnpdev.o
 
 ifneq ($(OS), AmigaOS)
+ifeq (,$(findstring CYGWIN,$(OS)))
 CFLAGS := -fPIC $(CFLAGS)
+endif
 LIBOBJS := $(LIBOBJS) minissdpc.o
 endif
 
@@ -136,7 +143,11 @@ endif
 
 LIBDIR ?= lib
 # install directories
-INSTALLPREFIX ?= $(PREFIX)/usr
+ifeq ($(strip $(PREFIX)),)
+INSTALLPREFIX ?= /usr
+else
+INSTALLPREFIX ?= $(PREFIX)
+endif
 INSTALLDIRINC = $(INSTALLPREFIX)/include/miniupnpc
 INSTALLDIRLIB = $(INSTALLPREFIX)/$(LIBDIR)
 INSTALLDIRBIN = $(INSTALLPREFIX)/bin

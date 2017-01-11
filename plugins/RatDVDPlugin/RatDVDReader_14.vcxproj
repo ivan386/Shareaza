@@ -21,7 +21,7 @@
   <PropertyGroup Label="Globals">
     <ProjectName>RatDVDReader</ProjectName>
     <ProjectGuid>{86944913-9269-4B41-AA2F-C2A37E68C50E}</ProjectGuid>
-    <RootNamespace>RatDVDReader_9</RootNamespace>
+    <RootNamespace>RatDVDReader</RootNamespace>
     <Keyword>AtlProj</Keyword>
     <WindowsTargetPlatformVersion>8.1</WindowsTargetPlatformVersion>
   </PropertyGroup>

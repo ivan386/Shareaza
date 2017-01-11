@@ -1214,7 +1214,7 @@
 				>
 			</File>
 			<File
-				RelativePath="ZLib.cpp"
+				RelativePath=".\ZLibWarp.cpp"
 				>
 			</File>
 			<Filter
@@ -2799,7 +2799,7 @@
 				>
 			</File>
 			<File
-				RelativePath="ZLib.h"
+				RelativePath=".\ZLibWarp.h"
 				>
 			</File>
 			<Filter

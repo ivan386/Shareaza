@@ -1,5 +1,5 @@
 //
-// ZLib.h
+// ZLibWarp.h
 //
 // Copyright (c) Shareaza Development Team, 2002-2010.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)

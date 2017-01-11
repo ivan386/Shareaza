@@ -32,7 +32,7 @@
 #include "Transfer.h"
 #include "SchemaCache.h"
 #include "Schema.h"
-#include "ZLib.h"
+#include "ZLibWarp.h"
 #include "XML.h"
 #include "GGEP.h"
 #include "VendorCache.h"

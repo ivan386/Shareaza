@@ -561,9 +561,6 @@
     <ClCompile Include="ZIPFile.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="ZLib.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="CtrlBrowseFrame.cpp">
       <Filter>Source Files\Controls</Filter>
     </ClCompile>
@@ -1146,6 +1143,9 @@
     <ClCompile Include="MiniUPnP.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="ZLibWarp.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Midl Include="Shareaza.idl">
@@ -1678,9 +1678,6 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="ZIPFile.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="ZLib.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="CtrlBrowseFrame.h">
@@ -2305,6 +2302,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="UPnP.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="ZLibWarp.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

@@ -765,7 +765,9 @@ BOOL CDatagrams::OnDatagram(const SOCKADDR_IN* pHost, const BYTE* pBuffer, DWORD
 	}
 
 	// Detect BitTorrent packets
-	if ( nLength > 16 )
+	if ( nLength > 16 &&
+		 pBuffer[ 0 ] == 'd' &&
+		 pBuffer[ nLength - 1 ] == 'e'  )
 	{
 		if ( CBTPacket* pPacket = CBTPacket::New(
 			BT_PACKET_EXTENSION, BT_EXTENSION_NOP, pBuffer, nLength ) )
@@ -835,9 +837,21 @@ BOOL CDatagrams::OnReceiveSGP(const SOCKADDR_IN* pHost, const SGP_HEADER* pHeade
 
 	CDatagramIn** pHash = m_pInputHash + ( nHash & DATAGRAM_HASH_MASK );
 
+	DWORD count = 0;
+	CDatagramIn* pDGAntiLoop = NULL;
+
     CDatagramIn* pDG = *pHash;
 	for ( ; pDG ; pDG = pDG->m_pNextHash )
 	{
+
+		if ( pDGAntiLoop == pDG ) 
+			break;
+
+		if ( ++count > 2000 ){
+			count = 0;
+			pDGAntiLoop = pDG;
+		}
+
 		if (	pDG->m_pHost.sin_addr.S_un.S_addr == pHost->sin_addr.S_un.S_addr &&
 				pDG->m_pHost.sin_port == pHost->sin_port &&
 				pDG->m_nSequence == pHeader->nSequence &&
@@ -951,8 +965,18 @@ BOOL CDatagrams::OnAcknowledgeSGP(const SOCKADDR_IN* pHost, const SGP_HEADER* pH
 
 	CDatagramOut** pHash = m_pOutputHash + ( nHash & DATAGRAM_HASH_MASK );
 
+	DWORD count = 0;
+	CDatagramOut* pDGAntiLoop = NULL;
 	for ( CDatagramOut* pDG = *pHash ; pDG ; pDG = pDG->m_pNextHash )
 	{
+		if ( pDGAntiLoop == pDG ) 
+			break;
+
+		if ( ++count > 2000 ){
+			count = 0;
+			pDGAntiLoop = pDG;
+		}
+
 		if (	pDG->m_pHost.sin_addr.S_un.S_addr == pHost->sin_addr.S_un.S_addr &&
 				pDG->m_pHost.sin_port == pHost->sin_port &&
 				pDG->m_nSequence == pHeader->nSequence )

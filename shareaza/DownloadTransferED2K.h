@@ -22,7 +22,7 @@
 #pragma once
 
 #include "DownloadTransfer.h"
-#include "zlib.h"
+#include "ZLibWarp.h"
 
 class CEDClient;
 class CEDPacket;

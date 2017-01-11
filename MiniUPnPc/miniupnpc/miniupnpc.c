@@ -1,4 +1,4 @@
-/* $Id: miniupnpc.c,v 1.148 2016/01/24 17:24:36 nanard Exp $ */
+/* $Id: miniupnpc.c,v 1.149 2016/02/09 09:50:46 nanard Exp $ */
 /* vim: tabstop=4 shiftwidth=4 noexpandtab
  * Project : miniupnp
  * Web : http://miniupnp.free.fr/
@@ -706,7 +706,7 @@ UPNP_GetIGDFromUrl(const char * rootdescurl,
 	int descXMLsize = 0;
 
 	descXML = miniwget_getaddr(rootdescurl, &descXMLsize,
-	   	                       lanaddr, lanaddrlen, 0, NULL);
+	                           lanaddr, lanaddrlen, 0, NULL);
 	if(descXML) {
 		memset(data, 0, sizeof(struct IGDdatas));
 		memset(urls, 0, sizeof(struct UPNPUrls));

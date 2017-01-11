@@ -1,5 +1,5 @@
 //
-// ZLib.cpp
+// ZLibWarp.cpp
 //
 // Copyright (c) Shareaza Development Team, 2002-2012.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
@@ -25,7 +25,7 @@
 #include "StdAfx.h"
 #include "Shareaza.h"
 #include "Settings.h"
-#include "ZLib.h"
+#include "ZLibWarp.h"
 
 #ifdef _DEBUG
 #undef THIS_FILE
