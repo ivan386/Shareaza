@@ -1,7 +1,7 @@
 //
 // DownloadWithTorrent.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2015.
+// Copyright (c) Shareaza Development Team, 2002-2017.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -319,6 +319,25 @@ BOOL CDownloadWithTorrent::SetTorrent(const CBTInfo* pTorrent)
 
 		m_pTorrent = *pTorrent;
 	}
+
+	if ( m_nSize != SIZE_UNKNOWN && // Single file download
+		 m_pTorrent.IsAvailableInfo() && ( m_pTorrent.m_nSize == SIZE_UNKNOWN || m_pTorrent.m_nSize != m_nSize ) )
+		return FALSE;
+
+	if ( m_bBTHTrusted && validAndUnequal( m_oBTH, m_pTorrent.m_oBTH ) )
+		return FALSE;
+
+	if ( m_bTigerTrusted && validAndUnequal( m_oTiger, m_pTorrent.m_oTiger ) )
+		return FALSE;
+
+	if ( m_bSHA1Trusted && validAndUnequal( m_oSHA1, m_pTorrent.m_oSHA1 ) )
+		return FALSE;
+
+	if ( m_bED2KTrusted && validAndUnequal( m_oED2K, m_pTorrent.m_oED2K ) )
+		return FALSE;
+
+	if ( m_bMD5Trusted && validAndUnequal( m_oMD5, m_pTorrent.m_oMD5 ) )
+		return FALSE;
 
 	if ( m_pTorrent.m_nSize != SIZE_UNKNOWN )
 	{
