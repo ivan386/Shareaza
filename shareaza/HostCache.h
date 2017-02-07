@@ -1,7 +1,7 @@
 //
 // HostCache.h
 //
-// Copyright (c) Shareaza Development Team, 2002-2015.
+// Copyright (c) Shareaza Development Team, 2002-2017.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -305,22 +305,7 @@ public:
 	void				OnSuccess(const IN_ADDR* pAddress, WORD nPort, PROTOCOLID nProtocol = PROTOCOL_NULL, bool bUpdate = true);
 	void				PruneOldHosts();
 
-	inline bool EnoughServers(PROTOCOLID nProtocol) const
-	{
-		switch ( nProtocol )
-		{
-		case PROTOCOL_G1:
-			return Gnutella1.CountHosts( TRUE ) > 20;
-		case PROTOCOL_G2:
-			return Gnutella2.CountHosts( TRUE ) > 25;
-		case PROTOCOL_ED2K:
-			return eDonkey.CountHosts( TRUE ) > 0;
-		case PROTOCOL_DC:
-			return DC.CountHosts( TRUE ) > 0;
-		default:
-			return true;
-		}
-	}
+	bool EnoughServers(PROTOCOLID nProtocol) const;
 
 	inline CHostCacheList* ForProtocol(PROTOCOLID nProtocol)
 	{

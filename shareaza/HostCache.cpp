@@ -1,7 +1,7 @@
 //
 // HostCache.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2015.
+// Copyright (c) Shareaza Development Team, 2002-2017.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -1043,6 +1043,25 @@ int CHostCache::ImportNodes(CFile* pFile)
 	}
 
 	return nServers;
+}
+
+bool CHostCache::EnoughServers(PROTOCOLID nProtocol) const
+{
+	switch ( nProtocol )
+	{
+	case PROTOCOL_G1:
+		return ! Settings.Gnutella1.EnableToday || Gnutella1.CountHosts( TRUE ) > 20;
+	case PROTOCOL_G2:
+		return ! Settings.Gnutella2.EnableToday || Gnutella2.CountHosts( TRUE ) > 25;
+	case PROTOCOL_ED2K:
+		return ! Settings.eDonkey.EnableToday || eDonkey.CountHosts( TRUE ) > 0;
+	case PROTOCOL_DC:
+		return ! Settings.DC.EnableToday || DC.CountHosts( TRUE ) > 0;
+	case PROTOCOL_BT:
+		return ! Settings.BitTorrent.EnableToday || BitTorrent.CountHosts( TRUE ) > 0;
+	default:
+		return true;
+	}
 }
 
 //////////////////////////////////////////////////////////////////////
