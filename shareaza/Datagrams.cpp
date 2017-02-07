@@ -1,7 +1,7 @@
 //
 // Datagrams.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2015.
+// Copyright (c) Shareaza Development Team, 2002-2017.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -765,10 +765,11 @@ BOOL CDatagrams::OnDatagram(const SOCKADDR_IN* pHost, const BYTE* pBuffer, DWORD
 	}
 
 	// Detect BitTorrent packets
-	if ( nLength > 16 )
+	if ( nLength > 16 &&
+		 pBuffer[ 0 ] == 'd' &&
+		 pBuffer[ nLength - 1 ] == 'e' )
 	{
-		if ( CBTPacket* pPacket = CBTPacket::New(
-			BT_PACKET_EXTENSION, BT_EXTENSION_NOP, pBuffer, nLength ) )
+		if ( CBTPacket* pPacket = CBTPacket::New( BT_PACKET_EXTENSION, BT_EXTENSION_NOP, pBuffer, nLength ) )
 		{
 			m_nInPackets++;
 
