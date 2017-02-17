@@ -663,6 +663,12 @@ BOOL CMetaItem::CreateLink()
 
 		return TRUE;
 	}
+	else if ( m_pMember->m_sName == _T( "hash" ) )
+	{
+		m_bLink = TRUE;
+		m_sLink =  _T("magnet:?xt=urn:btih:") + m_sValue;
+		m_sLinkName = m_sValue;
+	}
 
 	if ( m_pMember == NULL ) return FALSE;
 	
@@ -687,7 +693,7 @@ CAlbumFolder* CMetaItem::GetLinkTarget(BOOL bHTTP) const
 {
 	if ( bHTTP )
 	{
-		if ( m_sLink.Find( _T("http://") ) == 0 )
+		if ( m_sLink.Find( _T("http://") ) == 0 || m_sLink.Find( _T("magnet:?") ) == 0 )
 		{
 			ShellExecute( AfxGetMainWnd()->GetSafeHwnd(), _T("open"), m_sLink,
 				NULL, NULL, SW_SHOWNORMAL );
