@@ -209,7 +209,7 @@ bool CLocalSearch::ExecuteSharedFiles(INT_PTR nMaximum, INT_PTR& nHits)
 		return false;
 
 	// Is it a browser request?
-	if ( ! m_pSearch && m_nProtocol == PROTOCOL_G2 )
+	if ( ! m_pSearch && m_nProtocol == PROTOCOL_G2 && Settings.Gnutella2.EnableToday )
 	{
 		// Send virtual tree		
 		DispatchPacket( AlbumToPacket( Library.GetAlbumRoot() ) );
