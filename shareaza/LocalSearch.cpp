@@ -208,6 +208,16 @@ bool CLocalSearch::ExecuteSharedFiles(INT_PTR nMaximum, INT_PTR& nHits)
 	if ( ! oLock.Lock( 250 ) )
 		return false;
 
+	// Is it a browser request?
+	if ( ! m_pSearch && m_nProtocol == PROTOCOL_G2 && Settings.Gnutella2.EnableToday )
+	{
+		// Send virtual tree		
+		DispatchPacket( AlbumToPacket( Library.GetAlbumRoot() ) );
+
+		// Send physical tree
+		DispatchPacket( FoldersToPacket() );
+	}
+
 	auto_ptr< CFileList > pFiles( Library.Search(
 		m_pSearch, (int)nMaximum, FALSE,
 		// Ghost files only for G2
@@ -231,16 +241,6 @@ bool CLocalSearch::ExecuteSharedFiles(INT_PTR nMaximum, INT_PTR& nHits)
 		SendHits( oFilesInPacket );
 
 		nHits += oFilesInPacket.GetCount();
-	}
-
-	// Is it a browser request?
-	if ( ! m_pSearch && m_nProtocol == PROTOCOL_G2 )
-	{
-		// Send virtual tree		
-		DispatchPacket( AlbumToPacket( Library.GetAlbumRoot() ) );
-
-		// Send physical tree
-		DispatchPacket( FoldersToPacket() );
 	}
 
 	return true;
