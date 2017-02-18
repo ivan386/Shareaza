@@ -668,6 +668,8 @@ BOOL CMetaItem::CreateLink()
 		m_bLink = TRUE;
 		m_sLink =  _T("magnet:?xt=urn:btih:") + m_sValue;
 		m_sLinkName = m_sValue;
+
+		return TRUE;
 	}
 
 	if ( m_pMember == NULL ) return FALSE;
