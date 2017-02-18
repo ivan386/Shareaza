@@ -663,7 +663,7 @@ BOOL CMetaItem::CreateLink()
 
 		return TRUE;
 	}
-	else if ( m_pMember->m_sName == _T( "hash" ) )
+	else if ( m_pMember && m_pMember->m_sName == _T( "hash" ) )
 	{
 		m_bLink = TRUE;
 		m_sLink =  _T("magnet:?xt=urn:btih:") + m_sValue;
