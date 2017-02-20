@@ -27,13 +27,7 @@
     <ClCompile Include="zlib\deflate.c">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="gvmat32c.c">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="zlib\infback.c">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="zlib\contrib\masmx64\inffas8664.c">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="zlib\inffast.c">
@@ -78,20 +72,6 @@
     <ClCompile Include="zlib\gzlib.c">
       <Filter>Source Files</Filter>
     </ClCompile>
-  </ItemGroup>
-  <ItemGroup>
-    <MASM Include="gvmat32.asm">
-      <Filter>Source Files</Filter>
-    </MASM>
-    <MASM Include="zlib\contrib\masmx86\inffas32.asm">
-      <Filter>Source Files</Filter>
-    </MASM>
-    <MASM Include="zlib\contrib\masmx64\gvmat64.asm">
-      <Filter>Source Files</Filter>
-    </MASM>
-    <MASM Include="zlib\contrib\masmx64\inffasx64.asm">
-      <Filter>Source Files</Filter>
-    </MASM>
   </ItemGroup>
   <ItemGroup>
     <None Include="zlib\win32\zlib.def">

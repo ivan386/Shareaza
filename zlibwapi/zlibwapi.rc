@@ -25,7 +25,7 @@ LANGUAGE LANG_NEUTRAL, SUBLANG_NEUTRAL
 //
 
 VS_VERSION_INFO VERSIONINFO
- FILEVERSION 1,2,8,0
+ FILEVERSION 1,2,11,0
  PRODUCTVERSION 2,7,9,0
  FILEFLAGSMASK 0x17L
 #ifdef _DEBUG
@@ -44,9 +44,9 @@ BEGIN
             VALUE "Comments", "DLL support by Alessandro Iacopetti & Gilles Vollant"
             VALUE "CompanyName", "Jean-loup Gailly & Mark Adler"
             VALUE "FileDescription", "zlib data compression library"
-            VALUE "FileVersion", "1.2.8.0"
+            VALUE "FileVersion", "1.2.11.0"
             VALUE "InternalName", "zlib"
-            VALUE "LegalCopyright", "Copyright © Jean-loup Gailly & Mark Adler, 1995-2013. All rights reserved."
+            VALUE "LegalCopyright", "Copyright © Jean-loup Gailly & Mark Adler, 1995-2017. All rights reserved."
             VALUE "OriginalFilename", "zlib.dll"
             VALUE "ProductName", "Shareaza"
             VALUE "ProductVersion", "2.7.9.0"
