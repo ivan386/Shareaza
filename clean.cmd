@@ -1,4 +1,5 @@
 @echo off
+del /q "Languages\*.log" 2>nul:
 del /q "setup\builds\*.exe" 2>nul:
 del /q "setup\builds\*.7z" 2>nul:
 del /q "setup\builds\*.iss" 2>nul:
