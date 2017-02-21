@@ -33,7 +33,7 @@ VS_VERSION_INFO VERSIONINFO
 #else
  FILEFLAGS 0x0L
 #endif
- FILEOS 0x4L
+ FILEOS 0x40004L
  FILETYPE 0x2L
  FILESUBTYPE 0x0L
 BEGIN
@@ -45,9 +45,9 @@ BEGIN
             VALUE "CompanyName", "Jean-loup Gailly & Mark Adler"
             VALUE "FileDescription", "zlib data compression library"
             VALUE "FileVersion", "1.2.11.0"
-            VALUE "InternalName", "zlib"
+            VALUE "InternalName", "zlibwapi"
             VALUE "LegalCopyright", "Copyright © Jean-loup Gailly & Mark Adler, 1995-2017. All rights reserved."
-            VALUE "OriginalFilename", "zlib.dll"
+            VALUE "OriginalFilename", "zlibwapi.dll"
             VALUE "ProductName", "Shareaza"
             VALUE "ProductVersion", "2.7.9.0"
         END
