@@ -1,7 +1,7 @@
 //
 // WndMain.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2015.
+// Copyright (c) Shareaza Development Team, 2002-2017.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -1885,7 +1885,7 @@ void CMainWnd::OnNetworkG2()
 		if( !Network.IsConnected() )
 			Network.Connect( TRUE );
 		else
-			DiscoveryServices.Execute( FALSE, PROTOCOL_G2, FALSE );
+			DiscoveryServices.ExecuteBootstraps( PROTOCOL_G2 );
 	}
 }
 
@@ -1919,7 +1919,7 @@ void CMainWnd::OnNetworkG1()
 		if ( !Network.IsConnected() )
 			Network.Connect( TRUE );
 		else
-			DiscoveryServices.Execute( FALSE, PROTOCOL_G1, FALSE );
+			DiscoveryServices.ExecuteBootstraps( PROTOCOL_G1 );
 	}
 #endif // LAN_MODE
 }

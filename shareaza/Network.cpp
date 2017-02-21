@@ -1,7 +1,7 @@
 //
 // Network.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2014.
+// Copyright (c) Shareaza Development Team, 2002-2017.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -846,11 +846,9 @@ void CNetwork::OnRun()
 
 					Neighbours.IsG2HubCapable( FALSE, TRUE );
 					Neighbours.IsG1UltrapeerCapable( FALSE, TRUE );
-
-					// It will check if it is needed inside the function
-					DiscoveryServices.Execute( TRUE, PROTOCOL_NULL, FALSE );
 				}
 
+				DiscoveryServices.Execute();
 				Datagrams.OnRun();
 				SearchManager.OnRun();
 				QueryHashMaster.Build();
