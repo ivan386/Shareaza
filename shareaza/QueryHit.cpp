@@ -164,7 +164,7 @@ CQueryHit* CQueryHit::FromG1Packet(CG1Packet* pPacket, int* pnHops)
 		{
 			CHAR szaVendor[ 4 ];
 			pPacket->Read( szaVendor, 4 );
-			TCHAR szVendor[ 5 ] = { szaVendor[0], szaVendor[1], szaVendor[2], szaVendor[3], 0 };
+			TCHAR szVendor[ 5 ] = { (TCHAR)szaVendor[0], (TCHAR)szaVendor[1], (TCHAR)szaVendor[2], (TCHAR)szaVendor[3], 0 };
 			if ( Security.IsVendorBlocked( szVendor ) )
 			{
 				theApp.Message( MSG_DEBUG | MSG_FACILITY_SEARCH, _T("[G1] Got hit packet from invalid client") );

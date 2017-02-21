@@ -1,7 +1,7 @@
 //
 // StdAfx.h
 //
-// Copyright (c) Shareaza Development Team, 2002-2015.
+// Copyright (c) Shareaza Development Team, 2002-2017.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -26,7 +26,10 @@
 
 #pragma once
 
-#include "..\build.h"
+// Set "1" for release and "0" for alpha, beta, etc. daily builds
+#ifndef RELEASE_BUILD
+	#define RELEASE_BUILD 0
+#endif
 
 //
 // Configuration
@@ -208,7 +211,7 @@
 //
 
 #define BZ_NO_STDIO
-#include "bzlib.h"
+#include "../bzlib/bzlib.h"
 #include "zlib.h"
 
 #pragma warning ( pop )

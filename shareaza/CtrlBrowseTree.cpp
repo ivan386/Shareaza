@@ -1,7 +1,7 @@
 //
 // CtrlBrowseTree.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2014.
+// Copyright (c) Shareaza Development Team, 2002-2017.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -362,7 +362,7 @@ BOOL CBrowseTreeCtrl::CleanItems(CBrowseTreeItem* pItem, DWORD nCookie, BOOL bVi
 
 void CBrowseTreeCtrl::NotifySelection()
 {
-	NMHDR pNM = { GetSafeHwnd(), GetDlgCtrlID(), BTN_SELCHANGED };
+	NMHDR pNM = { GetSafeHwnd(), (UINT_PTR)GetDlgCtrlID(), BTN_SELCHANGED };
 	GetOwner()->SendMessage( WM_NOTIFY, pNM.idFrom, (LPARAM)&pNM );
 }
 

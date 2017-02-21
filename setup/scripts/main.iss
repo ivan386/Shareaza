@@ -1,7 +1,7 @@
 ;
 ; main.iss
 ;
-; Copyright (c) Shareaza Development Team, 2002-2016.
+; Copyright (c) Shareaza Development Team, 2002-2017.
 ; This file is part of SHAREAZA (shareaza.sourceforge.net)
 ;
 ; Shareaza is free software; you can redistribute it
@@ -29,8 +29,10 @@
   #error Inno Setup UNICODE version is needed for this script
 #endif
 
-; Project definitions
-#include SourcePath + "..\..\build.h"
+; Set "1" for release and "0" for alpha, beta, etc. daily builds
+#ifndef RELEASE_BUILD
+	#define RELEASE_BUILD 0
+#endif
 
 ; Test for VS2010
 #ifexist SourcePath + "..\..\vc10\Win32\Release\Shareaza.exe"
@@ -245,9 +247,7 @@ Name: "desktopicon"; Description: "{cm:CreateDesktopIcon}"
 Name: "quicklaunch"; Description: "{cm:CreateQuickLaunchIcon}"
 Name: "firewall"; Description: "{cm:tasks_firewall}"; MinVersion: 5.1sp2
 Name: "upnp"; Description: "{cm:tasks_upnp}"; MinVersion: 5.1; Check: CanUserModifyServices
-#if Str(RELEASE_BUILD) == "1"
 Name: "deleteoldsetup"; Description: "{cm:tasks_deleteoldsetup}"; Check: EnableDeleteOldSetup
-#endif
 Name: "resetdiscoveryhostcache"; Description: "{cm:tasks_resetdiscoveryhostcache}"; Flags: unchecked
 
 [Files]

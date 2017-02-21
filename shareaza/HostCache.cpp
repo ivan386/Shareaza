@@ -1378,7 +1378,7 @@ void CHostCacheHost::Serialize(CArchive& ar, int nVersion)
 		if ( szaVendor[0] )
 		{
 			ReadArchive( ar, szaVendor + 1, 3 );
-			TCHAR szVendor[5] = { szaVendor[0], szaVendor[1], szaVendor[2], szaVendor[3], 0 };
+			TCHAR szVendor[5] = { (TCHAR)szaVendor[0], (TCHAR)szaVendor[1], (TCHAR)szaVendor[2], (TCHAR)szaVendor[3], 0 };
 			m_pVendor = VendorCache.Lookup( szVendor );
 		}
 
