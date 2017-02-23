@@ -1545,7 +1545,6 @@ BOOL CDownloadTransferHTTP::ReadTiger(bool bDropped)
 			}
 			
 			pInput->Remove( ( nBody + 3 ) & ~3 );
-			if ( nFlags & 2 ) break;
 		}
 		
 		pInput->Clear();

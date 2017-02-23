@@ -580,13 +580,11 @@ BOOL CUploadTransferHTTP::OnHeadersComplete()
 
 		if ( CDownload* pDownload = Downloads.FindByURN( pszURN ) )
 		{
-			if ( pDownload->GetTigerTree() != NULL || ( pDownload->GetHashset() != NULL && bHashset ) )
-			{
-				m_sName = pDownload->m_sName;
-				m_nSize = pDownload->m_nSize;
-				return RequestTigerTreeDIME( pDownload->GetTigerTree(), nDepth,
-					bHashset ? pDownload->GetHashset() : NULL, FALSE );
-			}
+			CTigerTree* pTigerTree	= pDownload->GetTigerTree();
+			CED2K* pHashset			= bHashset ? pDownload->GetHashset() : NULL;
+			m_sName = pDownload->m_sName;
+			m_nSize = pDownload->m_nSize;
+			return RequestTigerTreeDIME( pTigerTree, nDepth, pHashset, FALSE );
 		}
 	}
 	else if ( ::StartsWith( m_sRequest, _PT("/uri-res/N2R?urn:") ) )
@@ -1093,7 +1091,7 @@ void CUploadTransferHTTP::SendFileHeaders()
 	if ( m_bMetadata )
 	{
 		Write( _P("X-Metadata-Path: /gnutella/metadata/v1?") );
-		Write( m_oTiger?m_oTiger.toUrn():m_oED2K.toUrn() );
+		Write( m_oTiger ? m_oTiger.toUrn(): m_oED2K.toUrn() );
 		Write( _P("\r\n") );
 	}
 
@@ -1470,18 +1468,6 @@ BOOL CUploadTransferHTTP::RequestTigerTreeDIME(CTigerTree* pTigerTree, int nDept
 	BOOL  bSendDIME   = FALSE;
 	CBuffer pDIME;
 
-	if ( pHashset && pHashset->ToBytes( &pSerialTree, &nSerialTree ) )
-	{
-		pDIME.WriteDIME( 2, _P(""),
-			_P("http://edonkey2000.com/spec/md4-hashset"), pSerialTree, nSerialTree );
-		GlobalFree( pSerialTree );
-
-		bSendDIME = TRUE;
-	}
-
-	if ( bDelete )
-		delete pHashset;
-
 	if ( pTigerTree && pTigerTree->ToBytes( &pSerialTree, &nSerialTree, nDepth ) )
 	{
 		CString strUUID, strXML;
@@ -1524,6 +1510,18 @@ BOOL CUploadTransferHTTP::RequestTigerTreeDIME(CTigerTree* pTigerTree, int nDept
 	
 	if ( bDelete )
 		delete pTigerTree;
+
+	if ( pHashset && pHashset->ToBytes( &pSerialTree, &nSerialTree ) )
+	{
+		pDIME.WriteDIME( 2, _P(""),
+			_P("http://edonkey2000.com/spec/md4-hashset"), pSerialTree, nSerialTree );
+		GlobalFree( pSerialTree );
+
+		bSendDIME = TRUE;
+	}
+
+	if ( bDelete )
+		delete pHashset;
 	
 	if ( ! bSendDIME ){
 		ClearHashes();
