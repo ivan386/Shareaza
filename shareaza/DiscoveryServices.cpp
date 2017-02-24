@@ -1,7 +1,7 @@
 //
 // DiscoveryServices.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2015.
+// Copyright (c) Shareaza Development Team, 2002-2017.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -920,12 +920,9 @@ BOOL CDiscoveryServices::Update()
 // You should never query server.met files, because of the load it would create.
 // This is public, and will be called quite regularly.
 
-BOOL CDiscoveryServices::Execute(BOOL bDiscovery, PROTOCOLID nProtocol, USHORT nForceDiscovery)
+BOOL CDiscoveryServices::Execute(PROTOCOLID nProtocol, USHORT nForceDiscovery)
 {
 	/*
-		bDiscovery:
-			TRUE	- Want Discovery(GEC, UHC, MET)
-			FALSE	- Want Bootstrap connection.
 		nProtocol:
 			PROTOCOL_NULL	- Auto Detection
 		nForceDiscovery:
@@ -938,89 +935,88 @@ BOOL CDiscoveryServices::Execute(BOOL bDiscovery, PROTOCOLID nProtocol, USHORT n
 	if ( ! pLock.Lock( 250 ) )
 		return FALSE;
 
-	if ( bDiscovery ) // If this is a user-initiated manual query, or AutoStart with Cache empty
-	{
-		if ( m_pRequest.IsPending() )
-			return FALSE;
+	if ( m_pRequest.IsPending() )
+		return FALSE;
 
-		const DWORD tNow = static_cast< DWORD >( time( NULL ) );
-		if ( m_tExecute != 0 && tNow - m_tExecute < 5 && nForceDiscovery < 2 ) return FALSE;
-		if ( m_tQueried != 0 && tNow - m_tQueried < 60 && nForceDiscovery == 0 ) return FALSE;
-		if ( nForceDiscovery > 0 && nProtocol == PROTOCOL_NULL ) return FALSE;
+	const DWORD tNow = static_cast< DWORD >( time( NULL ) );
+	if ( m_tExecute != 0 && tNow - m_tExecute < 10 && nForceDiscovery < 2 ) return FALSE;
+	if ( m_tQueried != 0 && tNow - m_tQueried < 60 && nForceDiscovery == 0 ) return FALSE;
+	if ( nForceDiscovery > 0 && nProtocol == PROTOCOL_NULL ) return FALSE;
 
-		m_tExecute = tNow;
+	m_tExecute = tNow;
 
 #ifdef LAN_MODE
-		BOOL	bG1Required = FALSE;
+	BOOL	bG1Required = FALSE;
 
-		BOOL	bG2Required = Settings.Gnutella2.EnableToday &&
-			( nProtocol == PROTOCOL_NULL || nProtocol == PROTOCOL_G2 ) &&
-			( nForceDiscovery == 1 || HostCache.Gnutella2.CountHosts( TRUE ) == 0 );
+	BOOL	bG2Required = Settings.Gnutella2.EnableToday &&
+		( nProtocol == PROTOCOL_NULL || nProtocol == PROTOCOL_G2 ) &&
+		( nForceDiscovery == 1 || HostCache.Gnutella2.CountHosts( TRUE ) == 0 );
 
-		BOOL	bEdRequired = FALSE;
-		BOOL	bDCRequired = FALSE;
+	BOOL	bEdRequired = FALSE;
+	BOOL	bDCRequired = FALSE;
 #else // LAN_MODE
-		BOOL	bG1Required = Settings.Gnutella1.EnableToday &&
-			( nProtocol == PROTOCOL_NULL || nProtocol == PROTOCOL_G1 ) &&
-			( nForceDiscovery == 1 || ! HostCache.EnoughServers( PROTOCOL_G1 ) );
+	BOOL	bG1Required = Settings.Gnutella1.EnableToday &&
+		( nProtocol == PROTOCOL_NULL || nProtocol == PROTOCOL_G1 ) &&
+		( nForceDiscovery == 1 || ! HostCache.EnoughServers( PROTOCOL_G1 ) );
 
-		BOOL	bG2Required = Settings.Gnutella2.EnableToday &&
-			( nProtocol == PROTOCOL_NULL || nProtocol == PROTOCOL_G2 ) &&
-			( nForceDiscovery == 1 || ! HostCache.EnoughServers( PROTOCOL_G2 ) );
+	BOOL	bG2Required = Settings.Gnutella2.EnableToday &&
+		( nProtocol == PROTOCOL_NULL || nProtocol == PROTOCOL_G2 ) &&
+		( nForceDiscovery == 1 || ! HostCache.EnoughServers( PROTOCOL_G2 ) );
 
-		BOOL	bEdRequired = Settings.eDonkey.EnableToday && Settings.eDonkey.AutoDiscovery &&
-			( nProtocol == PROTOCOL_NULL || nProtocol == PROTOCOL_ED2K ) &&
-			( nForceDiscovery == 1 || ! HostCache.EnoughServers( PROTOCOL_ED2K ) );
+	BOOL	bEdRequired = Settings.eDonkey.EnableToday && Settings.eDonkey.AutoDiscovery &&
+		( nProtocol == PROTOCOL_NULL || nProtocol == PROTOCOL_ED2K ) &&
+		( nForceDiscovery == 1 || ! HostCache.EnoughServers( PROTOCOL_ED2K ) );
 
-		BOOL	bDCRequired = Settings.DC.EnableToday && Settings.DC.AutoDiscovery &&
-			( nProtocol == PROTOCOL_NULL || nProtocol == PROTOCOL_DC ) &&
-			( nForceDiscovery == 1 || ! HostCache.EnoughServers( PROTOCOL_DC ) );
+	BOOL	bDCRequired = Settings.DC.EnableToday && Settings.DC.AutoDiscovery &&
+		( nProtocol == PROTOCOL_NULL || nProtocol == PROTOCOL_DC ) &&
+		( nForceDiscovery == 1 || ! HostCache.EnoughServers( PROTOCOL_DC ) );
 #endif // LAN_MODE
 
-		// Broadcast discovery
-		static bool bBroadcast = true;	// test, broadcast, cache, broadcast, cache, ...
-		bBroadcast = ! bBroadcast;
-		if ( bBroadcast && bG2Required )
-		{
-			theApp.Message( MSG_NOTICE, IDS_DISCOVERY_QUERY, _T("BROADCAST") );
-			SOCKADDR_IN addr = { AF_INET, Network.m_pHost.sin_port };
-			addr.sin_addr.S_un.S_addr = INADDR_NONE;
-			return Datagrams.Send( &addr, CG2Packet::New( G2_PACKET_DISCOVERY ), TRUE, 0, FALSE );
-		}
-
-		if ( nProtocol == PROTOCOL_NULL )	// All hosts are wanted
-			return  ( ! bG1Required || RequestRandomService( PROTOCOL_G1 ) ) &&
-					( ! bG2Required || RequestRandomService( PROTOCOL_G2 ) ) &&
-					( ! bEdRequired || RequestRandomService( PROTOCOL_ED2K ) ) &&
-					( ! bDCRequired || RequestRandomService( PROTOCOL_DC ) );
-		else if ( bG1Required )	// Only G1
-			return RequestRandomService( PROTOCOL_G1 );
-		else if ( bG2Required )	// Only G2
-			return RequestRandomService( PROTOCOL_G2 );
-		else if ( bEdRequired )	// Only Ed
-			return RequestRandomService( PROTOCOL_ED2K );
-		else if ( bDCRequired )	// Only DC++
-			return RequestRandomService( PROTOCOL_DC );
-		else
-			return TRUE;	// No Discovery needed
-	}
-	else
+	// Broadcast discovery
+	static bool bBroadcast = true;	// test, broadcast, cache, broadcast, cache, ...
+	bBroadcast = ! bBroadcast;
+	if ( bBroadcast && bG2Required )
 	{
-		theApp.Message( MSG_NOTICE, IDS_DISCOVERY_BOOTSTRAP );
-		// TCP bootstraps
-		if ( Settings.Gnutella1.EnableToday && Settings.Gnutella2.EnableToday && nProtocol == PROTOCOL_NULL )
-			ExecuteBootstraps( Settings.Discovery.BootstrapCount, FALSE, PROTOCOL_NULL );
-		else if ( Settings.Gnutella2.EnableToday && nProtocol == PROTOCOL_G2 )
-			ExecuteBootstraps( Settings.Discovery.BootstrapCount, FALSE, PROTOCOL_G2 );
-		else if ( Settings.Gnutella1.EnableToday && nProtocol == PROTOCOL_G1 )
-			ExecuteBootstraps( Settings.Discovery.BootstrapCount, FALSE, PROTOCOL_G1 );
+		theApp.Message( MSG_NOTICE, IDS_DISCOVERY_QUERY, _T("BROADCAST") );
+		SOCKADDR_IN addr = { AF_INET, Network.m_pHost.sin_port };
+		addr.sin_addr.S_un.S_addr = INADDR_NONE;
+		return Datagrams.Send( &addr, CG2Packet::New( G2_PACKET_DISCOVERY ), TRUE, 0, FALSE );
 	}
+
+	if ( nProtocol == PROTOCOL_NULL )	// All hosts are wanted
+		return  ( ! bG1Required || RequestRandomService( PROTOCOL_G1 ) ) &&
+				( ! bG2Required || RequestRandomService( PROTOCOL_G2 ) ) &&
+				( ! bEdRequired || RequestRandomService( PROTOCOL_ED2K ) ) &&
+				( ! bDCRequired || RequestRandomService( PROTOCOL_DC ) );
+	else if ( bG1Required )	// Only G1
+		return RequestRandomService( PROTOCOL_G1 );
+	else if ( bG2Required )	// Only G2
+		return RequestRandomService( PROTOCOL_G2 );
+	else if ( bEdRequired )	// Only Ed
+		return RequestRandomService( PROTOCOL_ED2K );
+	else if ( bDCRequired )	// Only DC++
+		return RequestRandomService( PROTOCOL_DC );
+	else
+		return TRUE;	// No Discovery needed
 
 	return FALSE;
 }
 
 //////////////////////////////////////////////////////////////////////
 // CDiscoveryServices resolve N gnutella bootstraps
+
+void CDiscoveryServices::ExecuteBootstraps(PROTOCOLID nProtocol)
+{
+	theApp.Message( MSG_NOTICE, IDS_DISCOVERY_BOOTSTRAP );
+
+	// TCP bootstraps
+	if ( Settings.Gnutella1.EnableToday && Settings.Gnutella2.EnableToday && nProtocol == PROTOCOL_NULL )
+		ExecuteBootstraps( Settings.Discovery.BootstrapCount, FALSE, PROTOCOL_NULL );
+	else if ( Settings.Gnutella2.EnableToday && nProtocol == PROTOCOL_G2 )
+		ExecuteBootstraps( Settings.Discovery.BootstrapCount, FALSE, PROTOCOL_G2 );
+	else if ( Settings.Gnutella1.EnableToday && nProtocol == PROTOCOL_G1 )
+		ExecuteBootstraps( Settings.Discovery.BootstrapCount, FALSE, PROTOCOL_G1 );
+}
 
 int CDiscoveryServices::ExecuteBootstraps(int nCount, BOOL bUDP, PROTOCOLID nProtocol)
 {

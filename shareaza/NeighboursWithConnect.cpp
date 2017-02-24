@@ -1,7 +1,7 @@
 //
 // NeighboursWithConnect.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2014.
+// Copyright (c) Shareaza Development Team, 2002-2017.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -1171,13 +1171,13 @@ void CNeighboursWithConnect::Maintain()
 				{
 					// Execute the discovery services (do)
 					if ( pCache->IsEmpty() && tNow >= tDiscoveryLastExecute + 8 )
-						DiscoveryServices.Execute( TRUE, PROTOCOL_G2, 1 );
+						DiscoveryServices.Execute( PROTOCOL_G2, 1 );
 				} // We're looping for Gnutella right now
 				else if ( nProtocol == PROTOCOL_G1 && Settings.Gnutella1.EnableToday )
 				{
 					// If the Gnutella host cache is empty (do), execute discovery services (do)
 					if ( pCache->IsEmpty() && tNow >= tDiscoveryLastExecute + 8 )
-						DiscoveryServices.Execute( TRUE, PROTOCOL_G1, 1 );
+						DiscoveryServices.Execute( PROTOCOL_G1, 1 );
 				}
 			}
 
