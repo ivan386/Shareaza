@@ -1,7 +1,7 @@
 //
 // CtrlSharedFolder.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2014.
+// Copyright (c) Shareaza Development Team, 2002-2017.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -378,7 +378,7 @@ void CLibraryFolderCtrl::OnLButtonDblClk(UINT /*nFlags*/, CPoint point)
 	}
 	else
 	{
-		NMHDR pNM = { GetSafeHwnd(), GetDlgCtrlID(), NM_DBLCLK };
+		NMHDR pNM = { GetSafeHwnd(), (UINT_PTR)GetDlgCtrlID(), NM_DBLCLK };
 		GetParent()->SendMessage( WM_NOTIFY, GetDlgCtrlID(), (LPARAM)&pNM );
 	}
 }

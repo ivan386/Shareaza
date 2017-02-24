@@ -1,7 +1,7 @@
 //
 // CtrlMatch.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2016.
+// Copyright (c) Shareaza Development Team, 2002-2017.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -912,7 +912,7 @@ void CMatchCtrl::DrawItem(CDC& dc, CRect& rcRow, CMatchFile* pFile, CQueryHit* p
 		case MATCH_COL_COUNT:
 			if ( nHits == 1 || pHit != NULL )
 			{
-				CQueryHit* ppHit = ( nHits == 1 || pHit == NULL ) ? pFile->GetBest() : pHit;
+				const CQueryHit* ppHit = ( nHits == 1 || pHit == NULL ) ? pFile->GetBest() : pHit;
 				CString strTemp;
 
 				if ( Settings.Search.ShowNames && !ppHit->m_sNick.IsEmpty() )
@@ -920,10 +920,9 @@ void CMatchCtrl::DrawItem(CDC& dc, CRect& rcRow, CMatchFile* pFile, CQueryHit* p
 					strTemp = ppHit->m_sNick;
 
 					if ( ppHit->GetSources() > 1 )
-						_sntprintf( szBuffer, sizeof( szBuffer ) / sizeof( TCHAR ), _T("%s+%lu"), (LPCTSTR)strTemp, ppHit->GetSources() - 1 );
+						_sntprintf( szBuffer, _countof( szBuffer ), _T("%s+%lu"), (LPCTSTR)strTemp, ppHit->GetSources() - 1 );
 					else
-						_sntprintf( szBuffer, sizeof( szBuffer ) / sizeof( TCHAR ), _T("%s"), (LPCTSTR)strTemp );
-					szBuffer[ sizeof( szBuffer ) / sizeof( TCHAR ) - 1 ] = 0;
+						_sntprintf( szBuffer, _countof( szBuffer ), _T("%s"), (LPCTSTR)strTemp );
 				}
 				else if ( ( ppHit->m_nProtocol == PROTOCOL_ED2K ) && ( ppHit->m_bPush == TRI_TRUE ) )
 				{
@@ -931,19 +930,15 @@ void CMatchCtrl::DrawItem(CDC& dc, CRect& rcRow, CMatchFile* pFile, CQueryHit* p
 					strTemp.Format( _T("(%s)"), (LPCTSTR)CString( inet_ntoa( (IN_ADDR&)*ppHit->m_oClientID.begin() ) ) );
 
 					if ( ppHit->GetSources() > 1 )
-						_sntprintf( szBuffer, sizeof( szBuffer ) / sizeof( TCHAR ), _T("%s+%lu"), (LPCTSTR)strTemp, ppHit->GetSources() - 1 );
+						_sntprintf( szBuffer, _countof( szBuffer ), _T("%s+%lu"), (LPCTSTR)strTemp, ppHit->GetSources() - 1 );
 					else
-						_sntprintf( szBuffer, sizeof( szBuffer ) / sizeof( TCHAR ), _T("%s"), (LPCTSTR)strTemp );
-					szBuffer[ sizeof( szBuffer ) / sizeof( TCHAR ) - 1 ] = 0;
+						_sntprintf( szBuffer, _countof( szBuffer ), _T("%s"), (LPCTSTR)strTemp );
 				}
 				else if ( ppHit->m_pAddress.S_un.S_addr )
 				{
 					if ( ppHit->GetSources() > 1 )
 					{
-						_sntprintf( szBuffer, sizeof( szBuffer ) / sizeof( TCHAR ), _T("%s+%lu"),
-							(LPCTSTR)CString( inet_ntoa( ppHit->m_pAddress ) ),
-							ppHit->GetSources() - 1 );
-						szBuffer[ sizeof( szBuffer ) / sizeof( TCHAR ) - 1 ] = 0;
+						_sntprintf( szBuffer, _countof( szBuffer ), _T("%s+%lu"), (LPCTSTR)CString( inet_ntoa( ppHit->m_pAddress ) ), ppHit->GetSources() - 1 );
 					}
 					else
 					{
@@ -965,14 +960,12 @@ void CMatchCtrl::DrawItem(CDC& dc, CRect& rcRow, CMatchFile* pFile, CQueryHit* p
 						{
 							strText.Format( _T("%u %s"), pFile->m_nFiltered, (LPCTSTR)strSource );
 						}
-						_sntprintf( szBuffer, sizeof( szBuffer ) / sizeof( TCHAR ), (LPCTSTR)strText, pFile->m_nFiltered );
-						szBuffer[ sizeof( szBuffer ) / sizeof( TCHAR ) - 1 ] = 0;
+						_tcsncpy( szBuffer, (LPCTSTR)strText, _countof( szBuffer ) );
 					}
 					else
 					{
 						// Not used?
-						_sntprintf( szBuffer, sizeof( szBuffer ) / sizeof( TCHAR ), _T("(Firewalled)") );
-						szBuffer[ sizeof( szBuffer ) / sizeof( TCHAR ) - 1 ] = 0;
+						_tcscpy( szBuffer, _T("(Firewalled)") );
 					}
 				}
 			}
@@ -989,9 +982,9 @@ void CMatchCtrl::DrawItem(CDC& dc, CRect& rcRow, CMatchFile* pFile, CQueryHit* p
 				{
 					strText.Format( _T("%u %s"), pFile->m_nFiltered, (LPCTSTR)strSource );
 				}
-				_sntprintf( szBuffer, sizeof( szBuffer ) / sizeof( TCHAR ), (LPCTSTR)strText, pFile->m_nFiltered );
-				szBuffer[ sizeof( szBuffer ) / sizeof( TCHAR ) - 1 ] = 0;
+				_tcsncpy( szBuffer, (LPCTSTR)strText, _countof( szBuffer ) );
 			}
+			szBuffer[ _countof( szBuffer ) - 1 ] = 0;
 			pszText = szBuffer;
 			break;
 			
