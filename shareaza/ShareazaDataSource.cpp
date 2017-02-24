@@ -138,7 +138,7 @@ UINT AsyncFileOperationThread(LPVOID param)
 	// Shell file operations
 	SHFILEOPSTRUCT sFileOp = {
 		pAFOP->hWnd,
-		( bCopy ? FO_COPY : FO_MOVE ),
+		(UINT)( bCopy ? FO_COPY : FO_MOVE ),
 		pAFOP->sFrom.GetData(),
 		pAFOP->sTo.GetData(),
 		FOF_ALLOWUNDO,
