@@ -1,7 +1,7 @@
 //
 // HashDatabase.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2014.
+// Copyright (c) Shareaza Development Team, 2002-2017.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -167,7 +167,7 @@ void CHashDatabase::Close()
 //////////////////////////////////////////////////////////////////////
 // CHashDatabase lookup
 
-HASHDB_INDEX* CHashDatabase::Lookup(DWORD nIndex, DWORD nType)
+HASHDB_INDEX* CHashDatabase::Lookup(DWORD nIndex, DWORD nType) const
 {
 	ASSERT( m_bOpen );
 	HASHDB_INDEX* pIndex = m_pIndex;

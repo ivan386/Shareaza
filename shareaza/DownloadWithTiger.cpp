@@ -1,7 +1,7 @@
 //
 // DownloadWithTiger.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2015.
+// Copyright (c) Shareaza Development Team, 2002-2017.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -337,7 +337,7 @@ BOOL CDownloadWithTiger::SetTigerTree(BYTE* pTiger, DWORD nTiger, BOOL bLevel1)
 	return TRUE;
 }
 
-CTigerTree* CDownloadWithTiger::GetTigerTree()
+const CTigerTree* CDownloadWithTiger::GetTigerTree() const
 {
 	CQuickLock oLock( m_pTigerSection );
 
@@ -405,7 +405,7 @@ BOOL CDownloadWithTiger::SetHashset(BYTE* pSource, DWORD nSource)
 	return TRUE;
 }
 
-CED2K* CDownloadWithTiger::GetHashset()
+const CED2K* CDownloadWithTiger::GetHashset() const
 {
 	CQuickLock oLock( m_pTigerSection );
 

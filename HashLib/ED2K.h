@@ -1,7 +1,7 @@
 //
 // ED2K.h
 //
-// Copyright (c) Shareaza Development Team, 2002-2011.
+// Copyright (c) Shareaza Development Team, 2002-2017.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -47,9 +47,8 @@ public:
 	BOOL	FinishBlockTest(uint32 nBlock);
 	
 	// To free ppOutput, use the GlobalFree function
-	BOOL	ToBytes(BYTE** ppOutput, uint32* pnOutput);
+	BOOL	ToBytes(BYTE** ppOutput, uint32* pnOutput) const;
 	BOOL	FromBytes(BYTE* pOutput, uint32 nOutput, uint64 nSize = 0);
-	BOOL	CheckIntegrity();
 	
 	BOOL	IsAvailable() const;
 	void	SetSize(uint32 nSize);
@@ -64,6 +63,9 @@ private:
 	uint32	m_nCurHash;
 	uint32	m_nCurByte;
 	bool	m_bNullBlock;
+
+	// Check hash tree integrity (rebuilding missed hashes if needed)
+	BOOL	CheckIntegrity() const;
 };
 
 const DWORD ED2K_PART_SIZE	= 9500 * 1024u;

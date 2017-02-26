@@ -1,7 +1,7 @@
 //
 // DownloadWithTiger.h
 //
-// Copyright (c) Shareaza Development Team, 2002-2013.
+// Copyright (c) Shareaza Development Team, 2002-2017.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -63,10 +63,10 @@ public:
 	BOOL		GetNextVerifyRange(QWORD& nOffset, QWORD& nLength, BOOL& bSuccess, int nHash = HASH_NULL) const;
 	BOOL		NeedTigerTree() const;
 	BOOL		SetTigerTree(BYTE* pTiger, DWORD nTiger, BOOL bLevel1 = FALSE);
-	CTigerTree*	GetTigerTree();
+	const CTigerTree* GetTigerTree() const;
 	BOOL		NeedHashset() const;
 	BOOL		SetHashset(BYTE* pSource, DWORD nSource);
-	CED2K*		GetHashset();
+	const CED2K* GetHashset() const;
 	bool		RunMergeFile(LPCTSTR szFilename, BOOL bMergeValidation, const Fragments::List& oMissedGaps, CDownloadTask* pTask);
 	void		ResetVerification();
 	void		ClearVerification();

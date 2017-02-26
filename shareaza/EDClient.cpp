@@ -1,7 +1,7 @@
 //
 // EDClient.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2014.
+// Copyright (c) Shareaza Development Team, 2002-2017.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -1490,46 +1490,48 @@ BOOL CEDClient::OnFileStatusRequest(CEDPacket* pPacket)
 	pPacket->Read( m_oUpED2K );
 	pReply->Write( m_oUpED2K );
 
-	CSingleLock oLock( &Library.m_pSection );
-	if ( oLock.Lock( 1000 ) )
+	BOOL bOk = FALSE;
+
 	{
-		if ( CLibraryFile* pFile = LibraryMaps.LookupFileByED2K( m_oUpED2K, TRUE, TRUE ) )
+		CSingleLock oLock( &Library.m_pSection, FALSE );
+		if ( oLock.Lock( 1000 ) )
 		{
-			pReply->WriteShortLE( 0 );
-			pReply->WriteByte( 0 );
+			if ( CLibraryFile* pFile = LibraryMaps.LookupFileByED2K( m_oUpED2K, TRUE, TRUE ) )
+			{
+				pReply->WriteShortLE( 0 );
+				pReply->WriteByte( 0 );
 
-			m_nUpSize = pFile->GetSize();
-			if ( ! CEDPacket::IsLowID( m_nClientID ) )
-				pFile->AddAlternateSource( GetSourceURL() );
+				m_nUpSize = pFile->GetSize();
+				if ( ! CEDPacket::IsLowID( m_nClientID ) )
+					pFile->AddAlternateSource( GetSourceURL() );
 
-			oLock.Unlock();
-
-			Send( pReply );
-			return TRUE;
+				bOk = TRUE;
+			}
 		}
-		oLock.Unlock();
 	}
-	if ( CDownload* pDownload = Downloads.FindByED2K( m_oUpED2K, TRUE ) )
+
+	if ( ! bOk )
 	{
-		WritePartStatus( pReply, pDownload );
-		m_nUpSize = pDownload->m_nSize;
+		if ( CDownload* pDownload = Downloads.FindByED2K( m_oUpED2K, TRUE ) )
+		{
+			WritePartStatus( pReply, pDownload );
+			m_nUpSize = pDownload->m_nSize;
 
-		if ( ! pDownload->IsMoving() && ! pDownload->IsCompleted() )
-			pDownload->AddSourceED2K( m_nClientID, htons( m_pHost.sin_port ),
-				m_pServer.sin_addr.S_un.S_addr, htons( m_pServer.sin_port ), m_oGUID );
+			if ( ! pDownload->IsMoving() && ! pDownload->IsCompleted() )
+				pDownload->AddSourceED2K( m_nClientID, htons( m_pHost.sin_port ), m_pServer.sin_addr.S_un.S_addr, htons( m_pServer.sin_port ), m_oGUID );
 
-		Send( pReply );
-		return TRUE;
+			bOk = TRUE;
+		}
 	}
 
-	pReply->m_nType = ED2K_C2C_FILENOTFOUND;
+	if ( ! bOk )
+	{
+		pReply->m_nType = ED2K_C2C_FILENOTFOUND;
+		theApp.Message( MSG_ERROR, IDS_UPLOAD_FILENOTFOUND, (LPCTSTR)m_sAddress, (LPCTSTR)m_oUpED2K.toUrn() );
+		m_oUpED2K.clear();
+	}
+
 	Send( pReply );
-
-	theApp.Message( MSG_ERROR, IDS_UPLOAD_FILENOTFOUND, (LPCTSTR)m_sAddress,
-		(LPCTSTR)m_oUpED2K.toUrn() );
-
-	m_oUpED2K.clear();
-
 	return TRUE;
 }
 
@@ -1547,33 +1549,32 @@ BOOL CEDClient::OnHashsetRequest(CEDPacket* pPacket)
 	Hashes::Ed2kHash oHash;
 	pPacket->Read( oHash );
 
-	CED2K* pHashset	= NULL;
+	const CED2K* pHashset = NULL;
 	BOOL bDelete = FALSE;
 	CString strName;
 
-	CSingleLock oLock( &Library.m_pSection );
-	if ( oLock.Lock( 1000 ) )
 	{
-		if ( CLibraryFile* pFile = LibraryMaps.LookupFileByED2K( oHash, TRUE, TRUE ) )
+		CSingleLock oLock( &Library.m_pSection, FALSE );
+		if ( oLock.Lock( 1000 ) )
 		{
-			strName		= pFile->m_sName;
-			pHashset	= pFile->GetED2K();
-			bDelete		= TRUE;
-			oLock.Unlock();
-		}
-		else
-		{
-			oLock.Unlock();
-			if ( CDownload* pDownload = Downloads.FindByED2K( oHash, TRUE ) )
+			if ( CLibraryFile* pFile = LibraryMaps.LookupFileByED2K( oHash, TRUE, TRUE ) )
 			{
-				if ( ( pHashset = pDownload->GetHashset() ) != NULL )
-				{
-					strName		= pDownload->m_sName;
-					bDelete		= FALSE;
-				}
+				strName		= pFile->m_sName;
+				pHashset	= pFile->GetED2K();
+				bDelete		= TRUE;
 			}
 		}
 	}
+
+	if ( pHashset == NULL )
+	{
+		if ( const CDownload* pDownload = Downloads.FindByED2K( oHash, TRUE ) )
+		{
+			pHashset = pDownload->GetHashset();
+			strName = pDownload->m_sName;
+		}
+	}
+
 	if ( pHashset != NULL )
 	{
 		CEDPacket* pReply = CEDPacket::New( ED2K_C2C_HASHSETANSWER );
