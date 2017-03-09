@@ -978,7 +978,7 @@ BOOL CDiscoveryServices::Execute(PROTOCOLID nProtocol, USHORT nForceDiscovery)
 	if ( bBroadcast && bG2Required )
 	{
 		theApp.Message( MSG_NOTICE, IDS_DISCOVERY_QUERY, _T("BROADCAST") );
-		SOCKADDR_IN addr = { AF_INET, Network.m_pHost.sin_port };
+		SOCKADDR_IN addr = { AF_INET, htons( protocolPorts[ PROTOCOL_G2 ] ) };
 		addr.sin_addr.S_un.S_addr = INADDR_NONE;
 		return Datagrams.Send( &addr, CG2Packet::New( G2_PACKET_DISCOVERY ), TRUE, 0, FALSE );
 	}

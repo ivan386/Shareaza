@@ -84,10 +84,8 @@ CDatagrams::CDatagrams()
 	, m_mOutput			()
 	, m_pReadBuffer		()
 {
-	m_hSocket[0] = INVALID_SOCKET;
-	m_hSocket[1] = INVALID_SOCKET;
-	m_hSocket[2] = INVALID_SOCKET;
-	m_hSocket[3] = INVALID_SOCKET;
+	for( int i = 0; i < SOCKET_COUNT; i++ )
+		m_hSocket[i] = INVALID_SOCKET;
 }
 
 CDatagrams::~CDatagrams()
@@ -179,28 +177,44 @@ BOOL CDatagrams::Listen()
 	if ( ! Settings.Connection.IgnoreLocalIP )
 	{
 		USHORT nPort = ntohs( saHost.sin_port );
-		USHORT nPorts[3] = { 5000, 6347, 6771 };
+		USHORT nPorts[4] = { 
+			  5000                          //eDonkey multicast
+			, DEFAULT_G1_MCAST_PORT         //Gnutella1 multicast
+			, 6771                          //BitTorrent multicast
+			, protocolPorts[ PROTOCOL_G2 ]  //Gnutella2 broadcast
+		};
 		ip_mreq mr[3] = {};
 		mr[0].imr_multiaddr.S_un.S_addr = inet_addr( "224.0.0.1" );
-		mr[1].imr_multiaddr.S_un.S_addr = inet_addr( "234.21.81.1" );
+		mr[1].imr_multiaddr.S_un.S_addr = inet_addr( DEFAULT_G1_MCAST_ADDRESS );
 		mr[2].imr_multiaddr.S_un.S_addr = inet_addr( "239.192.152.143" );
 
-		for (int i = 1; i < 4; i++)
+		for (int i = 1; i < SOCKET_COUNT; i++)
 		{
-			if ( nPorts[i] == nPort )
+			if ( nPorts[i-1] == nPort )
 			{
-				setsockopt( m_hSocket[0], IPPROTO_IP, IP_ADD_MEMBERSHIP, (char*)&mr[i-1], sizeof( ip_mreq ) );
+				if ( i < SOCKET_COUNT - 1 )
+					setsockopt( m_hSocket[0], IPPROTO_IP, IP_ADD_MEMBERSHIP, (char*)&mr[i-1], sizeof( ip_mreq ) );
 			}
-			else
+			else if( nPorts[i-1] ) 
 			{
 				m_hSocket[i] = socket( PF_INET, SOCK_DGRAM, IPPROTO_UDP );
 				saHost.sin_port = htons( nPorts[i-1] );
 
 				if ( bind( m_hSocket[i], (SOCKADDR*)&saHost, sizeof( saHost ) ) == 0 )
 				{
-						setsockopt( m_hSocket[i], IPPROTO_IP, IP_ADD_MEMBERSHIP, (char*)&mr[i-1], sizeof( ip_mreq ) );
+						if ( i < SOCKET_COUNT - 1 )
+						{
+							setsockopt( m_hSocket[i], IPPROTO_IP, IP_ADD_MEMBERSHIP, (char*)&mr[i-1], sizeof( ip_mreq ) );
+							theApp.Message( MSG_INFO, IDS_NETWORK_LISTENING_UDP, (LPCTSTR)CString( inet_ntoa( mr[i-1].imr_multiaddr ) ), htons( saHost.sin_port ) );
+						}
+						
+						if ( i == SOCKET_COUNT - 1 )
+						{
+							setsockopt( m_hSocket[i], SOL_SOCKET, SO_BROADCAST, "\x01", 1 );
+							theApp.Message( MSG_INFO, IDS_NETWORK_LISTENING_UDP, (LPCTSTR)CString( "255.255.255.255" ), htons( saHost.sin_port ) );
+						}
+
 						WSAEventSelect( m_hSocket[i], Network.GetWakeupEvent(), FD_READ );
-						theApp.Message( MSG_INFO, IDS_NETWORK_LISTENING_UDP, (LPCTSTR)CString( inet_ntoa( mr[i-1].imr_multiaddr ) ), htons( saHost.sin_port ) );
 				}
 				else
 					CNetwork::CloseSocket( m_hSocket[i], false );
@@ -267,7 +281,7 @@ void CDatagrams::Disconnect()
 
 	DHT.Disconnect();
 
-	for (int i = 0; i < 4; i++)
+	for (int i = 0; i < SOCKET_COUNT; i++)
 		CNetwork::CloseSocket( m_hSocket[i], false );
 
 	delete [] m_pOutputBuffer;
@@ -456,7 +470,7 @@ void CDatagrams::OnRun()
 	{
 		ManagePartials();
 	}
-	while ( TryRead() | TryRead( 1 ) | TryRead( 2 ) | TryRead( 3 ) );
+	while ( TryRead() | TryRead( 1 ) | TryRead( 2 ) | TryRead( 3 ) | TryRead( 4 ) );
 
 	Measure();
 }

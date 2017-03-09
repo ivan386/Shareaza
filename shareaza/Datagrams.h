@@ -100,7 +100,8 @@ public:
 	void	OnRun();
 
 protected:
-	SOCKET			m_hSocket[4];
+#define SOCKET_COUNT	5
+	SOCKET			m_hSocket[SOCKET_COUNT];
 	WORD			m_nSequence;
 	BOOL			m_bStable;
 	DWORD			m_tLastWrite;
