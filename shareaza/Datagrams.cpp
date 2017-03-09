@@ -61,7 +61,6 @@ CDatagrams::CDatagrams()
 	, m_nOutBandwidth	( 0 )
 	, m_nOutFrags		( 0 )
 	, m_nOutPackets		( 0 )
-	, m_hSocket			( INVALID_SOCKET )
 	, m_nSequence		( 0 )
 	, m_bStable			( FALSE )
 	, m_tLastWrite		( 0 )
@@ -85,6 +84,10 @@ CDatagrams::CDatagrams()
 	, m_mOutput			()
 	, m_pReadBuffer		()
 {
+	m_hSocket[0] = INVALID_SOCKET;
+	m_hSocket[1] = INVALID_SOCKET;
+	m_hSocket[2] = INVALID_SOCKET;
+	m_hSocket[3] = INVALID_SOCKET;
 }
 
 CDatagrams::~CDatagrams()
@@ -100,12 +103,12 @@ BOOL CDatagrams::Listen()
 	if ( IsValid() )
 		return TRUE;
 
-	m_hSocket = socket( PF_INET, SOCK_DGRAM, IPPROTO_UDP );
+	m_hSocket[0] = socket( PF_INET, SOCK_DGRAM, IPPROTO_UDP );
 	if ( ! IsValid() )	// Now, make sure it has been created
 	{
 		theApp.Message( MSG_ERROR, _T("Failed to create UDP socket. (1st Try)") );
 		// Second attempt
-		m_hSocket = socket( PF_INET, SOCK_DGRAM, IPPROTO_UDP );
+		m_hSocket[0] = socket( PF_INET, SOCK_DGRAM, IPPROTO_UDP );
 		if ( ! IsValid() )
 		{
 			theApp.Message( MSG_ERROR, _T("Failed to create UDP socket. (2nd Try)") );
@@ -113,7 +116,7 @@ BOOL CDatagrams::Listen()
 		}
 	}
 
-	VERIFY( setsockopt( m_hSocket, SOL_SOCKET, SO_BROADCAST, "\x01", 1 ) == 0 );
+	VERIFY( setsockopt( m_hSocket[0], SOL_SOCKET, SO_BROADCAST, "\x01", 1 ) == 0 );
 
 	SOCKADDR_IN saHost = {};
 	if ( Network.Resolve( Settings.Connection.InHost, Settings.Connection.InPort, &saHost ) )
@@ -124,7 +127,7 @@ BOOL CDatagrams::Listen()
 		else
 		{
 			// Set the exclusive address option
-			VERIFY( setsockopt( m_hSocket, SOL_SOCKET, SO_EXCLUSIVEADDRUSE, "\x01", 1 ) == 0 );
+			VERIFY( setsockopt( m_hSocket[0], SOL_SOCKET, SO_EXCLUSIVEADDRUSE, "\x01", 1 ) == 0 );
 		}
 	}
 	else if ( Network.Resolve( Settings.Connection.OutHost, Settings.Connection.InPort, &saHost ) )
@@ -139,12 +142,12 @@ BOOL CDatagrams::Listen()
 		else
 		{
 			// Set the exclusive address option
-			VERIFY( setsockopt( m_hSocket, SOL_SOCKET, SO_EXCLUSIVEADDRUSE, "\x01", 1 ) == 0 );
+			VERIFY( setsockopt( m_hSocket[0], SOL_SOCKET, SO_EXCLUSIVEADDRUSE, "\x01", 1 ) == 0 );
 		}
 	}
 
 	// First attempt to bind socket
-	if ( bind( m_hSocket, (SOCKADDR*)&saHost, sizeof( saHost ) ) != 0 )
+	if ( bind( m_hSocket[0], (SOCKADDR*)&saHost, sizeof( saHost ) ) != 0 )
 	{
 		theApp.Message( MSG_ERROR, IDS_NETWORK_CANT_LISTEN, (LPCTSTR)CString( inet_ntoa( saHost.sin_addr ) ), htons( saHost.sin_port ) );
 
@@ -153,7 +156,7 @@ BOOL CDatagrams::Listen()
 
 		// Second attempt to bind socket
 		saHost.sin_addr.s_addr = INADDR_ANY;
-		if ( bind( m_hSocket, (SOCKADDR*)&saHost, sizeof( saHost ) ) != 0 )
+		if ( bind( m_hSocket[0], (SOCKADDR*)&saHost, sizeof( saHost ) ) != 0 )
 		{
 			theApp.Message( MSG_ERROR, IDS_NETWORK_CANT_LISTEN, (LPCTSTR)CString( inet_ntoa( saHost.sin_addr ) ), htons( saHost.sin_port ) );
 			return FALSE;
@@ -162,15 +165,48 @@ BOOL CDatagrams::Listen()
 	
 	theApp.Message( MSG_INFO, IDS_NETWORK_LISTENING_UDP, (LPCTSTR)CString( inet_ntoa( saHost.sin_addr ) ), htons( saHost.sin_port ) );
 
+	WSAEventSelect( m_hSocket[0], Network.GetWakeupEvent(), FD_READ );
+
 	// Multi-cast ports:
 	// eD2K: 224.0.0.1:5000
 	// LimeWire: 234.21.81.1:6347
+	// http://bittorrent.org/beps/bep_0014.html
+	// LSD uses the following multicast groups: 
+	// A) 239.192.152.143:6771 (org-local)  
+	// B) [ff15::efc0:988f]:6771 (site-local)
 
-	ip_mreq mr = {};
-	mr.imr_multiaddr.s_addr = inet_addr( DEFAULT_G1_MCAST_ADDRESS );
-	setsockopt( m_hSocket, IPPROTO_IP, IP_ADD_MEMBERSHIP, (char*)&mr, sizeof( mr ) );
 
-	WSAEventSelect( m_hSocket, Network.GetWakeupEvent(), FD_READ );
+	if ( ! Settings.Connection.IgnoreLocalIP )
+	{
+		USHORT nPort = ntohs( saHost.sin_port );
+		USHORT nPorts[3] = { 5000, 6347, 6771 };
+		ip_mreq mr[3] = {};
+		mr[0].imr_multiaddr.S_un.S_addr = inet_addr( "224.0.0.1" );
+		mr[1].imr_multiaddr.S_un.S_addr = inet_addr( "234.21.81.1" );
+		mr[2].imr_multiaddr.S_un.S_addr = inet_addr( "239.192.152.143" );
+
+		for (int i = 1; i < 4; i++)
+		{
+			if ( nPorts[i] == nPort )
+			{
+				setsockopt( m_hSocket[0], IPPROTO_IP, IP_ADD_MEMBERSHIP, (char*)&mr[i-1], sizeof( ip_mreq ) );
+			}
+			else
+			{
+				m_hSocket[i] = socket( PF_INET, SOCK_DGRAM, IPPROTO_UDP );
+				saHost.sin_port = htons( nPorts[i-1] );
+
+				if ( bind( m_hSocket[i], (SOCKADDR*)&saHost, sizeof( saHost ) ) == 0 )
+				{
+						setsockopt( m_hSocket[i], IPPROTO_IP, IP_ADD_MEMBERSHIP, (char*)&mr[i-1], sizeof( ip_mreq ) );
+						WSAEventSelect( m_hSocket[i], Network.GetWakeupEvent(), FD_READ );
+						theApp.Message( MSG_INFO, IDS_NETWORK_LISTENING_UDP, (LPCTSTR)CString( inet_ntoa( mr[i-1].imr_multiaddr ) ), htons( saHost.sin_port ) );
+				}
+				else
+					CNetwork::CloseSocket( m_hSocket[i], false );
+			}
+		}
+	}
 
 	m_nBufferBuffer	= Settings.Gnutella2.UdpBuffers; // 256;
 	m_pBufferBuffer	= new CBuffer[ m_nBufferBuffer ];
@@ -231,7 +267,8 @@ void CDatagrams::Disconnect()
 
 	DHT.Disconnect();
 
-	CNetwork::CloseSocket( m_hSocket, false );
+	for (int i = 0; i < 4; i++)
+		CNetwork::CloseSocket( m_hSocket[i], false );
 
 	delete [] m_pOutputBuffer;
 	m_pOutputBuffer = NULL;
@@ -299,7 +336,7 @@ BOOL CDatagrams::Send(const SOCKADDR_IN* pHost, CPacket* pPacket, BOOL bRelease,
 		pPacket->SmartDump( pHost, TRUE, TRUE );
 		if ( bRelease ) pPacket->Release();
 
-		CNetwork::SendTo( m_hSocket, (LPSTR)pBuffer.m_pBuffer, pBuffer.m_nLength, pHost );
+		CNetwork::SendTo( m_hSocket[0], (LPSTR)pBuffer.m_pBuffer, pBuffer.m_nLength, pHost );
 
 		return TRUE;
 	}
@@ -419,7 +456,7 @@ void CDatagrams::OnRun()
 	{
 		ManagePartials();
 	}
-	while ( TryRead() );
+	while ( TryRead() | TryRead( 1 ) | TryRead( 2 ) | TryRead( 3 ) );
 
 	Measure();
 }
@@ -497,7 +534,7 @@ BOOL CDatagrams::TryWrite()
 			}
 			else if ( pDG->GetPacket( tNow, &pPacket, &nPacket, m_nInFrags > 0 ) )
 			{
-				CNetwork::SendTo( m_hSocket, (LPCSTR)pPacket, nPacket, &pDG->m_pHost );
+				CNetwork::SendTo( m_hSocket[0], (LPCSTR)pPacket, nPacket, &pDG->m_pHost );
 
 				nLastHost = pDG->m_pHost.sin_addr.S_un.S_addr;
 
@@ -601,13 +638,13 @@ void CDatagrams::Remove(CDatagramOut* pDG)
 //////////////////////////////////////////////////////////////////////
 // CDatagrams read datagram
 
-BOOL CDatagrams::TryRead()
+BOOL CDatagrams::TryRead(int nIndex)
 {
-	if ( ! IsValid() )
+	if ( ! IsValid( nIndex ) )
 		return FALSE;
 
 	SOCKADDR_IN pFrom = {};
-	int nLength	= CNetwork::RecvFrom( m_hSocket, (char*)m_pReadBuffer, sizeof( m_pReadBuffer ), &pFrom );
+	int nLength	= CNetwork::RecvFrom( m_hSocket[ nIndex ], (char*)m_pReadBuffer, sizeof( m_pReadBuffer ), &pFrom );
 
 	if ( nLength < 1 )
 		return FALSE;
@@ -824,7 +861,7 @@ BOOL CDatagrams::OnReceiveSGP(const SOCKADDR_IN* pHost, const SGP_HEADER* pHeade
 		pAck.nPart		= pHeader->nPart;
 		pAck.nCount		= 0;
 
-		CNetwork::SendTo( m_hSocket, (LPCSTR)&pAck, sizeof(pAck), pHost );
+		CNetwork::SendTo( m_hSocket[0], (LPCSTR)&pAck, sizeof(pAck), pHost );
 	}
 
 	BYTE nHash	= BYTE( ( pHost->sin_addr.S_un.S_un_b.s_b1

@@ -78,9 +78,9 @@ public:
 	void	Disconnect();
 
 	// True if the socket is valid, false if its closed
-	inline BOOL IsValid() const
+	inline BOOL IsValid(int nIndex = 0) const
 	{
-		return ( m_hSocket != INVALID_SOCKET );
+		return ( m_hSocket[ nIndex ] != INVALID_SOCKET );
 	}
 
 	// Avoid using this function directly, use !Network.IsFirewalled(CHECK_UDP) instead
@@ -100,7 +100,7 @@ public:
 	void	OnRun();
 
 protected:
-	SOCKET			m_hSocket;
+	SOCKET			m_hSocket[4];
 	WORD			m_nSequence;
 	BOOL			m_bStable;
 	DWORD			m_tLastWrite;
@@ -136,7 +136,7 @@ protected:
 	void	ManageOutput();
 	void	Remove(CDatagramOut* pDG);
 
-	BOOL	TryRead();
+	BOOL	TryRead(int nIndex = 0);
 	BOOL	OnDatagram(const SOCKADDR_IN* pHost, const BYTE* pBuffer, DWORD nLength);
 	BOOL	OnReceiveSGP(const SOCKADDR_IN* pHost, const SGP_HEADER* pHeader, DWORD nLength);
 	BOOL	OnAcknowledgeSGP(const SOCKADDR_IN* pHost, const SGP_HEADER* pHeader, DWORD nLength);
