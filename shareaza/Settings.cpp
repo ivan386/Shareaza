@@ -1,7 +1,7 @@
 //
 // Settings.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2015.
+// Copyright (c) Shareaza Development Team, 2002-2017.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -301,6 +301,13 @@ void CSettings::Load()
 	Add( _T("Connection"), _T("UPnPRefreshTime"), &Connection.UPnPRefreshTime, 30*60*1000, 60*1000, 5, 24*60, _T(" m") );
 	Add( _T("Connection"), _T("UPnPTimeout"), &Connection.UPnPTimeout, 5*1000, 1, 0, 60*1000, _T(" ms") );
 	Add( _T("Connection"), _T("ZLibCompressionLevel"), &Connection.ZLibCompressionLevel, 9, 1, 0, 9, _T(" level") ); 
+	Add( _T("Connection"), _T("EnableMulticast"), &Connection.EnableMulticast, true );
+	Add( _T("Connection"), _T("MulticastTTL"), &Connection.MulticastTTL, 1, 1, 0, 255 );
+#ifdef LAN_MODE
+	Add( _T("Connection"), _T("EnableBroadcast"), &Connection.EnableBroadcast, true );
+#else  // LAN_MODE
+	Add( _T("Connection"), _T("EnableBroadcast"), &Connection.EnableBroadcast, false );
+#endif // LAN_MODE
 
 	Add( _T("Bandwidth"), _T("Downloads"), &Bandwidth.Downloads, 0 );
 	Add( _T("Bandwidth"), _T("HubIn"), &Bandwidth.HubIn, 0, 128, 0, 8192, _T(" Kb/s") );

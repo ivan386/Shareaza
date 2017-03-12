@@ -1,7 +1,7 @@
 //
 // NeighboursWithG1.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2012.
+// Copyright (c) Shareaza Development Team, 2002-2017.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -126,7 +126,7 @@ void CNeighboursWithG1::OnRun()
 {
 	CNeighboursBase::OnRun();
 
-	if ( Settings.Gnutella1.EnableToday )
+	if ( Settings.Gnutella1.EnableToday && Settings.Connection.EnableMulticast )
 	{
 		DWORD tNow = GetTickCount();
 		if ( tNow > m_tLastPingOut + Settings.Gnutella1.MCastPingRate )

@@ -1,7 +1,7 @@
 //
 // EDPacket.h
 //
-// Copyright (c) Shareaza Development Team, 2002-2013.
+// Copyright (c) Shareaza Development Team, 2002-2017.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -587,3 +587,6 @@ public:
 // Things that aren't supported
 #define ED2K_VERSION_AICH			0x00
 #define ED2K_VERSION_SECUREID		0x00
+
+#define DEFAULT_ED2K_MCAST_ADDRESS	"224.0.0.1"
+#define DEFAULT_ED2K_MCAST_PORT		5000

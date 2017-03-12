@@ -1,7 +1,7 @@
 //
 // Datagrams.h
 //
-// Copyright (c) Shareaza Development Team, 2002-2015.
+// Copyright (c) Shareaza Development Team, 2002-2017.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -80,7 +80,7 @@ public:
 	// True if the socket is valid, false if its closed
 	inline BOOL IsValid() const
 	{
-		return ( m_hSocket != INVALID_SOCKET );
+		return ( m_hSocket[ 0 ] != INVALID_SOCKET );
 	}
 
 	// Avoid using this function directly, use !Network.IsFirewalled(CHECK_UDP) instead
@@ -100,7 +100,10 @@ public:
 	void	OnRun();
 
 protected:
-	SOCKET			m_hSocket;
+	SOCKET			m_hSocket[ 4 ];		// [ 0 ] - Main Shareaza port (0.0.0.0:6346)
+										// [ 1 ] - eD2K multi-cast port: 224.0.0.1:5000
+										// [ 2 ] - G1 LimeWire multi-cast port: 234.21.81.1:6347
+										// [ 3 ] - BitTorrent multi-cast port (http://bittorrent.org/beps/bep_0014.html): 239.192.152.143:6771
 	WORD			m_nSequence;
 	BOOL			m_bStable;
 	DWORD			m_tLastWrite;
@@ -136,7 +139,7 @@ protected:
 	void	ManageOutput();
 	void	Remove(CDatagramOut* pDG);
 
-	BOOL	TryRead();
+	BOOL	TryRead(int nIndex);
 	BOOL	OnDatagram(const SOCKADDR_IN* pHost, const BYTE* pBuffer, DWORD nLength);
 	BOOL	OnReceiveSGP(const SOCKADDR_IN* pHost, const SGP_HEADER* pHeader, DWORD nLength);
 	BOOL	OnAcknowledgeSGP(const SOCKADDR_IN* pHost, const SGP_HEADER* pHeader, DWORD nLength);
