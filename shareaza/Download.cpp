@@ -1,7 +1,7 @@
 //
 // Download.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2014.
+// Copyright (c) Shareaza Development Team, 2002-2017.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -728,7 +728,7 @@ BOOL CDownload::SeedTorrent()
 	if ( IsSingleFileTorrent() )
 	{
 		// Refill missed hashes for single-file torrent
-		const CBTInfo::CBTFile* pBTFile = m_pTorrent.m_pFiles.GetHead();
+		CBTInfo::CBTFile* pBTFile = m_pTorrent.m_pFiles.GetHead();
 		if ( ! m_pTorrent.m_oSHA1 && pBTFile->m_oSHA1 )
 			m_pTorrent.m_oSHA1 = pBTFile->m_oSHA1;
 		if ( ! m_pTorrent.m_oTiger && pBTFile->m_oTiger )

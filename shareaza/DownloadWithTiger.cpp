@@ -462,16 +462,17 @@ bool CDownloadWithTiger::RunMergeFile(LPCTSTR szFilename, BOOL bMergeValidation,
 	QWORD qwSourceOffset = 0;
 	if ( IsTorrent() && ! IsSingleFileTorrent() )
 	{
-		CString sSourceName( PathFindFileName( szFilename ) );
+		const CString sSourceName = PathFindFileName( szFilename );
 		BOOL bFound = FALSE;
 
-		// Try to calculate offset of file by names comparing
+		// Try to calculate offset of file by best fit
 		QWORD qwOffset = 0;
 		for ( POSITION pos = m_pTorrent.m_pFiles.GetHeadPosition() ; pos ; )
 		{
-			CBTInfo::CBTFile* pFile = m_pTorrent.m_pFiles.GetNext( pos );
-			CString sTargetName = PathFindFileName( pFile->m_sPath );
-			if ( sTargetName.CompareNoCase( sSourceName ) == 0 )
+			const CBTInfo::CBTFile* pFile = m_pTorrent.m_pFiles.GetNext( pos );
+
+			const CString& sFileName = pFile->GetBestPath();
+			if ( pFile->m_nSize == qwSourceLength && ! sFileName.IsEmpty() && sFileName.CompareNoCase( szFilename ) == 0 )
 			{
 				// Found
 				bFound = TRUE;
@@ -480,13 +481,33 @@ bool CDownloadWithTiger::RunMergeFile(LPCTSTR szFilename, BOOL bMergeValidation,
 			}
 			qwOffset += pFile->m_nSize;
 		}
+		// Try to calculate offset of file by name and size comparing
 		if ( ! bFound )
 		{
-			// Try to calculate offset of file by sizes comparing
 			qwOffset = 0;
 			for ( POSITION pos = m_pTorrent.m_pFiles.GetHeadPosition() ; pos ; )
 			{
-				CBTInfo::CBTFile* pFile = m_pTorrent.m_pFiles.GetNext( pos );
+				const CBTInfo::CBTFile* pFile = m_pTorrent.m_pFiles.GetNext( pos );
+
+				const CString sFileName = PathFindFileName( pFile->m_sPath );
+				if ( pFile->m_nSize == qwSourceLength && sFileName.CompareNoCase( sSourceName ) == 0 )
+				{
+					// Found
+					bFound = TRUE;
+					qwSourceOffset = qwOffset;
+					break;
+				}
+				qwOffset += pFile->m_nSize;
+			}
+		}
+		// Try to calculate offset of file by size only comparing
+		if ( ! bFound )
+		{
+			qwOffset = 0;
+			for ( POSITION pos = m_pTorrent.m_pFiles.GetHeadPosition() ; pos ; )
+			{
+				const CBTInfo::CBTFile* pFile = m_pTorrent.m_pFiles.GetNext( pos );
+
 				if ( pFile->m_nSize == qwSourceLength )
 				{
 					// Found
