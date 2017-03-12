@@ -1804,7 +1804,7 @@
 				<link format="bu" target="raza:shell:downloads">打开我的下载文件夹</link>
 				<group id="1">
 					<newline gap="8"/>
-					<text>%lu</text>
+					<text>Shareaza is scanning and processing</text>
 					<text id="LibraryHashRemaining" format="b">%lu</text>
 					<text>文件。</text>
 					<newline gap="8"/>
@@ -2950,7 +2950,7 @@
 		<string id="16285" value="接收到来自 %s 不必要的进入连接。"/>
 		<string id="16286" value="%s 主机正发送下载 &quot;%s&quot;，接受。"/>
 		<string id="16287" value="不能获取到 &quot;%s&quot; 更多的下载资源，因为现在没有网络连接。"/>
-		<string id="16288" value="在 %i 个连接中为下载 &quot;%s&quot; 查询更多资源..."/>
+		<string id="16288" value="Querying for more sources for download &quot;%s&quot; on %i connection(s)..."/>
 		<string id="16289" value="发送请求下载 &quot;%s&quot;..."/>
 		<string id="16290" value="下载主机 %s 相应了不同的，但是有用的范围 (%I64i-%I64i)，属于 &quot;%s&quot;。"/>
 		<string id="16291" value="移动 &quot;%s&quot; 到 &quot;%s&quot;，下载完毕。"/>
@@ -3311,7 +3311,7 @@
 		<string id="18508" value="丢失下载资源 %s 为 &quot;%s&quot;，因为队列位置 %i 太高。"/>
 		<string id="18509" value="您不能假设此下载已完成并验证，因为您还未拥有任何部分验证数据，例如 tiger-tree 卷，eDonkey Hashset 或 BitTorrent Hashset。没有验证信息，此下载不能被验证。"/>
 		<string id="18510" value="您确定要假设此下载已完成并验证？ 整个文件将会被考虑，并且 Shareaza 将会接受已通过验证的部分并重新下载未通过验证的部分。"/>
-		<string id="18511" value="BitTorrent 与 %s 的连合未被接受，达到最大连接数。"/>
+		<string id="18511" value="You have made changes to the file size. Are you sure you want to change the file size for this download?"/>
 		<string id="18512" value="您是否确认取消该下载但是保存未下载完成的文件？"/>
 		<string id="18513" value="你输入了 %s 的哈希值，可是无效。请检查并重试。"/>
 		<string id="18514" value="您提供了一个和当前 %s 下载不同的哈希值。您是否确认想要立即改变 %s 的哈希值？"/>

@@ -1796,7 +1796,7 @@
 					<newline gap="8"/>
 				</group>
 				<text id="LibraryFiles" format="b">%lu</text>
-				<text>%lu</text>
+				<text>files,</text>
 				<text id="LibraryVolume" format="b">%s</text>
 				<newline gap="4"/>
 				<link format="bu" target="raza:command:ID_VIEW_LIBRARY">Go to My Library</link>
@@ -1806,7 +1806,7 @@
 					<newline gap="8"/>
 					<text>Shareaza is scanning and processing</text>
 					<text id="LibraryHashRemaining" format="b">%lu</text>
-					<text>%lu</text>
+					<text>files.</text>
 					<newline gap="8"/>
 				</group>
 				<group id="3">

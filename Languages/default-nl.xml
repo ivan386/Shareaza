@@ -3152,7 +3152,7 @@
 		<string id="16816" value="Het eDonkey netwerk gebruikt grote wachtrijen met grote wachttijden. Door de maximum rijpositie te beperken zal je mogelijk problemen ondervinden om downloads te laten beginnen.\nWeet je zeker dat je de maximale rijpositie wilt beperken?"/>
 		<string id="16817" value="Windows ondersteunt geen bestandslocatie met meer dan 256 karakters.\nSelecteer een map met een kortere bestandslocatie."/>
 		<string id="16818" value="De incomplete map mag niet in de bibliotheek omdat dit de prestaties nadelig beïnvloed. Incomplete bestanden deel je rechtstreeks in het downloadvenster."/>
-		<string id="16819" value="Een submap van de geselecteerde map &quot;%s&quot; is al een onderdeel van de bibliotheek.\nToevoegen van deze map resulteert in het opnieuw hashen van sommige bestanden.\n\nWil je doorgaan ?"/>
+		<string id="16819" value="The incomplete files folder should not be in the library, as it would reduce performance. Incomplete files may be shared directly from the transfers window."/>
 		<string id="16864" value="Bezig met het opvragen van gastheer discovery services..."/>
 		<string id="16865" value="Bezig met het opvragen van discovery service &quot;%s&quot;..."/>
 		<string id="16866" value="GWebCache transactie gelukt (&quot;%s&quot;)."/>

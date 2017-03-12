@@ -1780,7 +1780,7 @@
 					<newline gap="4"/>
 				</group>
 				<link id="DownloadsNone" format="bu" target="raza:command:ID_VIEW_DOWNLOADS">اذهب الى مكتبة الملفات</link>
-				<link id="DownloadsOne" format="bu" target="raza:command:ID_VIEW_DOWNLOADS">اذهب الى مكتبة الملفات (%i)</link>
+				<link id="DownloadsOne" format="bu" target="raza:command:ID_VIEW_DOWNLOADS">Go to Download (1)</link>
 				<link id="DownloadsMany" format="bu" target="raza:command:ID_VIEW_DOWNLOADS">Go to Downloads (%i)</link>
 			</para>
 		</document>
