@@ -173,6 +173,7 @@ BOOL CDatagrams::Listen()
 
 	if ( Settings.Connection.EnableMulticast )
 	{
+		const DWORD bReuse = TRUE;
 		const DWORD bLoop = FALSE;
 		const DWORD bTTL = Settings.Connection.MulticastTTL;
 
@@ -212,15 +213,17 @@ BOOL CDatagrams::Listen()
 					m_hSocket[ i ] = socket( PF_INET, SOCK_DGRAM, IPPROTO_UDP );
 					if ( m_hSocket[ i ] != INVALID_SOCKET )
 					{
-						SOCKADDR_IN saMcastHost = saHost;
-						saMcastHost.sin_port = nPorts[ i ];
+						VERIFY( setsockopt( m_hSocket[ i ], SOL_SOCKET, SO_REUSEADDR, (const char*)&bReuse, sizeof( bReuse ) ) == 0 );
 
+						SOCKADDR_IN saMcastHost = {};
+						saMcastHost.sin_family = AF_INET;
+						saMcastHost.sin_port = nPorts[ i ];
 						if ( bind( m_hSocket[ i ], (SOCKADDR*)&saMcastHost, sizeof( saMcastHost ) ) == 0 &&
 							 setsockopt( m_hSocket[ i ], IPPROTO_IP, IP_MULTICAST_LOOP, (const char*)&bLoop, sizeof( bLoop ) ) == 0 &&
 							 setsockopt( m_hSocket[ i ], IPPROTO_IP, IP_MULTICAST_TTL, (const char*)&bTTL, sizeof( bTTL ) ) == 0 &&
 							 setsockopt( m_hSocket[ i ], IPPROTO_IP, IP_ADD_MEMBERSHIP, (const char*)&mr[ i ], sizeof( ip_mreq ) ) == 0 )
 						{
-							theApp.Message( MSG_INFO, IDS_NETWORK_LISTENING_UDP, (LPCTSTR)CString( inet_ntoa( mr[ i ].imr_multiaddr ) ), htons( nPorts[ i ] ) );
+							theApp.Message( MSG_INFO, IDS_NETWORK_LISTENING_UDP, (LPCTSTR)CString( inet_ntoa( mr[ i ].imr_multiaddr ) ), htons( saMcastHost.sin_port ) );
 
 							WSAEventSelect( m_hSocket[ i ], Network.GetWakeupEvent(), FD_READ );
 						}
