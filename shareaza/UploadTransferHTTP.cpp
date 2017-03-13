@@ -643,7 +643,7 @@ BOOL CUploadTransferHTTP::OnHeadersComplete()
 	if ( bBusy )
 	{
 		SendResponse( IDR_HTML_BUSY );
-		theApp.Message( MSG_ERROR, _T("Refusing upload of ""%s"" to %s, Library is busy."), (LPCTSTR)m_sName , (LPCTSTR)m_sAddress);
+		theApp.Message( MSG_ERROR, _T("Refusing upload of \"%s\" to %s, Library is busy."), (LPCTSTR)m_sName , (LPCTSTR)m_sAddress);
 	}
 	else
 	{
@@ -1125,7 +1125,14 @@ BOOL CUploadTransferHTTP::OpenFileSendHeaders()
 	{
 		DWORD nLimit = m_pQueue->m_nRotateChunk;
 		if ( nLimit == 0 ) nLimit = Settings.Uploads.RotateChunkLimit;
-		if ( nLimit > 0 ) m_nLength = min( m_nLength, (QWORD)nLimit );
+
+		if ( nLimit > 0 && m_nLength > nLimit )
+		{
+			if ( m_bBackwards )
+				m_nOffset += m_nLength - nLimit;
+			
+			m_nLength = nLimit;
+		}
 	}
 	
 	pLock.Unlock();
