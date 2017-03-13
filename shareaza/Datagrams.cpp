@@ -860,10 +860,7 @@ BOOL CDatagrams::OnDatagram(const SOCKADDR_IN* pHost, const BYTE* pBuffer, DWORD
 		// BitTorrent Local Service Discovery
 		// http://bittorrent.org/beps/bep_0014.html
 
-		if ( Network.IsFirewalledAddress( &pHost->sin_addr, Settings.Connection.IgnoreOwnIP ) )
-			return TRUE;
-
-		CString	sPacket((char*) pBuffer, nLength);
+		CString	sPacket( (char*) pBuffer, nLength );
 		
 		/*
 			As with any HTTP request to ensure forwards-compatibility any additional
@@ -899,12 +896,10 @@ BOOL CDatagrams::OnDatagram(const SOCKADDR_IN* pHost, const BYTE* pBuffer, DWORD
 				port on which the bittorrent client is listening in base-10, ascii
 		*/
 
-		int nPortStart = sPacket.MakeLower().Find( _T("\r\nport:"), 20 );
-
-		if ( nPortStart > 0  )
+		if ( LPCTSTR pszPortStart = _tcsnistr( sPacket, _T("\r\nport:"), 7 )  )
 		{
 			short nPort = 0;
-			if ( _stscanf( sPacket.Mid( nPortStart + 7 ), _T("%hd"), &nPort ) == 1 && nPort > 0 )
+			if ( _stscanf( pszPortStart + 7, _T("%hd"), &nPort ) == 1 && nPort > 0 )
 			{
 				/*
 					infohash:
@@ -917,12 +912,17 @@ BOOL CDatagrams::OnDatagram(const SOCKADDR_IN* pHost, const BYTE* pBuffer, DWORD
 						should not exceed 1400 bytes to avoid MTU/fragmentation problems.
 				*/
 
-				for ( int nHashStart = sPacket.Find( _T("\r\ninfohash:"), 20 );
-						  nHashStart > 0 ;
-						  nHashStart = sPacket.Find( _T("\r\ninfohash:"), nHashStart + 11 ) )
-				{
+				for ( LPCTSTR pszHashStart = _tcsnistr( sPacket, _T("\r\ninfohash:"), 11 );
+							  pszHashStart != NULL ;
+							  pszHashStart = _tcsnistr( pszHashStart, _T("\r\ninfohash:"), 11 ) )
+				{ 
+					pszHashStart += 11;
+					for(; *pszHashStart == _T(' ') || 
+						  *pszHashStart == _T('\t')   ;)
+						pszHashStart++;
+
 					Hashes::BtHash oHash;
-					if ( oHash.fromString< Hashes::base16Encoding >( sPacket.Mid( nHashStart + 11 ).TrimLeft() ) )
+					if ( oHash.fromString< Hashes::base16Encoding >( pszHashStart ) )
 					{
 						CSingleLock oLock( &Transfers.m_pSection, FALSE );
 						if ( oLock.Lock( 250 ) )
