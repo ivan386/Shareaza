@@ -1,7 +1,7 @@
 //
 // Settings.h
 //
-// Copyright (c) Shareaza Development Team, 2002-2016.
+// Copyright (c) Shareaza Development Team, 2002-2017.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -284,6 +284,9 @@ public:
 		bool		SkipWANIPSetup;				// UPnP: Skip WANIPConn1 device setup
 		DWORD		ZLibCompressionLevel;		// ZLib compression level: 0(none/fastest)..9(best/slowest)
 		string_set	IgnoredCountry;
+		bool		EnableMulticast;			// Send and accept multi-cast packets
+		DWORD		MulticastTTL;				// TTL for multi-cast packets
+		bool		EnableBroadcast;			// Send and accept broadcast packets
 	} Connection;
 
 	struct sBandwidth

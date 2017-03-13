@@ -28,6 +28,8 @@
 #include "Datagrams.h"
 #include "Datagram.h"
 #include "DatagramPart.h"
+#include "Download.h"
+#include "Downloads.h"
 #include "BTPacket.h"
 #include "BTTrackerRequest.h"
 #include "G1Packet.h"
@@ -36,6 +38,7 @@
 #include "DCPacket.h"
 #include "BENode.h"
 #include "Security.h"
+#include "Transfers.h"
 
 #ifdef _DEBUG
 #undef THIS_FILE
@@ -84,8 +87,8 @@ CDatagrams::CDatagrams()
 	, m_mOutput			()
 	, m_pReadBuffer		()
 {
-	for( int i = 0; i < SOCKET_COUNT; i++ )
-		m_hSocket[i] = INVALID_SOCKET;
+	for ( int i = 0; i < _countof( m_hSocket ); ++i )
+		m_hSocket[ i ] = INVALID_SOCKET;
 }
 
 CDatagrams::~CDatagrams()
@@ -101,20 +104,26 @@ BOOL CDatagrams::Listen()
 	if ( IsValid() )
 		return TRUE;
 
-	m_hSocket[0] = socket( PF_INET, SOCK_DGRAM, IPPROTO_UDP );
-	if ( ! IsValid() )	// Now, make sure it has been created
+	const BOOL bBoradcast = TRUE;
+	const BOOL bExclusive = TRUE;
+
+	m_hSocket[ 0 ] = socket( PF_INET, SOCK_DGRAM, IPPROTO_UDP );
+	if ( m_hSocket[ 0 ] == INVALID_SOCKET )	// Now, make sure it has been created
 	{
 		theApp.Message( MSG_ERROR, _T("Failed to create UDP socket. (1st Try)") );
 		// Second attempt
-		m_hSocket[0] = socket( PF_INET, SOCK_DGRAM, IPPROTO_UDP );
-		if ( ! IsValid() )
+		m_hSocket[ 0 ] = socket( PF_INET, SOCK_DGRAM, IPPROTO_UDP );
+		if ( m_hSocket[ 0 ] == INVALID_SOCKET )
 		{
 			theApp.Message( MSG_ERROR, _T("Failed to create UDP socket. (2nd Try)") );
 			return FALSE;
 		}
 	}
 
-	VERIFY( setsockopt( m_hSocket[0], SOL_SOCKET, SO_BROADCAST, "\x01", 1 ) == 0 );
+	if ( Settings.Connection.EnableBroadcast )
+	{
+		VERIFY( setsockopt( m_hSocket[ 0 ], SOL_SOCKET, SO_BROADCAST, (const char*)&bBoradcast, sizeof( bBoradcast ) ) == 0 );
+	}
 
 	SOCKADDR_IN saHost = {};
 	if ( Network.Resolve( Settings.Connection.InHost, Settings.Connection.InPort, &saHost ) )
@@ -125,7 +134,7 @@ BOOL CDatagrams::Listen()
 		else
 		{
 			// Set the exclusive address option
-			VERIFY( setsockopt( m_hSocket[0], SOL_SOCKET, SO_EXCLUSIVEADDRUSE, "\x01", 1 ) == 0 );
+			VERIFY( setsockopt( m_hSocket[ 0 ], SOL_SOCKET, SO_EXCLUSIVEADDRUSE, (const char*)&bExclusive, sizeof( bExclusive ) ) == 0 );
 		}
 	}
 	else if ( Network.Resolve( Settings.Connection.OutHost, Settings.Connection.InPort, &saHost ) )
@@ -140,12 +149,12 @@ BOOL CDatagrams::Listen()
 		else
 		{
 			// Set the exclusive address option
-			VERIFY( setsockopt( m_hSocket[0], SOL_SOCKET, SO_EXCLUSIVEADDRUSE, "\x01", 1 ) == 0 );
+			VERIFY( setsockopt( m_hSocket[ 0 ], SOL_SOCKET, SO_EXCLUSIVEADDRUSE, (const char*)&bExclusive, sizeof( bExclusive ) ) == 0 );
 		}
 	}
 
 	// First attempt to bind socket
-	if ( bind( m_hSocket[0], (SOCKADDR*)&saHost, sizeof( saHost ) ) != 0 )
+	if ( bind( m_hSocket[ 0 ], (SOCKADDR*)&saHost, sizeof( saHost ) ) != 0 )
 	{
 		theApp.Message( MSG_ERROR, IDS_NETWORK_CANT_LISTEN, (LPCTSTR)CString( inet_ntoa( saHost.sin_addr ) ), htons( saHost.sin_port ) );
 
@@ -154,7 +163,7 @@ BOOL CDatagrams::Listen()
 
 		// Second attempt to bind socket
 		saHost.sin_addr.s_addr = INADDR_ANY;
-		if ( bind( m_hSocket[0], (SOCKADDR*)&saHost, sizeof( saHost ) ) != 0 )
+		if ( bind( m_hSocket[ 0 ], (SOCKADDR*)&saHost, sizeof( saHost ) ) != 0 )
 		{
 			theApp.Message( MSG_ERROR, IDS_NETWORK_CANT_LISTEN, (LPCTSTR)CString( inet_ntoa( saHost.sin_addr ) ), htons( saHost.sin_port ) );
 			return FALSE;
@@ -163,61 +172,68 @@ BOOL CDatagrams::Listen()
 	
 	theApp.Message( MSG_INFO, IDS_NETWORK_LISTENING_UDP, (LPCTSTR)CString( inet_ntoa( saHost.sin_addr ) ), htons( saHost.sin_port ) );
 
-	WSAEventSelect( m_hSocket[0], Network.GetWakeupEvent(), FD_READ );
+	WSAEventSelect( m_hSocket[ 0 ], Network.GetWakeupEvent(), FD_READ );
 
-	// Multi-cast ports:
-	// eD2K: 224.0.0.1:5000
-	// LimeWire: 234.21.81.1:6347
-	// http://bittorrent.org/beps/bep_0014.html
-	// LSD uses the following multicast groups: 
-	// A) 239.192.152.143:6771 (org-local)  
-	// B) [ff15::efc0:988f]:6771 (site-local)
-
-
-	if ( ! Settings.Connection.IgnoreLocalIP )
+	if ( Settings.Connection.EnableMulticast )
 	{
-		USHORT nPort = ntohs( saHost.sin_port );
-		USHORT nPorts[4] = { 
-			  5000                          //eDonkey multicast
-			, DEFAULT_G1_MCAST_PORT         //Gnutella1 multicast
-			, 6771                          //BitTorrent multicast
-			, protocolPorts[ PROTOCOL_G2 ]  //Gnutella2 broadcast
-		};
-		ip_mreq mr[3] = {};
-		mr[0].imr_multiaddr.S_un.S_addr = inet_addr( "224.0.0.1" );
-		mr[1].imr_multiaddr.S_un.S_addr = inet_addr( DEFAULT_G1_MCAST_ADDRESS );
-		mr[2].imr_multiaddr.S_un.S_addr = inet_addr( "239.192.152.143" );
+		const DWORD bReuse = TRUE;
+		const DWORD bLoop = FALSE;
+		const DWORD bTTL = Settings.Connection.MulticastTTL;
 
-		for (int i = 1; i < SOCKET_COUNT; i++)
+		USHORT nPorts[ _countof( m_hSocket ) ] = {};
+		ip_mreq mr[ _countof( m_hSocket ) ] = {};
+
+		if ( Settings.eDonkey.EnableToday )
 		{
-			if ( nPorts[i-1] == nPort )
-			{
-				if ( i < SOCKET_COUNT - 1 )
-					setsockopt( m_hSocket[0], IPPROTO_IP, IP_ADD_MEMBERSHIP, (char*)&mr[i-1], sizeof( ip_mreq ) );
-			}
-			else if( nPorts[i-1] ) 
-			{
-				m_hSocket[i] = socket( PF_INET, SOCK_DGRAM, IPPROTO_UDP );
-				saHost.sin_port = htons( nPorts[i-1] );
+			mr[ 1 ].imr_multiaddr.s_addr = inet_addr( DEFAULT_ED2K_MCAST_ADDRESS );
+			nPorts[ 1 ] = htons( DEFAULT_ED2K_MCAST_PORT );
+		}
 
-				if ( bind( m_hSocket[i], (SOCKADDR*)&saHost, sizeof( saHost ) ) == 0 )
+		if ( Settings.Gnutella1.EnableToday )
+		{
+			mr[ 2 ].imr_multiaddr.s_addr = inet_addr( DEFAULT_G1_MCAST_ADDRESS );
+			nPorts[ 2 ] = htons( DEFAULT_G1_MCAST_PORT );
+		}
+
+		if ( Settings.BitTorrent.EnableToday )
+		{
+			mr[ 3 ].imr_multiaddr.s_addr = inet_addr( DEFAULT_BT_MCAST_ADDRESS );
+			nPorts[ 3 ] = htons( DEFAULT_BT_MCAST_PORT );
+		}
+
+		for ( int i = 1; i < _countof( m_hSocket ); ++i )
+		{
+			if ( nPorts[ i ] )
+			{
+				if ( nPorts[ i ] == saHost.sin_port )
 				{
-						if ( i < SOCKET_COUNT - 1 )
-						{
-							setsockopt( m_hSocket[i], IPPROTO_IP, IP_ADD_MEMBERSHIP, (char*)&mr[i-1], sizeof( ip_mreq ) );
-							theApp.Message( MSG_INFO, IDS_NETWORK_LISTENING_UDP, (LPCTSTR)CString( inet_ntoa( mr[i-1].imr_multiaddr ) ), htons( saHost.sin_port ) );
-						}
-						
-						if ( i == SOCKET_COUNT - 1 )
-						{
-							setsockopt( m_hSocket[i], SOL_SOCKET, SO_BROADCAST, "\x01", 1 );
-							theApp.Message( MSG_INFO, IDS_NETWORK_LISTENING_UDP, (LPCTSTR)CString( "255.255.255.255" ), htons( saHost.sin_port ) );
-						}
-
-						WSAEventSelect( m_hSocket[i], Network.GetWakeupEvent(), FD_READ );
+					setsockopt( m_hSocket[ i ], IPPROTO_IP, IP_MULTICAST_LOOP, (const char*)&bLoop, sizeof( bLoop ) );			
+					setsockopt( m_hSocket[ i ], IPPROTO_IP, IP_MULTICAST_TTL, (const char*)&bTTL, sizeof( bTTL ) );
+					setsockopt( m_hSocket[ i ], IPPROTO_IP, IP_ADD_MEMBERSHIP, (const char*)&mr[ i ], sizeof( ip_mreq ) );
 				}
 				else
-					CNetwork::CloseSocket( m_hSocket[i], false );
+				{
+					m_hSocket[ i ] = socket( PF_INET, SOCK_DGRAM, IPPROTO_UDP );
+					if ( m_hSocket[ i ] != INVALID_SOCKET )
+					{
+						VERIFY( setsockopt( m_hSocket[ i ], SOL_SOCKET, SO_REUSEADDR, (const char*)&bReuse, sizeof( bReuse ) ) == 0 );
+
+						SOCKADDR_IN saMcastHost = {};
+						saMcastHost.sin_family = AF_INET;
+						saMcastHost.sin_port = nPorts[ i ];
+						if ( bind( m_hSocket[ i ], (SOCKADDR*)&saMcastHost, sizeof( saMcastHost ) ) == 0 &&
+							 setsockopt( m_hSocket[ i ], IPPROTO_IP, IP_MULTICAST_LOOP, (const char*)&bLoop, sizeof( bLoop ) ) == 0 &&
+							 setsockopt( m_hSocket[ i ], IPPROTO_IP, IP_MULTICAST_TTL, (const char*)&bTTL, sizeof( bTTL ) ) == 0 &&
+							 setsockopt( m_hSocket[ i ], IPPROTO_IP, IP_ADD_MEMBERSHIP, (const char*)&mr[ i ], sizeof( ip_mreq ) ) == 0 )
+						{
+							theApp.Message( MSG_INFO, IDS_NETWORK_LISTENING_UDP, (LPCTSTR)CString( inet_ntoa( mr[ i ].imr_multiaddr ) ), htons( saMcastHost.sin_port ) );
+
+							WSAEventSelect( m_hSocket[ i ], Network.GetWakeupEvent(), FD_READ );
+						}
+						else
+							CNetwork::CloseSocket( m_hSocket[ i ], false );
+					}
+				}
 			}
 		}
 	}
@@ -281,8 +297,8 @@ void CDatagrams::Disconnect()
 
 	DHT.Disconnect();
 
-	for (int i = 0; i < SOCKET_COUNT; i++)
-		CNetwork::CloseSocket( m_hSocket[i], false );
+	for ( int i = 0; i < _countof( m_hSocket ); ++i )
+		CNetwork::CloseSocket( m_hSocket[ i ], false );
 
 	delete [] m_pOutputBuffer;
 	m_pOutputBuffer = NULL;
@@ -350,7 +366,7 @@ BOOL CDatagrams::Send(const SOCKADDR_IN* pHost, CPacket* pPacket, BOOL bRelease,
 		pPacket->SmartDump( pHost, TRUE, TRUE );
 		if ( bRelease ) pPacket->Release();
 
-		CNetwork::SendTo( m_hSocket[0], (LPSTR)pBuffer.m_pBuffer, pBuffer.m_nLength, pHost );
+		CNetwork::SendTo( m_hSocket[ 0 ], (LPSTR)pBuffer.m_pBuffer, pBuffer.m_nLength, pHost );
 
 		return TRUE;
 	}
@@ -459,18 +475,22 @@ void CDatagrams::PurgeToken(LPVOID pToken)
 
 void CDatagrams::OnRun()
 {
-	if ( ! IsValid() ) return;
+	if ( ! IsValid() )
+		return;
 
 	DHT.OnRun();
 
 	TryWrite();
 	ManageOutput();
 
-	do
+	for ( int i = 0; i < _countof( m_hSocket ); ++i )
 	{
-		ManagePartials();
+		do
+		{
+			ManagePartials();
+		}
+		while ( TryRead( i ) );
 	}
-	while ( TryRead() | TryRead( 1 ) | TryRead( 2 ) | TryRead( 3 ) | TryRead( 4 ) );
 
 	Measure();
 }
@@ -548,7 +568,7 @@ BOOL CDatagrams::TryWrite()
 			}
 			else if ( pDG->GetPacket( tNow, &pPacket, &nPacket, m_nInFrags > 0 ) )
 			{
-				CNetwork::SendTo( m_hSocket[0], (LPCSTR)pPacket, nPacket, &pDG->m_pHost );
+				CNetwork::SendTo( m_hSocket[ 0 ], (LPCSTR)pPacket, nPacket, &pDG->m_pHost );
 
 				nLastHost = pDG->m_pHost.sin_addr.S_un.S_addr;
 
@@ -654,7 +674,7 @@ void CDatagrams::Remove(CDatagramOut* pDG)
 
 BOOL CDatagrams::TryRead(int nIndex)
 {
-	if ( ! IsValid( nIndex ) )
+	if ( m_hSocket[ nIndex ] == INVALID_SOCKET )
 		return FALSE;
 
 	SOCKADDR_IN pFrom = {};
@@ -833,6 +853,89 @@ BOOL CDatagrams::OnDatagram(const SOCKADDR_IN* pHost, const BYTE* pBuffer, DWORD
 		}
 	}
 
+	// Detect BitTorrent Local Service Discovery
+	if ( nLength > 22 &&
+		 memcmp( pBuffer, "BT-SEARCH * HTTP/1.1\r\n", 22 ) == 0 )
+	{
+		// BitTorrent Local Service Discovery
+		// http://bittorrent.org/beps/bep_0014.html
+
+		if ( Network.IsFirewalledAddress( &pHost->sin_addr, Settings.Connection.IgnoreOwnIP ) )
+			return TRUE;
+
+		CString	sPacket((char*) pBuffer, nLength);
+		
+		/*
+			As with any HTTP request to ensure forwards-compatibility any additional
+			headers that not understood by a client should be ignored.
+		*/
+		
+		/*
+			BT-SEARCH * HTTP/1.1\r\n
+			Host: <host>\r\n
+			Port: <port>\r\n
+			Infohash: <infohash>\r\n
+			cookie: <cookie (optional)>\r\n
+			\r\n
+			\r\n
+		*/
+
+		/*
+			host:
+				RFC 2616 section 14.23 and RFC 2732 compliant Host header specifying the 
+				multicast group to which the announce is sent. In other words, strings
+				A) 239.192.152.143:6771 (org-local) or B) [ff15::efc0:988f]:6771 (site-local),
+				as appropriate.
+		*/
+
+		/*
+			cookie:
+				opaque value, allowing the sending client to filter out its own announces
+				if it receives them via multicast loopback
+		*/
+		
+		/*
+			port:
+				port on which the bittorrent client is listening in base-10, ascii
+		*/
+
+		int nPortStart = sPacket.MakeLower().Find( _T("\r\nport:"), 20 );
+
+		if ( nPortStart > 0  )
+		{
+			short nPort = 0;
+			if ( _stscanf( sPacket.Mid( nPortStart + 7 ), _T("%hd"), &nPort ) == 1 && nPort > 0 )
+			{
+				/*
+					infohash:
+
+						hex-encoded (40 character) infohash
+
+						An announce may contain multiple, consecutive Infohash headers to announce
+						the participation in more than one torrent. This may not be supported by 
+						older implementations. When sending multiple infohashes the packet length 
+						should not exceed 1400 bytes to avoid MTU/fragmentation problems.
+				*/
+
+				for ( int nHashStart = sPacket.Find( _T("\r\ninfohash:"), 20 );
+						  nHashStart > 0 ;
+						  nHashStart = sPacket.Find( _T("\r\ninfohash:"), nHashStart + 11 ) )
+				{
+					Hashes::BtHash oHash;
+					if ( oHash.fromString< Hashes::base16Encoding >( sPacket.Mid( nHashStart + 11 ).TrimLeft() ) )
+					{
+						CSingleLock oLock( &Transfers.m_pSection, FALSE );
+						if ( oLock.Lock( 250 ) )
+							if ( CDownload* pDownload = Downloads.FindByBTH( oHash ) )
+								if ( ! pDownload->m_pTorrent.m_bPrivate ) // Do not share private torrents
+									pDownload->AddSourceBT( Hashes::BtGuid(), &pHost->sin_addr,  nPort );
+					}
+				}
+				return TRUE;
+			}
+		}
+	}
+
 	// Detect BitTorrent UDP tracker packets
 	if ( nLength > 7 )
 	{
@@ -875,7 +978,7 @@ BOOL CDatagrams::OnReceiveSGP(const SOCKADDR_IN* pHost, const SGP_HEADER* pHeade
 		pAck.nPart		= pHeader->nPart;
 		pAck.nCount		= 0;
 
-		CNetwork::SendTo( m_hSocket[0], (LPCSTR)&pAck, sizeof(pAck), pHost );
+		CNetwork::SendTo( m_hSocket[ 0 ], (LPCSTR)&pAck, sizeof(pAck), pHost );
 	}
 
 	BYTE nHash	= BYTE( ( pHost->sin_addr.S_un.S_un_b.s_b1
@@ -887,21 +990,9 @@ BOOL CDatagrams::OnReceiveSGP(const SOCKADDR_IN* pHost, const SGP_HEADER* pHeade
 
 	CDatagramIn** pHash = m_pInputHash + ( nHash & DATAGRAM_HASH_MASK );
 
-	DWORD count = 0;
-	CDatagramIn* pDGAntiLoop = NULL;
-
     CDatagramIn* pDG = *pHash;
 	for ( ; pDG ; pDG = pDG->m_pNextHash )
 	{
-
-		if ( pDGAntiLoop == pDG ) 
-			break;
-
-		if ( ++count > 2000 ){
-			count = 0;
-			pDGAntiLoop = pDG;
-		}
-
 		if (	pDG->m_pHost.sin_addr.S_un.S_addr == pHost->sin_addr.S_un.S_addr &&
 				pDG->m_pHost.sin_port == pHost->sin_port &&
 				pDG->m_nSequence == pHeader->nSequence &&
@@ -1015,18 +1106,8 @@ BOOL CDatagrams::OnAcknowledgeSGP(const SOCKADDR_IN* pHost, const SGP_HEADER* pH
 
 	CDatagramOut** pHash = m_pOutputHash + ( nHash & DATAGRAM_HASH_MASK );
 
-	DWORD count = 0;
-	CDatagramOut* pDGAntiLoop = NULL;
 	for ( CDatagramOut* pDG = *pHash ; pDG ; pDG = pDG->m_pNextHash )
 	{
-		if ( pDGAntiLoop == pDG ) 
-			break;
-
-		if ( ++count > 2000 ){
-			count = 0;
-			pDGAntiLoop = pDG;
-		}
-
 		if (	pDG->m_pHost.sin_addr.S_un.S_addr == pHost->sin_addr.S_un.S_addr &&
 				pDG->m_pHost.sin_port == pHost->sin_port &&
 				pDG->m_nSequence == pHeader->nSequence )
