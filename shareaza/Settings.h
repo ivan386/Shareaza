@@ -283,9 +283,10 @@ public:
 		bool		SkipWANPPPSetup;			// UPnP: Skip WANPPPConn1 device setup
 		bool		SkipWANIPSetup;				// UPnP: Skip WANIPConn1 device setup
 		DWORD		ZLibCompressionLevel;		// ZLib compression level: 0(none/fastest)..9(best/slowest)
-		bool		EnableMulticast;			// Send and accept multi-cast packets
-		DWORD		MulticastTTL;				// TTL for multi-cast packets
-		bool		EnableBroadcast;			// Send and accept broadcast packets
+		bool		EnableMulticast;			// Send and accept multi-cast packets (default = true)
+		bool		MulticastLoop;				// Use multi-cast loopback (for debugging, default = false)
+		DWORD		MulticastTTL;				// TTL for multi-cast packets (default = 1)
+		bool		EnableBroadcast;			// Send and accept broadcast packets (for LAN, default = false)
 	} Connection;
 
 	struct sBandwidth

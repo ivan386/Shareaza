@@ -302,6 +302,7 @@ void CSettings::Load()
 	Add( _T("Connection"), _T("UPnPTimeout"), &Connection.UPnPTimeout, 5*1000, 1, 0, 60*1000, _T(" ms") );
 	Add( _T("Connection"), _T("ZLibCompressionLevel"), &Connection.ZLibCompressionLevel, 9, 1, 0, 9, _T(" level") ); 
 	Add( _T("Connection"), _T("EnableMulticast"), &Connection.EnableMulticast, true );
+	Add( _T("Connection"), _T("MulticastLoop"), &Connection.MulticastLoop, false );
 	Add( _T("Connection"), _T("MulticastTTL"), &Connection.MulticastTTL, 1, 1, 0, 255 );
 #ifdef LAN_MODE
 	Add( _T("Connection"), _T("EnableBroadcast"), &Connection.EnableBroadcast, true );

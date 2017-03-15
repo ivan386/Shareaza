@@ -174,7 +174,7 @@ BOOL CDatagrams::Listen()
 	if ( Settings.Connection.EnableMulticast )
 	{
 		const DWORD bReuse = TRUE;
-		const DWORD bLoop = FALSE;
+		const DWORD bLoop = Settings.Connection.MulticastLoop ? TRUE : FALSE;
 		const DWORD bTTL = Settings.Connection.MulticastTTL;
 
 		USHORT nPorts[ _countof( m_hSocket ) ] = {};
@@ -683,7 +683,7 @@ BOOL CDatagrams::TryRead(int nIndex)
 	// Clear rest of buffer for security reasons
 	ZeroMemory( m_pReadBuffer + nLength, sizeof( m_pReadBuffer ) - nLength );
 
-	DWORD tNow = GetTickCount();
+	const DWORD tNow = GetTickCount();
 	if ( tNow - m_mInput.tLastSlot < METER_MINIMUM )
 	{
 		m_mInput.pHistory[ m_mInput.nPosition ] += nLength;
@@ -714,7 +714,7 @@ BOOL CDatagrams::TryRead(int nIndex)
 			strText += ( ( m_pReadBuffer[ i ] < ' ' ) ? '.' : (char)m_pReadBuffer[ i ] );
 		}
 		theApp.Message( MSG_DEBUG | MSG_FACILITY_INCOMING,
-			_T("UDP: Recieved unknown packet (%i bytes) from %s: %s"),
+			_T("UDP: Received unknown packet (%i bytes) from %s: %s"),
 			nLength, (LPCTSTR)CString( inet_ntoa( pFrom.sin_addr ) ), strText );
 		return TRUE;
 	}
