@@ -28,6 +28,8 @@
 #include "Datagrams.h"
 #include "Datagram.h"
 #include "DatagramPart.h"
+#include "Download.h"
+#include "Downloads.h"
 #include "BTPacket.h"
 #include "BTTrackerRequest.h"
 #include "G1Packet.h"
@@ -36,6 +38,7 @@
 #include "DCPacket.h"
 #include "BENode.h"
 #include "Security.h"
+#include "Transfers.h"
 
 #ifdef _DEBUG
 #undef THIS_FILE
@@ -204,9 +207,9 @@ BOOL CDatagrams::Listen()
 			{
 				if ( nPorts[ i ] == saHost.sin_port )
 				{
-					setsockopt( m_hSocket[ i ], IPPROTO_IP, IP_MULTICAST_LOOP, (const char*)&bLoop, sizeof( bLoop ) );			
-					setsockopt( m_hSocket[ i ], IPPROTO_IP, IP_MULTICAST_TTL, (const char*)&bTTL, sizeof( bTTL ) );
-					setsockopt( m_hSocket[ i ], IPPROTO_IP, IP_ADD_MEMBERSHIP, (const char*)&mr[ i ], sizeof( ip_mreq ) );
+					setsockopt( m_hSocket[ 0 ], IPPROTO_IP, IP_MULTICAST_LOOP, (const char*)&bLoop, sizeof( bLoop ) );			
+					setsockopt( m_hSocket[ 0 ], IPPROTO_IP, IP_MULTICAST_TTL, (const char*)&bTTL, sizeof( bTTL ) );
+					setsockopt( m_hSocket[ 0 ], IPPROTO_IP, IP_ADD_MEMBERSHIP, (const char*)&mr[ i ], sizeof( ip_mreq ) );
 				}
 				else
 				{
@@ -675,12 +678,12 @@ BOOL CDatagrams::TryRead(int nIndex)
 		return FALSE;
 
 	SOCKADDR_IN pFrom = {};
-	int nLength	= CNetwork::RecvFrom( m_hSocket[ nIndex ], (char*)m_pReadBuffer, sizeof( m_pReadBuffer ), &pFrom );
+	int nLength	= CNetwork::RecvFrom( m_hSocket[ nIndex ], (char*)m_pReadBuffer, sizeof( m_pReadBuffer ) - 1, &pFrom );
 
 	if ( nLength < 1 )
 		return FALSE;
 
-	// Clear rest of buffer for security reasons
+	// Clear rest of buffer for security reasons and make it a zero terminated
 	ZeroMemory( m_pReadBuffer + nLength, sizeof( m_pReadBuffer ) - nLength );
 
 	const DWORD tNow = GetTickCount();
@@ -699,7 +702,7 @@ BOOL CDatagrams::TryRead(int nIndex)
 	m_mInput.nTotal += nLength;
 	Statistics.Current.Bandwidth.Incoming += nLength;
 
-	if ( Network.IsFirewalledAddress( &pFrom.sin_addr, Settings.Connection.IgnoreOwnUDP ) ||
+	if ( Network.IsFirewalledAddress( &pFrom.sin_addr, Settings.Connection.IgnoreOwnUDP, FALSE ) ||
 		Security.IsDenied( &pFrom.sin_addr ) )
 	{
 		return TRUE;
@@ -848,6 +851,76 @@ BOOL CDatagrams::OnDatagram(const SOCKADDR_IN* pHost, const BYTE* pBuffer, DWORD
 			if ( bHandled )
 				return TRUE;
 		}
+	}
+
+	// Detect BitTorrent Local Service Discovery (http://bittorrent.org/beps/bep_0014.html)
+	//
+	// As with any HTTP request to ensure forwards-compatibility any additional
+	// headers that not understood by a client should be ignored.
+	//
+	// BT-SEARCH * HTTP/1.1\r\n
+	// Host: <host>\r\n
+	// Port: <port>\r\n
+	// Infohash: <infohash>\r\n
+	// cookie: <cookie (optional)>\r\n
+	// \r\n
+	// \r\n
+	//
+	// host:
+	//	RFC 2616 section 14.23 and RFC 2732 compliant Host header specifying the 
+	//	multicast group to which the announce is sent. In other words, strings
+	//	A) 239.192.152.143:6771 (org-local) or B) [ff15::efc0:988f]:6771 (site-local),
+	//	as appropriate.
+	//
+	// cookie:
+	//	opaque value, allowing the sending client to filter out its own announces
+	//	if it receives them via multicast loopback
+	//
+	// port:
+	//	port on which the bittorrent client is listening in base-10, ascii
+	//
+	// infohash:
+	//  hex-encoded (40 character) infohash
+	//  An announce may contain multiple, consecutive Infohash headers to announce
+	//  the participation in more than one torrent. This may not be supported by 
+	//  older implementations. When sending multiple infohashes the packet length 
+	//  should not exceed 1400 bytes to avoid MTU/fragmentation problems.
+
+	if ( nLength > 22 &&
+		 memcmp( pBuffer, _P("BT-SEARCH * HTTP/1.1\r\n") ) == 0 )
+	{
+		WORD nPort = 0;
+		const char* pStart = (const char*)pBuffer;
+		for ( const char* pNext = pStart; pNext; )
+		{
+			pNext += strspn( pNext, "\r\n" ); // skip CR, LF
+
+			const char* pEnd = strpbrk( pNext, "\r\n" ); // find next CR, LF
+
+			const size_t nPart = pEnd ? ( pEnd - pNext ) : ( nLength - ( pNext - pStart ) );
+
+			if ( nPart >= 5 + 1 && _strnicmp( pNext, _P("port:") ) == 0 )
+			{
+				sscanf_s( pNext + 5, "%hu", &nPort );
+			}
+			else if ( nPort && nPart >= 9 + 40 && _strnicmp( pNext, _P("infohash:") ) == 0 )
+			{
+				Hashes::BtHash oHash;
+				if ( oHash.fromString< Hashes::base16Encoding >( CString( pNext + 9, nPart - 9 ).Trim() ) )
+				{
+					CSingleLock oLock( &Transfers.m_pSection, FALSE );
+					if ( oLock.Lock( 250 ) )
+					{
+						if ( CDownload* pDownload = Downloads.FindByBTH( oHash ) )
+							pDownload->AddSourceBT( Hashes::BtGuid(), &pHost->sin_addr, nPort );
+					}
+				}
+			}
+
+			pNext = pEnd;
+		}
+
+		return TRUE;
 	}
 
 	// Detect BitTorrent UDP tracker packets

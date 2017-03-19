@@ -43,7 +43,6 @@
 #include "QueryKeys.h"
 #include "RouteCache.h"
 #include "SearchManager.h"
-#include "Settings.h"
 #include "Statistics.h"
 #include "Transfers.h"
 #include "WndHitMonitor.h"
@@ -615,24 +614,37 @@ void CNetwork::ClearResolve()
 
 // CNetwork firewalled address checking
 
-BOOL CNetwork::IsFirewalledAddress(const IN_ADDR* pAddress, BOOL bIncludeSelf) const
+BOOL CNetwork::IsFirewalledAddress(const IN_ADDR* pAddress, BOOL bIncludeSelf, BOOL bIgnoreLocalIP) const
 {
-	if ( ! pAddress ) return TRUE;
-	if ( bIncludeSelf && IsSelfIP( *pAddress ) ) return TRUE;
-	if ( ! pAddress->S_un.S_addr ) return TRUE;							// 0.0.0.0
+	if ( ! pAddress )
+		return TRUE;
+	if ( bIncludeSelf && IsSelfIP( *pAddress ) )
+		return TRUE;
+	if ( ! pAddress->S_un.S_addr )						// 0.0.0.0
+		return TRUE;
 #ifdef LAN_MODE
-	if ( ( pAddress->S_un.S_addr & 0xFFFF ) == 0xA8C0 ) return FALSE;	// 192.168.0.0/16
-	if ( ( pAddress->S_un.S_addr & 0xFFFF ) == 0xFEA9 ) return FALSE;	// 169.254.0.0/16
-	if ( ( pAddress->S_un.S_addr & 0xF0FF ) == 0x10AC ) return FALSE;	// 172.16.0.0/12
-	if ( ( pAddress->S_un.S_addr & 0xFF ) == 0x0A ) return FALSE;		// 10.0.0.0/8
+	if ( ( pAddress->S_un.S_addr & 0xFFFF ) == 0xA8C0 )	// 192.168.0.0/16
+		return FALSE;
+	if ( ( pAddress->S_un.S_addr & 0xFFFF ) == 0xFEA9 )	// 169.254.0.0/16
+		return FALSE;
+	if ( ( pAddress->S_un.S_addr & 0xF0FF ) == 0x10AC )	// 172.16.0.0/12
+		return FALSE;
+	if ( ( pAddress->S_un.S_addr & 0xFF ) == 0x0A )		// 10.0.0.0/8
+		return FALSE;
 	return TRUE;
 #else // LAN_MODE
-	if ( ! Settings.Connection.IgnoreLocalIP ) return FALSE;
-	if ( ( pAddress->S_un.S_addr & 0xFFFF ) == 0xA8C0 ) return TRUE;	// 192.168.0.0/16
-	if ( ( pAddress->S_un.S_addr & 0xFFFF ) == 0xFEA9 ) return TRUE;	// 169.254.0.0/16
-	if ( ( pAddress->S_un.S_addr & 0xF0FF ) == 0x10AC ) return TRUE;	// 172.16.0.0/12
-	if ( ( pAddress->S_un.S_addr & 0xFF ) == 0x0A ) return TRUE;		// 10.0.0.0/8
-	if ( ( pAddress->S_un.S_addr & 0xFF ) == 0x7F ) return TRUE;		// 127.0.0.0/8
+	if ( ! bIgnoreLocalIP )
+		return FALSE;
+	if ( ( pAddress->S_un.S_addr & 0xFFFF ) == 0xA8C0 )	// 192.168.0.0/16
+		return TRUE;
+	if ( ( pAddress->S_un.S_addr & 0xFFFF ) == 0xFEA9 )	// 169.254.0.0/16
+		return TRUE;
+	if ( ( pAddress->S_un.S_addr & 0xF0FF ) == 0x10AC )	// 172.16.0.0/12
+		return TRUE;
+	if ( ( pAddress->S_un.S_addr & 0xFF ) == 0x0A )		// 10.0.0.0/8
+		return TRUE;
+	if ( ( pAddress->S_un.S_addr & 0xFF ) == 0x7F )		// 127.0.0.0/8
+		return TRUE;
 	return FALSE;
 #endif // LAN_MODE
 }

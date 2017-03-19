@@ -131,8 +131,8 @@ protected:
 	UDPBandwidthMeter	m_mOutput;
 
 	// Buffer for current incoming UDP packet. It's global since CDatagrams
-	// process one packet at once only. Maximal UDP size 64KB.
-	BYTE			m_pReadBuffer[ 65536 ];
+	// process one packet at once only. Maximal UDP size 64KB + 1. Zero terminated.
+	BYTE			m_pReadBuffer[ 65537 ];
 
 	void	Measure();
 	BOOL	TryWrite();
