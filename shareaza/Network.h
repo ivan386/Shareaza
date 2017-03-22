@@ -1,7 +1,7 @@
 //
 // Network.h
 //
-// Copyright (c) Shareaza Development Team, 2002-2014.
+// Copyright (c) Shareaza Development Team, 2002-2017.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -22,6 +22,7 @@
 #pragma once
 
 #include "ThreadImpl.h"
+#include "Settings.h"
 
 class CBuffer;
 class CConnection;
@@ -196,8 +197,8 @@ public:
 	void		Disconnect();
 	BOOL		ConnectTo(LPCTSTR pszAddress, int nPort = 0, PROTOCOLID nProtocol = PROTOCOL_NULL, BOOL bNoUltraPeer = FALSE);
 	BOOL		AcquireLocalAddress(SOCKET hSocket);
-	BOOL		AcquireLocalAddress(LPCTSTR pszHeader, WORD nPort = 0);
-	BOOL		AcquireLocalAddress(const IN_ADDR& pAddress, WORD nPort = 0);
+	BOOL		AcquireLocalAddress(LPCTSTR pszHeader, WORD nPort = 0, const IN_ADDR* pFromAddress = NULL);
+	BOOL		AcquireLocalAddress(const IN_ADDR& pAddress, WORD nPort = 0, const IN_ADDR* pFromAddress = NULL);
 	static BOOL	Resolve(LPCTSTR pszHost, int nPort, SOCKADDR_IN* pHost, BOOL bNames = TRUE);
 	BOOL		AsyncResolve(LPCTSTR pszAddress, WORD nPort, PROTOCOLID nProtocol, BYTE nCommand);
 	// Pending network name resolves queue size
@@ -205,7 +206,11 @@ public:
 	BOOL		IsReserved(const IN_ADDR* pAddress) const;
 	WORD		RandomPort() const;
 	void		CreateID(Hashes::Guid& oID);
-	BOOL		IsFirewalledAddress(const IN_ADDR* pAddress, BOOL bIncludeSelf = FALSE) const;
+	BOOL		IsFirewalledAddress(const IN_ADDR* pAddress, BOOL bIncludeSelf = FALSE, BOOL bIgnoreLocalIP = Settings.Connection.IgnoreLocalIP) const;
+	BOOL		IsValidAddressFor(const IN_ADDR* pForAddress, const IN_ADDR* pAddress) const;
+	BOOL		IsHomeNetwork(const IN_ADDR* pAddress) const;
+	BOOL		IsLocalAreaNetwork(const IN_ADDR* pAddress) const;
+	IN_ADDR		GetMyAddressFor(const IN_ADDR* pAddress) const;
 	WORD		GetPort() const;
 
 	BOOL		GetNodeRoute(const Hashes::Guid& oGUID, CNeighbour** ppNeighbour, SOCKADDR_IN* pEndpoint);

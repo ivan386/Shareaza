@@ -43,7 +43,6 @@
 #include "QueryKeys.h"
 #include "RouteCache.h"
 #include "SearchManager.h"
-#include "Settings.h"
 #include "Statistics.h"
 #include "Transfers.h"
 #include "WndHitMonitor.h"
@@ -444,7 +443,7 @@ BOOL CNetwork::AcquireLocalAddress(SOCKET hSocket)
 	return AcquireLocalAddress( pAddress.sin_addr );
 }
 
-BOOL CNetwork::AcquireLocalAddress(LPCTSTR pszHeader, WORD nPort)
+BOOL CNetwork::AcquireLocalAddress(LPCTSTR pszHeader, WORD nPort, const IN_ADDR* pFromAddress)
 {
 	int nIPb1, nIPb2, nIPb3, nIPb4;
 	if ( _stscanf( pszHeader, _T("%i.%i.%i.%i"), &nIPb1, &nIPb2, &nIPb3, &nIPb4 ) != 4 ||
@@ -459,10 +458,10 @@ BOOL CNetwork::AcquireLocalAddress(LPCTSTR pszHeader, WORD nPort)
 	pAddress.S_un.S_un_b.s_b2 = (BYTE)nIPb2;
 	pAddress.S_un.S_un_b.s_b3 = (BYTE)nIPb3;
 	pAddress.S_un.S_un_b.s_b4 = (BYTE)nIPb4;
-	return AcquireLocalAddress( pAddress, nPort );
+	return AcquireLocalAddress( pAddress, nPort, pFromAddress );
 }
 
-BOOL CNetwork::AcquireLocalAddress(const IN_ADDR& pAddress, WORD nPort)
+BOOL CNetwork::AcquireLocalAddress(const IN_ADDR& pAddress, WORD nPort, const IN_ADDR* pFromAddress)
 {
 	if ( nPort )
 	{
@@ -471,6 +470,9 @@ BOOL CNetwork::AcquireLocalAddress(const IN_ADDR& pAddress, WORD nPort)
 
 	if ( pAddress.s_addr == INADDR_ANY ||
 		 pAddress.s_addr == INADDR_NONE )
+		return FALSE;
+
+	if ( pFromAddress != NULL && ! IsValidAddressFor( pFromAddress, &pAddress ) )
 		return FALSE;
 
 	CQuickLock oHALock( m_pHASection );
@@ -613,26 +615,171 @@ void CNetwork::ClearResolve()
 	m_pLookups.RemoveAll();
 }
 
+BOOL CNetwork::IsValidAddressFor(const IN_ADDR* pForAddress, const IN_ADDR* pAddress) const
+{
+	if ( pForAddress->s_net == 127 && pAddress->s_net == 127 ) //Loopback
+		return TRUE;
+
+	if ( IsReserved( pAddress ) )
+		return FALSE;
+
+	if ( IsHomeNetwork( pForAddress ) )
+		return TRUE;
+	else if ( ( IsLocalAreaNetwork( pForAddress ) || 
+				IsSelfIP( *pForAddress ) ) && 
+			  ! IsHomeNetwork( pAddress ) )
+		return TRUE;
+	else if ( ! IsLocalAreaNetwork( pForAddress ) && 
+		      ! IsLocalAreaNetwork( pAddress ) )
+		return TRUE;
+
+	return FALSE;
+}
+
+IN_ADDR CNetwork::GetMyAddressFor( const IN_ADDR* pAddress ) const
+{
+	IN_ADDR nMyAddress = { 0 };
+	int nNet = 0; // Internet (default)
+
+	if ( pAddress->s_net == 127 )
+	{
+		nMyAddress.S_un.S_addr = 0x0100007f; // 127.0.0.1 (loopback)
+		return nMyAddress;
+	}
+	
+	if ( IsHomeNetwork( pAddress ) )
+		nNet = 1;
+	else if ( IsLocalAreaNetwork( pAddress ) || IsSelfIP( *pAddress ) )
+		nNet = 2;
+		
+	switch ( nNet )
+	{
+	case 1: // Home Network
+	
+		if ( IsHomeNetwork( &m_pHost.sin_addr ) )
+			return m_pHost.sin_addr;
+		
+		for ( POSITION pos = m_pHostAddresses.GetHeadPosition(); pos; )
+		{
+			nMyAddress.S_un.S_addr = m_pHostAddresses.GetNext( pos );
+			
+			if ( IsHomeNetwork( &nMyAddress ) )
+				return nMyAddress;
+		}
+	 
+	case 2: // Local Area Network
+	
+		if ( IsLocalAreaNetwork( &m_pHost.sin_addr ) &&
+			 ! IsHomeNetwork( &m_pHost.sin_addr ) )
+			return m_pHost.sin_addr;
+
+		for ( POSITION pos = m_pHostAddresses.GetHeadPosition(); pos; )
+		{
+			nMyAddress.S_un.S_addr = m_pHostAddresses.GetNext( pos );
+			
+			if ( IsLocalAreaNetwork( &nMyAddress ) && ! IsHomeNetwork( &nMyAddress ) )
+				return nMyAddress;
+		}
+
+	default: // Internet
+
+		if ( ! IsLocalAreaNetwork( &m_pHost.sin_addr ) &&
+			 ! IsReserved( &m_pHost.sin_addr ) )
+			return m_pHost.sin_addr;
+
+		for ( POSITION pos = m_pHostAddresses.GetHeadPosition(); pos; )
+		{
+			nMyAddress.S_un.S_addr = m_pHostAddresses.GetNext( pos );
+			
+			if ( ! IsLocalAreaNetwork( &nMyAddress )  &&
+				 ! IsReserved( &nMyAddress ) )
+				return nMyAddress;
+		}
+	}
+	
+	nMyAddress.S_un.S_addr = 0;
+	return nMyAddress;
+}
+
+BOOL CNetwork::IsHomeNetwork(const IN_ADDR* pAddress) const
+{
+	if ( ! IsLocalAreaNetwork( pAddress ) )
+		return FALSE;
+
+	if ( ( pAddress->S_un.S_addr & 0xFFFF ) == 0xFEA9 ) // 169.254.0.0/16
+		return TRUE;	
+
+	// Take an IP address table
+	char mib[ sizeof(MIB_IPADDRTABLE) + 32 * sizeof(MIB_IPADDRROW) ];
+	ULONG nSize = sizeof(mib);
+	PMIB_IPADDRTABLE ipAddr = (PMIB_IPADDRTABLE)mib;
+
+	if ( GetIpAddrTable( ipAddr, &nSize, TRUE ) == NO_ERROR )
+	{
+		DWORD nCount = ipAddr->dwNumEntries;
+		for ( DWORD nIf = 0 ; nIf < nCount ; nIf++ )
+		{
+			DWORD dwAddr = ipAddr->table[ nIf ].dwAddr;
+			DWORD dwMask = ipAddr->table[ nIf ].dwMask;
+			
+			if ( dwAddr == 0x0100007f || dwAddr == 0x0 ) // loopback or 0.0.0.0
+				continue; 
+			
+			IN_ADDR nMyAddress = { 0 };
+			nMyAddress.S_un.S_addr = dwAddr;
+			
+			if ( ! IsLocalAreaNetwork( &nMyAddress ) ) 
+				continue;
+			
+			if ( ( dwAddr & dwMask ) == ( pAddress->S_un.S_addr & dwMask ) )
+			{
+				MIB_IFROW ifRow = {};
+				ifRow.dwIndex = ipAddr->table[ nIf ].dwIndex;
+				// Check interface
+				if ( GetIfEntry( &ifRow ) != NO_ERROR || ifRow.dwAdminStatus != MIB_IF_ADMIN_STATUS_UP )
+					continue;
+
+				return TRUE;
+			}
+		}
+	}
+	return FALSE;
+}
+
+BOOL CNetwork::IsLocalAreaNetwork(const IN_ADDR* pAddress) const
+{
+	if ( ( pAddress->S_un.S_addr & 0xFFFF ) == 0xA8C0 )	// 192.168.0.0/16
+		return TRUE;
+	if ( ( pAddress->S_un.S_addr & 0xFFFF ) == 0xFEA9 )	// 169.254.0.0/16
+		return TRUE;
+	if ( ( pAddress->S_un.S_addr & 0xF0FF ) == 0x10AC )	// 172.16.0.0/12
+		return TRUE;
+	if ( ( pAddress->S_un.S_addr & 0xFF ) == 0x0A )		// 10.0.0.0/8
+		return TRUE;
+	return FALSE;
+}
+
 // CNetwork firewalled address checking
 
-BOOL CNetwork::IsFirewalledAddress(const IN_ADDR* pAddress, BOOL bIncludeSelf) const
+BOOL CNetwork::IsFirewalledAddress(const IN_ADDR* pAddress, BOOL bIncludeSelf, BOOL bIgnoreLocalIP) const
 {
-	if ( ! pAddress ) return TRUE;
-	if ( bIncludeSelf && IsSelfIP( *pAddress ) ) return TRUE;
-	if ( ! pAddress->S_un.S_addr ) return TRUE;							// 0.0.0.0
+	if ( ! pAddress )
+		return TRUE;
+	if ( bIncludeSelf && IsSelfIP( *pAddress ) )
+		return TRUE;
+	if ( ! pAddress->S_un.S_addr )						// 0.0.0.0
+		return TRUE;
 #ifdef LAN_MODE
-	if ( ( pAddress->S_un.S_addr & 0xFFFF ) == 0xA8C0 ) return FALSE;	// 192.168.0.0/16
-	if ( ( pAddress->S_un.S_addr & 0xFFFF ) == 0xFEA9 ) return FALSE;	// 169.254.0.0/16
-	if ( ( pAddress->S_un.S_addr & 0xF0FF ) == 0x10AC ) return FALSE;	// 172.16.0.0/12
-	if ( ( pAddress->S_un.S_addr & 0xFF ) == 0x0A ) return FALSE;		// 10.0.0.0/8
+	if ( IsLocalAreaNetwork( pAddress ) )
+		return FALSE;
 	return TRUE;
 #else // LAN_MODE
-	if ( ! Settings.Connection.IgnoreLocalIP ) return FALSE;
-	if ( ( pAddress->S_un.S_addr & 0xFFFF ) == 0xA8C0 ) return TRUE;	// 192.168.0.0/16
-	if ( ( pAddress->S_un.S_addr & 0xFFFF ) == 0xFEA9 ) return TRUE;	// 169.254.0.0/16
-	if ( ( pAddress->S_un.S_addr & 0xF0FF ) == 0x10AC ) return TRUE;	// 172.16.0.0/12
-	if ( ( pAddress->S_un.S_addr & 0xFF ) == 0x0A ) return TRUE;		// 10.0.0.0/8
-	if ( ( pAddress->S_un.S_addr & 0xFF ) == 0x7F ) return TRUE;		// 127.0.0.0/8
+	if ( ! bIgnoreLocalIP )
+		return FALSE;
+	if ( IsLocalAreaNetwork( pAddress ) )
+		return TRUE;
+	if ( ( pAddress->S_un.S_addr & 0xFF ) == 0x7F )		// 127.0.0.0/8
+		return TRUE;
 	return FALSE;
 #endif // LAN_MODE
 }
@@ -721,13 +868,11 @@ bool CNetwork::PreRun()
 		InternetCloseHandle( hInternet );
 	}
 
-#ifndef _WIN64
 	if ( ! InternetConnect() )
 	{
 		theApp.Message( MSG_ERROR, _T("Internet connection attempt failed.") );
 		return false;
 	}
-#endif
 
 	m_bConnected = true;
 
