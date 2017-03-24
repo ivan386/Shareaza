@@ -79,6 +79,7 @@ protected:
 
 	DWORD			m_nUPnPTier;				// UPnP tier number (0..UPNP_MAX)
 	DWORD			m_tUPnPMap;					// Time of last UPnP port mapping
+	BOOL			m_bHomeNetworkNAT;				// Home network NAT> LAN NAT> Internet
 
 	typedef struct
 	{

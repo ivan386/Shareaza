@@ -123,6 +123,7 @@ CNetwork::CNetwork()
 	, m_nUPnPTier			( 0 )
 	, m_bUPnPPortsForwarded	( TRI_UNKNOWN )
 	, m_tUPnPMap			( 0 )
+	, m_bHomeNetworkNAT		( FALSE )
 {
 	m_pHost.sin_family = AF_INET;
 }
@@ -475,6 +476,9 @@ BOOL CNetwork::AcquireLocalAddress(const IN_ADDR& pAddress, WORD nPort, const IN
 	if ( pFromAddress != NULL && ! IsValidAddressFor( pFromAddress, &pAddress ) )
 		return FALSE;
 
+	if ( IsLocalAreaNetwork( &pAddress ) && ! IsHomeNetwork( &pAddress ) )
+		m_bHomeNetworkNAT = TRUE;
+
 	CQuickLock oHALock( m_pHASection );
 
 	// Add new address to address list
@@ -617,86 +621,122 @@ void CNetwork::ClearResolve()
 
 BOOL CNetwork::IsValidAddressFor(const IN_ADDR* pForAddress, const IN_ADDR* pAddress) const
 {
-	if ( pForAddress->s_net == 127 && pAddress->s_net == 127 ) //Loopback
+	if ( pForAddress->s_net == 127 && pAddress->s_net == 127 ) // Loopback
 		return TRUE;
 
 	if ( IsReserved( pAddress ) )
 		return FALSE;
 
-	if ( IsHomeNetwork( pForAddress ) )
-		return TRUE;
-	else if ( ( IsLocalAreaNetwork( pForAddress ) || 
-				IsSelfIP( *pForAddress ) ) && 
-			  ! IsHomeNetwork( pAddress ) )
-		return TRUE;
-	else if ( ! IsLocalAreaNetwork( pForAddress ) && 
-		      ! IsLocalAreaNetwork( pAddress ) )
+	if ( ! IsLocalAreaNetwork( pAddress ) ) // This internet address valid for all
 		return TRUE;
 
-	return FALSE;
+	// Here pAddress is home or LAN
+
+	if ( pForAddress->s_net == 127 ) // For loopback valid all
+		return TRUE;
+	
+	if ( ! IsLocalAreaNetwork( pForAddress ) ) // pForAddress is internet address and pAddress in not
+		return FALSE;
+
+	if ( IsHomeNetwork( pForAddress ) ) // For home network host valid all
+		return TRUE;
+	
+	// Here pForAddress is local area network
+
+	if ( m_bHomeNetworkNAT &&
+		 IsHomeNetwork( pAddress ) )
+		return FALSE;
+		
+	// pForAddress and pAddress in local area network 
+	return TRUE;
 }
 
 IN_ADDR CNetwork::GetMyAddressFor( const IN_ADDR* pAddress ) const
 {
-	IN_ADDR nMyAddress = { 0 };
+	IN_ADDR nMyHomeAddress = { 0 };
+	IN_ADDR nMyLanAddress = { 0 };
+	IN_ADDR nMyInternetAddress = { 0 };
+
+
 	int nNet = 0; // Internet (default)
 
 	if ( pAddress->s_net == 127 )
 	{
+		IN_ADDR nMyAddress = { 0 };
 		nMyAddress.S_un.S_addr = 0x0100007f; // 127.0.0.1 (loopback)
 		return nMyAddress;
 	}
 	
 	if ( IsHomeNetwork( pAddress ) )
 		nNet = 1;
-	else if ( IsLocalAreaNetwork( pAddress ) || IsSelfIP( *pAddress ) )
+	else if ( IsLocalAreaNetwork( pAddress ) ||
+			  IsSelfIP( *pAddress ) ) // Same internet provider
 		nNet = 2;
-		
-	switch ( nNet )
+
+	if ( IsHomeNetwork( &m_pHost.sin_addr ) )
 	{
-	case 1: // Home Network
-	
-		if ( IsHomeNetwork( &m_pHost.sin_addr ) )
-			return m_pHost.sin_addr;
-		
-		for ( POSITION pos = m_pHostAddresses.GetHeadPosition(); pos; )
-		{
-			nMyAddress.S_un.S_addr = m_pHostAddresses.GetNext( pos );
-			
-			if ( IsHomeNetwork( &nMyAddress ) )
-				return nMyAddress;
-		}
-	 
-	case 2: // Local Area Network
-	
-		if ( IsLocalAreaNetwork( &m_pHost.sin_addr ) &&
-			 ! IsHomeNetwork( &m_pHost.sin_addr ) )
-			return m_pHost.sin_addr;
-
-		for ( POSITION pos = m_pHostAddresses.GetHeadPosition(); pos; )
-		{
-			nMyAddress.S_un.S_addr = m_pHostAddresses.GetNext( pos );
-			
-			if ( IsLocalAreaNetwork( &nMyAddress ) && ! IsHomeNetwork( &nMyAddress ) )
-				return nMyAddress;
-		}
-
-	default: // Internet
-
-		if ( ! IsLocalAreaNetwork( &m_pHost.sin_addr ) &&
-			 ! IsReserved( &m_pHost.sin_addr ) )
-			return m_pHost.sin_addr;
-
-		for ( POSITION pos = m_pHostAddresses.GetHeadPosition(); pos; )
-		{
-			nMyAddress.S_un.S_addr = m_pHostAddresses.GetNext( pos );
-			
-			if ( ! IsLocalAreaNetwork( &nMyAddress )  &&
-				 ! IsReserved( &nMyAddress ) )
-				return nMyAddress;
-		}
+		if ( nNet == 1 ) // For home network host
+			return m_pHost.sin_addr; // Our home address
+		else
+			nMyHomeAddress = m_pHost.sin_addr;
 	}
+	else if ( IsLocalAreaNetwork( &m_pHost.sin_addr ) )
+	{
+		if ( nNet == 2 ) // For Local Area Network host
+			return m_pHost.sin_addr; // Our LAN address
+		else
+			nMyLanAddress = m_pHost.sin_addr;
+	}
+	else if ( ! IsReserved( &m_pHost.sin_addr ) )
+	{
+		if ( nNet == 0 ) // For internet host
+			return m_pHost.sin_addr; // Our internet address
+		else
+			nMyInternetAddress = m_pHost.sin_addr;
+	}
+
+	for ( POSITION pos = m_pHostAddresses.GetHeadPosition(); pos; )
+	{
+		
+		IN_ADDR nMyAddress = { 0 };
+		nMyAddress.S_un.S_addr = m_pHostAddresses.GetNext( pos );
+		
+		if ( IsHomeNetwork( &nMyAddress ) )
+		{
+			if ( nNet == 1 ) // For home host
+				return nMyAddress; // We found our home address
+			else if ( ! nMyHomeAddress.S_un.S_addr )
+				nMyHomeAddress = m_pHost.sin_addr;
+		}
+		else if ( IsLocalAreaNetwork( &nMyAddress ) )
+		{
+			if ( nNet == 2 ) // For Local Area Network host
+				return nMyAddress; // We found our LAN address
+			else if ( ! nMyLanAddress.S_un.S_addr )
+				nMyLanAddress = nMyAddress;
+		}
+		else if ( ! IsReserved( &nMyAddress ) )
+		{
+			if ( nNet == 0 ) // For internet host
+				return nMyAddress; // We found our internet address
+			else if ( ! nMyInternetAddress.S_un.S_addr )
+				nMyInternetAddress = nMyAddress;
+		}
+
+	}
+
+	if ( nNet == 1 && // For home host
+		 nMyLanAddress.S_un.S_addr ) // It can not be that we do not know our home address, but we know the LAN address.
+		return nMyLanAddress;
 	
+	if ( nNet == 2 &&  // For Local Area Network host
+		 nMyHomeAddress.S_un.S_addr ) // Perhaps we are connected to a local network without a home router.
+		return nMyHomeAddress;
+	
+	if ( nMyInternetAddress.S_un.S_addr ) // By default we give our internet address.
+		return nMyInternetAddress;
+	
+	IN_ADDR nMyAddress = { 0 };
 	nMyAddress.S_un.S_addr = 0;
 	return nMyAddress;
 }
@@ -731,7 +771,7 @@ BOOL CNetwork::IsHomeNetwork(const IN_ADDR* pAddress) const
 			if ( ! IsLocalAreaNetwork( &nMyAddress ) ) 
 				continue;
 			
-			if ( ( dwAddr & dwMask ) == ( pAddress->S_un.S_addr & dwMask ) )
+			if ( ( dwAddr & dwMask ) == ( pAddress->S_un.S_addr & dwMask ) ) // We check that the address in the same subnet
 			{
 				MIB_IFROW ifRow = {};
 				ifRow.dwIndex = ipAddr->table[ nIf ].dwIndex;
