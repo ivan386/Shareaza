@@ -1,7 +1,7 @@
 //
 // ManagedSearch.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2014.
+// Copyright (c) Shareaza Development Team, 2002-2017.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -193,7 +193,7 @@ BOOL CManagedSearch::Execute(int nPriorityClass)
 	BOOL bSuccess = ExecuteNeighbours( tTicks, tSecs );
 
 	// G1 multicast search. (UDP)
-	if ( Settings.Gnutella1.EnableToday &&
+	if ( Settings.Gnutella1.EnableToday && Settings.Connection.EnableMulticast &&
 		 m_bAllowG1 &&
 		 tTicks > m_tLastG1 + Settings.Gnutella1.QueryGlobalThrottle &&
 		 Network.IsListening() )

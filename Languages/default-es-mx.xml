@@ -1804,7 +1804,7 @@
 				<link format="bu" target="raza:shell:downloads">Open my Downloads folder</link>
 				<group id="1">
 					<newline gap="8"/>
-					<text>%lu</text>
+					<text>Shareaza is scanning and processing</text>
 					<text id="LibraryHashRemaining" format="b">%lu</text>
 					<text>files.</text>
 					<newline gap="8"/>
@@ -2949,7 +2949,7 @@
 		<string id="16264" value="Iniciando conexión con %s puerto %i para descargar %s..."/>
 		<string id="16265" value="Fué imposible conectarse con %s."/>
 		<string id="16266" value="Conexión para descarga fué establecida con %s."/>
-		<string id="16267" value="Pidiendo el fragmento (%lu-%lu) de %s a %s."/>
+		<string id="16267" value="Requesting download fragment (%I64u-%I64u) of &quot;%s&quot; from %s."/>
 		<string id="16268" value="No hay más fragmentos disponible para este archivo, cerrando la conexión con %s."/>
 		<string id="16269" value="Fragmento corto, cerrando %s."/>
 		<string id="16270" value="La transferencia con %s no pudo ser iniciada, no se pudo conectar."/>
@@ -2972,7 +2972,7 @@
 		<string id="16287" value="No se pudieron buscar más fuentes para %s, no hay conexión a la red."/>
 		<string id="16288" value="Buscando más fuentes para %s en %i connexión(es)..."/>
 		<string id="16289" value="Enviando push para iniciar la transferencia de %s..."/>
-		<string id="16290" value="El vecino %s respondió con un rango distinto, pero aceptable (%lu-%lu) de %s."/>
+		<string id="16290" value="Download host %s responded with a different, but useful range (%I64i-%I64i) of &quot;%s&quot;."/>
 		<string id="16291" value="El archivo %s a %s fué movido, transferencia completada."/>
 		<string id="16292" value="Fué imposible mover el archivo descargado %s a %s.  Revise que el archivo no este siendo utilizado, y que tenga acceso de escritura a la carpeta compartida."/>
 		<string id="16293" value="Resolviendo %s para descargar %s..."/>
@@ -3156,7 +3156,7 @@
 		<string id="16816" value="La red eDonkey utiliza largas colas con tiempos largos de espera. Limitando tu máxima cola de posición puede que te de problemas para iniciar las descargas.\nEstas seguro que deseas limitar las posiciones de cola que vas a aceptar?"/>
 		<string id="16817" value="Windows no soporta nomres ms grandes que 256 caracteres.\nPlor favor selecciona un nombre con un tamao ms pequeo."/>
 		<string id="16818" value="La carpeta de archivos incompletos no debe de estar en la librera, porque reduce velocidad. Archivos incompletos pueden ser compartidos directamente de la ventana de transferencias."/>
-		<string id="16819" value="Una subcarpeta de la carpeta seleccionada &quot;%s&quot; ya es parte de tu librera. \n\nDeseas agregar la carpeta seleccionada a tu librera ?\n\n La carpeta existente va a ser un subfolder de la nueva carpeta. Esto va a causar re-hashing re-hashing de todos los archivos en esta carpeta."/>
+		<string id="16819" value="The incomplete files folder should not be in the library, as it would reduce performance. Incomplete files may be shared directly from the transfers window."/>
 		<string id="16864" value="Accesando servicios de descubrimiento..."/>
 		<string id="16865" value="Accesando el servicio de descubrimiento en &quot;%s&quot;..."/>
 		<string id="16866" value="Transacción con el GWebCache (&quot;%s&quot;) fué completada."/>

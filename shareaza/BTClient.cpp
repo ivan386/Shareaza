@@ -1294,7 +1294,7 @@ BOOL CBTClient::OnExtendedHandshake(CBTPacket* pPacket)
 		if ( pYourIP->m_nValue == 4 )
 		{
 			// IPv4
-			Network.AcquireLocalAddress( *(const IN_ADDR*)pYourIP->m_pValue );
+			Network.AcquireLocalAddress( *(const IN_ADDR*)pYourIP->m_pValue, 0, &m_pHost.sin_addr );
 		}
 	}
 

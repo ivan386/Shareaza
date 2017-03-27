@@ -973,14 +973,17 @@ BOOL CDiscoveryServices::Execute(PROTOCOLID nProtocol, USHORT nForceDiscovery)
 #endif // LAN_MODE
 
 	// Broadcast discovery
-	static bool bBroadcast = true;	// test, broadcast, cache, broadcast, cache, ...
-	bBroadcast = ! bBroadcast;
-	if ( bBroadcast && bG2Required )
+	if ( Settings.Connection.EnableBroadcast )
 	{
-		theApp.Message( MSG_NOTICE, IDS_DISCOVERY_QUERY, _T("BROADCAST") );
-		SOCKADDR_IN addr = { AF_INET, htons( protocolPorts[ PROTOCOL_G2 ] ) };
-		addr.sin_addr.S_un.S_addr = INADDR_NONE;
-		return Datagrams.Send( &addr, CG2Packet::New( G2_PACKET_DISCOVERY ), TRUE, 0, FALSE );
+		static bool bBroadcast = true;	// test, broadcast, cache, broadcast, cache, ...
+		bBroadcast = ! bBroadcast;
+		if ( bBroadcast && bG2Required )
+		{
+			theApp.Message( MSG_NOTICE, IDS_DISCOVERY_QUERY, _T("BROADCAST") );
+			SOCKADDR_IN addr = { AF_INET, Network.m_pHost.sin_port };
+			addr.sin_addr.S_un.S_addr = INADDR_BROADCAST;
+			return Datagrams.Send( &addr, CG2Packet::New( G2_PACKET_DISCOVERY ), TRUE, 0, FALSE );
+		}
 	}
 
 	if ( nProtocol == PROTOCOL_NULL )	// All hosts are wanted
@@ -1543,10 +1546,10 @@ BOOL CDiscoveryServices::RunWebCacheGet(BOOL bCaches)
 					}
 
 					if ( ( m_nLastQueryProtocol == PROTOCOL_G2 ) ?
-						HostCache.Gnutella2.Add( (IN_ADDR*)&nAddress, (WORD)nPort,
+						HostCache.Gnutella2.Add( (IN_ADDR*)&nAddress, (WORD)nPort, NULL,
 							tSeen, ( pVendor ? (LPCTSTR)pVendor->m_sCode : NULL ),
 							tUptime, nCurrentLeaves, nLeafLimit ) :
-						HostCache.Gnutella1.Add( (IN_ADDR*)&nAddress, (WORD)nPort,
+						HostCache.Gnutella1.Add( (IN_ADDR*)&nAddress, (WORD)nPort, NULL,
 							tSeen, ( pVendor ? (LPCTSTR)pVendor->m_sCode : NULL ),
 							tUptime,nCurrentLeaves, nLeafLimit ) )
 					{

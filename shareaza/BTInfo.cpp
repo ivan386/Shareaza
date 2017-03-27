@@ -1,7 +1,7 @@
 //
 // BTInfo.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2014.
+// Copyright (c) Shareaza Development Team, 2002-2017.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -26,6 +26,7 @@
 #include "BTInfo.h"
 #include "Buffer.h"
 #include "DownloadTask.h"
+#include "DownloadGroups.h"
 #include "Library.h"
 #include "SharedFile.h"
 #include "SharedFolder.h"
@@ -106,53 +107,73 @@ CBTInfo::CBTFile::CBTFile(const CBTInfo* pInfo, const CBTFile* pBTFile)
 	}
 }
 
-CString	CBTInfo::CBTFile::FindFile() const
+const CString& CBTInfo::CBTFile::FindFile()
 {
-	CQuickLock oLock( Library.m_pSection );
+	CString strShortPath;
+	int nSlash = m_sPath.Find( _T('\\') );
+	if ( nSlash != -1 )
+		strShortPath = m_sPath.Mid( nSlash + 1 );
+
+	CStringIList mFolders;
 
 	// Try complete folder
-	CString strFile = Settings.Downloads.CompletePath + _T("\\") + m_sPath;
-	if ( GetFileSize( CString( _T("\\\\?\\") ) + strFile ) != m_nSize )
+	mFolders.AddTail( Settings.Downloads.CompletePath );
+
+	// Try all possible download folders
+	DownloadGroups.GetFolders( mFolders );
+
+	// Try folder of original .torrent
+	mFolders.AddTail( m_pInfo->m_sPath.Left( m_pInfo->m_sPath.ReverseFind( _T('\\') ) ) );
+
+	for ( POSITION pos = mFolders.GetHeadPosition(); pos; )
 	{
-		// Try folder of original .torrent
-		CString strTorrentPath = m_pInfo->m_sPath.Left(
-			m_pInfo->m_sPath.ReverseFind( _T('\\') ) + 1 );
-		strFile = strTorrentPath + m_sPath;
-		if ( GetFileSize( CString( _T("\\\\?\\") ) + strFile ) != m_nSize )
+		const CString sFolder = mFolders.GetNext( pos );
+		
+		CString strFile = sFolder + _T("\\") + m_sPath;
+		if ( GetFileSize( strFile ) == m_nSize )
 		{
-			// Try complete folder without outer file directory
-			CString strShortPath;
-			int nSlash = m_sPath.Find( _T('\\') );
-			if ( nSlash != -1 )
-				strShortPath = m_sPath.Mid( nSlash + 1 );
-			strFile = Settings.Downloads.CompletePath + _T("\\") + strShortPath;
-			if ( strShortPath.IsEmpty() || GetFileSize( CString( _T("\\\\?\\") ) + strFile ) != m_nSize )
+			m_sBestPath = strFile;
+			return m_sBestPath;
+		}
+
+		// ... without outer file directory
+		if ( ! strShortPath.IsEmpty() )
+		{
+			strFile = sFolder + _T("\\") + strShortPath;
+			if ( GetFileSize( strFile ) == m_nSize )
 			{
-				// Try folder of original .torrent without outer file directory
-				strFile = strTorrentPath + strShortPath;
-				if ( strShortPath.IsEmpty() || GetFileSize( CString( _T("\\\\?\\") ) + strFile ) != m_nSize )
-				{
-					// Try find by name only
-					const CLibraryFile* pShared = LibraryMaps.LookupFileByName( m_sName, m_nSize, FALSE, TRUE );
-					if ( pShared )
-						strFile = pShared->GetPath();
-					if ( ! pShared || GetFileSize( CString( _T("\\\\?\\") ) + strFile ) != m_nSize )
-					{
-						// Try find file by hash/size
-						pShared = LibraryMaps.LookupFileByHash( this, FALSE, TRUE );
-						if ( pShared )
-							strFile = pShared->GetPath();
-						if ( ! pShared || GetFileSize( CString( _T( "\\\\?\\" ) ) + strFile ) != m_nSize )
-						{
-							return m_sPath;
-						}
-					}
-				}
+				m_sBestPath = strFile;
+				return m_sBestPath;
 			}
 		}
 	}
 
-	return strFile;
+	CQuickLock oLock( Library.m_pSection );
+
+	// Try find file by hash/size
+	if ( const CLibraryFile* pShared = LibraryMaps.LookupFileByHash( this, FALSE, TRUE ) )
+	{
+		const CString strFile = pShared->GetPath();
+		if ( GetFileSize( strFile ) == m_nSize )
+		{
+			m_sBestPath = strFile;
+			return m_sBestPath;
+		}
+	}
+
+	// Try find by name only
+	if ( const CLibraryFile* pShared = LibraryMaps.LookupFileByName( m_sName, m_nSize, FALSE, TRUE ) )
+	{
+		const CString strFile = pShared->GetPath();
+		if ( GetFileSize( strFile ) == m_nSize )
+		{
+			m_sBestPath = strFile;
+			return m_sBestPath;
+		}
+	}
+
+	m_sBestPath.Empty();
+	return m_sPath;
 }
 
 //////////////////////////////////////////////////////////////////////

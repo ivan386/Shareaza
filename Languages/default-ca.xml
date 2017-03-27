@@ -2949,7 +2949,7 @@
 		<string id="16264" value="Iniciant la connexió amb %s port %i per a descarregar %s..."/>
 		<string id="16265" value="Ha estat imposible connectarse amb %s."/>
 		<string id="16266" value="La connexió per a descàrrega ha estat establerta amb %s."/>
-		<string id="16267" value="Demanant el fragment (%lu-%lu) de %s a %s."/>
+		<string id="16267" value="Requesting download fragment (%I64u-%I64u) of &quot;%s&quot; from %s."/>
 		<string id="16268" value="No hi ha més fragments disponible per a aquest arxiu, tancant la connexió amb %s."/>
 		<string id="16269" value="Fragment tallat, tancant la connexió amb %s."/>
 		<string id="16270" value="La transferència amb %s no ha pogut ser iniciada, no s'ha pogut connectar."/>
@@ -2972,7 +2972,7 @@
 		<string id="16287" value="No s'han pogut cercar més fonts per a %s, no hi ha connexió a la xarxa."/>
 		<string id="16288" value="Cercant més fonts per a %s en %i connexió(ns)..."/>
 		<string id="16289" value="Enviant push per a iniciar la transferència de %s..."/>
-		<string id="16290" value="El veí %s ha respost amb un rang diferent, però aceptable (%lu-%lu) de %s."/>
+		<string id="16290" value="Download host %s responded with a different, but useful range (%I64i-%I64i) of &quot;%s&quot;."/>
 		<string id="16291" value="l'arxiu %s a %s ha estat mogut, transferència completada."/>
 		<string id="16292" value="ha estat imposible moure l'arxiu descarregat %s a %s.  Revisa que l'arxiu no està essent utilitzat, i que tingui Accès d'escriptura a la carpeta compartida."/>
 		<string id="16293" value="Resolent %s per a descarregar %s..."/>

@@ -1,7 +1,7 @@
 //
 // UploadTransferHTTP.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2015.
+// Copyright (c) Shareaza Development Team, 2002-2017.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -322,6 +322,8 @@ BOOL CUploadTransferHTTP::OnHeaderLine(CString& strHeader, CString& strValue)
 
 BOOL CUploadTransferHTTP::OnHeadersComplete()
 {
+	BOOL bBusy = FALSE;
+
 	if ( Uploads.EnforcePerHostLimit( this, TRUE ) )
 	{
 		// Too many connections from same host
@@ -430,11 +432,7 @@ BOOL CUploadTransferHTTP::OnHeadersComplete()
 				return RequestPreview( pShared, oLock );
 		}
 		else
-		{
-			theApp.Message( MSG_ERROR, _T("Refusing request from %s, Library is busy."), (LPCTSTR)m_sAddress );
-			SendResponse( IDR_HTML_BUSY );
-			return TRUE;
-		}
+			bBusy = TRUE;
 	}
 	else if ( ::StartsWith( m_sRequest, _PT("/gnutella/metadata/v1?urn:") ) && Settings.Uploads.ShareMetadata )
 	{
@@ -458,11 +456,7 @@ BOOL CUploadTransferHTTP::OnHeadersComplete()
 				}
 			}
 			else
-			{
-				theApp.Message( MSG_ERROR, _T("Refusing request from %s, Library is busy."), (LPCTSTR)m_sAddress );
-				SendResponse( IDR_HTML_BUSY );
-				return TRUE;
-			}
+				bBusy = TRUE;
 		}
 
 		if ( CDownload* pDownload = Downloads.FindByURN( pszURN ) )
@@ -523,29 +517,23 @@ BOOL CUploadTransferHTTP::OnHeadersComplete()
 			{
 				if ( CLibraryFile* pShared = LibraryMaps.LookupFileByURN( pszURN, TRUE, TRUE ) )
 				{
-					CTigerTree* pTigerTree = pShared->GetTigerTree();
+					const CTigerTree* pTigerTree = pShared->GetTigerTree();
 					m_sName = pShared->m_sName;
 					return RequestTigerTreeRaw( pTigerTree, TRUE );
 				}
 			}
 			else
-			{
-				theApp.Message( MSG_ERROR, _T("Refusing request from %s, Library is busy."), (LPCTSTR)m_sAddress );
-				SendResponse( IDR_HTML_BUSY );
-				return TRUE;
-			}
+				bBusy = TRUE;
 		}
 
-		if ( CDownload* pDownload = Downloads.FindByURN( pszURN ) )
+		if ( const CDownload* pDownload = Downloads.FindByURN( pszURN ) )
 		{
-			if ( pDownload->GetTigerTree() != NULL )
-			{
-				m_sName = pDownload->m_sName;
-				return RequestTigerTreeRaw( pDownload->GetTigerTree(), FALSE );
-			}
+			const CTigerTree* pTigerTree = pDownload->GetTigerTree();
+			m_sName = pDownload->m_sName;
+			return RequestTigerTreeRaw( pTigerTree, FALSE );
 		}
 	}
-	else if ( ::StartsWith( m_sRequest, _PT("/gnutella/thex/v1?urn:") ) && Settings.Uploads.ShareTiger )
+	else if ( ::StartsWith( m_sRequest, _PT("/gnutella/thex/v1?urn:") ) && ( Settings.Uploads.ShareTiger || Settings.Uploads.ShareHashset ) )
 	{
 		LPCTSTR pszURN	= (LPCTSTR)m_sRequest + 18;
 		DWORD nDepth	= 0;
@@ -555,7 +543,8 @@ BOOL CUploadTransferHTTP::OnHeadersComplete()
 			_stscanf( pszDepth + 6, _T("%lu"), &nDepth );
 		}
 
-		BOOL bHashset = ( _tcsistr( m_sRequest, _T("ed2k=1") ) != NULL );
+		const bool bTigerTree = Settings.Uploads.ShareTiger;
+		const bool bHashset = ( _tcsistr( m_sRequest, _T("ed2k=1") ) != NULL ) && Settings.Uploads.ShareHashset;
 
 		{
 			CSingleLock oLock( &Library.m_pSection );
@@ -563,25 +552,21 @@ BOOL CUploadTransferHTTP::OnHeadersComplete()
 			{
 				if ( CLibraryFile* pShared = LibraryMaps.LookupFileByURN( pszURN, TRUE, TRUE ) )
 				{
-					CTigerTree* pTigerTree	= pShared->GetTigerTree();
-					CED2K* pHashset			= bHashset ? pShared->GetED2K() : NULL;
+					const CTigerTree* pTigerTree = bTigerTree ? pShared->GetTigerTree() : NULL;
+					const CED2K* pHashset = bHashset ? pShared->GetED2K() : NULL;
 					m_sName = pShared->m_sName;
 					m_nSize = pShared->GetSize();
 					return RequestTigerTreeDIME( pTigerTree, nDepth, pHashset, TRUE );
 				}
 			}
 			else
-			{
-				theApp.Message( MSG_ERROR, _T("Refusing request from %s, Library is busy."), (LPCTSTR)m_sAddress );
-				SendResponse( IDR_HTML_BUSY );
-				return TRUE;
-			}
+				bBusy = TRUE;
 		}
 
-		if ( CDownload* pDownload = Downloads.FindByURN( pszURN ) )
+		if ( const CDownload* pDownload = Downloads.FindByURN( pszURN ) )
 		{
-			CTigerTree* pTigerTree	= pDownload->GetTigerTree();
-			CED2K* pHashset			= bHashset ? pDownload->GetHashset() : NULL;
+			const CTigerTree* pTigerTree = bTigerTree ? pDownload->GetTigerTree() : NULL;
+			const CED2K* pHashset = bHashset ? pDownload->GetHashset() : NULL;
 			m_sName = pDownload->m_sName;
 			m_nSize = pDownload->m_nSize;
 			return RequestTigerTreeDIME( pTigerTree, nDepth, pHashset, FALSE );
@@ -599,11 +584,7 @@ BOOL CUploadTransferHTTP::OnHeadersComplete()
 					return RequestSharedFile( pShared, oLock );
 			}
 			else
-			{
-				theApp.Message( MSG_ERROR, _T("Refusing request from %s, Library is busy."), (LPCTSTR)m_sAddress );
-				SendResponse( IDR_HTML_BUSY );
-				return TRUE;
-			}
+				bBusy = TRUE;
 		}
 
 		CDownload* pDownload = Downloads.FindByURN( pszURN );
@@ -635,11 +616,7 @@ BOOL CUploadTransferHTTP::OnHeadersComplete()
 				return RequestSharedFile( pFile, oLock );
 		}
 		else
-		{
-			theApp.Message( MSG_ERROR, _T("Refusing request from %s, Library is busy."), (LPCTSTR)m_sAddress );
-			SendResponse( IDR_HTML_BUSY );
-			return TRUE;
-		}
+			bBusy = TRUE;
 	}
 	else
 	{
@@ -652,11 +629,7 @@ BOOL CUploadTransferHTTP::OnHeadersComplete()
 				return RequestSharedFile( pFile, oLock );
 		}
 		else
-		{
-			theApp.Message( MSG_ERROR, _T("Refusing request from %s, Library is busy."), (LPCTSTR)m_sAddress );
-			SendResponse( IDR_HTML_BUSY );
-			return TRUE;
-		}
+			bBusy = TRUE;
 	}
 
 	if ( m_sName.IsEmpty() )
@@ -667,8 +640,16 @@ BOOL CUploadTransferHTTP::OnHeadersComplete()
 			m_sName = m_sRequest;
 	}
 
-	SendResponse( IDR_HTML_FILENOTFOUND );
-	theApp.Message( MSG_ERROR, IDS_UPLOAD_FILENOTFOUND, (LPCTSTR)m_sAddress, (LPCTSTR)m_sName );
+	if ( bBusy )
+	{
+		SendResponse( IDR_HTML_BUSY );
+		theApp.Message( MSG_ERROR, _T("Refusing upload of \"%s\" to %s, Library is busy."), (LPCTSTR)m_sName , (LPCTSTR)m_sAddress);
+	}
+	else
+	{
+		SendResponse( IDR_HTML_FILENOTFOUND );
+		theApp.Message( MSG_ERROR, IDS_UPLOAD_FILENOTFOUND, (LPCTSTR)m_sAddress, (LPCTSTR)m_sName );
+	}
 
 	return TRUE;
 }
@@ -1077,21 +1058,21 @@ void CUploadTransferHTTP::SendFileHeaders()
 	{
 		CString strTigerURL;
 		strTigerURL.Format( _T("X-Thex-URI: /gnutella/thex/v1?%s&depth=%u&ed2k=%d;%s\r\n"),
-			(LPCTSTR)m_oTiger.toUrn(), Settings.Library.TigerHeight, ( m_bHashset ? 1 : 0 ), (LPCTSTR)m_oTiger.toString() );
+			(LPCTSTR)m_oTiger.toUrn(), Settings.Library.TigerHeight, ( ( m_bHashset && Settings.Uploads.ShareHashset ) ? 1 : 0 ), (LPCTSTR)m_oTiger.toString() );
 		Write( strTigerURL );
 	}
-	else if( m_bHashset &&  Settings.Uploads.ShareHashset )
+	else if ( m_bHashset && Settings.Uploads.ShareHashset )
 	{
 		CString strTigerURL;
-		strTigerURL.Format( _T("X-Thex-URI: /gnutella/thex/v1?%s&ed2k=%d;%s\r\n"),
-			(LPCTSTR)m_oED2K.toUrn(), ( m_bHashset ? 1 : 0 ), (LPCTSTR)m_oED2K.toString() );
+		strTigerURL.Format( _T("X-Thex-URI: /gnutella/thex/v1?%s&ed2k=1;%s\r\n"),
+			(LPCTSTR)m_oED2K.toUrn(), (LPCTSTR)m_oED2K.toString() );
 		Write( strTigerURL );
 	}
 
 	if ( m_bMetadata )
 	{
 		Write( _P("X-Metadata-Path: /gnutella/metadata/v1?") );
-		Write( m_oTiger ? m_oTiger.toUrn(): m_oED2K.toUrn() );
+		Write( m_oTiger ? m_oTiger.toUrn() : m_oED2K.toUrn() );
 		Write( _P("\r\n") );
 	}
 
@@ -1144,7 +1125,14 @@ BOOL CUploadTransferHTTP::OpenFileSendHeaders()
 	{
 		DWORD nLimit = m_pQueue->m_nRotateChunk;
 		if ( nLimit == 0 ) nLimit = Settings.Uploads.RotateChunkLimit;
-		if ( nLimit > 0 ) m_nLength = min( m_nLength, (QWORD)nLimit );
+
+		if ( nLimit > 0 && m_nLength > nLimit )
+		{
+			if ( m_bBackwards )
+				m_nOffset += m_nLength - nLimit;
+			
+			m_nLength = nLimit;
+		}
 	}
 	
 	pLock.Unlock();
@@ -1381,7 +1369,7 @@ BOOL CUploadTransferHTTP::RequestMetadata(CXMLElement* pMetadata)
 //////////////////////////////////////////////////////////////////////
 // CUploadTransferHTTP request a tiger tree hash, raw format
 
-BOOL CUploadTransferHTTP::RequestTigerTreeRaw(CTigerTree* pTigerTree, BOOL bDelete)
+BOOL CUploadTransferHTTP::RequestTigerTreeRaw(const CTigerTree* pTigerTree, BOOL bDelete)
 {
 	BYTE* pSerialTree = NULL;
 	DWORD nSerialTree = 0;
@@ -1461,7 +1449,7 @@ BOOL CUploadTransferHTTP::RequestTigerTreeRaw(CTigerTree* pTigerTree, BOOL bDele
 //////////////////////////////////////////////////////////////////////
 // CUploadTransferHTTP request a tiger tree hash, DIME format
 
-BOOL CUploadTransferHTTP::RequestTigerTreeDIME(CTigerTree* pTigerTree, int nDepth, CED2K* pHashset, BOOL bDelete)
+BOOL CUploadTransferHTTP::RequestTigerTreeDIME(const CTigerTree* pTigerTree, int nDepth, const CED2K* pHashset, BOOL bDelete)
 {
 	DWORD nSerialTree = 0;
 	BYTE* pSerialTree = NULL;
@@ -1523,14 +1511,13 @@ BOOL CUploadTransferHTTP::RequestTigerTreeDIME(CTigerTree* pTigerTree, int nDept
 	if ( bDelete )
 		delete pHashset;
 	
-	if ( ! bSendDIME ){
+	if ( ! bSendDIME )
+	{
 		ClearHashes();
 		m_sLocations.Empty();
 		
 		SendResponse( IDR_HTML_FILENOTFOUND, TRUE );
 		theApp.Message( MSG_ERROR, IDS_UPLOAD_FILENOTFOUND, (LPCTSTR)m_sAddress, (LPCTSTR)m_sName );
-		
-		if ( pHashset != NULL && bDelete ) delete pHashset;
 		
 		return TRUE;
 	}

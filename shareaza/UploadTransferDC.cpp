@@ -1,7 +1,7 @@
 //
 // UploadTransferDC.cpp 
 //
-// Copyright (c) Shareaza Development Team, 2010-2015.
+// Copyright (c) Shareaza Development Team, 2010-2017.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -529,7 +529,7 @@ BOOL CUploadTransferDC::RequestTigerTree(CLibraryFile* pFile, QWORD nOffset, QWO
 	theApp.Message( MSG_INFO, IDS_UPLOAD_TIGER_SEND,
 		(LPCTSTR)m_sName, (LPCTSTR)m_sAddress );
 
-	CAutoPtr< CTigerTree > pTigerTree( pFile->GetTigerTree() );
+	CAutoPtr< const CTigerTree > pTigerTree( pFile->GetTigerTree() );
 	if ( ! pTigerTree )
 	{
 		return FALSE;

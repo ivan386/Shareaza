@@ -1,7 +1,7 @@
 //
 // DownloadTransferHTTP.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2014.
+// Copyright (c) Shareaza Development Team, 2002-2017.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -446,22 +446,27 @@ BOOL CDownloadTransferHTTP::SendRequest()
 				
 				if ( m_pDownload->IsShared() && m_pDownload->IsStarted() && Network.IsStable() )
 				{
-					if ( m_pSource->m_nGnutella < 2 )
+					IN_ADDR MyAddress = Network.GetMyAddressFor( &m_pHost.sin_addr );
+					
+					if ( MyAddress.S_un.S_addr )
 					{
-						strLine.Format( _T("%s:%u"),
-							(LPCTSTR)CString( inet_ntoa( Network.m_pHost.sin_addr ) ),
-							htons( Network.m_pHost.sin_port ) );
-						Write( _P("X-Alt: ") );
+						if ( m_pSource->m_nGnutella < 2 )
+						{
+							strLine.Format( _T("%s:%u"),
+								(LPCTSTR)CString( inet_ntoa( MyAddress ) ),
+								htons( Network.m_pHost.sin_port ) );
+							Write( _P("X-Alt: ") );
+						}
+						else
+						{
+							strLine = m_pDownload->GetURL( MyAddress,
+								htons( Network.m_pHost.sin_port ) ) + _T(" ") +
+								TimeToString( time( NULL ) - 180 );
+							Write( _P("Alt-Location: ") );
+						}
+						Write( strLine );
+						Write( _P("\r\n") );
 					}
-					else
-					{
-						strLine = m_pDownload->GetURL( Network.m_pHost.sin_addr,
-							htons( Network.m_pHost.sin_port ) ) + _T(" ") +
-							TimeToString( time( NULL ) - 180 );
-						Write( _P("Alt-Location: ") );
-					}
-					Write( strLine );
-					Write( _P("\r\n") );
 					
 					if ( m_pSource->m_nGnutella < 2 )
 					{

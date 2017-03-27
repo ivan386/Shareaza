@@ -1,7 +1,7 @@
 //
 // ED2K.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2014.
+// Copyright (c) Shareaza Development Team, 2002-2017.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -221,7 +221,7 @@ BOOL CED2K::FinishBlockTest(uint32 nBlock)
 //////////////////////////////////////////////////////////////////////
 // CED2K encode to bytes
 
-BOOL CED2K::ToBytes(BYTE** ppOutput, uint32* pnOutput)
+BOOL CED2K::ToBytes(BYTE** ppOutput, uint32* pnOutput) const
 {
 	if ( m_nList == 0 )
 		return FALSE;
@@ -307,7 +307,7 @@ BOOL CED2K::FromBytes(BYTE* pOutput, uint32 nOutput, uint64 nSize)
 //////////////////////////////////////////////////////////////////////
 // CED2K integrity checking
 
-BOOL CED2K::CheckIntegrity()
+BOOL CED2K::CheckIntegrity() const
 {
 	if ( m_nList == 1 )
 	{

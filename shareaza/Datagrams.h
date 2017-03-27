@@ -100,10 +100,11 @@ public:
 	void	OnRun();
 
 protected:
-	SOCKET			m_hSocket[ 4 ];		// [ 0 ] - Main Shareaza port (0.0.0.0:6346)
-										// [ 1 ] - eD2K multi-cast port: 224.0.0.1:5000
-										// [ 2 ] - G1 LimeWire multi-cast port: 234.21.81.1:6347
-										// [ 3 ] - BitTorrent multi-cast port (http://bittorrent.org/beps/bep_0014.html): 239.192.152.143:6771
+	SOCKET			m_hSocket[ 5 ];		// [ 0 ] - Main Shareaza port (0.0.0.0:6346)
+										// [ 1 ] - Broadcast Shareaza port (0.0.0.0:6346)
+										// [ 2 ] - eD2K multi-cast port: 224.0.0.1:5000
+										// [ 3 ] - G1 LimeWire multi-cast port: 234.21.81.1:6347
+										// [ 4 ] - BitTorrent multi-cast port (http://bittorrent.org/beps/bep_0014.html): 239.192.152.143:6771
 	WORD			m_nSequence;
 	BOOL			m_bStable;
 	DWORD			m_tLastWrite;
@@ -131,8 +132,8 @@ protected:
 	UDPBandwidthMeter	m_mOutput;
 
 	// Buffer for current incoming UDP packet. It's global since CDatagrams
-	// process one packet at once only. Maximal UDP size 64KB.
-	BYTE			m_pReadBuffer[ 65536 ];
+	// process one packet at once only. Maximal UDP size 64KB + 1. Zero terminated.
+	BYTE			m_pReadBuffer[ 65537 ];
 
 	void	Measure();
 	BOOL	TryWrite();

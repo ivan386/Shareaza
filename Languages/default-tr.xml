@@ -2085,8 +2085,8 @@
 		<document name="DownloadHelp.Seeding">
 			<text format="b">Bu Torrent paylaşılmakta</text>
 			<newline gap="8"/>
-			<text>Shareaza bu tamamlanmış indirmeyi kontrol etmiş ve BitTorrent üzerinde
-			başkalarıyla etkin bir şekilde paylaşmaktadır. Asgari %100 oranında paylaşınız.</text>
+			<text>Shareaza has verified this complete download, and is actively sharing it
+			with other downloaders through BitTorrent. Please share at least 100%.</text>
 		</document>
 		<document name="DownloadHelp.Completed">
 			<text format="b">İndirme Tamamlandı</text>
@@ -2206,9 +2206,9 @@
 		<document name="GeneralHelp.AdultFilter">
 			<text format="b">Yetişkin içerik filtresi etkin kılındı</text>
 			<newline gap="8"/>
-			<text>Lütfen dikkat, filtre (herhangi bir otomatik filtre gibi) 100% etkili olmayabilir.
-			Bu, fazla istenmeyen sonuçları süzmek için basit bir şekilde taslaktır, 
-			%100 güvenli değildir.</text>
+			<text>Please note that (as with any automated filter) it may not be 100% effective at
+			screening content. It is designed simply to filter out excess unwanted results, rather than 
+			as a 100% safe block.</text>
 			<newline gap="8"/>
 			<text>Çocukların İnternet kullanımı (P2P dosya paylaşımı dahil) daima ailelerin denetimi altında olmalıdır.</text>
 		</document>
@@ -2243,8 +2243,9 @@
 			<text>Neyse ki, genişbant DSL bağlantıları iki şeritli yola benzer: aktarım ve indirme için ayrılmış bölümlere sahipsiniz.
 			Eğer istemciniz düzgün yapılandırıldıysa, hem tam indirme kapasitesine sahip olup hem de yüksek oranda aktarım yapabilirsiniz.</text>
 			<newline gap="8"/>
-			<text>Varsayılan, indirmeler limitsiz olduğunda aktarım limitiniz mevcut bant genişliğinin %85 'idir.
-			Bu yapılandırma mümkün olan en hızlı indirmeleri sunabilecektir.</text>
+			<text>By default, your upload limit is set to about 85% of available upstream bandwidth,
+			while downloads are unlimited. That configuration should give you the fastest possible 
+			downloads that are available.</text>
 		</document>
 		<!-- Search help documents -->
 		<document name="SearchHelp.BadSearch1">
@@ -4433,7 +4434,7 @@
 		</dialog>
 		<dialog name="CDownloadActionsPage" cookie="StStStStStEdEdBuBuBuStStSt" caption="Eylemler">
 			<control caption="Güncel denetleme durumunu unut ve yeniden denetle"/>
-			<control caption="Dosyanın %100 tamamlandığını farz et ve yeniden denetle"/>
+			<control caption="Assume file is 100% complete and reverify"/>
 			<control caption="Tüm bilinen kaynakları unut"/>
 			<control caption="Yerel dosya ile birleştir ve denetle"/>
 			<control caption="İndirmeyi iptal et fakat kısmi dosyaları kaydet"/>
@@ -4460,7 +4461,7 @@
 			<control/>
 			<control/>
 			<control/>
-			<control caption="Gerektiğince|Oran %100'ü aşınca|Sadece talep olduğunda|Asla"/>
+			<control caption=" As needed| When ratio over 100%| Only when requested| Never"/>
 			<control/>
 			<control caption="Torrent B_ilgileri:"/>
 			<control caption="Adı:"/>

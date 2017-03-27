@@ -1,7 +1,7 @@
 //
 // SkinTranslate.cpp
 //
-// Copyright (c) Shareaza Development Team, 2009-2015.
+// Copyright (c) Shareaza Development Team, 2009-2017.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -84,29 +84,35 @@ void CXMLLoader::CItem::SetTranslate(LPCSTR szText)
 	
 	// Compare amount of "|" and "%" in original and translated texts
 
-	DWORD nVerticalBar = 0, nPercent = 0;//, nColumn = 0;
+	int nVerticalBar = 0;//, nColumn = 0;
+	CAtlList< TCHAR > oSpecs;
 	for ( LPCTSTR ch = sTranslated; *ch; ++ch )
 	{
 		if ( *ch == _T('|') )
 			++nVerticalBar;
 		else if ( *ch == _T('%') && isspec( ch + 1 ) )
-			++nPercent;
+			oSpecs.AddTail( *(ch + 1) );
 	//	else if ( *ch == _T(':') )
 	//		++nColumn;
 	}
 
-	DWORD nVerticalBarID = 0, nPercentID = 0;//, nColumnID = 0;
 	for ( LPCTSTR ch = sID; *ch; ++ch )
 	{
 		if ( *ch == _T('|') )
-			++nVerticalBarID;
+			--nVerticalBar;
 		else if ( *ch == _T('%') && isspec( ch + 1 ) )
-			++nPercentID;
+		{
+			if ( oSpecs.IsEmpty() || oSpecs.RemoveHead() != *(ch + 1) )
+			{
+				bError = true;
+				return;
+			}
+		}
 	//	else if ( *ch == _T(':') )
-	//		++nColumnID;
+	//		--nColumn;
 	}
 
-	if ( nVerticalBar != nVerticalBarID || ( nPercentID && nPercent != nPercentID ) /* || nColumn != nColumnID */ )
+	if ( nVerticalBar != 0 || ! oSpecs.IsEmpty() /* || nColumn != 0 */)
 	{
 		bError = true;
 	}
@@ -192,7 +198,7 @@ bool CXMLLoader::LoadPO(LPCWSTR szFilename)
 					case '#':
 						if ( mode == mode_msgid )
 						{
-							_tprintf( _T("ERROR: Invalid .po-file line #%d: %s\n"), nLine, sOriginalLine );
+							_tprintf( _T("ERROR: Invalid .po-file line #%d: %s\n"), nLine, (LPCTSTR)CA2T( sOriginalLine ) );
 							return false;
 						}
 						if ( mode == mode_msgstr )
@@ -236,7 +242,7 @@ bool CXMLLoader::LoadPO(LPCWSTR szFilename)
 						{
 							if( mode != mode_start && mode != mode_ref )
 							{
-								_tprintf( _T("ERROR: Invalid .po-file line #%d: %s\n"), nLine, sOriginalLine );
+								_tprintf( _T("ERROR: Invalid .po-file line #%d: %s\n"), nLine,  (LPCTSTR)CA2T( sOriginalLine ) );
 								return false;
 							}
 							
@@ -252,7 +258,7 @@ bool CXMLLoader::LoadPO(LPCWSTR szFilename)
 						{
 							if ( mode != mode_msgid )
 							{
-								_tprintf( _T("ERROR: Invalid .po-file line #%d: %s\n"), nLine, sOriginalLine );
+								_tprintf( _T("ERROR: Invalid .po-file line #%d: %s\n"), nLine,  (LPCTSTR)CA2T( sOriginalLine ) );
 								return false;
 							}
 							
@@ -267,14 +273,14 @@ bool CXMLLoader::LoadPO(LPCWSTR szFilename)
 						else
 						{
 							// Unknown string
-							_tprintf( _T("ERROR: Invalid .po-file line #%d: %s\n"), nLine, sOriginalLine );
+							_tprintf( _T("ERROR: Invalid .po-file line #%d: %s\n"), nLine, (LPCTSTR)CA2T( sOriginalLine ) );
 							return false;
 						}
 
 					case '\"':
 						if( mode != mode_msgid && mode != mode_msgstr )
 						{
-							_tprintf( _T("ERROR: Invalid .po-file line #%d: %s\n"), nLine, sOriginalLine );
+							_tprintf( _T("ERROR: Invalid .po-file line #%d: %s\n"), nLine, (LPCTSTR)CA2T( sOriginalLine ) );
 							return false;
 						}
 						if ( sLine[ sLine.GetLength() - 1 ] == '\"' )
@@ -285,14 +291,14 @@ bool CXMLLoader::LoadPO(LPCWSTR szFilename)
 						else
 						{
 							// Unknown string
-							_tprintf( _T("ERROR: Invalid .po-file line #%d: %s\n"), nLine, sOriginalLine );
+							_tprintf( _T("ERROR: Invalid .po-file line #%d: %s\n"), nLine, (LPCTSTR)CA2T( sOriginalLine ) );
 							return false;
 						}
 						break;
 
 					default:
 						// Unknown string
-						_tprintf( _T("ERROR: Invalid .po-file line #%d: %s\n"), nLine, sOriginalLine );
+						_tprintf( _T("ERROR: Invalid .po-file line #%d: %s\n"), nLine, (LPCTSTR)CA2T( sOriginalLine ) );
 						return false;
 					}
 
@@ -304,7 +310,7 @@ bool CXMLLoader::LoadPO(LPCWSTR szFilename)
 				if ( mode != mode_msgstr )
 				{
 					// Unknown string
-					_tprintf( _T("ERROR: Invalid .po-file line #%d: %s\n"), nLine, sOriginalLine );
+					_tprintf( _T("ERROR: Invalid .po-file line #%d: %s\n"), nLine, (LPCTSTR)CA2T( sOriginalLine ) );
 					return false;
 				}
 
@@ -434,7 +440,7 @@ void CXMLLoader::Translate(const CXMLLoader& oTranslator)
 		};
 
 		if ( item.sTranslated.IsEmpty() )
-			_tprintf( _T("WARNING: Untranslated message \"%s\": \"%s\"\n"), item.sRef, item.sID );
+			_tprintf( _T("WARNING: Untranslated message \"%s\": \"%s\"\n"), (LPCTSTR)item.sRef, (LPCTSTR)item.sID );
 	}
 }
 
@@ -491,15 +497,15 @@ bool CXMLLoader::SavePO(LPCTSTR szFilename) const
 
 	for( POSITION pos = m_Items.GetHeadPosition(); pos; )
 	{
-		const CItem& item = m_Items.GetNext( pos );
+		const CItem& it = m_Items.GetNext( pos );
 
-		ATLASSERT( item.sID != "" );
+		ATLASSERT( it.sID != "" );
 
-		CString sSafeID( MakeSafe( item.sID ) );
-		CString sSafeTranslated( MakeSafe( item.sTranslated ) );
+		CString sSafeID( MakeSafe( it.sID ) );
+		CString sSafeTranslated( MakeSafe( it.sTranslated ) );
 
 		sOutput += "\n#: ";
-		sOutput += item.sRef;
+		sOutput += it.sRef;
 		sOutput += "\nmsgid \"";
 		sOutput += sSafeID;
 		sOutput += "\"\nmsgstr \"";
@@ -799,7 +805,7 @@ bool CXMLLoader::Load(LPCWSTR szParentName, LPCWSTR szRefName, LPCWSTR szTextNam
 
 		if( sRefFull.Find( _T(" \t\r\n") ) != -1 )
 		{
-			_tprintf( _T("ERROR: Found invalid PO reference: \"%s\"\n"), sRefFull );
+			_tprintf( _T("ERROR: Found invalid PO reference: \"%s\"\n"), (LPCTSTR)sRefFull );
 			return false;
 		}
 

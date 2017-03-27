@@ -87,9 +87,13 @@ public:
 	BOOL			IsDenied(const CShareazaFile* pFile);
 	BOOL			IsDenied(const CQuerySearch* pQuery, const CString& strContent);
 
-	inline  BOOL    IsDeniedComplexCheck(const IN_ADDR* pAddress, BOOL bIncludeSelf = FALSE){
-		return Network.IsFirewalledAddress( pAddress, bIncludeSelf ) || Network.IsReserved( pAddress ) ||
-		IsIgnoredCountry( theApp.GetCountryCode( *pAddress ) ) || IsDenied( pAddress );
+	inline  BOOL    IsDeniedComplexCheck(const IN_ADDR* pAddress, const IN_ADDR* pForAddress, BOOL bIncludeSelf = FALSE)
+	{
+		return Network.IsFirewalledAddress( pAddress, bIncludeSelf ) ||
+			   Network.IsReserved( pAddress ) ||
+			   ! Network.IsValidAddressFor( pForAddress , pAddress ) ||
+		       IsIgnoredCountry( theApp.GetCountryCode( *pAddress ) ) || 
+			   IsDenied( pAddress );
 	}
 
 	void			Expire();

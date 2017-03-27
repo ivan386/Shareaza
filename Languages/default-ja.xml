@@ -3067,7 +3067,7 @@
 		<string id="16384" value="ファイル &quot;%s&quot; を開いてよろしいですか?\n\nファイルがコンピュータに有害であることもあります。  ファイルを開く前に安全であるか確認して下さい"/>
 		<string id="16385" value="%i ファイルのメタデータを改変しようとしています。 続けて宜しいですか?"/>
 		<string id="16386" value="%i ファイルのメタデータを編集中です"/>
-		<string id="16389" value="選択した %1 ファイルを完全に削除して本当に宜しいですか?\n\n設定次第では削除したファイルが&quot;ごみ箱&quot;に移動される可能性があります"/>
+		<string id="16389" value="Are you sure you want to permanently delete the %i selected file(s) ?\n\nThe files will be moved to your &quot;recycle bin&quot; if it is enabled."/>
 		<string id="16390" value="まだ選択したファイルを再生するメディアプレーヤーを設定していません(例:Nullsoft WinAmp)。 今すぐプレーヤーを選択しますか?\n\nShareazaは &quot;/ADD&quot; 引数でファイル名を選択したプログラムに渡します"/>
 		<string id="16391" value="ネットワーク未接続です"/>
 		<string id="16392" value="開始するには接続ボタンをクリックして下さい"/>

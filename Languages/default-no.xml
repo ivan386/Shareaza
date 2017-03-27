@@ -1804,7 +1804,7 @@
 				<link format="bu" target="raza:shell:downloads">Open my Downloads folder</link>
 				<group id="1">
 					<newline gap="8"/>
-					<text>%lu</text>
+					<text>Shareaza is scanning and processing</text>
 					<text id="LibraryHashRemaining" format="b">%lu</text>
 					<text>files.</text>
 					<newline gap="8"/>
@@ -3156,7 +3156,7 @@
 		<string id="16816" value="eDonkey-nettverket har lange køer med lange ventetider. Ved å begrense den maksimale akseptable køposisjonen så strengt, kan du få problemer med å få nedlastinger til å begynne.\nEr du sikker på at du vil begrense hvilken køposisjon du vil akseptere?"/>
 		<string id="16817" value="Windows støtter ikke filbaner langre enn 256 tegn.\nVennligst angi en mappe med kortere filbane."/>
 		<string id="16818" value="Mappen for ufullstendige filer bør ikke være i biblioteket, ettersom det vil senkt ytelsen. Ufullstendige filer kan deles direkte fra overføringsvinduet."/>
-		<string id="16819" value="En undermappe av den valgte mappen &quot;%s&quot; er allerede en del av biblioteket ditt.\nÅ legge til denne mapen vil føre til re-hashing av noen filer.\n\nØnsker du å fortsette?"/>
+		<string id="16819" value="The incomplete files folder should not be in the library, as it would reduce performance. Incomplete files may be shared directly from the transfers window."/>
 		<string id="16864" value="Oppdaterer vert-oppdagelsestjeneste..."/>
 		<string id="16865" value="Oppdaterer oppdagelsestjeneste &quot;%s&quot;..."/>
 		<string id="16866" value="GWebCache overføring fullført (&quot;%s&quot;)."/>

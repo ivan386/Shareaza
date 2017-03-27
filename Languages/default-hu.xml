@@ -3156,7 +3156,7 @@
 		<string id="16816" value="Az eDonkey hálózaton sokáig kell sorbanállni és várakozni egy fájlért. Ha csökkenti a sorok maximális számát, valószínűleg nem fognak elidulni a letöltések. \nBiztos csökkenteni akarja a számodra kirendelt sorszámot?"/>
 		<string id="16817" value="A Windows nem kezeli a 256 karakternél hosszabb elérési utakat.\nVálasszon egy rövidebb elérési utat."/>
 		<string id="16818" value="A félkész fájlok ne kerüljenek be a Könyvtárba, mert esetleg csökkenthetik a teljesítményt. A félkész fájlokat a Forgalom ablakban lehet megosztani."/>
-		<string id="16819" value="A kiválasztott mappa &quot;%s&quot; egy másik mappa almappájaként már meg van osztva.\nEz újbóli hashelést okozhat.\n\nBiztos folytatni akarja?"/>
+		<string id="16819" value="The incomplete files folder should not be in the library, as it would reduce performance. Incomplete files may be shared directly from the transfers window."/>
 		<string id="16864" value="Szerverkereső szolgáltatás keresése..."/>
 		<string id="16865" value="Szerverkereső szolgáltatás keresése &quot;%s&quot;..."/>
 		<string id="16866" value="GWebCache tranzakció sikeres (&quot;%s&quot;)."/>
@@ -3331,7 +3331,7 @@
 		<string id="18508" value="Forrás %s a(z) &quot;%s&quot;, mert a %i. hely a sorban túl magas."/>
 		<string id="18509" value="Nem tudja a letöltést késznek tekinteni és ellenőrizni, mert nincs hozzá megfelelő hash érték."/>
 		<string id="18510" value="Késznek veszis a letöltést és úgy ellenőrzi? A fájl újra lesz hashelve, jó és rossz részek is elfogadásra kerülnek."/>
-		<string id="18511" value="BitTorrent kapcsolódás visszautasítva: %s, több kapcsolat már nem hozható létre."/>
+		<string id="18511" value="You have made changes to the file size. Are you sure you want to change the file size for this download?"/>
 		<string id="18512" value="Are you sure you want to cancel this download but save incomplete file(s)?"/>
 		<string id="18513" value="You have typed an %s hash value, however it is invalid. Please check it and try again."/>
 		<string id="18514" value="You have provided an %s hash value which is different to the one currently associated with this download. Are you sure you want to change the %s hash now?"/>
@@ -4439,7 +4439,7 @@
 			<control caption="_URNs:"/>
 			<control caption="_Eszközök"/>
 			<control caption="Újraellenőrzés"/>
-			<control caption="Fájl 100%-osnak vétele, és így újraellenőrzése"/>
+			<control caption="Tiger-Root:"/>
 			<control caption="Minden ismert forrás elfelejtése"/>
 			<control caption="Helyi letöltött fájllal való egyesítés és újraellenőrzés"/>
 			<control caption="Letöltés leállítása, de mentse a félkész fájlt"/>

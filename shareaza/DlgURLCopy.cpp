@@ -226,7 +226,6 @@ CString CURLCopyDlg::CreateMagnet(CShareazaFile& pFile)
 		sMagnet.AppendFormat( _T("br=%I64u"), pFile.m_nBitrate );
 	}
 
-
 	if ( sTracker.GetLength() )
 	{
 		if ( sMagnet.GetLength() ) sMagnet += _T("&");

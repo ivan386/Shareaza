@@ -2212,9 +2212,9 @@
 		<document name="GeneralHelp.AdultFilter">
 			<text format="b">Erotikfitler aktiviert</text>
 			<newline gap="8"/>
-			<text>Bitte beachten Sie, dass dieser Filter (wie jeder automatische Filter) nicht mit 100%iger Genauigkeit arbeiten kann.
-		Er wurde entwickelt, um übermäßige, ungewollte Spam-Suchergebnisse herauszufiltern und nicht als eine
-		100%ig sichere Blockade.</text>
+			<text>Please note that (as with any automated filter) it may not be 100% effective at
+			screening content. It is designed simply to filter out excess unwanted results, rather than 
+			as a 100% safe block.</text>
 			<newline gap="8"/>
 			<text>Wenn Kinder das Internet nutzen (inklusive P2P), sollte dies immer von den Eltern überwacht werden.</text>
 		</document>
@@ -3151,7 +3151,7 @@
 		<string id="16816" value="eDonkey-Clients benutzen meist nicht-lineare Warteschlangen. Hohe Warteschlangenpositionen bedeuten nicht unbedingt lange Wartezeiten. Wenn Sie die Maximale Warteschlangenlänge zu strikt einstellen, könnten Sie Probleme bekommen, Dateien herunterzuladen.\nSind Sie sicher, dass Sie die Maximale Warteschlangenposition auf diesen Wert setzen wollen?"/>
 		<string id="16817" value="Windows unterstützt keine Dateipfade länger als 256 Zeichen.\nBitte wählen Sie einen Ordner mit einem kürzeren Pfad."/>
 		<string id="16818" value="Das Verzeichnis für unvollständige Dateien darf sich nicht im Downloadverzeichnis befinden."/>
-		<string id="16819" value="Ein Unterordner des gewählten Ordners &quot;%s&quot; ist schon in ihrer Bibliothek.\nBeim Hinzufügen des Ordners müssen einige Dateien neu verifiziert werden.\n\nWollen Sie fortfahren ?"/>
+		<string id="16819" value="The incomplete files folder should not be in the library, as it would reduce performance. Incomplete files may be shared directly from the transfers window."/>
 		<string id="16864" value="Service-Provider abfragen..."/>
 		<string id="16865" value="Service-Provider &quot;%s&quot; abfragen..."/>
 		<string id="16866" value="GWebCache-Übertragung erfolgreich (&quot;%s&quot;)."/>
@@ -4331,7 +4331,7 @@
 			<control caption="Abbrechen"/>
 		</dialog>
 		<dialog name="CWarningsDlg" cookie="StStStStStStBu" caption="Shareaza respektiert seine Benutzer">
-			<control caption="Wussten Sie, dass Shareaza 100%ig kostenlose Software ist?"/>
+			<control caption="Did you know Shareaza is a 100% free product?"/>
 			<control caption="Shareaza enthält KEINE weder Spy-, noch Adware und auch keine Software Dritter. Es zeigt weder Werbung oder Popups an.{n}{n}Sollten Sie Werbung oder Popups sehen, während Sie Shareaza benutzen, können Sie sicher sein, dass diese nicht von Shareaza stammen."/>
 			<control caption="Leider installieren viele andere Programme unerwünschte Adware oder Spyware. Falls Sie etwas Verdächtiges beobachten, können Sie ihren PC mit einem Anti-Spyware-Programm überprüfen."/>
 			<control caption="Shareaza ist kostenlos und kann von jedem auf http://shareaza.sourceforge.net/ heruntergeladen werden. Wenn Sie jemandem Geld für Shareaza bezahlt haben, sollten Sie dieses sofort zurückverlangen."/>

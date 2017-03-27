@@ -94,7 +94,7 @@ public:
 	BOOL		SeedTorrent();
 	BOOL		PrepareFile();
 	QWORD		GetRealSpeed();
-	QWORD       GetNonRandomEnd();
+	QWORD		GetNonRandomEnd();
 	void		Allocate();
 	void		Copy();
 	void		PreviewRequest( LPCTSTR szURL);

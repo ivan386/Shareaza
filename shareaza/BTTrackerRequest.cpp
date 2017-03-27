@@ -328,11 +328,15 @@ CBTTrackerRequest::CBTTrackerRequest(CDownload* pDownload, BTTrackerEvent nEvent
 				m_sURL += szEvents[ m_nEvent ];
 
 				// If event is 'started' and the IP is valid, add it.
-				if ( m_nEvent == BTE_TRACKER_STARTED && Network.m_pHost.sin_addr.s_addr != INADDR_ANY )
+				if ( m_nEvent == BTE_TRACKER_STARTED )
 				{	
-					// Note: Some trackers ignore this value and take the IP the request came from. (Usually the same)
-					m_sURL += _T("&ip=");
-					m_sURL += inet_ntoa( Network.m_pHost.sin_addr );
+					IN_ADDR nMyAddress = Network.GetMyAddressFor( &m_pHost.sin_addr );
+					if ( nMyAddress.S_un.S_addr )
+					{
+						// Note: Some trackers ignore this value and take the IP the request came from. (Usually the same)
+						m_sURL += _T("&ip=");
+						m_sURL += inet_ntoa( nMyAddress );
+					}
 				}
 			}
 

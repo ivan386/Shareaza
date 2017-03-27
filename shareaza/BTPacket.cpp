@@ -314,6 +314,9 @@ void CDHT::OnEvent(void* /*closure*/, int evt, const unsigned char* info_hash, c
 	case DHT_EVENT_REPLY:
 		if ( data_len == sizeof( SOCKADDR_IN ) )
 		{
+			// Assume UDP is stable
+			Datagrams.SetStable();
+
 			const SOCKADDR_IN* pHost = (const SOCKADDR_IN*)data;
 
 			CQuickLock oLock( HostCache.BitTorrent.m_pSection );
@@ -673,12 +676,12 @@ BOOL CBTPacket::OnPacket(const SOCKADDR_IN* pHost)
 		if ( pYourIPPort->m_nValue == 6 )
 		{
 			// IPv4
-			Network.AcquireLocalAddress( *(const IN_ADDR*)pYourIPPort->m_pValue );
+			Network.AcquireLocalAddress( *(const IN_ADDR*)pYourIPPort->m_pValue, 0, &pHost->sin_addr );
 
 			// Port
 			u_short* pPort = ( (u_short*) pYourIPPort->m_pValue ) + 2;
 
-			if ( Network.m_pHost.sin_port == *pPort && ! Datagrams.IsStable() )
+			if ( Network.GetPort() == ntohs( *pPort ) && ! Datagrams.IsStable() )
 			{
 				CQuickLock oLock( HostCache.BitTorrent.m_pSection );
 				CHostCacheHostPtr pCache = HostCache.BitTorrent.Find( &pHost->sin_addr );
@@ -717,7 +720,7 @@ BOOL CBTPacket::OnPacket(const SOCKADDR_IN* pHost)
 		if ( pYourIP->m_nValue == 4 )
 		{
 			// IPv4
-			Network.AcquireLocalAddress( *(const IN_ADDR*)pYourIP->m_pValue );
+			Network.AcquireLocalAddress( *(const IN_ADDR*)pYourIP->m_pValue, 0, &pHost->sin_addr );
 		}
 	}
 

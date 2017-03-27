@@ -185,13 +185,6 @@ public:
 		return result;
 	}
 
-	const_iterator last_range() const
-	{
-		const_iterator result = begin();
-		if ( !empty() ) std::advance( result, (uint64)size() - 1 );
-		return result;
-	}
-
 	bool overlaps(const range_type& key) const { return m_set.find( key ) != end(); }
 	bool overlaps(const List& rhs) const
 	{

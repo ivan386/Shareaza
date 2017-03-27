@@ -1,7 +1,7 @@
 //
 // Download.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2014.
+// Copyright (c) Shareaza Development Team, 2002-2017.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -304,7 +304,12 @@ QWORD CDownload::GetNonRandomEnd()
 		return 0;
 
 	QWORD nByterate = ( m_nBitrate / 8 );
-	
+	if ( m_tBegan == 0 )
+	{
+		m_tBegan = GetTickCount();
+		m_nCompletedAtBegan = GetVolumeComplete();
+	}
+
 	if ( Settings.Downloads.MediaBuffer && m_tBegan > 0 && ( GetRealSpeed() > nByterate || GetAverageSpeed() > nByterate ))
 		return m_nCompletedAtBegan + ( ( ( GetTickCount() - m_tBegan + Settings.Downloads.MediaBuffer ) / 1000 ) * nByterate );
 	return 0;
@@ -606,7 +611,7 @@ void CDownload::OnRun()
 
 void CDownload::OnDownloaded()
 {
-	ASSERT( m_bComplete == false );
+//	ASSERT( m_bComplete == false );
 
 	theApp.Message( MSG_NOTICE, IDS_DOWNLOAD_COMPLETED, GetDisplayName() );
 
@@ -749,7 +754,7 @@ BOOL CDownload::SeedTorrent()
 	if ( IsSingleFileTorrent() )
 	{
 		// Refill missed hashes for single-file torrent
-		const CBTInfo::CBTFile* pBTFile = m_pTorrent.m_pFiles.GetHead();
+		CBTInfo::CBTFile* pBTFile = m_pTorrent.m_pFiles.GetHead();
 		if ( ! m_pTorrent.m_oSHA1 && pBTFile->m_oSHA1 )
 			m_pTorrent.m_oSHA1 = pBTFile->m_oSHA1;
 		if ( ! m_pTorrent.m_oTiger && pBTFile->m_oTiger )

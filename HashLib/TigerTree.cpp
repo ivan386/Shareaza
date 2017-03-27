@@ -1,7 +1,7 @@
 //
 // TigerTree.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2014.
+// Copyright (c) Shareaza Development Team, 2002-2017.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -713,12 +713,12 @@ void CTigerTree::SetupAndAllocate(uint32 nHeight, uint64 nLength)
 
 	Clear();
 
-	uint64 nCount = (uint32)( nLength / BLOCK_SIZE );
+	uint64 nCount = nLength / BLOCK_SIZE;
 	if ( nLength % BLOCK_SIZE ) nCount++;
 
 	uint32 nActualHeight = 1;
 
-	for ( uint32 nStep = 1 ; nStep < nCount ; nStep *= 2 ) nActualHeight++;
+	for ( uint64 nStep = 1 ; nStep < nCount ; nStep *= 2 ) nActualHeight++;
 
 	m_nHeight = min( nActualHeight, nHeight );
 
@@ -731,14 +731,13 @@ void CTigerTree::SetupAndAllocate(uint32 nHeight, uint64 nLength)
 	}
 
 	m_nNodeCount = 1;
-
 	for ( uint32 nStep = m_nHeight ; nStep ; nStep-- ) m_nNodeCount *= 2;
-
 	m_nNodeBase	= ( m_nNodeCount / 2 );
+	m_nNodeCount--;
 	m_nBaseUsed	= (uint32)( nCount / m_nBlockCount );
 	if ( nCount % m_nBlockCount ) m_nBaseUsed++;
 
-	m_pNode		= new (std::nothrow) CTigerNode[ --m_nNodeCount ];
+	m_pNode		= new (std::nothrow) CTigerNode[ m_nNodeCount ];
 	m_nNodePos	= 0;
 }
 
@@ -750,7 +749,7 @@ void CTigerTree::SetupParameters(uint64 nLength)
 	if ( nLength % BLOCK_SIZE ) nCount++;
 
 	uint32 nActualHeight = 1;
-	for ( uint32 nStep = 1 ; nStep < nCount ; nStep *= 2 ) nActualHeight++;
+	for ( uint64 nStep = 1 ; nStep < nCount ; nStep *= 2 ) nActualHeight++;
 
 	m_nBlockCount	= 1;
 	m_nBlockPos		= 0;
@@ -762,9 +761,8 @@ void CTigerTree::SetupParameters(uint64 nLength)
 
 	m_nNodeCount = 1;
 	for ( uint32 nStep = m_nHeight ; nStep ; nStep-- ) m_nNodeCount *= 2;
-
-	m_nNodeBase = ( m_nNodeCount-- / 2 );
-
+	m_nNodeBase = ( m_nNodeCount / 2 );
+	m_nNodeCount--;
 	m_nBaseUsed	= (uint32)( nCount / m_nBlockCount );
 	if ( nCount % m_nBlockCount ) m_nBaseUsed++;
 }
@@ -861,21 +859,21 @@ BOOL CTigerTree::GetRoot(__in_bcount(24) uchar* pHash) const
 //////////////////////////////////////////////////////////////////////
 // CTigerTree assume
 
-void CTigerTree::Assume(CTigerTree* pSource)
-{
-	CSectionLock oLock( &m_pSection );
-
-	Clear();
-	if ( pSource->m_pNode == NULL ) return;
-
-	m_nHeight		= pSource->m_nHeight;
-	m_nNodeCount	= pSource->m_nNodeCount;
-	m_pNode			= pSource->m_pNode;
-
-	pSource->m_nHeight		= 0;
-	pSource->m_nNodeCount	= 0;
-	pSource->m_pNode		= NULL;
-}
+//void CTigerTree::Assume(CTigerTree* pSource)
+//{
+//	CSectionLock oLock( &m_pSection );
+//
+//	Clear();
+//	if ( pSource->m_pNode == NULL ) return;
+//
+//	m_nHeight		= pSource->m_nHeight;
+//	m_nNodeCount	= pSource->m_nNodeCount;
+//	m_pNode			= pSource->m_pNode;
+//
+//	pSource->m_nHeight		= 0;
+//	pSource->m_nNodeCount	= 0;
+//	pSource->m_pNode		= NULL;
+//}
 
 //////////////////////////////////////////////////////////////////////
 // CTigerTree create from file
@@ -1038,7 +1036,7 @@ BOOL CTigerTree::FinishBlockTest(uint32 nBlock)
 //////////////////////////////////////////////////////////////////////
 // CTigerTree breadth-first serialize
 
-BOOL CTigerTree::ToBytes(uint8** ppOutput, uint32* pnOutput, uint32 nHeight)
+BOOL CTigerTree::ToBytes(uint8** ppOutput, uint32* pnOutput, uint32 nHeight) const
 {
 	CSectionLock oLock( &m_pSection );
 
@@ -1072,7 +1070,7 @@ BOOL CTigerTree::ToBytes(uint8** ppOutput, uint32* pnOutput, uint32 nHeight)
 	return TRUE;
 }
 
-BOOL CTigerTree::ToBytesLevel1(uint8** ppOutput, uint32* pnOutput)
+BOOL CTigerTree::ToBytesLevel1(uint8** ppOutput, uint32* pnOutput) const
 {
 	CSectionLock oLock( &m_pSection );
 
@@ -1214,13 +1212,13 @@ BOOL CTigerTree::FromBytesLevel1(const uint8* pInput, uint32 nInput, uint64 nLen
 //////////////////////////////////////////////////////////////////////
 // CTigerTree integrity check
 
-BOOL CTigerTree::CheckIntegrity()
+BOOL CTigerTree::CheckIntegrity() const
 {
 	CSectionLock oLock( &m_pSection );
 
 	if ( m_pNode == NULL ) return FALSE;
 
-	m_nNodeBase = ( m_nNodeCount + 1 ) / 2;
+	_ASSERT( m_nNodeBase == ( m_nNodeCount + 1 ) / 2 );
 	CTigerNode* pBase = m_pNode + m_nNodeCount - m_nNodeBase;
 
 	for ( uint32 nCombine = m_nNodeBase ; nCombine > 1 ; )

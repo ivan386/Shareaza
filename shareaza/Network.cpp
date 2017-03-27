@@ -421,7 +421,7 @@ BOOL CNetwork::ConnectTo(LPCTSTR pszAddress, int nPort, PROTOCOLID nProtocol, BO
 	if ( saHost.sin_addr.s_addr != INADDR_ANY )
 	{
 		// It's dotted IP address
-		HostCache.ForProtocol( nProtocol )->Add( &saHost.sin_addr, ntohs( saHost.sin_port ) );
+		HostCache.ForProtocol( nProtocol )->Add( &saHost.sin_addr, ntohs( saHost.sin_port ), NULL );
 
 		Neighbours.ConnectTo( saHost.sin_addr, ntohs( saHost.sin_port ), nProtocol, FALSE, bNoUltraPeer );
 		return TRUE;
@@ -621,6 +621,11 @@ void CNetwork::ClearResolve()
 
 BOOL CNetwork::IsValidAddressFor(const IN_ADDR* pForAddress, const IN_ADDR* pAddress) const
 {
+	ASSERT( pForAddress && pAddress );
+
+	if ( pForAddress == NULL || pAddress == NULL )
+		return FALSE;
+
 	if ( pForAddress->s_net == 127 && pAddress->s_net == 127 ) // Loopback
 		return TRUE;
 

@@ -1396,7 +1396,7 @@ BOOL CG2Packet::OnKHLA(const SOCKADDR_IN* pHost)
 			}
 
 			CHostCacheHostPtr pCached = HostCache.Gnutella2.Add(
-				(IN_ADDR*)&nAddress, nPort, tSeen, strVendor );
+				(IN_ADDR*)&nAddress, nPort, &pHost->sin_addr, tSeen, strVendor );
 			if ( pCached != NULL )
 			{
 				nCount++;
@@ -1411,7 +1411,7 @@ BOOL CG2Packet::OnKHLA(const SOCKADDR_IN* pHost)
 		{
 			IN_ADDR pMyAddress;
 			pMyAddress.s_addr = ReadLongLE();
-			Network.AcquireLocalAddress( pMyAddress );
+			Network.AcquireLocalAddress( pMyAddress, 0, &pHost->sin_addr );
 		}
 
 		m_nPosition = nNext;
@@ -1489,7 +1489,8 @@ BOOL CG2Packet::OnKHLR(const SOCKADDR_IN* pHost)
 
 			if ( pCachedHost->CanQuote( tNow ) &&
 				Neighbours.Get( pCachedHost->m_pAddress ) == NULL &&
-				! Network.IsSelfIP( pCachedHost->m_pAddress ) )
+				! Network.IsSelfIP( pCachedHost->m_pAddress ) &&
+				Network.IsValidAddressFor( &pHost->sin_addr , &pCachedHost->m_pAddress ) )
 			{
 
 				BOOL bCompound = ( pCachedHost->m_pVendor && pCachedHost->m_pVendor->m_sCode.GetLength() > 0 );

@@ -65,7 +65,7 @@
 				PrecompiledHeaderFile="$(IntDir)/$(ProjectName).pch"
 				WarningLevel="4"
 				DebugInformationFormat="4"
-				DisableSpecificWarnings="4512"
+				DisableSpecificWarnings="4512;4548"
 			/>
 			<Tool
 				Name="VCManagedResourceCompilerTool"

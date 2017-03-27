@@ -1,7 +1,7 @@
 //
 // TigerTree.h
 //
-// Copyright (c) Shareaza Development Team, 2002-2011.
+// Copyright (c) Shareaza Development Team, 2002-2017.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -50,7 +50,7 @@ public:
 	};
 
 	BOOL	GetRoot(__in_bcount(24) uchar* pHash) const;
-	void	Assume(CTigerTree* pSource);
+	//void	Assume(CTigerTree* pSource);
 
 	void	BeginFile(uint32 nHeight, uint64 nLength);
 	void	AddToFile(const void* pInput, uint32 nLength);
@@ -61,15 +61,13 @@ public:
 	BOOL	FinishBlockTest(uint32 nBlock);
 
 	// Extract hash tree (to free ppOutput use the GlobalFree function)
-	BOOL	ToBytes(uint8** ppOutput, uint32* pnOutput, uint32 nHeight = 0);
+	BOOL	ToBytes(uint8** ppOutput, uint32* pnOutput, uint32 nHeight = 0) const;
 	// Extract first level of hash tree (to free ppOutput use the GlobalFree function)
-	BOOL	ToBytesLevel1(uint8** ppOutput, uint32* pnOutput);
+	BOOL	ToBytesLevel1(uint8** ppOutput, uint32* pnOutput) const;
 	// Create hash tree from full tree data
 	BOOL	FromBytes(const uint8* pInput, uint32 nInput, uint32 nHeight, uint64 nLength);
 	// Create hash tree from first level of tree data
 	BOOL	FromBytesLevel1(const uint8* pInput, uint32 nInput, uint64 nLength);
-	// Check hash tree integrity (rebuilding missed hashes if needed)
-	BOOL	CheckIntegrity();
 
 	BOOL	IsAvailable() const;
 	void	SetHeight(uint32 nHeight);
@@ -93,6 +91,8 @@ private:
 
 	mutable CRITICAL_SECTION	m_pSection;
 
+	// Check hash tree integrity (rebuilding missed hashes if needed)
+	BOOL	CheckIntegrity() const;
 	void	Collapse();
 	void	BlocksToNode();
 	static void	Tiger(LPCVOID pInput, uint64 nInput, uint64* pOutput, uint64* pInput1 = NULL, uint64* pInput2 = NULL);

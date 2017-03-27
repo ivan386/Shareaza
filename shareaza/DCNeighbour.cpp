@@ -49,6 +49,7 @@ CDCNeighbour::CDCNeighbour()
 	, m_bNickValid	( FALSE )
 	, m_nMyAddress	()
 {
+	m_nMyAddress.S_un.S_addr = 0;
 	m_nNodeType = ntHub;
 
 	m_oUsers.InitHashTable( GetBestHashTableSize( 3000 ) );
@@ -85,13 +86,13 @@ BOOL CDCNeighbour::ConnectToMe(const CString& sNick)
 
 	CString strRequest;
 
-	SOCKADDR_IN Host(Network.m_pHost);
+	SOCKADDR_IN nHost( Network.m_pHost );
 
 	if (m_nMyAddress.S_un.S_addr)
-		Host.sin_addr = m_nMyAddress;
+		nHost.sin_addr = m_nMyAddress;
 	
 	strRequest.Format( _T("$ConnectToMe %s %s|"),
-		(LPCTSTR)DCClients.CreateNick( sNick ), (LPCTSTR)HostToString( &Host ) );
+		(LPCTSTR)DCClients.CreateNick( sNick ), (LPCTSTR)HostToString( &nHost ) );
 
 	if ( CDCPacket* pPacket = CDCPacket::New() )
 	{
@@ -836,7 +837,7 @@ BOOL CDCNeighbour::OnUserIP(LPSTR szIP)
 			if ( m_bNickValid && m_sNick == sNick )
 			{
 				m_nMyAddress.S_un.S_addr = inet_addr( szAddress );
-				Network.AcquireLocalAddress( m_nMyAddress );
+				Network.AcquireLocalAddress( m_nMyAddress, 0, &m_pHost.sin_addr );
 			}
 		}
 	}

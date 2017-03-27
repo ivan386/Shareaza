@@ -388,7 +388,6 @@ void CHostCacheWnd::OnUpdateHostCacheDisconnect(CCmdUI* pCmdUI)
 			pCmdUI->Enable( FALSE );
 			return;
 		}
-				
 
 		// Lock HostCache objects until we are finished with them
 		CQuickLock oHostCacheLock( HostCache.ForProtocol(

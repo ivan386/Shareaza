@@ -1,7 +1,7 @@
 //
 // DownloadGroups.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2011.
+// Copyright (c) Shareaza Development Team, 2002-2017.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -52,6 +52,19 @@ CDownloadGroups::CDownloadGroups() :
 CDownloadGroups::~CDownloadGroups()
 {
 	Clear();
+}
+
+void CDownloadGroups::GetFolders(CStringIList& oFolders) const
+{
+	CQuickLock pLock( m_pSection );
+
+	for ( POSITION pos = GetIterator() ; pos ; )
+	{
+		const CDownloadGroup* pGroup = GetNext( pos );
+
+		if ( ! pGroup->m_sFolder.IsEmpty() && oFolders.Find( pGroup->m_sFolder ) == NULL )
+			oFolders.AddTail( pGroup->m_sFolder );
+	}
 }
 
 //////////////////////////////////////////////////////////////////////
@@ -187,17 +200,18 @@ void CDownloadGroups::CreateDefault()
 //////////////////////////////////////////////////////////////////////
 // CDownloadGroups completed path
 
-CString CDownloadGroups::GetCompletedPath(CDownload* pDownload)
+CString CDownloadGroups::GetCompletedPath(CDownload* pDownload) const
 {
 	CQuickLock pLock( m_pSection );
 
 	for ( POSITION pos = GetIterator() ; pos ; )
 	{
-		CDownloadGroup* pGroup = GetNext( pos );
+		const CDownloadGroup* pGroup = GetNext( pos );
 
 		if ( pGroup != m_pSuper && pGroup->Contains( pDownload ) )
 		{
-			if ( pGroup->m_sFolder.GetLength() ) return pGroup->m_sFolder;
+			if ( ! pGroup->m_sFolder.IsEmpty() )
+				return pGroup->m_sFolder;
 		}
 	}
 

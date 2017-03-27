@@ -1,7 +1,7 @@
 //
 // SharedFile.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2015.
+// Copyright (c) Shareaza Development Team, 2002-2017.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -805,27 +805,39 @@ CTigerTree* CLibraryFile::GetTigerTree()
 
 CED2K* CLibraryFile::GetED2K()
 {
-	if ( ! m_oED2K ) return NULL;
-	if ( ! m_pFolder ) return NULL;
+	if ( ! m_oED2K )
+		// Not hashed yet
+		return NULL;
 
-	CED2K* pED2K = new CED2K();
+	if ( ! m_pFolder )
+		// Virtual file
+		return NULL;
 
-	if ( LibraryHashDB.GetED2K( m_nIndex, pED2K ) )
+	CAutoPtr< CED2K > pED2K( new CED2K() );
+	if ( ! pED2K )
+		// Out of memory
+		return NULL;
+
+	if ( ! LibraryHashDB.GetED2K( m_nIndex, pED2K ) )
+		// Database error
+		return NULL;
+
+	Hashes::Ed2kHash oRoot;
+	pED2K->GetRoot( &oRoot[ 0 ] );
+	oRoot.validate();
+	if ( m_oED2K != oRoot )
 	{
-		Hashes::Ed2kHash oRoot;
-		pED2K->GetRoot( &oRoot[ 0 ] );
-		oRoot.validate();
-		if ( m_oED2K == oRoot ) return pED2K;
-
+		// Wrong hash
 		LibraryHashDB.DeleteED2K( m_nIndex );
+
+		Library.RemoveFile( this );
+		m_oED2K.clear();
+		Library.AddFile( this );
+
+		return NULL;
 	}
 
-	delete pED2K;
-	Library.RemoveFile( this );
-	m_oED2K.clear();
-	Library.AddFile( this );
-
-	return NULL;
+	return pED2K.Detach();
 }
 
 //////////////////////////////////////////////////////////////////////

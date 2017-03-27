@@ -3152,7 +3152,7 @@ puede comenzar a transferir en cualquier momento.</text>
 		<string id="16816" value="La red eDonkey utiliza largas colas con tiempos largos de espera. Limitando la posición máxima de cola de espera,puede que te de problemas para iniciar las descargas.\nEstas seguro que deseas limitar las posiciones de cola que vas a aceptar?"/>
 		<string id="16817" value="Windows no soporta nombres más grandes que 256 caracteres.\nPor favor, selecciona un nombre con un tamaño más pequeño."/>
 		<string id="16818" value="La carpeta de archivos incompletos no debe de estar en Mi Colección, porque reduce velocidad. Archivos incompletos pueden ser compartidos directamente de la ventana de transferencias."/>
-		<string id="16819" value="Una subcarpeta de la carpeta seleccionada &quot;%s&quot; ya es parte de Mi Colección. \n\nDeseas agregar la carpeta seleccionada a Mi colección?\n\n La carpeta existente va a ser una subcarpeta de la nueva carpeta. Esto va a causar refusión de todos los archivos en esta carpeta."/>
+		<string id="16819" value="The incomplete files folder should not be in the library, as it would reduce performance. Incomplete files may be shared directly from the transfers window."/>
 		<string id="16864" value="Pidiendo informacion a servicios de descubrimiento..."/>
 		<string id="16865" value="Pidiendo informacion al servicio de descubrimiento &quot;%s&quot;..."/>
 		<string id="16866" value="Transacción con el GWebCache (&quot;%s&quot;) fué completada."/>
