@@ -66,6 +66,8 @@ CDownload::CDownload() :
 ,	m_tSaved		( 0 )
 ,	m_tBegan		( 0 )
 ,	m_bDownloading	( false )
+,	m_nCompletedAtBegan ( 0 )
+,	m_nStartFrom	( 0 )
 #pragma warning(suppress:4355) // 'this' : used in base member initializer list
 ,	m_pTask			( this )
 ,	m_bStableName	( false )
@@ -288,6 +290,8 @@ void CDownload::StartTrying()
 
 	m_tBegan = GetTickCount();
 	m_nCompletedAtBegan = GetVolumeComplete();
+	if ( ! GetEmptyFragmentList().empty() )
+		m_nStartFrom = GetEmptyFragmentList().begin()->begin();
 }
 
 QWORD CDownload::GetRealSpeed()
@@ -304,14 +308,9 @@ QWORD CDownload::GetNonRandomEnd()
 		return 0;
 
 	QWORD nByterate = ( m_nBitrate / 8 );
-	if ( m_tBegan == 0 )
-	{
-		m_tBegan = GetTickCount();
-		m_nCompletedAtBegan = GetVolumeComplete();
-	}
 
 	if ( Settings.Downloads.MediaBuffer && m_tBegan > 0 && ( GetRealSpeed() > nByterate || GetAverageSpeed() > nByterate ))
-		return m_nCompletedAtBegan + ( ( ( GetTickCount() - m_tBegan + Settings.Downloads.MediaBuffer ) / 1000 ) * nByterate );
+		return m_nStartFrom + ( ( ( GetTickCount() - m_tBegan + Settings.Downloads.MediaBuffer ) / 1000 ) * nByterate );
 	return 0;
 }
 
