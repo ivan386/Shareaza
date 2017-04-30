@@ -44,6 +44,10 @@ http://download.microsoft.com/download/3/3/f/33f1af6e-c61b-4f14-a0de-3e9096ed4b3
  **Microsoft Visual Studio 2010**
  Any version fit except "Test Professional".
 
+#### Microsoft Visual Studio Community 2015
+
+Download and install **Microsoft Visual Studio Community 2015** - https://www.visualstudio.com/
+
 ### gzip
 
  Download & copy gzip.exe into your windows path eg. ```C:\WINDOWS\system32```
@@ -51,6 +55,9 @@ http://download.microsoft.com/download/3/3/f/33f1af6e-c61b-4f14-a0de-3e9096ed4b3
  I am using version 1.2.4 which you can download from http://www.gzip.org/.
 
  On some systems, possibly related to Windows 7 or Windows 64-bit, placing gzip in system32 will not be recognized.  In that case, just put it somewhere else in Visual Studio's executable path, such as under 'Microsoft Visual Studio 9.0/Common7/Tools'.
+
+### 7-Zip
+Download and install 7-Zip - http://www.7-zip.org/
 
 ### boost
 
