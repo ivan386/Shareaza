@@ -55,7 +55,8 @@ http://download.microsoft.com/download/3/3/f/33f1af6e-c61b-4f14-a0de-3e9096ed4b3
 ### boost
 
 To setup the [boost](http://www.boost.org/) library download it from
- ```http://sourceforge.net/projects/boost/files/boost/1.44.0/boost_1_44_0.7z/download```.
+ https://sourceforge.net/projects/boost/files/boost/
+
  You will only need to extract the zipped files and **NOT** compile the library.
  Uncompress ```boost_1_54_0.zip``` to a drive/folder on your PC.
  ie ```C:\Program Files\boost_1_54_0```
@@ -76,7 +77,7 @@ To setup the [boost](http://www.boost.org/) library download it from
  Do the same for Tools -> Options -> Projects and Solutions -> VC++ Directories -> x64 - Include Files
 
 ### Download and install Unicode Inno Setup QuickStart Pack self-installing package
- from ```http://www.jrsoftware.org/isdl.php```.
+ from http://www.jrsoftware.org/isdl.php.
 
  Make sure you install the "Unicode Inno Setup QuickStart Pack" not the standard setup/install. 
 
@@ -85,10 +86,10 @@ The "Unicode Inno Setup QuickStart Pack" incudes additional componets that are r
 Also make sure you install Inno on your C drive. I generally install my programs on another drive but found when setting up VS2005 last time that the visual studio project file used to build shareaza used a script reference to access Inno. This script assumed that Inno was installed on C drive, so not having Inno installed on C drive caused an error in compiling. To avoid this potential problem I installed Inno on my C drive this time and had no problems. 
 
 ### Download and install TortoiseSVN
- from ```http://tortoisesvn.net```.
+ from http://tortoisesvn.net.
 
  Use [TortoiseSVN](http://tortoisesvn.net/) "Checkout" with URL repository
- ```https://shareaza.svn.sourceforge.net/svnroot/shareaza/trunk/```
+ https://shareaza.svn.sourceforge.net/svnroot/shareaza/trunk/
  to download current code.
 
  [TortoiseSVN](http://tortoisesvn.net) will notify you of updates to the program as they are made available. 
