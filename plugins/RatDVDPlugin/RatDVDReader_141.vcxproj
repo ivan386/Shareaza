@@ -23,11 +23,12 @@
     <ProjectGuid>{86944913-9269-4B41-AA2F-C2A37E68C50E}</ProjectGuid>
     <RootNamespace>RatDVDReader</RootNamespace>
     <Keyword>AtlProj</Keyword>
-    <WindowsTargetPlatformVersion>8.1</WindowsTargetPlatformVersion>
+    <WindowsTargetPlatformVersion>10.0.15063.0</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
     <ConfigurationType>DynamicLibrary</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
     <CharacterSet>Unicode</CharacterSet>
     <WholeProgramOptimization>true</WholeProgramOptimization>
     <UseOfAtl>Dynamic</UseOfAtl>
@@ -35,11 +36,13 @@
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
     <ConfigurationType>DynamicLibrary</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
     <CharacterSet>Unicode</CharacterSet>
     <PlatformToolset>v141</PlatformToolset>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
     <ConfigurationType>DynamicLibrary</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
     <CharacterSet>Unicode</CharacterSet>
     <WholeProgramOptimization>true</WholeProgramOptimization>
     <UseOfAtl>Dynamic</UseOfAtl>
@@ -47,6 +50,7 @@
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
     <ConfigurationType>DynamicLibrary</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
     <CharacterSet>Unicode</CharacterSet>
     <PlatformToolset>v141</PlatformToolset>
   </PropertyGroup>
@@ -117,7 +121,7 @@
     <ClCompile>
       <Optimization>Disabled</Optimization>
       <AdditionalIncludeDirectories>..\..\shareaza;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <PreprocessorDefinitions>_ATL_XP_TARGETING;WIN32;_WINDOWS;_DEBUG;_USRDLL;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>WIN32;_WINDOWS;_DEBUG;_USRDLL;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ExceptionHandling>
       </ExceptionHandling>
       <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
@@ -128,7 +132,7 @@
       <WarningLevel>Level4</WarningLevel>
       <DebugInformationFormat>EditAndContinue</DebugInformationFormat>
       <SDLCheck>true</SDLCheck>
-      <AdditionalOptions>/Zc:threadSafeInit- %(AdditionalOptions)</AdditionalOptions>
+      <MinimalRebuild>false</MinimalRebuild>
     </ClCompile>
     <ResourceCompile>
       <PreprocessorDefinitions>_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
@@ -142,7 +146,7 @@
       <TargetMachine>MachineX86</TargetMachine>
       <AdditionalOptions>nothrownew.obj %(AdditionalOptions)</AdditionalOptions>
       <ImageHasSafeExceptionHandlers>false</ImageHasSafeExceptionHandlers>
-      <MinimumRequiredVersion>5.01</MinimumRequiredVersion>
+      <GenerateDebugInformation>DebugFull</GenerateDebugInformation>
     </Link>
     <Bscmake>
       <OutputFile>
@@ -179,6 +183,7 @@
       <WarningLevel>Level4</WarningLevel>
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <SDLCheck>true</SDLCheck>
+      <MinimalRebuild>false</MinimalRebuild>
     </ClCompile>
     <ResourceCompile>
       <PreprocessorDefinitions>_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
@@ -191,6 +196,7 @@
       <SubSystem>Windows</SubSystem>
       <TargetMachine>MachineX64</TargetMachine>
       <AdditionalOptions>nothrownew.obj %(AdditionalOptions)</AdditionalOptions>
+      <GenerateDebugInformation>DebugFull</GenerateDebugInformation>
     </Link>
     <Bscmake>
       <OutputFile>
@@ -221,7 +227,7 @@
       <FavorSizeOrSpeed>Size</FavorSizeOrSpeed>
       <OmitFramePointers>true</OmitFramePointers>
       <AdditionalIncludeDirectories>..\..\shareaza;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <PreprocessorDefinitions>_ATL_XP_TARGETING;WIN32;_WINDOWS;NDEBUG;_USRDLL;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>WIN32;_WINDOWS;NDEBUG;_USRDLL;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <StringPooling>true</StringPooling>
       <ExceptionHandling>
       </ExceptionHandling>
@@ -231,10 +237,8 @@
       <WarningLevel>Level4</WarningLevel>
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <EnableEnhancedInstructionSet>StreamingSIMDExtensions2</EnableEnhancedInstructionSet>
-      <DebugInformationFormat>None</DebugInformationFormat>
       <ControlFlowGuard>Guard</ControlFlowGuard>
       <SDLCheck>true</SDLCheck>
-      <AdditionalOptions>/Zc:threadSafeInit- %(AdditionalOptions)</AdditionalOptions>
     </ClCompile>
     <ResourceCompile>
       <PreprocessorDefinitions>NDEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
@@ -251,8 +255,6 @@
       <SetChecksum>true</SetChecksum>
       <TargetMachine>MachineX86</TargetMachine>
       <AdditionalOptions>nothrownew.obj %(AdditionalOptions)</AdditionalOptions>
-      <GenerateDebugInformation>No</GenerateDebugInformation>
-      <MinimumRequiredVersion>5.01</MinimumRequiredVersion>
     </Link>
     <Bscmake>
       <OutputFile>
@@ -292,7 +294,6 @@
       <PrecompiledHeader>Use</PrecompiledHeader>
       <WarningLevel>Level4</WarningLevel>
       <FunctionLevelLinking>true</FunctionLevelLinking>
-      <DebugInformationFormat>None</DebugInformationFormat>
       <SDLCheck>true</SDLCheck>
     </ClCompile>
     <ResourceCompile>
@@ -310,7 +311,6 @@
       <SetChecksum>true</SetChecksum>
       <TargetMachine>MachineX64</TargetMachine>
       <AdditionalOptions>nothrownew.obj %(AdditionalOptions)</AdditionalOptions>
-      <GenerateDebugInformation>No</GenerateDebugInformation>
     </Link>
     <Bscmake>
       <OutputFile>

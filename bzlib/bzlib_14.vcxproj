@@ -23,28 +23,31 @@
     <ProjectGuid>{A14F5E46-C04C-4F32-9985-2E15819A722A}</ProjectGuid>
     <RootNamespace>bzlib</RootNamespace>
     <Keyword>Win32Proj</Keyword>
-    <WindowsTargetPlatformVersion>8.1</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
     <ConfigurationType>DynamicLibrary</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
     <CharacterSet>Unicode</CharacterSet>
     <WholeProgramOptimization>true</WholeProgramOptimization>
     <PlatformToolset>v140</PlatformToolset>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
     <ConfigurationType>DynamicLibrary</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
     <CharacterSet>Unicode</CharacterSet>
     <PlatformToolset>v140</PlatformToolset>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
     <ConfigurationType>DynamicLibrary</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
     <CharacterSet>Unicode</CharacterSet>
     <WholeProgramOptimization>true</WholeProgramOptimization>
     <PlatformToolset>v140</PlatformToolset>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
     <ConfigurationType>DynamicLibrary</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
     <CharacterSet>Unicode</CharacterSet>
     <PlatformToolset>v140</PlatformToolset>
   </PropertyGroup>
@@ -96,7 +99,7 @@
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
       <Optimization>Disabled</Optimization>
-      <PreprocessorDefinitions>_ATL_XP_TARGETING;WIN32;_DEBUG;_WINDOWS;_USRDLL;BZIP2_EXPORTS;_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>WIN32;_DEBUG;_WINDOWS;_USRDLL;BZIP2_EXPORTS;_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ExceptionHandling>
       </ExceptionHandling>
       <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
@@ -106,14 +109,13 @@
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <DebugInformationFormat>EditAndContinue</DebugInformationFormat>
       <SDLCheck>true</SDLCheck>
-      <AdditionalOptions>/Zc:threadSafeInit- %(AdditionalOptions)</AdditionalOptions>
     </ClCompile>
     <Link>
       <ModuleDefinitionFile>$(TargetName).def</ModuleDefinitionFile>
       <SubSystem>Windows</SubSystem>
       <TargetMachine>MachineX86</TargetMachine>
       <ImageHasSafeExceptionHandlers>false</ImageHasSafeExceptionHandlers>
-      <MinimumRequiredVersion>5.01</MinimumRequiredVersion>
+      <GenerateDebugInformation>Debug</GenerateDebugInformation>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
@@ -136,6 +138,7 @@
       <SubSystem>Windows</SubSystem>
       <TargetMachine>MachineX64</TargetMachine>
       <ModuleDefinitionFile>$(TargetName).def</ModuleDefinitionFile>
+      <GenerateDebugInformation>Debug</GenerateDebugInformation>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -145,7 +148,7 @@
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <FavorSizeOrSpeed>Speed</FavorSizeOrSpeed>
       <OmitFramePointers>true</OmitFramePointers>
-      <PreprocessorDefinitions>_ATL_XP_TARGETING;WIN32;NDEBUG;_WINDOWS;_USRDLL;BZIP2_EXPORTS;_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>WIN32;NDEBUG;_WINDOWS;_USRDLL;BZIP2_EXPORTS;_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <StringPooling>true</StringPooling>
       <ExceptionHandling>
       </ExceptionHandling>
@@ -154,10 +157,8 @@
       <WarningLevel>Level2</WarningLevel>
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <EnableEnhancedInstructionSet>StreamingSIMDExtensions2</EnableEnhancedInstructionSet>
-      <DebugInformationFormat>None</DebugInformationFormat>
       <ControlFlowGuard>Guard</ControlFlowGuard>
       <SDLCheck>true</SDLCheck>
-      <AdditionalOptions>/Zc:threadSafeInit- %(AdditionalOptions)</AdditionalOptions>
     </ClCompile>
     <Link>
       <ModuleDefinitionFile>$(TargetName).def</ModuleDefinitionFile>
@@ -166,8 +167,7 @@
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <SetChecksum>true</SetChecksum>
       <TargetMachine>MachineX86</TargetMachine>
-      <GenerateDebugInformation>No</GenerateDebugInformation>
-      <MinimumRequiredVersion>5.01</MinimumRequiredVersion>
+      <GenerateDebugInformation>Debug</GenerateDebugInformation>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
@@ -188,7 +188,6 @@
       <RuntimeTypeInfo>false</RuntimeTypeInfo>
       <WarningLevel>Level2</WarningLevel>
       <FunctionLevelLinking>true</FunctionLevelLinking>
-      <DebugInformationFormat>None</DebugInformationFormat>
       <SDLCheck>true</SDLCheck>
     </ClCompile>
     <Link>
@@ -198,7 +197,7 @@
       <SetChecksum>true</SetChecksum>
       <TargetMachine>MachineX64</TargetMachine>
       <ModuleDefinitionFile>$(TargetName).def</ModuleDefinitionFile>
-      <GenerateDebugInformation>No</GenerateDebugInformation>
+      <GenerateDebugInformation>Debug</GenerateDebugInformation>
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>

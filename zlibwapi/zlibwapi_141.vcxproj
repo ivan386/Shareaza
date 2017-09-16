@@ -22,28 +22,32 @@
     <ProjectName>zlibwapi</ProjectName>
     <ProjectGuid>{39F34F2C-D42A-41D2-A0BC-54D7972E2BC5}</ProjectGuid>
     <RootNamespace>zlibwapi</RootNamespace>
-    <WindowsTargetPlatformVersion>8.1</WindowsTargetPlatformVersion>
+    <WindowsTargetPlatformVersion>10.0.15063.0</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
     <ConfigurationType>DynamicLibrary</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
     <WholeProgramOptimization>true</WholeProgramOptimization>
     <CharacterSet>Unicode</CharacterSet>
     <PlatformToolset>v141</PlatformToolset>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
     <ConfigurationType>DynamicLibrary</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
     <CharacterSet>Unicode</CharacterSet>
     <PlatformToolset>v141</PlatformToolset>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
     <ConfigurationType>DynamicLibrary</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
     <WholeProgramOptimization>true</WholeProgramOptimization>
     <CharacterSet>Unicode</CharacterSet>
     <PlatformToolset>v141</PlatformToolset>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
     <ConfigurationType>DynamicLibrary</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
     <CharacterSet>Unicode</CharacterSet>
     <PlatformToolset>v141</PlatformToolset>
   </PropertyGroup>
@@ -93,16 +97,15 @@
     </MASM>
     <ClCompile>
       <Optimization>Disabled</Optimization>
-      <PreprocessorDefinitions>_WINDOWS;_USRDLL;ZLIB_WINAPI;_CRT_SECURE_NO_DEPRECATE;_ATL_XP_TARGETING;WIN32;_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>_WINDOWS;_USRDLL;ZLIB_WINAPI;_CRT_SECURE_NO_DEPRECATE;WIN32;_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ExceptionHandling>false</ExceptionHandling>
       <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
       <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <RuntimeTypeInfo>false</RuntimeTypeInfo>
-      <AdditionalOptions>/Zc:threadSafeInit- %(AdditionalOptions)</AdditionalOptions>
       <AdditionalIncludeDirectories>zlib;zlib\contrib\minizip</AdditionalIncludeDirectories>
-      <ControlFlowGuard>Guard</ControlFlowGuard>
       <DisableSpecificWarnings>4067</DisableSpecificWarnings>
+      <MinimalRebuild>false</MinimalRebuild>
     </ClCompile>
     <ResourceCompile>
       <PreprocessorDefinitions>_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
@@ -112,7 +115,7 @@
       <TargetMachine>MachineX86</TargetMachine>
       <SubSystem>Windows</SubSystem>
       <ImageHasSafeExceptionHandlers>false</ImageHasSafeExceptionHandlers>
-      <MinimumRequiredVersion>5.01</MinimumRequiredVersion>
+      <GenerateDebugInformation>DebugFull</GenerateDebugInformation>
     </Link>
     <Bscmake>
       <OutputFile>
@@ -133,8 +136,8 @@
       <RuntimeTypeInfo>false</RuntimeTypeInfo>
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <AdditionalIncludeDirectories>zlib;zlib\contrib\minizip</AdditionalIncludeDirectories>
-      <ControlFlowGuard>Guard</ControlFlowGuard>
       <DisableSpecificWarnings>4067</DisableSpecificWarnings>
+      <MinimalRebuild>false</MinimalRebuild>
     </ClCompile>
     <ResourceCompile>
       <PreprocessorDefinitions>_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
@@ -144,6 +147,7 @@
       <TargetMachine>MachineX64</TargetMachine>
       <SubSystem>Windows</SubSystem>
       <ImageHasSafeExceptionHandlers>false</ImageHasSafeExceptionHandlers>
+      <GenerateDebugInformation>DebugFull</GenerateDebugInformation>
     </Link>
     <Bscmake>
       <OutputFile>
@@ -161,14 +165,13 @@
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <FavorSizeOrSpeed>Size</FavorSizeOrSpeed>
       <OmitFramePointers>true</OmitFramePointers>
-      <PreprocessorDefinitions>_WINDOWS;_USRDLL;ZLIB_WINAPI;_CRT_SECURE_NO_DEPRECATE;_ATL_XP_TARGETING;WIN32;NDEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>_WINDOWS;_USRDLL;ZLIB_WINAPI;_CRT_SECURE_NO_DEPRECATE;WIN32;NDEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <StringPooling>true</StringPooling>
       <ExceptionHandling>false</ExceptionHandling>
       <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
       <RuntimeTypeInfo>false</RuntimeTypeInfo>
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <EnableEnhancedInstructionSet>StreamingSIMDExtensions2</EnableEnhancedInstructionSet>
-      <AdditionalOptions>/Zc:threadSafeInit- %(AdditionalOptions)</AdditionalOptions>
       <AdditionalIncludeDirectories>zlib;zlib\contrib\minizip</AdditionalIncludeDirectories>
       <ControlFlowGuard>Guard</ControlFlowGuard>
       <DisableSpecificWarnings>4067</DisableSpecificWarnings>
@@ -183,7 +186,6 @@
       <SetChecksum>true</SetChecksum>
       <TargetMachine>MachineX86</TargetMachine>
       <SubSystem>Windows</SubSystem>
-      <MinimumRequiredVersion>5.01</MinimumRequiredVersion>
       <ImageHasSafeExceptionHandlers>false</ImageHasSafeExceptionHandlers>
     </Link>
     <Bscmake>

@@ -27,23 +27,27 @@
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
     <ConfigurationType>DynamicLibrary</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
     <CharacterSet>Unicode</CharacterSet>
     <WholeProgramOptimization>true</WholeProgramOptimization>
     <UseOfAtl>Dynamic</UseOfAtl>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
     <ConfigurationType>DynamicLibrary</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
     <CharacterSet>Unicode</CharacterSet>
     <UseOfAtl>Static</UseOfAtl>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
     <ConfigurationType>DynamicLibrary</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
     <CharacterSet>Unicode</CharacterSet>
     <WholeProgramOptimization>true</WholeProgramOptimization>
     <UseOfAtl>Dynamic</UseOfAtl>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
     <ConfigurationType>DynamicLibrary</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
     <CharacterSet>Unicode</CharacterSet>
     <UseOfAtl>Static</UseOfAtl>
   </PropertyGroup>
@@ -125,7 +129,6 @@
       <RegisterOutput>false</RegisterOutput>
       <PerUserRedirection>false</PerUserRedirection>
       <ModuleDefinitionFile>ShortURL.def</ModuleDefinitionFile>
-      <GenerateDebugInformation>true</GenerateDebugInformation>
       <SubSystem>Windows</SubSystem>
       <TargetMachine>MachineX86</TargetMachine>
       <AdditionalDependencies>ws2_32.lib;Wininet.lib;%(AdditionalDependencies)</AdditionalDependencies>
@@ -161,7 +164,6 @@
       <RegisterOutput>false</RegisterOutput>
       <PerUserRedirection>false</PerUserRedirection>
       <ModuleDefinitionFile>ShortURL.def</ModuleDefinitionFile>
-      <GenerateDebugInformation>true</GenerateDebugInformation>
       <SubSystem>Windows</SubSystem>
       <TargetMachine>MachineX64</TargetMachine>
       <AdditionalDependencies>ws2_32.lib;Wininet.lib;%(AdditionalDependencies)</AdditionalDependencies>

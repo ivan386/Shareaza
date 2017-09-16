@@ -23,11 +23,12 @@
     <ProjectGuid>{F9C719B3-35FB-427D-A795-91105DFECAAF}</ProjectGuid>
     <RootNamespace>Shareaza</RootNamespace>
     <Keyword>MFCProj</Keyword>
-    <WindowsTargetPlatformVersion>8.1</WindowsTargetPlatformVersion>
+    <WindowsTargetPlatformVersion>10.0.15063.0</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
     <UseOfMfc>Dynamic</UseOfMfc>
     <WholeProgramOptimization>true</WholeProgramOptimization>
     <CharacterSet>Unicode</CharacterSet>
@@ -36,12 +37,14 @@
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
     <UseOfMfc>Static</UseOfMfc>
     <CharacterSet>Unicode</CharacterSet>
     <PlatformToolset>v141</PlatformToolset>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
     <UseOfMfc>Dynamic</UseOfMfc>
     <WholeProgramOptimization>true</WholeProgramOptimization>
     <CharacterSet>Unicode</CharacterSet>
@@ -50,6 +53,7 @@
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
     <UseOfMfc>Static</UseOfMfc>
     <CharacterSet>Unicode</CharacterSet>
     <PlatformToolset>v141</PlatformToolset>
@@ -119,17 +123,16 @@
     </Midl>
     <ClCompile>
       <Optimization>Disabled</Optimization>
-      <PreprocessorDefinitions>_ATL_XP_TARGETING;_DEBUG;WIN32;_WINDOWS;_SHAREAZA;SHAREAZA_USE_ASM;ZLIB_WINAPI;ZLIB_DLL;_WINSOCK_DEPRECATED_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>WIN32;_WINDOWS;_SHAREAZA;ZLIB_WINAPI;ZLIB_DLL;_SCL_SECURE_NO_WARNINGS;_WINSOCK_DEPRECATED_NO_WARNINGS;SHAREAZA_USE_ASM;_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
       <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <RuntimeTypeInfo>false</RuntimeTypeInfo>
       <PrecompiledHeader>Use</PrecompiledHeader>
-      <WarningLevel>EnableAllWarnings</WarningLevel>
+      <WarningLevel>Level4</WarningLevel>
       <DebugInformationFormat>EditAndContinue</DebugInformationFormat>
       <SDLCheck>true</SDLCheck>
-      <AdditionalOptions>/Zc:threadSafeInit- %(AdditionalOptions)</AdditionalOptions>
-      <DisableSpecificWarnings>4710;4711;4738;4464</DisableSpecificWarnings>
+      <MinimalRebuild>false</MinimalRebuild>
     </ClCompile>
     <ResourceCompile>
       <PreprocessorDefinitions>WIN32;_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
@@ -141,7 +144,7 @@
       <TargetMachine>MachineX86</TargetMachine>
       <AdditionalLibraryDirectories>$(OutDir)</AdditionalLibraryDirectories>
       <ImageHasSafeExceptionHandlers>false</ImageHasSafeExceptionHandlers>
-      <MinimumRequiredVersion>5.01</MinimumRequiredVersion>
+      <GenerateDebugInformation>DebugFull</GenerateDebugInformation>
     </Link>
     <Manifest />
     <PostBuildEvent />
@@ -163,17 +166,17 @@
     </Midl>
     <ClCompile>
       <Optimization>Disabled</Optimization>
-      <PreprocessorDefinitions>_DEBUG;WIN64;_WINDOWS;_SHAREAZA;ZLIB_WINAPI;ZLIB_DLL;_WINSOCK_DEPRECATED_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>WIN32;_WINDOWS;_SHAREAZA;ZLIB_WINAPI;ZLIB_DLL;_SCL_SECURE_NO_WARNINGS;_WINSOCK_DEPRECATED_NO_WARNINGS;_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
       <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
       <RuntimeTypeInfo>false</RuntimeTypeInfo>
       <PrecompiledHeader>Use</PrecompiledHeader>
       <PrecompiledHeaderFile>StdAfx.h</PrecompiledHeaderFile>
       <PrecompiledHeaderOutputFile>$(IntDir)$(ProjectName).pch</PrecompiledHeaderOutputFile>
-      <WarningLevel>EnableAllWarnings</WarningLevel>
+      <WarningLevel>Level4</WarningLevel>
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <SDLCheck>true</SDLCheck>
-      <DisableSpecificWarnings>4710;4711;4738;4464</DisableSpecificWarnings>
+      <MinimalRebuild>false</MinimalRebuild>
     </ClCompile>
     <ResourceCompile>
       <PreprocessorDefinitions>WIN64;_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
@@ -186,6 +189,7 @@
       <KeyFile>
       </KeyFile>
       <AdditionalLibraryDirectories>$(OutDir)</AdditionalLibraryDirectories>
+      <GenerateDebugInformation>DebugFull</GenerateDebugInformation>
     </Link>
     <Manifest />
     <Bscmake>
@@ -214,21 +218,18 @@
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <FavorSizeOrSpeed>Speed</FavorSizeOrSpeed>
       <OmitFramePointers>false</OmitFramePointers>
-      <PreprocessorDefinitions>_ATL_XP_TARGETING;NDEBUG;WIN32;_WINDOWS;_SHAREAZA;SHAREAZA_USE_ASM;ZLIB_WINAPI;ZLIB_DLL;_WINSOCK_DEPRECATED_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>WIN32;_WINDOWS;_SHAREAZA;ZLIB_WINAPI;ZLIB_DLL;_SCL_SECURE_NO_WARNINGS;_WINSOCK_DEPRECATED_NO_WARNINGS;SHAREAZA_USE_ASM;NDEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <StringPooling>true</StringPooling>
       <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
       <RuntimeTypeInfo>false</RuntimeTypeInfo>
       <PrecompiledHeader>Use</PrecompiledHeader>
       <PrecompiledHeaderFile>StdAfx.h</PrecompiledHeaderFile>
       <PrecompiledHeaderOutputFile>$(IntDir)$(ProjectName).pch</PrecompiledHeaderOutputFile>
-      <WarningLevel>EnableAllWarnings</WarningLevel>
-      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
+      <WarningLevel>Level4</WarningLevel>
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <EnableEnhancedInstructionSet>StreamingSIMDExtensions2</EnableEnhancedInstructionSet>
       <ControlFlowGuard>Guard</ControlFlowGuard>
       <SDLCheck>true</SDLCheck>
-      <AdditionalOptions>/Zc:threadSafeInit- %(AdditionalOptions)</AdditionalOptions>
-      <DisableSpecificWarnings>4710;4711;4738;4464</DisableSpecificWarnings>
     </ClCompile>
     <ResourceCompile>
       <PreprocessorDefinitions>WIN32;NDEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
@@ -244,7 +245,6 @@
       <KeyFile>
       </KeyFile>
       <AdditionalLibraryDirectories>$(OutDir)</AdditionalLibraryDirectories>
-      <MinimumRequiredVersion>5.01</MinimumRequiredVersion>
     </Link>
     <Manifest />
     <Bscmake>
@@ -274,18 +274,16 @@
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <FavorSizeOrSpeed>Speed</FavorSizeOrSpeed>
       <OmitFramePointers>false</OmitFramePointers>
-      <PreprocessorDefinitions>NDEBUG;WIN64;_WINDOWS;_SHAREAZA;ZLIB_WINAPI;ZLIB_DLL;_WINSOCK_DEPRECATED_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>WIN32;_WINDOWS;_SHAREAZA;ZLIB_WINAPI;ZLIB_DLL;_SCL_SECURE_NO_WARNINGS;_WINSOCK_DEPRECATED_NO_WARNINGS;NDEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <StringPooling>true</StringPooling>
       <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
       <RuntimeTypeInfo>false</RuntimeTypeInfo>
       <PrecompiledHeader>Use</PrecompiledHeader>
       <PrecompiledHeaderFile>StdAfx.h</PrecompiledHeaderFile>
       <PrecompiledHeaderOutputFile>$(IntDir)$(ProjectName).pch</PrecompiledHeaderOutputFile>
-      <WarningLevel>EnableAllWarnings</WarningLevel>
-      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
+      <WarningLevel>Level4</WarningLevel>
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <SDLCheck>true</SDLCheck>
-      <DisableSpecificWarnings>4710;4711;4738;4464</DisableSpecificWarnings>
     </ClCompile>
     <ResourceCompile>
       <PreprocessorDefinitions>WIN64;NDEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
@@ -456,22 +454,14 @@
     <ClCompile Include="ShakeNeighbour.cpp" />
     <ClCompile Include="Shareaza.cpp" />
     <ClCompile Include="Shareaza_i.c">
-      <AdditionalOptions Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">/Wall %(AdditionalOptions)</AdditionalOptions>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
       </PrecompiledHeader>
-      <DisableSpecificWarnings Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">4255;4668;4820;%(DisableSpecificWarnings)</DisableSpecificWarnings>
-      <AdditionalOptions Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">/Wall %(AdditionalOptions)</AdditionalOptions>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
       </PrecompiledHeader>
-      <DisableSpecificWarnings Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">4255;4668;4820;%(DisableSpecificWarnings)</DisableSpecificWarnings>
-      <AdditionalOptions Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">/Wall %(AdditionalOptions)</AdditionalOptions>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
       </PrecompiledHeader>
-      <DisableSpecificWarnings Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">4255;4668;4820;%(DisableSpecificWarnings)</DisableSpecificWarnings>
-      <AdditionalOptions Condition="'$(Configuration)|$(Platform)'=='Release|x64'">/Wall %(AdditionalOptions)</AdditionalOptions>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
       </PrecompiledHeader>
-      <DisableSpecificWarnings Condition="'$(Configuration)|$(Platform)'=='Release|x64'">4255;4668;4820;%(DisableSpecificWarnings)</DisableSpecificWarnings>
     </ClCompile>
     <ClCompile Include="ShareazaDataSource.cpp" />
     <ClCompile Include="ShareazaFile.cpp" />

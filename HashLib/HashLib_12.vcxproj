@@ -27,23 +27,27 @@
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
     <ConfigurationType>DynamicLibrary</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
     <CharacterSet>Unicode</CharacterSet>
     <WholeProgramOptimization>true</WholeProgramOptimization>
     <PlatformToolset>v120_xp</PlatformToolset>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
     <ConfigurationType>DynamicLibrary</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
     <CharacterSet>Unicode</CharacterSet>
     <PlatformToolset>v120_xp</PlatformToolset>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
     <ConfigurationType>DynamicLibrary</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
     <CharacterSet>Unicode</CharacterSet>
     <WholeProgramOptimization>true</WholeProgramOptimization>
     <PlatformToolset>v120</PlatformToolset>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
     <ConfigurationType>DynamicLibrary</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
     <CharacterSet>Unicode</CharacterSet>
     <PlatformToolset>v120</PlatformToolset>
   </PropertyGroup>
@@ -113,11 +117,9 @@
       <TargetMachine>MachineX86</TargetMachine>
       <AdditionalOptions>nothrownew.obj %(AdditionalOptions)</AdditionalOptions>
       <ImageHasSafeExceptionHandlers>false</ImageHasSafeExceptionHandlers>
-      <GenerateDebugInformation>true</GenerateDebugInformation>
     </Link>
     <MASM>
       <WarningLevel>2</WarningLevel>
-      <GenerateDebugInformation>false</GenerateDebugInformation>
     </MASM>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
@@ -141,11 +143,9 @@
       <SubSystem>Windows</SubSystem>
       <TargetMachine>MachineX64</TargetMachine>
       <AdditionalOptions>nothrownew.obj %(AdditionalOptions)</AdditionalOptions>
-      <GenerateDebugInformation>true</GenerateDebugInformation>
     </Link>
     <MASM>
       <WarningLevel>2</WarningLevel>
-      <GenerateDebugInformation>false</GenerateDebugInformation>
     </MASM>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -166,7 +166,6 @@
       <DisableSpecificWarnings>4986</DisableSpecificWarnings>
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <EnableEnhancedInstructionSet>StreamingSIMDExtensions2</EnableEnhancedInstructionSet>
-      <DebugInformationFormat>None</DebugInformationFormat>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -176,11 +175,9 @@
       <BaseAddress>0x29100000</BaseAddress>
       <TargetMachine>MachineX86</TargetMachine>
       <AdditionalOptions>nothrownew.obj %(AdditionalOptions)</AdditionalOptions>
-      <GenerateDebugInformation>false</GenerateDebugInformation>
     </Link>
     <MASM>
       <WarningLevel>2</WarningLevel>
-      <GenerateDebugInformation>false</GenerateDebugInformation>
     </MASM>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
@@ -203,7 +200,6 @@
       <DisableSpecificWarnings>4986</DisableSpecificWarnings>
       <StringPooling>true</StringPooling>
       <FunctionLevelLinking>true</FunctionLevelLinking>
-      <DebugInformationFormat>None</DebugInformationFormat>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -212,11 +208,9 @@
       <TargetMachine>MachineX64</TargetMachine>
       <SetChecksum>true</SetChecksum>
       <AdditionalOptions>nothrownew.obj %(AdditionalOptions)</AdditionalOptions>
-      <GenerateDebugInformation>false</GenerateDebugInformation>
     </Link>
     <MASM>
       <WarningLevel>2</WarningLevel>
-      <GenerateDebugInformation>false</GenerateDebugInformation>
     </MASM>
   </ItemDefinitionGroup>
   <ItemGroup>

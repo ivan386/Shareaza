@@ -23,28 +23,32 @@
     <ProjectGuid>{E8CF1ADA-264A-4127-86C2-FD7057D3792C}</ProjectGuid>
     <RootNamespace>BugTrap</RootNamespace>
     <Keyword>Win32Proj</Keyword>
-    <WindowsTargetPlatformVersion>8.1</WindowsTargetPlatformVersion>
+    <WindowsTargetPlatformVersion>10.0.15063.0</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
     <ConfigurationType>DynamicLibrary</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
     <CharacterSet>Unicode</CharacterSet>
     <WholeProgramOptimization>true</WholeProgramOptimization>
     <PlatformToolset>v141</PlatformToolset>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
     <ConfigurationType>DynamicLibrary</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
     <CharacterSet>Unicode</CharacterSet>
     <PlatformToolset>v141</PlatformToolset>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
     <ConfigurationType>DynamicLibrary</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
     <CharacterSet>Unicode</CharacterSet>
     <WholeProgramOptimization>true</WholeProgramOptimization>
     <PlatformToolset>v141</PlatformToolset>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
     <ConfigurationType>DynamicLibrary</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
     <CharacterSet>Unicode</CharacterSet>
     <PlatformToolset>v141</PlatformToolset>
   </PropertyGroup>
@@ -104,7 +108,7 @@
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
       <Optimization>Disabled</Optimization>
-      <PreprocessorDefinitions>_ATL_XP_TARGETING;WIN32;_DEBUG;_WINDOWS;_USRDLL;BUGTRAP_EXPORTS;ZLIB_WINAPI;ZLIB_DLL;_WINSOCK_DEPRECATED_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>WIN32;_DEBUG;_WINDOWS;_USRDLL;BUGTRAP_EXPORTS;ZLIB_WINAPI;ZLIB_DLL;_WINSOCK_DEPRECATED_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ExceptionHandling>
       </ExceptionHandling>
       <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
@@ -114,8 +118,8 @@
       <WarningLevel>Level4</WarningLevel>
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <DebugInformationFormat>EditAndContinue</DebugInformationFormat>
-      <AdditionalOptions>/Zc:threadSafeInit- %(AdditionalOptions)</AdditionalOptions>
       <DisableSpecificWarnings>4091;4996</DisableSpecificWarnings>
+      <MinimalRebuild>false</MinimalRebuild>
     </ClCompile>
     <Link>
       <AdditionalDependencies>comctl32.lib;version.lib;shlwapi.lib;ws2_32.lib;wininet.lib;%(AdditionalDependencies)</AdditionalDependencies>
@@ -123,7 +127,7 @@
       <SubSystem>Windows</SubSystem>
       <AdditionalOptions>nothrownew.obj %(AdditionalOptions)</AdditionalOptions>
       <ImageHasSafeExceptionHandlers>false</ImageHasSafeExceptionHandlers>
-      <MinimumRequiredVersion>5.01</MinimumRequiredVersion>
+      <GenerateDebugInformation>DebugFull</GenerateDebugInformation>
     </Link>
     <PreBuildEvent>
       <Command>
@@ -152,6 +156,7 @@
       <WarningLevel>Level4</WarningLevel>
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <DisableSpecificWarnings>4091;4996</DisableSpecificWarnings>
+      <MinimalRebuild>false</MinimalRebuild>
     </ClCompile>
     <ResourceCompile>
       <Culture>0x0409</Culture>
@@ -166,6 +171,7 @@
       <SubSystem>Windows</SubSystem>
       <TargetMachine>MachineX64</TargetMachine>
       <AdditionalOptions>nothrownew.obj %(AdditionalOptions)</AdditionalOptions>
+      <GenerateDebugInformation>DebugFull</GenerateDebugInformation>
     </Link>
     <PreBuildEvent>
       <Command>
@@ -185,7 +191,7 @@
       <InlineFunctionExpansion>AnySuitable</InlineFunctionExpansion>
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <FavorSizeOrSpeed>Size</FavorSizeOrSpeed>
-      <PreprocessorDefinitions>_ATL_XP_TARGETING;WIN32;NDEBUG;_WINDOWS;_USRDLL;BUGTRAP_EXPORTS;ZLIB_DLL;ZLIB_WINAPI;_WINSOCK_DEPRECATED_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>WIN32;NDEBUG;_WINDOWS;_USRDLL;BUGTRAP_EXPORTS;ZLIB_DLL;ZLIB_WINAPI;_WINSOCK_DEPRECATED_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <StringPooling>true</StringPooling>
       <ExceptionHandling>
       </ExceptionHandling>
@@ -197,7 +203,6 @@
       <EnableEnhancedInstructionSet>StreamingSIMDExtensions2</EnableEnhancedInstructionSet>
       <OmitFramePointers>false</OmitFramePointers>
       <ControlFlowGuard>Guard</ControlFlowGuard>
-      <AdditionalOptions>/Zc:threadSafeInit- %(AdditionalOptions)</AdditionalOptions>
       <DisableSpecificWarnings>4091;4996</DisableSpecificWarnings>
     </ClCompile>
     <Link>
@@ -208,7 +213,6 @@
       <TargetMachine>MachineX86</TargetMachine>
       <SubSystem>Windows</SubSystem>
       <AdditionalOptions>nothrownew.obj %(AdditionalOptions)</AdditionalOptions>
-      <MinimumRequiredVersion>5.01</MinimumRequiredVersion>
     </Link>
     <PreBuildEvent>
       <Command>
@@ -238,7 +242,6 @@
       <RuntimeTypeInfo>false</RuntimeTypeInfo>
       <PrecompiledHeader>Use</PrecompiledHeader>
       <WarningLevel>Level4</WarningLevel>
-      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <OmitFramePointers>false</OmitFramePointers>
       <DisableSpecificWarnings>4091;4996</DisableSpecificWarnings>

@@ -124,7 +124,6 @@
       <SubSystem>Windows</SubSystem>
       <TargetMachine>MachineX86</TargetMachine>
       <ImageHasSafeExceptionHandlers>false</ImageHasSafeExceptionHandlers>
-      <GenerateDebugInformation>true</GenerateDebugInformation>
     </Link>
     <Manifest />
     <Bscmake>
@@ -156,7 +155,6 @@
       <AdditionalDependencies>version.lib;windowscodecs.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <SubSystem>Windows</SubSystem>
       <TargetMachine>MachineX64</TargetMachine>
-      <GenerateDebugInformation>true</GenerateDebugInformation>
     </Link>
     <Manifest />
     <Bscmake>
@@ -183,7 +181,6 @@
       <SuppressStartupBanner>true</SuppressStartupBanner>
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <EnableEnhancedInstructionSet>StreamingSIMDExtensions2</EnableEnhancedInstructionSet>
-      <DebugInformationFormat>None</DebugInformationFormat>
     </ClCompile>
     <ResourceCompile>
       <PreprocessorDefinitions>WIN32;NDEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
@@ -195,7 +192,6 @@
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <SetChecksum>true</SetChecksum>
       <TargetMachine>MachineX86</TargetMachine>
-      <GenerateDebugInformation>false</GenerateDebugInformation>
     </Link>
     <Manifest />
     <Bscmake>
@@ -223,7 +219,6 @@
       <PrecompiledHeaderOutputFile>$(IntDir)$(TargetName).pch</PrecompiledHeaderOutputFile>
       <WarningLevel>Level4</WarningLevel>
       <FunctionLevelLinking>true</FunctionLevelLinking>
-      <DebugInformationFormat>None</DebugInformationFormat>
     </ClCompile>
     <ResourceCompile>
       <PreprocessorDefinitions>WIN64;NDEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
@@ -235,7 +230,6 @@
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <SetChecksum>true</SetChecksum>
       <TargetMachine>MachineX64</TargetMachine>
-      <GenerateDebugInformation>false</GenerateDebugInformation>
     </Link>
     <Manifest />
     <Bscmake>

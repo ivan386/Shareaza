@@ -103,7 +103,6 @@
       <SubSystem>Windows</SubSystem>
       <AdditionalDependencies>ws2_32.lib;IPHlpApi.Lib;%(AdditionalDependencies)</AdditionalDependencies>
       <ImageHasSafeExceptionHandlers>false</ImageHasSafeExceptionHandlers>
-      <GenerateDebugInformation>true</GenerateDebugInformation>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
@@ -121,7 +120,6 @@
     <Link>
       <SubSystem>Windows</SubSystem>
       <AdditionalDependencies>ws2_32.lib;IPHlpApi.Lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <GenerateDebugInformation>true</GenerateDebugInformation>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -146,7 +144,6 @@
       <OptimizeReferences>true</OptimizeReferences>
       <AdditionalDependencies>ws2_32.lib;IPHlpApi.Lib;%(AdditionalDependencies)</AdditionalDependencies>
       <SetChecksum>true</SetChecksum>
-      <GenerateDebugInformation>true</GenerateDebugInformation>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
@@ -170,7 +167,6 @@
       <OptimizeReferences>true</OptimizeReferences>
       <AdditionalDependencies>ws2_32.lib;IPHlpApi.Lib;%(AdditionalDependencies)</AdditionalDependencies>
       <SetChecksum>true</SetChecksum>
-      <GenerateDebugInformation>true</GenerateDebugInformation>
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
