@@ -1,16 +1,12 @@
-M http://cache.w3-hidden.cc/
 M http://disobscure.velum-ultra.com/skulls.php
-M http://gwc.gallaxial.com/beacon2/gwc.php
-M http://gwc.mccarragher.org/skulls/skulls.php
+M http://gwc.centrump2p.com/skulls.php
 M http://gwctest.zapto.org:1337/
-M http://gweb.4octets.co.uk/skulls.php
-M http://gweb.dwbo.nl/
-M http://gweb2.4octets.co.uk/gwc.php
+M http://skulls-milanesi.rhcloud.com/skulls.php
 M http://tenafly5k.com/gwc/skulls.php
 
+2 http://au.gnutella.dyslexicfish.net:3559/
 2 http://cache.ce3c.be/
 2 http://cache.ibel.de/
-2 http://cachechu.navhost.com/skulls.php
 2 http://dkac.trillinux.org/dkac/dkac.php
 2 http://ping.pongwar.com/
 2 http://uk.gnutella.dyslexicfish.net:3559/
@@ -18,6 +14,7 @@ M http://tenafly5k.com/gwc/skulls.php
 2 http://uswest.gnutella.dyslexicfish.net:3559/
 2 http://www.k33bz.com/g2/bazooka.php
 
+1 http://au.gnutella.dyslexicfish.net:3558/
 1 http://uk.gnutella.dyslexicfish.net:3558/
 1 http://useast.gnutella.dyslexicfish.net:3558/
 1 http://uswest.gnutella.dyslexicfish.net:3558/
@@ -36,6 +33,7 @@ X http://cache-doxu.rhcloud.com/
 X http://cache.trillinux.org/g2/bazooka.php
 X http://fascination77.free.fr/cachechu/
 X http://p2p.findclan.org/
+X http://p2p.findclan.net/skulls.php
 
 # Duplicates:
 X http://gwc.gallaxial.com/beacon2/gwc
@@ -49,9 +47,11 @@ X http://cache.hxdsecurity.com/gwc/
 X http://cache.leite.us/
 X http://cache.peernix.com/gwc.php
 X http://cache.trillinux.org.nyud.net:8090/g2/bazooka.php
+X http://cache.w3-hidden.cc/
 X http://cache.wru.pl/skulls.php
 X http://cache2.bazookanetworks.com/g2/bazooka.php
 X http://cache2.leite.us/
+X http://cachechu.navhost.com/skulls.php
 X http://cachechu.orgfree.com/
 X http://dogma.cloud.bishopston.net:33559/
 X http://fischaleck.net/cache/mcache.php
@@ -62,10 +62,15 @@ X http://gwc.agrocampmt.com.br/skulls.php
 X http://gwc.dyndns.info:28960/gwc.php
 X http://gwc.frodoslair.net/skulls/skulls
 X http://gwc.frodoslair.net/skulls/skulls.php
+X http://gwc.gallaxial.com/beacon2/gwc.php
 X http://gwc.gofoxy.net:2108/gwc/cgi-bin/fc
 X http://gwc.iblinx.com:2108/gwc/cgi-bin/fc
 X http://gwc.marksieklucki.com/skulls.php
+X http://gwc.mccarragher.org/skulls/skulls.php
 X http://gwc2.wodi.org/skulls.php
+X http://gweb.4octets.co.uk/skulls.php
+X http://gweb.dwbo.nl/
+X http://gweb2.4octets.co.uk/gwc.php
 X http://gwebcache.ns1.net/
 X http://gwebcache.spearforensics.com/
 X http://htmlhell.com/
@@ -89,6 +94,7 @@ X http://www.gofoxy.net/gwc/cgi-bin/fc
 X http://www.lo7.wroc.pl/~stash/old-g2-moved/bazooka.php
 X http://www.myfoxy.net/gwc/cgi-bin/fc
 X http://www.omhub.ru/mibew/view/
+X https://gwc-ale5000.rhcloud.com/skulls.php
 
 #
 # Keep these comments at the end
