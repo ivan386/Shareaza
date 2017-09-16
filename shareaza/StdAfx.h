@@ -31,48 +31,6 @@
 	#define RELEASE_BUILD 0
 #endif
 
-//
-// Configuration
-//
-
-#if 1
-
-#pragma warning ( disable : 4619 )	// #pragma warning : there is no warning number
-
-// Warnings that are normally ON by default
-#pragma warning ( disable : 4350 )	// (Level 1)	behavior change: 'member1' called instead of 'member2'
-#pragma warning ( disable : 4351 )	// (Level 1)	new behavior: elements of array 'array' will be default initialized
-
-#pragma warning ( disable : 4347 )	// (Level 4)	behavior change: 'function template' is called instead of 'function'
-#pragma warning ( disable : 4512 )	// (Level 4)	'class' : assignment operator could not be generated
-
-// Warnings that are normally OFF by default (enabled by using /Wall)
-#pragma warning ( disable : 4264 )	// (Level 1)	'virtual_function' : no override available for virtual member function from base 'class'; function is hidden
-#pragma warning ( disable : 4555 )	// (Level 1)	expression has no effect; expected expression with side-effect
-#pragma warning ( disable : 4711 )	// (Level 1)	function 'function' selected for inline expansion
-
-#pragma warning ( disable : 4191 )	// (Level 3)	'operator/operation' : unsafe conversion from 'type of expression' to 'type required'
-#pragma warning ( disable : 4640 )	// (Level 3)	'instance' : construction of local static object is not thread-safe
-#pragma warning ( disable : 4738 )	// (Level 3)	storing 32-bit float result in memory, possible loss of performance
-
-#pragma warning ( disable : 4061 )	// (Level 4)	enumerator 'identifier' in switch of enum 'enumeration' is not explicitly handled by a case label
-#pragma warning ( disable : 4263 )	// (Level 4)	'function' : member function does not override any base class virtual member function
-#pragma warning ( disable : 4266 )	// (Level 4)	'function' : no override available for virtual member function from base 'type'; function is hidden
-#pragma warning ( disable : 4365 )	// (Level 4)	'action' : conversion from 'type_1' to 'type_2', signed/unsigned mismatch
-#pragma warning ( disable : 4514 )	// (Level 4)	'function' : unreferenced inline function has been removed
-#pragma warning ( disable : 4571 )	// (Level 4)	Informational: catch(...) semantics changed since Visual C++ 7.1; structured exceptions (SEH) are no longer caught
-#pragma warning ( disable : 4625 )	// (Level 4)	'derived class' : copy constructor could not be generated because a base class copy constructor is inaccessible
-#pragma warning ( disable : 4626 )	// (Level 4)	'derived class' : assignment operator could not be generated because a base class assignment operator is inaccessible
-#pragma warning ( disable : 4710 )	// (Level 4)	'function' : function not inlined
-#pragma warning ( disable : 4820 )	// (Level 4)	'bytes' bytes padding added after construct 'member_name'
-
-#if _MSC_VER >= 1900 // VS 2015
-#pragma warning ( disable : 5026 )	// (Level 4)	'derived class' : move constructor was implicitly defined as deleted because a base class move constructor is inaccessible or deleted
-#pragma warning ( disable : 5027 )	// (Level 4)	'derived class' : move assignment operator was implicitly defined as deleted because a base class move assignment operator is inaccessible or deleted
-#endif
-
-#endif
-
 #include "targetver.h"					// Setup versioning for windows SDK/DDK
 
 #ifndef _SECURE_ATL
@@ -102,16 +60,6 @@
 #define _ATL_NO_COM_SUPPORT					// Prevents ATL COM-related code from being compiled
 #define _ATL_CSTRING_EXPLICIT_CONSTRUCTORS	// Makes certain ATL CString constructors explicit, preventing any unintentional conversions
 #define _ATL_CSTRING_NO_CRT
-
-#pragma warning ( push )			// Suppress Microsoft warnings
-
-#pragma warning ( disable : 4302 )	// afxwin4.inl : 'type cast' : truncation from 'HIMAGELIST' to 'WCHAR'
-#pragma warning ( disable : 4668 )	// 'symbol' is not defined as a preprocessor macro, replacing with '0' for '#if/#elif'
-#pragma warning ( disable : 4917 )	// ocidl.h : 'symbol' a GUID can only be associated with a class, interface or namespace
-#pragma warning ( disable : 4371 )	// boost : layout of class may have changed from a previous version of the compiler due to better packing of member
-#pragma warning ( disable : 4987 )	// nonstandard extension used: 'throw (...)'
-#pragma warning ( disable : 4996 )	// Function call with parameters that may be unsafe
-
 
 //
 // MFC
@@ -213,8 +161,6 @@
 #define BZ_NO_STDIO
 #include "../bzlib/bzlib.h"
 #include "zlib.h"
-
-#pragma warning ( pop )
 
 #include "MinMax.hpp"
 
