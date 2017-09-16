@@ -523,7 +523,7 @@ BOOL CNetwork::Resolve(LPCTSTR pszHost, int nPort, SOCKADDR_IN* pHost, BOOL bNam
 
 		strHost = strHost.Left( nColon );
 	}
-	
+
 	if ( ! IsValidDomain( strHost ) )
 		return FALSE;
 
@@ -744,7 +744,7 @@ bool CNetwork::PreRun()
 	// Get host name
 	gethostname( m_sHostName.GetBuffer( 255 ), 255 );
 	m_sHostName.ReleaseBuffer();
-					
+
 	// Get all IPs
 	if ( hostent* h = gethostbyname( m_sHostName ) )
 	{
@@ -838,7 +838,7 @@ void CNetwork::OnRun()
 						Handshakes.Disconnect();
 
 						DeletePorts();
-			
+
 						// Change port to random
 						Settings.Connection.InPort = Network.RandomPort();
 
@@ -956,7 +956,7 @@ void CNetwork::OnWinsock(WPARAM wParam, LPARAM lParam)
 	}
 	else
 	{
-		theApp.Message( MSG_ERROR, IDS_NETWORK_RESOLVE_FAIL, pResolve->m_sAddress );
+		theApp.Message( MSG_ERROR, IDS_NETWORK_RESOLVE_FAIL, (LPCTSTR)pResolve->m_sAddress );
 
 		switch ( pResolve->m_nCommand )
 		{
@@ -1240,7 +1240,7 @@ void CNetwork::RunJobs()
 		bool bKeep = true;
 		CSingleLock oNetworkLock( &m_pSection, FALSE );
 		if ( oNetworkLock.Lock( 250 ) )
-		{		
+		{
 			switch ( oJob.GetType() )
 			{
 			case CJob::Hit:

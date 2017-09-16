@@ -322,7 +322,7 @@ bool CLibraryFolders::AddSharedFolder(CListCtrl& oList)
 		if ( bSubFolder )
 		{
 			CString strMessage;
-			strMessage.Format( LoadString( IDS_LIBRARY_SUBFOLDER_IN_LIBRARY ), strPath );
+			strMessage.Format( LoadString( IDS_LIBRARY_SUBFOLDER_IN_LIBRARY ), (LPCTSTR)strPath );
 
 			if ( bForceAdd || AfxMessageBox( strMessage, MB_ICONQUESTION|MB_YESNO ) == IDYES )
 			{
@@ -341,7 +341,7 @@ bool CLibraryFolders::AddSharedFolder(CListCtrl& oList)
 		else
 		{
 			CString strMessage;
-			strMessage.Format( LoadString( IDS_WIZARD_SHARE_ALREADY ), strOld );
+			strMessage.Format( LoadString( IDS_WIZARD_SHARE_ALREADY ), (LPCTSTR)strOld );
 			AfxMessageBox( strMessage, MB_ICONINFORMATION );
 			return false;
 		}
@@ -814,7 +814,7 @@ void CLibraryFolders::Maintain()
 	for ( POSITION pos = GetFolderIterator() ; pos ; )
 	{
 		CLibraryFolder* pFolder = GetNextFolder( pos );
-		
+
 		pFolder->Maintain( TRUE );
 
 		if ( pIShellLib && theApp.m_pfnSHCreateItemFromParsingName )

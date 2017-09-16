@@ -264,7 +264,7 @@ int CG1Packet::GGEPReadCachedHosts(const CGGEPBlock& pGGEP)
 			WORD nPort = 0;
 			pIPPs->Read( (void*)&nAddress, 4 );
 			pIPPs->Read( (void*)&nPort, 2 );
-			DEBUG_ONLY( theApp.Message( MSG_DEBUG, _T("[G1] Got host %s:%i"), (LPCTSTR)CString( inet_ntoa( *(IN_ADDR*)&nAddress ) ), nPort ) ); 
+			DEBUG_ONLY( theApp.Message( MSG_DEBUG, _T("[G1] Got host %s:%i"), (LPCTSTR)CString( inet_ntoa( *(IN_ADDR*)&nAddress ) ), nPort ) );
 			CHostCacheHostPtr pCachedHost =
 				HostCache.Gnutella1.Add( (IN_ADDR*)&nAddress, nPort );
 			if ( pCachedHost ) nCount++;
@@ -286,7 +286,7 @@ int CG1Packet::GGEPReadCachedHosts(const CGGEPBlock& pGGEP)
 				WORD nPort = 0;
 				pGDNAs->Read( (void*)&nAddress, 4 );
 				pGDNAs->Read( (void*)&nPort, 2 );
-				DEBUG_ONLY( theApp.Message( MSG_DEBUG, _T("Got GDNA host %s:%i"), (LPCTSTR)CString( inet_ntoa( *(IN_ADDR*)&nAddress ) ), nPort ) ); 
+				DEBUG_ONLY( theApp.Message( MSG_DEBUG, _T("Got GDNA host %s:%i"), (LPCTSTR)CString( inet_ntoa( *(IN_ADDR*)&nAddress ) ), nPort ) );
 				CHostCacheHostPtr pCachedHost =
 					HostCache.Gnutella1.Add( (IN_ADDR*)&nAddress, nPort );
 				if ( pCachedHost ) nCount++;
@@ -407,7 +407,7 @@ bool CG1Packet::ReadHUGE(CShareazaFile* pFile)
 	else if ( oBTH.fromUrn< Hashes::base16Encoding >( strURN ) )	// Got BTH base16
 		pFile->m_oBTH   = oBTH;
 	else
-		theApp.Message( MSG_DEBUG | MSG_FACILITY_SEARCH, _T("[G1] Got packet with unknown HUGE \"%s\" (%d bytes)"), strURN, len );
+		theApp.Message( MSG_DEBUG | MSG_FACILITY_SEARCH, _T("[G1] Got packet with unknown HUGE \"%s\" (%d bytes)"), (LPCTSTR)strURN, len );
 
 	return true;
 }
@@ -703,7 +703,7 @@ BOOL CG1Packet::OnPong(const SOCKADDR_IN* pHost)
 		CGGEPBlock pGGEP;
 		if ( pGGEP.ReadFromPacket( this ) )
 		{
-			// Read vendor code			
+			// Read vendor code
 			if ( CGGEPItem* pVC = pGGEP.Find( GGEP_HEADER_VENDOR_INFO, 4 ) )
 			{
 				CHAR szaVendor[ 5 ] = {};
@@ -918,7 +918,7 @@ BOOL CG1Packet::OnPush(const SOCKADDR_IN* pHost)
 		}
 	}
 
-	if ( ! nPort || ( m_nHops && ( 
+	if ( ! nPort || ( m_nHops && (
 		Network.IsFirewalledAddress( (IN_ADDR*)&nAddress ) ||
 		Network.IsReserved( (IN_ADDR*)&nAddress ) ) ) )
 	{

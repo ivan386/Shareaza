@@ -213,16 +213,16 @@ void CHostBrowser::Stop(BOOL bCompleted)
 		if ( m_pProfile && m_pNotify )
 			m_pNotify->OnProfileReceived();
 
-		theApp.Message( MSG_NOTICE, IDS_BROWSE_FINISHED, m_sAddress, m_nHits );
+		theApp.Message( MSG_NOTICE, IDS_BROWSE_FINISHED, (LPCTSTR)m_sAddress, m_nHits );
 	}
 	else if ( IsValid() )
 	{
-		theApp.Message( MSG_INFO, IDS_BROWSE_CLOSED, m_sAddress );
+		theApp.Message( MSG_INFO, IDS_BROWSE_CLOSED, (LPCTSTR)m_sAddress );
 	}
 
 	m_nState	= hbsNull;
 	m_tPushed	= 0;
-	
+
 	if ( m_nProtocol != PROTOCOL_ED2K && m_nProtocol != PROTOCOL_DC )
 	{
 		CTransfer::Close();
@@ -324,8 +324,8 @@ void CHostBrowser::OnDropped()
 
 		if ( m_nState == hbsConnecting )
 		{
-			theApp.Message( MSG_ERROR, IDS_BROWSE_CANT_CONNECT_TO, m_sAddress );
-			
+			theApp.Message( MSG_ERROR, IDS_BROWSE_CANT_CONNECT_TO, (LPCTSTR)m_sAddress );
+
 			if ( ! m_tPushed && SendPush( TRUE ) )
 				return;
 		}
@@ -338,7 +338,7 @@ void CHostBrowser::OnDropped()
 				return;
 			}
 
-			theApp.Message( MSG_ERROR, IDS_BROWSE_DROPPED, m_sAddress );
+			theApp.Message( MSG_ERROR, IDS_BROWSE_DROPPED, (LPCTSTR)m_sAddress );
 		}
 	}
 
@@ -366,7 +366,7 @@ BOOL CHostBrowser::OnRun()
 	case hbsHeaders:
 		if ( nNow - m_tConnected > Settings.Connection.TimeoutHandshake * 3 )
 		{
-			theApp.Message( MSG_ERROR, IDS_BROWSE_TIMEOUT, m_sAddress );
+			theApp.Message( MSG_ERROR, IDS_BROWSE_TIMEOUT, (LPCTSTR)m_sAddress );
 			Stop();
 			return FALSE;
 		}
@@ -374,7 +374,7 @@ BOOL CHostBrowser::OnRun()
 	case hbsContent:
 		if ( nNow - m_mInput.tLast > Settings.Connection.TimeoutTraffic )
 		{
-			theApp.Message( MSG_ERROR, IDS_BROWSE_TIMEOUT, m_sAddress );
+			theApp.Message( MSG_ERROR, IDS_BROWSE_TIMEOUT, (LPCTSTR)m_sAddress );
 			Stop();
 			return FALSE;
 		}
@@ -400,7 +400,7 @@ BOOL CHostBrowser::SendPush(BOOL bMessage)
 		m_tPushed = GetTickCount();
 
 		if ( bMessage )
-			theApp.Message( MSG_INFO, IDS_BROWSE_PUSHED_TO, m_sAddress );
+			theApp.Message( MSG_INFO, IDS_BROWSE_PUSHED_TO, (LPCTSTR)m_sAddress );
 
 		return TRUE;
 	}
@@ -607,7 +607,7 @@ void CHostBrowser::SendRequest()
 
 	m_mInput.pLimit = m_mOutput.pLimit = &Settings.Bandwidth.Downloads;
 
-	theApp.Message( MSG_INFO, IDS_BROWSE_SENT_REQUEST, m_sAddress );
+	theApp.Message( MSG_INFO, IDS_BROWSE_SENT_REQUEST, (LPCTSTR)m_sAddress );
 }
 
 //////////////////////////////////////////////////////////////////////
@@ -643,9 +643,8 @@ BOOL CHostBrowser::ReadResponseLine()
 	}
 	else
 	{
-		theApp.Message( MSG_DEBUG, _T("UNKNOWN BROWSE RESPONSE: %s: %s"),
-			m_sAddress, strLine );
-		theApp.Message( MSG_ERROR, IDS_BROWSE_NOT_HTTP, m_sAddress );
+		theApp.Message( MSG_DEBUG, _T("UNKNOWN BROWSE RESPONSE: %s: %s"), (LPCTSTR)m_sAddress, (LPCTSTR)strLine );
+		theApp.Message( MSG_ERROR, IDS_BROWSE_NOT_HTTP, (LPCTSTR)m_sAddress );
 		Stop();
 		return FALSE;
 	}
@@ -659,8 +658,7 @@ BOOL CHostBrowser::ReadResponseLine()
 		strMessage.TrimLeft();
 		if ( strMessage.GetLength() > 256 ) strMessage = _T("No Message");
 
-		theApp.Message( MSG_ERROR, IDS_BROWSE_HTTPCODE, m_sAddress, strCode,
-			strMessage );
+		theApp.Message( MSG_ERROR, IDS_BROWSE_HTTPCODE, (LPCTSTR)m_sAddress, (LPCTSTR)strCode, (LPCTSTR)strMessage );
 
 		Stop();
 		return FALSE;
@@ -719,7 +717,7 @@ BOOL CHostBrowser::OnHeadersComplete()
 
 	if ( m_nProtocol == PROTOCOL_ANY || m_nLength == 0 )
 	{
-		theApp.Message( MSG_ERROR, IDS_BROWSE_BAD_RESPONSE, m_sAddress );
+		theApp.Message( MSG_ERROR, IDS_BROWSE_BAD_RESPONSE, (LPCTSTR)m_sAddress );
 		Stop();
 		return FALSE;
 	}
@@ -729,8 +727,7 @@ BOOL CHostBrowser::OnHeadersComplete()
 	m_pBuffer->Clear();
 	m_mInput.tLast	= GetTickCount();
 
-	theApp.Message( MSG_INFO, IDS_BROWSE_DOWNLOADING_FROM,
-		m_sAddress, protocolNames[ m_nProtocol == PROTOCOL_NULL ? PROTOCOL_HTTP : m_nProtocol ]);
+	theApp.Message( MSG_INFO, IDS_BROWSE_DOWNLOADING_FROM, (LPCTSTR)m_sAddress, protocolNames[ m_nProtocol == PROTOCOL_NULL ? PROTOCOL_HTTP : m_nProtocol ]);
 
 	return TRUE;
 }
@@ -813,7 +810,7 @@ BOOL CHostBrowser::StreamPacketsG1()
 
 		if ( pPacket->m_nLength < 0 || nLength >= (DWORD)Settings.Gnutella.MaximumPacket * 8 )
 		{
-			theApp.Message( MSG_ERROR, IDS_BROWSE_PACKET_ERROR, m_sAddress );
+			theApp.Message( MSG_ERROR, IDS_BROWSE_PACKET_ERROR, (LPCTSTR)m_sAddress );
 			Stop();
 			return FALSE;
 		}
@@ -883,7 +880,7 @@ BOOL CHostBrowser::OnPacket(CG1Packet* pPacket)
 
 	if ( pHits == NULL )
 	{
-		theApp.Message( MSG_ERROR, IDS_BROWSE_PACKET_ERROR, m_sAddress );
+		theApp.Message( MSG_ERROR, IDS_BROWSE_PACKET_ERROR, (LPCTSTR)m_sAddress );
 		return FALSE;
 	}
 
@@ -901,7 +898,7 @@ BOOL CHostBrowser::OnPacket(CG2Packet* pPacket)
 			OnQueryHits( pHits );
 		else
 		{
-			theApp.Message( MSG_ERROR, IDS_BROWSE_PACKET_ERROR, m_sAddress );
+			theApp.Message( MSG_ERROR, IDS_BROWSE_PACKET_ERROR, (LPCTSTR)m_sAddress );
 			return FALSE;
 		}
 		break;

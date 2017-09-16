@@ -258,7 +258,7 @@ CQueryHit* CQueryHit::FromG1Packet(CG1Packet* pPacket, int* pnHops)
 				if ( pVendor )
 					strVendorName = pVendor->m_sName;
 
-				theApp.Message( MSG_DEBUG | MSG_FACILITY_SEARCH, L"[G1] Invalid compressed metadata. Vendor: %s", strVendorName );
+				theApp.Message( MSG_DEBUG | MSG_FACILITY_SEARCH, L"[G1] Invalid compressed metadata. Vendor: %s", (LPCTSTR)strVendorName );
 			}
 		}
 
@@ -1004,13 +1004,15 @@ BOOL CQueryHit::CheckValid() const
 {
 	if ( m_sName.GetLength() > 160 )
 	{
-		theApp.Message( MSG_DEBUG | MSG_FACILITY_SEARCH, _T("Got bogus hit packet from %s. Too long name (> 160): %d symbols. File \"%s\"."), (LPCTSTR)CString( inet_ntoa( m_pAddress ) ), m_sName.GetLength(), m_sName );
+		theApp.Message( MSG_DEBUG | MSG_FACILITY_SEARCH, _T("Got bogus hit packet from %s. Too long name (> 160): %d symbols. File \"%s\"."),
+			(LPCTSTR)CString( inet_ntoa( m_pAddress ) ), m_sName.GetLength(), (LPCTSTR)m_sName );
 		return FALSE;
 	}
 
 	if ( ! HasHash() )
 	{
-		theApp.Message( MSG_DEBUG | MSG_FACILITY_SEARCH, _T("Got bogus hit packet from %s. No hash. File \"%s\"."), (LPCTSTR)CString( inet_ntoa( m_pAddress ) ), m_sName );
+		theApp.Message( MSG_DEBUG | MSG_FACILITY_SEARCH, _T("Got bogus hit packet from %s. No hash. File \"%s\"."),
+			(LPCTSTR)CString( inet_ntoa( m_pAddress ) ), (LPCTSTR)m_sName );
 		return FALSE;
 	}
 
@@ -1024,7 +1026,8 @@ BOOL CQueryHit::CheckValid() const
 			if ( sExt.CompareNoCase( _T("wma") ) == 0 ||
 				 sExt.CompareNoCase( _T("wmv") ) == 0 )
 			{
-				theApp.Message( MSG_DEBUG | MSG_FACILITY_SEARCH, _T("Got bogus hit packet from %s. No metadata in extended client. File \"%s\"."), (LPCTSTR)CString( inet_ntoa( m_pAddress ) ), m_sName );
+				theApp.Message( MSG_DEBUG | MSG_FACILITY_SEARCH, _T("Got bogus hit packet from %s. No metadata in extended client. File \"%s\"."),
+					(LPCTSTR)CString( inet_ntoa( m_pAddress ) ), (LPCTSTR)m_sName );
 				return FALSE;
 			}
 		}
@@ -1037,7 +1040,8 @@ BOOL CQueryHit::CheckValid() const
 		{
 			if ( ++nCurWord > 50 )
 			{
-				theApp.Message( MSG_DEBUG | MSG_FACILITY_SEARCH, _T("Got bogus hit packet from %s. Too long word (> 50 symbols) in name. File \"%s\"."), (LPCTSTR)CString( inet_ntoa( m_pAddress ) ), m_sName );
+				theApp.Message( MSG_DEBUG | MSG_FACILITY_SEARCH, _T("Got bogus hit packet from %s. Too long word (> 50 symbols) in name. File \"%s\"."),
+					(LPCTSTR)CString( inet_ntoa( m_pAddress ) ), (LPCTSTR)m_sName );
 				return FALSE;
 			}
 		}
@@ -1050,7 +1054,8 @@ BOOL CQueryHit::CheckValid() const
 	}
 	if ( nWords > 30 )
 	{
-		theApp.Message( MSG_DEBUG | MSG_FACILITY_SEARCH, _T("Got bogus hit packet from %s. Too many words (> 30) in name: %d words. File \"%s\"."), (LPCTSTR)CString( inet_ntoa( m_pAddress ) ), nWords, m_sName );
+		theApp.Message( MSG_DEBUG | MSG_FACILITY_SEARCH, _T("Got bogus hit packet from %s. Too many words (> 30) in name: %d words. File \"%s\"."),
+			(LPCTSTR)CString( inet_ntoa( m_pAddress ) ), nWords, (LPCTSTR)m_sName );
 		return FALSE;
 	}
 
@@ -1061,7 +1066,8 @@ BOOL CQueryHit::CheckValid() const
 			CString sValue = pAttribute->GetValue();
 			if ( _tcsnistr( (LPCTSTR)sValue, L"not related", 11 ) )
 			{
-				theApp.Message( MSG_DEBUG | MSG_FACILITY_SEARCH, _T("Got bogus hit packet from %s. Bogus matadata: \"%s\". File \"%s\"."), (LPCTSTR)CString( inet_ntoa( m_pAddress ) ), sValue, m_sName );
+				theApp.Message( MSG_DEBUG | MSG_FACILITY_SEARCH, _T("Got bogus hit packet from %s. Bogus matadata: \"%s\". File \"%s\"."),
+					(LPCTSTR)CString( inet_ntoa( m_pAddress ) ), (LPCTSTR)sValue, (LPCTSTR)m_sName );
 				return FALSE;
 			}
 		}
@@ -1202,7 +1208,7 @@ void CQueryHit::ReadGGEP(CG1Packet* pPacket)
 				else if ( oBTH.fromUrn(   strURN ) );	// Got BTH base32
 				else if ( oBTH.fromUrn< Hashes::base16Encoding >( strURN ) );	// Got BTH base16
 				else
-					theApp.Message( MSG_DEBUG | MSG_FACILITY_SEARCH, _T("[G1] Got hit packet with unknown GGEP URN: \"%s\""), strURN );
+					theApp.Message( MSG_DEBUG | MSG_FACILITY_SEARCH, _T("[G1] Got hit packet with unknown GGEP URN: \"%s\""), (LPCTSTR)strURN );
 			}
 			else if ( pItemPos->IsNamed( GGEP_HEADER_TTROOT ) )
 			{

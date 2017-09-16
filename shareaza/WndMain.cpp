@@ -1512,8 +1512,7 @@ void CMainWnd::UpdateMessages()
 			if ( Settings.General.GUIMode == GUI_BASIC )
 			{
 				// In the basic GUI, don't bother with mode details or neighbour count.
-				strStatusbar.Format( LoadString( IDS_STATUS_BAR_CONNECTED_SIMPLE ),
-					Settings.SmartVolume( nLocalVolume, KiloBytes ) );
+				strStatusbar.Format( LoadString( IDS_STATUS_BAR_CONNECTED_SIMPLE ), (LPCTSTR)Settings.SmartVolume( nLocalVolume, KiloBytes ) );
 			}
 			else
 			{
@@ -1521,7 +1520,7 @@ void CMainWnd::UpdateMessages()
 				strStatusbar.Format( LoadString( Neighbours.IsG2Hub() ?
 					( Neighbours.IsG1Ultrapeer() ? IDS_STATUS_BAR_CONNECTED_HUB_UP : IDS_STATUS_BAR_CONNECTED_HUB ) :
 					( Neighbours.IsG1Ultrapeer() ? IDS_STATUS_BAR_CONNECTED_UP : IDS_STATUS_BAR_CONNECTED ) ),
-					Neighbours.GetStableCount(), Settings.SmartVolume( nLocalVolume, KiloBytes ) );
+					Neighbours.GetStableCount(), (LPCTSTR)Settings.SmartVolume( nLocalVolume, KiloBytes ) );
 			}
 		}
 		else if ( Network.IsConnected() )
@@ -1532,8 +1531,7 @@ void CMainWnd::UpdateMessages()
 				! Settings.eDonkey.EnableToday &&
 				! Settings.DC.EnableToday )
 			{
-				strStatusbar.Format( LoadString( IDS_STATUS_BAR_CONNECTED_SIMPLE ),
-					Settings.SmartVolume( nLocalVolume, KiloBytes ) );
+				strStatusbar.Format( LoadString( IDS_STATUS_BAR_CONNECTED_SIMPLE ), (LPCTSTR)Settings.SmartVolume( nLocalVolume, KiloBytes ) );
 			}
 			else
 				// Trying to connect
@@ -1560,8 +1558,8 @@ void CMainWnd::UpdateMessages()
 
 		// StatusBar pane 1
 		strStatusbar.Format( LoadString( IDS_STATUS_BAR_BANDWIDTH ),
-			Settings.SmartSpeed( CGraphItem::GetValue( GRC_TOTAL_BANDWIDTH_IN ), bits ),
-			Settings.SmartSpeed( CGraphItem::GetValue( GRC_TOTAL_BANDWIDTH_OUT ), bits ),
+			(LPCTSTR)Settings.SmartSpeed( CGraphItem::GetValue( GRC_TOTAL_BANDWIDTH_IN ), bits ),
+			(LPCTSTR)Settings.SmartSpeed( CGraphItem::GetValue( GRC_TOTAL_BANDWIDTH_OUT ), bits ),
 			CGraphItem::GetValue( GRC_DOWNLOADS_TRANSFERS ),
 			CGraphItem::GetValue( GRC_UPLOADS_TRANSFERS ) );
 		m_wndStatusBar.GetPaneText( 1, strOld );
@@ -1583,8 +1581,8 @@ void CMainWnd::UpdateMessages()
 		CString strTip;
 		strTip.Format( LoadString( IDS_TRAY_TIP ),
 			CGraphItem::GetValue( GRC_GNUTELLA_CONNECTIONS ),
-			Settings.SmartSpeed( CGraphItem::GetValue( GRC_TOTAL_BANDWIDTH_IN ), bits ),
-			Settings.SmartSpeed( CGraphItem::GetValue( GRC_TOTAL_BANDWIDTH_OUT ), bits ),
+			(LPCTSTR)Settings.SmartSpeed( CGraphItem::GetValue( GRC_TOTAL_BANDWIDTH_IN ), bits ),
+			(LPCTSTR)Settings.SmartSpeed( CGraphItem::GetValue( GRC_TOTAL_BANDWIDTH_OUT ), bits ),
 			CGraphItem::GetValue( GRC_DOWNLOADS_TRANSFERS ),
 			CGraphItem::GetValue( GRC_UPLOADS_TRANSFERS ) );
 		strTip = Settings.SmartAgent() + _T("\r\n") + strTip;
@@ -1613,7 +1611,7 @@ void CMainWnd::UpdateMessages()
 		else
 		{
 			m_pTaskbar->SetProgressState( hWnd, TBPF_NOPROGRESS );
-			sAppBarTip = Settings.SmartAgent();				
+			sAppBarTip = Settings.SmartAgent();
 		}
 		m_pTaskbar->SetThumbnailTooltip( hWnd, sAppBarTip );
 	}
@@ -2272,7 +2270,7 @@ void CMainWnd::OnViewSecurity()
 	OpenFromTray();
 }
 
-void CMainWnd::OnUpdateViewScheduler(CCmdUI* pCmdUI) 
+void CMainWnd::OnUpdateViewScheduler(CCmdUI* pCmdUI)
 {
 	pCmdUI->SetCheck( m_pWindows.Find( RUNTIME_CLASS(CSchedulerWnd) ) != NULL );
 }
@@ -3219,7 +3217,7 @@ bool CMainWnd::SnarlNotify(const CString& sText, const CString& sTitle, DWORD dw
 	case NIIF_WARNING:
 		sCommand += "&icon=!system-warning";
 		break;
-	case NIIF_ERROR:		
+	case NIIF_ERROR:
 		sCommand += "&icon=!system-critical";
 		break;
 	case NIIF_USER:

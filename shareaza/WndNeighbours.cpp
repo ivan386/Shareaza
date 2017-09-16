@@ -215,11 +215,11 @@ void CNeighboursWnd::Update()
 
 		pItem->Format( 3, _T("%u - %u"), pNeighbour->m_nInputCount, pNeighbour->m_nOutputCount );
 		pItem->Format( 4, _T("%s - %s"),
-			Settings.SmartSpeed( pNeighbour->m_mInput.nMeasure ),
-			Settings.SmartSpeed( pNeighbour->m_mOutput.nMeasure ) );
+			(LPCTSTR)Settings.SmartSpeed( pNeighbour->m_mInput.nMeasure ),
+			(LPCTSTR)Settings.SmartSpeed( pNeighbour->m_mOutput.nMeasure ) );
 		pItem->Format( 5, _T("%s - %s"),
-			Settings.SmartVolume( pNeighbour->m_mInput.nTotal ),
-			Settings.SmartVolume( pNeighbour->m_mOutput.nTotal ) );
+			(LPCTSTR)Settings.SmartVolume( pNeighbour->m_mInput.nTotal ),
+			(LPCTSTR)Settings.SmartVolume( pNeighbour->m_mOutput.nTotal ) );
 		pItem->Format( 6, _T("%u (%u)"), pNeighbour->m_nOutbound, pNeighbour->m_nLostCount );
 
 		if ( pNeighbour->m_nState >= nrsConnected )
@@ -667,7 +667,7 @@ BOOL CNeighboursWnd::PreTranslateMessage(MSG* pMsg)
 				pLock.Lock();
 
 				BOOL bResult = pNeighbour->ProcessPackets( dlg.GetData() );
-				
+
 				pLock.Unlock();
 
 				if ( bResult )

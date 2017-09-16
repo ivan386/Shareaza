@@ -253,7 +253,7 @@ CShareazaApp::CShareazaApp()
 	osvi.dwMajorVersion = 6;
 	osvi.dwMinorVersion = 1;
 	m_bIs7OrNewer = VerifyVersionInfo( &osvi, VER_MAJORVERSION | VER_MINORVERSION | VER_SERVICEPACKMAJOR, dwlMajorMinorPack ) != FALSE;
-	
+
 	// Half-Open limit from Windows XP SP2 to Windows Vista SP1
 	bool bCanBeRegistryPatched = false;
 	osvi.dwMajorVersion = 5;
@@ -747,7 +747,7 @@ BOOL CShareazaApp::Register()
 		//	oTasks.AddKnownCategory( KDC_RECENT );
 		//	oTasks.AddTask( _T("shareaza:command:search"), _T(""), LoadString( IDS_SEARCH_TASK ) + _T("..."), theApp.m_strBinaryPath, - IDR_SEARCHFRAME );
 		//	oTasks.AddTask( _T("shareaza:command:download"), _T(""), LoadString( IDS_DOWNLOAD_TASK ) + _T("..."), theApp.m_strBinaryPath, - IDR_DOWNLOADSFRAME );
-	
+
 		// For VS2008:
 		CComPtr< ICustomDestinationList > pList;
 		if ( SUCCEEDED( pList.CoCreateInstance( CLSID_DestinationList ) ) )
@@ -1004,7 +1004,7 @@ BOOL CShareazaApp::OpenDownload(LPCTSTR lpszFileName, BOOL bDoIt)
 			{
 				// Rename old file
 				::MoveFileEx( _T("\\\\?\\") + strFileName, _T("\\\\?\\") + strFileName + _T(".sav"), MOVEFILE_REPLACE_EXISTING | MOVEFILE_WRITE_THROUGH );
-				
+
 				theApp.Message( MSG_NOTICE, _T("Download file \"%s\" has been successfully loaded and saved as \"%s\"."), (LPCTSTR)strFileName, (LPCTSTR)pDownload->m_sPath );
 			}
 			else
@@ -1060,7 +1060,7 @@ void CShareazaApp::InitResources()
 		m_nVersion[0], m_nVersion[1],
 		m_nVersion[2], m_nVersion[3] );
 
-	m_sVersionLong = m_sVersion + 
+	m_sVersionLong = m_sVersion +
 #ifdef _DEBUG
 		_T(" Debug")
 #else
@@ -1073,7 +1073,7 @@ void CShareazaApp::InitResources()
 #endif
 #ifdef LAN_MODE
 		_T(" LAN")
-#endif		
+#endif
 		_T(" (r") _T(__REVISION__) _T(" ") + m_sBuildDate + _T(")");
 
 	BT_SetAppVersion( m_sVersionLong );
@@ -1502,7 +1502,7 @@ CString GetErrorString(DWORD dwError)
 void ReportError(DWORD dwError)
 {
 	CString sError = GetErrorString( dwError );
-	theApp.Message( MSG_ERROR, _T("%s"), sError );
+	theApp.Message( MSG_ERROR, _T("%s"), (LPCTSTR)sError );
 	AfxMessageBox( sError, MB_OK | MB_ICONEXCLAMATION );
 }
 
@@ -2537,7 +2537,7 @@ BOOL CreateDirectory(LPCTSTR szPath)
 	}
 	return CreateDirectory( CString( _T("\\\\?\\") ) + szPath, NULL );
 }
-	
+
 void DeleteFiles(CStringList& pList)
 {
 	DWORD nTotal = (DWORD)pList.GetCount();
@@ -2770,7 +2770,7 @@ CString LoadRichHTML(UINT nResourceID, CString& strResponse, CShareazaFile* pFil
 	{
 		int nStart = strBody.Find( _T("<%") );
 		if ( nStart < 0 ) break;
-		
+
 		int nEnd = strBody.Find( _T("%>") );
 		if ( nEnd < nStart ) break;
 
@@ -2778,7 +2778,7 @@ CString LoadRichHTML(UINT nResourceID, CString& strResponse, CShareazaFile* pFil
 
 		strReplace.TrimLeft();
 		strReplace.TrimRight();
-		
+
 		if ( strReplace.CompareNoCase( _T("Client") ) == 0 )
 			strReplace = CLIENT_NAME_T;
 		else if ( strReplace.CompareNoCase( _T("SmartAgent") ) == 0 )
@@ -2952,7 +2952,7 @@ BOOL SaveIcon(HICON hIcon, CBuffer& oBuffer, int colors)
 	HDC hDC = GetDC( NULL );
 	if ( ! hDC )
 		return FALSE;
-	
+
 	// Calculate mask size
 	bih.bmiHeader.biBitCount = 1;
 	if ( ! GetDIBits( hDC, ii.hbmMask, 0, cx, NULL, &bih, DIB_RGB_COLORS ) )

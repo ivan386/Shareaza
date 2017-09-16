@@ -83,12 +83,12 @@ BOOL CPlugins::Register(const CString& sGeneralPath)
 				if ( hr == S_OK )
 				{
 					nSucceeded++;
-					theApp.Message( MSG_NOTICE, _T("Registered plugin: %s"), sName );
+					theApp.Message( MSG_NOTICE, _T("Registered plugin: %s"), (LPCTSTR)sName );
 				}
 				else if ( FAILED( hr ) )
 				{
 					nFailed++;
-					theApp.Message( MSG_ERROR, _T("Failed to register plugin: %s : 0x%08x"), sName, hr );
+					theApp.Message( MSG_ERROR, _T("Failed to register plugin: %s : 0x%08x"), (LPCTSTR)sName, hr );
 				}
 
 				FreeLibrary( hDll );
@@ -128,12 +128,12 @@ BOOL CPlugins::Register(const CString& sGeneralPath)
 					if ( dwError == ERROR_SUCCESS )
 					{
 						nSucceeded++;
-						theApp.Message( MSG_NOTICE, _T("Registered plugin: %s"), sName );
+						theApp.Message( MSG_NOTICE, _T("Registered plugin: %s"), (LPCTSTR)sName );
 					}
 					else
 					{
 						nFailed++;
-						theApp.Message( MSG_ERROR, _T("Failed to register plugin: %s : 0x%08x"), sName, dwError );
+						theApp.Message( MSG_ERROR, _T("Failed to register plugin: %s : 0x%08x"), (LPCTSTR)sName, dwError );
 					}
 				}
 			}
@@ -327,7 +327,7 @@ IUnknown* CPlugins::GetPlugin(LPCTSTR pszGroup, LPCTSTR pszType)
 
 				if ( SUCCEEDED( hr = pGITPlugin->m_pGIT.CopyTo( &pPlugin ) ) )
 					return pPlugin.Detach();
-			
+
 				TRACE( "Invalid plugin \"%s\"-\"%s\" %s\n", (LPCSTR)CT2A( pszGroup ), (LPCSTR)CT2A( pszType ), (LPCSTR)CT2A( Hashes::toGuid( pCLSID ) ) );
 			}
 
@@ -409,7 +409,7 @@ void CPlugins::OnRun()
 		if ( pGITPlugin )
 		{
 			// Create plugin
-			if ( ( SUCCEEDED( hr = pGITPlugin->m_pIUnknown.CoCreateInstance( m_inCLSID, NULL, CLSCTX_LOCAL_SERVER ) ) || 
+			if ( ( SUCCEEDED( hr = pGITPlugin->m_pIUnknown.CoCreateInstance( m_inCLSID, NULL, CLSCTX_LOCAL_SERVER ) ) ||
 				   SUCCEEDED( hr = pGITPlugin->m_pIUnknown.CoCreateInstance( m_inCLSID ) ) ) &&
 				 // Add plugin interface to GIT
 				 SUCCEEDED( hr = pGITPlugin->m_pGIT.Attach( pGITPlugin->m_pIUnknown ) ) )
@@ -626,7 +626,7 @@ BOOL CPlugins::OnChatMessage(LPCTSTR pszChatID, BOOL bOutgoing, LPCTSTR pszFrom,
 	{
 		CPlugin* pPlugin = GetNext( pos );
 
-		if ( pPlugin->m_pChat ) 
+		if ( pPlugin->m_pChat )
 		{
 			pPlugin->m_pChat->OnChatMessage(
 				CComBSTR( pszChatID ),
@@ -648,7 +648,7 @@ BOOL CPlugins::OnNewFile(CLibraryFile* pFile)
 	{
 		CPlugin* pPlugin = GetNext( pos );
 
-		if ( pPlugin->m_pLibrary ) 
+		if ( pPlugin->m_pLibrary )
 		{
 			if ( pPlugin->m_pLibrary->OnNewFile( pIFile ) == S_OK )
 			{

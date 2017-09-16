@@ -663,7 +663,7 @@ void CDownloadWithTorrent::OnTrackerEvent(bool bSuccess, LPCTSTR pszReason, LPCT
 		// Lock on this tracker if we were searching for one
 		if ( m_pTorrent.GetTrackerMode() == CBTInfo::tMultiFinding )
 		{
-			theApp.Message( MSG_DEBUG , _T("[BT] Locked onto tracker %s"), m_pTorrent.GetTrackerAddress() );
+			theApp.Message( MSG_DEBUG , _T("[BT] Locked onto tracker %s"), (LPCTSTR)m_pTorrent.GetTrackerAddress() );
 			m_pTorrent.SetTrackerMode( CBTInfo::tMultiFound );
 		}
 	}
@@ -832,7 +832,7 @@ void CDownloadWithTorrent::ChokeTorrent(DWORD tNow)
 			(DWORD)m_pTorrentUploads.GetCount() != GetBTSourceCount() &&
 			CanStartTransfers( tNow ) )
 		{
-			theApp.Message( MSG_DEBUG, _T("Attempting to push-start a BitTorrent upload for %s"), m_pTorrent.m_sName );
+			theApp.Message( MSG_DEBUG, _T("Attempting to push-start a BitTorrent upload for %s"), (LPCTSTR)m_pTorrent.m_sName );
 			StartNewTransfer( tNow );
 		}
 	}

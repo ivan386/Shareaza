@@ -55,7 +55,7 @@ CDownloadTransferBT::CDownloadTransferBT(CDownloadSource* pSource, CBTClient* pC
 	ASSUME_LOCK( Transfers.m_pSection );
 
 	m_nState			= pClient ? dtsConnecting : dtsNull;
-	m_sUserAgent		= protocolNames[ PROTOCOL_BT ];	
+	m_sUserAgent		= protocolNames[ PROTOCOL_BT ];
 }
 
 CDownloadTransferBT::~CDownloadTransferBT()
@@ -92,7 +92,7 @@ BOOL CDownloadTransferBT::Initiate()
 	m_pHost			= m_pClient->m_pHost;
 	m_sAddress		= m_pClient->m_sAddress;
 	UpdateCountry();
-	
+
 	return TRUE;
 }
 
@@ -104,7 +104,7 @@ void CDownloadTransferBT::Close(TRISTATE bKeepSource, DWORD nRetryAfter)
 	if ( m_pClient != NULL )
 	{
 		if ( Settings.General.DebugBTSources )
-			theApp.Message( MSG_DEBUG, L"Closing BT download connection: %s", m_pClient->m_sAddress );
+			theApp.Message( MSG_DEBUG, L"Closing BT download connection: %s", (LPCTSTR)m_pClient->m_sAddress );
 
 		m_pClient->m_pDownloadTransfer = NULL;
 		if ( m_pClient->IsOnline() )
@@ -257,11 +257,11 @@ BOOL CDownloadTransferBT::OnBitfield(CBTPacket* pPacket)
 
 	QWORD nBlockSize	= m_pDownload->m_pTorrent.m_nBlockSize;
 	DWORD nBlockCount	= m_pDownload->m_pTorrent.m_nBlockCount;
-	
+
 	m_pSource->m_oAvailable.clear();
-	
+
 	m_pAvailable.clear();
-	
+
 	if ( nBlockCount == 0 )
 		nBlockCount = pPacket->GetRemaining() * 8;
 
@@ -270,11 +270,11 @@ BOOL CDownloadTransferBT::OnBitfield(CBTPacket* pPacket)
 
 	m_bAvailable = ( nBlockSize > 0 );
 	m_pAvailable.assign( nBlockCount, false );
-	
+
 	for ( DWORD nBlock = 0 ; nBlock < nBlockCount && pPacket->GetRemaining() ; )
 	{
 		BYTE nByte = pPacket->ReadByte();
-		
+
 		for ( int nBit = 7 ; nBit >= 0 && nBlock < nBlockCount ; nBit--, nBlock++ )
 		{
 			if ( nByte & ( 1 << nBit ) )
@@ -290,7 +290,7 @@ BOOL CDownloadTransferBT::OnBitfield(CBTPacket* pPacket)
 			}
 		}
 	}
-	
+
 	ShowInterest();
 	return TRUE;
 }
@@ -334,7 +334,7 @@ BOOL CDownloadTransferBT::OnHave(CBTPacket* pPacket)
 	{
 		m_pAvailable.resize( nBlockCount, false );
 	}
-	
+
 	m_pAvailable[ nBlock ] = true;
 	ShowInterest();
 	return TRUE;
@@ -425,9 +425,9 @@ BOOL CDownloadTransferBT::OnUnchoked(CBTPacket* /*pPacket*/)
 	m_bChoked = FALSE;
 	SetState( dtsTorrent );
 	m_oRequested.clear();
-	
+
 	theApp.Message( MSG_DEBUG, _T("Download from %s was Unchoked."), (LPCTSTR)m_sAddress );
-	
+
 	return SendFragmentRequests();
 }
 
@@ -449,7 +449,7 @@ bool CDownloadTransferBT::SendFragmentRequests()
 
 	if ( m_oRequested.size() >= (int)Settings.BitTorrent.RequestPipe )
 	{
-		if ( m_nState != dtsDownloading ) 
+		if ( m_nState != dtsDownloading )
 		{
 			theApp.Message( MSG_DEBUG, L"Too many requests per host, staying in the requested state" );
 			SetState( dtsRequesting );
@@ -509,7 +509,7 @@ bool CDownloadTransferBT::SendFragmentRequests()
 		{
 			// Then activate endgame
 			m_pDownload->m_bTorrentEndgame = true;
-			theApp.Message( MSG_DEBUG, _T("Torrent EndGame mode activated for %s"), m_pDownload->m_sName );
+			theApp.Message( MSG_DEBUG, _T("Torrent EndGame mode activated for %s"), (LPCTSTR)m_pDownload->m_sName );
 		}
 	}
 
@@ -519,7 +519,7 @@ bool CDownloadTransferBT::SendFragmentRequests()
 		SetState( dtsRequesting );
 	}
 
-	if ( m_oRequested.empty() ) 
+	if ( m_oRequested.empty() )
 		SetState( dtsTorrent );
 
 	return true;
@@ -532,7 +532,7 @@ BOOL CDownloadTransferBT::SubtractRequested(Fragments::List& ppFragments) const
 {
 	ASSUME_LOCK( Transfers.m_pSection );
 
-	if ( m_oRequested.empty() || m_bChoked ) 
+	if ( m_oRequested.empty() || m_bChoked )
 		return FALSE;
 
 	ppFragments.erase( m_oRequested.begin(), m_oRequested.end() );
@@ -543,7 +543,7 @@ bool CDownloadTransferBT::UnrequestRange(QWORD nOffset, QWORD nLength)
 {
 	ASSUME_LOCK( Transfers.m_pSection );
 
-	if ( m_oRequested.empty() ) 
+	if ( m_oRequested.empty() )
 		return false;
 
 	ASSERT( m_pDownload->m_pTorrent.m_nBlockSize != 0 );
@@ -611,16 +611,16 @@ BOOL CDownloadTransferBT::OnSourceResponse(CBTPacket* pPacket)
 		delete pRoot;
 		return TRUE;
 	}
-	
+
 	int nCount = 0;
-	
+
 	for ( int nPeer = 0 ; nPeer < pPeers->GetCount(); nPeer++ )
 	{
 		const CBENode* pPeer = pPeers->GetNode( nPeer );
 		if ( ! pPeer->IsType( CBENode::beDict ) ) continue;
-		
+
 		const CBENode* pURL = pPeer->GetNode( BT_DICT_PEER_URL );
-		
+
 		if ( pURL->IsType( CBENode::beString ) )
 		{
 			nCount += m_pDownload->AddSourceURL( pURL->GetString() );
@@ -629,17 +629,17 @@ BOOL CDownloadTransferBT::OnSourceResponse(CBTPacket* pPacket)
 		{
 			const CBENode* pIP = pPeer->GetNode( BT_DICT_PEER_IP );
 			if ( ! pIP->IsType( CBENode::beString ) ) continue;
-			
+
 			const CBENode* pPort = pPeer->GetNode( BT_DICT_PEER_PORT );
 			if ( ! pPort->IsType( CBENode::beInt ) ) continue;
-			
+
 			SOCKADDR_IN saPeer = {};
 			if ( ! Network.Resolve( pIP->GetString(), (int)pPort->GetInt(), &saPeer ) ) continue;
-			
+
 			theApp.Message( MSG_DEBUG, _T("CDownloadTransferBT::OnSourceResponse(): %s: %s:%i"),
 				(LPCTSTR)m_sAddress,
 				(LPCTSTR)CString( inet_ntoa( saPeer.sin_addr ) ), htons( saPeer.sin_port ) );
-			
+
 			const CBENode* pID = pPeer->GetNode( BT_DICT_PEER_ID );
 			if ( ! pID->IsType( CBENode::beString ) || pID->m_nValue != Hashes::BtGuid::byteCount )
 			{
@@ -652,8 +652,8 @@ BOOL CDownloadTransferBT::OnSourceResponse(CBTPacket* pPacket)
 			}
 		}
 	}
-	
+
 	theApp.Message( MSG_INFO, IDS_BT_CLIENT_EXCHANGE, nCount, (LPCTSTR)m_sAddress );
-	
+
 	return TRUE;
 }

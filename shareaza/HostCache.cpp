@@ -97,7 +97,7 @@ BOOL CHostCache::Load()
 				ar.Abort();
 				pFile.Abort();
 				pException->Delete();
-				theApp.Message( MSG_ERROR, _T("Failed to load host cache: %s"), strFile );
+				theApp.Message( MSG_ERROR, _T("Failed to load host cache: %s"), (LPCTSTR)strFile );
 			}
 			pFile.Close();
 		}
@@ -105,11 +105,11 @@ BOOL CHostCache::Load()
 		{
 			pFile.Abort();
 			pException->Delete();
-			theApp.Message( MSG_ERROR, _T("Failed to load host cache: %s"), strFile );
+			theApp.Message( MSG_ERROR, _T("Failed to load host cache: %s"), (LPCTSTR)strFile );
 		}
 	}
 	else
-		theApp.Message( MSG_ERROR, _T("Failed to load host cache: %s"), strFile );
+		theApp.Message( MSG_ERROR, _T("Failed to load host cache: %s"), (LPCTSTR)strFile );
 
 	if ( Gnutella2.IsEmpty() )	CheckMinimumServers( PROTOCOL_G2 );
 	if ( Gnutella1.IsEmpty() )	CheckMinimumServers( PROTOCOL_G1 );
@@ -130,7 +130,7 @@ BOOL CHostCache::Save()
 	if ( ! pFile.Open( strTemp, CFile::modeWrite | CFile::modeCreate | CFile::shareExclusive | CFile::osSequentialScan ) )
 	{
 		DeleteFile( strTemp );
-		theApp.Message( MSG_ERROR, _T("Failed to save host cache: %s"), strTemp );
+		theApp.Message( MSG_ERROR, _T("Failed to save host cache: %s"), (LPCTSTR)strTemp );
 		return FALSE;
 	}
 
@@ -151,7 +151,7 @@ BOOL CHostCache::Save()
 			pFile.Abort();
 			pException->Delete();
 			DeleteFile( strTemp );
-			theApp.Message( MSG_ERROR, _T("Failed to save host cache: %s"), strTemp );
+			theApp.Message( MSG_ERROR, _T("Failed to save host cache: %s"), (LPCTSTR)strTemp );
 			return FALSE;
 		}
 		pFile.Close();
@@ -161,14 +161,14 @@ BOOL CHostCache::Save()
 		pFile.Abort();
 		pException->Delete();
 		DeleteFile( strTemp );
-		theApp.Message( MSG_ERROR, _T("Failed to save host cache: %s"), strTemp );
+		theApp.Message( MSG_ERROR, _T("Failed to save host cache: %s"), (LPCTSTR)strTemp );
 		return FALSE;
 	}
 
 	if ( ! MoveFileEx( strTemp, strFile, MOVEFILE_COPY_ALLOWED | MOVEFILE_REPLACE_EXISTING ) )
 	{
 		DeleteFile( strTemp );
-		theApp.Message( MSG_ERROR, _T("Failed to save host cache: %s"), strFile );
+		theApp.Message( MSG_ERROR, _T("Failed to save host cache: %s"), (LPCTSTR)strFile );
 		return FALSE;
 	}
 
@@ -1143,7 +1143,7 @@ int CHostCache::LoadDefaultServers(PROTOCOLID nProtocol)
 	CStdioFile pFile;
 	if ( pFile.Open( strFile, CFile::modeRead | CFile::shareDenyWrite | CFile::osSequentialScan ) )
 	{
-		theApp.Message( MSG_NOTICE, _T("Loading default server list for %s: %s"), protocolNames[ nProtocol ], strFile );
+		theApp.Message( MSG_NOTICE, _T("Loading default server list for %s: %s"), protocolNames[ nProtocol ], (LPCTSTR)strFile );
 
 		for (;;)
 		{
@@ -1541,7 +1541,7 @@ bool CHostCacheHost::ConnectTo(BOOL bAutomatic)
 
 	if ( m_pAddress.s_addr != INADDR_ANY )
 		return Neighbours.ConnectTo( m_pAddress, m_nPort, m_nProtocol, bAutomatic ) != NULL;
-	
+
 	m_tConnect += 30; // Throttle for 30 seconds
 	return Network.ConnectTo( m_sAddress, m_nPort, m_nProtocol ) != FALSE;
 }

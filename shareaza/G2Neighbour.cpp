@@ -416,8 +416,7 @@ BOOL CG2Neighbour::OnPacket(CG2Packet* pPacket)
 	case G2_PACKET_PROFILE_DELIVERY:
 		return OnProfileDelivery( pPacket );
 	default:
-		theApp.Message( MSG_DEBUG, _T("TCP: Received unexpected packet %s from %s"),
-			pPacket->GetType(), (LPCTSTR)CString( inet_ntoa( m_pHost.sin_addr ) ) );
+		theApp.Message( MSG_DEBUG, _T("TCP: Received unexpected packet %s from %s"), (LPCTSTR)pPacket->GetType(), (LPCTSTR)CString( inet_ntoa( m_pHost.sin_addr ) ) );
 	}
 
 	return TRUE;
@@ -851,7 +850,7 @@ BOOL CG2Neighbour::ParseKHLPacket(CG2Packet* pPacket, const SOCKADDR_IN* pHost)
 	BOOL bInvalid = FALSE;
 
 	CNeighbour* pNeighbour = Neighbours.Get( pHost->sin_addr );
-	CG2Neighbour* pOwner = ( pNeighbour && pNeighbour->m_nProtocol == PROTOCOL_G2 ) ? 
+	CG2Neighbour* pOwner = ( pNeighbour && pNeighbour->m_nProtocol == PROTOCOL_G2 ) ?
 		static_cast< CG2Neighbour* >( pNeighbour ) : NULL;
 
 	if ( pPacket->m_bCompound )
@@ -1339,7 +1338,7 @@ bool CG2Neighbour::OnPush(CG2Packet* pPacket)
 	if ( !pPacket->SkipCompound( nLength, 6 ) )
 	{
 		// Ignore packet and return that it was handled
-		theApp.Message( MSG_NOTICE, IDS_PROTOCOL_SIZE_PUSH, m_sAddress );
+		theApp.Message( MSG_NOTICE, IDS_PROTOCOL_SIZE_PUSH, (LPCTSTR)m_sAddress );
 		DEBUG_ONLY( pPacket->Debug( _T("BadPush") ) );
 		++Statistics.Current.Gnutella2.Dropped;
 		++m_nDropCount;
@@ -1367,7 +1366,7 @@ bool CG2Neighbour::OnPush(CG2Packet* pPacket)
 	{
 		// Can't push open a connection, ignore packet and return that it was
 		// handled
-		theApp.Message( MSG_NOTICE, IDS_PROTOCOL_ZERO_PUSH, m_sAddress );
+		theApp.Message( MSG_NOTICE, IDS_PROTOCOL_ZERO_PUSH, (LPCTSTR)m_sAddress );
 		++Statistics.Current.Gnutella2.Dropped;
 		++m_nDropCount;
 		return true;

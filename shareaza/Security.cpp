@@ -166,7 +166,7 @@ void CSecurity::Remove(CSecureRule* pRule)
 	{
 		m_pRules.RemoveAt( pos );
 	}
-	
+
 	// this also accounts for double entries.
 	if ( pRule->m_nType == CSecureRule::srAddress )
 	{
@@ -520,7 +520,7 @@ BOOL CSecurity::IsDenied(const IN_ADDR* pAddress)
 		}
 	}
 
-	// If the IP is clean, add it to the miss cache	
+	// If the IP is clean, add it to the miss cache
 	m_Cache.insert( *(DWORD*) pAddress );
 
 	// In this case, return our default policy
@@ -705,7 +705,7 @@ BOOL CSecurity::Load()
 				ar.Abort();
 				pFile.Abort();
 				pException->Delete();
-				theApp.Message( MSG_ERROR, _T("Failed to load security rules: %s"), strFile );
+				theApp.Message( MSG_ERROR, _T("Failed to load security rules: %s"), (LPCTSTR)strFile );
 				return FALSE;
 			}
 			pFile.Close();
@@ -714,13 +714,13 @@ BOOL CSecurity::Load()
 		{
 			pFile.Abort();
 			pException->Delete();
-			theApp.Message( MSG_ERROR, _T("Failed to load security rules: %s"), strFile );
+			theApp.Message( MSG_ERROR, _T("Failed to load security rules: %s"), (LPCTSTR)strFile );
 			return FALSE;
 		}
 	}
 	else
 	{
-		theApp.Message( MSG_ERROR, _T("Failed to load security rules: %s"), strFile );
+		theApp.Message( MSG_ERROR, _T("Failed to load security rules: %s"), (LPCTSTR)strFile );
 		return FALSE;
 	}
 
@@ -736,7 +736,7 @@ BOOL CSecurity::Save()
 	if ( ! pFile.Open( strTemp, CFile::modeWrite | CFile::modeCreate | CFile::shareExclusive | CFile::osSequentialScan ) )
 	{
 		DeleteFile( strTemp );
-		theApp.Message( MSG_ERROR, _T("Failed to save security rules: %s"), strTemp );
+		theApp.Message( MSG_ERROR, _T("Failed to save security rules: %s"), (LPCTSTR)strTemp );
 		return FALSE;
 	}
 
@@ -757,7 +757,7 @@ BOOL CSecurity::Save()
 			pFile.Abort();
 			pException->Delete();
 			DeleteFile( strTemp );
-			theApp.Message( MSG_ERROR, _T("Failed to save security rules: %s"), strTemp );
+			theApp.Message( MSG_ERROR, _T("Failed to save security rules: %s"), (LPCTSTR)strTemp );
 			return FALSE;
 		}
 		pFile.Close();
@@ -767,14 +767,14 @@ BOOL CSecurity::Save()
 		pFile.Abort();
 		pException->Delete();
 		DeleteFile( strTemp );
-		theApp.Message( MSG_ERROR, _T("Failed to save security rules: %s"), strTemp );
+		theApp.Message( MSG_ERROR, _T("Failed to save security rules: %s"), (LPCTSTR)strTemp );
 		return FALSE;
 	}
 
 	if ( ! MoveFileEx( strTemp, strFile, MOVEFILE_COPY_ALLOWED | MOVEFILE_REPLACE_EXISTING ) )
 	{
 		DeleteFile( strTemp );
-		theApp.Message( MSG_ERROR, _T("Failed to save security rules: %s"), strFile );
+		theApp.Message( MSG_ERROR, _T("Failed to save security rules: %s"), (LPCTSTR)strFile );
 		return FALSE;
 	}
 
@@ -966,7 +966,7 @@ BOOL CSecurity::Import(LPCTSTR pszFile)
 			if ( pRule->FromGnucleusString( strLine ) )
 			{
 				CQuickLock oLock( m_pSection );
-				
+
 				pRule->MaskFix();
 
 				// special treatment for single IP security rules
@@ -1002,7 +1002,7 @@ BOOL CSecurity::IsClientBad(const CString& sUserAgent) const
 
 	// Bad/unapproved versions of Shareaza
 	// Really obsolete versions of Shareaza should be blocked. (they may have bad settings)
-	if ( LPCTSTR szVersion = _tcsistr( sUserAgent, _T("shareaza") ) )	
+	if ( LPCTSTR szVersion = _tcsistr( sUserAgent, _T("shareaza") ) )
 	{
 		szVersion += 8;
 		if ( _tcsistr( szVersion, _T(" 0.") ) )			return TRUE;
@@ -1020,7 +1020,7 @@ BOOL CSecurity::IsClientBad(const CString& sUserAgent) const
 	}
 
 	// LimeWire
-	if ( LPCTSTR szVersion = _tcsistr( sUserAgent, _T("LimeWire") ) )	
+	if ( LPCTSTR szVersion = _tcsistr( sUserAgent, _T("LimeWire") ) )
 	{
 		szVersion += 8;
 		return FALSE;
@@ -1056,19 +1056,19 @@ BOOL CSecurity::IsClientBad(const CString& sUserAgent) const
 
 	// Fildelarprogram
 	if ( _tcsistr( sUserAgent, _T("Fildelarprogram") ) )			return TRUE;
-	
+
 	// Trilix
 	if ( _tcsistr( sUserAgent, _T("Trilix") ) )						return TRUE;
-	
+
 	// Gnutella Turbo (Look into this client some more)
 	if ( _tcsistr( sUserAgent, _T("Gnutella Turbo") ) )				return TRUE;
-	
+
 	// Mastermax File Sharing
 	if ( _tcsistr( sUserAgent, _T("Mastermax File Sharing") ) )		return TRUE;
-	
+
 	// Fastload.TV
 	if ( _tcsistr( sUserAgent, _T("Fastload.TV") ) )				return TRUE;
-	
+
 	// GPL breakers- Clients violating the GPL
 	// See http://www.gnu.org/copyleft/gpl.html
 	// Some other breakers outside the list
@@ -1084,7 +1084,7 @@ BOOL CSecurity::IsClientBad(const CString& sUserAgent) const
 	if ( _tcsistr( sUserAgent, _T("mxie") ) )						return TRUE; // Leechers, do not allow to connect
 
 	if ( _tcsistr( sUserAgent, _T("WinMX") ) )						return TRUE;
-	
+
 	if ( _tcsistr( sUserAgent, _T("eTomi") ) )						return TRUE; // outdated rip-off
 
 	// Unknown- Assume OK

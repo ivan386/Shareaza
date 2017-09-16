@@ -302,7 +302,7 @@ BOOL CEDPartImporter::ImportFile(LPCTSTR pszPath, LPCTSTR pszFile)
 		oGaps.insert( Fragments::Fragment( nStart, nStop ) );
 	}
 
-	Message( IDS_ED2K_EPI_DETECTED, strName, Settings.SmartVolume( nSize ) );
+	Message( IDS_ED2K_EPI_DETECTED, (LPCTSTR)strName, (LPCTSTR)Settings.SmartVolume( nSize ) );
 
 	if ( ! Downloads.IsSpaceAvailable( nSize, Downloads.dlPathIncomplete ) )
 	{
@@ -368,9 +368,8 @@ BOOL CEDPartImporter::ImportFile(LPCTSTR pszPath, LPCTSTR pszFile)
 	if ( ! bPaused )
 		pDownload->Resume();
 
-	Message( IDS_ED2K_EPI_FILE_CREATED,
-		Settings.SmartVolume( pDownload->GetVolumeRemaining() ) );
-	
+	Message( IDS_ED2K_EPI_FILE_CREATED, (LPCTSTR)Settings.SmartVolume( pDownload->GetVolumeRemaining() ) );
+
 	if ( Settings.Downloads.ShowMonitorURLs )
 		pDownload->ShowMonitor();
 

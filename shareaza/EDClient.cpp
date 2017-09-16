@@ -344,7 +344,7 @@ void CEDClient::Close(UINT nError)
 
 	if ( ( m_pDownloadTransfer ) && ( m_pDownloadTransfer->m_nState == dtsDownloading ) )
 	{
-		theApp.Message( MSG_ERROR, _T("Warning: CEDClient::Close() called for downloading client %s"), m_sAddress );
+		theApp.Message( MSG_ERROR, _T("Warning: CEDClient::Close() called for downloading client %s"), (LPCTSTR)m_sAddress );
 		m_pDownloadTransfer->SetState( dtsNull );
 	}
 	// if ( ! m_bGUID ) Remove();
@@ -610,7 +610,7 @@ CHostBrowser* CEDClient::GetBrowser() const
 	if ( pLock.Lock( 1000 ) )
 	{
 		if ( CMainWnd* pMainWnd = theApp.SafeMainWnd() )
-		{	
+		{
 			for ( POSITION pos = pMainWnd->m_pWindows.GetIterator() ; pos ; )
 			{
 				CChildWnd* pChildWnd = pMainWnd->m_pWindows.GetNext( pos );
@@ -799,7 +799,7 @@ BOOL CEDClient::SendCommentsPacket(int nRating, LPCTSTR pszComments)
 			pComment->WriteLongEDString( strComments.Left(ED2K_COMMENT_MAX), m_bEmUnicode );
 
 			// Send comments / rating
-			theApp.Message( MSG_DEBUG, _T("Sending file comments to %s"), m_sAddress );
+			theApp.Message( MSG_DEBUG, _T("Sending file comments to %s"), (LPCTSTR)m_sAddress );
 			m_bCommentSent = TRUE;
 			Send( pComment );
 
@@ -1907,7 +1907,7 @@ BOOL CEDClient::OnViewSharedDirAnswer(CEDPacket* pPacket)
 					break;
 
 				CQueryHit* pHit = new CQueryHit( PROTOCOL_ED2K );
-				
+
 				pHit->m_bBrowseHost = TRUE;
 				pHit->m_bChat = TRUE;
 				pHit->m_pVendor = VendorCache.Lookup( _T("ED2K") );

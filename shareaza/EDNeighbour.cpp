@@ -126,7 +126,7 @@ BOOL CEDNeighbour::Send(CPacket* pPacket, BOOL bRelease, BOOL /*bBuffered*/)
 			QueueRun();
 
 			bSuccess = TRUE;
-		
+
 			if ( bRelease ) pPacket->Release();
 		}
 	}
@@ -164,7 +164,7 @@ BOOL CEDNeighbour::OnRun()
 
 				// Try another server.
 				theApp.Message( MSG_DEBUG, _T("eDonkey server %s fake low ID detected."), (LPCTSTR)m_sAddress );
-				
+
 				Close( IDS_CONNECTION_CLOSED );
 				return FALSE;
 			}
@@ -183,7 +183,7 @@ BOOL CEDNeighbour::OnConnected()
 		return FALSE;
 
 	theApp.Message( MSG_INFO, IDS_ED2K_SERVER_CONNECTED, (LPCTSTR)m_sAddress );
-	
+
 	m_nState = nrsHandshake1;
 
 	return SendLogin();
@@ -221,7 +221,7 @@ BOOL CEDNeighbour::ProcessPackets()
 	CLockedBuffer pInputLocked( GetInput() );
 
 	CBuffer* pInput = m_pZInput ? m_pZInput : (CBuffer*)pInputLocked;
-	
+
 	return ProcessPackets( pInput );
 }
 
@@ -355,8 +355,8 @@ BOOL CEDNeighbour::OnIdChange(CEDPacket* pPacket)
 	{
 		theApp.Message( MSG_INFO, IDS_ED2K_SERVER_IDCHANGE, (LPCTSTR)m_sAddress, m_nClientID, nClientID );
 	}
-		
-	theApp.Message( MSG_DEBUG, _T("eDonkey server %s TCP flags: %s"), (LPCTSTR)m_sAddress, GetED2KServerTCPFlags( m_nTCPFlags ) );
+
+	theApp.Message( MSG_DEBUG, _T("eDonkey server %s TCP flags: %s"), (LPCTSTR)m_sAddress, (LPCTSTR)GetED2KServerTCPFlags( m_nTCPFlags ) );
 
 	m_nState	= nrsConnected;
 	m_nClientID	= nClientID;
@@ -511,7 +511,7 @@ BOOL CEDNeighbour::OnCallbackRequested(CEDPacket* pPacket)
 	if ( pPacket->GetRemaining() < 6 )
 	{
 		// Ignore packet and return that it was handled
-		theApp.Message( MSG_NOTICE, IDS_PROTOCOL_SIZE_PUSH, m_sAddress );
+		theApp.Message( MSG_NOTICE, IDS_PROTOCOL_SIZE_PUSH, (LPCTSTR)m_sAddress );
 		++Statistics.Current.eDonkey.Dropped;
 		++m_nDropCount;
 		return TRUE;
@@ -529,7 +529,7 @@ BOOL CEDNeighbour::OnCallbackRequested(CEDPacket* pPacket)
 		++m_nDropCount;
 		return TRUE;
 	}
-	
+
 	// Check that remote client has a port number, isn't firewalled or using a
 	// reserved address
 	if ( !nPort
@@ -538,7 +538,7 @@ BOOL CEDNeighbour::OnCallbackRequested(CEDPacket* pPacket)
 	{
 		// Can't push open a connection, ignore packet and return that it was
 		// handled
-		theApp.Message( MSG_NOTICE, IDS_PROTOCOL_ZERO_PUSH, m_sAddress );
+		theApp.Message( MSG_NOTICE, IDS_PROTOCOL_ZERO_PUSH, (LPCTSTR)m_sAddress );
 		++Statistics.Current.eDonkey.Dropped;
 		++m_nDropCount;
 		return TRUE;
@@ -667,7 +667,7 @@ BOOL CEDNeighbour::SendLogin()
 		( ( theApp.m_nVersion[1] & 0x7F ) << 10 ) |
 		( ( theApp.m_nVersion[2] & 0x07 ) << 7  ) |
 		( ( theApp.m_nVersion[3] & 0x7F )       ) ) ).Write( pPacket );
-	
+
 	// 5 - Port
 	if ( Settings.eDonkey.SendPortServer )
 		CEDTag( ED2K_CT_PORT, htons( Network.m_pHost.sin_port ) ).Write( pPacket );

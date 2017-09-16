@@ -141,7 +141,7 @@ void CResultFilters::Remove(DWORD index)
 
 		if ( index == m_nDefault ) m_nDefault = NONE;
 		else if ( ( m_nDefault != NONE ) && ( index < m_nDefault ) ) m_nDefault--;
-		
+
 		if ( m_nFilters == 0 ) m_nDefault = NONE;
 	}
 }
@@ -152,7 +152,7 @@ BOOL CResultFilters::Load()
 
 	// Delete old content first
 	Clear();
-	
+
 	CString strFile = Settings.General.UserPath + _T("\\Data\\Filters.dat");
 
 	CFile pFile;
@@ -173,7 +173,7 @@ BOOL CResultFilters::Load()
 			ar.Abort();
 			pFile.Abort();
 			pException->Delete();
-			theApp.Message( MSG_ERROR, _T("Failed to load result filters: %s"), strFile );
+			theApp.Message( MSG_ERROR, _T("Failed to load result filters: %s"), (LPCTSTR)strFile );
 			return FALSE;
 		}
 		pFile.Close();
@@ -182,7 +182,7 @@ BOOL CResultFilters::Load()
 	{
 		pFile.Abort();
 		pException->Delete();
-		theApp.Message( MSG_ERROR, _T("Failed to load result filters: %s"), strFile );
+		theApp.Message( MSG_ERROR, _T("Failed to load result filters: %s"), (LPCTSTR)strFile );
 		return FALSE;
 	}
 
@@ -206,7 +206,7 @@ BOOL CResultFilters::Save()
 	if ( ! pFile.Open( strTemp, CFile::modeWrite | CFile::modeCreate | CFile::shareExclusive | CFile::osSequentialScan ) )
 	{
 		DeleteFile( strTemp );
-		theApp.Message( MSG_ERROR, _T("Failed to save result filters: %s"), strTemp );
+		theApp.Message( MSG_ERROR, _T("Failed to save result filters: %s"), (LPCTSTR)strTemp );
 		return FALSE;
 	}
 
@@ -224,7 +224,7 @@ BOOL CResultFilters::Save()
 			ar.Abort();
 			pFile.Abort();
 			pException->Delete();
-			theApp.Message( MSG_ERROR, _T("Failed to save result filters: %s"), strTemp );
+			theApp.Message( MSG_ERROR, _T("Failed to save result filters: %s"), (LPCTSTR)strTemp );
 			return FALSE;
 		}
 		pFile.Close();
@@ -233,14 +233,14 @@ BOOL CResultFilters::Save()
 	{
 		pFile.Abort();
 		pException->Delete();
-		theApp.Message( MSG_ERROR, _T("Failed to save result filters: %s"), strTemp );
+		theApp.Message( MSG_ERROR, _T("Failed to save result filters: %s"), (LPCTSTR)strTemp );
 		return FALSE;
 	}
 
 	if ( ! MoveFileEx( strTemp, strFile, MOVEFILE_COPY_ALLOWED | MOVEFILE_REPLACE_EXISTING ) )
 	{
 		DeleteFile( strTemp );
-		theApp.Message( MSG_ERROR, _T("Failed to save result filters: %s"), strFile );
+		theApp.Message( MSG_ERROR, _T("Failed to save result filters: %s"), (LPCTSTR)strFile );
 		return FALSE;
 	}
 

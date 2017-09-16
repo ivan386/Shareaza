@@ -78,27 +78,27 @@ BOOL CMessageDlg::OnInitDialog()
 	if ( rcCalc.Height() < 64 ) rcCalc.bottom = rc.top + 64;
 	int delta_height = rcCalc.Height() - rc.Height();
 	m_pText.MoveWindow( &rcCalc );
-	
+
 	m_pButton1.GetWindowRect( &rc );
 	ScreenToClient( &rc );
 	rc.MoveToY( rc.top + delta_height );
 	m_pButton1.MoveWindow( &rc );
-	
+
 	m_pButton2.GetWindowRect( &rc );
 	ScreenToClient( &rc );
 	rc.MoveToY( rc.top + delta_height );
 	m_pButton2.MoveWindow( &rc );
-	
+
 	m_pButton3.GetWindowRect( &rc );
 	ScreenToClient( &rc );
 	rc.MoveToY( rc.top + delta_height );
 	m_pButton3.MoveWindow( &rc );
-	
+
 	m_pSplit.GetWindowRect( &rc );
 	ScreenToClient( &rc );
 	rc.MoveToY( rc.top + delta_height );
 	m_pSplit.MoveWindow( &rc );
-	
+
 	m_pDefault.GetWindowRect( &rc );
 	ScreenToClient( &rc );
 	rc.MoveToY( rc.top + delta_height );
@@ -548,7 +548,7 @@ void CMessageDlg::UpdateTimer()
 	if ( m_nTimer > 0 )
 	{
 		CString sNewText;
-		sNewText.Format( _T("%s (%u)"), sText, m_nTimer );
+		sNewText.Format( _T("%s (%u)"), (LPCTSTR)sText, m_nTimer );
 		pButton->SetWindowText( sNewText );
 	}
 	else

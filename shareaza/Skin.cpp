@@ -389,7 +389,7 @@ BOOL CSkin::LoadFromXML(CXMLElement* pXML, const CString& strPath)
 
 	if ( ! pXML->IsNamed( _T("skin") ) )
 	{
-		theApp.Message( MSG_ERROR, IDS_SKIN_ERROR, _T("Unknown [skin] element"), pXML->ToString() );
+		theApp.Message( MSG_ERROR, IDS_SKIN_ERROR, _T("Unknown [skin] element"), (LPCTSTR)pXML->ToString() );
 		return FALSE;
 	}
 
@@ -470,13 +470,13 @@ BOOL CSkin::LoadFromXML(CXMLElement* pXML, const CString& strPath)
 			else if ( strType.CompareNoCase( _T("skin") ) == 0 )
 			{
 				CString strSkinName = pSub->GetAttributeValue( _T("name"), _T("") );
-				theApp.Message( MSG_NOTICE, IDS_SKIN_LOAD, strSkinName );
+				theApp.Message( MSG_NOTICE, IDS_SKIN_LOAD, (LPCTSTR)strSkinName );
 			}
 			else
-				theApp.Message( MSG_ERROR, IDS_SKIN_ERROR, _T("Unknown [type] attribute in [manifest] element"), pSub->ToString() );
+				theApp.Message( MSG_ERROR, IDS_SKIN_ERROR, _T("Unknown [type] attribute in [manifest] element"), (LPCTSTR)pSub->ToString() );
 		}
 		else
-			theApp.Message( MSG_ERROR, IDS_SKIN_ERROR, _T("Unknown element in [skin] element"), pSub->ToString() );
+			theApp.Message( MSG_ERROR, IDS_SKIN_ERROR, _T("Unknown element in [skin] element"), (LPCTSTR)pSub->ToString() );
 
 		bSuccess = TRUE;
 	}
@@ -552,7 +552,7 @@ BOOL CSkin::LoadStrings(CXMLElement* pBase)
 				m_pStrings.SetAt( nID, strValue );
 			}
 			else
-				theApp.Message( MSG_ERROR, IDS_SKIN_ERROR, _T("Unknown [id] attribute in [string] element"), pXML->ToString() );
+				theApp.Message( MSG_ERROR, IDS_SKIN_ERROR, _T("Unknown [id] attribute in [string] element"), (LPCTSTR)pXML->ToString() );
 		}
 		else if ( pXML->IsNamed( _T("tip") ) )
 		{
@@ -564,10 +564,10 @@ BOOL CSkin::LoadStrings(CXMLElement* pBase)
 				m_pStrings.SetAt( nID, strMessage );
 			}
 			else
-				theApp.Message( MSG_ERROR, IDS_SKIN_ERROR, _T("Unknown [id] attribute in [tip] element"), pXML->ToString() );
+				theApp.Message( MSG_ERROR, IDS_SKIN_ERROR, _T("Unknown [id] attribute in [tip] element"), (LPCTSTR)pXML->ToString() );
 		}
 		else
-			theApp.Message( MSG_ERROR, IDS_SKIN_ERROR, _T("Unknown element in [strings] element"), pXML->ToString() );
+			theApp.Message( MSG_ERROR, IDS_SKIN_ERROR, _T("Unknown element in [strings] element"), (LPCTSTR)pXML->ToString() );
 	}
 
 	return TRUE;
@@ -639,7 +639,7 @@ BOOL CSkin::LoadMenus(CXMLElement* pBase)
 				return FALSE;
 		}
 		else
-			theApp.Message( MSG_ERROR, IDS_SKIN_ERROR, _T("Unknown element in [menu] element"), pXML->ToString() );
+			theApp.Message( MSG_ERROR, IDS_SKIN_ERROR, _T("Unknown element in [menu] element"), (LPCTSTR)pXML->ToString() );
 	}
 
 	return TRUE;
@@ -650,7 +650,7 @@ BOOL CSkin::LoadMenu(CXMLElement* pXML)
 	CString strName = pXML->GetAttributeValue( _T("name") );
 	if ( strName.IsEmpty() )
 	{
-		theApp.Message( MSG_ERROR, IDS_SKIN_ERROR, _T("No [name] attribute in [menu] element"), pXML->ToString() );
+		theApp.Message( MSG_ERROR, IDS_SKIN_ERROR, _T("No [name] attribute in [menu] element"), (LPCTSTR)pXML->ToString() );
 		return FALSE;
 	}
 
@@ -671,7 +671,7 @@ BOOL CSkin::LoadMenu(CXMLElement* pXML)
 	{
 		if( ! pMenu->CreateMenu() )
 		{
-			theApp.Message( MSG_ERROR, IDS_SKIN_ERROR, _T("Cannot create menu"), pXML->ToString() );
+			theApp.Message( MSG_ERROR, IDS_SKIN_ERROR, _T("Cannot create menu"), (LPCTSTR)pXML->ToString() );
 			return FALSE;
 		}
 	}
@@ -679,7 +679,7 @@ BOOL CSkin::LoadMenu(CXMLElement* pXML)
 	{
 		if( ! pMenu->CreatePopupMenu() )
 		{
-			theApp.Message( MSG_ERROR, IDS_SKIN_ERROR, _T("Cannot create popup menu"), pXML->ToString() );
+			theApp.Message( MSG_ERROR, IDS_SKIN_ERROR, _T("Cannot create popup menu"), (LPCTSTR)pXML->ToString() );
 			return FALSE;
 		}
 	}
@@ -735,7 +735,7 @@ BOOL CSkin::CreateMenu(CXMLElement* pRoot, HMENU hMenu)
 				VERIFY( AppendMenu( hMenu, MF_STRING, nID, strText ) );
 			}
 			else
-				theApp.Message( MSG_ERROR, IDS_SKIN_ERROR, _T("Unknown [id] attribute in menu [item] element"), pXML->ToString() );
+				theApp.Message( MSG_ERROR, IDS_SKIN_ERROR, _T("Unknown [id] attribute in menu [item] element"), (LPCTSTR)pXML->ToString() );
 		}
 		else if ( pXML->IsNamed( _T("menu") ) )
 		{
@@ -754,7 +754,7 @@ BOOL CSkin::CreateMenu(CXMLElement* pRoot, HMENU hMenu)
 			VERIFY( AppendMenu( hMenu, MF_SEPARATOR, ID_SEPARATOR, NULL ) );
 		}
 		else
-			theApp.Message( MSG_ERROR, IDS_SKIN_ERROR, _T("Unknown element in [menu] element"), pXML->ToString() );
+			theApp.Message( MSG_ERROR, IDS_SKIN_ERROR, _T("Unknown element in [menu] element"), (LPCTSTR)pXML->ToString() );
 	}
 
 	return TRUE;
@@ -771,7 +771,7 @@ BOOL CSkin::LoadNavBar(CXMLElement* pBase)
 		if ( _stscanf( strValue, _T("%li,%li"),
 			&m_rcNavBarOffset.left, &m_rcNavBarOffset.top ) != 2 )
 		{
-			theApp.Message( MSG_ERROR, IDS_SKIN_ERROR, _T("Bad [offset] attribute in [navbar] element"), pBase->ToString() );
+			theApp.Message( MSG_ERROR, IDS_SKIN_ERROR, _T("Bad [offset] attribute in [navbar] element"), (LPCTSTR)pBase->ToString() );
 		}
 	}
 
@@ -808,7 +808,7 @@ BOOL CSkin::CreateToolBar(LPCTSTR pszName, CCoolBarCtrl* pBar)
 	}
 	pBar->SetWatermark( NULL );
 	pBar->Clear();
-	
+
 	CString sClassName( pszName );
 
 	ASSERT( Settings.General.GUIMode == GUI_WINDOWED ||
@@ -872,7 +872,7 @@ BOOL CSkin::LoadToolbars(CXMLElement* pBase)
 				return FALSE;
 		}
 		else
-			theApp.Message( MSG_ERROR, IDS_SKIN_ERROR, _T("Unknown element in [toolbars] element"), pXML->ToString() );
+			theApp.Message( MSG_ERROR, IDS_SKIN_ERROR, _T("Unknown element in [toolbars] element"), (LPCTSTR)pXML->ToString() );
 	}
 
 	return TRUE;
@@ -918,7 +918,7 @@ BOOL CSkin::CreateToolBar(CXMLElement* pBase)
 						pItem->m_crText = RGB( nRed, nGreen, nBlue );
 					}
 					else
-						theApp.Message( MSG_ERROR, IDS_SKIN_ERROR, _T("Bad [colour] attribute in [button] element"), pXML->ToString() );
+						theApp.Message( MSG_ERROR, IDS_SKIN_ERROR, _T("Bad [colour] attribute in [button] element"), (LPCTSTR)pXML->ToString() );
 				}
 
 				strTemp = pXML->GetAttributeValue( L"tip" );
@@ -930,7 +930,7 @@ BOOL CSkin::CreateToolBar(CXMLElement* pBase)
 					pItem->Show( FALSE );
 			}
 			else
-				theApp.Message( MSG_ERROR, IDS_SKIN_ERROR, _T("Unknown [id] attribute in [button] element"), pXML->ToString() );
+				theApp.Message( MSG_ERROR, IDS_SKIN_ERROR, _T("Unknown [id] attribute in [button] element"), (LPCTSTR)pXML->ToString() );
 		}
 		else if ( pXML->IsNamed( _T("separator") ) )
 		{
@@ -950,11 +950,11 @@ BOOL CSkin::CreateToolBar(CXMLElement* pBase)
 			{
 				CString strWidth = pXML->GetAttributeValue( _T("width") );
 				if ( strWidth.GetLength() && _stscanf( strWidth, _T("%u"), &nWidth ) != 1 )
-					theApp.Message( MSG_ERROR, IDS_SKIN_ERROR, _T("Bad [width] attribute in [control] element"), pXML->ToString() );
-				
+					theApp.Message( MSG_ERROR, IDS_SKIN_ERROR, _T("Bad [width] attribute in [control] element"), (LPCTSTR)pXML->ToString() );
+
 				CString strHeight = pXML->GetAttributeValue( _T("height") );
 				if ( strHeight.GetLength() && _stscanf( strHeight, _T("%u"), &nHeight ) != 1 )
-					theApp.Message( MSG_ERROR, IDS_SKIN_ERROR, _T("Bad [height] attribute in [control] element"), pXML->ToString() );
+					theApp.Message( MSG_ERROR, IDS_SKIN_ERROR, _T("Bad [height] attribute in [control] element"), (LPCTSTR)pXML->ToString() );
 
 				CCoolBarItem* pItem = nWidth ? pBar->Add( nID, nWidth, nHeight ) : NULL;
 				if ( pItem )
@@ -972,7 +972,7 @@ BOOL CSkin::CreateToolBar(CXMLElement* pBase)
 				}
 			}
 			else
-				theApp.Message( MSG_ERROR, IDS_SKIN_ERROR, _T("Unknown [id] attribute in [control] element"), pXML->ToString() );
+				theApp.Message( MSG_ERROR, IDS_SKIN_ERROR, _T("Unknown [id] attribute in [control] element"), (LPCTSTR)pXML->ToString() );
 
 		}
 		else if ( pXML->IsNamed( _T("label") ) )
@@ -982,7 +982,7 @@ BOOL CSkin::CreateToolBar(CXMLElement* pBase)
 			pItem->SetTip( pXML->GetAttributeValue( _T("tip") ) );
 		}
 		else
-			theApp.Message( MSG_ERROR, IDS_SKIN_ERROR, _T("Unknown element in [toolbar] element"), pXML->ToString() );
+			theApp.Message( MSG_ERROR, IDS_SKIN_ERROR, _T("Unknown element in [toolbar] element"), (LPCTSTR)pXML->ToString() );
 	}
 
 	CString strName = pBase->GetAttributeValue( _T("name") );
@@ -1014,7 +1014,7 @@ BOOL CSkin::LoadDocuments(CXMLElement* pBase)
 			m_pDocuments.SetAt( strName, pDoc->Detach() );
 		}
 		else
-			theApp.Message( MSG_ERROR, IDS_SKIN_ERROR, _T("Unknown element in [documents] element"), pDoc->ToString() );
+			theApp.Message( MSG_ERROR, IDS_SKIN_ERROR, _T("Unknown element in [documents] element"), (LPCTSTR)pDoc->ToString() );
 	}
 
 	return TRUE;
@@ -1044,7 +1044,7 @@ HBITMAP CSkin::GetWatermark(LPCTSTR pszName, BOOL bShared)
 		if ( HBITMAP hBitmap = LoadBitmap( strPath, bShared ) )
 			return hBitmap;
 
-		theApp.Message( MSG_ERROR, IDS_SKIN_ERROR, _T("Failed to load watermark"), CString( pszName ) + _T(". File: ") + strPath );
+		theApp.Message( MSG_ERROR, IDS_SKIN_ERROR, _T("Failed to load watermark"), (LPCTSTR)( CString( pszName ) + _T(". File: ") + strPath ) );
 	}
 	return NULL;
 }
@@ -1083,10 +1083,10 @@ BOOL CSkin::LoadWatermarks(CXMLElement* pSub, const CString& strPath)
 				m_pWatermarks.SetAt( strName, strFile );
 			}
 			else
-				theApp.Message( MSG_ERROR, IDS_SKIN_ERROR, _T("Missed [target] attribute in [watermark] element"), pMark->ToString() );
+				theApp.Message( MSG_ERROR, IDS_SKIN_ERROR, _T("Missed [target] attribute in [watermark] element"), (LPCTSTR)pMark->ToString() );
 		}
 		else
-			theApp.Message( MSG_ERROR, IDS_SKIN_ERROR, _T("Unknown element in [watermarks] element"), pMark->ToString() );
+			theApp.Message( MSG_ERROR, IDS_SKIN_ERROR, _T("Unknown element in [watermarks] element"), (LPCTSTR)pMark->ToString() );
 	}
 
 	return TRUE;
@@ -1169,7 +1169,7 @@ BOOL CSkin::LoadListColumns(CXMLElement* pBase)
 			CString strName = pXML->GetAttributeValue( _T("name") );
 			if ( strName.IsEmpty() )
 			{
-				theApp.Message( MSG_ERROR, IDS_SKIN_ERROR, _T("Missed [name] attribute in [list] element"), pXML->ToString() );
+				theApp.Message( MSG_ERROR, IDS_SKIN_ERROR, _T("Missed [name] attribute in [list] element"), (LPCTSTR)pXML->ToString() );
 				continue;
 			}
 
@@ -1192,16 +1192,16 @@ BOOL CSkin::LoadListColumns(CXMLElement* pBase)
 						strEdit += strTo;
 					}
 					else
-						theApp.Message( MSG_ERROR, IDS_SKIN_ERROR, _T("Missed [from] attribute in [column] element"), pCol->ToString() );
+						theApp.Message( MSG_ERROR, IDS_SKIN_ERROR, _T("Missed [from] attribute in [column] element"), (LPCTSTR)pCol->ToString() );
 				}
 				else
-					theApp.Message( MSG_ERROR, IDS_SKIN_ERROR, _T("Unknown element in [list] element"), pCol->ToString() );
+					theApp.Message( MSG_ERROR, IDS_SKIN_ERROR, _T("Unknown element in [list] element"), (LPCTSTR)pCol->ToString() );
 			}
 
 			m_pLists.SetAt( strName, strEdit );
 		}
 		else
-			theApp.Message( MSG_ERROR, IDS_SKIN_ERROR, _T("Unknown element in [listColumns] element"), pXML->ToString() );
+			theApp.Message( MSG_ERROR, IDS_SKIN_ERROR, _T("Unknown element in [listColumns] element"), (LPCTSTR)pXML->ToString() );
 	}
 
 	return TRUE;
@@ -1353,7 +1353,8 @@ BOOL CSkin::Apply(LPCTSTR pszName, CDialog* pDialog, UINT nIconID, CToolTipCtrl*
 
 	if ( strCaption != pBase->GetAttributeValue( _T("cookie") ) )
 	{
-		theApp.Message( MSG_ERROR, IDS_SKIN_ERROR, _T("Invalid [cookie] attribute in [dialog] element. Real cookie: ") + strCaption, pBase->ToString() );
+		theApp.Message( MSG_ERROR, IDS_SKIN_ERROR, (LPCTSTR)( _T("Invalid [cookie] attribute in [dialog] element. Real cookie: ") + strCaption ),
+			(LPCTSTR)pBase->ToString() );
 		return FALSE;
 	}
 
@@ -1459,7 +1460,7 @@ BOOL CSkin::LoadDialogs(CXMLElement* pBase)
 			m_pDialogs.SetAt( strName, pXML );
 		}
 		else
-			theApp.Message( MSG_ERROR, IDS_SKIN_ERROR, _T("Unknown element in [dialogs] element"), pXML->ToString() );
+			theApp.Message( MSG_ERROR, IDS_SKIN_ERROR, _T("Unknown element in [dialogs] element"), (LPCTSTR)pXML->ToString() );
 	}
 
 	return TRUE;
@@ -1543,7 +1544,7 @@ BOOL CSkin::LoadWindowSkins(CXMLElement* pSub, const CString& strPath)
 			}
 		}
 		else
-			theApp.Message( MSG_ERROR, IDS_SKIN_ERROR, _T("Unknown element in [windowSkins] element"), pSkinElement->ToString() );
+			theApp.Message( MSG_ERROR, IDS_SKIN_ERROR, _T("Unknown element in [windowSkins] element"), (LPCTSTR)pSkinElement->ToString() );
 	}
 
 	return TRUE;
@@ -1751,20 +1752,20 @@ BOOL CSkin::LoadColourScheme(CXMLElement* pBase)
 						*pColour = RGB( nRed, nGreen, nBlue );
 					}
 					else
-						theApp.Message( MSG_ERROR, IDS_SKIN_ERROR, _T("Bad [value] attribute in [colour] element"), pXML->ToString() );
+						theApp.Message( MSG_ERROR, IDS_SKIN_ERROR, _T("Bad [value] attribute in [colour] element"), (LPCTSTR)pXML->ToString() );
 				}
 				else if ( strValue.GetLength() == 0 )
 				{
 					*pColour = CLR_NONE;
 				}
 				else
-					theApp.Message( MSG_ERROR, IDS_SKIN_ERROR, _T("Bad [value] attribute in [colour] element"), pXML->ToString() );
+					theApp.Message( MSG_ERROR, IDS_SKIN_ERROR, _T("Bad [value] attribute in [colour] element"), (LPCTSTR)pXML->ToString() );
 			}
 			else
-				theApp.Message( MSG_ERROR, IDS_SKIN_ERROR, _T("Unknown [name] attribute in [colourScheme] element"), pXML->ToString() );
+				theApp.Message( MSG_ERROR, IDS_SKIN_ERROR, _T("Unknown [name] attribute in [colourScheme] element"), (LPCTSTR)pXML->ToString() );
 		}
 		else
-			theApp.Message( MSG_ERROR, IDS_SKIN_ERROR, _T("Unknown element in [colourScheme] element"), pXML->ToString() );
+			theApp.Message( MSG_ERROR, IDS_SKIN_ERROR, _T("Unknown element in [colourScheme] element"), (LPCTSTR)pXML->ToString() );
 	}
 
 	return TRUE;
@@ -1799,13 +1800,13 @@ BOOL CSkin::LoadResourceMap(CXMLElement* pBase)
 				if ( ! strID.IsEmpty() )
 					CoolInterface.NameCommand( nID, strID );
 				else
-					theApp.Message( MSG_ERROR, IDS_SKIN_ERROR, _T("Missed [id] attribute in resource map element"), pXML->ToString() );
+					theApp.Message( MSG_ERROR, IDS_SKIN_ERROR, _T("Missed [id] attribute in resource map element"), (LPCTSTR)pXML->ToString() );
 			}
 			else
-				theApp.Message( MSG_ERROR, IDS_SKIN_ERROR, _T("Bad [code] attribute in resource map element"), pXML->ToString() );
+				theApp.Message( MSG_ERROR, IDS_SKIN_ERROR, _T("Bad [code] attribute in resource map element"), (LPCTSTR)pXML->ToString() );
 		}
 		else
-			theApp.Message( MSG_ERROR, IDS_SKIN_ERROR, _T("Unknown element in resource map"), pXML->ToString() );
+			theApp.Message( MSG_ERROR, IDS_SKIN_ERROR, _T("Unknown element in resource map"), (LPCTSTR)pXML->ToString() );
 	}
 
 	return TRUE;
@@ -1864,7 +1865,7 @@ BOOL CSkin::LoadFonts(CXMLElement* pBase, const CString& strPath)
 				}
 				else
 				{
-					theApp.Message( MSG_ERROR, IDS_SKIN_ERROR, _T("Unknown font name"), pXML->ToString() );
+					theApp.Message( MSG_ERROR, IDS_SKIN_ERROR, _T("Unknown font name"), (LPCTSTR)pXML->ToString() );
 					continue;
 				}
 
@@ -1881,16 +1882,16 @@ BOOL CSkin::LoadFonts(CXMLElement* pBase, const CString& strPath)
 				int nFontSize = Settings.Fonts.FontSize, nFontWeight = FW_NORMAL;
 
 				if ( strSize.GetLength() && _stscanf( strSize, _T("%i"), &nFontSize ) != 1 )
-					theApp.Message( MSG_ERROR, IDS_SKIN_ERROR, _T("Bad [size] attribute in [font] element"), pXML->ToString() );
+					theApp.Message( MSG_ERROR, IDS_SKIN_ERROR, _T("Bad [size] attribute in [font] element"), (LPCTSTR)pXML->ToString() );
 
 				if ( strWeight.GetLength() && _stscanf( strWeight, _T("%i"), &nFontWeight ) != 1 )
-					theApp.Message( MSG_ERROR, IDS_SKIN_ERROR, _T("Bad [weight] attribute in [font] element"), pXML->ToString() );
+					theApp.Message( MSG_ERROR, IDS_SKIN_ERROR, _T("Bad [weight] attribute in [font] element"), (LPCTSTR)pXML->ToString() );
 
 				if ( ! pFont->CreateFont( -nFontSize, 0, 0, 0, nFontWeight, FALSE, FALSE, FALSE,
 					DEFAULT_CHARSET, OUT_DEFAULT_PRECIS, CLIP_DEFAULT_PRECIS,
 					theApp.m_nFontQuality,
 					DEFAULT_PITCH|FF_DONTCARE, strFace ) )
-					theApp.Message( MSG_ERROR, IDS_SKIN_ERROR, _T("Failed to create font"), pXML->ToString() );
+					theApp.Message( MSG_ERROR, IDS_SKIN_ERROR, _T("Failed to create font"), (LPCTSTR)pXML->ToString() );
 
 				if ( strName.CompareNoCase( _T("system.plain") ) == 0 )
 				{
@@ -1901,7 +1902,7 @@ BOOL CSkin::LoadFonts(CXMLElement* pBase, const CString& strPath)
 							DEFAULT_CHARSET, OUT_DEFAULT_PRECIS, CLIP_DEFAULT_PRECIS,
 							theApp.m_nFontQuality,
 							DEFAULT_PITCH|FF_DONTCARE, strFace ) )
-						theApp.Message( MSG_ERROR, IDS_SKIN_ERROR, _T("Failed to create font (underline)"), pXML->ToString() );
+						theApp.Message( MSG_ERROR, IDS_SKIN_ERROR, _T("Failed to create font (underline)"), (LPCTSTR)pXML->ToString() );
 
 					pFont = &CoolInterface.m_fntItalic;
 					if ( pFont->m_hObject ) pFont->DeleteObject();
@@ -1910,7 +1911,7 @@ BOOL CSkin::LoadFonts(CXMLElement* pBase, const CString& strPath)
 							DEFAULT_CHARSET, OUT_DEFAULT_PRECIS, CLIP_DEFAULT_PRECIS,
 							theApp.m_nFontQuality,
 							DEFAULT_PITCH|FF_DONTCARE, strFace ) )
-						theApp.Message( MSG_ERROR, IDS_SKIN_ERROR, _T("Failed to create font (italic)"), pXML->ToString() );
+						theApp.Message( MSG_ERROR, IDS_SKIN_ERROR, _T("Failed to create font (italic)"), (LPCTSTR)pXML->ToString() );
 				}
 				else if ( strName.CompareNoCase( _T("system.bold") ) == 0 )
 				{
@@ -1921,7 +1922,7 @@ BOOL CSkin::LoadFonts(CXMLElement* pBase, const CString& strPath)
 							DEFAULT_CHARSET, OUT_DEFAULT_PRECIS, CLIP_DEFAULT_PRECIS,
 							theApp.m_nFontQuality,
 							DEFAULT_PITCH|FF_DONTCARE, strFace ) )
-						theApp.Message( MSG_ERROR, IDS_SKIN_ERROR, _T("Failed to create font (bold italic)"), pXML->ToString() );
+						theApp.Message( MSG_ERROR, IDS_SKIN_ERROR, _T("Failed to create font (bold italic)"), (LPCTSTR)pXML->ToString() );
 				}
 			}
 		}
@@ -1932,10 +1933,10 @@ BOOL CSkin::LoadFonts(CXMLElement* pBase, const CString& strPath)
 			if ( AddFontResourceEx( strFile, FR_PRIVATE, NULL ) )
 				m_pFontPaths.AddTail( strFile );
 			else
-				theApp.Message( MSG_ERROR, IDS_SKIN_ERROR, _T("Failed to import font"), pXML->ToString() );
+				theApp.Message( MSG_ERROR, IDS_SKIN_ERROR, _T("Failed to import font"), (LPCTSTR)pXML->ToString() );
 		}
 		else
-			theApp.Message( MSG_ERROR, IDS_SKIN_ERROR, _T("Unknown element in [fonts] element"), pXML->ToString() );
+			theApp.Message( MSG_ERROR, IDS_SKIN_ERROR, _T("Unknown element in [fonts] element"), (LPCTSTR)pXML->ToString() );
 	}
 
 	// Create Rich Default font based on Normal font if absent
@@ -1995,7 +1996,7 @@ BOOL CSkin::LoadCommandImages(CXMLElement* pBase, const CString& strPath)
 				return FALSE;
 		}
 		else
-			theApp.Message( MSG_ERROR, IDS_SKIN_ERROR, _T("Unknown element in [commandImages] element"), pXML->ToString() );
+			theApp.Message( MSG_ERROR, IDS_SKIN_ERROR, _T("Unknown element in [commandImages] element"), (LPCTSTR)pXML->ToString() );
 	}
 
 	return TRUE;
@@ -2015,12 +2016,12 @@ BOOL CSkin::LoadCommandIcon(CXMLElement* pXML, const CString& strPath)
 	HINSTANCE hInstance = NULL;
 	if ( nIconID )
 		if ( strPath.GetLength() && _stscanf( strPath, _T("%p"), &hInstance ) != 1 )
-			theApp.Message( MSG_ERROR, IDS_SKIN_ERROR, _T("Bad instance in [icon] element"), pXML->ToString() );
+			theApp.Message( MSG_ERROR, IDS_SKIN_ERROR, _T("Bad instance in [icon] element"), (LPCTSTR)pXML->ToString() );
 
 	UINT nID = LookupCommandID( pXML );
 	if ( nID == 0 )
 	{
-		theApp.Message( MSG_ERROR, IDS_SKIN_ERROR, _T("Unknown [id] attribute in [icon] element"), pXML->ToString() );
+		theApp.Message( MSG_ERROR, IDS_SKIN_ERROR, _T("Unknown [id] attribute in [icon] element"), (LPCTSTR)pXML->ToString() );
 		return TRUE;
 	}
 
@@ -2047,7 +2048,7 @@ BOOL CSkin::LoadCommandIcon(CXMLElement* pXML, const CString& strPath)
 			nType = LVSIL_BIG;
 			break;
 		default:
-			theApp.Message( MSG_ERROR, IDS_SKIN_ERROR, _T("Icon has invalid size"), pXML->ToString() );
+			theApp.Message( MSG_ERROR, IDS_SKIN_ERROR, _T("Icon has invalid size"), (LPCTSTR)pXML->ToString() );
 			continue;
 		}
 
@@ -2075,7 +2076,7 @@ BOOL CSkin::LoadCommandIcon(CXMLElement* pXML, const CString& strPath)
 			VERIFY( DestroyIcon( hIcon ) );
 		}
 		else
-			theApp.Message( MSG_ERROR, IDS_SKIN_ERROR, _T("Failed to load icon"), pXML->ToString() );
+			theApp.Message( MSG_ERROR, IDS_SKIN_ERROR, _T("Failed to load icon"), (LPCTSTR)pXML->ToString() );
 	}
 
 	return TRUE;
@@ -2103,12 +2104,12 @@ BOOL CSkin::LoadCommandBitmap(CXMLElement* pBase, const CString& strPath)
 		crMask = RGB( nRed, nGreen, nBlue );
 	}
 	else
-		theApp.Message( MSG_ERROR, IDS_SKIN_ERROR, _T("Image has invalid mask"), pBase->ToString() );
+		theApp.Message( MSG_ERROR, IDS_SKIN_ERROR, _T("Image has invalid mask"), (LPCTSTR)pBase->ToString() );
 
 	HBITMAP hBitmap = LoadBitmap( strFile );
 	if ( hBitmap == NULL )
 	{
-		theApp.Message( MSG_ERROR, IDS_SKIN_ERROR, _T("Failed to load image"), pBase->ToString() );
+		theApp.Message( MSG_ERROR, IDS_SKIN_ERROR, _T("Failed to load image"), (LPCTSTR)pBase->ToString() );
 		return TRUE;
 	}
 	if ( Settings.General.LanguageRTL )
@@ -2117,7 +2118,7 @@ BOOL CSkin::LoadCommandBitmap(CXMLElement* pBase, const CString& strPath)
 	BOOL bResult = CoolInterface.Add( pBase, hBitmap, crMask );
 	DeleteObject( hBitmap );
 	if ( ! bResult )
-		theApp.Message( MSG_ERROR, IDS_SKIN_ERROR, _T("Failed to add image"), pBase->ToString() );
+		theApp.Message( MSG_ERROR, IDS_SKIN_ERROR, _T("Failed to add image"), (LPCTSTR)pBase->ToString() );
 
 	return TRUE;
 }
@@ -2440,7 +2441,7 @@ BOOL CSkin::LoadColour(CXMLElement* pXML, LPCTSTR pszName, COLORREF* pColour)
 	if ( str.GetLength() )
 	{
 		int nRed = 0, nGreen = 0, nBlue = 0;
-		if ( str.GetLength() == 6 &&	
+		if ( str.GetLength() == 6 &&
 			_stscanf( str.Mid( 0, 2 ), _T("%x"), &nRed ) == 1 &&
 			_stscanf( str.Mid( 2, 2 ), _T("%x"), &nGreen ) == 1 &&
 			_stscanf( str.Mid( 4, 2 ), _T("%x"), &nBlue ) == 1 )
@@ -2449,7 +2450,7 @@ BOOL CSkin::LoadColour(CXMLElement* pXML, LPCTSTR pszName, COLORREF* pColour)
 			return TRUE;
 		}
 		else
-			theApp.Message( MSG_ERROR, IDS_SKIN_ERROR, _T("Bad color attribute"), pXML->ToString() );
+			theApp.Message( MSG_ERROR, IDS_SKIN_ERROR, _T("Bad color attribute"), (LPCTSTR)pXML->ToString() );
 	}
 
 	return FALSE;

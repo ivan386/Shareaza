@@ -291,7 +291,7 @@ BOOL CFragmentedFile::Open(const CShareazaFile* pSHFile, BOOL bWrite)
 	if ( ! Open( strSource, 0, pSHFile->m_nSize, bWrite, pSHFile->m_sName ) )
 	{
 		m_sFileError.Format( LoadString( bWrite ? IDS_DOWNLOAD_FILE_CREATE_ERROR : IDS_DOWNLOAD_FILE_OPEN_ERROR ), (LPCTSTR)strSource );
-		theApp.Message( MSG_ERROR, _T("%s"), m_sFileError + _T(" ") + GetErrorString( m_nFileError ) );
+		theApp.Message( MSG_ERROR, _T("%s"), (LPCTSTR)( m_sFileError + _T(" ") + GetErrorString( m_nFileError ) ) );
 
 		Close();
 		return FALSE;
@@ -334,7 +334,7 @@ BOOL CFragmentedFile::Open(const CBTInfo& oInfo, BOOL bWrite)
 		if ( ! Open( strSource, nOffset, pBTFile->m_nSize, bWrite, pBTFile->m_sPath ) )
 		{
 			m_sFileError.Format( LoadString( bWrite ? IDS_DOWNLOAD_FILE_CREATE_ERROR : IDS_BT_SEED_SOURCE_LOST ), (LPCTSTR)strSource );
-			theApp.Message( MSG_ERROR, _T("%s"), m_sFileError + _T(" ") + GetErrorString( m_nFileError ) );
+			theApp.Message( MSG_ERROR, _T("%s"), (LPCTSTR)( m_sFileError + _T(" ") + GetErrorString( m_nFileError ) ) );
 
 			Close();
 			return FALSE;
@@ -618,10 +618,9 @@ DWORD CFragmentedFile::Move(DWORD nIndex, LPCTSTR pszDestination, LPPROGRESS_ROU
 		return ERROR_SUCCESS;
 
 	if ( bSkip )
-		theApp.Message( MSG_DEBUG, _T("Skipping \"%s\"..."), sPath );
+		theApp.Message( MSG_DEBUG, _T("Skipping \"%s\"..."), (LPCTSTR)sPath );
 	else
-		theApp.Message( MSG_DEBUG, _T("Moving \"%s\" to \"%s\"..."),
-			(LPCTSTR)sPath, (LPCTSTR)strTargetDir );
+		theApp.Message( MSG_DEBUG, _T("Moving \"%s\" to \"%s\"..."), (LPCTSTR)sPath, (LPCTSTR)strTargetDir );
 
 	// Close chained uploads
 	theApp.OnRename( sPath );
@@ -813,7 +812,7 @@ void CFragmentedFile::Serialize(CArchive& ar, int nVersion)
 				m_pDownload->m_sPath.GetLength() - 3 );
 			if ( ! Open( sPath, 0, m_pDownload->m_nSize, TRUE, m_pDownload->m_sName ) )
 			{
-				theApp.Message( MSG_ERROR, IDS_DOWNLOAD_FILE_OPEN_ERROR, sPath );
+				theApp.Message( MSG_ERROR, IDS_DOWNLOAD_FILE_OPEN_ERROR, (LPCTSTR)sPath );
 				AfxThrowFileException( CFileException::fileNotFound );
 			}
 		}
@@ -847,7 +846,7 @@ void CFragmentedFile::Serialize(CArchive& ar, int nVersion)
 
 				if ( ! Open( sPath, nOffset, nLength, bWrite, sName, nPriority ) )
 				{
-					theApp.Message( MSG_ERROR, IDS_DOWNLOAD_FILE_OPEN_ERROR, sPath );
+					theApp.Message( MSG_ERROR, IDS_DOWNLOAD_FILE_OPEN_ERROR, (LPCTSTR)sPath );
 					AfxThrowFileException( CFileException::fileNotFound );
 				}
 			}

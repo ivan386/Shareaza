@@ -489,7 +489,7 @@ BOOL CFileExecutor::Enqueue(LPCTSTR pszFile, LPCTSTR pszExt)
 		{
 			if ( strExecutable.CompareNoCase( KnownPlayers[ i ].szPlayer ) == 0 )
 			{
-				strParam.Format( KnownPlayers[ i ].szEnqueue, strFile );
+				strParam.Format( KnownPlayers[ i ].szEnqueue, (LPCTSTR)strFile );
 				break;
 			}
 		}
@@ -527,7 +527,7 @@ BOOL CFileExecutor::Enqueue(LPCTSTR pszFile, LPCTSTR pszExt)
 		{
 			if ( strExecutable.CompareNoCase( KnownPlayers[ i ].szPlayer ) == 0 )
 			{
-				strParam.Format( KnownPlayers[ i ].szEnqueue, strFile );
+				strParam.Format( KnownPlayers[ i ].szEnqueue, (LPCTSTR)strFile );
 				break;
 			}
 		}

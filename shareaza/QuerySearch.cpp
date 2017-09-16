@@ -694,7 +694,7 @@ CDCPacket* CQuerySearch::ToDCPacket() const
 		( bSizeRestriced ? _T('T') : _T('F') ),
 		( bIsMaxSize ? _T('T') : _T('F') ),
 		( bSizeRestriced ? ( bIsMaxSize ? m_nMaxSize : m_nMinSize ) : 0ull ),
-		nType, 
+		nType,
 		(LPCTSTR)( m_oTiger ? ( _T("TTH:") + m_oTiger.toString() ) : strSearch ) );
 
 	pPacket->WriteString( strQuery, FALSE );
@@ -916,7 +916,8 @@ void CQuerySearch::ReadGGEP(CG1Packet* pPacket)
 				else if ( oBTH.fromUrn(   strURN ) );	// Got BTH base32
 				else if ( oBTH.fromUrn< Hashes::base16Encoding >( strURN ) );	// Got BTH base16
 				else
-					theApp.Message( MSG_DEBUG | MSG_FACILITY_SEARCH, _T("[G1] Got query packet with GGEP \"u\" unknown URN: \"%s\" (%d bytes)"), strURN, pItemPos->m_nLength );
+					theApp.Message( MSG_DEBUG | MSG_FACILITY_SEARCH, _T("[G1] Got query packet with GGEP \"u\" unknown URN: \"%s\" (%d bytes)"),
+					(LPCTSTR)strURN, pItemPos->m_nLength );
 			}
 			else if ( pItemPos->IsNamed( GGEP_HEADER_SECURE_OOB ) )
 			{
@@ -961,7 +962,8 @@ void CQuerySearch::ReadGGEP(CG1Packet* pPacket)
 				m_bWhatsNew = true;
 			}
 			else
-				theApp.Message( MSG_DEBUG | MSG_FACILITY_SEARCH, _T("[G1] Got query packet with unknown GGEP \"%s\" (%d bytes)"), pItemPos->m_sID, pItemPos->m_nLength );
+				theApp.Message( MSG_DEBUG | MSG_FACILITY_SEARCH, _T("[G1] Got query packet with unknown GGEP \"%s\" (%d bytes)"),
+					(LPCTSTR)pItemPos->m_sID, pItemPos->m_nLength );
 		}
 
 		if ( oSHA1  && ! m_oSHA1 )  m_oSHA1  = oSHA1;
@@ -1168,7 +1170,7 @@ BOOL CQuerySearch::ReadDCPacket(CDCPacket* pPacket, const SOCKADDR_IN* pEndpoint
 	LPSTR szFlag2 = strchr( szFlag1, '?' );
 	if ( ! szFlag2 )
 		return FALSE;
-	*szFlag2++ = 0;	
+	*szFlag2++ = 0;
 
 	LPSTR szSize = strchr( szFlag2, '?' );
 	if ( ! szSize )
@@ -2056,7 +2058,7 @@ CString CQuerySearch::BuildRegExp(const CString& strPattern) const
 					// Add all keywords at the "<_>" position
 					for ( CQuerySearch::const_iterator i = begin(); i != end(); ++i )
 					{
-						strFilter.AppendFormat( L"%s\\s*", 
+						strFilter.AppendFormat( L"%s\\s*",
 							(LPCTSTR)CString( i->first, (int)( i->second ) ) );
 					}
 				}
@@ -2074,7 +2076,7 @@ CString CQuerySearch::BuildRegExp(const CString& strPattern) const
 					{
 						if ( nWord == nNumber )
 						{
-							strFilter.AppendFormat( L"%s\\s*", 
+							strFilter.AppendFormat( L"%s\\s*",
 								(LPCTSTR)CString( i->first, (int)( i->second ) ) );
 							break;
 						}

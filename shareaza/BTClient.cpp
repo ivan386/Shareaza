@@ -76,7 +76,7 @@ CBTClient::CBTClient()
 	m_mInput.pLimit = m_mOutput.pLimit = &Settings.Bandwidth.Request;
 
 	if ( Settings.General.DebugBTSources )
-		theApp.Message( MSG_DEBUG, L"Adding BT client to collection: %s", m_sAddress );
+		theApp.Message( MSG_DEBUG, L"Adding BT client to collection: %s", (LPCTSTR)m_sAddress );
 
 	BTClients.Add( this );
 }
@@ -89,7 +89,7 @@ CBTClient::~CBTClient()
 	ASSERT( m_pUploadTransfer == NULL );
 
 	if ( Settings.General.DebugBTSources )
-		theApp.Message( MSG_DEBUG, L"Removing BT client from collection: %s", m_sAddress );
+		theApp.Message( MSG_DEBUG, L"Removing BT client from collection: %s", (LPCTSTR)m_sAddress );
 
 	BTClients.Remove( this );
 }
@@ -108,11 +108,11 @@ BOOL CBTClient::Connect(CDownloadTransferBT* pDownloadTransfer)
 	const CDownloadSource* pSource = pDownloadTransfer->GetSource();
 
 	if ( ! CTransfer::ConnectTo( &pSource->m_pAddress, pSource->m_nPort ) ) return FALSE;
-	
+
 	m_pDownload			= pDownloadTransfer->GetDownload();
 	m_pDownloadTransfer	= pDownloadTransfer;
 
-	theApp.Message( MSG_INFO, IDS_BT_CLIENT_CONNECTING, m_sAddress );
+	theApp.Message( MSG_INFO, IDS_BT_CLIENT_CONNECTING, (LPCTSTR)m_sAddress );
 
 	return TRUE;
 }
@@ -127,11 +127,11 @@ void CBTClient::AttachTo(CConnection* pConnection)
 
 	CTransfer::AttachTo( pConnection );
 	if ( Settings.General.DebugBTSources )
-		theApp.Message( MSG_DEBUG, L"Attaching new BT client connection: %s", m_sAddress );
+		theApp.Message( MSG_DEBUG, L"Attaching new BT client connection: %s", (LPCTSTR)m_sAddress );
 
 	ASSERT( m_mInput.pLimit != NULL );
 	m_tConnected = GetTickCount();
-	theApp.Message( MSG_INFO, IDS_BT_CLIENT_ACCEPTED, m_sAddress );
+	theApp.Message( MSG_INFO, IDS_BT_CLIENT_ACCEPTED, (LPCTSTR)m_sAddress );
 }
 
 //////////////////////////////////////////////////////////////////////
@@ -148,7 +148,7 @@ void CBTClient::Close(UINT nError)
 	m_bClosing = TRUE;
 
 	if ( Settings.General.DebugBTSources )
-		theApp.Message( MSG_DEBUG, L"Deleting BT client: %s", m_sAddress );
+		theApp.Message( MSG_DEBUG, L"Deleting BT client: %s", (LPCTSTR)m_sAddress );
 
 	if ( m_pUploadTransfer != NULL ) m_pUploadTransfer->Close();
 	ASSERT( m_pUploadTransfer == NULL );
@@ -176,7 +176,7 @@ void CBTClient::Send(CBTPacket* pPacket, BOOL bRelease)
 {
 	ASSERT( IsValid() );
 	ASSERT( m_bOnline );
-	
+
 	if ( pPacket != NULL )
 	{
 		ASSERT( pPacket->m_nProtocol == PROTOCOL_BT );
@@ -188,7 +188,7 @@ void CBTClient::Send(CBTPacket* pPacket, BOOL bRelease)
 		Write( pPacket );
 		if ( bRelease ) pPacket->Release();
 	}
-	
+
 	OnWrite();
 }
 
@@ -198,9 +198,9 @@ void CBTClient::Send(CBTPacket* pPacket, BOOL bRelease)
 BOOL CBTClient::OnRun()
 {
 	CTransfer::OnRun();
-	
+
 	DWORD tNow = GetTickCount();
-	
+
 	if ( ! m_bConnected )
 	{
 		if ( tNow - m_tConnected > Settings.Connection.TimeoutConnect )
@@ -240,7 +240,7 @@ BOOL CBTClient::OnRun()
 		if ( m_pDownloadTransfer != NULL && ! m_pDownloadTransfer->OnRun() ) return FALSE;
 		if ( m_pUploadTransfer == NULL || ! m_pUploadTransfer->OnRun() ) return FALSE;
 	}
-	
+
 	return TRUE;
 }
 
@@ -308,7 +308,7 @@ BOOL CBTClient::OnRead()
 				if ( ! m_bOnline )
 					bSuccess = FALSE;
 			}
-			
+
 			pPacket->Release();
 
 			if ( ! bSuccess )
@@ -343,7 +343,7 @@ void CBTClient::SendHandshake(BOOL bPart1, BOOL bPart2)
 		return;
 
 	ASSERT( m_pDownload != NULL );
-	
+
 	if ( bPart1 )
 	{
 		const QWORD nFlags = BT_FLAG_EXTENSION | BT_FLAG_DHT_PORT;
@@ -351,7 +351,7 @@ void CBTClient::SendHandshake(BOOL bPart1, BOOL bPart2)
 		Write( &nFlags, 8 );
 		Write( m_pDownload->m_oBTH );
 	}
-	
+
 	if ( bPart2 )
 	{
 		if ( ! m_pDownload->m_pPeerID )
@@ -359,12 +359,12 @@ void CBTClient::SendHandshake(BOOL bPart1, BOOL bPart2)
 
         Write( m_pDownload->m_pPeerID );
 	}
-	
+
 	OnWrite();
 }
 
 BOOL CBTClient::OnHandshake1()
-{	
+{
 	// First part of the handshake
 	ASSERT( ! m_bOnline );
 	ASSERT( ! m_bShake );
@@ -438,9 +438,9 @@ BOOL CBTClient::OnHandshake1()
 		}
 
 
-		// Check we don't have too many active torrent connections 
+		// Check we don't have too many active torrent connections
 		// (Prevent routers overloading for very popular torrents)
-		if ( ( m_pDownload->GetTransferCount( dtsCountTorrentAndActive ) ) > ( Settings.BitTorrent.DownloadConnections * 1.25 ) ) 
+		if ( ( m_pDownload->GetTransferCount( dtsCountTorrentAndActive ) ) > ( Settings.BitTorrent.DownloadConnections * 1.25 ) )
 		{
 			Close( IDS_BT_CLIENT_MAX_CONNECTIONS );
 			return FALSE;
@@ -522,14 +522,14 @@ BOOL CBTClient::OnHandshake2()
 
 	ASSERT( m_pUploadTransfer == NULL );
 	if ( Settings.General.DebugBTSources )
-		theApp.Message( MSG_DEBUG, L"Creating new BT upload: %s", m_sAddress );
+		theApp.Message( MSG_DEBUG, L"Creating new BT upload: %s", (LPCTSTR)m_sAddress );
 	m_pUploadTransfer = new CUploadTransferBT( this, m_pDownload );
 
 	m_bOnline = TRUE;
 
 	theApp.Message( MSG_INFO, IDS_BT_CLIENT_ONLINE, (LPCTSTR)m_sAddress,
 		(LPCTSTR)m_pDownload->GetDisplayName() );
-	
+
 	if ( ! m_pDownload->IsTorrent() ) // perhaps we just finished download; investigate this!
 	{
 		m_pDownload = NULL;
@@ -548,7 +548,7 @@ BOOL CBTClient::OnHandshake2()
 
 	if ( CBTPacket* pBitfield = m_pDownload->CreateBitfieldPacket() )
 		Send( pBitfield );
-	
+
 	if ( m_pDownloadTransfer != NULL && ! m_pDownloadTransfer->OnConnected() )
 		return FALSE;
 
@@ -560,7 +560,7 @@ BOOL CBTClient::OnHandshake2()
 		m_pUploadTransfer->m_bChoked = FALSE;
 		UnChoke();
 	}
-	
+
 	return TRUE;
 }
 
@@ -782,7 +782,7 @@ CString CBTClient::GetAzureusStyleUserAgent(const BYTE* pVendor, size_t nVendor)
 				break;
 			}
 		}
-		if ( sUserAgent.IsEmpty() ) 
+		if ( sUserAgent.IsEmpty() )
 			// If we don't want the version, etc.
 			sUserAgent.Format( _T("BitTorrent (%c%c)"), (TCHAR)pVendor[ 1 ], (TCHAR)pVendor[ 2 ] );
 	}
@@ -827,7 +827,7 @@ void CBTClient::DetermineUserAgent( const Hashes::BtGuid& oGUID )
 		default: // Unknown client using this naming.
 			sUserAgent.Format(_T("%c"), oGUID[0]);
 		}
-		
+
 		sUserAgent.AppendFormat( _T(" %i.%i.%i"), charint( oGUID[1] ), charint( oGUID[2] ), charint( oGUID[3] ) );
 	}
 	else if  ( oGUID[0] == 'M' && oGUID[2] == '-' && oGUID[4] == '-' && oGUID[6] == '-' )
@@ -839,12 +839,12 @@ void CBTClient::DetermineUserAgent( const Hashes::BtGuid& oGUID )
 		sUserAgent.Format( _T("BitTorrent Plus %i.%i%i%c"), charint( oGUID[4] ), charint( oGUID[5] ), charint( oGUID[6] ), oGUID[7] );
 	}
 	else if  ( oGUID[0] == 'e' && oGUID[1] == 'x' && oGUID[2] == 'b' && oGUID[3] == 'c' )
-	{	
+	{
 		// BitLord
 		if  ( oGUID[6] == 'L' && oGUID[7] == 'O' && oGUID[8] == 'R' && oGUID[9] == 'D' )
 			sUserAgent.Format( _T("BitLord %u.%02u"), oGUID[4], oGUID[5] );
 		// Old BitComet
-		else 
+		else
 			sUserAgent.Format( _T("BitComet %u.%02u"), oGUID[4], oGUID[5] );
 	}
 	else if  ( ( oGUID[0] == 'B' && oGUID[1] == 'S' ) || ( oGUID[2] == 'B' && oGUID[3] == 'S' ) )
@@ -1060,7 +1060,7 @@ BOOL CBTClient::OnPacket(CBTPacket* pPacket)
 	case BT_PACKET_SOURCE_RESPONSE:
 		return m_pDownloadTransfer == NULL || m_pDownloadTransfer->OnSourceResponse( pPacket );
 	}
-	
+
 	return TRUE;
 }
 
@@ -1068,7 +1068,7 @@ BOOL CBTClient::OnPacket(CBTPacket* pPacket)
 // CBTClient advanced handshake
 
 void CBTClient::SendBeHandshake()
-{	
+{
 	// Send extended handshake (for G2 capable clients)
 	CBTPacket* pPacket = CBTPacket::New( BT_PACKET_HANDSHAKE );
 	CBENode* pRoot = pPacket->m_pNode.get();
@@ -1079,13 +1079,13 @@ void CBTClient::SendBeHandshake()
 		pRoot->Add( BT_DICT_NICKNAME )->SetString( strNick );
 
 	pRoot->Add( BT_DICT_SRC_EXCHANGE )->SetInt( BT_HANDSHAKE_SOURCE );
-	pRoot->Add( BT_DICT_USER_AGENT )->SetString( Settings.SmartAgent() );	
+	pRoot->Add( BT_DICT_USER_AGENT )->SetString( Settings.SmartAgent() );
 
 	Send( pPacket );
 }
 
 BOOL CBTClient::OnBeHandshake(CBTPacket* pPacket)
-{	
+{
 	ASSUME_LOCK( Transfers.m_pSection );
 
 	const CBENode* pRoot = pPacket->m_pNode.get();
@@ -1099,7 +1099,7 @@ BOOL CBTClient::OnBeHandshake(CBTPacket* pPacket)
 			sUserAgent.Trim();
 
 			SetUserAgent( sUserAgent, TRUE );
-			
+
 			if ( Security.IsClientBanned( m_sUserAgent ) )
 			{
 				Close( IDS_SECURITY_BANNED_USERAGENT );
@@ -1434,7 +1434,7 @@ BOOL CBTClient::OnMetadataRequest(CBTPacket* pPacket)
 	return TRUE;
 }
 
-/*	
+/*
  The PEX message payload is a bencoded dictionary with three keys:
  'added': the set of peers met since the last PEX
  'added.f': a flag for every peer, apparently with the following values:
@@ -1475,7 +1475,7 @@ void CBTClient::SendUtPex(DWORD tConnectedAfter)
 
 		BYTE nFlag = (pBTDownload->m_pClient->m_bPrefersEncryption ? 1 : 0 ) |
 					 (pBTDownload->m_pClient->m_bSeeder ? 2 : 0);
-		 
+
 		DWORD nFalgInBytePos = (nPeersCount - 1 ) % 4;
 
 		if ( nFalgInBytePos == 0 )
@@ -1519,7 +1519,7 @@ BOOL CBTClient::OnUtPex(CBTPacket* pPacket)
 			}
 		}
 	}
-	
+
 	if ( CBENode* pPeersDrop = pRoot->GetNode( BT_DICT_DROPPED ) )
 	{
 		if ( 0 == ( pPeersDrop->m_nValue % 6 ) ) // IPv4?
@@ -1530,7 +1530,7 @@ BOOL CBTClient::OnUtPex(CBTPacket* pPacket)
 
 				if ( pSource->IsConnected() || pSource->m_nProtocol != PROTOCOL_BT )
 					continue;
-				
+
 				WORD nPort = htons( pSource->m_nPort );
 				const BYTE* pPointer = (const BYTE*)pPeersDrop->m_pValue;
 

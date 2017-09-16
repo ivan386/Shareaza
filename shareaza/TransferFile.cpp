@@ -60,7 +60,7 @@ CTransferFile* CTransferFiles::Open(LPCTSTR pszFile, BOOL bWrite)
 	{
 		if ( bWrite && ! pFile->EnsureWrite() )
 			return NULL;
-	
+
 		pFile->AddRef();
 	}
 	else
@@ -279,7 +279,7 @@ BOOL CTransferFile::Read(QWORD nOffset, LPVOID pBuffer, QWORD nBuffer, QWORD* pn
 
 	if ( ! ReadFile( m_hFile, pBuffer, (DWORD)nBuffer, (DWORD*)pnRead, NULL ) )
 	{
-		theApp.Message( MSG_ERROR, _T("Can't read from file \"%s\". %s"), m_sPath, GetErrorString() );
+		theApp.Message( MSG_ERROR, _T("Can't read from file \"%s\". %s"), (LPCTSTR)m_sPath, (LPCTSTR)GetErrorString() );
 		return FALSE;
 	}
 
@@ -329,7 +329,7 @@ BOOL CTransferFile::Write(QWORD nOffset, LPCVOID pBuffer, QWORD nBuffer, QWORD* 
 
 	if ( ! WriteFile( m_hFile, pBuffer, (DWORD)nBuffer, (LPDWORD)pnWritten, NULL ) )
 	{
-		theApp.Message( MSG_ERROR, _T("Can't write to file \"%s\". %s"), m_sPath, GetErrorString() );
+		theApp.Message( MSG_ERROR, _T("Can't write to file \"%s\". %s"), (LPCTSTR)m_sPath, (LPCTSTR)GetErrorString() );
 		return FALSE;
 	}
 

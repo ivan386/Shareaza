@@ -149,8 +149,7 @@ bool CEDClients::PushTo(DWORD nClientID, WORD nClientPort)
 	pClient->m_bCallbackRequested = true;
 
 	// Log request
-	theApp.Message( MSG_DEBUG, _T("[ED2K] Push request received for %s"),
-		CString( inet_ntoa( pClient->m_pHost.sin_addr ) ) );
+	theApp.Message( MSG_DEBUG, _T("[ED2K] Push request received for %s"), (LPCTSTR)CString( inet_ntoa( pClient->m_pHost.sin_addr ) ) );
 
 	// Set up succeeded
 	return true;
@@ -502,7 +501,7 @@ BOOL CEDClients::OnServerStatus(const SOCKADDR_IN* pHost, CEDPacket* pPacket)
 	DWORD nKey = pPacket->ReadLongLE();
 
 	CQuickLock oLock( HostCache.eDonkey.m_pSection );
-	
+
 	CHostCacheHostPtr pServer = HostCache.eDonkey.Find( &pHost->sin_addr );
 	if ( pServer == NULL )
 	{
@@ -576,7 +575,7 @@ BOOL CEDClients::OnServerStatus(const SOCKADDR_IN* pHost, CEDPacket* pPacket)
 
 	HostCache.eDonkey.Update( pServer );
 
-	theApp.Message( MSG_DEBUG, _T("eDonkey server %s:%u UDP flags: %s"), (LPCTSTR)CString( inet_ntoa( pHost->sin_addr ) ), htons( pHost->sin_port ), GetED2KServerUDPFlags( nUDPFlags ) );
+	theApp.Message( MSG_DEBUG, _T("eDonkey server %s:%u UDP flags: %s"), (LPCTSTR)CString( inet_ntoa( pHost->sin_addr ) ), htons( pHost->sin_port ), (LPCTSTR)GetED2KServerUDPFlags( nUDPFlags ) );
 
 	return TRUE;
 }

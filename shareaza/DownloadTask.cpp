@@ -228,7 +228,7 @@ void CDownloadTask::RunAllocate()
 		if ( ! DeviceIoControl( hFile, FSCTL_SET_SPARSE, NULL, 0, NULL, 0, &dwOut, NULL ) )
 		{
 			DWORD nError = GetLastError();
-			theApp.Message( MSG_ERROR, _T("Unable to set sparse file: \"%s\", Win32 error %x."), m_pDownload->m_sPath, nError );
+			theApp.Message( MSG_ERROR, _T("Unable to set sparse file: \"%s\", Win32 error %x."), (LPCTSTR)m_pDownload->m_sPath, nError );
 		}
 	}
 
@@ -275,7 +275,7 @@ DWORD CALLBACK CDownloadTask::CopyProgressRoutine(LARGE_INTEGER TotalFileSize,
 {
 	CDownloadTask* pThis = (CDownloadTask*)lpData;
 
-	if ( TotalFileSize.QuadPart ) 
+	if ( TotalFileSize.QuadPart )
 		pThis->m_fProgress = (float)( TotalBytesTransferred.QuadPart * 100 ) / (float)TotalFileSize.QuadPart;
 	else
 		pThis->m_fProgress = 100.0f;

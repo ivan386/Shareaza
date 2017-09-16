@@ -154,7 +154,7 @@ bool CLibrary::OnQueryHits(const CQueryHit* pHits)
 			}
 		}
 	}
-	
+
 	return true;
 }
 
@@ -358,7 +358,7 @@ BOOL CLibrary::Load()
 BOOL CLibrary::Save()
 {
 	CSingleLock pLock( &m_pSection, TRUE );
-	
+
 	//CAutoPtr< CXMLElement > pXML( LibraryFolders.CreateXML( _T("/"), TRUE, xmlDC ) );
 	//CString strXML( pXML->ToString( TRUE, TRUE, TRUE, TRI_TRUE ) );
 	//CString strXMLFile;
@@ -378,7 +378,7 @@ BOOL CLibrary::Save()
 	CFile pFile;
 	if ( ! pFile.Open( strFile, CFile::modeWrite|CFile::modeCreate ) )
 	{
-		theApp.Message( MSG_ERROR, _T("Library save error to: %s"), strFile );
+		theApp.Message( MSG_ERROR, _T("Library save error to: %s"), (LPCTSTR)strFile );
 		return FALSE;
 	}
 
@@ -399,7 +399,7 @@ BOOL CLibrary::Save()
 			ar.Abort();
 			pFile.Abort();
 			pException->Delete();
-			theApp.Message( MSG_ERROR, _T("Library save error to: %s"), strFile );
+			theApp.Message( MSG_ERROR, _T("Library save error to: %s"), (LPCTSTR)strFile );
 			return FALSE;
 		}
 
@@ -413,12 +413,12 @@ BOOL CLibrary::Save()
 	{
 		pFile.Abort();
 		pException->Delete();
-		theApp.Message( MSG_ERROR, _T("Library save error to: %s"), strFile );
+		theApp.Message( MSG_ERROR, _T("Library save error to: %s"), (LPCTSTR)strFile );
 		return FALSE;
 	}
 
 	m_nSaveCookie = m_nUpdateCookie;
-	theApp.Message( MSG_DEBUG, _T("Library successfully saved to: %s"), strFile );
+	theApp.Message( MSG_DEBUG, _T("Library successfully saved to: %s"), (LPCTSTR)strFile );
 	return TRUE;
 }
 

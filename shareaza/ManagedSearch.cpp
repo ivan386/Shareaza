@@ -373,8 +373,7 @@ BOOL CManagedSearch::ExecuteNeighbours(const DWORD tTicks, const DWORD tSecs)
 				m_tMoreResults = 0;
 
 				//Display message in system window
-				theApp.Message( MSG_INFO, IDS_NETWORK_SEARCH_SENT, m_pSearch->GetSearch(),
-					(LPCTSTR)CString( inet_ntoa( pNeighbour->m_pHost.sin_addr ) ) );
+				theApp.Message( MSG_INFO, IDS_NETWORK_SEARCH_SENT, (LPCTSTR)m_pSearch->GetSearch(), (LPCTSTR)CString( inet_ntoa( pNeighbour->m_pHost.sin_addr ) ) );
 
 				switch ( pNeighbour->m_nProtocol )
 				{
@@ -659,7 +658,7 @@ BOOL CManagedSearch::ExecuteDonkeyMesh(const DWORD /*tTicks*/, const DWORD tSecs
 		// Make sure this host can be queried (now)
 		if ( ! pHost->CanQuery( tSecs ) )
 			continue;
-		
+
 		// Never re-query eDonkey2000 servers
 		DWORD tLastQuery;
 		if ( m_pNodes.Lookup( pHost->m_pAddress.s_addr, tLastQuery ) )

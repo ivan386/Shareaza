@@ -129,7 +129,7 @@ BOOL CDatagrams::Listen()
 	if ( Network.Resolve( Settings.Connection.InHost, Settings.Connection.InPort, &saHost ) )
 	{
 		// Inbound resolved
-		if ( ! Settings.Connection.InBind ) 
+		if ( ! Settings.Connection.InBind )
 			saHost.sin_addr.s_addr = INADDR_ANY;
 		else
 		{
@@ -144,7 +144,7 @@ BOOL CDatagrams::Listen()
 	else
 	{
 		saHost = Network.m_pHost;
-		if ( ! Settings.Connection.InBind ) 
+		if ( ! Settings.Connection.InBind )
 			saHost.sin_addr.s_addr = INADDR_ANY;
 		else
 		{
@@ -169,7 +169,7 @@ BOOL CDatagrams::Listen()
 			return FALSE;
 		}
 	}
-	
+
 	theApp.Message( MSG_INFO, IDS_NETWORK_LISTENING_UDP, (LPCTSTR)CString( inet_ntoa( saHost.sin_addr ) ), htons( saHost.sin_port ) );
 
 	WSAEventSelect( m_hSocket[ 0 ], Network.GetWakeupEvent(), FD_READ );
@@ -207,7 +207,7 @@ BOOL CDatagrams::Listen()
 			{
 				if ( nPorts[ i ] == saHost.sin_port )
 				{
-					setsockopt( m_hSocket[ 0 ], IPPROTO_IP, IP_MULTICAST_LOOP, (const char*)&bLoop, sizeof( bLoop ) );			
+					setsockopt( m_hSocket[ 0 ], IPPROTO_IP, IP_MULTICAST_LOOP, (const char*)&bLoop, sizeof( bLoop ) );
 					setsockopt( m_hSocket[ 0 ], IPPROTO_IP, IP_MULTICAST_TTL, (const char*)&bTTL, sizeof( bTTL ) );
 					setsockopt( m_hSocket[ 0 ], IPPROTO_IP, IP_ADD_MEMBERSHIP, (const char*)&mr[ i ], sizeof( ip_mreq ) );
 				}
@@ -718,7 +718,7 @@ BOOL CDatagrams::TryRead(int nIndex)
 		}
 		theApp.Message( MSG_DEBUG | MSG_FACILITY_INCOMING,
 			_T("UDP: Received unknown packet (%i bytes) from %s: %s"),
-			nLength, (LPCTSTR)CString( inet_ntoa( pFrom.sin_addr ) ), strText );
+			nLength, (LPCTSTR)CString( inet_ntoa( pFrom.sin_addr ) ), (LPCTSTR)strText );
 		return TRUE;
 	}
 
@@ -867,7 +867,7 @@ BOOL CDatagrams::OnDatagram(const SOCKADDR_IN* pHost, const BYTE* pBuffer, DWORD
 	// \r\n
 	//
 	// host:
-	//	RFC 2616 section 14.23 and RFC 2732 compliant Host header specifying the 
+	//	RFC 2616 section 14.23 and RFC 2732 compliant Host header specifying the
 	//	multicast group to which the announce is sent. In other words, strings
 	//	A) 239.192.152.143:6771 (org-local) or B) [ff15::efc0:988f]:6771 (site-local),
 	//	as appropriate.
@@ -882,8 +882,8 @@ BOOL CDatagrams::OnDatagram(const SOCKADDR_IN* pHost, const BYTE* pBuffer, DWORD
 	// infohash:
 	//  hex-encoded (40 character) infohash
 	//  An announce may contain multiple, consecutive Infohash headers to announce
-	//  the participation in more than one torrent. This may not be supported by 
-	//  older implementations. When sending multiple infohashes the packet length 
+	//  the participation in more than one torrent. This may not be supported by
+	//  older implementations. When sending multiple infohashes the packet length
 	//  should not exceed 1400 bytes to avoid MTU/fragmentation problems.
 
 	if ( nLength > 22 &&
@@ -906,7 +906,7 @@ BOOL CDatagrams::OnDatagram(const SOCKADDR_IN* pHost, const BYTE* pBuffer, DWORD
 			else if ( nPort && nPart >= 9 + 40 && _strnicmp( pNext, _P("infohash:") ) == 0 )
 			{
 				Hashes::BtHash oHash;
-				if ( oHash.fromString< Hashes::base16Encoding >( CString( pNext + 9, nPart - 9 ).Trim() ) )
+				if ( oHash.fromString< Hashes::base16Encoding >( CString( pNext + 9, (int)nPart - 9 ).Trim() ) )
 				{
 					CSingleLock oLock( &Transfers.m_pSection, FALSE );
 					if ( oLock.Lock( 250 ) )

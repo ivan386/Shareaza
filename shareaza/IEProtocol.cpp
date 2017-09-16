@@ -585,13 +585,14 @@ HRESULT CIEProtocol::OnRequestApplication(LPCTSTR pszURL, CBuffer& oBuffer, CStr
 			_T(".time1 { width: 8%%; background-color: %s; text-align: right; }\n")
 			_T(".icon { width: 16px; height: 16px; border-style: none; }\n")
 			_T("</style>\n</head>\n<body onmousemove=\"window.external.hover(''); event.cancel\">\n<h1> %s </h1>\n<table>\n"),
-			/* body */ Settings.Fonts.DefaultFont, Settings.Fonts.FontSize, ToCSSColor( CoolInterface.m_crWindow ), ToCSSColor( CoolInterface.m_crDisabled ),
-			/* h1 */ ToCSSColor( Skin.m_crBannerText ) , ToCSSColor( Skin.m_crBannerBack ),
-			/* .name0 */ ToCSSColor( Skin.m_crSchemaRow[ 0 ] ), ToCSSColor( CoolInterface.m_crTextLink ),
-			/* .time0 */ ToCSSColor( Skin.m_crSchemaRow[ 0 ] ), 
-			/* .name1 */ ToCSSColor( Skin.m_crSchemaRow[ 1 ] ), ToCSSColor( CoolInterface.m_crTextLink ),
-			/* .time1 */ ToCSSColor( Skin.m_crSchemaRow[ 1 ] ), 
-			/* h1 */ Escape( LoadString( IDS_LIBPANEL_RECENT_ADDITIONS ) ) );
+			/* body */ (LPCTSTR)Settings.Fonts.DefaultFont, Settings.Fonts.FontSize,
+			(LPCTSTR)ToCSSColor( CoolInterface.m_crWindow ), (LPCTSTR)ToCSSColor( CoolInterface.m_crDisabled ),
+			/* h1 */ (LPCTSTR)ToCSSColor( Skin.m_crBannerText ) , (LPCTSTR)ToCSSColor( Skin.m_crBannerBack ),
+			/* .name0 */ (LPCTSTR)ToCSSColor( Skin.m_crSchemaRow[ 0 ] ), (LPCTSTR)ToCSSColor( CoolInterface.m_crTextLink ),
+			/* .time0 */ (LPCTSTR)ToCSSColor( Skin.m_crSchemaRow[ 0 ] ),
+			/* .name1 */ (LPCTSTR)ToCSSColor( Skin.m_crSchemaRow[ 1 ] ), (LPCTSTR)ToCSSColor( CoolInterface.m_crTextLink ),
+			/* .time1 */ (LPCTSTR)ToCSSColor( Skin.m_crSchemaRow[ 1 ] ),
+			/* h1 */ (LPCTSTR)Escape( LoadString( IDS_LIBPANEL_RECENT_ADDITIONS ) ) );
 
 		CSingleLock oLock( &Library.m_pSection, FALSE );
 		if ( ! oLock.Lock( 500 ) )
@@ -622,8 +623,8 @@ HRESULT CIEProtocol::OnRequestApplication(LPCTSTR pszURL, CBuffer& oBuffer, CStr
 				_T("<td class=\"name%d\" onclick=\"window.external.display('%s');\" onmousemove=\"window.external.hover('%s'); window.event.cancelBubble = true;\">")
 				_T("<img class=\"icon\" src=\"p2p-file://%s/icon16\"> %s </a></td>")
 				_T("<td class=\"time%d\"> %s </td>"),
-				( nCount & 2 ) >> 1, Escape( strURN ), Escape( strURN ), Escape( strURN ), Escape( pRecent->m_pFile->m_sName ),
-				( nCount & 2 ) >> 1, Escape( sTime ) );
+				( nCount & 2 ) >> 1, (LPCTSTR)Escape( strURN ), (LPCTSTR)Escape( strURN ), (LPCTSTR)Escape( strURN ), (LPCTSTR)Escape( pRecent->m_pFile->m_sName ),
+				( nCount & 2 ) >> 1, (LPCTSTR)Escape( sTime ) );
 
 			if ( ( nCount & 1 ) != 0 )
 				strXML += _T("</tr>\n");
