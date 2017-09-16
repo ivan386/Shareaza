@@ -222,7 +222,7 @@ public:
 					_T("Content-Transfer-Encoding: base64\r\n")
 					_T("Content-Location: %s%s\r\n")
 					_T("\r\n"),
-					szBoundary, szType, m_sRoot, sURI );
+					szBoundary, szType, (LPCTSTR)m_sRoot, (LPCTSTR)sURI );
 
 				fileOut.Write( (LPCSTR)CT2A( strHeader ), strHeader.GetLength() );
 				fileOut.Write( sPart, sPart.GetLength() );
@@ -365,7 +365,7 @@ HRESULT CPlugin::Export(IGenericView* pGenericView, LONG nCount)
 
 		str.Format( _T("dn=%s&amp;xl=%I64u\">%s</a></span>")
 			_T("<span class=\"fs\">%s</span></div>\r\n"),
-			URLEncode( bstrName ), nSize, bstrName, SmartVolume( nSize ) );
+			(LPCTSTR)URLEncode( bstrName ), nSize, (LPCTSTR)bstrName, (LPCTSTR)SmartVolume( nSize ) );
 		sHTML += str;
 	}
 
