@@ -784,7 +784,7 @@ CString CDownloadWithSources::GetSourceURLs(CList< CString >* pState, int nMaxim
 				pSource->m_sURL.Find( _T("Z%2C http://") ) >= 0 )
 			{
 				// Ignore buggy URLs
-				TRACE( _T("CDownloadWithSources::GetSourceURLs() Bad URL: %s\n"), pSource->m_sURL );
+				TRACE( "CDownloadWithSources::GetSourceURLs() Bad URL: %s\n", (LPCSTR)CT2A( pSource->m_sURL ) );
 			}
 			else
 			{

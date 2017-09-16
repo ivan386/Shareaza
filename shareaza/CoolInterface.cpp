@@ -821,8 +821,8 @@ BOOL CCoolInterface::Add(CXMLElement* pBase, HBITMAP hbmImage, COLORREF crMask, 
 		CXMLElement* pXML = pBase->GetNextElement( pos );
 		if ( ! pXML->IsNamed( _T("image") ) )
 		{
-			TRACE( _T("Unknown tag \"%s\" inside \"%s:%s\" in CCoolInterface::Add\r\n"),
-				pXML->GetName(), pBase->GetName(), pBase->GetAttributeValue( _T("id") ) );
+			TRACE( "Unknown tag \"%s\" inside \"%s:%s\" in CCoolInterface::Add\r\n",
+				(LPCSTR)CT2A( pXML->GetName() ), (LPCSTR)CT2A( pBase->GetName() ), (LPCSTR)CT2A( pBase->GetAttributeValue( _T("id") ) ) );
 			continue;
 		}
 
@@ -831,8 +831,8 @@ BOOL CCoolInterface::Add(CXMLElement* pBase, HBITMAP hbmImage, COLORREF crMask, 
 		{
 			if ( _stscanf( strValue, _T("%i"), &nIndex ) != 1 )
 			{
-				TRACE( _T("Image \"%s\" has invalid index \"%s\" in CCoolInterface::Add\r\n"),
-					pBase->GetAttributeValue( _T("id") ), strValue );
+				TRACE( "Image \"%s\" has invalid index \"%s\" in CCoolInterface::Add\r\n",
+					(LPCSTR)CT2A( pBase->GetAttributeValue( _T("id") ) ), (LPCSTR)CT2A( strValue ) );
 				continue;
 			}
 		}

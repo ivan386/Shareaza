@@ -133,7 +133,7 @@ STDMETHODIMP CRazaWebHook::Invoke(
 				ATLASSERT( pDispParams->rgvarg[ 5 ].vt == ( VT_BYREF | VT_VARIANT ) );
 				ATLASSERT( pDispParams->rgvarg[ 5 ].pvarVal->vt == VT_BSTR );
 				BSTR& bstrURL = pDispParams->rgvarg[ 5 ].pvarVal->bstrVal;
-				
+
 				ATLTRACE( _T("[Raza Web Hook] Before navigate: %s\n"), bstrURL );
 				m_sURL.Empty();
 
@@ -163,7 +163,7 @@ STDMETHODIMP CRazaWebHook::Invoke(
 
 				if ( ! m_sURL.IsEmpty() )
 				{
-					ATLTRACE( _T("[Raza Web Hook] File download: %s\n"), m_sURL );
+					ATLTRACE( "[Raza Web Hook] File download: %s\n", (LPCSTR)CT2A( m_sURL ) );
 					AddLink( m_sURL );
 					m_sURL.Empty();
 					*pCancel = VARIANT_TRUE;

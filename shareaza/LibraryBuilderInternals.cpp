@@ -394,7 +394,7 @@ bool CLibraryBuilderInternals::ExtractProperties(DWORD nIndex, const CString& st
 							strItem.Format( _T("%lu"), nSampleRate );
 							pXML->AddAttribute( _T("sampleRate"), strItem );
 						}
-						
+
 						DWORD nBitrate;
 						if ( PropGetValue( pStore, PKEY_Audio_EncodingBitrate, nBitrate ) && nBitrate )
 						{
@@ -455,7 +455,7 @@ bool CLibraryBuilderInternals::ExtractProperties(DWORD nIndex, const CString& st
 								(TCHAR)LOBYTE( HIWORD( nFourCC ) ), (TCHAR)HIBYTE( HIWORD( nFourCC ) ) );
 							pXML->AddAttribute( _T("codec"), strItem );
 						}
-						
+
 						DWORD nFrameRate;
 						if ( PropGetValue( pStore, PKEY_Video_FrameRate, nFrameRate ) && nFrameRate )
 						{
@@ -494,7 +494,7 @@ bool CLibraryBuilderInternals::ExtractProperties(DWORD nIndex, const CString& st
 				CString strArtist;
 				if ( PropGetValue( pStore, PKEY_Author, strArtist ) )
 					pXML->AddAttribute( ( nType == PERCEIVED_TYPE_VIDEO || nType == PERCEIVED_TYPE_AUDIO ) ? _T("artist") : _T("author"), strArtist );
-	
+
 				CString strCopyright;
 				if ( PropGetValue( pStore, PKEY_Copyright, strCopyright ) )
 					pXML->AddAttribute( _T("copyright"), strCopyright );
@@ -502,7 +502,7 @@ bool CLibraryBuilderInternals::ExtractProperties(DWORD nIndex, const CString& st
 				bool bDRM;
 				if ( PropGetValue( pStore, PKEY_DRM_IsProtected, bDRM ) && bDRM )
 					pXML->AddAttribute( _T("DRM"), _T("true") );
-				
+
 				CString strKeywords;
 				if ( PropGetValue( pStore, PKEY_Keywords, strKeywords ) )
 					pXML->AddAttribute( _T("keywords"), strKeywords );
@@ -1123,7 +1123,7 @@ bool CLibraryBuilderInternals::ScanMP3Frame(CXMLElement* pXML, HANDLE hFile, DWO
 	};
 
 	static const int nChannelTable[4]	= { 2, 2, 2, 1 };
-	static const CString strSoundType[4]= 
+	static const CString strSoundType[4]=
 	{
 		_T("Stereo"),
 		_T("Joint Stereo"),
@@ -1805,7 +1805,7 @@ bool CLibraryBuilderInternals::ReadFLVEMCA(HANDLE hFile, DWORD& nRemaning, CXMLE
 #ifdef _DEBUG
 		CComVariant varDebug;
 		varDebug.ChangeType( VT_BSTR, &varValue );
-		TRACE( "FLV EMCA %2u : %s = \"%s\"\n", i + 1, strName, (LPCSTR)CW2A( (LPCWSTR)varDebug.bstrVal ) );
+		TRACE( "FLV EMCA %2u : %s = \"%s\"\n", i + 1, (LPCSTR)strName, (LPCSTR)CW2A( (LPCWSTR)varDebug.bstrVal ) );
 #endif
 
 		if ( pXML )
@@ -1939,7 +1939,7 @@ bool CLibraryBuilderInternals::ReadFLV(DWORD nIndex, HANDLE hFile)
 				else if ( bMetadata )
 					break;
 			}
-		} 
+		}
 
 		SetFilePointer( hFile, nNextTagPosition, NULL, FILE_BEGIN );
 	}
@@ -4509,7 +4509,7 @@ bool CLibraryBuilderInternals::ReadDJVU(DWORD nIndex, HANDLE hFile)
 
 		// Skip size
 		SetFilePointer( hFile, 4, NULL, FILE_CURRENT );
-		
+
 		BYTE nFlags;
 		if ( ! ReadFile( hFile, &nFlags, sizeof( nFlags ), &nRead, NULL ) || nRead != sizeof( nFlags ) )
 			return false;

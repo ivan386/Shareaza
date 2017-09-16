@@ -590,7 +590,7 @@ BOOL CDownloadTransferBT::OnPiece(CBTPacket* pPacket)
 	BOOL bSuccess = m_pDownload->SubmitData( nOffset,
 		pPacket->m_pBuffer + pPacket->m_nPosition, nLength );
 	if ( ! bSuccess )
-		TRACE( _T("[BT] Failed to submit data %I64u-%I64u to \"%s\".\n"), nOffset, nOffset + nLength, m_pDownload->m_sPath );
+		TRACE( "[BT] Failed to submit data %I64u-%I64u to \"%s\".\n", nOffset, nOffset + nLength, (LPCSTR)CT2A( m_pDownload->m_sPath ) );
 
 	// TODO: SendRequests and ShowInterest could be combined.. SendRequests
 	// is probably going to tell us if we are interested or not

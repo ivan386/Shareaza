@@ -1248,7 +1248,7 @@ void CQueryHit::ReadGGEP(CG1Packet* pPacket)
 			else if ( pItemPos->IsNamed( GGEP_HEADER_ALTS_TLS ) );
 				// AlternateLocations that support TLS not supported yet
 			else
-				DEBUG_ONLY( theApp.Message( MSG_DEBUG | MSG_FACILITY_SEARCH, _T("[G1] Got hit packet with unknown GGEP \"%s\" (%d bytes)"), pItemPos->m_sID, pItemPos->m_nLength ) );
+				DEBUG_ONLY( theApp.Message( MSG_DEBUG | MSG_FACILITY_SEARCH, _T("[G1] Got hit packet with unknown GGEP \"%s\" (%d bytes)"), (LPCTSTR)pItemPos->m_sID, pItemPos->m_nLength ) );
 		}
 
 		if ( oSHA1  && ! m_oSHA1 )  m_oSHA1  = oSHA1;

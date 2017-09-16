@@ -464,8 +464,8 @@ BOOL CSkin::LoadFromXML(CXMLElement* pXML, const CString& strPath)
 			{
 				Settings.General.Language = pSub->GetAttributeValue( _T("language"), _T("en") );
 				Settings.General.LanguageRTL = ( pSub->GetAttributeValue( _T("dir"), _T("ltr") ) == "rtl" );
-				TRACE( _T("Loading language: %s\r\n"), Settings.General.Language );
-				TRACE( _T("RTL: %d\r\n"), Settings.General.LanguageRTL );
+				TRACE( "Loading language: %s\r\n", (LPCSTR)CT2A( Settings.General.Language ) );
+				TRACE( "RTL: %d\r\n", Settings.General.LanguageRTL );
 			}
 			else if ( strType.CompareNoCase( _T("skin") ) == 0 )
 			{

@@ -66,7 +66,7 @@ inline void FillExtMap()
 				else if ( ext == "pspimag" )	// PaintShopPro Image
 					ext = "pspimage";
 
-				ATLTRACE( " .%s", ext );
+				ATLTRACE( " .%s", (LPCSTR)ext );
 				GFL_INT32 index;
 				if ( ! _ExtMap.Lookup( ext, index ) )
 					_ExtMap.SetAt( ext, info.Index );
@@ -155,7 +155,7 @@ STDAPI DllRegisterServer(void)
 		if ( ext == "pdf" || ext == "ps" || ext == "eps" || ext == "vst" )
 			continue;
 		ext.Insert( 0, '.' );
-		ATLTRACE ("Add %s\n", ext );
+		ATLTRACE ("Add %s\n", (LPCSTR)ext );
 		SHSetValue (HKEY_CURRENT_USER, REG_LIBRARYBUILDER_KEY, CA2T( ext ), REG_SZ,
 			_T("{6C9E61BE-E58F-4AE1-A304-6FF1D183804C}"),
 			38 * sizeof (TCHAR));
@@ -177,7 +177,7 @@ STDAPI DllUnregisterServer(void)
 		if ( ext == "pdf" || ext == "ps" || ext == "eps" || ext == "vst" )
 			continue;
 		ext.Insert( 0, '.' );
-		ATLTRACE ("Remove %s\n", ext );
+		ATLTRACE ("Remove %s\n", (LPCSTR)ext );
 		SHDeleteValue( HKEY_CURRENT_USER, REG_LIBRARYBUILDER_KEY, CA2T( ext ) );
 	}
 

@@ -638,7 +638,7 @@ void CLibraryFile::UpdateMetadata(const CDownload* pDownload)
 		else if ( CXMLElement* pBody = pDownload->m_pXML->GetFirstElement() )
 		{
 			// Recreate metadata
-			TRACE( _T("Using download XML:%s"), pBody->ToString( FALSE, TRUE ) );
+			TRACE( "Using download XML:%s", (LPCSTR)CT2A( pBody->ToString( FALSE, TRUE ) ) );
 			m_pSchema = SchemaCache.Get( pDownload->m_pXML->GetAttributeValue(
 				CXMLAttribute::schemaName ) );
 			m_pMetadata = pBody->Clone();
@@ -940,7 +940,7 @@ CString CLibraryFile::GetAlternateSources(CList< CString >* pState, int nMaximum
 				pSource->m_sURL.Find( _T("Z%2C http://") ) >= 0 )
 			{
 				// Ignore buggy URLs
-				TRACE( _T("CLibraryFile::GetAlternateSources() Bad URL: %s\n"), pSource->m_sURL );
+				TRACE( "CLibraryFile::GetAlternateSources() Bad URL: %s\n", (LPCSTR)CT2A( pSource->m_sURL ) );
 			}
 			else
 			{
@@ -1403,7 +1403,7 @@ BOOL CLibraryFile::PrepareDoc(LPCTSTR pszTemplate, CArray< CString >& oDocs) con
 			CString strReplace = pNode->GetValue();
 			if ( str == _T("seconds") || str == _T("minutes") )
 			{
-				double nTotalSecs = ( str == _T("minutes") ) ? 
+				double nTotalSecs = ( str == _T("minutes") ) ?
 					_tstof( (LPCTSTR)strReplace ) * 60 : _tstof( (LPCTSTR)strReplace );
 				int nSecs = int( nTotalSecs );
 				int nHours = nSecs / 3600;
@@ -1457,10 +1457,10 @@ BOOL CLibraryFile::PrepareDoc(LPCTSTR pszTemplate, CArray< CString >& oDocs) con
 			strHumanSize.Format( _T("%.2f MB"), (float)m_nSize / 1024 / 1024 );
 		else
 			strHumanSize.Format( _T("%.2f KB"), (float)m_nSize / 1024 );
-		ReplaceNoCase( strDoc, _T("$meta:size$"), strHumanSize ); 
+		ReplaceNoCase( strDoc, _T("$meta:size$"), strHumanSize );
 	}
 
-	if ( m_oSHA1 ) 
+	if ( m_oSHA1 )
 	{
 		strMagnet = _T("xt=urn:sha1:") + m_oSHA1.toString();
 
@@ -1469,7 +1469,7 @@ BOOL CLibraryFile::PrepareDoc(LPCTSTR pszTemplate, CArray< CString >& oDocs) con
 		ReplaceNoCase( strDoc, _T("$meta:gnutella$"), _T("gnutella://urn:sha1:") + m_oSHA1.toString() + _T('/') + strNameURI + _T('/') );
 	}
 
-	if ( m_oTiger ) 
+	if ( m_oTiger )
 	{
 		strMagnet = _T("xt=urn:tree:tiger/:") + m_oTiger.toString();
 
@@ -1515,7 +1515,7 @@ BOOL CLibraryFile::PrepareDoc(LPCTSTR pszTemplate, CArray< CString >& oDocs) con
 	ReplaceNoCase( strDoc, _T("$meta:magnet$"), strMagnet );
 
 	ReplaceNoCase( strDoc, _T("$meta:name$"), strFileName );
-	if ( ! m_sComments.IsEmpty() ) 
+	if ( ! m_sComments.IsEmpty() )
 		ReplaceNoCase( strDoc, _T("$meta:comments$"), m_sComments );
 
 	CString strNumber;

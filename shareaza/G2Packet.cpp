@@ -129,7 +129,7 @@ CG2Packet* CG2Packet::New(G2_PACKET nType, CG1Packet* pWrap, int nMinTTL)
 	CG2Packet* pPacket = New( nType, FALSE );
 
 	GNUTELLAPACKET pHeader;
-	
+
 	pHeader.m_oGUID		= pWrap->m_oGUID.storage();
 	pHeader.m_nType		= pWrap->m_nType;
 	pHeader.m_nTTL		= min( pWrap->m_nTTL, BYTE(nMinTTL) );
@@ -326,9 +326,9 @@ BOOL CG2Packet::GetTo(Hashes::Guid& oGUID)
 	if ( pTest[1] != 0x10 ) return FALSE;
 	if ( pTest[2] != 'T' ) return FALSE;
 	if ( pTest[3] != 'O' ) return FALSE;
-	
+
 	CopyMemory( &oGUID[ 0 ], pTest + 4, oGUID.byteCount );
-	
+
 	return BOOL( oGUID.validate() );
 }
 
@@ -642,7 +642,7 @@ CString CG2Packet::Dump(DWORD nTotal)
 void CG2Packet::Debug(LPCTSTR pszReason) const
 {
 	CString strOutput;
-	strOutput.Format( L"[G2] %s Type: %s", pszReason, GetType() );
+	strOutput.Format( L"[G2] %s Type: %s", pszReason, (LPCTSTR)GetType() );
 	CPacket::Debug( strOutput );
 }
 
@@ -797,7 +797,7 @@ BOOL CG2Packet::OnQuery(const SOCKADDR_IN* pHost)
 
 		return TRUE;
 	}
-	
+
 	if ( ! Network.QueryRoute->Add( pSearch->m_oGUID, &pSearch->m_pEndpoint ) )
 	{
 		// Ack without hub list
@@ -822,7 +822,7 @@ BOOL CG2Packet::OnQuery(const SOCKADDR_IN* pHost)
 	Neighbours.RouteQuery( pSearch, this, NULL, TRUE );
 
 	Network.OnQuerySearch( new CLocalSearch( pSearch, PROTOCOL_G2 ) );
-	
+
 	// Ack with hub list
 	Datagrams.Send( &pSearch->m_pEndpoint, Neighbours.CreateQueryWeb( pSearch->m_oGUID, true ) );
 
@@ -844,7 +844,7 @@ BOOL CG2Packet::OnQueryAck(const SOCKADDR_IN* pHost)
 	}
 
 	Hashes::Guid oGUID;
-	
+
 	if ( SearchManager.OnQueryAck( this, pHost, oGUID ) )
 	{
 		CNeighbour* pNeighbour = NULL;
@@ -1075,7 +1075,7 @@ BOOL CG2Packet::OnPush(const SOCKADDR_IN* pHost)
 
 	if ( ! SkipCompound( nLength, 6 ) )
 	{
-		theApp.Message( MSG_ERROR, _T("[G2] Invalid PUSH packet received from %s"), 
+		theApp.Message( MSG_ERROR, _T("[G2] Invalid PUSH packet received from %s"),
 			(LPCTSTR)inet_ntoa( pHost->sin_addr ) );
 		Statistics.Current.Gnutella2.Dropped++;
 		return FALSE;

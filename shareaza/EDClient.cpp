@@ -1865,7 +1865,7 @@ BOOL CEDClient::OnAskSharedDirsAnswer(CEDPacket* pPacket)
 			// Read directory name
 			CString sDir = pPacket->ReadEDString( m_bEmUnicode );
 
-			TRACE( _T("Folder: %s\n"), sDir );
+			TRACE( "Folder: %s\n", (LPCSTR)CT2A( sDir ) );
 
 			// Request directory content
 			if ( CEDPacket* pReply = CEDPacket::New( ED2K_C2C_VIEWSHAREDDIR ) )

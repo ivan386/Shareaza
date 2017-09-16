@@ -244,7 +244,7 @@ void CG1Packet::ToBuffer(CBuffer* pBuffer, bool /*bTCP*/)
 void CG1Packet::Debug(LPCTSTR pszReason) const
 {
 	CString strOutput;
-	strOutput.Format( L"[G1] %s Type: %s [%i/%i]", pszReason, GetType(), m_nTTL, m_nHops );
+	strOutput.Format( L"[G1] %s Type: %s [%i/%i]", pszReason, (LPCTSTR)GetType(), m_nTTL, m_nHops );
 	CPacket::Debug( strOutput );
 }
 
