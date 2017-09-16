@@ -33,13 +33,12 @@ CPreviewPlugin::CPreviewPlugin()
 
 HRESULT CPreviewPlugin::FinalConstruct()
 {
-	return CoCreateFreeThreadedMarshaler( GetControllingUnknown(), &m_pUnkMarshaler.p );
+	return S_OK;
 }
 
 void CPreviewPlugin::FinalRelease()
 {
 	m_pSite.Release();
-	m_pUnkMarshaler.Release();
 }
 
 bool CPreviewPlugin::Execute(LPCTSTR szCommand)

@@ -34,18 +34,13 @@ CRazaWebHook::CRazaWebHook() :
 
 HRESULT CRazaWebHook::FinalConstruct()
 {
-	if ( ! IsEnabled() )
-		return E_FAIL;
-
-	return CoCreateFreeThreadedMarshaler(
-		GetControllingUnknown(), &m_pUnkMarshaler.p);
+	return IsEnabled() ? S_OK : E_FAIL;
 }
 
 void CRazaWebHook::FinalRelease()
 {
 	Disconnect();
 	m_spUnkSite.Release();
-	m_pUnkMarshaler.Release();
 }
 
 bool CRazaWebHook::IsEnabled() const

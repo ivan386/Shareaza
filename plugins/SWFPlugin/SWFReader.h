@@ -24,31 +24,18 @@
 #include "resource.h"
 #include "SWFPlugin.h"
 
-class ATL_NO_VTABLE CSWFReader : 
+class ATL_NO_VTABLE CSWFReader :
 	public CComObjectRootEx<CComMultiThreadModel>,
 	public CComCoClass<CSWFReader, &CLSID_SWFReader>,
 	public IImageServicePlugin
 {
 public:
-	CSWFReader() throw()
-	{
-		m_pUnkMarshaler = NULL;
-	}
 
 DECLARE_REGISTRY_RESOURCEID(IDR_SWFREADER)
 
 BEGIN_COM_MAP(CSWFReader)
 	COM_INTERFACE_ENTRY(IImageServicePlugin)
-	COM_INTERFACE_ENTRY_AGGREGATE(IID_IMarshal, m_pUnkMarshaler.p)
 END_COM_MAP()
-
-DECLARE_PROTECT_FINAL_CONSTRUCT()
-DECLARE_GET_CONTROLLING_UNKNOWN()
-
-	CComPtr<IUnknown> m_pUnkMarshaler;
-
-	HRESULT FinalConstruct () throw();
-	void FinalRelease () throw();
 
 // IImageServicePlugin
 public:

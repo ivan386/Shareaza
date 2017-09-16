@@ -22,16 +22,6 @@
 #include "stdafx.h"
 #include "Builder.h"
 
-HRESULT CBuilder::FinalConstruct () throw()
-{
-	return CoCreateFreeThreadedMarshaler (GetControllingUnknown(), &m_pUnkMarshaler.p);
-}
-
-void CBuilder::FinalRelease () throw()
-{
-	m_pUnkMarshaler.Release ();
-}
-
 STDMETHODIMP CBuilder::Process (
 	/* [in] */ BSTR sFile,
 	/* [in] */ ISXMLElement* pXML)
@@ -68,7 +58,7 @@ STDMETHODIMP CBuilder::Process (
 	hr = pXMLElement->get_Attributes(&pISXMLAttributes);
 	if (FAILED (hr))
 		return hr;
-	
+
 	GFL_FILE_INFORMATION inf = {};
 	GFL_ERROR err = gflGetFileInformationW( (LPCWSTR)sFile, -1, &inf );
 	if ( err != GFL_NO_ERROR )
@@ -87,7 +77,7 @@ STDMETHODIMP CBuilder::Process (
 			height.Format( _T("%d"), inf.Height );
 			pISXMLAttributes->Add( CComBSTR( "height" ), CComBSTR( height ) );
 		}
-		
+
 		if ( inf.Width > 0 )
 		{
 			CString width;
