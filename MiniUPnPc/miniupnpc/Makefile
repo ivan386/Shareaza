@@ -1,9 +1,9 @@
-# $Id: Makefile,v 1.135 2016/12/16 08:57:20 nanard Exp $
+# $Id: Makefile,v 1.136 2017/04/21 09:44:20 nanard Exp $
 # MiniUPnP Project
 # http://miniupnp.free.fr/
 # http://miniupnp.tuxfamily.org/
 # https://github.com/miniupnp/miniupnp
-# (c) 2005-2016 Thomas Bernard
+# (c) 2005-2017 Thomas Bernard
 # to install use :
 # $ make DESTDIR=/tmp/dummylocation install
 # or
@@ -48,7 +48,7 @@ CFLAGS += -D_XOPEN_SOURCE=600
 endif
 endif
 #CFLAGS += -ansi
-# -DNO_GETADDRINFO
+#CFLAGS += -DNO_GETADDRINFO
 INSTALL = install
 SH = /bin/sh
 JAVA = java
@@ -65,7 +65,7 @@ JNAERATORARGS = -mode StandaloneJar -runtime JNAerator -library miniupnpc
 JNAERATORBASEURL = https://repo1.maven.org/maven2/com/nativelibs4java/jnaerator/0.12
 
 ifeq (SunOS, $(OS))
-  LDFLAGS=-lsocket -lnsl -lresolv
+  LDLIBS=-lsocket -lnsl -lresolv
   CFLAGS += -D__EXTENSIONS__
   CFLAGS += -std=c99
 endif
