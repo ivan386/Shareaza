@@ -1,7 +1,7 @@
 //
 // ImageFile.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2012.
+// Copyright (c) Shareaza Development Team, 2002-2017.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -85,7 +85,7 @@ BOOL CImageFile::LoadFromFile(LPCTSTR pszFile, BOOL bScanOnly, BOOL bPartialOk)
 	return m_bLoaded = ImageServices.LoadFromFile( this, pszFile, bScanOnly, bPartialOk );
 }
 
-BOOL CImageFile::LoadFromResource(HINSTANCE hInstance, UINT nResourceID, LPCTSTR pszType, BOOL bScanOnly, BOOL bPartialOk)
+BOOL CImageFile::LoadFromResource(HINSTANCE hInstance, UINT nResourceID, LPCTSTR pszType)
 {
 	Clear();
 
@@ -116,7 +116,7 @@ BOOL CImageFile::LoadFromResource(HINSTANCE hInstance, UINT nResourceID, LPCTSTR
 					pszType = strType;
 				}
 
-				m_bLoaded = ImageServices.LoadFromMemory( this, pszType, pMemory, nSize, bScanOnly, bPartialOk );
+				m_bLoaded = LoadFromMemory( pszType, pMemory, nSize );
 			}
 			FreeResource( hMemory );
 		}
@@ -154,8 +154,7 @@ BOOL CImageFile::LoadFromURL(LPCTSTR pszURL)
 		if ( pBuffer == NULL ) return FALSE;
 
 		strMIME.Replace( '/', '.' );
-		m_bLoaded = ImageServices.LoadFromMemory( this, strMIME, (LPVOID)pBuffer->m_pBuffer,
-													pBuffer->m_nLength );
+		m_bLoaded = LoadFromMemory( strMIME, (LPVOID)pBuffer->m_pBuffer, pBuffer->m_nLength );
 		if ( m_bLoaded )
 			m_nFlags |= idRemote;
 
@@ -167,12 +166,13 @@ BOOL CImageFile::LoadFromURL(LPCTSTR pszURL)
 
 BOOL CImageFile::LoadFromBitmap(HBITMAP hBitmap, BOOL bScanOnly)
 {
-	BITMAP bmInfo;
+	Clear();
+
+	BITMAP bmInfo = {};
 	if ( ! GetObject( hBitmap, sizeof( BITMAP ), &bmInfo ) )
 		return FALSE;
 
-	if ( bmInfo.bmType != 0 || bmInfo.bmPlanes != 1 || ! bmInfo.bmBits ||
-		bmInfo.bmWidth <= 0 || bmInfo.bmHeight <= 0 )
+	if ( bmInfo.bmType != 0 || bmInfo.bmPlanes != 1 || ! bmInfo.bmBits || bmInfo.bmWidth <= 0 || bmInfo.bmHeight <= 0 )
 		// Unsupported format
 		return FALSE;
 
@@ -186,30 +186,25 @@ BOOL CImageFile::LoadFromBitmap(HBITMAP hBitmap, BOOL bScanOnly)
 
 	DWORD line_size = ( m_nWidth * m_nComponents + 3 ) & ~3;
 	m_pImage = new BYTE[ line_size * m_nHeight ];
-	if ( ! m_pImage )
-		// Out of memory
-		return FALSE;
-
-	HDC hDC = GetDC( NULL );
-	BITMAPINFOHEADER bmi = { sizeof( BITMAPINFOHEADER ), bmInfo.bmWidth, - bmInfo.bmHeight, 1, 24, BI_RGB };
-	GetDIBits( hDC, hBitmap, 0, bmInfo.bmHeight, m_pImage, (BITMAPINFO*)&bmi, DIB_RGB_COLORS );
-	ReleaseDC( NULL, hDC );
-
-	// BGR -> RGB
-	LPBYTE dst = m_pImage;
-	for ( LONG j = 0; j < bmInfo.bmHeight; ++j, dst += line_size )
+	if ( m_pImage )
 	{
-		for ( LONG i = 0; i < bmInfo.bmWidth * 3; i += 3 )
+		HDC hDC = GetDC( NULL );
+		BITMAPINFOHEADER bmi = { sizeof( BITMAPINFOHEADER ), bmInfo.bmWidth, -bmInfo.bmHeight, 1, 24, BI_RGB };
+		int copied = GetDIBits( hDC, hBitmap, 0, bmInfo.bmHeight, m_pImage, (BITMAPINFO*)&bmi, DIB_RGB_COLORS );
+		ReleaseDC( NULL, hDC );
+
+		if ( copied == m_nHeight )
 		{
-			BYTE c = dst[i + 0];
-			dst[i + 0] = dst[i + 2];
-			dst[i + 2] = c;
+			m_bLoaded = TRUE;
+
+			return SwapRGB();
 		}
 	}
 
-	m_bLoaded = TRUE;
+	// Out of memory
+	Clear();
 
-	return TRUE;
+	return FALSE;
 }
 
 /////////////////////////////////////////////////////////////////////////////
