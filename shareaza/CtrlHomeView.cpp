@@ -1,7 +1,7 @@
 //
 // CtrlHomeView.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2015.
+// Copyright (c) Shareaza Development Team, 2002-2017.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -87,9 +87,6 @@ void CHomeViewCtrl::OnSkinChange()
 {
 	m_pDocument.Clear();
 	m_peHeader = m_peSearch = m_peUpgrade = m_peRemote1 = m_peRemote2 = NULL;
-
-	Skin.GetWatermark( &m_bmHeader1, _T("CHomeViewCtrl.Header1") );
-	Skin.GetWatermark( &m_bmHeader2, _T("CHomeViewCtrl.Header2") );
 
 	CXMLElement* pXML = Skin.GetDocument( _T("CHomeViewCtrl") );
 	CElementMap pMap;
@@ -213,8 +210,15 @@ void CHomeViewCtrl::OnLayoutComplete()
 
 void CHomeViewCtrl::OnPaintBegin(CDC* pDC)
 {
-	if ( m_peHeader != NULL && ( m_peHeader->m_nFlags & retfHidden ) == 0 && m_bmHeader1.m_hObject != NULL )
+	if ( m_peHeader == NULL || ( m_peHeader->m_nFlags & retfHidden ) != 0 )
+		// No headers
+		return;
+
+	HBITMAP hbmHeader1 = Skin.GetWatermark( _T( "CHomeViewCtrl.Header1" ), TRUE );
+	if ( hbmHeader1 != NULL )
 	{
+		CBitmap* pbmHeader1 = CBitmap::FromHandle( hbmHeader1 );
+
 		CRect rcAnchor( 0, 0, 0, 0 );
 		GetElementRect( m_peHeader, &rcAnchor );
 
@@ -223,37 +227,52 @@ void CHomeViewCtrl::OnPaintBegin(CDC* pDC)
 		rcAnchor.left = rcClient.left;
 		rcAnchor.right = rcClient.right;
 
-		CDC dcHeader;
-		dcHeader.CreateCompatibleDC( pDC );
-		CBitmap* pbmOld = (CBitmap*)dcHeader.SelectObject( &m_bmHeader1 );
-
-		BITMAP pHeader1;
-		m_bmHeader1.GetBitmap( &pHeader1 );
-
-		pDC->BitBlt( rcAnchor.left, rcAnchor.top, min( (LONG)rcAnchor.Width(), pHeader1.bmWidth ),
-			min( (LONG)rcAnchor.Height(), pHeader1.bmHeight ), &dcHeader, 0, 0, SRCCOPY );
-
 		CRect rcMark( &rcAnchor );
-		rcMark.left += pHeader1.bmWidth;
 
-		if ( m_bmHeader2.m_hObject != NULL && pDC->RectVisible( &rcMark ) )
+		CDC dcHeader;
+		if ( dcHeader.CreateCompatibleDC( pDC ) )
 		{
-			BITMAP pHeader2;
-			m_bmHeader2.GetBitmap( &pHeader2 );
-			dcHeader.SelectObject( &m_bmHeader2 );
-
-			while ( rcMark.left < rcMark.right )
+			BITMAP pHeader1 = {};
+			if ( pbmHeader1->GetBitmap( &pHeader1 ) )
 			{
-				pDC->BitBlt( rcMark.left, rcMark.top, min( (LONG)rcMark.Width(), pHeader2.bmWidth ),
-					min( (LONG)rcMark.Height(), pHeader2.bmHeight ), &dcHeader, 0, 0, SRCCOPY );
-				rcMark.left += pHeader2.bmWidth;
+				CBitmap* pbmOld = (CBitmap*)dcHeader.SelectObject( pbmHeader1 );
+
+				pDC->BitBlt( rcAnchor.left, rcAnchor.top, min( (LONG)rcAnchor.Width(), pHeader1.bmWidth ),
+					min( (LONG)rcAnchor.Height(), pHeader1.bmHeight ), &dcHeader, 0, 0, SRCCOPY );
+
+				rcMark.left += pHeader1.bmWidth;
+
+				dcHeader.SelectObject( pbmOld );
 			}
+
+			if ( pDC->RectVisible( &rcMark ) )
+			{
+				HBITMAP hbmHeader2 = Skin.GetWatermark( _T( "CHomeViewCtrl.Header2" ), TRUE );
+				if ( hbmHeader2 != NULL )
+				{
+					CBitmap* pbmHeader2 = CBitmap::FromHandle( hbmHeader2 );
+
+					BITMAP pHeader2 = {};
+					if ( pbmHeader2->GetBitmap( &pHeader2 ) )
+					{
+						CBitmap* pbmOld = (CBitmap*)dcHeader.SelectObject( pbmHeader2 );
+
+						while ( rcMark.left < rcMark.right )
+						{
+							pDC->BitBlt( rcMark.left, rcMark.top, min( (LONG)rcMark.Width(), pHeader2.bmWidth ),
+								min( (LONG)rcMark.Height(), pHeader2.bmHeight ), &dcHeader, 0, 0, SRCCOPY );
+							rcMark.left += pHeader2.bmWidth;
+						}
+
+						dcHeader.SelectObject( pbmOld );
+					}
+				}
+			}
+
+			dcHeader.DeleteDC();
+
+			pDC->ExcludeClipRect( &rcAnchor );
 		}
-
-		dcHeader.SelectObject( pbmOld );
-		dcHeader.DeleteDC();
-
-		pDC->ExcludeClipRect( &rcAnchor );
 	}
 }
 

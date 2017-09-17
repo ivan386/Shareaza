@@ -1,7 +1,7 @@
 //
 // Skin.h
 //
-// Copyright (c) Shareaza Development Team, 2002-2014.
+// Copyright (c) Shareaza Development Team, 2002-2017.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -94,7 +94,6 @@ protected:
 // Watermarks (images)
 public:
 	HBITMAP	GetWatermark(LPCTSTR pszName, BOOL bShared = FALSE);
-	BOOL	GetWatermark(CBitmap* pBitmap, LPCTSTR pszName, BOOL bShared = FALSE);
 	HBITMAP	LoadBitmap(const CString& strName, BOOL bShared = FALSE);
 	HBITMAP	LoadBitmap(UINT nID, BOOL bShared = FALSE);
 protected:

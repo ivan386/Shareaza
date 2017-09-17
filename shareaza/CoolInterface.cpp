@@ -1,7 +1,7 @@
 //
 // CoolInterface.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2015.
+// Copyright (c) Shareaza Development Team, 2002-2017.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -421,18 +421,25 @@ CDC* CCoolInterface::GetBuffer(CDC& dcScreen, const CSize& szItem)
 
 BOOL CCoolInterface::DrawWatermark(CDC* pDC, CRect* pRect, CBitmap* pMark, int nOffX, int nOffY)
 {
-	BITMAP pWatermark;
-	CBitmap* pOldMark;
-	CDC dcMark;
-
 	if ( pDC == NULL || pRect == NULL || pMark == NULL || pMark->m_hObject == NULL )
 		return FALSE;
 
-	dcMark.CreateCompatibleDC( pDC );
+	BITMAP pWatermark = {};
+	if ( ! pMark->GetBitmap( &pWatermark ) ||
+		! pWatermark.bmWidth ||
+		! pWatermark.bmHeight ||
+		! pWatermark.bmPlanes ||
+		! pWatermark.bmBitsPixel )
+		return FALSE;
+
+	CDC dcMark;
+	if ( ! dcMark.CreateCompatibleDC( pDC ) )
+		return FALSE;
+
 	if ( Settings.General.LanguageRTL )
 		SetLayout( dcMark.m_hDC, LAYOUT_BITMAPORIENTATIONPRESERVED );
-	pOldMark = (CBitmap*)dcMark.SelectObject( pMark );
-	pMark->GetBitmap( &pWatermark );
+
+	CBitmap* pOldMark = (CBitmap*)dcMark.SelectObject( pMark );
 
 	for ( int nY = pRect->top - nOffY ; nY < pRect->bottom ; nY += pWatermark.bmHeight )
 	{

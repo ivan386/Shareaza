@@ -1,7 +1,7 @@
 //
 // CtrlTaskPanel.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2012.
+// Copyright (c) Shareaza Development Team, 2002-2017.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -34,18 +34,15 @@ static char THIS_FILE[] = __FILE__;
 IMPLEMENT_DYNAMIC(CTaskPanel, CWnd)
 
 BEGIN_MESSAGE_MAP(CTaskPanel, CWnd)
-	//{{AFX_MSG_MAP(CTaskPanel)
 	ON_WM_SIZE()
 	ON_WM_PAINT()
 	ON_WM_ERASEBKGND()
 	ON_WM_CREATE()
-	//}}AFX_MSG_MAP
 END_MESSAGE_MAP()
 
 IMPLEMENT_DYNAMIC(CTaskBox, CButton)
 
 BEGIN_MESSAGE_MAP(CTaskBox, CButton)
-	//{{AFX_MSG_MAP(CTaskBox)
 	ON_WM_NCCALCSIZE()
 	ON_WM_NCPAINT()
 	ON_WM_NCHITTEST()
@@ -56,7 +53,6 @@ BEGIN_MESSAGE_MAP(CTaskBox, CButton)
 	ON_WM_NCLBUTTONUP()
 	ON_WM_TIMER()
 	ON_WM_NCLBUTTONDOWN()
-	//}}AFX_MSG_MAP
 END_MESSAGE_MAP()
 
 #define CAPTION_HEIGHT	25
@@ -69,8 +65,6 @@ CTaskPanel::CTaskPanel()
 	: m_pStretch	( NULL )
 	, m_nMargin		( 12 )
 	, m_nCurve		( 2 )
-	, m_hbmWatermark( NULL )
-	, m_hbmFooter	( NULL )
 	, m_bLayout		( FALSE )
 {
 }
@@ -78,7 +72,7 @@ CTaskPanel::CTaskPanel()
 /////////////////////////////////////////////////////////////////////////////
 // CTaskPanel create
 
-BOOL CTaskPanel::Create(LPCTSTR lpszWindowName, DWORD dwStyle, const RECT& rect, CWnd* pParentWnd, UINT nID) 
+BOOL CTaskPanel::Create(LPCTSTR lpszWindowName, DWORD dwStyle, const RECT& rect, CWnd* pParentWnd, UINT nID)
 {
 	return CreateEx( WS_EX_CONTROLPARENT, NULL, lpszWindowName,
 		dwStyle | WS_CHILD | WS_CLIPCHILDREN, rect, pParentWnd, nID, NULL );
@@ -100,7 +94,7 @@ CTaskBox* CTaskPanel::AddBox(CTaskBox* pBox, POSITION posBefore)
 	}
 
 	OnChanged();
-	
+
 	return pBox;
 }
 
@@ -137,10 +131,10 @@ void CTaskPanel::ClearBoxes(BOOL bDelete)
 	{
 		for ( POSITION pos = GetBoxIterator() ; pos ; ) delete GetNextBox( pos );
 	}
-	
+
 	m_pBoxes.RemoveAll();
 	m_pStretch = NULL;
-	
+
 	OnChanged();
 }
 
@@ -157,30 +151,28 @@ void CTaskPanel::SetMargin(int nMargin, int nCurve)
 
 void CTaskPanel::SetWatermark(LPCTSTR szWatermark)
 {
-	m_hbmWatermark  = Skin.GetWatermark( szWatermark, TRUE );
+	m_sWatermark = szWatermark;
 }
 
 void CTaskPanel::SetFooter(LPCTSTR szWatermark)
 {
-	m_hbmFooter = Skin.GetWatermark( szWatermark, TRUE );
-	if ( ! m_hbmFooter && CoolInterface.m_crTaskPanelBack == RGB( 122, 161, 230 ) )
-		m_hbmFooter = Skin.LoadBitmap( IDB_TASKPANEL_FOOTER, TRUE );
+	m_sFooter = szWatermark;
 }
 
 /////////////////////////////////////////////////////////////////////////////
 // CTaskPanel message handlers
 
-int CTaskPanel::OnCreate(LPCREATESTRUCT lpCreateStruct) 
+int CTaskPanel::OnCreate(LPCREATESTRUCT lpCreateStruct)
 {
 	if ( CWnd::OnCreate( lpCreateStruct ) == -1 ) return -1;
 	SetOwner( GetParent() );
 	return 0;
 }
 
-void CTaskPanel::OnSize(UINT nType, int cx, int cy) 
+void CTaskPanel::OnSize(UINT nType, int cx, int cy)
 {
 	CWnd::OnSize( nType, cx, cy );
-	
+
 	if ( m_pStretch != NULL && m_pStretch->GetOuterHeight() )
 	{
 		m_bLayout = TRUE;
@@ -188,33 +180,42 @@ void CTaskPanel::OnSize(UINT nType, int cx, int cy)
 	}
 }
 
-BOOL CTaskPanel::OnEraseBkgnd(CDC* /*pDC*/) 
+BOOL CTaskPanel::OnEraseBkgnd(CDC* /*pDC*/)
 {
 	return TRUE;
 }
 
-void CTaskPanel::OnPaint() 
+void CTaskPanel::OnPaint()
 {
 	CPaintDC dc( this );
 	CRect rc;
-	
+
 	GetClientRect( &rc );
-	
+
 	if ( m_bLayout ) Layout( rc );
 
-	if ( m_hbmFooter )
+	HBITMAP hbmFooter = Skin.GetWatermark( m_sFooter, TRUE );
+	if ( ! hbmFooter && CoolInterface.m_crTaskPanelBack == RGB( 122, 161, 230 ) )
+	{
+		hbmFooter = Skin.LoadBitmap( IDB_TASKPANEL_FOOTER, TRUE );
+	}
+	if ( hbmFooter )
 	{
 		BITMAP pInfo = {};
-		GetObject( m_hbmFooter, sizeof ( BITMAP ), &pInfo );
-		
-		CRect rcFooter( &rc );
-		rc.bottom = rcFooter.top = rcFooter.bottom - pInfo.bmHeight;
-		
-		CoolInterface.DrawWatermark( &dc, &rcFooter, CBitmap::FromHandle( m_hbmFooter ) );
+		if ( GetObject( hbmFooter, sizeof( BITMAP ), &pInfo ) )
+		{
+			CRect rcFooter( &rc );
+			rc.bottom = rcFooter.top = rcFooter.bottom - pInfo.bmHeight;
+
+			CoolInterface.DrawWatermark( &dc, &rcFooter, CBitmap::FromHandle( hbmFooter ) );
+		}
 	}
-	
-	if ( ! CoolInterface.DrawWatermark( &dc, &rc, CBitmap::FromHandle( m_hbmWatermark ) ) )
+
+	HBITMAP hbmWatermark = Skin.GetWatermark( m_sWatermark, TRUE );
+	if ( ! hbmWatermark || ! CoolInterface.DrawWatermark( &dc, &rc, CBitmap::FromHandle( hbmWatermark ) ) )
 	{
+		// No watermark
+
 		dc.FillSolidRect( &rc, CoolInterface.m_crTaskPanelBack );
 		CRect rcShadow( rc );
 		rcShadow.bottom = rcShadow.top + 1;
@@ -238,17 +239,17 @@ void CTaskPanel::OnChanged()
 void CTaskPanel::Layout(CRect& rcClient)
 {
 	CRect rcBox( &rcClient );
-	
+
 	rcBox.DeflateRect( m_nMargin, m_nMargin );
-	
+
 	int nStretch = rcBox.Height();
-	
+
 	if ( m_pStretch && m_pStretch->GetOuterHeight() )
 	{
 		for ( POSITION pos = GetBoxIterator() ; pos ; )
 		{
 			CTaskBox* pBox = GetNextBox( pos );
-			
+
 			if ( pBox->m_bVisible && pBox->m_nHeight && pBox != m_pStretch )
 			{
 				nStretch -= pBox->GetOuterHeight() + m_nMargin;
@@ -258,19 +259,19 @@ void CTaskPanel::Layout(CRect& rcClient)
 
 	// Prevent stretch boxes from having negative height
 	nStretch = max( nStretch, CAPTION_HEIGHT * 2 );
-	
+
 	for ( POSITION pos = GetBoxIterator() ; pos ; )
 	{
 		CTaskBox* pBox = GetNextBox( pos );
-		
+
 		int nHeight = pBox->GetOuterHeight();
-		
+
 		if ( nHeight )
 		{
 			if ( pBox == m_pStretch && pBox->m_bOpen ) nHeight = nStretch;
-			
+
 			rcBox.bottom = rcBox.top + nHeight;
-			
+
 			pBox->SetWindowPos( NULL, rcBox.left, rcBox.top, rcBox.Width(), rcBox.Height(),
 				SWP_SHOWWINDOW | SWP_NOZORDER | SWP_NOACTIVATE );
 
@@ -287,7 +288,7 @@ void CTaskPanel::Layout(CRect& rcClient)
 			pBox->ShowWindow( SW_HIDE );
 		}
 	}
-	
+
 	m_bLayout = FALSE;
 }
 
@@ -303,9 +304,6 @@ CTaskBox::CTaskBox()
 	, m_bHover			( FALSE )
 	, m_bPrimary		( FALSE )
 	, m_hIcon			( NULL )
-	, m_hbmWatermark	( NULL )
-	, m_hbmCaptionmark	( NULL )
-	, m_bCaptionCurve	( TRUE )
 {
 }
 
@@ -320,17 +318,17 @@ CTaskBox::~CTaskBox()
 BOOL CTaskBox::Create(CTaskPanel* pPanel, int nHeight, LPCTSTR pszCaption, UINT nIDIcon, UINT nID)
 {
 	CRect rect( 0, 0, 0, 0 );
-	
+
 	m_pPanel	= pPanel;
 	m_nHeight	= nHeight;
-	
+
 	if ( pPanel->m_hWnd )
 	{
 		pPanel->GetClientRect( &rect );
 		rect.DeflateRect( pPanel->m_nMargin, 0 );
 		rect.bottom = 0;
 	}
-	
+
 	if ( ! CreateEx( WS_EX_CONTROLPARENT, NULL, pszCaption,
 		WS_CHILD | WS_CLIPCHILDREN | WS_CLIPSIBLINGS, rect, pPanel, nID ) ) return FALSE;
 
@@ -338,7 +336,7 @@ BOOL CTaskBox::Create(CTaskPanel* pPanel, int nHeight, LPCTSTR pszCaption, UINT 
 	{
 		CoolInterface.SetIcon( nIDIcon, Settings.General.LanguageRTL, FALSE, this );
 	}
-	
+
 	CString strKey;
 	strKey.Format( _T("%s.Open"), (LPCTSTR)CString( GetRuntimeClass()->m_lpszClassName ) );
 	m_bOpen = theApp.GetProfileInt( _T("Interface"), strKey, TRUE );
@@ -357,7 +355,7 @@ void CTaskBox::SetCaption(LPCTSTR pszCaption)
 {
 	CString strOld;
 	GetWindowText( strOld );
-	
+
 	if ( strOld != pszCaption )
 	{
 		SetWindowText( pszCaption );
@@ -392,40 +390,29 @@ void CTaskBox::SetPrimary(BOOL bPrimary)
 
 void CTaskBox::SetWatermark(LPCTSTR szWatermark)
 {
-	m_hbmWatermark = Skin.GetWatermark( szWatermark, TRUE );
+	m_sWatermark = szWatermark;
 }
 
 void CTaskBox::SetCaptionmark(LPCTSTR szWatermark)
 {
-	m_hbmCaptionmark = Skin.GetWatermark( szWatermark, TRUE );
-	if ( ! m_hbmCaptionmark && m_bPrimary && CoolInterface.m_crTaskBoxPrimaryBack == RGB( 30, 87, 199 ) )
-		m_hbmCaptionmark = Skin.LoadBitmap( IDB_TASKBOX_CAPTION, TRUE );
-
-	m_bCaptionCurve = TRUE;
-	
-	if ( m_hbmCaptionmark )
-	{
-		BITMAP pInfo;
-		GetObject( m_hbmCaptionmark, sizeof( BITMAP ), &pInfo );
-		m_bCaptionCurve = pInfo.bmWidth < 176;
-	}
+	m_sCaptionmark = szWatermark;
 }
 
 void CTaskBox::Expand(BOOL bOpen)
 {
 	if ( m_bOpen == bOpen ) return;
 	m_bOpen = bOpen;
-	
+
 	if ( m_pPanel != NULL )
 	{
 		m_pPanel->OnChanged();
 		OnExpanded( m_bOpen );
 	}
-	
+
 	CString strKey;
 	strKey.Format( _T("%s.Open"), (LPCTSTR)CString( GetRuntimeClass()->m_lpszClassName ) );
 	theApp.WriteProfileInt( _T("Interface"), strKey, m_bOpen );
-	
+
 	InvalidateNonclient();
 }
 
@@ -442,7 +429,7 @@ int CTaskBox::GetOuterHeight() const
 /////////////////////////////////////////////////////////////////////////////
 // CTaskBox message handlers
 
-void CTaskBox::OnNcCalcSize(BOOL /*bCalcValidRects*/, NCCALCSIZE_PARAMS FAR* lpncsp) 
+void CTaskBox::OnNcCalcSize(BOOL /*bCalcValidRects*/, NCCALCSIZE_PARAMS FAR* lpncsp)
 {
 	NCCALCSIZE_PARAMS* pSize = (NCCALCSIZE_PARAMS*)lpncsp;
 
@@ -452,7 +439,7 @@ void CTaskBox::OnNcCalcSize(BOOL /*bCalcValidRects*/, NCCALCSIZE_PARAMS FAR* lpn
 	pSize->rgrc[0].bottom --;
 }
 
-LRESULT CTaskBox::OnNcHitTest(CPoint point) 
+LRESULT CTaskBox::OnNcHitTest(CPoint point)
 {
 	CRect rc;
 	GetWindowRect( &rc );
@@ -462,11 +449,11 @@ LRESULT CTaskBox::OnNcHitTest(CPoint point)
 		if ( point.y < rc.top + CAPTION_HEIGHT ) return HTCAPTION;
 		return HTCLIENT;
 	}
-	
+
 	return HTNOWHERE;
 }
 
-BOOL CTaskBox::OnSetCursor(CWnd* pWnd, UINT nHitTest, UINT message) 
+BOOL CTaskBox::OnSetCursor(CWnd* pWnd, UINT nHitTest, UINT message)
 {
 	if ( nHitTest == HTCAPTION )
 	{
@@ -476,24 +463,24 @@ BOOL CTaskBox::OnSetCursor(CWnd* pWnd, UINT nHitTest, UINT message)
 			PaintBorders();
 			SetTimer( 1, 50, NULL );
 		}
-		
+
 		::SetCursor( theApp.LoadCursor( IDC_HAND ) );
 		return TRUE;
 	}
-	
+
 	return CButton::OnSetCursor(pWnd, nHitTest, message);
 }
 
-void CTaskBox::OnNcLButtonDown(UINT /*nHitTest*/, CPoint /*point*/) 
+void CTaskBox::OnNcLButtonDown(UINT /*nHitTest*/, CPoint /*point*/)
 {
 }
 
-void CTaskBox::OnNcLButtonUp(UINT nHitTest, CPoint /*point*/) 
+void CTaskBox::OnNcLButtonUp(UINT nHitTest, CPoint /*point*/)
 {
-	if ( nHitTest == HTCAPTION ) Expand( ! m_bOpen );	
+	if ( nHitTest == HTCAPTION ) Expand( ! m_bOpen );
 }
 
-void CTaskBox::OnTimer(UINT_PTR /*nIDEvent*/) 
+void CTaskBox::OnTimer(UINT_PTR /*nIDEvent*/)
 {
 	CPoint point;
 	GetCursorPos( &point );
@@ -512,7 +499,7 @@ BOOL CTaskBox::OnNcActivate(BOOL /*bActive*/)
 	return TRUE;
 }
 
-void CTaskBox::OnNcPaint() 
+void CTaskBox::OnNcPaint()
 {
 	PaintBorders();
 }
@@ -522,11 +509,26 @@ void CTaskBox::PaintBorders()
 	CWindowDC dc( this );
 	CString strCaption;
 	CRect rc, rcc;
-	
+
 	GetWindowRect( &rc );
 	rc.OffsetRect( -rc.left, -rc.top );
-	
-	if ( m_pPanel->m_nCurve != 0 && m_bCaptionCurve )
+
+	BOOL bCaptionCurve = TRUE;
+	HBITMAP hbmCaptionmark = Skin.GetWatermark( m_sCaptionmark, TRUE );
+	if ( ! hbmCaptionmark && m_bPrimary && CoolInterface.m_crTaskBoxPrimaryBack == RGB( 30, 87, 199 ) )
+	{
+		hbmCaptionmark = Skin.LoadBitmap( IDB_TASKBOX_CAPTION, TRUE );
+	}
+	if ( hbmCaptionmark )
+	{
+		BITMAP pInfo = {};
+		if ( GetObject( hbmCaptionmark, sizeof( BITMAP ), &pInfo ) )
+		{
+			bCaptionCurve = pInfo.bmWidth < 176;
+		}
+	}
+
+	if ( m_pPanel->m_nCurve != 0 && bCaptionCurve )
 	{
 		dc.SetPixel( 0, 0, CoolInterface.m_crTaskPanelBack );
 		dc.SetPixel( 1, 0, CoolInterface.m_crTaskPanelBack );
@@ -534,47 +536,47 @@ void CTaskBox::PaintBorders()
 		dc.SetPixel( rc.right - 1, 0, CoolInterface.m_crTaskPanelBack );
 		dc.SetPixel( rc.right - 2, 0, CoolInterface.m_crTaskPanelBack );
 		dc.SetPixel( rc.right - 1, 1, CoolInterface.m_crTaskPanelBack );
-		
+
 		dc.ExcludeClipRect( 0, 0, 2, 1 );
 		dc.ExcludeClipRect( 0, 1, 1, 2 );
 		dc.ExcludeClipRect( rc.right - 2, 0, rc.right, 1 );
 		dc.ExcludeClipRect( rc.right - 1, 1, rc.right, 2 );
 	}
-	
+
 	rcc.SetRect( 0, 0, rc.right, CAPTION_HEIGHT );
 
 	CSize size= rcc.Size();
 	CDC* pBuffer = CoolInterface.GetBuffer( dc, size );
-	
-	if ( ! CoolInterface.DrawWatermark( pBuffer, &rcc, CBitmap::FromHandle( m_hbmCaptionmark ) ) )
+
+	if ( ! hbmCaptionmark || ! CoolInterface.DrawWatermark( pBuffer, &rcc, CBitmap::FromHandle( hbmCaptionmark ) ) )
 	{
-		pBuffer->FillSolidRect( &rcc, m_bPrimary ?
-			CoolInterface.m_crTaskBoxPrimaryBack : CoolInterface.m_crTaskBoxCaptionBack );
+		// No watermark
+		pBuffer->FillSolidRect( &rcc, m_bPrimary ? CoolInterface.m_crTaskBoxPrimaryBack : CoolInterface.m_crTaskBoxCaptionBack );
 	}
-	
+
 	CPoint ptIcon( 6, rcc.Height() / 2 - 7 );
-	
+
 	DrawIconEx( pBuffer->GetSafeHdc(), ptIcon.x, ptIcon.y, CWnd::GetIcon( FALSE ),
 		16, 16, 0, NULL, DI_NORMAL );
-	
+
 	GetWindowText( strCaption );
-	
+
 	CFont* pOldFont	= (CFont*)pBuffer->SelectObject( &CoolInterface.m_fntBold );
 	CSize sz		= pBuffer->GetTextExtent( strCaption );
-	
+
 	pBuffer->SetBkMode( TRANSPARENT );
 	pBuffer->SetTextColor( m_bHover ? CoolInterface.m_crTaskBoxCaptionHover :
 		( m_bPrimary ? CoolInterface.m_crTaskBoxPrimaryText : CoolInterface.m_crTaskBoxCaptionText ) );
-	
+
 	pBuffer->ExtTextOut( ptIcon.x * 2 + 16 + 1, rcc.Height() / 2 - sz.cy / 2,
 		ETO_CLIPPED, &rcc, strCaption, NULL );
-	
+
 	pBuffer->SelectObject( pOldFont );
-	
+
 	dc.BitBlt( rc.left, rc.top, rcc.Width(), rcc.Height(), pBuffer, 0, 0, SRCCOPY );
-	
+
 	dc.ExcludeClipRect( &rcc );
-	
+
 	if ( m_bOpen )
 	{
 		rc.top = rcc.bottom - 1;
@@ -597,20 +599,22 @@ void CTaskBox::InvalidateNonclient()
 	}
 }
 
-void CTaskBox::OnPaint() 
+void CTaskBox::OnPaint()
 {
 	CPaintDC dc( this );
 	CRect rc;
-	
-	GetClientRect( &rc );	
 
-	if ( ! CoolInterface.DrawWatermark( &dc, &rc, CBitmap::FromHandle( m_hbmWatermark ) ) )
+	GetClientRect( &rc );
+
+	HBITMAP hbmWatermark = Skin.GetWatermark( m_sWatermark, TRUE );
+	if ( ! hbmWatermark || ! CoolInterface.DrawWatermark( &dc, &rc, CBitmap::FromHandle( hbmWatermark ) ) )
 	{
+		// No watermark
 		dc.FillSolidRect( &rc, CoolInterface.m_crTaskBoxClient );
 	}
 }
 
-void CTaskBox::OnSysCommand(UINT /*nID*/, LPARAM /*lParam*/) 
+void CTaskBox::OnSysCommand(UINT /*nID*/, LPARAM /*lParam*/)
 {
 }
 

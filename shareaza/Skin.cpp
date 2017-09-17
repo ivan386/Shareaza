@@ -1,7 +1,7 @@
 //
 // Skin.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2015.
+// Copyright (c) Shareaza Development Team, 2002-2017.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -1036,6 +1036,9 @@ CXMLElement* CSkin::GetDocument(LPCTSTR pszName)
 
 HBITMAP CSkin::GetWatermark(LPCTSTR pszName, BOOL bShared)
 {
+	if ( ! pszName || ! *pszName )
+		return NULL;
+
 	CQuickLock oLock( m_pSection );
 
 	CString strPath;
@@ -1047,22 +1050,6 @@ HBITMAP CSkin::GetWatermark(LPCTSTR pszName, BOOL bShared)
 		theApp.Message( MSG_ERROR, IDS_SKIN_ERROR, _T("Failed to load watermark"), (LPCTSTR)( CString( pszName ) + _T(". File: ") + strPath ) );
 	}
 	return NULL;
-}
-
-BOOL CSkin::GetWatermark(CBitmap* pBitmap, LPCTSTR pszName, BOOL bShared)
-{
-	if ( pBitmap->m_hObject )
-	{
-		if ( bShared )
-			pBitmap->Detach();
-		else
-			pBitmap->DeleteObject();
-	}
-
-	if ( HBITMAP hBitmap = GetWatermark( pszName, bShared ) )
-		return pBitmap->Attach( hBitmap );
-
-	return FALSE;
 }
 
 BOOL CSkin::LoadWatermarks(CXMLElement* pSub, const CString& strPath)
