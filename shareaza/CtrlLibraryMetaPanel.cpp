@@ -32,7 +32,6 @@
 #include "ShellIcons.h"
 #include "Skin.h"
 #include "ThumbCache.h"
-#include "ImageServices.h"
 #include "ImageFile.h"
 #include "CtrlLibraryFrame.h"
 #include "CtrlLibraryMetaPanel.h"
@@ -538,7 +537,7 @@ void CLibraryMetaPanel::OnRun()
 	m_pSection.Lock();
 
 	while ( IsThreadEnabled() )
-	{	
+	{
 		CString strPath = m_sPath;
 
 		if ( strPath.IsEmpty() )

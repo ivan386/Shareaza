@@ -23,7 +23,6 @@
 #include "Shareaza.h"
 #include "Settings.h"
 #include "Emoticons.h"
-#include "ImageServices.h"
 #include "ImageFile.h"
 #include "XML.h"
 

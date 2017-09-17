@@ -40,7 +40,6 @@
 #include "DownloadSource.h"
 #include "DownloadTransferED2K.h"
 #include "UploadTransferED2K.h"
-#include "ImageServices.h"
 #include "ImageFile.h"
 #include "ThumbCache.h"
 

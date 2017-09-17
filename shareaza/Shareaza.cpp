@@ -42,7 +42,6 @@
 #include "GProfile.h"
 #include "HostCache.h"
 #include "IEProtocol.h"
-#include "ImageServices.h"
 #include "Library.h"
 #include "LibraryBuilder.h"
 #include "Neighbours.h"

@@ -36,7 +36,6 @@
 #include "ZIPFile.h"
 #include "ShellIcons.h"
 #include "Connection.h"
-#include "ImageServices.h"
 #include "ImageFile.h"
 #include "Skin.h"
 #include "ThumbCache.h"

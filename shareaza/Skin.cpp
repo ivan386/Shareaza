@@ -27,7 +27,6 @@
 #include "CoolMenu.h"
 #include "CtrlCoolBar.h"
 #include "ImageFile.h"
-#include "ImageServices.h"
 #include "Plugins.h"
 #include "Skin.h"
 #include "SkinWindow.h"

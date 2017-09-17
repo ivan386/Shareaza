@@ -29,7 +29,6 @@
 #include "Downloads.h"
 #include "FragmentedFile.h"
 #include "HttpRequest.h"
-#include "ImageServices.h"
 #include "ImageFile.h"
 #include "Library.h"
 #include "LibraryFolders.h"

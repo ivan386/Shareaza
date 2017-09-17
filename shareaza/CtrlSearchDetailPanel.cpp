@@ -30,7 +30,6 @@
 #include "SchemaCache.h"
 #include "Library.h"
 #include "CoolInterface.h"
-#include "ImageServices.h"
 #include "ImageFile.h"
 #include "RichElement.h"
 #include "ShellIcons.h"

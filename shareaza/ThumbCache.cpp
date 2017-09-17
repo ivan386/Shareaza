@@ -24,7 +24,6 @@
 #include "SQLite.h"
 #include "Settings.h"
 #include "ThumbCache.h"
-#include "ImageServices.h"
 #include "ImageFile.h"
 #include "Library.h"
 #include "SharedFile.h"
@@ -192,7 +191,7 @@ BOOL CThumbCache::Store(LPCTSTR pszPath, CImageFile* pImage)
 		TRACE( "CThumbCache::Store : Can't save thumbnail to JPEG for %s\n", (LPCSTR)CT2A( pszPath ) );
 		return FALSE;
 	}
-	auto_array< BYTE > data( buf );	
+	auto_array< BYTE > data( buf );
 
 	// Remove old image
 	if ( ! db->Prepare( _T("DELETE FROM Files WHERE Filename == ?;") ) ||
