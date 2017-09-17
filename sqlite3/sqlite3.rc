@@ -26,7 +26,7 @@ LANGUAGE LANG_NEUTRAL, SUBLANG_NEUTRAL
 
 VS_VERSION_INFO VERSIONINFO
  FILEVERSION 3,20,1,0
- PRODUCTVERSION 2,7,9,0
+ PRODUCTVERSION 2,7,10,0
  FILEFLAGSMASK 0x17L
 #ifdef _DEBUG
  FILEFLAGS 0x1L
@@ -48,7 +48,7 @@ BEGIN
             VALUE "LegalCopyright", "Copyright © Shareaza Development Team, 2001-2017. All rights reserved."
             VALUE "OriginalFilename", "sqlite3.dll"
             VALUE "ProductName", "Shareaza"
-            VALUE "ProductVersion", "2.7.9.0"
+            VALUE "ProductVersion", "2.7.10.0"
         END
     END
     BLOCK "VarFileInfo"
