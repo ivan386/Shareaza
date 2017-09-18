@@ -36,14 +36,13 @@ static char THIS_FILE[] = __FILE__;
 /////////////////////////////////////////////////////////////////////////////
 // CImageFile construction
 
-CImageFile::CImageFile() :
-	m_bScanned( FALSE ),
-	m_nWidth( 0 ),
-	m_nHeight( 0 ),
-	m_nComponents( 0 ),
-	m_bLoaded( FALSE ),
-	m_pImage( NULL ),
-	m_nFlags( 0 )
+CImageFile::CImageFile()
+	: m_bScanned	( FALSE )
+	, m_nWidth		( 0 )
+	, m_nHeight		( 0 )
+	, m_nComponents	( 0 )
+	, m_pImage		( NULL )
+	, m_nFlags		( 0 )
 {
 }
 
@@ -63,7 +62,6 @@ void CImageFile::Clear()
 	m_nWidth		= 0;
 	m_nHeight		= 0;
 	m_nComponents	= 0;
-	m_bLoaded		= FALSE;
 	m_pImage		= NULL;
 	m_nFlags		= 0;
 }
@@ -75,20 +73,21 @@ BOOL CImageFile::LoadFromMemory(LPCTSTR pszType, LPCVOID pData, DWORD nLength, B
 {
 	Clear();
 
-	return m_bLoaded = ImageServices.LoadFromMemory( this, pszType, pData, nLength, bScanOnly, bPartialOk );
+	return ImageServices.LoadFromMemory( this, pszType, pData, nLength, bScanOnly, bPartialOk );
 }
 
 BOOL CImageFile::LoadFromFile(LPCTSTR pszFile, BOOL bScanOnly, BOOL bPartialOk)
 {
 	Clear();
 
-	return m_bLoaded = ImageServices.LoadFromFile( this, pszFile, bScanOnly, bPartialOk );
+	return ImageServices.LoadFromFile( this, pszFile, bScanOnly, bPartialOk );
 }
 
 BOOL CImageFile::LoadFromResource(HINSTANCE hInstance, UINT nResourceID, LPCTSTR pszType)
 {
 	Clear();
 
+	BOOL bLoaded = FALSE;
 	HMODULE hModule = (HMODULE)hInstance;
 	HRSRC hRes = FindResource( hModule, MAKEINTRESOURCE( nResourceID ), pszType );
 	if ( hRes  )
@@ -116,16 +115,19 @@ BOOL CImageFile::LoadFromResource(HINSTANCE hInstance, UINT nResourceID, LPCTSTR
 					pszType = strType;
 				}
 
-				m_bLoaded = LoadFromMemory( pszType, pMemory, nSize );
+				bLoaded = LoadFromMemory( pszType, pMemory, nSize );
 			}
 			FreeResource( hMemory );
 		}
 	}
-	return m_bLoaded;
+	return bLoaded;
 }
 
 BOOL CImageFile::LoadFromURL(LPCTSTR pszURL)
 {
+	Clear();
+
+	BOOL bLoaded = FALSE;
 	CHttpRequest pImageFetcher;
 
 	if ( !pImageFetcher.SetURL( pszURL ) )
@@ -151,20 +153,19 @@ BOOL CImageFile::LoadFromURL(LPCTSTR pszURL)
 		}
 
 		CBuffer* pBuffer = pImageFetcher.GetResponseBuffer();
-		if ( pBuffer == NULL ) return FALSE;
-
-		strMIME.Replace( '/', '.' );
-		m_bLoaded = LoadFromMemory( strMIME, (LPVOID)pBuffer->m_pBuffer, pBuffer->m_nLength );
-		if ( m_bLoaded )
-			m_nFlags |= idRemote;
-
-		return m_bLoaded;
+		if ( pBuffer )
+		{
+			strMIME.Replace( '/', '.' );
+			bLoaded = LoadFromMemory( strMIME, (LPVOID)pBuffer->m_pBuffer, pBuffer->m_nLength );
+			if ( bLoaded )
+				m_nFlags |= idRemote;
+		}
 	}
 
-	return FALSE;
+	return bLoaded;
 }
 
-BOOL CImageFile::LoadFromBitmap(HBITMAP hBitmap, BOOL bScanOnly)
+BOOL CImageFile::LoadFromBitmap(HBITMAP hBitmap, BOOL bAlpha, BOOL bScanOnly)
 {
 	Clear();
 
@@ -176,10 +177,10 @@ BOOL CImageFile::LoadFromBitmap(HBITMAP hBitmap, BOOL bScanOnly)
 		// Unsupported format
 		return FALSE;
 
-	m_bScanned = TRUE;
-	m_nComponents = 3;
-	m_nWidth = bmInfo.bmWidth;
-	m_nHeight = bmInfo.bmHeight;
+	m_bScanned		= TRUE;
+	m_nWidth		= bmInfo.bmWidth;
+	m_nHeight		= bmInfo.bmHeight;
+	m_nComponents	= ( bAlpha ? 4 : 3 );
 
 	if ( bScanOnly )
 		return TRUE;
@@ -189,22 +190,64 @@ BOOL CImageFile::LoadFromBitmap(HBITMAP hBitmap, BOOL bScanOnly)
 	if ( m_pImage )
 	{
 		HDC hDC = GetDC( NULL );
-		BITMAPINFOHEADER bmi = { sizeof( BITMAPINFOHEADER ), bmInfo.bmWidth, -bmInfo.bmHeight, 1, 24, BI_RGB };
+		BITMAPINFOHEADER bmi = { sizeof( BITMAPINFOHEADER ), bmInfo.bmWidth, -bmInfo.bmHeight, 1, ( ( m_nComponents == 3 ) ? 24u : 32u ), BI_RGB };
 		int copied = GetDIBits( hDC, hBitmap, 0, bmInfo.bmHeight, m_pImage, (BITMAPINFO*)&bmi, DIB_RGB_COLORS );
 		ReleaseDC( NULL, hDC );
 
 		if ( copied == m_nHeight )
 		{
-			m_bLoaded = TRUE;
-
-			return SwapRGB();
+			if ( SwapRGB() )
+			{
+				return TRUE;
+			}
 		}
 	}
 
-	// Out of memory
-	Clear();
+	delete [] m_pImage;
+	m_pImage = NULL;
 
 	return FALSE;
+}
+
+BOOL CImageFile::LoadFromService(const IMAGESERVICEDATA* pParams, SAFEARRAY* pArray)
+{
+	Clear();
+
+	m_bScanned		= TRUE;
+	m_nWidth		= pParams->nWidth;
+	m_nHeight		= pParams->nHeight;
+	m_nComponents	= pParams->nComponents;
+
+	if ( pArray == NULL )
+	{
+		// Scanned only
+		return TRUE;
+	}
+
+	BOOL bLoaded = FALSE;
+	LONG nArray = 0;
+	if ( SUCCEEDED( SafeArrayGetUBound( pArray, 1, &nArray ) ) )
+	{
+		nArray++;
+		LONG nFullSize = ( ( pParams->nWidth * pParams->nComponents + 3 ) & ~3 ) * pParams->nHeight;
+		if ( nArray == nFullSize )
+		{
+			LPBYTE pData = NULL;
+			if ( SUCCEEDED( SafeArrayAccessData( pArray, (VOID**)&pData ) ) )
+			{
+				m_pImage = new BYTE[ nArray ];
+				if ( m_pImage )
+				{
+					CopyMemory( m_pImage, pData, nArray );
+					bLoaded = TRUE;
+				}
+
+				VERIFY( SUCCEEDED( SafeArrayUnaccessData( pArray ) ) );
+			}
+		}
+	}
+
+	return bLoaded;
 }
 
 /////////////////////////////////////////////////////////////////////////////
@@ -212,7 +255,7 @@ BOOL CImageFile::LoadFromBitmap(HBITMAP hBitmap, BOOL bScanOnly)
 
 BOOL CImageFile::SaveToMemory(LPCTSTR pszType, int nQuality, LPBYTE* ppBuffer, DWORD* pnLength)
 {
-	if ( ! m_bLoaded )
+	if ( ! IsLoaded() )
 		return FALSE;
 
 	return ImageServices.SaveToMemory( this, pszType, nQuality, ppBuffer, pnLength );
@@ -220,7 +263,7 @@ BOOL CImageFile::SaveToMemory(LPCTSTR pszType, int nQuality, LPBYTE* ppBuffer, D
 
 BOOL CImageFile::SaveToFile(LPCTSTR pszFile, int nQuality, DWORD* pnLength)
 {
-	if ( ! m_bLoaded )
+	if ( ! IsLoaded() )
 		return FALSE;
 
 	return ImageServices.SaveToFile( this, pszFile, nQuality, pnLength );
@@ -231,7 +274,7 @@ BOOL CImageFile::SaveToFile(LPCTSTR pszFile, int nQuality, DWORD* pnLength)
 
 DWORD CImageFile::GetSerialSize() const
 {
-	if ( ! m_bLoaded ) return 4;
+	if ( ! IsLoaded() ) return 4;
 	return 12 + ( ( m_nWidth * m_nComponents + 3 ) & ~3 ) * m_nHeight;
 }
 
@@ -239,9 +282,9 @@ void CImageFile::Serialize(CArchive& ar)
 {
 	if ( ar.IsStoring() )
 	{
-		if ( ! m_bLoaded )
+		if ( ! IsLoaded() )
 		{
-			ar << m_bLoaded;
+			ar << (int)0;
 			return;
 		}
 
@@ -257,7 +300,8 @@ void CImageFile::Serialize(CArchive& ar)
 		Clear();
 
 		ar >> m_nWidth;
-		if ( ! m_nWidth ) return;
+		if ( ! m_nWidth )
+			return;
 		ar >> m_nHeight;
 		DWORD nCompositeValue;
 		ar >> nCompositeValue;
@@ -272,7 +316,7 @@ void CImageFile::Serialize(CArchive& ar)
 		m_pImage = new BYTE[ nPitch  ];
 		ReadArchive( ar, m_pImage, nPitch );
 
-		m_bLoaded = TRUE;
+		m_bScanned = TRUE;
 	}
 }
 
@@ -281,8 +325,8 @@ void CImageFile::Serialize(CArchive& ar)
 
 HBITMAP CImageFile::CreateBitmap(HDC hUseDC)
 {
-	if ( ! m_bLoaded ) return NULL;
-	if ( m_nComponents != 3 ) return NULL;
+	if ( ! IsLoaded() || m_nComponents != 3 )
+		return NULL;
 
 	BITMAPV5HEADER pV5Header = {};
 
@@ -370,7 +414,7 @@ BOOL CImageFile::Resample(int nNewWidth, int nNewHeight)
 		return FALSE;
 	if ( nNewWidth <= 0 || nNewHeight <= 0 )
 		return FALSE;
-	if ( ! m_bLoaded )
+	if ( ! IsLoaded() )
 		return FALSE;
 	if ( m_nComponents != 3 )
 		return FALSE;
@@ -451,7 +495,7 @@ BOOL CImageFile::Resample(int nNewWidth, int nNewHeight)
 
 /*BOOL CImageFile::FastResample(int nNewWidth, int nNewHeight)
 {
-	if ( ! m_bLoaded ) return FALSE;
+	if ( ! IsLoaded() ) return FALSE;
 	if ( m_nComponents != 3 ) return FALSE;
 	if ( nNewWidth == m_nWidth && nNewHeight == m_nHeight ) return TRUE;
 
@@ -491,7 +535,7 @@ BOOL CImageFile::Resample(int nNewWidth, int nNewHeight)
 
 BOOL CImageFile::EnsureRGB(COLORREF crBack)
 {
-	if ( ! m_bLoaded || m_nWidth <= 0 || m_nHeight <= 0 || ! m_pImage )
+	if ( ! IsLoaded() || m_nWidth <= 0 || m_nHeight <= 0 )
 	{
 		return FALSE;
 	}
@@ -515,7 +559,7 @@ BOOL CImageFile::EnsureRGB(COLORREF crBack)
 
 BOOL CImageFile::MonoToRGB()
 {
-	if ( ! m_bLoaded ) return FALSE;
+	if ( ! IsLoaded() ) return FALSE;
 	if ( m_nComponents == 3 ) return TRUE;
 	if ( m_nComponents != 1 ) return FALSE;
 
@@ -552,7 +596,7 @@ BOOL CImageFile::MonoToRGB()
 
 BOOL CImageFile::AlphaToRGB(COLORREF crBack)
 {
-	if ( ! m_bLoaded ) return FALSE;
+	if ( ! IsLoaded() ) return FALSE;
 	if ( m_nComponents == 3 ) return TRUE;
 	if ( m_nComponents != 4 ) return FALSE;
 
@@ -609,13 +653,11 @@ BOOL CImageFile::AlphaToRGB(COLORREF crBack)
 
 BOOL CImageFile::SwapRGB()
 {
-	if ( ! m_bLoaded ) return FALSE;
-	if ( m_nComponents != 3 ) return FALSE;
+	if ( ! IsLoaded() ) return FALSE;
+	if ( m_nComponents != 3 && m_nComponents != 4 ) return FALSE;
 
-	DWORD nPitch = ( m_nWidth * 3 + 3) & ~3u;
-
+	const DWORD nPitch = ( m_nWidth * m_nComponents + 3 ) & ~3u;
 	BYTE* pImage = m_pImage;
-	BYTE nTemp;
 
 	for ( int nY = m_nHeight ; nY ; nY-- )
 	{
@@ -624,10 +666,10 @@ BOOL CImageFile::SwapRGB()
 
 		for ( int nX = m_nWidth ; nX ; nX-- )
 		{
-			nTemp = pRow[0];
+			const BYTE nTemp = pRow[0];
 			pRow[0] = pRow[2];
 			pRow[2] = nTemp;
-			pRow += 3;
+			pRow += m_nComponents;
 		}
 	}
 

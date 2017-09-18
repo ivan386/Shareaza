@@ -53,9 +53,10 @@ BOOL CImageServices::LoadFromMemory(CImageFile* pFile, LPCTSTR pszType, LPCVOID 
 		{
 			CImage image;
 			HRESULT hr = image.Load( pStream );
-			if ( SUCCEEDED( hr ) )
+			if ( SUCCEEDED( hr ) && image.IsDIBSection() )
 			{
-				if ( pFile->LoadFromBitmap( image, bScanOnly ) )
+				BOOL bAlpha = ( image.GetBPP() == 32 ) && ( _tcsicmp( pszType, _T(".png") ) == 0 );
+				if ( pFile->LoadFromBitmap( image, bAlpha, bScanOnly ) )
 				{
 					return TRUE;
 				}
@@ -94,7 +95,7 @@ BOOL CImageServices::LoadFromMemory(CImageFile* pFile, LPCTSTR pszType, LPCVOID 
 				HRESULT hr = pService->LoadFromMemory( bstrType, pInput, &pParams, &pArray );
 				if ( SUCCEEDED( hr ) )
 				{
-					bSuccess = PostLoad( pFile, &pParams, pArray );
+					bSuccess = pFile->LoadFromService( &pParams, pArray );
 				}
 				else if ( SERVERLOST( hr ) )
 				{
@@ -118,21 +119,22 @@ BOOL CImageServices::LoadFromMemory(CImageFile* pFile, LPCTSTR pszType, LPCVOID 
 
 BOOL CImageServices::LoadFromFile(CImageFile* pFile, LPCTSTR szFilename, BOOL bScanOnly, BOOL bPartialOk)
 {
+	// Get file extension
+	LPCTSTR szType = PathFindExtension( szFilename ); // ".ext"
+
 	// Try to load common types first (JPEG/GIF/BMP/PNG)
 	{
 		CImage image;
 		HRESULT hr = image.Load( szFilename );
-		if ( SUCCEEDED( hr ) )
+		if ( SUCCEEDED( hr ) && image.IsDIBSection() )
 		{
-			if ( pFile->LoadFromBitmap( image, bScanOnly ) )
+			BOOL bAlpha = ( image.GetBPP() == 32 ) && ( _tcsicmp( szType, _T(".png") ) == 0 );
+			if ( pFile->LoadFromBitmap( image, bAlpha, bScanOnly ) )
 			{
 				return TRUE;
 			}
 		}
 	}
-
-	// Get file extension
-	LPCTSTR szType = PathFindExtension( szFilename ); // ".ext"
 
 	CComQIPtr< IImageServicePlugin > pService( Plugins.GetPlugin( _T("ImageService"), szType ) );
 	if ( pService )
@@ -171,7 +173,7 @@ BOOL CImageServices::LoadFromFileHelper(IImageServicePlugin* pService, CImageFil
 	HRESULT hr = pService->LoadFromFile( CComBSTR( szFilename ), &pParams, &pArray );
 	if ( SUCCEEDED( hr ) )
 	{
-		bSuccess = PostLoad( pFile, &pParams, pArray );
+		bSuccess = pFile->LoadFromService( &pParams, pArray );
 	}
 	else if ( SERVERLOST( hr ) )
 	{
@@ -217,47 +219,6 @@ BOOL CImageServices::LoadFromFileHelper(IImageServicePlugin* pService, CImageFil
 	AfxSetResourceHandle( hRes );
 
 	return bSuccess;
-}
-
-/////////////////////////////////////////////////////////////////////////////
-// CImageServices post load
-
-BOOL CImageServices::PostLoad(CImageFile* pFile, const IMAGESERVICEDATA* pParams, SAFEARRAY* pArray)
-{
-	pFile->m_bScanned		= TRUE;
-	pFile->m_nWidth			= pParams->nWidth;
-	pFile->m_nHeight		= pParams->nHeight;
-	pFile->m_nComponents	= pParams->nComponents;
-	if ( pArray == NULL )
-	{
-		// Scanned only
-		return TRUE;
-	}
-
-	LONG nArray = 0;
-	if ( SUCCEEDED( SafeArrayGetUBound( pArray, 1, &nArray ) ) )
-	{
-		nArray++;
-		LONG nFullSize = ( ( pParams->nWidth * pParams->nComponents + 3 ) & ~3 ) *
-			pParams->nHeight;
-		if ( nArray == nFullSize )
-		{
-			pFile->m_pImage = new BYTE[ nArray ];
-			if ( pFile->m_pImage )
-			{
-				LPBYTE pData;
-				if ( SUCCEEDED( SafeArrayAccessData( pArray, (VOID**)&pData ) ) )
-				{
-					CopyMemory( pFile->m_pImage, pData, nArray );
-					pFile->m_bLoaded = TRUE;
-
-					VERIFY( SUCCEEDED( SafeArrayUnaccessData( pArray ) ) );
-				}
-			}
-		}
-	}
-
-	return pFile->m_bLoaded;
 }
 
 /////////////////////////////////////////////////////////////////////////////

@@ -1,7 +1,7 @@
 //
 // Emoticons.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2010.
+// Copyright (c) Shareaza Development Team, 2002-2017.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -209,8 +209,7 @@ void CEmoticons::Clear()
 
 int CEmoticons::AddEmoticon(LPCTSTR pszText, CImageFile* pImage, CRect* pRect, COLORREF crBack, BOOL bButton)
 {
-	ASSERT( pImage->m_bLoaded && pImage->m_nComponents == 3 );
-
+	if ( ! pImage->IsLoaded() || pImage->m_nComponents != 3 ) return -1;
 	if ( pRect->left < 0 || pRect->left + EMOTICON_SIZE > pImage->m_nWidth ) return -1;
 	if ( pRect->top < 0 || pRect->top > pImage->m_nHeight + EMOTICON_SIZE ) return -1;
 	if ( pRect->right != pRect->left + EMOTICON_SIZE ) return -1;

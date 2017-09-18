@@ -1,7 +1,7 @@
 //
 // CtrlBrowseProfile.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2015.
+// Copyright (c) Shareaza Development Team, 2002-2017.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -130,14 +130,12 @@ void CBrowseProfileCtrl::OnSkinChange()
 
 void CBrowseProfileCtrl::Update(CHostBrowser* pBrowser)
 {
-	CSingleLock pLock( &m_pSection, TRUE );
-
 	CGProfile* pProfile = pBrowser->m_pProfile;
 
 	if ( m_pDocument1 == NULL || m_pDocument2 == NULL ) return;
 	if ( pProfile == NULL || pProfile->IsValid() == FALSE ) return;
 
-	if ( ! pBrowser->IsBrowsing() && pBrowser->m_nHits > 0 && ! m_imgHead.m_bLoaded )
+	if ( ! pBrowser->IsBrowsing() && pBrowser->m_nHits > 0 )
 	{
 		LoadDefaultHead();
 	}
@@ -151,7 +149,8 @@ void CBrowseProfileCtrl::Update(CHostBrowser* pBrowser)
 
 void CBrowseProfileCtrl::UpdateDocument1(CGProfile* pProfile)
 {
-	CSingleLock pLock( &m_pDocument1->m_pSection, TRUE );
+	CSingleLock pLock( &m_pSection, TRUE );
+	CSingleLock pDocLock( &m_pDocument1->m_pSection, TRUE );
 	CString str;
 
 	if ( m_pdNick != NULL ) m_pdNick->SetText( pProfile->GetNick() );
@@ -293,10 +292,12 @@ void CBrowseProfileCtrl::UpdateDocument1(CGProfile* pProfile)
 
 void CBrowseProfileCtrl::UpdateDocument2(CHostBrowser* pBrowser)
 {
+	CSingleLock pLock( &m_pSection, TRUE );
+
 	int nBookmarks = 0;
 	CGProfile* pProfile = pBrowser->m_pProfile;
 
-	CSingleLock pLock( &m_pDocument2->m_pSection, TRUE );
+	CSingleLock pDocLock( &m_pDocument2->m_pSection, TRUE );
 
 	m_pDocument2->ShowGroup( 2, pBrowser->m_bCanChat );
 
@@ -350,7 +351,6 @@ void CBrowseProfileCtrl::UpdateDocument2(CHostBrowser* pBrowser)
 
 void CBrowseProfileCtrl::OnHeadPacket(CG2Packet* pPacket)
 {
-	CSingleLock pLock( &m_pSection, TRUE );
 	CString strFile;
 	G2_PACKET nType;
 	DWORD nLength;
@@ -365,6 +365,8 @@ void CBrowseProfileCtrl::OnHeadPacket(CG2Packet* pPacket)
 		}
 		else if ( nType == G2_PACKET_BODY )
 		{
+			CSingleLock pLock( &m_pSection, TRUE );
+
 			if ( m_imgHead.LoadFromMemory( PathFindExtension( strFile ),
 				 (LPCVOID)( pPacket->m_pBuffer + pPacket->m_nPosition ), nLength ) &&
 				 m_imgHead.EnsureRGB( CoolInterface.m_crWindow ) &&
@@ -384,7 +386,7 @@ void CBrowseProfileCtrl::LoadDefaultHead()
 {
 	CSingleLock pLock( &m_pSection, TRUE );
 
-	if ( m_imgHead.m_bLoaded ) return;
+	if ( m_imgHead.IsLoaded() ) return;
 
 	if ( m_imgHead.LoadFromFile( Settings.General.Path + _T("\\Data\\DefaultAvatar.png") ) &&
 		m_imgHead.EnsureRGB( CoolInterface.m_crWindow ) &&
@@ -443,7 +445,7 @@ void CBrowseProfileCtrl::OnPaint()
 
 	GetClientRect( &rcPanel );
 
-	if ( m_imgHead.m_bLoaded )
+	if ( m_imgHead.IsLoaded() )
 	{
 		CRect rcHead( 10, 10, 138, 138 );
 		CDC dcMem;
@@ -487,6 +489,8 @@ void CBrowseProfileCtrl::OnClickView(NMHDR* pNotify, LRESULT* /*pResult*/)
 
 void CBrowseProfileCtrl::Serialize(CArchive& ar, int /*nVersion*/ /* BROWSER_SER_VERSION */)
 {
+	CSingleLock pLock( &m_pSection, TRUE );
+
 	m_imgHead.Serialize( ar );
 
 	if ( ar.IsLoading() )
