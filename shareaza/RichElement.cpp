@@ -27,7 +27,6 @@
 #include "RichFragment.h"
 
 #include "CoolInterface.h"
-#include "ImageServices.h"
 #include "ImageFile.h"
 
 #ifdef _DEBUG

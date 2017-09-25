@@ -22,7 +22,6 @@
     <ProjectName>Installer</ProjectName>
     <ProjectGuid>{3D7C87D6-A044-4334-8BB4-3B88B4E1757D}</ProjectGuid>
     <RootNamespace>Installer</RootNamespace>
-    <WindowsTargetPlatformVersion>8.1</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">

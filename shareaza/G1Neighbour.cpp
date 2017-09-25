@@ -255,7 +255,7 @@ BOOL CG1Neighbour::ProcessPackets()
 	CLockedBuffer pInputLocked( GetInput() );
 
 	CBuffer* pInput = m_pZInput ? m_pZInput : (CBuffer*)pInputLocked;
-	
+
 	return ProcessPackets( pInput );
 }
 
@@ -1153,7 +1153,7 @@ BOOL CG1Neighbour::OnPush(CG1Packet* pPacket)
 {
 	if ( pPacket->m_nLength < 26 )
 	{
-		theApp.Message( MSG_NOTICE, IDS_PROTOCOL_SIZE_PUSH, m_sAddress );
+		theApp.Message( MSG_NOTICE, IDS_PROTOCOL_SIZE_PUSH, (LPCTSTR)m_sAddress );
 		++Statistics.Current.Gnutella1.Dropped;
 		++m_nDropCount;
 		return TRUE;
@@ -1188,11 +1188,11 @@ BOOL CG1Neighbour::OnPush(CG1Packet* pPacket)
 		}
 	}
 
-	if ( ! nPort || ( pPacket->m_nHops && ( 
+	if ( ! nPort || ( pPacket->m_nHops && (
 		Network.IsFirewalledAddress( (IN_ADDR*)&nAddress ) ||
 		Network.IsReserved( (IN_ADDR*)&nAddress ) ) ) )
 	{
-		theApp.Message( MSG_NOTICE, IDS_PROTOCOL_ZERO_PUSH, m_sAddress );
+		theApp.Message( MSG_NOTICE, IDS_PROTOCOL_ZERO_PUSH, (LPCTSTR)m_sAddress );
 		++Statistics.Current.Gnutella1.Dropped;
 		++m_nDropCount;
 		return TRUE;

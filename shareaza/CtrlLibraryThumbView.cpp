@@ -25,7 +25,6 @@
 #include "Library.h"
 #include "SharedFile.h"
 #include "SharedFolder.h"
-#include "ImageServices.h"
 #include "ImageFile.h"
 #include "ThumbCache.h"
 #include "ShellIcons.h"
@@ -869,7 +868,7 @@ void CLibraryThumbView::OnRun()
 		{
 			if ( m_pList[ i ]->m_nThumb == CLibraryThumbItem::thumbWaiting )
 			{
-				bWaiting = true;		
+				bWaiting = true;
 				if ( CLibraryFile* pFile = Library.LookupFile( m_pList[ i ]->m_nIndex ) )
 				{
 					nIndex	= pFile->m_nIndex;

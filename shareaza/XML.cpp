@@ -70,7 +70,7 @@ BOOL CXMLNode::ParseMatch(LPCTSTR& pszBase, LPCTSTR pszToken)
 	LPCTSTR pszXML = pszBase;
 	int nParse = 0;
 
-	for ( ; IsSpace( *pszXML ) ; pszXML++, nParse++ );
+	for ( ; IsSpaceW( *pszXML ) ; pszXML++, nParse++ );
 	if ( ! *pszXML ) return FALSE;
 
 	for ( ; *pszXML && *pszToken ; pszXML++, pszToken++, nParse++ )
@@ -88,7 +88,7 @@ BOOL CXMLNode::ParseIdentifier(LPCTSTR& pszBase, CString& strIdentifier)
 	LPCTSTR pszXML = pszBase;
 	int nParse = 0;
 
-	while ( IsSpace( *pszXML ) )
+	while ( IsSpaceW( *pszXML ) )
 	{
 		pszXML++;
 		nParse++;

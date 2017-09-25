@@ -17,26 +17,7 @@
 #undef APSTUDIO_READONLY_SYMBOLS
 
 /////////////////////////////////////////////////////////////////////////////
-// Russian resources
-
-#if !defined(AFX_RESOURCE_DLL) || defined(AFX_TARG_RUS)
-#ifdef _WIN32
-LANGUAGE LANG_RUSSIAN, SUBLANG_DEFAULT
-#pragma code_page(1251)
-#endif //_WIN32
-
-/////////////////////////////////////////////////////////////////////////////
-//
-// XSL
-//
-
-IDR_XSL_ShareazaFileListStyle XSL                     "Res\\ShareazaFileListStyle.xsl"
-#endif    // Russian resources
-/////////////////////////////////////////////////////////////////////////////
-
-
-/////////////////////////////////////////////////////////////////////////////
-// English (Neutral) resources
+// English resources
 
 #if !defined(AFX_RESOURCE_DLL) || defined(AFX_TARG_ENU)
 #ifdef _WIN32
@@ -49,6 +30,7 @@ LANGUAGE LANG_ENGLISH, SUBLANG_NEUTRAL
 // XSL
 //
 
+IDR_XSL_ShareazaFileListStyle XSL                     "Res\\ShareazaFileListStyle.xsl"
 IDR_XSL_DCFileListStyle XSL                     "Res\\DCFileListStyle.xsl"
 
 #ifdef APSTUDIO_INVOKED
@@ -287,8 +269,8 @@ ID_NETWORK_DC           ICON                    "Res\\Network_DC.ico"
 //
 
 VS_VERSION_INFO VERSIONINFO
- FILEVERSION 2,7,9,1
- PRODUCTVERSION 2,7,9,1
+ FILEVERSION 2,7,10,3
+ PRODUCTVERSION 2,7,10,3
  FILEFLAGSMASK 0x1fL
 #ifdef _DEBUG
  FILEFLAGS 0x1L
@@ -306,12 +288,12 @@ BEGIN
             VALUE "Comments", "Shareaza Ultimate File Sharing"
             VALUE "CompanyName", "Shareaza Development Team"
             VALUE "FileDescription", "Shareaza Ultimate File Sharing"
-            VALUE "FileVersion", "2.7.9.1"
+            VALUE "FileVersion", "2.7.10.3"
             VALUE "InternalName", "Shareaza"
-            VALUE "LegalCopyright", "Copyright © Shareaza Development Team, 2002-2016. All rights reserved."
+            VALUE "LegalCopyright", "Copyright © Shareaza Development Team, 2002-2017. All rights reserved."
             VALUE "OriginalFilename", "Shareaza.exe"
             VALUE "ProductName", "Shareaza"
-            VALUE "ProductVersion", "2.7.9.1"
+            VALUE "ProductVersion", "2.7.10.3"
         END
     END
     BLOCK "VarFileInfo"
@@ -2877,7 +2859,7 @@ BEGIN
     VK_F2,          ID_VIEW_SEARCH_MONITOR, VIRTKEY, CONTROL, NOINVERT
     VK_F7,          ID_VIEW_SECURITY,       VIRTKEY, NOINVERT
     VK_F11,         ID_VIEW_SYSTEM,         VIRTKEY, NOINVERT
-    VK_F10,         ID_VIEW_TRAFFIC,        VIRTKEY, NOINVERT
+    VK_F10,         ID_VIEW_TRAFFIC,        VIRTKEY, CONTROL, NOINVERT
     VK_F4,          ID_VIEW_UPLOADS,        VIRTKEY, NOINVERT
     "P",            ID_TOOLS_SETTINGS,      VIRTKEY, CONTROL, NOINVERT
 END
@@ -5033,7 +5015,7 @@ BEGIN
     ID_SCHEDULER_REMOVE_ALL "Removes all scheduled tasks."
 END
 
-#endif    // English (Neutral) resources
+#endif    // English resources
 /////////////////////////////////////////////////////////////////////////////
 
 

@@ -25,16 +25,6 @@
 #include "stdafx.h"
 #include "GFLReader.h"
 
-HRESULT CGFLReader::FinalConstruct () throw()
-{
-	return CoCreateFreeThreadedMarshaler (GetControllingUnknown(), &m_pUnkMarshaler.p);
-}
-
-void CGFLReader::FinalRelease () throw()
-{
-	m_pUnkMarshaler.Release();
-}
-
 HRESULT BitmapToSafeArray (SAFEARRAY** const ppImage, const IMAGESERVICEDATA* const pParams,
 	const GFL_BITMAP* hGflBitmap) throw ()
 {
@@ -301,7 +291,7 @@ STDMETHODIMP CGFLReader::SaveToMemory (
 		SafeArrayDestroy (*ppMemory);
 		*ppMemory = NULL;
 	}
-	
+
 	ATLTRACE( "SaveToMemory (\"%s\", 0x%08x, 0x%08x, 0x%08x) : %s\n", (LPCSTR)CW2A( (LPCWSTR)sType ), ppMemory, pParams, pImage, SUCCEEDED( hr ) ? "OK" : "ERROR" );
 
 	return hr;

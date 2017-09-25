@@ -458,7 +458,7 @@ BOOL CUploadQueues::Load()
 				ar.Abort();
 				pFile.Abort();
 				pException->Delete();
-				theApp.Message( MSG_ERROR, _T("Failed to load upload queues: %s"), strFile );
+				theApp.Message( MSG_ERROR, _T("Failed to load upload queues: %s"), (LPCTSTR)strFile );
 			}
 			pFile.Close();
 		}
@@ -466,11 +466,11 @@ BOOL CUploadQueues::Load()
 		{
 			pFile.Abort();
 			pException->Delete();
-			theApp.Message( MSG_ERROR, _T("Failed to load upload queues: %s"), strFile );
+			theApp.Message( MSG_ERROR, _T("Failed to load upload queues: %s"), (LPCTSTR)strFile );
 		}
 	}
 	else
-		theApp.Message( MSG_ERROR, _T("Failed to load upload queues: %s"), strFile );
+		theApp.Message( MSG_ERROR, _T("Failed to load upload queues: %s"), (LPCTSTR)strFile );
 
 	if ( GetCount() == 0 ) CreateDefault();
 
@@ -488,7 +488,7 @@ BOOL CUploadQueues::Save()
 	if ( ! pFile.Open( strTemp, CFile::modeWrite | CFile::modeCreate | CFile::shareExclusive | CFile::osSequentialScan ) )
 	{
 		DeleteFile( strTemp );
-		theApp.Message( MSG_ERROR, _T("Failed to save upload queues: %s"), strTemp );
+		theApp.Message( MSG_ERROR, _T("Failed to save upload queues: %s"), (LPCTSTR)strTemp );
 		return FALSE;
 	}
 
@@ -509,7 +509,7 @@ BOOL CUploadQueues::Save()
 			pFile.Abort();
 			pException->Delete();
 			DeleteFile( strTemp );
-			theApp.Message( MSG_ERROR, _T("Failed to save upload queues: %s"), strTemp );
+			theApp.Message( MSG_ERROR, _T("Failed to save upload queues: %s"), (LPCTSTR)strTemp );
 			return FALSE;
 		}
 		pFile.Close();
@@ -519,14 +519,14 @@ BOOL CUploadQueues::Save()
 		pFile.Abort();
 		pException->Delete();
 		DeleteFile( strTemp );
-		theApp.Message( MSG_ERROR, _T("Failed to save upload queues: %s"), strTemp );
+		theApp.Message( MSG_ERROR, _T("Failed to save upload queues: %s"), (LPCTSTR)strTemp );
 		return FALSE;
 	}
 
 	if ( ! MoveFileEx( strTemp, strFile, MOVEFILE_COPY_ALLOWED | MOVEFILE_REPLACE_EXISTING ) )
 	{
 		DeleteFile( strTemp );
-		theApp.Message( MSG_ERROR, _T("Failed to save upload queues: %s"), strFile );
+		theApp.Message( MSG_ERROR, _T("Failed to save upload queues: %s"), (LPCTSTR)strFile );
 		return FALSE;
 	}
 
@@ -928,24 +928,24 @@ void CUploadQueues::Validate()
 {
 	CQuickLock oLock( m_pSection );
 
-	bool bED2K_NoPartial = 
+	bool bED2K_NoPartial =
 		SelectQueue( PROTOCOL_ED2K, _T("Filename"), 1, CUploadQueue::ulqPartial ) == NULL ||
 		SelectQueue( PROTOCOL_ED2K, _T("Filename"), SIZE_UNKNOWN - 1, CUploadQueue::ulqPartial ) == NULL;
-	bool bED2K_NoLibrary = 
+	bool bED2K_NoLibrary =
 		SelectQueue( PROTOCOL_ED2K, _T("Filename"), 1, CUploadQueue::ulqLibrary ) == NULL ||
 		SelectQueue( PROTOCOL_ED2K, _T("Filename"), SIZE_UNKNOWN - 1, CUploadQueue::ulqLibrary ) == NULL;
 
-	bool bHTTP_NoPartial = 
+	bool bHTTP_NoPartial =
 		SelectQueue( PROTOCOL_HTTP, _T("Filename"), 1, CUploadQueue::ulqPartial ) == NULL ||
 		SelectQueue( PROTOCOL_HTTP, _T("Filename"), SIZE_UNKNOWN - 1, CUploadQueue::ulqPartial ) == NULL;
-	bool bHTTP_NoLibrary = 
+	bool bHTTP_NoLibrary =
 		SelectQueue( PROTOCOL_HTTP, _T("Filename"), 1, CUploadQueue::ulqLibrary ) == NULL ||
 		SelectQueue( PROTOCOL_HTTP, _T("Filename"), SIZE_UNKNOWN - 1, CUploadQueue::ulqLibrary ) == NULL;
 
-	bool bDC_NoPartial = 
+	bool bDC_NoPartial =
 		SelectQueue( PROTOCOL_DC, _T("Filename"), 1, CUploadQueue::ulqPartial ) == NULL ||
 		SelectQueue( PROTOCOL_DC, _T("Filename"), SIZE_UNKNOWN - 1, CUploadQueue::ulqPartial ) == NULL;
-	bool bDC_NoLibrary = 
+	bool bDC_NoLibrary =
 		SelectQueue( PROTOCOL_DC, _T("Filename"), 1, CUploadQueue::ulqLibrary ) == NULL ||
 		SelectQueue( PROTOCOL_DC, _T("Filename"), SIZE_UNKNOWN - 1, CUploadQueue::ulqLibrary ) == NULL;
 

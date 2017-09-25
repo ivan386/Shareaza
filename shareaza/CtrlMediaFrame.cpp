@@ -1219,7 +1219,7 @@ void CMediaFrame::OnHScroll(UINT nSBCode, UINT /*nPos*/, CScrollBar* pScrollBar)
 			nNewPosition = 0;
 		else if ( nNewPosition > nLength )
 			nNewPosition = nLength;
-	
+
 		if ( nState == smsPlaying )
 		{
 			m_bThumbPlay = TRUE;
@@ -1807,7 +1807,7 @@ BOOL CMediaFrame::PrepareVis()
 						return FALSE;
 				}
 			}
-				
+
 			hr = m_pPlayer ? m_pPlayer->SetPluginSize( Settings.MediaPlayer.VisSize ) : E_FAIL;
 			if ( FAILED( hr ) )
 				return FALSE;
@@ -1909,7 +1909,7 @@ void CMediaFrame::ReportError()
 	m_pMetadata.Add( _T("Error"), strMessage );
 	m_pMetadata.Add( _T("Error"), LoadString( IDS_MEDIA_LOAD_FAIL_HELP ) );
 
-	theApp.Message( MSG_ERROR, _T("%s"), strMessage );
+	theApp.Message( MSG_ERROR, _T("%s"), (LPCTSTR)strMessage );
 
 	AfxMessageBox( strMessage + _T("\r\n\r\n") +
 		LoadString( IDS_MEDIA_LOAD_FAIL_HELP ), MB_ICONEXCLAMATION );

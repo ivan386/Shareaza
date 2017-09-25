@@ -98,6 +98,7 @@ void CSettings::Load()
 	Add( _T(""), _T("SearchLog"), &General.SearchLog, true );
 	Add( _T(""), _T("UserPath"), &General.UserPath );
 	Add( _T(""), _T("DialogScan"), &General.DialogScan, false );
+	Add( _T(""), _T("UnlimitedSettings"), &General.UnlimitedSettings, false );
 
 	Add( _T("Settings"), _T("AlwaysOpenURLs"), &General.AlwaysOpenURLs, false );
 	Add( _T("Settings"), _T("CloseMode"), &General.CloseMode, 0, 1, 0, 3 );
@@ -1738,7 +1739,7 @@ void CSettings::Item::Load()
 		ASSERT( ( m_nScale == 0 && m_nMin == 0 && m_nMax == 0 ) \
 			|| ( m_nScale && m_nMin < m_nMax ) );
 		*m_pDword = CRegistry::GetDword( m_szSection, m_szName, m_DwordDefault );
-		if ( m_nScale && m_nMin < m_nMax )
+		if ( ! Settings.General.UnlimitedSettings && m_nScale && m_nMin < m_nMax )
 		{
 			ASSERT( ( m_DwordDefault >= m_nMin * m_nScale ) \
 				&& ( m_DwordDefault <= m_nMax * m_nScale ) );
@@ -1825,7 +1826,7 @@ CString CSettings::SaveSet(const string_set* pSet)
 
 void CSettings::Item::Normalize()
 {
-	if ( m_pDword && m_nScale && m_nMin < m_nMax )
+	if ( ! Settings.General.UnlimitedSettings && m_pDword && m_nScale && m_nMin < m_nMax )
 	{
 		*m_pDword = max( min( *m_pDword, m_nMax * m_nScale ), m_nMin * m_nScale );
 	}

@@ -286,9 +286,9 @@ void CUploadTransfer::LongTermAverage(DWORD tNow)
 		m_nBandwidth = min( nAverage, m_nBandwidth );
 
 		theApp.Message( MSG_DEBUG, _T("Changing upload throttle on %s from %s to %s"),
-			m_sAddress,
-			Settings.SmartSpeed( nOld ),
-			Settings.SmartSpeed( m_nBandwidth ) );
+			(LPCTSTR)m_sAddress,
+			(LPCTSTR)Settings.SmartSpeed( nOld ),
+			(LPCTSTR)Settings.SmartSpeed( m_nBandwidth ) );
 	}
 	else if ( m_pQueue && m_pQueue->GetAvailableBandwidth() )
 	{
@@ -302,9 +302,9 @@ void CUploadTransfer::LongTermAverage(DWORD tNow)
 			m_nBandwidth = m_nMaxRate;
 
 		theApp.Message( MSG_DEBUG, _T("Changing upload throttle on %s from %s to %s"),
-			m_sAddress,
-			Settings.SmartSpeed( nOld ),
-			Settings.SmartSpeed( m_nBandwidth ) );
+			(LPCTSTR)m_sAddress,
+			(LPCTSTR)Settings.SmartSpeed( nOld ),
+			(LPCTSTR)Settings.SmartSpeed( m_nBandwidth ) );
 	}
 }
 

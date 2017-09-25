@@ -242,7 +242,7 @@ BOOL CLibraryWnd::OnCollection(const CString& sPath)
 				{	//Collection was copied into the collection folder
 					strMessage.Format( LoadString( IDS_LIBRARY_COLLECTION_INSTALLED ), (LPCTSTR)pCollection.GetTitle() );
 					AfxMessageBox( strMessage, MB_ICONINFORMATION );
-					
+
 					//Force a scan of collection folder (in case watch library folders is disabled)
 					oLock.Lock();
 					if ( CLibraryFolder* pLibFolder =  LibraryFolders.GetFolder( Settings.Downloads.CollectionPath ) )
@@ -297,7 +297,7 @@ BOOL CLibraryWnd::OnCollection(const CString& sPath)
 	}
 	else
 	{	//User clicked on an invalid collection
-		strMessage.Format( LoadString( IDS_LIBRARY_COLLECTION_INVALID ), sPath );
+		strMessage.Format( LoadString( IDS_LIBRARY_COLLECTION_INVALID ), (LPCTSTR)sPath );
 		AfxMessageBox( strMessage, MB_ICONEXCLAMATION );
 	}
 

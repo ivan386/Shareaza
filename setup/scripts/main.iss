@@ -136,6 +136,40 @@
   #define ConfigurationName "Debug"
 #endif
 
+; Test for VS2017
+#ifexist SourcePath + "..\..\vc141\Win32\Release\Shareaza.exe"
+  #ifdef Compiler
+    #error Found a few Shareaza.exe files, you need to leave only one
+  #endif
+  #define Compiler "vc141"
+  #define PlatformName "Win32"
+  #define ConfigurationName "Release"
+#endif
+#ifexist SourcePath + "..\..\vc141\x64\Release\Shareaza.exe"
+  #ifdef Compiler
+    #error Found a few Shareaza.exe files, you need to leave only one
+  #endif
+  #define Compiler "vc141"
+  #define PlatformName "x64"
+  #define ConfigurationName "Release"
+#endif
+#ifexist SourcePath + "..\..\vc141\Win32\Debug\Shareaza.exe"
+  #ifdef Compiler
+    #error Found a few Shareaza.exe files, you need to leave only one
+  #endif
+  #define Compiler "vc141"
+  #define PlatformName "Win32"
+  #define ConfigurationName "Debug"
+#endif
+#ifexist SourcePath + "..\..\vc141\x64\Debug\Shareaza.exe"
+  #ifdef Compiler
+    #error Found a few Shareaza.exe files, you need to leave only one
+  #endif
+  #define Compiler "vc141"
+  #define PlatformName "x64"
+  #define ConfigurationName "Debug"
+#endif
+
 #ifndef Compiler
   #error No Shareaza.exe files are found, compile some
 #endif

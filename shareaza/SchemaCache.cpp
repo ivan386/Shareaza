@@ -78,7 +78,7 @@ int CSchemaCache::Load()
 		__int64 nStart = GetMicroCount();
 #endif
 		strPath.Format( _T("%s\\Schemas\\%s"), (LPCTSTR)Settings.General.Path, pFind.cFileName );
-		
+
 		CSchema* pSchema = new CSchema();
 		if ( pSchema && pSchema->Load( strPath ) )
 		{
@@ -106,8 +106,8 @@ int CSchemaCache::Load()
 
 #ifdef _DEBUG
 		__int64 nEnd = GetMicroCount();
-		TRACE( _T("Schema \"%s\" load time : %I64i ms : %s\n"), strPath,
-			( nEnd - nStart ) / 1000, pSchema ? _T("SUCCESS") : _T("FAILED") );
+		TRACE( "Schema \"%s\" load time : %I64i ms : %s\n", (LPCSTR)CT2A( strPath ),
+			( nEnd - nStart ) / 1000, pSchema ? "SUCCESS" : "FAILED" );
 #endif
 	}
 	while ( FindNextFile( hSearch, &pFind ) );
@@ -132,7 +132,7 @@ void CSchemaCache::Clear()
 	{
 		delete GetNext( pos );
 	}
-	
+
 	m_pURIs.RemoveAll();
 	m_pNames.RemoveAll();
 	m_pTypeFilters.RemoveAll();

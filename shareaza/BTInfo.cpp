@@ -128,7 +128,7 @@ const CString& CBTInfo::CBTFile::FindFile()
 	for ( POSITION pos = mFolders.GetHeadPosition(); pos; )
 	{
 		const CString sFolder = mFolders.GetNext( pos );
-		
+
 		CString strFile = sFolder + _T("\\") + m_sPath;
 		if ( GetFileSize( strFile ) == m_nSize )
 		{
@@ -580,7 +580,7 @@ BOOL CBTInfo::SaveTorrentFile(const CString& sFolder)
 BOOL CBTInfo::LoadInfoPiece(BYTE *pPiece, DWORD nPieceSize, DWORD nInfoSize, DWORD nInfoPiece)
 {
 	ASSERT( nPieceSize <= MAX_PIECE_SIZE );
-	if ( nPieceSize > MAX_PIECE_SIZE ) 
+	if ( nPieceSize > MAX_PIECE_SIZE )
 		return FALSE;
 
 	if ( m_pSource.m_nLength == 0 && nInfoPiece == 0 )
@@ -624,7 +624,7 @@ BOOL CBTInfo::LoadInfoPiece(BYTE *pPiece, DWORD nPieceSize, DWORD nInfoSize, DWO
 int CBTInfo::NextInfoPiece() const
 {
 	if ( m_pSource.m_nLength == 0 )
-		return 0; 
+		return 0;
 	else if ( m_pSource.m_nLength > m_nInfoStart && ! m_nInfoSize )
 		return ( m_pSource.m_nLength - m_nInfoStart ) / MAX_PIECE_SIZE;
 
@@ -671,7 +671,7 @@ BOOL CBTInfo::CheckInfoData()
 		pBTH.Add( &m_pSource.m_pBuffer[pInfo->m_nPosition], (DWORD)pInfo->m_nSize );
 		pBTH.Finish();
 		pBTH.GetHash( &oBTH[0] );
-		
+
 		if ( oBTH == m_oBTH )
 		{
 			m_nInfoStart = (DWORD)pInfo->m_nPosition;
@@ -690,10 +690,10 @@ BOOL CBTInfo::LoadTorrentBuffer(const CBuffer* pBuffer)
 	auto_ptr< CBENode > pNode ( CBENode::Decode( pBuffer ) );
 	if ( ! pNode.get() )
 	{
-		theApp.Message( MSG_ERROR, _T("[BT] Failed to decode torrent data: %s"), pBuffer->ReadString( (size_t)-1 ) );
+		theApp.Message( MSG_ERROR, _T("[BT] Failed to decode torrent data: %s"), (LPCTSTR)pBuffer->ReadString( (size_t)-1 ) );
 		return FALSE;
 	}
- 
+
 	return LoadTorrentTree( pNode.get() );
 }
 
@@ -1033,7 +1033,7 @@ BOOL CBTInfo::LoadTorrentTree(const CBENode* pRoot)
 				}
 			}
 		}
-		
+
 		// BEP 19 : WebSeed - HTTP/FTP Seeding (GetRight style) : http://bittorrent.org/beps/bep_0019.html
 		// TODO: Support multi-file torrents
 		if ( const CBENode* pUrlList = pRoot->GetNode( "url-list" ) )
@@ -1282,8 +1282,8 @@ BOOL CBTInfo::LoadTorrentTree(const CBENode* pRoot)
 	oSHA.GetHash( &m_oBTH[ 0 ] );
 	m_oBTH.validate();
 
-	if ( m_pSource.m_nLength > 0 
-		 && pInfo->m_nSize 
+	if ( m_pSource.m_nLength > 0
+		 && pInfo->m_nSize
 		 && pInfo->m_nPosition + pInfo->m_nSize < m_pSource.m_nLength )
 	{
 		Hashes::BtHash oBTH;
@@ -1291,7 +1291,7 @@ BOOL CBTInfo::LoadTorrentTree(const CBENode* pRoot)
 		pBTH.Add( &m_pSource.m_pBuffer[pInfo->m_nPosition], (DWORD)pInfo->m_nSize );
 		pBTH.Finish();
 		pBTH.GetHash( &oBTH[0] );
-		
+
 		if ( oBTH == m_oBTH )
 		{
 			m_nInfoStart = (DWORD)pInfo->m_nPosition;

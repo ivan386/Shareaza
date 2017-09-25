@@ -23,7 +23,6 @@
 #include "Shareaza.h"
 #include "Settings.h"
 #include "Flags.h"
-#include "ImageServices.h"
 #include "ImageFile.h"
 
 #ifdef _DEBUG

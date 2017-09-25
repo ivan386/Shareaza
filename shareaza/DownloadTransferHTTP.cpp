@@ -443,7 +443,7 @@ BOOL CDownloadTransferHTTP::SendRequest()
 					Write( strLine );
 					Write( _P("\r\n") );
 				}
-				
+
 				if ( m_pDownload->IsShared() && m_pDownload->IsStarted() && Network.IsStable() )
 				{
 					IN_ADDR MyAddress = Network.GetMyAddressFor( &m_pHost.sin_addr );
@@ -467,7 +467,7 @@ BOOL CDownloadTransferHTTP::SendRequest()
 						Write( strLine );
 						Write( _P("\r\n") );
 					}
-					
+
 					if ( m_pSource->m_nGnutella < 2 )
 					{
 						strLine = m_pDownload->GetTopFailedSources( 15, PROTOCOL_G1 );
@@ -645,7 +645,7 @@ BOOL CDownloadTransferHTTP::ReadResponseLine()
 	{
 		strCode		= strLine.Mid( 5, 3 );
 		strMessage	= strLine.Mid( 8 );
-		theApp.Message( MSG_DEBUG, _T("HTTP with unknown version: %s"), strLine );
+		theApp.Message( MSG_DEBUG, _T("HTTP with unknown version: %s"), (LPCTSTR)strLine );
 		m_bKeepAlive = FALSE;
 	}
 	else
@@ -857,7 +857,7 @@ BOOL CDownloadTransferHTTP::OnHeaderLine(CString& strHeader, CString& strValue)
 		}
 		else
 		{
-			theApp.Message( MSG_DEBUG, _T( "Unknown transfer encoding: %s" ), strValue );
+			theApp.Message( MSG_DEBUG, _T( "Unknown transfer encoding: %s" ), (LPCTSTR)strValue );
 			Close( TRI_FALSE );
 			return FALSE;
 		}

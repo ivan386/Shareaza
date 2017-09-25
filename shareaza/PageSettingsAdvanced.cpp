@@ -231,34 +231,44 @@ void CAdvancedSettingsPage::UpdateInputArea()
 
 	int nItem = m_wndList.GetNextItem( -1, LVNI_SELECTED );
 
-	m_wndValue.ShowWindow( SW_HIDE );
-	m_wndValue.EnableWindow( FALSE );
-
-	m_wndBool.ShowWindow( SW_HIDE );
-	m_wndBool.EnableWindow( FALSE );
-
-	m_wndValueSpin.ShowWindow( SW_HIDE );
-	m_wndValueSpin.EnableWindow( FALSE );
-
-	m_wndFonts.ShowWindow( SW_HIDE );
-	m_wndFonts.EnableWindow( TRUE );
-
-	m_wndDefaultBtn.EnableWindow( FALSE );
-	
 	if ( nItem >= 0 )
 	{
 		const EditItem* pItem = (const EditItem*)m_wndList.GetItemData( nItem );
+
+		if ( ! ( pItem->m_pItem->m_pDword || ( pItem->m_pItem->m_pString && pItem->m_pItem->m_nType == CSettings::setString ) ) )
+		{
+			m_wndValue.ShowWindow( SW_HIDE );
+			m_wndValue.EnableWindow( FALSE );
+
+			m_wndValueSpin.ShowWindow( SW_HIDE );
+			m_wndValueSpin.EnableWindow( FALSE );
+		}
 		
+		if ( ! pItem->m_pItem->m_pBool )
+		{
+			m_wndBool.ShowWindow( SW_HIDE );
+			m_wndBool.EnableWindow( FALSE );
+		}
+
+		if ( ! ( pItem->m_pItem->m_pString && pItem->m_pItem->m_nType == CSettings::setFont ) )
+		{
+			m_wndFonts.ShowWindow( SW_HIDE );
+			m_wndFonts.EnableWindow( TRUE );
+		}
+
 		if ( pItem->m_pItem->m_pDword )
 		{
-			CString strValue;
-			strValue.Format( _T("%lu"), pItem->m_nValue / pItem->m_pItem->m_nScale );
+			CString strValueOld;
+			CString strValueNew;
+			strValueNew.Format( _T("%lu"), pItem->m_nValue / pItem->m_pItem->m_nScale );
 			m_wndValue.ShowWindow( SW_SHOW );
 			m_wndValue.EnableWindow( TRUE );
 			m_wndValueSpin.ShowWindow( SW_SHOW );
 			m_wndValueSpin.EnableWindow( TRUE );
 			pItem->m_pItem->SetRange( m_wndValueSpin );
-			m_wndValue.SetWindowText( strValue );
+			m_wndValue.GetWindowText( strValueOld );
+			if ( strValueNew != strValueOld )
+				m_wndValue.SetWindowText( strValueNew );
 		}
 		else if ( pItem->m_pItem->m_pBool )
 		{
@@ -268,10 +278,14 @@ void CAdvancedSettingsPage::UpdateInputArea()
 		}
 		else if ( pItem->m_pItem->m_pString && pItem->m_pItem->m_nType == CSettings::setString )
 		{
-			m_wndValue.SetWindowText( pItem->m_sValue );
+			CString strValueOld;
+			m_wndValue.GetWindowText( strValueOld );
+			if ( pItem->m_sValue != strValueOld )
+				m_wndValue.SetWindowText( pItem->m_sValue );
 			m_wndValue.ShowWindow( SW_SHOW );
 			m_wndValue.EnableWindow( TRUE );
-			m_wndValueSpin.ShowWindow( SW_SHOW );
+			m_wndValueSpin.ShowWindow( SW_HIDE );
+			m_wndValueSpin.EnableWindow( FALSE );
 		}
 		else if ( pItem->m_pItem->m_pString && pItem->m_pItem->m_nType == CSettings::setFont )
 		{
@@ -282,6 +296,8 @@ void CAdvancedSettingsPage::UpdateInputArea()
 
 		if ( ! pItem->IsDefault() )
 			m_wndDefaultBtn.EnableWindow( TRUE );
+		else
+			m_wndDefaultBtn.EnableWindow( FALSE );
 	}
 
 	m_bUpdating = false;
@@ -303,7 +319,8 @@ void CAdvancedSettingsPage::OnChangeValue()
 			m_wndValue.GetWindowText( strValue );
 			DWORD nValue;
 			if ( _stscanf( strValue, _T("%lu"), &nValue ) != 1 || nValue > pItem->m_pItem->m_nMax || nValue < pItem->m_pItem->m_nMin )
-				return;
+				if ( ! Settings.General.UnlimitedSettings )
+					return;
 			pItem->m_nValue = nValue * pItem->m_pItem->m_nScale;
 		}
 		else if ( pItem->m_pItem->m_pBool )

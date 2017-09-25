@@ -99,8 +99,8 @@ namespace augment
 			: ref_count_( 0 )
 		{
 #ifndef NDEBUG
-			ATLTRACE2( atlTraceCOM, 1, L"%s(%p)::ctor()\n", \
-				AfxGetIIDString( __uuidof( I0 ) ), this );
+			ATLTRACE2( atlTraceCOM, 1, "%s(%p)::ctor()\n", \
+				(LPCSTR)CT2A( AfxGetIIDString( __uuidof( I0 ) ) ), this );
 #endif
 		}
 		virtual ~IUnknownImplementation() {}
@@ -124,8 +124,8 @@ namespace augment
 		HRESULT __stdcall QueryInterface(const IID& iid, void** ppvObject)
 		{
 #ifndef NDEBUG
-			ATLTRACE2( atlTraceQI, 1, L"%s(%p)->QueryInterface(%s)\n", \
-				AfxGetIIDString( __uuidof( I0 ) ), this, AfxGetIIDString( iid ) );
+			ATLTRACE2( atlTraceQI, 1, "%s(%p)->QueryInterface(%s)\n", \
+				(LPCSTR)CT2A( AfxGetIIDString( __uuidof( I0 ) ) ), this, (LPCSTR)CT2A( AfxGetIIDString( iid ) ) );
 #endif
 			if ( !ppvObject )
 				return E_POINTER;
@@ -149,8 +149,8 @@ namespace augment
 		{
 			ULONG ref_count = ULONG( InterlockedIncrement( &ref_count_ ) );
 #ifndef NDEBUG
-			ATLTRACE2( atlTraceRefcount, 1, L"%s(%p)->AddRef - ref_count = %lu\n", \
-				AfxGetIIDString( __uuidof( I0 ) ), this, ref_count );
+			ATLTRACE2( atlTraceRefcount, 1, "%s(%p)->AddRef - ref_count = %lu\n", \
+				(LPCSTR)CT2A( AfxGetIIDString( __uuidof( I0 ) ) ), this, ref_count );
 #endif
 			return ref_count;
 		}
@@ -158,8 +158,8 @@ namespace augment
 		{
 			ULONG ref_count = ULONG( InterlockedDecrement( &ref_count_ ) );
 #ifndef NDEBUG
-			ATLTRACE2( atlTraceRefcount, 1, L"%s(%p)->Release - ref_count = %lu\n", \
-				AfxGetIIDString( __uuidof( I0 ) ), this, ref_count );
+			ATLTRACE2( atlTraceRefcount, 1, "%s(%p)->Release - ref_count = %lu\n", \
+				(LPCSTR)CT2A( AfxGetIIDString( __uuidof( I0 ) ) ), this, ref_count );
 #endif
 			if ( ref_count != 0 )
 				return ref_count;

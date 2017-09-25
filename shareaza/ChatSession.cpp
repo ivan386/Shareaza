@@ -298,7 +298,7 @@ BOOL CChatSession::OnConnected()
 			Write( _P("CHAT CONNECT/0.2\r\n") );
 
 		Write( _P("Accept: text/plain,application/x-gnutella2\r\n") );
-		
+
 		Write( _P("User-Agent: ") );
 		Write( Settings.SmartAgent() );
 		Write( _P("\r\n") );
@@ -813,7 +813,7 @@ BOOL CChatSession::OnChatMessage(CEDPacket* pPacket)
 BOOL CChatSession::OnCaptchaRequest(CEDPacket* pPacket)
 {
 	// Note: The message packet has already been validated by the EDClient.
-	
+
 	// Skip tags
 	for ( BYTE nCount = pPacket->ReadByte(); nCount && pPacket->GetRemaining(); --nCount )
 	{
@@ -1178,7 +1178,7 @@ BOOL CChatSession::OnChatAnswer(CG2Packet* pPacket)
 
 		case G2_PACKET_CHAT_AWAY:
 			MakeActive();
-			StatusMessage( cmtError, IDS_CHAT_PRIVATE_AWAY, (LPCTSTR)m_sNick, pPacket->ReadString( nLength ) );
+			StatusMessage( cmtError, IDS_CHAT_PRIVATE_AWAY, (LPCTSTR)m_sNick, (LPCTSTR)pPacket->ReadString( nLength ) );
 			break;
 		}
 		pPacket->m_nPosition = nOffset;

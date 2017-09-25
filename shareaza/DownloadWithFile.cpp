@@ -312,12 +312,12 @@ DWORD CDownloadWithFile::MoveFile(LPCTSTR pszDestination, LPPROGRESS_ROUTINE lpP
 		ret = ERROR_FILE_NOT_FOUND;
 
 	if ( ret == ERROR_SUCCESS )
-		theApp.Message( MSG_NOTICE, IDS_DOWNLOAD_MOVED, GetDisplayName(), pszDestination );
+		theApp.Message( MSG_NOTICE, IDS_DOWNLOAD_MOVED, (LPCTSTR)GetDisplayName(), pszDestination );
 	else
 	{
 		CString strMessage;
-		strMessage.Format( LoadString( IDS_DOWNLOAD_CANT_MOVE ), GetDisplayName(), pszDestination );
-		theApp.Message( MSG_ERROR | MSG_TRAY, _T("%s"), strMessage + _T(" ") + GetErrorString( ret ) );
+		strMessage.Format( LoadString( IDS_DOWNLOAD_CANT_MOVE ), (LPCTSTR)GetDisplayName(), pszDestination );
+		theApp.Message( MSG_ERROR | MSG_TRAY, _T("%s"), (LPCTSTR)( strMessage + _T(" ") + GetErrorString( ret ) ) );
 	}
 
 	ClearSources();

@@ -106,7 +106,7 @@ void CPrivateChatWnd::Setup(LPCTSTR szNick)
 
 	// Put a 'connecting' message in the window
 	CString strMessage;
-	strMessage.Format( LoadString( IDS_CHAT_CONNECTING_TO ), m_sNick );
+	strMessage.Format( LoadString( IDS_CHAT_CONNECTING_TO ), (LPCTSTR)m_sNick );
 	CChatWnd::OnStatusMessage( 0, strMessage );
 }
 

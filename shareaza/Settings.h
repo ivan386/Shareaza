@@ -75,6 +75,7 @@ public:
 		DWORD		LastSettingsIndex;			// Top item index of Advanced Settings list
 		bool		SearchPanelResults;			// Search Results Panel state (open or closed)
 		CString		AntiVirus;					// Anti-virus path or CLSID
+		bool		UnlimitedSettings;			// Disable min/max for settings
 	} General;
 
 	struct sVersionCheck

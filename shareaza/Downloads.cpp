@@ -1216,7 +1216,7 @@ CDownload* CDownloads::Load(const CString& strPath)
 		{
 			if ( ! Settings.BitTorrent.AutoSeed )
 			{
-				theApp.Message( MSG_NOTICE, IDS_DOWNLOAD_REMOVE, pDownload->m_sName );
+				theApp.Message( MSG_NOTICE, IDS_DOWNLOAD_REMOVE, (LPCTSTR)pDownload->m_sName );
 				DeleteFileEx( strPath, FALSE, TRUE, TRUE );
 				DeleteFileEx( strPath + _T(".sav"), FALSE, FALSE, TRUE );
 				DeleteFileEx( strPath + _T(".png"), FALSE, FALSE, TRUE );
@@ -1230,7 +1230,7 @@ CDownload* CDownloads::Load(const CString& strPath)
 	}
 	else
 	{
-		theApp.Message( MSG_ERROR, IDS_DOWNLOAD_REMOVE, ( pDownload->m_sName.IsEmpty() ? strPath : pDownload->m_sName ) );
+		theApp.Message( MSG_ERROR, IDS_DOWNLOAD_REMOVE, (LPCTSTR)( pDownload->m_sName.IsEmpty() ? strPath : pDownload->m_sName ) );
 		DeleteFileEx( strPath, FALSE, TRUE, TRUE );
 		DeleteFileEx( strPath + _T(".sav"), FALSE, FALSE, TRUE );
 		DeleteFileEx( strPath + _T(".png"), FALSE, FALSE, TRUE );

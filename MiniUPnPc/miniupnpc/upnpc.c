@@ -1,4 +1,4 @@
-/* $Id: upnpc.c,v 1.115 2016/10/07 09:04:01 nanard Exp $ */
+/* $Id: upnpc.c,v 1.116 2017/04/21 10:20:50 nanard Exp $ */
 /* Project : miniupnp
  * Author : Thomas Bernard
  * Copyright (c) 2005-2016 Thomas Bernard
@@ -292,9 +292,11 @@ static int SetRedirectAndTest(struct UPNPUrls * urls,
 		r = UPNP_AddPortMapping(urls->controlURL, data->first.servicetype,
 					eport, iport, iaddr, description,
 					proto, 0, leaseDuration);
-		if(r!=UPNPCOMMAND_SUCCESS)
+		if(r!=UPNPCOMMAND_SUCCESS) {
 			printf("AddPortMapping(%s, %s, %s) failed with code %d (%s)\n",
 			       eport, iport, iaddr, r, strupnperror(r));
+			return -2;
+	}
 	}
 
 	r = UPNP_GetSpecificPortMappingEntry(urls->controlURL,

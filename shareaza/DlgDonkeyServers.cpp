@@ -141,7 +141,7 @@ void CDonkeyServersDlg::OnTimer(UINT_PTR nIDEvent)
 		else
 		{
 			CString strError;
-			strError.Format( LoadString( IDS_DOWNLOAD_DROPPED ), m_sURL );
+			strError.Format( LoadString( IDS_DOWNLOAD_DROPPED ), (LPCTSTR)m_sURL );
 			AfxMessageBox( strError, MB_OK | MB_ICONEXCLAMATION );
 		}
 
