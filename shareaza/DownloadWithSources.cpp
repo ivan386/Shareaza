@@ -514,10 +514,15 @@ BOOL CDownloadWithSources::AddSourceURL(LPCTSTR pszURL, FILETIME* pLastSeen, int
 	if ( pURL.m_nAction != CShareazaURL::uriDownload &&
 		 pURL.m_nAction != CShareazaURL::uriSource )
 		return FALSE;	// Wrong URL type
-
-	if ( pURL.m_pAddress.s_addr != INADDR_ANY && pURL.m_pAddress.s_addr != INADDR_NONE )
+	
+	if ( pURL.m_pAddress.s_addr == 0x0100007f )
 	{
-		if ( Network.IsFirewalledAddress( &pURL.m_pAddress, TRUE ) ||
+		if ( Settings.Connection.IgnoreOwnIP )
+			return FALSE;
+	}
+	else if ( pURL.m_pAddress.s_addr != INADDR_ANY && pURL.m_pAddress.s_addr != INADDR_NONE )
+	{
+		if ( Network.IsFirewalledAddress( &pURL.m_pAddress, Settings.Connection.IgnoreOwnIP ) ||
 			 Network.IsReserved( &pURL.m_pAddress ) )
 			 return FALSE;	// Unreachable URL
 	}
