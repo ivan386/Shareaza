@@ -381,7 +381,7 @@ BOOL CShareazaApp::InitInstance()
 	tCompileTime.ParseDateTime( _T(__DATE__), LOCALE_NOUSEROVERRIDE, 1033 );
 	COleDateTime tCurrent = COleDateTime::GetCurrentTime();
 	COleDateTimeSpan tTimeOut( 7, 0, 0, 0);			// Daily builds
-	if ( ( tCompileTime + tTimeOut )  < tCurrent )
+	if ( ! m_cmdInfo.m_bNoAlphaWarning && ( tCompileTime + tTimeOut )  < tCurrent )
 	{
 		if ( MsgBox(
 			_T("This is a pre-release version of ") CLIENT_NAME_T _T(", and the beta testing period has ended.  ")
