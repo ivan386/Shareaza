@@ -357,8 +357,9 @@ void CDownloadTransfer::ChunkifyRequest(QWORD* pnOffset, QWORD* pnLength, DWORD 
 		if ( *pnLength % nChunk ) nCount++;
 
 		QWORD nNonRandomEnd = this->m_pDownload->GetNonRandomEnd();
+
 		if (*pnOffset >= nNonRandomEnd)
-		nCount = GetRandomNum( 0ui64, nCount - 1 );
+			nCount = GetRandomNum( 0ui64, nCount - 1 );
 		else
 			nCount = 0;
 
@@ -408,6 +409,7 @@ blockPair CDownloadTransfer::SelectBlock(const Fragments::List& oPossible, const
 		return std::make_pair( pItr->begin(), pItr->end() - pItr->begin() );
 
 	QWORD nNonRandomEnd = this->m_pDownload->GetNonRandomEnd();
+	QWORD nStartFrom = this->m_pDownload->m_nStartFrom;
 	
 	std::vector< QWORD > oBlocks;
 	QWORD nRangeBlock = 0ull;
@@ -420,14 +422,15 @@ blockPair CDownloadTransfer::SelectBlock(const Fragments::List& oPossible, const
 		QWORD nBlockBegin = nPart[0] / nBlockSize;
 		QWORD nBlockEnd = ( pItr->end() - 1ull ) / nBlockSize;
 
-		if ( pItr->begin() < nNonRandomEnd )
+		if ( pItr->begin() < nNonRandomEnd && pItr->end() > nStartFrom )
 		{
 			QWORD nBlock = nBlockBegin;
 			for (; nBlock <= nBlockEnd && ( ( nBlock * nBlockSize ) < nNonRandomEnd ); ++nBlock)
 			{
-				if ( pAvailable.empty() || pAvailable[ nBlockBegin ] )
+				QWORD nPos = max( pItr->begin(), nBlockSize * nBlock );
+
+				if ( nPos >= nStartFrom && ( pAvailable.empty() || pAvailable[ nBlockBegin ] ) )
 				{
-					QWORD nPos = max( pItr->begin(), nBlockSize * nBlock );
 					QWORD nLength = min( pItr->end(), nBlockSize * ( nBlock + 1ull ) );
 					nLength -=  nPos;
 					return std::make_pair( nPos , nLength );

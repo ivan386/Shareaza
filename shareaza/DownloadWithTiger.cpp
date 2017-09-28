@@ -1094,10 +1094,30 @@ BOOL CDownloadWithTiger::GetFragment(CDownloadTransfer* pTransfer)
 					return TRUE;
 				}
 			}
-			
-			if ( pRange->begin() > pDownload->GetNonRandomEnd() )
-				pRange = oPossible.random_range();
 
+			QWORD nNonRandomEnd = pDownload->GetNonRandomEnd();
+
+			if ( nNonRandomEnd )
+			{
+				Fragments::List::const_iterator pItr = oPossible.begin();
+				const Fragments::List::const_iterator pEnd = oPossible.end();
+			
+				for ( ; pItr != pEnd ; ++pItr )
+				{
+					if ( pItr->begin() >= nNonRandomEnd )
+						break;
+
+					if ( pItr->end() > pDownload->m_nStartFrom )
+					{
+						pTransfer->m_nOffset = max( pItr->begin() , pDownload->m_nStartFrom );
+						pTransfer->m_nLength = min( pItr->end() , nNonRandomEnd ) - pTransfer->m_nOffset;
+						pTransfer->m_bWantBackwards	= FALSE;
+						return TRUE;
+					}
+				}
+			}
+
+			pRange = oPossible.random_range();
 		}
 		else if( pRange->begin() > nChunkSize )
 			pRange = oPossible.random_range();

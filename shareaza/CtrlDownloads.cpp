@@ -1109,7 +1109,7 @@ void CDownloadsCtrl::PaintDownload(CDC& dc, const CRect& rcRow, CDownload* pDown
 
 				
 
-				QWORD NonRandomEnd = pDownload->GetNonRandomEnd();
+				QWORD NonRandomEnd = pDownload->GetNonRandomEnd( TRUE );
 
 				if ( NonRandomEnd > 0 && pDownload->m_nSize > 0)
 				{
@@ -1119,12 +1119,34 @@ void CDownloadsCtrl::PaintDownload(CDC& dc, const CRect& rcRow, CDownload* pDown
 						rect.left += rect.Width() - 3;
 					else
 						rect.left += ((rect.Width() - 3) * NonRandomEnd) / pDownload->m_nSize;
+					
 					rect.right = rect.left + 3;
 					rect.InflateRect(0, 2);
 					dc.FillSolidRect(&rect, crBorder);
 				}
 
-					rcCell.DeflateRect( 1, 1 );
+				if ( pDownload->m_nStartFrom > 0 && pDownload->m_nSize > 0 )
+				{
+					CRect rect(rcCell);
+
+					if ( pDownload->m_nStartFrom > pDownload->m_nSize )
+						rect.left += rect.Width() - 3;
+					else
+						rect.left += ((rect.Width() - 3) * pDownload->m_nStartFrom) / pDownload->m_nSize;
+
+					rect.right = rect.left + 3;
+					rect.InflateRect(0, 2);
+					dc.FillSolidRect(&rect, crBorder);
+				}
+				else
+				{
+					CRect rect(rcCell);
+					rect.right = rect.left + 3;
+					rect.InflateRect(0, 2);
+					dc.FillSolidRect(&rect, crBorder);
+				}
+
+				rcCell.DeflateRect( 1, 1 );
 
 				if ( Settings.Downloads.SimpleBar )
 					CFragmentBar::DrawDownloadSimple( &dc, &rcCell, pDownload, crNatural );
@@ -1900,6 +1922,15 @@ void CDownloadsCtrl::OnLButtonDown(UINT nFlags, CPoint point)
 		}
 		else
 		{
+			if ( pDownload != NULL && ( nFlags & ( MK_SHIFT | MK_CONTROL | MK_RBUTTON ) ) == 0 )
+			{
+				CRect rcCell;
+
+				m_wndHeader.GetItemRect( DOWNLOAD_COLUMN_PROGRESS, &rcCell );
+				if ( point.x >= rcCell.left + rcItem.left && point.x <= rcCell.right + rcItem.left - 3 )
+					pDownload->SetStartFrom( pDownload->m_nSize * ( point.x - ( rcCell.left + rcItem.left ) )  / ( rcCell.Width() - 3 ) );
+			}
+
 			if ( pDownload != NULL && pDownload->m_bSelected )
 			{
 				if ( ( nFlags & ( MK_SHIFT | MK_CONTROL | MK_RBUTTON ) ) == 0 )

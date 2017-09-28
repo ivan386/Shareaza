@@ -290,8 +290,11 @@ void CDownload::StartTrying()
 
 	m_tBegan = GetTickCount();
 	m_nCompletedAtBegan = GetVolumeComplete();
+
 	if ( ! GetEmptyFragmentList().empty() )
-		m_nStartFrom = GetEmptyFragmentList().begin()->begin();
+		SetStartFrom( GetEmptyFragmentList().begin()->begin() );
+	else
+		SetStartFrom();
 }
 
 QWORD CDownload::GetRealSpeed()
@@ -302,15 +305,23 @@ QWORD CDownload::GetRealSpeed()
 	return 0;
 }
 
-QWORD CDownload::GetNonRandomEnd()
+void CDownload::SetStartFrom(QWORD nStartFrom)
+{
+	m_nStartFrom = nStartFrom;
+	m_tStartFromSet = GetTickCount();
+}
+
+QWORD CDownload::GetNonRandomEnd(bool bForce)
 {
 	if ( m_nBitrate < 8 )
 		return 0;
 
 	QWORD nByterate = ( m_nBitrate / 8 );
 
-	if ( Settings.Downloads.MediaBuffer && m_tBegan > 0 && ( GetRealSpeed() > nByterate || GetAverageSpeed() > nByterate ))
-		return m_nStartFrom + ( ( ( GetTickCount() - m_tBegan + Settings.Downloads.MediaBuffer ) / 1000 ) * nByterate );
+	if ( Settings.Downloads.MediaBuffer && m_tStartFromSet > 0 &&
+		( GetRealSpeed() > nByterate || GetAverageSpeed() > nByterate || bForce ) )
+		return m_nStartFrom + ( ( ( GetTickCount() - m_tStartFromSet + Settings.Downloads.MediaBuffer ) / 1000 ) * nByterate );
+
 	return 0;
 }
 
