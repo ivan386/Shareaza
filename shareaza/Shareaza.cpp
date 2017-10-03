@@ -299,7 +299,7 @@ CShareazaApp::CShareazaApp()
 	ZeroMemory( m_pBTVersion, sizeof( m_pBTVersion ) );
 
 // BugTrap http://www.intellesoft.net/
-	BT_SetAppName( CLIENT_NAME_T );
+	BT_SetAppName( MOD_CLIENT_NAME_T );
 	BT_SetFlags( BTF_INTERCEPTSUEF | BTF_SHOWADVANCEDUI | BTF_DESCRIBEERROR | BTF_DETAILEDMODE | BTF_ATTACHREPORT | BTF_EDITMAIL );
 	BT_SetExitMode( BTEM_CONTINUESEARCH );
 	BT_SetDumpType( 0x00001851 /* MiniDumpWithDataSegs | MiniDumpScanMemory | MiniDumpWithIndirectlyReferencedMemory | MiniDumpWithFullMemoryInfo | MiniDumpWithThreadInfo */ );
@@ -384,7 +384,7 @@ BOOL CShareazaApp::InitInstance()
 	if ( ! m_cmdInfo.m_bNoAlphaWarning && ( tCompileTime + tTimeOut )  < tCurrent )
 	{
 		if ( MsgBox(
-			_T("This is a pre-release version of ") CLIENT_NAME_T _T(", and the beta testing period has ended.  ")
+			_T("This is a pre-release version of ") MOD_CLIENT_NAME_T _T(", and the beta testing period has ended.  ")
 			_T("Please download the full, official release from ") WEB_SITE_T _T("."), MB_ICONQUESTION|MB_OK, 0, NULL, 30 ) != IDOK )
 			return FALSE;
 	}
@@ -393,7 +393,7 @@ BOOL CShareazaApp::InitInstance()
 	if ( ! m_cmdInfo.m_bNoAlphaWarning && m_cmdInfo.m_bShowSplash )
 	{
 		if ( MsgBox(
-			_T("WARNING: This is an ALPHA TEST version of ") CLIENT_NAME_T _T(".\n\n")
+			_T("WARNING: This is an ALPHA TEST version of ") MOD_CLIENT_NAME_T _T(".\n\n")
 			_T("It is NOT FOR GENERAL USE, and is only for testing specific features in a controlled ")
 			_T("environment. It will frequently stop running, or display debug information to assist testing.\n\n")
 			_T("If you wish to actually use this software, you should download ")
@@ -1085,7 +1085,7 @@ void CShareazaApp::InitResources()
 
 	BT_SetAppVersion( m_sVersionLong );
 
-	m_sSmartAgent = CLIENT_NAME_T;
+	m_sSmartAgent = MOD_CLIENT_NAME_T;
 	m_sSmartAgent += _T(" ");
 	m_sSmartAgent += m_sVersion;
 

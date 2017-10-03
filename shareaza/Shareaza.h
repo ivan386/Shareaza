@@ -421,6 +421,8 @@ __int64 GetRandomNum<__int64>(const __int64& min, const __int64& max);
 #define CLIENT_NAME			"Shareaza"
 #define CLIENT_NAME_T		_T( CLIENT_NAME )
 
+#define MOD_CLIENT_NAME_T	_T("i") CLIENT_NAME_T
+
 // Client's main window class name
 #define CLIENT_HWND			CLIENT_NAME_T _T("MainWnd")
 
@@ -431,16 +433,16 @@ __int64 GetRandomNum<__int64>(const __int64& min, const __int64& max);
 
 // 4 Character vendor code (used on G1, G2)
 // BEAR, LIME, RAZA, RAZB, etc
-#define VENDOR_CODE			"RAZA"
+#define VENDOR_CODE			"RAZI"
 
 // ed2k client ID number.
 // 0 = eMule, 1 = cDonkey, 4 = old Shareaza alpha/beta/mod/fork, 0x28 (40) = Shareaza, 0xcb (203) = ShareazaPlus with RazaCB core, etc
-#define ED2K_CLIENT_ID		40
+#define ED2K_CLIENT_ID		41
 
 // 2 Character BT peer-id code
 // SZ = Shareaza, S~ = old Shareaza alpha/beta , CB = ShareazaPlus with RazaCB core, AZ = Azureus, etc
-#define BT_ID1				'S'
-#define BT_ID2				'Z'
+#define BT_ID1				'i'
+#define BT_ID2				'S'
 
 #define WEB_SITE			"http://ivan386.github.io/"
 #define WEB_SITE_T			_T( WEB_SITE )
