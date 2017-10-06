@@ -211,6 +211,7 @@ public:
 	BOOL		IsValidAddressFor(const IN_ADDR* pForAddress, const IN_ADDR* pAddress) const;
 	BOOL		IsHomeNetwork(const IN_ADDR* pAddress) const;
 	BOOL		IsLocalAreaNetwork(const IN_ADDR* pAddress) const;
+	int			GetNetworkLevel(const IN_ADDR* pAddress) const;
 	IN_ADDR		GetMyAddressFor(const IN_ADDR* pAddress) const;
 	WORD		GetPort() const;
 

@@ -465,33 +465,49 @@ BOOL CNetwork::AcquireLocalAddress(LPCTSTR pszHeader, WORD nPort, const IN_ADDR*
 BOOL CNetwork::AcquireLocalAddress(const IN_ADDR& pAddress, WORD nPort, const IN_ADDR* pFromAddress)
 {
 	if ( nPort )
-	{
 		m_pHost.sin_port = htons( nPort );
-	}
 
 	if ( pAddress.s_addr == INADDR_ANY ||
 		 pAddress.s_addr == INADDR_NONE )
 		return FALSE;
 
-	if ( pFromAddress != NULL && ! IsValidAddressFor( pFromAddress, &pAddress ) )
+	if ( IsReserved( &pAddress ) )
 		return FALSE;
 
-	if ( IsLocalAreaNetwork( &pAddress ) && ! IsHomeNetwork( &pAddress ) )
-		m_bHomeNetworkNAT = TRUE;
-
-	CQuickLock oHALock( m_pHASection );
-
-	// Add new address to address list
-	if ( ! m_pHostAddresses.Find( pAddress.s_addr ) )
-		m_pHostAddresses.AddTail( pAddress.s_addr );
-
-	if ( IsFirewalledAddress( &pAddress ) )
-		return FALSE;
-
-	// Allow real IP only
 	if ( m_pHost.sin_addr.s_addr != pAddress.s_addr )
 	{
-		m_pHost.sin_addr.s_addr = pAddress.s_addr;
+		if ( pFromAddress != NULL && ! IsValidAddressFor( pFromAddress, &pAddress ) )
+			return FALSE;
+
+		int nNet = GetNetworkLevel( &pAddress );
+
+		if ( nNet == 1 ) // local area network
+			m_bHomeNetworkNAT = TRUE;
+
+		if ( nNet >= 3 ) // loopback or reserved
+			return FALSE;
+
+
+		CQuickLock oHALock( m_pHASection );
+
+		// Add new address to address list
+		if ( ! m_pHostAddresses.Find( pAddress.s_addr ) )
+			m_pHostAddresses.AddTail( pAddress.s_addr );
+
+		if ( IsFirewalledAddress( &pAddress ) )
+			return FALSE;
+
+		// Allow real IP only
+
+		int nMyNet = GetNetworkLevel( &m_pHost.sin_addr );
+
+		if ( nMyNet >= nNet )
+		{
+			if ( ! m_pHostAddresses.Find( m_pHost.sin_addr.s_addr ) )
+				m_pHostAddresses.AddTail( m_pHost.sin_addr.s_addr );
+
+			m_pHost.sin_addr.s_addr = pAddress.s_addr;
+		}
 	}
 
 	return TRUE;
@@ -656,6 +672,23 @@ BOOL CNetwork::IsValidAddressFor(const IN_ADDR* pForAddress, const IN_ADDR* pAdd
 	return TRUE;
 }
 
+int CNetwork::GetNetworkLevel( const IN_ADDR* pAddress ) const
+{
+	if ( pAddress->s_net == 127 ) 
+		return 3; // loopback
+
+	if ( IsReserved( pAddress ) )
+		return 4; // reserved
+
+	if ( IsHomeNetwork( pAddress ) )
+		return 2; // home network
+
+	if ( IsLocalAreaNetwork( pAddress ) )
+		return 1; // local area network
+
+	return 0; // internet
+}
+
 IN_ADDR CNetwork::GetMyAddressFor( const IN_ADDR* pAddress ) const
 {
 	IN_ADDR nMyHomeAddress = { 0 };
@@ -663,87 +696,83 @@ IN_ADDR CNetwork::GetMyAddressFor( const IN_ADDR* pAddress ) const
 	IN_ADDR nMyInternetAddress = { 0 };
 
 
-	int nNet = 0; // Internet (default)
+	int nNet = GetNetworkLevel( pAddress );
 
-	if ( pAddress->s_net == 127 )
+	if ( nNet <= 1 && IsSelfIP( *pAddress ) )
+		nNet++;
+
+	if ( nNet == 3 ) // loopback
 	{
 		IN_ADDR nMyAddress = { 0 };
 		nMyAddress.S_un.S_addr = 0x0100007f; // 127.0.0.1 (loopback)
 		return nMyAddress;
 	}
-	
-	if ( IsHomeNetwork( pAddress ) )
-		nNet = 1;
-	else if ( IsLocalAreaNetwork( pAddress ) ||
-			  IsSelfIP( *pAddress ) ) // Same internet provider
-		nNet = 2;
 
-	if ( IsHomeNetwork( &m_pHost.sin_addr ) )
+	switch ( GetNetworkLevel( &m_pHost.sin_addr ) )
 	{
-		if ( nNet == 1 ) // For home network host
+	case 2:
+		if ( nNet == 2 ) // For home network host
 			return m_pHost.sin_addr; // Our home address
 		else
 			nMyHomeAddress = m_pHost.sin_addr;
-	}
-	else if ( IsLocalAreaNetwork( &m_pHost.sin_addr ) )
-	{
-		if ( nNet == 2 ) // For Local Area Network host
+	break;
+	case 1:
+		if ( nNet == 1 ) // For Local Area Network host
 			return m_pHost.sin_addr; // Our LAN address
 		else
 			nMyLanAddress = m_pHost.sin_addr;
-	}
-	else if ( ! IsReserved( &m_pHost.sin_addr ) )
-	{
+	break;
+	case 0:
 		if ( nNet == 0 ) // For internet host
 			return m_pHost.sin_addr; // Our internet address
 		else
 			nMyInternetAddress = m_pHost.sin_addr;
+	break;
 	}
+	
 
 	for ( POSITION pos = m_pHostAddresses.GetHeadPosition(); pos; )
 	{
 		
 		IN_ADDR nMyAddress = { 0 };
-		nMyAddress.S_un.S_addr = m_pHostAddresses.GetNext( pos );
+		nMyAddress.s_addr = m_pHostAddresses.GetNext( pos );
 		
-		if ( IsHomeNetwork( &nMyAddress ) )
-		{
-			if ( nNet == 1 ) // For home host
-				return nMyAddress; // We found our home address
-			else if ( ! nMyHomeAddress.S_un.S_addr )
-				nMyHomeAddress = m_pHost.sin_addr;
-		}
-		else if ( IsLocalAreaNetwork( &nMyAddress ) )
-		{
-			if ( nNet == 2 ) // For Local Area Network host
-				return nMyAddress; // We found our LAN address
-			else if ( ! nMyLanAddress.S_un.S_addr )
-				nMyLanAddress = nMyAddress;
-		}
-		else if ( ! IsReserved( &nMyAddress ) )
-		{
-			if ( nNet == 0 ) // For internet host
-				return nMyAddress; // We found our internet address
-			else if ( ! nMyInternetAddress.S_un.S_addr )
-				nMyInternetAddress = nMyAddress;
-		}
+		if ( m_pHost.sin_addr.s_addr == nMyAddress.s_addr )
+			continue;
 
+		switch ( GetNetworkLevel( &nMyAddress ) )
+		{
+		case 2:
+			if ( nNet == 2 ) // For home network host
+				return nMyAddress; // Our home address
+			else
+				nMyHomeAddress = nMyAddress;
+		break;
+		case 1:
+			if ( nNet == 1 ) // For Local Area Network host
+				return nMyAddress; // Our LAN address
+			else
+				nMyLanAddress = nMyAddress;
+		break;
+		case 0:
+			if ( nNet == 0 ) // For internet host
+				return nMyAddress; // Our internet address
+			else
+				nMyInternetAddress = nMyAddress;
+		break;
+		}
 	}
 
-	if ( nNet == 1 && // For home host
+	if ( nNet == 2 && // For home host
 		 nMyLanAddress.S_un.S_addr ) // It can not be that we do not know our home address, but we know the LAN address.
 		return nMyLanAddress;
 	
-	if ( nNet == 2 &&  // For Local Area Network host
+	if ( nNet == 1 &&  // For Local Area Network host
 		 nMyHomeAddress.S_un.S_addr ) // Perhaps we are connected to a local network without a home router.
 		return nMyHomeAddress;
 	
-	if ( nMyInternetAddress.S_un.S_addr ) // By default we give our internet address.
-		return nMyInternetAddress;
-	
-	IN_ADDR nMyAddress = { 0 };
-	nMyAddress.S_un.S_addr = 0;
-	return nMyAddress;
+	// By default we give our internet address or zero net.
+	return nMyInternetAddress;
 }
 
 BOOL CNetwork::IsHomeNetwork(const IN_ADDR* pAddress) const
