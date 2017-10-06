@@ -2790,7 +2790,7 @@ CString LoadRichHTML(UINT nResourceID, CString& strResponse, CShareazaFile* pFil
 		strReplace.TrimRight();
 
 		if ( strReplace.CompareNoCase( _T("Client") ) == 0 )
-			strReplace = CLIENT_NAME_T;
+			strReplace = MOD_CLIENT_NAME_T;
 		else if ( strReplace.CompareNoCase( _T("SmartAgent") ) == 0 )
 			strReplace = theApp.m_sSmartAgent;
 		else if ( strReplace.CompareNoCase( _T("Name") ) == 0 )
@@ -3454,7 +3454,7 @@ CProgressDialog::CProgressDialog(LPCTSTR szTitle, DWORD dwFlags)
 {
 	if ( SUCCEEDED( CoCreateInstance( CLSID_ProgressDialog ) ) )
 	{
-		p->SetTitle( CLIENT_NAME_T );
+		p->SetTitle( MOD_CLIENT_NAME_T );
 		p->SetLine( 1, szTitle, FALSE, NULL );
 		p->StartProgressDialog( theApp.SafeMainWnd() ? theApp.SafeMainWnd()->GetSafeHwnd() : GetDesktopWindow(), NULL, dwFlags, NULL );
 	}
