@@ -612,7 +612,7 @@
 					<item id="ID_VIEW_SECURITY" text="Se_curity" shortcut="F7"/>
 					<item id="ID_VIEW_HOSTS" text="H_ost Cache" shortcut="F8"/>
 					<item id="ID_VIEW_DISCOVERY" text="Disco_very" shortcut="F9"/>
-					<item id="ID_VIEW_TRAFFIC" text="_Graph" shortcut="F10"/>
+					<item id="ID_VIEW_TRAFFIC" text="_Graph" shortcut="Ctrl+F10"/>
 					<item id="ID_VIEW_SCHEDULER" text="Sch_eduler" shortcut="Ctrl+Shift+F11"/>
 					<separator/>
 					<item id="ID_VIEW_PACKETS" text="_Packet Dump" shortcut="Ctrl+F1"/>
@@ -708,7 +708,7 @@
 				<item id="ID_VIEW_SECURITY" text="Se_curity" shortcut="F7"/>
 				<item id="ID_VIEW_HOSTS" text="H_ost Cache" shortcut="F8"/>
 				<item id="ID_VIEW_DISCOVERY" text="Disco_very" shortcut="F9"/>
-				<item id="ID_VIEW_TRAFFIC" text="_Graph" shortcut="F10"/>
+				<item id="ID_VIEW_TRAFFIC" text="_Graph" shortcut="Ctrl+F10"/>
 				<item id="ID_VIEW_SCHEDULER" text="Sch_eduler" shortcut="Ctrl+Shift+F11"/>
 				<separator/>
 				<item id="ID_VIEW_PACKETS" text="_Packet Dump" shortcut="Ctrl+F1"/>

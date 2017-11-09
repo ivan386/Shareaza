@@ -602,6 +602,12 @@ BOOL CSecurity::IsDenied(const CShareazaFile* pFile)
 	return m_bDenyPolicy;
 }
 
+BOOL CSecurity::IsIgnoredCountry(const CString& strCountry)
+{
+	if (strCountry.IsEmpty()) return FALSE;
+	return Settings.Connection.IgnoredCountry.find( strCountry ) != Settings.Connection.IgnoredCountry.end();
+}
+
 BOOL CSecurity::IsDenied(const CQuerySearch* pQuery, const CString& strContent)
 {
 	CQuickLock oLock( m_pSection );

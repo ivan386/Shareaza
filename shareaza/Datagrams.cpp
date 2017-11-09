@@ -174,6 +174,26 @@ BOOL CDatagrams::Listen()
 
 	WSAEventSelect( m_hSocket[ 0 ], Network.GetWakeupEvent(), FD_READ );
 
+	if ( Settings.Connection.EnableBroadcast && saHost.sin_port != htons( protocolPorts[ PROTOCOL_G2 ] ) )
+	{
+		SOCKADDR_IN saBcastHost = { 0 };
+		saBcastHost.sin_family = AF_INET;
+		saBcastHost.sin_addr.s_addr = INADDR_ANY;
+		saBcastHost.sin_port = htons( protocolPorts[ PROTOCOL_G2 ] );
+		m_hSocket[ 1 ] = socket( PF_INET, SOCK_DGRAM, IPPROTO_UDP );
+		if ( m_hSocket[ 1 ] != INVALID_SOCKET )
+		{
+			if ( setsockopt( m_hSocket[ 1 ], SOL_SOCKET, SO_BROADCAST, (const char*)&bBoradcast, sizeof( bBoradcast ) ) == 0 &&
+				 bind( m_hSocket[ 1 ], (SOCKADDR*)&saBcastHost, sizeof( saBcastHost ) ) == 0 )
+			{
+				theApp.Message( MSG_INFO, IDS_NETWORK_LISTENING_UDP, (LPCTSTR)CString( inet_ntoa( saBcastHost.sin_addr ) ), htons( saBcastHost.sin_port ) );
+				WSAEventSelect( m_hSocket[ 1 ], Network.GetWakeupEvent(), FD_READ );
+			}
+			else
+				CNetwork::CloseSocket( m_hSocket[ 1 ], false );
+		}
+	}
+
 	if ( Settings.Connection.EnableMulticast )
 	{
 		const DWORD bReuse = TRUE;
@@ -185,23 +205,23 @@ BOOL CDatagrams::Listen()
 
 		if ( Settings.eDonkey.EnableToday )
 		{
-			mr[ 1 ].imr_multiaddr.s_addr = inet_addr( DEFAULT_ED2K_MCAST_ADDRESS );
-			nPorts[ 1 ] = htons( DEFAULT_ED2K_MCAST_PORT );
+			mr[ 2 ].imr_multiaddr.s_addr = inet_addr( DEFAULT_ED2K_MCAST_ADDRESS );
+			nPorts[ 2 ] = htons( DEFAULT_ED2K_MCAST_PORT );
 		}
 
 		if ( Settings.Gnutella1.EnableToday )
 		{
-			mr[ 2 ].imr_multiaddr.s_addr = inet_addr( DEFAULT_G1_MCAST_ADDRESS );
-			nPorts[ 2 ] = htons( DEFAULT_G1_MCAST_PORT );
+			mr[ 3 ].imr_multiaddr.s_addr = inet_addr( DEFAULT_G1_MCAST_ADDRESS );
+			nPorts[ 3 ] = htons( DEFAULT_G1_MCAST_PORT );
 		}
 
 		if ( Settings.BitTorrent.EnableToday )
 		{
-			mr[ 3 ].imr_multiaddr.s_addr = inet_addr( DEFAULT_BT_MCAST_ADDRESS );
-			nPorts[ 3 ] = htons( DEFAULT_BT_MCAST_PORT );
+			mr[ 4 ].imr_multiaddr.s_addr = inet_addr( DEFAULT_BT_MCAST_ADDRESS );
+			nPorts[ 4 ] = htons( DEFAULT_BT_MCAST_PORT );
 		}
 
-		for ( int i = 1; i < _countof( m_hSocket ); ++i )
+		for ( int i = 2; i < _countof( m_hSocket ); ++i )
 		{
 			if ( nPorts[ i ] )
 			{
@@ -217,6 +237,11 @@ BOOL CDatagrams::Listen()
 					if ( m_hSocket[ i ] != INVALID_SOCKET )
 					{
 						VERIFY( setsockopt( m_hSocket[ i ], SOL_SOCKET, SO_REUSEADDR, (const char*)&bReuse, sizeof( bReuse ) ) == 0 );
+						
+						if ( Settings.Connection.EnableBroadcast )
+						{
+							VERIFY( setsockopt( m_hSocket[ i ], SOL_SOCKET, SO_BROADCAST, (const char*)&bBoradcast, sizeof( bBoradcast ) ) == 0 );
+						}
 
 						SOCKADDR_IN saMcastHost = {};
 						saMcastHost.sin_family = AF_INET;

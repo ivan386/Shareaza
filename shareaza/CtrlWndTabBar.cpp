@@ -849,6 +849,10 @@ void CWndTabBar::TabItem::Paint(CWndTabBar* pBar, CDC* pDC, CRect* pRect, BOOL b
 
 	if ( pDC->GetTextExtent( strText ).cx > rc.Width() )
 	{
+		int nSplit =strText.Find( _T(":") );
+		if ( nSplit > 0)
+			strText = strText.Mid(nSplit);
+
 		while ( pDC->GetTextExtent( strText + _T('\x2026') ).cx > rc.Width() && strText.GetLength() )
 		{
 			strText = strText.Left( strText.GetLength() - 1 );

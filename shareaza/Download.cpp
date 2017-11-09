@@ -66,6 +66,8 @@ CDownload::CDownload() :
 ,	m_tSaved		( 0 )
 ,	m_tBegan		( 0 )
 ,	m_bDownloading	( false )
+,	m_nCompletedAtBegan ( 0 )
+,	m_nStartFrom	( 0 )
 #pragma warning(suppress:4355) // 'this' : used in base member initializer list
 ,	m_pTask			( this )
 ,	m_bStableName	( false )
@@ -287,6 +289,40 @@ void CDownload::StartTrying()
 		return;
 
 	m_tBegan = GetTickCount();
+	m_nCompletedAtBegan = GetVolumeComplete();
+
+	if ( ! GetEmptyFragmentList().empty() )
+		SetStartFrom( GetEmptyFragmentList().begin()->begin() );
+	else
+		SetStartFrom();
+}
+
+QWORD CDownload::GetRealSpeed()
+{
+	DWORD tTime = GetTickCount() - m_tBegan;
+	if ( tTime > 0 )
+		return ( GetVolumeComplete() - m_nCompletedAtBegan ) * 1000 / tTime;
+	return 0;
+}
+
+void CDownload::SetStartFrom(QWORD nStartFrom)
+{
+	m_nStartFrom = nStartFrom;
+	m_tStartFromSet = GetTickCount();
+}
+
+QWORD CDownload::GetNonRandomEnd(bool bForce)
+{
+	if ( m_nBitrate < 8 )
+		return 0;
+
+	QWORD nByterate = ( m_nBitrate / 8 );
+
+	if ( Settings.Downloads.MediaBuffer && m_tStartFromSet > 0 &&
+		( GetRealSpeed() > nByterate || GetAverageSpeed() > nByterate || bForce ) )
+		return m_nStartFrom + ( ( ( GetTickCount() - m_tStartFromSet + Settings.Downloads.MediaBuffer ) / 1000 ) * nByterate );
+
+	return 0;
 }
 
 //////////////////////////////////////////////////////////////////////
@@ -585,7 +621,7 @@ void CDownload::OnRun()
 
 void CDownload::OnDownloaded()
 {
-	ASSERT( m_bComplete == false );
+//	ASSERT( m_bComplete == false );
 
 	theApp.Message( MSG_NOTICE, IDS_DOWNLOAD_COMPLETED, (LPCTSTR)GetDisplayName() );
 

@@ -44,6 +44,7 @@
 #define IDC_TORRENT_SEED                1030
 #define IDC_CHECK_ED2K                  1031
 #define IDC_CHECK_MD5                   1032
+#define IDC_CHECK_TTH                   1035
 #define IDC_PRIVATE                     1033
 #define IDC_SOURCE                      1034
 #define IDS_WELCOME_NEED_TYPE           8000

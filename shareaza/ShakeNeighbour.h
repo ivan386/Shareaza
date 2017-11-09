@@ -108,6 +108,7 @@ protected:
 	// Possibly not in use (do)
 	TRISTATE m_bUltraPeerLoaded;
 	UINT	m_bDelayClose;			// This is DelayClose reason
+	QWORD	m_nHereIsTheBug;		// bypass
 	CString	m_sTryUltrapeers;		// Storage of X-Try-Ultrapeers Header
 	CString	m_sTryHubs;				// Storage of X-Try-Hubs Header
 	CString	m_sTryDNAHubs;			// Storage of X-Try-DNA-Hubs Header

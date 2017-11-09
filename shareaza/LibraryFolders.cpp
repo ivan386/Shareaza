@@ -806,17 +806,17 @@ void CLibraryFolders::Serialize(CArchive& ar, int nVersion)
 void CLibraryFolders::Maintain()
 {
 	CQuickLock oLock( Library.m_pSection );
-
+/*/
 	CComPtr< IShellLibrary > pIShellLib;
 	if ( theApp.m_bIs7OrNewer && Settings.Library.UseWindowsLibrary )
 		pIShellLib.CoCreateInstance( CLSID_ShellLibrary );
-
+//*/
 	for ( POSITION pos = GetFolderIterator() ; pos ; )
 	{
 		CLibraryFolder* pFolder = GetNextFolder( pos );
 
 		pFolder->Maintain( TRUE );
-
+/*/
 		if ( pIShellLib && theApp.m_pfnSHCreateItemFromParsingName )
 		{
 			CComPtr< IShellItem > psiFolder;
@@ -824,8 +824,9 @@ void CLibraryFolders::Maintain()
 			if ( psiFolder )
 				pIShellLib->AddFolder( psiFolder );
 		}
+//*/
 	}
-
+/*/
 	if ( pIShellLib )
 	{
 		pIShellLib->SetIcon( (LPCWSTR)CT2W( Skin.GetImagePath( IDR_LIBRARYFRAME ) ) );
@@ -833,6 +834,7 @@ void CLibraryFolders::Maintain()
 		CComPtr< IShellItem > psiLibrary;
 		pIShellLib->SaveInKnownFolder( FOLDERID_UsersLibraries, CLIENT_NAME_T, LSF_OVERRIDEEXISTING, &psiLibrary );
 	}
+//*/
 }
 
 //////////////////////////////////////////////////////////////////////

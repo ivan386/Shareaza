@@ -189,7 +189,7 @@ BOOL CKademlia::OnPacket(const SOCKADDR_IN* pHost, CEDPacket* pPacket)
 	return FALSE;
 }
 
-BOOL CKademlia::OnPacket_KADEMLIA_BOOTSTRAP_RES(const SOCKADDR_IN* /*pHost*/, CEDPacket* pPacket)
+BOOL CKademlia::OnPacket_KADEMLIA_BOOTSTRAP_RES(const SOCKADDR_IN* pHost, CEDPacket* pPacket)
 {
 	Hashes::Guid oGUID;
 	IN_ADDR pAddress;
@@ -212,7 +212,7 @@ BOOL CKademlia::OnPacket_KADEMLIA_BOOTSTRAP_RES(const SOCKADDR_IN* /*pHost*/, CE
 		nTCPPort = pPacket->ReadShortLE();
 		pPacket->ReadByte();	// skip
 
-		CHostCacheHostPtr pCache = HostCache.Kademlia.Add( &pAddress, nTCPPort );
+		CHostCacheHostPtr pCache = HostCache.Kademlia.Add( &pAddress, nTCPPort, &pHost->sin_addr );
 		if ( pCache )
 		{
 			pCache->m_oGUID = oGUID;
@@ -249,7 +249,7 @@ BOOL CKademlia::OnPacket_KADEMLIA2_BOOTSTRAP_RES(const SOCKADDR_IN* pHost, CEDPa
 
 	CQuickLock oLock( HostCache.Kademlia.m_pSection );
 
-	CHostCacheHostPtr pCache = HostCache.Kademlia.Add( &pHost->sin_addr, nTCPPort );
+	CHostCacheHostPtr pCache = HostCache.Kademlia.Add( &pHost->sin_addr, nTCPPort, &pHost->sin_addr );
 	if ( ! pCache )
 		return FALSE;
 
@@ -269,7 +269,7 @@ BOOL CKademlia::OnPacket_KADEMLIA2_BOOTSTRAP_RES(const SOCKADDR_IN* pHost, CEDPa
 		nTCPPort = pPacket->ReadShortLE();
 		nVersion = pPacket->ReadByte();
 
-		pCache = HostCache.Kademlia.Add( &pAddress, nTCPPort );
+		pCache = HostCache.Kademlia.Add( &pAddress, nTCPPort, &pHost->sin_addr );
 		if ( pCache )
 		{
 			pCache->m_oGUID = oGUID;

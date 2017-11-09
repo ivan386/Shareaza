@@ -1081,11 +1081,11 @@ CString Unescape(const TCHAR* __restrict pszXML, int nLength)
 
 	while ( pszXML < pszNull && *pszXML )
 	{
-		if ( IsSpace( *pszXML ) && *pszXML != 0xa0 )	// Keep non-breaking space
+		if ( IsSpaceW( *pszXML ) && *pszXML != 0xa0 )	// Keep non-breaking space
 		{
 			if ( pszValue != pszOut ) *pszOut++ = ' ';
 			pszXML++;
-			while ( *pszXML && IsSpace( *pszXML ) && *pszXML != 0xa0 ) pszXML++;
+			while ( *pszXML && IsSpaceW( *pszXML ) && *pszXML != 0xa0 ) pszXML++;
 			if ( pszXML >= pszNull || ! *pszXML ) break;
 		}
 

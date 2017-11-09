@@ -383,7 +383,11 @@ void CHostCacheWnd::OnUpdateHostCacheDisconnect(CCmdUI* pCmdUI)
 		// Lock Network objects until we are finished with them
 		// Note - This needs to be locked before the HostCache object to avoid
 		// deadlocks with the network thread
-		CQuickLock oNetworkLock( Network.m_pSection );
+		CSingleLock oLock( &Network.m_pSection, FALSE );
+		if ( !oLock.Lock( 100 ) ){
+			pCmdUI->Enable( FALSE );
+			return;
+		}
 
 		// Lock HostCache objects until we are finished with them
 		CQuickLock oHostCacheLock( HostCache.ForProtocol(

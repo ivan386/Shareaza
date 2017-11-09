@@ -87,6 +87,18 @@ public:
 	// Select a fragment for a transfer
 	BOOL		GetFragment(CDownloadTransfer* pTransfer);
 
+	inline BOOL IsTigerSet() const{
+		return m_pTigerBlock != NULL && m_nTigerBlock > 0;
+	}
+
+	inline BOOL IsHashsetSet() const{
+		return m_pHashsetBlock != NULL && m_nHashsetBlock > 0;
+	}
+
+	inline BOOL IsTorrentSet() const{
+		return m_pTorrentBlock != NULL && m_nTorrentBlock > 0;
+	}
+
 protected:
 	bool		IsFullyVerified() const;
 

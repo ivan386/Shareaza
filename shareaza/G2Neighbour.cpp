@@ -728,7 +728,7 @@ BOOL CG2Neighbour::OnLNI(CG2Packet* pPacket)
 	if ( m_pVendor != NULL && m_nNodeType != ntLeaf )
 	{
 		HostCache.Gnutella2.Add( &m_pHost.sin_addr, htons( m_pHost.sin_port ),
-			0, m_pVendor->m_sCode );
+			NULL, 0, m_pVendor->m_sCode );
 	}
 
 	return TRUE;
@@ -796,7 +796,8 @@ CG2Packet* CG2Neighbour::CreateKHLPacket(CG2Neighbour* pOwner)
 
 		if (	pHost->CanQuote( tNow ) &&
 				Neighbours.Get( pHost->m_pAddress ) == NULL &&
-				! Network.IsSelfIP( pHost->m_pAddress ) )
+				! Network.IsSelfIP( pHost->m_pAddress ) &&
+				Network.IsValidAddressFor( &pOwner->m_pHost.sin_addr , &pHost->m_pAddress ) )
 		{
 			int nLength = 10;
 
@@ -934,14 +935,12 @@ BOOL CG2Neighbour::ParseKHLPacket(CG2Packet* pPacket, const SOCKADDR_IN* pHost)
 				}
 
 				if ( nPort &&
-					! Network.IsFirewalledAddress( (IN_ADDR*)&nAddress, TRUE ) &&
-					! Network.IsReserved( (IN_ADDR*)&nAddress ) &&
-					! Security.IsDenied( (IN_ADDR*)&nAddress ) )
+					! Security.IsDeniedComplexCheck( (IN_ADDR*)&nAddress, &pHost->sin_addr ) )
 				{
 					CQuickLock oLock( HostCache.Gnutella2.m_pSection );
 
 					CHostCacheHostPtr pCached = HostCache.Gnutella2.Add(
-						(IN_ADDR*)&nAddress, nPort, tSeen, strVendor );
+						(IN_ADDR*)&nAddress, nPort, &pHost->sin_addr, tSeen, strVendor );
 					if ( pCached != NULL )
 					{
 						if ( nLeafs ) pCached->m_nUserCount = nLeafs;			// Hack
@@ -979,7 +978,7 @@ BOOL CG2Neighbour::ParseKHLPacket(CG2Packet* pPacket, const SOCKADDR_IN* pHost)
 			{
 				IN_ADDR pMyAddress;
 				pMyAddress.s_addr = pPacket->ReadLongLE();
-				Network.AcquireLocalAddress( pMyAddress );
+				Network.AcquireLocalAddress( pMyAddress, 0, &pHost->sin_addr );
 			}
 			else
 				bInvalid = TRUE;
@@ -1084,9 +1083,7 @@ BOOL CG2Neighbour::OnHAW(CG2Packet* pPacket)
 	if ( pPacket->GetRemaining() < 2 + 16 ) return TRUE;
 
 	if ( ! nPort ||
-		Network.IsFirewalledAddress( (IN_ADDR*)&nAddress, TRUE ) ||
-		Network.IsReserved( (IN_ADDR*)&nAddress ) ||
-		Security.IsDenied( (IN_ADDR*)&nAddress ) ) return TRUE;
+		Security.IsDeniedComplexCheck( (IN_ADDR*)&nAddress, &m_pHost.sin_addr ) ) return TRUE;
 
 	BYTE* pPtr	= pPacket->m_pBuffer + pPacket->m_nPosition;
 	BYTE nTTL	= pPacket->ReadByte();
@@ -1095,7 +1092,7 @@ BOOL CG2Neighbour::OnHAW(CG2Packet* pPacket)
 	Hashes::Guid oGUID;
 	pPacket->Read( oGUID );
 
-	HostCache.Gnutella2.Add( (IN_ADDR*)&nAddress, nPort, 0, strVendor );
+	HostCache.Gnutella2.Add( (IN_ADDR*)&nAddress, nPort, &m_pHost.sin_addr, 0, strVendor );
 
 	if ( nTTL > 0 && nHops < 255 )
 	{
@@ -1313,7 +1310,7 @@ BOOL CG2Neighbour::OnQueryKeyAns(CG2Packet* pPacket)
 
 	CQuickLock oLock( HostCache.Gnutella2.m_pSection );
 
-	CHostCacheHostPtr pCache = HostCache.Gnutella2.Add( (IN_ADDR*)&nAddress, nPort );
+	CHostCacheHostPtr pCache = HostCache.Gnutella2.Add( (IN_ADDR*)&nAddress, nPort, &m_pHost.sin_addr );
 	if ( pCache != NULL )
 	{
 		theApp.Message( MSG_DEBUG, _T("Got a query key for %s:%i via neighbour %s: 0x%x"),

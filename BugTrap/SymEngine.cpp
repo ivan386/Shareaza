@@ -1214,8 +1214,10 @@ void CSymEngine::GetOsInfo(COsInfo& rOsInfo)
 			case 2:
 				if (osvi.wProductType == VER_NT_WORKSTATION && sysi.wProcessorArchitecture == PROCESSOR_ARCHITECTURE_AMD64)
 					rOsInfo.m_pszWinVersion = szWindowsXPProX64;
+#ifdef VER_SUITE_WH_SERVER
 				else if (osvi.wSuiteMask & VER_SUITE_WH_SERVER)
 					rOsInfo.m_pszWinVersion = szWindowsHomeServer;
+#endif
 				else if (GetSystemMetrics(SM_SERVERR2) == 0)
 					rOsInfo.m_pszWinVersion = szWindowsServer2003;
 				else

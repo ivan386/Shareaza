@@ -355,7 +355,13 @@ void CDownloadTransfer::ChunkifyRequest(QWORD* pnOffset, QWORD* pnLength, DWORD 
 	{
 		QWORD nCount = *pnLength / nChunk;
 		if ( *pnLength % nChunk ) nCount++;
-		nCount = GetRandomNum( 0ui64, nCount - 1 );
+
+		QWORD nNonRandomEnd = this->m_pDownload->GetNonRandomEnd();
+
+		if (*pnOffset >= nNonRandomEnd)
+			nCount = GetRandomNum( 0ui64, nCount - 1 );
+		else
+			nCount = 0;
 
 		QWORD nStart = *pnOffset + nChunk * nCount;
 		*pnLength = min( (QWORD)nChunk, *pnOffset + *pnLength - nStart );
@@ -402,6 +408,9 @@ blockPair CDownloadTransfer::SelectBlock(const Fragments::List& oPossible, const
 	if ( !nBlockSize )
 		return std::make_pair( pItr->begin(), pItr->end() - pItr->begin() );
 
+	QWORD nNonRandomEnd = this->m_pDownload->GetNonRandomEnd();
+	QWORD nStartFrom = this->m_pDownload->m_nStartFrom;
+	
 	std::vector< QWORD > oBlocks;
 	QWORD nRangeBlock = 0ull;
 	QWORD nRange[3] = { 0ull, 0ull, 0ull };
@@ -412,6 +421,22 @@ blockPair CDownloadTransfer::SelectBlock(const Fragments::List& oPossible, const
 		QWORD nPart[2] = { pItr->begin(), 0ull };
 		QWORD nBlockBegin = nPart[0] / nBlockSize;
 		QWORD nBlockEnd = ( pItr->end() - 1ull ) / nBlockSize;
+
+		if ( pItr->begin() < nNonRandomEnd && pItr->end() > nStartFrom )
+		{
+			QWORD nBlock = nBlockBegin;
+			for (; nBlock <= nBlockEnd && ( ( nBlock * nBlockSize ) < nNonRandomEnd ); ++nBlock)
+			{
+				QWORD nPos = max( pItr->begin(), nBlockSize * nBlock );
+
+				if ( nPos >= nStartFrom && ( pAvailable.empty() || pAvailable[ nBlockBegin ] ) )
+				{
+					QWORD nLength = min( pItr->end(), nBlockSize * ( nBlock + 1ull ) );
+					nLength -=  nPos;
+					return std::make_pair( nPos , nLength );
+				}
+			}
+		}
 
 		// The start of a block is complete, but part is missing
 		if ( nPart[0] % nBlockSize

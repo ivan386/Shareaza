@@ -743,8 +743,17 @@ BOOL CG2Packet::OnPong(const SOCKADDR_IN* pHost)
 		m_nPosition = nOffset;
 	}
 
-	if ( bRelayed && ! Network.IsConnectedTo( &pHost->sin_addr ) )
-		Datagrams.SetStable();
+	
+
+	if ( bRelayed && ! Datagrams.IsStable() && ! Network.IsConnectedTo( &pHost->sin_addr ) ){
+		CHostCacheHostPtr pCache = HostCache.Gnutella2.Find( &pHost->sin_addr );
+		DWORD tNow = static_cast< DWORD >( time( NULL ) );
+		//If we firewaled than we can't get udp packed from host that we don't send it
+		if ( ! pCache )
+			Datagrams.SetStable();
+	}
+			
+	
 
 	return TRUE;
 }
@@ -1387,7 +1396,7 @@ BOOL CG2Packet::OnKHLA(const SOCKADDR_IN* pHost)
 			}
 
 			CHostCacheHostPtr pCached = HostCache.Gnutella2.Add(
-				(IN_ADDR*)&nAddress, nPort, tSeen, strVendor );
+				(IN_ADDR*)&nAddress, nPort, &pHost->sin_addr, tSeen, strVendor );
 			if ( pCached != NULL )
 			{
 				nCount++;
@@ -1402,7 +1411,7 @@ BOOL CG2Packet::OnKHLA(const SOCKADDR_IN* pHost)
 		{
 			IN_ADDR pMyAddress;
 			pMyAddress.s_addr = ReadLongLE();
-			Network.AcquireLocalAddress( pMyAddress );
+			Network.AcquireLocalAddress( pMyAddress, 0, &pHost->sin_addr );
 		}
 
 		m_nPosition = nNext;
@@ -1480,7 +1489,8 @@ BOOL CG2Packet::OnKHLR(const SOCKADDR_IN* pHost)
 
 			if ( pCachedHost->CanQuote( tNow ) &&
 				Neighbours.Get( pCachedHost->m_pAddress ) == NULL &&
-				! Network.IsSelfIP( pCachedHost->m_pAddress ) )
+				! Network.IsSelfIP( pCachedHost->m_pAddress ) &&
+				Network.IsValidAddressFor( &pHost->sin_addr , &pCachedHost->m_pAddress ) )
 			{
 
 				BOOL bCompound = ( pCachedHost->m_pVendor && pCachedHost->m_pVendor->m_sCode.GetLength() > 0 );

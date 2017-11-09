@@ -333,6 +333,10 @@ BOOL CDownloadWithSources::AddSource(const CShareazaFile* pHit, BOOL bForce)
 	{
 		bUpdated = Resize( pHit->m_nSize );
 	}
+	if ( m_nBitrate == 0 && (pHit->m_nBitrate > 0) )
+	{
+		m_nBitrate = pHit->m_nBitrate;
+	}
 
 	if ( bUpdated )
 	{
@@ -359,6 +363,23 @@ BOOL CDownloadWithSources::AddSourceHit(const CQueryHit* pHit, BOOL bForce)
 		m_pXML = pHit->m_pSchema->Instantiate( TRUE );
 		m_pXML->AddElement( pHit->m_pXML->Clone() );
 		pHit->m_pSchema->Validate( m_pXML, TRUE );
+	}
+
+	if ( m_nBitrate == 0 && pHit->m_pXML && pHit->m_pSchema ){
+		QWORD nLength = 0;
+		CString sMinutes = pHit->m_pXML->GetAttributeValue(L"minutes");
+		CString sSeconds = pHit->m_pXML->GetAttributeValue(L"seconds");
+		if (!sMinutes.IsEmpty())
+		{
+			double nMins = 0.0;
+			_stscanf( sMinutes, _T("%lf"), &nMins );
+			nLength = (QWORD)( nMins * (double)60 );	// Convert to seconds
+		}
+		if (!sSeconds.IsEmpty())
+			_stscanf( sSeconds, _T("%I64i"), &nLength );
+		
+		if (m_nSize > 0 && nLength > 0)
+			m_nBitrate = (m_nSize / nLength) * 8;
 	}
 
 	/*
@@ -462,7 +483,7 @@ BOOL CDownloadWithSources::AddSourceBT(const Hashes::BtGuid& oGUID, const IN_ADD
 //////////////////////////////////////////////////////////////////////
 // CDownloadWithSources add a single URL source
 
-BOOL CDownloadWithSources::AddSourceURL(LPCTSTR pszURL, FILETIME* pLastSeen, int nRedirectionCount, BOOL bFailed, BOOL bForce)
+BOOL CDownloadWithSources::AddSourceURL(LPCTSTR pszURL, FILETIME* pLastSeen, int nRedirectionCount, BOOL bFailed, BOOL bForce, BOOL bPartialSame )
 {
 	if ( pszURL == NULL || *pszURL == 0 )
 		return FALSE;
@@ -493,10 +514,15 @@ BOOL CDownloadWithSources::AddSourceURL(LPCTSTR pszURL, FILETIME* pLastSeen, int
 	if ( pURL.m_nAction != CShareazaURL::uriDownload &&
 		 pURL.m_nAction != CShareazaURL::uriSource )
 		return FALSE;	// Wrong URL type
-
-	if ( pURL.m_pAddress.s_addr != INADDR_ANY && pURL.m_pAddress.s_addr != INADDR_NONE )
+	
+	if ( pURL.m_pAddress.s_addr == 0x0100007f )
 	{
-		if ( Network.IsFirewalledAddress( &pURL.m_pAddress, TRUE ) ||
+		if ( Settings.Connection.IgnoreOwnIP )
+			return FALSE;
+	}
+	else if ( pURL.m_pAddress.s_addr != INADDR_ANY && pURL.m_pAddress.s_addr != INADDR_NONE )
+	{
+		if ( Network.IsFirewalledAddress( &pURL.m_pAddress, Settings.Connection.IgnoreOwnIP ) ||
 			 Network.IsReserved( &pURL.m_pAddress ) )
 			 return FALSE;	// Unreachable URL
 	}
@@ -533,7 +559,7 @@ BOOL CDownloadWithSources::AddSourceURL(LPCTSTR pszURL, FILETIME* pLastSeen, int
 //////////////////////////////////////////////////////////////////////
 // CDownloadWithSources add several URL sources
 
-int CDownloadWithSources::AddSourceURLs(LPCTSTR pszURLs, BOOL bFailed)
+int CDownloadWithSources::AddSourceURLs(LPCTSTR pszURLs, BOOL bFailed, BOOL bPartialSame)
 {
 	int nCount = 0;
 
@@ -546,7 +572,7 @@ int CDownloadWithSources::AddSourceURLs(LPCTSTR pszURLs, BOOL bFailed)
 		FILETIME tSeen = {};
 		oUrls.GetNextAssoc( pos, strURL, tSeen );
 
-		if ( AddSourceURL( strURL, ( tSeen.dwLowDateTime | tSeen.dwHighDateTime ) ? &tSeen : NULL, 0, bFailed ) )
+		if ( AddSourceURL( strURL, ( tSeen.dwLowDateTime | tSeen.dwHighDateTime ) ? &tSeen : NULL, 0, bFailed, 0, bPartialSame ) )
 		{
 			if ( bFailed )
 			{

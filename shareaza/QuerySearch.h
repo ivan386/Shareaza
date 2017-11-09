@@ -84,6 +84,7 @@ public:
 	SOCKADDR_IN			m_pMyHub;		// DC: Hub address
 	CString				m_sMyHub;		// DC: Hub name
 	CString				m_sMyNick;		// DC: Nick
+	in_addr				m_nMyAddress;	// DC: IP
 
 	Hash32List			m_oURNs;			// Hashed URNs
 	Hash32List			m_oKeywordHashList;	// list of hashed keywords to BOOST QUery Routing.

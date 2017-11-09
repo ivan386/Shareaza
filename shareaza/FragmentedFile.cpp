@@ -308,6 +308,25 @@ BOOL CFragmentedFile::Open(const CBTInfo& oInfo, BOOL bWrite)
 	const size_t nCount = m_oFile.size();
 	QWORD nOffset = 0;
 
+	if ( bWrite && nCount == 0 && oInfo.GetCount() == 0 && oInfo.m_nSize != SIZE_UNKNOWN )
+	{
+		CString strSource;
+		// Generate new filename (inside incomplete folder)
+		strSource.Format( _T("%s\\%s.partial"),
+			(LPCTSTR)Settings.Downloads.IncompletePath, (LPCTSTR)oInfo.GetFilename());
+		
+		if ( ! Open( strSource, nOffset, oInfo.m_nSize, bWrite, oInfo.m_sName ) )
+		{
+			m_sFileError.Format( LoadString( bWrite ? IDS_DOWNLOAD_FILE_CREATE_ERROR : IDS_BT_SEED_SOURCE_LOST ), (LPCTSTR)strSource );
+			theApp.Message( MSG_ERROR, _T("%s"), m_sFileError + _T(" ") + GetErrorString( m_nFileError ) );
+
+			Close();
+			return FALSE;
+		}
+
+		nOffset += oInfo.m_nSize;
+	}
+
 	for ( POSITION pos = oInfo.m_pFiles.GetHeadPosition() ; pos ; ++i )
 	{
 		CBTInfo::CBTFile* pBTFile = oInfo.m_pFiles.GetNext( pos );

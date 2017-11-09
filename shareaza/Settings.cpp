@@ -98,6 +98,7 @@ void CSettings::Load()
 	Add( _T(""), _T("SearchLog"), &General.SearchLog, true );
 	Add( _T(""), _T("UserPath"), &General.UserPath );
 	Add( _T(""), _T("DialogScan"), &General.DialogScan, false );
+	Add( _T(""), _T("UnlimitedSettings"), &General.UnlimitedSettings, false );
 
 	Add( _T("Settings"), _T("AlwaysOpenURLs"), &General.AlwaysOpenURLs, false );
 	Add( _T("Settings"), _T("CloseMode"), &General.CloseMode, 0, 1, 0, 3 );
@@ -121,8 +122,8 @@ void CSettings::Load()
 
 	Add( _T("VersionCheck"), _T("NextCheck"), &VersionCheck.NextCheck, 0 );
 	Add( _T("VersionCheck"), _T("Quote"), &VersionCheck.Quote );
-	Add( _T("VersionCheck"), _T("UpdateCheck"), &VersionCheck.UpdateCheck, true );
-	Add( _T("VersionCheck"), _T("UpdateCheckURL"), &VersionCheck.UpdateCheckURL, WEB_SITE_T _T("version/") );
+	Add( _T("VersionCheck"), _T("UpdateCheck"), &VersionCheck.UpdateCheck, false );
+	Add( _T("VersionCheck"), _T("UpdateCheckURL"), &VersionCheck.UpdateCheckURL, WEB_SITE_T _T("version") );
 	Add( _T("VersionCheck"), _T("UpgradeFile"), &VersionCheck.UpgradeFile );
 	Add( _T("VersionCheck"), _T("UpgradePrompt"), &VersionCheck.UpgradePrompt );
 	Add( _T("VersionCheck"), _T("UpgradeSHA1"), &VersionCheck.UpgradeSHA1 );
@@ -234,8 +235,8 @@ void CSettings::Load()
 
 	Add( _T("MediaPlayer"), _T("Aspect"), &MediaPlayer.Aspect, smaDefault );
 	Add( _T("MediaPlayer"), _T("AviPreviewCLSID"), &MediaPlayer.AviPreviewCLSID, _T("{394011F0-6D5C-42a3-96C6-24B9AD6B010C}") );
-	Add( _T("MediaPlayer"), _T("EnableEnqueue"), &MediaPlayer.EnableEnqueue, true );
-	Add( _T("MediaPlayer"), _T("EnablePlay"), &MediaPlayer.EnablePlay, true );
+	Add( _T("MediaPlayer"), _T("EnableEnqueue"), &MediaPlayer.EnableEnqueue, false );
+	Add( _T("MediaPlayer"), _T("EnablePlay"), &MediaPlayer.EnablePlay, false );
 	Add( _T("MediaPlayer"), _T("FileTypes"), &MediaPlayer.FileTypes, _T("") );
 	Add( _T("MediaPlayer"), _T("ListSize"), &MediaPlayer.ListSize, 240 );
 	Add( _T("MediaPlayer"), _T("ListVisible"), &MediaPlayer.ListVisible, true );
@@ -301,6 +302,7 @@ void CSettings::Load()
 	Add( _T("Connection"), _T("UPnPRefreshTime"), &Connection.UPnPRefreshTime, 30*60*1000, 60*1000, 5, 24*60, _T(" m") );
 	Add( _T("Connection"), _T("UPnPTimeout"), &Connection.UPnPTimeout, 5*1000, 1, 0, 60*1000, _T(" ms") );
 	Add( _T("Connection"), _T("ZLibCompressionLevel"), &Connection.ZLibCompressionLevel, 9, 1, 0, 9, _T(" level") ); 
+	Add( _T("Connection"), _T("IgnoredCountry"), &Connection.IgnoredCountry, _T("|TW|HK|CN|") );
 	Add( _T("Connection"), _T("EnableMulticast"), &Connection.EnableMulticast, true );
 	Add( _T("Connection"), _T("MulticastLoop"), &Connection.MulticastLoop, false );
 	Add( _T("Connection"), _T("MulticastTTL"), &Connection.MulticastTTL, 1, 1, 0, 255 );
@@ -399,7 +401,7 @@ void CSettings::Load()
 	Add( _T("Gnutella2"), _T("NumPeers"), &Gnutella2.NumPeers, 1, 1, 0, 64 );
 #else // LAN_MODE
 	Add( _T("Gnutella2"), _T("NumHubs"), &Gnutella2.NumHubs, 2, 1, 1, 3 );
-	Add( _T("Gnutella2"), _T("NumLeafs"), &Gnutella2.NumLeafs, 300, 1, 50, 1024 );
+	Add( _T("Gnutella2"), _T("NumLeafs"), &Gnutella2.NumLeafs, 300, 1, 50, 0x7FFFFFFF );
 	Add( _T("Gnutella2"), _T("NumPeers"), &Gnutella2.NumPeers, 6, 1, 4, 64 );
 #endif // LAN_MODE
 	Add( _T("Gnutella2"), _T("PingRate"), &Gnutella2.PingRate, 15000, 1000, 5, 180, _T(" s") );
@@ -511,7 +513,8 @@ void CSettings::Load()
 	Add( _T("Downloads"), _T("MaxReviews"), &Downloads.MaxReviews, 64, 1, 0, 256 );
 	Add( _T("Downloads"), _T("MaxTransfers"), &Downloads.MaxTransfers, 100, 1, 1, 250 );
 	Add( _T("Downloads"), _T("Metadata"), &Downloads.Metadata, true );
-	Add( _T("Downloads"), _T("MinSources"), &Downloads.MinSources, 1, 1, 0, 6 );
+	Add( _T("Downloads"), _T("MediaBuffer"), &Downloads.MediaBuffer, 20*1000, 1000, 0, 180, _T(" s")  );
+	Add( _T("Downloads"), _T("MinSources"), &Downloads.MinSources, 3, 1, 0, 6 );
 	Add( _T("Downloads"), _T("NeverDrop"), &Downloads.NeverDrop, false );
 	Add( _T("Downloads"), _T("PushTimeout"), &Downloads.PushTimeout, 45*1000, 1000, 5, 180, _T(" s") );
 	Add( _T("Downloads"), _T("QueueLimit"), &Downloads.QueueLimit, 0, 1, 0, 20000 );
@@ -1736,7 +1739,7 @@ void CSettings::Item::Load()
 		ASSERT( ( m_nScale == 0 && m_nMin == 0 && m_nMax == 0 ) \
 			|| ( m_nScale && m_nMin < m_nMax ) );
 		*m_pDword = CRegistry::GetDword( m_szSection, m_szName, m_DwordDefault );
-		if ( m_nScale && m_nMin < m_nMax )
+		if ( ! Settings.General.UnlimitedSettings && m_nScale && m_nMin < m_nMax )
 		{
 			ASSERT( ( m_DwordDefault >= m_nMin * m_nScale ) \
 				&& ( m_DwordDefault <= m_nMax * m_nScale ) );
@@ -1823,7 +1826,7 @@ CString CSettings::SaveSet(const string_set* pSet)
 
 void CSettings::Item::Normalize()
 {
-	if ( m_pDword && m_nScale && m_nMin < m_nMax )
+	if ( ! Settings.General.UnlimitedSettings && m_pDword && m_nScale && m_nMin < m_nMax )
 	{
 		*m_pDword = max( min( *m_pDword, m_nMax * m_nScale ), m_nMin * m_nScale );
 	}

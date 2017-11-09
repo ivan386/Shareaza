@@ -184,7 +184,10 @@ BOOL CSchema::Load(LPCTSTR pszFile)
 
 	m_sIcon = m_sIcon.Left( m_sIcon.GetLength() - 4 );
 	m_sIcon += _T("XP.ico");
-	if ( ! LoadIcon() )
+
+	//LoadIcon() causes bad registry reads
+	//CCoolInterface::IsNewWindows() caused several reapeat ones.
+	if ( theApp.m_bIsWin2000 || ! LoadIcon() )
 	{
 		m_sIcon = m_sIcon.Left( m_sIcon.GetLength() - 6 );
 		m_sIcon += _T(".ico");

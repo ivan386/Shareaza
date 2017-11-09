@@ -677,7 +677,7 @@ void CSkinWindow::OnSize(CWnd* pWnd)
 	{
 		SelectRegion( pWnd );
 	}
-	else
+	else if ( ! theApp.m_bIsWin2000 )
 	{
 		CRect rcWnd;
 

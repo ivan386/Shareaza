@@ -75,6 +75,7 @@ public:
 		DWORD		LastSettingsIndex;			// Top item index of Advanced Settings list
 		bool		SearchPanelResults;			// Search Results Panel state (open or closed)
 		CString		AntiVirus;					// Anti-virus path or CLSID
+		bool		UnlimitedSettings;			// Disable min/max for settings
 	} General;
 
 	struct sVersionCheck
@@ -283,6 +284,7 @@ public:
 		bool		SkipWANPPPSetup;			// UPnP: Skip WANPPPConn1 device setup
 		bool		SkipWANIPSetup;				// UPnP: Skip WANIPConn1 device setup
 		DWORD		ZLibCompressionLevel;		// ZLib compression level: 0(none/fastest)..9(best/slowest)
+		string_set	IgnoredCountry;
 		bool		EnableMulticast;			// Send and accept multi-cast packets (default = true)
 		bool		MulticastLoop;				// Use multi-cast loopback (for debugging, default = false)
 		DWORD		MulticastTTL;				// TTL for multi-cast packets (default = 1)
@@ -517,6 +519,7 @@ public:
 		DWORD		StarveGiveUp;				// How long (in hours) before Shareaza will give up and try another download if it gets no data. (+ 0-9 h, depending on sources)
 		DWORD		RetryDelay;
 		DWORD		PushTimeout;
+		DWORD		MediaBuffer;
 		bool		StaggardStart;
 		bool		AllowBackwards;				// Permit download to run in reverse when appropriate
 		DWORD		ChunkSize;

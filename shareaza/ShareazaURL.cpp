@@ -685,12 +685,19 @@ BOOL CShareazaURL::ParseMagnet(LPCTSTR pszURL)
 			// Nodes are common
 			pTorrent->SetNode( strValue );
 		}
+		else if ( _tcsicmp( strKey, _T("br") ) == 0 )
+		{
+			QWORD nBitrate;
+			if ( _stscanf( strValue, _T("%I64i"), &nBitrate ) == 1 )
+				m_nBitrate = nBitrate;
+	}
 	}
 
 	if ( m_oBTH && ! m_pTorrent )
 	{
 		pTorrent->SetTrackerMode( ( pTorrent->GetTrackerCount() > 1 ) ? CBTInfo::tMultiFinding : CBTInfo::tSingle );
 		m_pTorrent = pTorrent;
+		m_pTorrent->m_nBitrate		= m_nBitrate;
 		m_pTorrent->m_oMD5			= m_oMD5;
 		m_pTorrent->m_oBTH			= m_oBTH;
 		m_pTorrent->m_oSHA1			= m_oSHA1;

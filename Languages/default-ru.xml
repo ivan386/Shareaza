@@ -599,7 +599,7 @@
 					<item id="ID_VIEW_SECURITY" text="_Безопасность" shortcut="F7"/>
 					<item id="ID_VIEW_HOSTS" text="_Кэш хостов" shortcut="F8"/>
 					<item id="ID_VIEW_DISCOVERY" text="_Ресурсы подключений" shortcut="F9"/>
-					<item id="ID_VIEW_TRAFFIC" text="_График" shortcut="F10"/>
+					<item id="ID_VIEW_TRAFFIC" text="_График" shortcut="Ctrl+F10"/>
 					<item id="ID_VIEW_SCHEDULER" text="Пла_нировщик" shortcut="Ctrl+Shift+F11"/>
 					<separator/>
 					<item id="ID_VIEW_PACKETS" text="Дамп _пакетов" shortcut="Ctrl+F1"/>
@@ -695,7 +695,7 @@
 				<item id="ID_VIEW_SECURITY" text="_Безопасность" shortcut="F7"/>
 				<item id="ID_VIEW_HOSTS" text="_Кэш хостов" shortcut="F8"/>
 				<item id="ID_VIEW_DISCOVERY" text="_Ресурсы подключений" shortcut="F9"/>
-				<item id="ID_VIEW_TRAFFIC" text="_График" shortcut="F10"/>
+				<item id="ID_VIEW_TRAFFIC" text="_График" shortcut="Ctrl+F10"/>
 				<item id="ID_VIEW_SCHEDULER" text="Пла_нировщик" shortcut="Ctrl+Shift+F11"/>
 				<separator/>
 				<item id="ID_VIEW_PACKETS" text="Дамп _пакетов" shortcut="Ctrl+F1"/>
