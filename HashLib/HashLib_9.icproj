@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="windows-1251"?>
+<VisualStudioProject
+	ProjectType="Intel C++ Project"
+	Version="11.0"
+	Name="HashLib"
+	ProjectGUID="{3BEC4C6A-C473-41B1-9215-1ED3B2126688}"
+	VCNestedProjectGUID="{196C99FC-9A4E-421F-B44C-8E3FD177122F}"
+	VCNestedProjectFileName="HashLib_9.vcproj">
+	<Configurations>
+		<Configuration
+			Name="Release|Win32">
+			<Tool
+				Name="CppCmplrTool"
+				GlobalOptimizations="true"
+				GenerateAlternateCodePaths="5"
+				UseProcessorExtensions="6"
+				Parallelization="true"/>
+		</Configuration>
+		<Configuration
+			Name="Release|x64">
+			<Tool
+				Name="CppCmplrTool"
+				GlobalOptimizations="true"
+				GenerateAlternateCodePaths="5"
+				UseProcessorExtensions="6"
+				Parallelization="true"/>
+		</Configuration>
+	</Configurations>
+	<Files/>
+</VisualStudioProject>
