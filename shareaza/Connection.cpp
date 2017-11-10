@@ -738,7 +738,7 @@ BOOL CConnection::OnHeaderLine(CString& strHeader, CString& strValue)
 	else if ( strHeader.CompareNoCase( _T("Remote-IP") ) == 0 )
 	{
 		// Add this address to our record of them
-		Network.AcquireLocalAddress( strValue );
+		Network.AcquireLocalAddress( strValue, 0, &m_pHost.sin_addr );
 	
 	} // It's the x my address, listen IP, or node header, like "X-My-Address: 10.254.0.16:6349"
 	else if (  strHeader.CompareNoCase( _T("X-My-Address") ) == 0
@@ -799,7 +799,7 @@ BOOL CConnection::SendMyAddress()
 
 		strHeader.Format(
 			_T("Listen-IP: %s:%hu\r\n"),								// Make it like "Listen-IP: 67.176.34.172:6346\r\n"
-			(LPCTSTR)CString( inet_ntoa( Network.m_pHost.sin_addr ) ),	// Insert the IP address like "67.176.34.172"
+			(LPCTSTR)CString( inet_ntoa( Network.GetMyAddressFor( &m_pHost.sin_addr ) ) ),	// Insert the IP address like "67.176.34.172"
 			htons( Network.m_pHost.sin_port ) );						// Our port number in big endian
 
 		// Print the line into the bottom of the output buffer

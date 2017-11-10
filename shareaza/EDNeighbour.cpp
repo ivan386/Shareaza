@@ -367,7 +367,7 @@ BOOL CEDNeighbour::OnIdChange(CEDPacket* pPacket)
 
 		IN_ADDR pMyAddress;
 		pMyAddress.s_addr = m_nClientID;
-		Network.AcquireLocalAddress( pMyAddress );
+		Network.AcquireLocalAddress( pMyAddress, 0, &m_pHost.sin_addr );
 	}
 	else if ( Settings.eDonkey.ForceHighID )
 	{
@@ -395,7 +395,7 @@ BOOL CEDNeighbour::OnServerList(CEDPacket* pPacket)
 
 		if ( Settings.eDonkey.LearnNewServers )
 		{
-			HostCache.eDonkey.Add( (IN_ADDR*)&nAddress, nPort );
+			HostCache.eDonkey.Add( (IN_ADDR*)&nAddress, nPort, &m_pHost.sin_addr );
 		}
 	}
 

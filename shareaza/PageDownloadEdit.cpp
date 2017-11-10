@@ -66,6 +66,7 @@ void CDownloadEditPage::DoDataExchange(CDataExchange* pDX)
 	DDX_Text(pDX, IDC_NAME, m_sName);
 	DDX_Text(pDX, IDC_DISKNAME, m_sDiskName);
 	DDX_Text(pDX, IDC_FILESIZE, m_sFileSize);
+	DDX_Text(pDX, IDC_BITRATE, m_sBitrate);
 	DDX_Text(pDX, IDC_URN_SHA1, m_sSHA1);
 	DDX_Text(pDX, IDC_URN_TIGER, m_sTiger);
 	DDX_Text(pDX, IDC_URN_ED2K, m_sED2K);
@@ -95,6 +96,9 @@ BOOL CDownloadEditPage::OnInitDialog()
 	m_sDiskName = pDownload->m_sPath;
 	if ( pDownload->m_nSize != SIZE_UNKNOWN )
 		m_sFileSize.Format( _T("%I64u"), pDownload->m_nSize );
+
+	if ( pDownload->m_nBitrate != SIZE_UNKNOWN )
+		m_sBitrate.Format( _T("%I64u"), pDownload->m_nBitrate );
 
 	if ( pDownload->m_oSHA1 )
 		m_sSHA1 = pDownload->m_oSHA1.toString();
@@ -219,6 +223,10 @@ BOOL CDownloadEditPage::OnApply()
 		pDownload->ClearVerification();
 		bCriticalChange = true;
 	}
+	
+	QWORD nNewBitrate = 0;
+	if ( _stscanf( m_sBitrate, _T("%I64u"), &nNewBitrate ) == 1 )
+		pDownload->m_nBitrate = nNewBitrate;
 	
 	if ( pDownload->m_oSHA1.isValid() != oSHA1.isValid()
 		|| validAndUnequal( pDownload->m_oSHA1, oSHA1 ) )

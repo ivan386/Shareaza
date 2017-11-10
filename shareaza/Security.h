@@ -22,6 +22,7 @@
 #pragma once
 
 #include "SecureRule.h"
+#include "Network.h"
 
 
 #define SECURITY_SER_VERSION	5
@@ -80,10 +81,21 @@ public:
 
 	bool			Complain(const IN_ADDR* pAddress, int nBanLength = ban5Mins, int nExpire = 10, int nCount = 3);
 	void			Clear();
+	BOOL			IsIgnoredCountry(const CString& strCountry);
 	BOOL			IsDenied(const IN_ADDR* pAddress);
 	BOOL			IsDenied(LPCTSTR pszContent);
 	BOOL			IsDenied(const CShareazaFile* pFile);
 	BOOL			IsDenied(const CQuerySearch* pQuery, const CString& strContent);
+
+	inline  BOOL    IsDeniedComplexCheck(const IN_ADDR* pAddress, const IN_ADDR* pForAddress, BOOL bIncludeSelf = FALSE)
+	{
+		return Network.IsFirewalledAddress( pAddress, bIncludeSelf ) ||
+			   Network.IsReserved( pAddress ) ||
+			   ! Network.IsValidAddressFor( pForAddress , pAddress ) ||
+		       IsIgnoredCountry( theApp.GetCountryCode( *pAddress ) ) || 
+			   IsDenied( pAddress );
+	}
+
 	void			Expire();
 	BOOL			Load();
 	BOOL			Save();

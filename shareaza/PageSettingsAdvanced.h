@@ -51,7 +51,7 @@ protected:
 		DWORD				m_nOriginalValue;	// Original value for DWORD
 		bool				m_bOriginalValue;	// Original value for bool
 		CString				m_sOriginalValue;	// Original value for CString
-
+		
 		void	Update();				// Reload data from parent item
 		void	Commit();				// Commit data to parent item
 		bool	IsModified() const;		// Value was modified

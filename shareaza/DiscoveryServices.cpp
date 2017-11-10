@@ -1546,10 +1546,10 @@ BOOL CDiscoveryServices::RunWebCacheGet(BOOL bCaches)
 					}
 
 					if ( ( m_nLastQueryProtocol == PROTOCOL_G2 ) ?
-						HostCache.Gnutella2.Add( (IN_ADDR*)&nAddress, (WORD)nPort,
+						HostCache.Gnutella2.Add( (IN_ADDR*)&nAddress, (WORD)nPort, NULL,
 							tSeen, ( pVendor ? (LPCTSTR)pVendor->m_sCode : NULL ),
 							tUptime, nCurrentLeaves, nLeafLimit ) :
-						HostCache.Gnutella1.Add( (IN_ADDR*)&nAddress, (WORD)nPort,
+						HostCache.Gnutella1.Add( (IN_ADDR*)&nAddress, (WORD)nPort, NULL,
 							tSeen, ( pVendor ? (LPCTSTR)pVendor->m_sCode : NULL ),
 							tUptime,nCurrentLeaves, nLeafLimit ) )
 					{

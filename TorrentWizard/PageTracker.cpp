@@ -73,7 +73,7 @@ BOOL CTrackerPage::OnInitDialog()
 	m_sTracker = theApp.GetProfileString( _T("Trackers"), _T("Last") );
 	if ( m_sTracker.IsEmpty() )
 	{
-		m_sTracker = _T("udp://tracker.openbittorrent.com:80");
+		m_sTracker = _T("udp://tracker.openbittorrent.com:80/announce");
 	}
 
 	m_bPrivate = ( theApp.GetProfileInt( _T("Trackers"), _T("Private"), FALSE ) != FALSE );

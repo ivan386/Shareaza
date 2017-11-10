@@ -191,7 +191,7 @@ CDownloadSource::CDownloadSource(const CDownload* pDownload,
 // CDownloadSource construction from URL
 
 CDownloadSource::CDownloadSource(const CDownload* pDownload, LPCTSTR pszURL,
-	BOOL bHashAuth, FILETIME* pLastSeen, int nRedirectionCount)
+	BOOL bHashAuth, FILETIME* pLastSeen, int nRedirectionCount, BOOL bPartialSame)
 	: m_oAvailable		( pDownload->m_nSize )
 	, m_oPastFragments	( pDownload->m_nSize )
 {
@@ -201,6 +201,7 @@ CDownloadSource::CDownloadSource(const CDownload* pDownload, LPCTSTR pszURL,
 
 	m_sURL			= pszURL;
 	m_bHashAuth		= bHashAuth;
+	m_bPartialSame	= bPartialSame;
 
 	if ( pLastSeen )
 	{
@@ -235,6 +236,7 @@ void CDownloadSource::Construct(const CDownload* pDownload)
 	m_bED2K					= FALSE;
 	m_bBTH					= FALSE;
 	m_bMD5					= FALSE;
+	m_bPartialSame			= FALSE;
 	m_nSpeed				= 0;
 	m_bPushOnly				= FALSE;
 	m_bCloseConn			= FALSE;

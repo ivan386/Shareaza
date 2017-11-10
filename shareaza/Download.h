@@ -52,6 +52,8 @@ public:
 	DWORD		m_tCompleted;
 	int			m_nRunCookie;
 	int			m_nGroupCookie;
+	QWORD		m_nStartFrom;
+
 private:
 	BOOL		m_bTempPaused;
 	BOOL		m_bPaused;
@@ -61,6 +63,8 @@ private:
 	DWORD		m_tSaved;
 	DWORD		m_tBegan;		// The time when this download began trying to download (Started
 								// searching, etc). 0 means has not tried this session.
+	DWORD		m_tStartFromSet;
+	QWORD		m_nCompletedAtBegan;
 	bool		m_bDownloading;	// This is used to store if a download is downloading. (Performance tweak)
 								// You should count the transfers if you need a 100% current answer.
 	CDownloadTask	m_pTask;
@@ -92,7 +96,9 @@ public:
 	BOOL		OpenDownload();
 	BOOL		SeedTorrent();
 	BOOL		PrepareFile();
-
+	QWORD		GetRealSpeed();
+	QWORD		GetNonRandomEnd(bool bForce = FALSE);
+	void		SetStartFrom(QWORD nStartFrom = 0);
 	void		Allocate();
 	void		Copy();
 	void		PreviewRequest( LPCTSTR szURL);

@@ -290,7 +290,7 @@ int CG1Packet::GGEPReadCachedHosts(const CGGEPBlock& pGGEP)
 				CHostCacheHostPtr pCachedHost =
 					HostCache.Gnutella1.Add( (IN_ADDR*)&nAddress, nPort );
 				if ( pCachedHost ) nCount++;
-				HostCache.G1DNA.Add( (IN_ADDR*)&nAddress, nPort, 0, _T("GDNA") );
+				HostCache.G1DNA.Add( (IN_ADDR*)&nAddress, nPort, NULL, 0, _T("GDNA") );
 			}
 		}
 	}
@@ -739,10 +739,10 @@ BOOL CG1Packet::OnPong(const SOCKADDR_IN* pHost)
 
 	if ( bUltrapeer )
 	{
-		HostCache.Gnutella1.Add( (IN_ADDR*)&nAddress, nPort, 0, strVendorCode, nUptime );
+		HostCache.Gnutella1.Add( (IN_ADDR*)&nAddress, nPort, &pHost->sin_addr, 0, strVendorCode, nUptime );
 
 		if ( bGDNA )
-			HostCache.G1DNA.Add( (IN_ADDR*)&nAddress, nPort, 0, strVendorCode, nUptime );
+			HostCache.G1DNA.Add( (IN_ADDR*)&nAddress, nPort, &pHost->sin_addr, 0, strVendorCode, nUptime );
 	}
 
 	// Update Gnutella UDPHC state

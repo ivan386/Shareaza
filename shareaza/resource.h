@@ -202,6 +202,8 @@
 #define IDI_USER                        347
 #define IDI_USER_ME                     348
 #define IDD_DEBUG_HEX                   350
+#define IDR_XSL_DCFileListStyle         351
+#define IDR_XSL_ShareazaFileListStyle   352
 #define IDR_CHANSFRAME                  991
 #define IDD_DOWNLOAD_ACTIONS            993
 #define IDR_USERSFRAME                  995
@@ -819,6 +821,7 @@
 #define IDC_TORRENT_TRACKERS_REN        1623
 #define IDC_FONT                        1624
 #define IDC_BOOL                        1625
+#define IDC_BITRATE                     1626
 #define IDC_EDIT_HEX                    1626
 #define IDC_QUICKFILTER                 1627
 #define IDC_QUICKFILTER_ICON            1628
@@ -1949,7 +1952,7 @@
 #ifdef APSTUDIO_INVOKED
 #ifndef APSTUDIO_READONLY_SYMBOLS
 #define _APS_3D_CONTROLS                     1
-#define _APS_NEXT_RESOURCE_VALUE        351
+#define _APS_NEXT_RESOURCE_VALUE        353
 #define _APS_NEXT_COMMAND_VALUE         33329
 #define _APS_NEXT_CONTROL_VALUE         1629
 #define _APS_NEXT_SYMED_VALUE           104

@@ -23,6 +23,7 @@
 #include "Shareaza.h"
 #include "Settings.h"
 #include "Buffer.h"
+#include "Download.h"
 #include "Downloads.h"
 #include "EDClient.h"
 #include "EDClients.h"
@@ -153,7 +154,11 @@ BOOL CHostBrowser::Browse()
 		oURL.m_sName.Format( _T("Files of %s.xml.bz2"), (LPCTSTR)SafeFilename( m_sNick ) );
 		oURL.m_sURL.Format( _T("dchub://%s@%s:%u/files.xml.bz2"), (LPCTSTR)URLEncode( m_sNick ), (LPCTSTR)CString( inet_ntoa( m_pAddress ) ), m_nPort );
 
-		return ( Downloads.Add( oURL ) != NULL );
+		CDownload *Download = Downloads.Add( oURL );
+		if ( Download )
+			Download->Rename( oURL.m_sName );
+
+		return ( Download != NULL );
 	}
 	else
 	{

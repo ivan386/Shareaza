@@ -1103,18 +1103,56 @@ void CDownloadsCtrl::PaintDownload(CDC& dc, const CRect& rcRow, CDownload* pDown
 				rcCell.DeflateRect( 0, 1 );
 
 				if ( Settings.Downloads.SimpleBar )
-				{
 					dc.Draw3dRect( &rcCell, crBorderSimple, crBorderSimple );
-					rcCell.DeflateRect( 1, 1 );
-					CFragmentBar::DrawDownloadSimple( &dc, &rcCell, pDownload, crNatural );
+				else
+					dc.Draw3dRect( &rcCell, crBorder, crBorder );
+
+				
+
+				QWORD NonRandomEnd = pDownload->GetNonRandomEnd( TRUE );
+
+				if ( NonRandomEnd > 0 && pDownload->m_nSize > 0)
+				{
+					CRect rect(rcCell);
+
+					if ( NonRandomEnd > pDownload->m_nSize )
+						rect.left += rect.Width() - 3;
+					else
+						rect.left += ((rect.Width() - 3) * NonRandomEnd) / pDownload->m_nSize;
+					
+					rect.right = rect.left + 3;
+					rect.InflateRect(0, 2);
+					dc.FillSolidRect(&rect, crBorder);
+				}
+
+				if ( pDownload->m_nStartFrom > 0 && pDownload->m_nSize > 0 )
+				{
+					CRect rect(rcCell);
+
+					if ( pDownload->m_nStartFrom > pDownload->m_nSize )
+						rect.left += rect.Width() - 3;
+					else
+						rect.left += ((rect.Width() - 3) * pDownload->m_nStartFrom) / pDownload->m_nSize;
+
+					rect.right = rect.left + 3;
+					rect.InflateRect(0, 2);
+					dc.FillSolidRect(&rect, crBorder);
 				}
 				else
 				{
-					dc.Draw3dRect( &rcCell, crBorder, crBorder );
-					rcCell.DeflateRect( 1, 1 );
+					CRect rect(rcCell);
+					rect.right = rect.left + 3;
+					rect.InflateRect(0, 2);
+					dc.FillSolidRect(&rect, crBorder);
+				}
+
+				rcCell.DeflateRect( 1, 1 );
+
+				if ( Settings.Downloads.SimpleBar )
+					CFragmentBar::DrawDownloadSimple( &dc, &rcCell, pDownload, crNatural );
+				else
 					CFragmentBar::DrawDownload( &dc, &rcCell, pDownload, crNatural );
 				}
-			}
 			else if ( ( pDownload->m_nSize < SIZE_UNKNOWN ) && ( pDownload->m_nSize > 0 ) )
 				if ( rcCell.Width() > 50 )
 					strText.Format( _T("%.2f%%"), pDownload->GetProgress() );
@@ -1126,8 +1164,13 @@ void CDownloadsCtrl::PaintDownload(CDC& dc, const CRect& rcRow, CDownload* pDown
 			if ( pDownload->IsTrying() )
 			{
 				DWORD nSpeed = pDownload->GetAverageSpeed();
-				if ( nSpeed )
-					strText = Settings.SmartSpeed( nSpeed );
+				DWORD nRealSpeed = pDownload->GetRealSpeed();
+
+				if ( nSpeed && nRealSpeed )
+					strText.Format( _T("%s (%s)"),
+									Settings.SmartSpeed( nSpeed ),
+									Settings.SmartSpeed( nRealSpeed ) );
+									
 			}
 			break;
 
@@ -1879,6 +1922,15 @@ void CDownloadsCtrl::OnLButtonDown(UINT nFlags, CPoint point)
 		}
 		else
 		{
+			if ( pDownload != NULL && ( nFlags & ( MK_SHIFT | MK_CONTROL | MK_RBUTTON ) ) == 0 )
+			{
+				CRect rcCell;
+
+				m_wndHeader.GetItemRect( DOWNLOAD_COLUMN_PROGRESS, &rcCell );
+				if ( point.x >= rcCell.left + rcItem.left && point.x <= rcCell.right + rcItem.left - 3 )
+					pDownload->SetStartFrom( pDownload->m_nSize * ( point.x - ( rcCell.left + rcItem.left ) )  / ( rcCell.Width() - 3 ) );
+			}
+
 			if ( pDownload != NULL && pDownload->m_bSelected )
 			{
 				if ( ( nFlags & ( MK_SHIFT | MK_CONTROL | MK_RBUTTON ) ) == 0 )

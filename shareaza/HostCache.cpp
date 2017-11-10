@@ -346,7 +346,7 @@ void CHostCacheList::Clear()
 //////////////////////////////////////////////////////////////////////
 // CHostCacheList host add
 
-CHostCacheHostPtr CHostCacheList::Add(LPCTSTR pszHost, WORD nPort, DWORD tSeen, LPCTSTR pszVendor, DWORD nUptime, DWORD nCurrentLeaves, DWORD nLeafLimit)
+CHostCacheHostPtr CHostCacheList::Add(LPCTSTR pszHost, WORD nPort, const IN_ADDR* pFromAddress, DWORD tSeen, LPCTSTR pszVendor, DWORD nUptime, DWORD nCurrentLeaves, DWORD nLeafLimit)
 {
 	CString strHost( pszHost );
 	strHost.Trim();
@@ -361,10 +361,10 @@ CHostCacheHostPtr CHostCacheList::Add(LPCTSTR pszHost, WORD nPort, DWORD tSeen, 
 			return NULL;
 	}
 
-	return Add( NULL, nPort, tSeen, pszVendor, nUptime, nCurrentLeaves, nLeafLimit, strHost );
+	return Add( NULL, nPort, pFromAddress, tSeen, pszVendor, nUptime, nCurrentLeaves, nLeafLimit, strHost );
 }
 
-CHostCacheHostPtr CHostCacheList::Add(const IN_ADDR* pAddress, WORD nPort, DWORD tSeen, LPCTSTR pszVendor, DWORD nUptime, DWORD nCurrentLeaves, DWORD nLeafLimit, LPCTSTR szAddress)
+CHostCacheHostPtr CHostCacheList::Add(const IN_ADDR* pAddress, WORD nPort, const IN_ADDR* pFromAddress, DWORD tSeen, LPCTSTR pszVendor, DWORD nUptime, DWORD nCurrentLeaves, DWORD nLeafLimit, LPCTSTR szAddress)
 {
 	ASSERT( pAddress || szAddress );
 
@@ -394,6 +394,8 @@ CHostCacheHostPtr CHostCacheList::Add(const IN_ADDR* pAddress, WORD nPort, DWORD
 				Network.IsFirewalledAddress( pAddress, TRUE ) ||
 			// check against IANA Reserved address.
 				Network.IsReserved( pAddress ) ||
+			// Check address is valid
+				( pFromAddress != NULL && ! Network.IsValidAddressFor( pFromAddress, pAddress ) ) ||
 			// Check security settings, don't add blocked IPs
 				Security.IsDenied( pAddress ) )
 				// Bad IP
@@ -408,6 +410,8 @@ CHostCacheHostPtr CHostCacheList::Add(const IN_ADDR* pAddress, WORD nPort, DWORD
 			Network.IsFirewalledAddress( pAddress, TRUE ) ||
 		// check against IANA Reserved address.
 			Network.IsReserved( pAddress ) ||
+		// Check address is valid
+			( pFromAddress != NULL && ! Network.IsValidAddressFor( pFromAddress, pAddress ) ) ||
 		// Check security settings, don't add blocked IPs
 			Security.IsDenied( pAddress ) )
 			// Bad IP
@@ -422,6 +426,9 @@ CHostCacheHostPtr CHostCacheList::Add(const IN_ADDR* pAddress, WORD nPort, DWORD
 		pHost = Find( szAddress );
 	if ( ! pHost )
 	{
+		if ( Security.IsIgnoredCountry( theApp.GetCountryCode( *pAddress ) ) )
+			return NULL;
+
 		// Create new host
 		pHost = new CHostCacheHost( m_nProtocol );
 		if ( pHost )
@@ -570,7 +577,7 @@ void CHostCacheList::OnResolve(LPCTSTR szAddress, const IN_ADDR* pAddress, WORD 
 		else
 		{
 			// New host
-			pHost = Add( pAddress, nPort, 0, 0, 0, 0, 0, szAddress );
+			pHost = Add( pAddress, nPort, NULL, 0, 0, 0, 0, 0, szAddress );
 		}
 	}
 	else
@@ -695,7 +702,9 @@ void CHostCacheList::PruneOldHosts(DWORD tNow)
 
 		if ( ! pHost->m_bPriority &&
 			 ( pHost->m_nFailures > Settings.Connection.FailureLimit ||
-			   pHost->IsExpired( tNow ) ) )
+			   ( pHost->IsExpired( tNow ) && 
+			     ( pHost->m_nProtocol != PROTOCOL_G2 ||
+			       m_Hosts.size() >= 100 ) ) ) )
 		{
 			i = Remove( pHost );
 		}
@@ -903,7 +912,7 @@ int CHostCache::ImportHubList(CFile* pFile)
 			int nMaxusers = _tstoi( pHub->GetAttributeValue( _T("Maxusers") ) );
 
 			CQuickLock oLock( DC.m_pSection );
-			CHostCacheHostPtr pServer = DC.Add( NULL, protocolPorts[ PROTOCOL_DC ], 0,
+			CHostCacheHostPtr pServer = DC.Add( NULL, protocolPorts[ PROTOCOL_DC ], NULL, 0,
 				protocolNames[ PROTOCOL_DC ], 0, nUsers, nMaxusers, sAddress );
 			if ( pServer )
 			{
@@ -1627,7 +1636,9 @@ bool CHostCacheHost::CanConnect(DWORD tNow) const
 		// ...and we lost no hope on this host...
 		( m_nFailures <= Settings.Connection.FailureLimit ) &&
 		// ...and host isn't expired...
-		( m_bPriority || ! IsExpired( tNow ) ) &&
+		( m_bPriority || ! IsExpired( tNow ) ||
+			( this->m_nProtocol == PROTOCOL_G2 &&
+			  Neighbours.GetCount( PROTOCOL_G2, 7, 1 ) <= 1 ) ) &&
 		// ...and make sure we reconnect not too fast...
 		( ! IsThrottled( tNow ) );
 		// ...then we can connect!
@@ -1642,7 +1653,9 @@ bool CHostCacheHost::CanQuote(const DWORD tNow) const
 		// A host isn't dead...
 		( m_nFailures == 0 ) &&
 		// ...and host isn't expired...
-		( ! IsExpired( tNow ) );
+		( ! IsExpired( tNow ) ) &&
+		// ...and we checked this host...
+		( m_nUserLimit > 0 && m_bCheckedLocally );
 		// ...then we can tell about it to others!
 }
 

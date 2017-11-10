@@ -729,7 +729,7 @@ void CCoolInterface::CalculateColours(BOOL bCustom)
 	m_crFragmentFail		= RGB( 220, 0, 0 );
 	m_crFragmentRequest		= RGB( 255, 255, 0 );
 	m_crFragmentBorder		= RGB( 50, 50, 50 );
-	m_crFragmentBorderSelected	= RGB( 50, 50, 50 );
+	m_crFragmentBorderSelected	= RGB( 255, 255, 255 );
 	m_crFragmentBorderSimpleBar	= RGB( 50, 50, 50 );
 	m_crFragmentBorderSimpleBarSelected	= RGB( 255, 255, 255 );
 

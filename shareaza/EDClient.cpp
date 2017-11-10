@@ -1026,7 +1026,7 @@ BOOL CEDClient::OnHello(CEDPacket* pPacket)
 	// If we are learning new servers from clients
 	if ( Settings.eDonkey.LearnNewServersClient )
 	{	// Add their server
-		HostCache.eDonkey.Add( &m_pServer.sin_addr, htons( m_pServer.sin_port ) );
+		HostCache.eDonkey.Add( &m_pServer.sin_addr, htons( m_pServer.sin_port ), &m_pHost.sin_addr );
 	}
 
 	// Some clients append additional "stuff" at the end.
@@ -2266,7 +2266,7 @@ void CEDClient::WritePartStatus(CEDPacket* pPacket, CDownload* pDownload)
 
 	pPacket->WriteShortLE( (WORD)nParts );
 
-	if ( pDownload->m_pHashsetBlock != NULL && pDownload->m_nHashsetBlock == nParts )
+	if ( pDownload->IsHashsetSet() && pDownload->m_nHashsetBlock == nParts )
 	{
 		for ( QWORD nPart = 0 ; nPart < nParts ; )
 		{

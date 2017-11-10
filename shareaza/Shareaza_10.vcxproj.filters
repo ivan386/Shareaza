@@ -561,6 +561,9 @@
     <ClCompile Include="ZIPFile.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="ZLib.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
     <ClCompile Include="CtrlBrowseFrame.cpp">
       <Filter>Source Files\Controls</Filter>
     </ClCompile>
@@ -730,6 +733,9 @@
       <Filter>Source Files\Controls</Filter>
     </ClCompile>
     <ClCompile Include="DlgAbout.cpp">
+      <Filter>Source Files\Dialogs</Filter>
+    </ClCompile>
+    <ClCompile Include="DlgBitziDownload.cpp">
       <Filter>Source Files\Dialogs</Filter>
     </ClCompile>
     <ClCompile Include="DlgCloseMode.cpp">
@@ -1143,9 +1149,6 @@
     <ClCompile Include="MiniUPnP.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="ZLibWarp.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Midl Include="Shareaza.idl">
@@ -1168,6 +1171,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="BENode.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="BitziDownloader.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="BTClient.h">
@@ -1680,6 +1686,9 @@
     <ClInclude Include="ZIPFile.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="ZLib.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
     <ClInclude Include="CtrlBrowseFrame.h">
       <Filter>Header Files\Controls</Filter>
     </ClInclude>
@@ -1933,6 +1942,9 @@
       <Filter>Header Files\Windows</Filter>
     </ClInclude>
     <ClInclude Include="DlgAbout.h">
+      <Filter>Header Files\Dialogs</Filter>
+    </ClInclude>
+    <ClInclude Include="DlgBitziDownload.h">
       <Filter>Header Files\Dialogs</Filter>
     </ClInclude>
     <ClInclude Include="DlgCloseMode.h">
@@ -2302,9 +2314,6 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="UPnP.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="ZLibWarp.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

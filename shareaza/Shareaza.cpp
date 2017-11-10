@@ -86,6 +86,7 @@ const LPCTSTR RT_BMP = _T("BMP");
 const LPCTSTR RT_JPEG = _T("JPEG");
 const LPCTSTR RT_PNG = _T("PNG");
 const LPCTSTR RT_GZIP = _T("GZIP");
+const LPCTSTR RT_XSL = _T("XSL");
 // double scaleX = 1;
 // double scaleY = 1;
 
@@ -190,6 +191,8 @@ CShareazaApp::CShareazaApp()
 	,	m_bInteractive			( false )
 	,	m_bLive					( false )
 	,	m_bClosing				( false )
+,	m_bIsServer				( false )
+,	m_bIsWin2000			( false )
 	,	m_bIsVistaOrNewer		( false )
 	,	m_bIs7OrNewer			( false )
 	,	m_bLimitedConnections	( false )
@@ -296,7 +299,7 @@ CShareazaApp::CShareazaApp()
 	ZeroMemory( m_pBTVersion, sizeof( m_pBTVersion ) );
 
 // BugTrap http://www.intellesoft.net/
-	BT_SetAppName( CLIENT_NAME_T );
+	BT_SetAppName( MOD_CLIENT_NAME_T );
 	BT_SetFlags( BTF_INTERCEPTSUEF | BTF_SHOWADVANCEDUI | BTF_DESCRIBEERROR | BTF_DETAILEDMODE | BTF_ATTACHREPORT | BTF_EDITMAIL );
 	BT_SetExitMode( BTEM_CONTINUESEARCH );
 	BT_SetDumpType( 0x00001851 /* MiniDumpWithDataSegs | MiniDumpScanMemory | MiniDumpWithIndirectlyReferencedMemory | MiniDumpWithFullMemoryInfo | MiniDumpWithThreadInfo */ );
@@ -378,10 +381,10 @@ BOOL CShareazaApp::InitInstance()
 	tCompileTime.ParseDateTime( _T(__DATE__), LOCALE_NOUSEROVERRIDE, 1033 );
 	COleDateTime tCurrent = COleDateTime::GetCurrentTime();
 	COleDateTimeSpan tTimeOut( 7, 0, 0, 0);			// Daily builds
-	if ( ( tCompileTime + tTimeOut )  < tCurrent )
+	if ( ! m_cmdInfo.m_bNoAlphaWarning && ( tCompileTime + tTimeOut )  < tCurrent )
 	{
 		if ( MsgBox(
-			_T("This is a pre-release version of ") CLIENT_NAME_T _T(", and the beta testing period has ended.  ")
+			_T("This is a pre-release version of ") MOD_CLIENT_NAME_T _T(", and the beta testing period has ended.  ")
 			_T("Please download the full, official release from ") WEB_SITE_T _T("."), MB_ICONQUESTION|MB_OK, 0, NULL, 30 ) != IDOK )
 			return FALSE;
 	}
@@ -390,7 +393,7 @@ BOOL CShareazaApp::InitInstance()
 	if ( ! m_cmdInfo.m_bNoAlphaWarning && m_cmdInfo.m_bShowSplash )
 	{
 		if ( MsgBox(
-			_T("WARNING: This is an ALPHA TEST version of ") CLIENT_NAME_T _T(".\n\n")
+			_T("WARNING: This is an ALPHA TEST version of ") MOD_CLIENT_NAME_T _T(".\n\n")
 			_T("It is NOT FOR GENERAL USE, and is only for testing specific features in a controlled ")
 			_T("environment. It will frequently stop running, or display debug information to assist testing.\n\n")
 			_T("If you wish to actually use this software, you should download ")
@@ -747,7 +750,7 @@ BOOL CShareazaApp::Register()
 		//	oTasks.AddTask( _T("shareaza:command:search"), _T(""), LoadString( IDS_SEARCH_TASK ) + _T("..."), theApp.m_strBinaryPath, - IDR_SEARCHFRAME );
 		//	oTasks.AddTask( _T("shareaza:command:download"), _T(""), LoadString( IDS_DOWNLOAD_TASK ) + _T("..."), theApp.m_strBinaryPath, - IDR_DOWNLOADSFRAME );
 
-		// For VS2008:
+		/*/ For VS2008:
 		CComPtr< ICustomDestinationList > pList;
 		if ( SUCCEEDED( pList.CoCreateInstance( CLSID_DestinationList ) ) )
 		{
@@ -777,6 +780,7 @@ BOOL CShareazaApp::Register()
 
 			VERIFY( SUCCEEDED( pList->CommitList() ) );
 		}
+		//*/
 	}
 
 	return CWinApp::Register();
@@ -800,7 +804,9 @@ void CShareazaApp::AddToRecentFileList(LPCTSTR lpszPathName)
 {
 	SHAddToRecentDocs( SHARD_PATHW, lpszPathName );
 
-
+/*/ 
+	if ( Windows.dwMajorVersion > 6 || ( Windows.dwMajorVersion == 6 && Windows.dwMinorVersion >= 1 ) )
+	{
 	if ( m_pfnSHCreateItemFromParsingName )
 	{
 		CComPtr< IShellItem > pItem;
@@ -810,6 +816,8 @@ void CShareazaApp::AddToRecentFileList(LPCTSTR lpszPathName)
 			SHAddToRecentDocs( SHARD_APPIDINFO, &info );
 		}
 	}
+}
+//*/
 }
 
 CDocument* CShareazaApp::OpenDocumentFile(LPCTSTR lpszFileName)
@@ -1073,11 +1081,11 @@ void CShareazaApp::InitResources()
 #ifdef LAN_MODE
 		_T(" LAN")
 #endif
-		_T(" (r") _T(__REVISION__) _T(" ") + m_sBuildDate + _T(")");
+		_T(" (r") _T(__REVISION__) _T("i ") + m_sBuildDate + _T(")");
 
 	BT_SetAppVersion( m_sVersionLong );
 
-	m_sSmartAgent = CLIENT_NAME_T;
+	m_sSmartAgent = MOD_CLIENT_NAME_T;
 	m_sSmartAgent += _T(" ");
 	m_sSmartAgent += m_sVersion;
 
@@ -2710,6 +2718,9 @@ CString LoadHTML(HINSTANCE hInstance, UINT nResourceID)
 	BOOL bGZIP = FALSE;
 	HRSRC hRes = FindResource( hInstance, MAKEINTRESOURCE( nResourceID ), RT_HTML );
 	if ( ! hRes )
+		hRes = FindResource( hInstance, MAKEINTRESOURCE( nResourceID ), RT_XSL );
+
+	if ( ! hRes )
 	{
 		hRes = FindResource( hInstance, MAKEINTRESOURCE( nResourceID ), RT_GZIP );
 		bGZIP = ( hRes != NULL );
@@ -2779,7 +2790,7 @@ CString LoadRichHTML(UINT nResourceID, CString& strResponse, CShareazaFile* pFil
 		strReplace.TrimRight();
 
 		if ( strReplace.CompareNoCase( _T("Client") ) == 0 )
-			strReplace = CLIENT_NAME_T;
+			strReplace = MOD_CLIENT_NAME_T;
 		else if ( strReplace.CompareNoCase( _T("SmartAgent") ) == 0 )
 			strReplace = theApp.m_sSmartAgent;
 		else if ( strReplace.CompareNoCase( _T("Name") ) == 0 )
@@ -3443,7 +3454,7 @@ CProgressDialog::CProgressDialog(LPCTSTR szTitle, DWORD dwFlags)
 {
 	if ( SUCCEEDED( CoCreateInstance( CLSID_ProgressDialog ) ) )
 	{
-		p->SetTitle( CLIENT_NAME_T );
+		p->SetTitle( MOD_CLIENT_NAME_T );
 		p->SetLine( 1, szTitle, FALSE, NULL );
 		p->StartProgressDialog( theApp.SafeMainWnd() ? theApp.SafeMainWnd()->GetSafeHwnd() : GetDesktopWindow(), NULL, dwFlags, NULL );
 	}

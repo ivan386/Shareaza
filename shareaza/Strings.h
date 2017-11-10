@@ -29,7 +29,7 @@
 #define _P(x)	(x),(_countof(x)-1)
 #define _PT(x)	_P(_T(x))
 
-#define IsSpace(ch)	((ch) == _T(' ') || (ch) == _T('\t') || (ch) == _T('\r') || (ch) == _T('\n'))
+#define IsSpaceW(ch)	((ch) == _T(' ') || (ch) == _T('\t') || (ch) == _T('\r') || (ch) == _T('\n'))
 
 bool IsCharacter(WCHAR nChar);
 bool IsHiragana(WCHAR nChar);

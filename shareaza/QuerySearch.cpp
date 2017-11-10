@@ -80,7 +80,8 @@ CQuerySearch::CQuerySearch(BOOL bGUID) :
 	m_bWhatsNew	( false ),
 	m_bDropMe	( false ),
 	m_oWords	(),
-	m_oNegWords	()
+	m_oNegWords	(),
+	m_nMyAddress()
 {
 	if ( bGUID ) Network.CreateID( m_oGUID );
 
@@ -681,12 +682,18 @@ CDCPacket* CQuerySearch::ToDCPacket() const
 	strSearch.Replace( _T('|'), _T('$') );
 
 	CString strAddress;
+
+	SOCKADDR_IN nMyHost(Network.m_pHost);
+
+	if (m_nMyAddress.S_un.S_addr)
+		nMyHost.sin_addr = m_nMyAddress;
+
 	if ( Network.IsFirewalled( CHECK_IP ) )
 		// Passive search
 		strAddress = _T("Hub:") + m_sMyNick;
 	else
 		// Active search
-		strAddress = HostToString( &Network.m_pHost );
+		strAddress = HostToString( &nMyHost );
 
 	CString strQuery;
 	strQuery.Format( _T("$Search %s %c?%c?%I64u?%d?%s|"),

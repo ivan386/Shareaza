@@ -92,6 +92,8 @@ public:
 	volatile bool		m_bInteractive;				// Shareaza begins initialization
 	volatile bool		m_bLive;					// Shareaza fully initialized
 	volatile bool		m_bClosing;					// Shareaza begins closing
+	bool				m_bIsServer;				// Is OS a Server version
+	bool				m_bIsWin2000;				// Is OS Windows 2000
 	bool				m_bIsVistaOrNewer;			// Is OS Vista or newer
 	bool				m_bIs7OrNewer;				// Is OS 7 or newer
 	bool				m_bLimitedConnections;		// Networking is limited (XP SP2)
@@ -419,6 +421,8 @@ __int64 GetRandomNum<__int64>(const __int64& min, const __int64& max);
 #define CLIENT_NAME			"Shareaza"
 #define CLIENT_NAME_T		_T( CLIENT_NAME )
 
+#define MOD_CLIENT_NAME_T	_T("i") CLIENT_NAME_T
+
 // Client's main window class name
 #define CLIENT_HWND			CLIENT_NAME_T _T("MainWnd")
 
@@ -429,18 +433,18 @@ __int64 GetRandomNum<__int64>(const __int64& min, const __int64& max);
 
 // 4 Character vendor code (used on G1, G2)
 // BEAR, LIME, RAZA, RAZB, etc
-#define VENDOR_CODE			"RAZA"
+#define VENDOR_CODE			"RAZI"
 
 // ed2k client ID number.
 // 0 = eMule, 1 = cDonkey, 4 = old Shareaza alpha/beta/mod/fork, 0x28 (40) = Shareaza, 0xcb (203) = ShareazaPlus with RazaCB core, etc
-#define ED2K_CLIENT_ID		40
+#define ED2K_CLIENT_ID		41
 
 // 2 Character BT peer-id code
 // SZ = Shareaza, S~ = old Shareaza alpha/beta , CB = ShareazaPlus with RazaCB core, AZ = Azureus, etc
-#define BT_ID1				'S'
-#define BT_ID2				'Z'
+#define BT_ID1				'i'
+#define BT_ID2				'S'
 
-#define WEB_SITE			"http://shareaza.sourceforge.net/"
+#define WEB_SITE			"http://ivan386.github.io/"
 #define WEB_SITE_T			_T( WEB_SITE )
 
 // URLs used by Shareaza

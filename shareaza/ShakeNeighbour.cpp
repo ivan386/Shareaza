@@ -350,9 +350,8 @@ void CShakeNeighbour::SendPublicHeaders()
 	m_bSentAddress |= SendMyAddress(); // Returns true if the header is sent, set m_bSentAddress true once its sent
 
 	// Tell the remote computer what IP address it has from here with a header like "Remote-IP: 81.103.192.245"
-	Write( _P("Remote-IP: ") );
-	Write( CString( inet_ntoa( m_pHost.sin_addr ) ) );
-	Write( _P("\r\n") );
+	strHeader.Format( _T("Remote-IP: %s:%i\r\n"), (LPCTSTR)CString( inet_ntoa( m_pHost.sin_addr ) ), htons( m_pHost.sin_port ) );
+	Write( strHeader );
 
 	// Shareaza Settings allow us to exchange compressed data with this computer
 	if ( m_bCanDeflate )
@@ -530,7 +529,7 @@ void CShakeNeighbour::SendHostHeaders(LPCSTR pszMessage, size_t nLength)
 		{
 			CHostCacheHostPtr pHost = (*i);
 
-			if ( pHost->CanQuote( nTime ) )		// if host is still recent enough
+			if ( pHost->CanQuote( nTime ) && Network.IsValidAddressFor( &m_pHost.sin_addr , &pHost->m_pAddress ) )		// if host is still recent enough
 			{
 				if ( strHosts.GetLength() ) strHosts += _T(",");	// Separate each computer's info with a comma
 				strHosts += pHost->ToString();						// Add this computer's info to the string
@@ -562,7 +561,7 @@ void CShakeNeighbour::SendHostHeaders(LPCSTR pszMessage, size_t nLength)
 			CHostCacheHostPtr pHost = (*i);
 
 			// This host is still recent enough to tell another computer about
-			if ( pHost->CanQuote( nTime ) )
+			if ( pHost->CanQuote( nTime ) && Network.IsValidAddressFor( &m_pHost.sin_addr , &pHost->m_pAddress ) )
 			{
 				if ( strHosts.GetLength() ) strHosts += _T(",");
 				strHosts += pHost->ToString( m_bClientExtended != FALSE );
@@ -703,7 +702,7 @@ BOOL CShakeNeighbour::OnHeaderLine(CString& strHeader, CString& strValue)
 	else if ( strHeader.CompareNoCase( _T("Remote-IP") ) == 0 )
 	{
 		// Give the value, which is text like "1.2.3.4", to the Network object
-		Network.AcquireLocalAddress( strValue );
+		Network.AcquireLocalAddress( strValue, 0, &m_pHost.sin_addr );
 	} // The remote computer is telling us its IP address
 	else if (	strHeader.CompareNoCase( _T("X-My-Address") ) == 0 ||
 				strHeader.CompareNoCase( _T("Listen-IP") ) == 0 ||
@@ -1006,7 +1005,7 @@ BOOL CShakeNeighbour::OnHeadersCompleteG2()
 
 	if ( m_bUltraPeerSet == TRI_TRUE )
 	{
-		HostCache.Gnutella2.Add( &m_pHost.sin_addr, htons( m_pHost.sin_port ) );
+		HostCache.Gnutella2.Add( &m_pHost.sin_addr, htons( m_pHost.sin_port ), &m_pHost.sin_addr );
 	}
 
 	// The remote computer replied to our headers with something other than "200 OK"
@@ -1219,7 +1218,7 @@ BOOL CShakeNeighbour::OnHeadersCompleteG1()
 
 	if ( m_bUltraPeerSet == TRI_TRUE )
 	{
-		HostCache.Gnutella1.Add( &m_pHost.sin_addr, htons( m_pHost.sin_port ) );
+		HostCache.Gnutella1.Add( &m_pHost.sin_addr, htons( m_pHost.sin_port ), &m_pHost.sin_addr );
 	}
 
 	// Check if Gnutella1 is enabled before connecting to a gnutella client
