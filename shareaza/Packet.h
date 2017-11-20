@@ -125,6 +125,7 @@ public:
 
 	// Gives this packet and related objects to each window in the tab bar for them to process it
 	virtual void SmartDump(const SOCKADDR_IN* pAddress, BOOL bUDP, BOOL bOutgoing, DWORD_PTR nNeighbourUnique = 0);
+	virtual void SmartDump(const SOCKADDR_IN6* pAddress, BOOL bUDP, BOOL bOutgoing, DWORD_PTR nNeighbourUnique = 0);
 
 public:
 	// Does nothing (do)

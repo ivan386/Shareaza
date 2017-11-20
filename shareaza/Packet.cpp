@@ -468,6 +468,18 @@ void CPacket::SmartDump(const SOCKADDR_IN* pAddress, BOOL bUDP, BOOL bOutgoing, 
 	}
 }
 
+void CPacket::SmartDump(const SOCKADDR_IN6* pAddress, BOOL bUDP, BOOL bOutgoing, DWORD_PTR nNeighbourUnique)
+{
+	m_bUDP = bUDP;
+	m_bOutgoing = bOutgoing;
+	m_nNeighbourUnique = nNeighbourUnique;
+
+	if ( theApp.m_pPacketWnd )
+	{
+		theApp.m_pPacketWnd->SmartDump( this, pAddress, bUDP, bOutgoing, nNeighbourUnique );
+	}
+}
+
 // Does nothing, and is not overriden by any inheritng class (do)
 void CPacket::RazaSign()
 {

@@ -46,6 +46,7 @@ public:
 	DWORD				m_tRequest;			// The time a request was sent
 
 	virtual BOOL	ConnectTo(const IN_ADDR* pAddress, WORD nPort);
+	virtual BOOL	ConnectToIPv6(const IN6_ADDR* pAddress, WORD nPort);
 	virtual void	AttachTo(CConnection* pConnection);
 	virtual void	Close(UINT nError = 0);
 

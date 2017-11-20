@@ -21,7 +21,7 @@
 
 #pragma once
 
-#define DOWNLOAD_SER_VERSION	42
+#define DOWNLOAD_SER_VERSION	43
 // History:
 // 33 - added m_sSearchKeyword to CDownloadBase (CyberBob)
 // 34 - added m_bSeeding and m_sServingFileName to CDownloadWithTorrent (Rolandas)
@@ -33,6 +33,7 @@
 // 40 - added virtual fragmented file (Ryo-oh-ki)
 // 41 - added m_sName to CFragmentedFile (Ryo-oh-ki)
 // 42 - added m_bMetaIgnore to CDownloadSource (Ryo-oh-ki)
+// 43 - added m_pIPv6Address and m_pIPv6ServerAddress to CDownloadSource (ivan386)
 
 #include "DownloadWithExtras.h"
 

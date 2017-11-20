@@ -117,6 +117,7 @@ CNetwork::CNetwork()
 	, UPnPFinder			( NULL )
 	, Firewall				( new CFirewall() )
 	, m_pHost				()
+	, m_pHostIPv6			()
 	, m_bAutoConnect		( FALSE )
 	, m_bConnected			( false )
 	, m_tStartedConnecting	( 0 )
@@ -126,6 +127,7 @@ CNetwork::CNetwork()
 	, m_bHomeNetworkNAT		( FALSE )
 {
 	m_pHost.sin_family = AF_INET;
+	m_pHostIPv6.sin6_family = AF_INET6;
 }
 
 CNetwork::~CNetwork()
@@ -216,6 +218,11 @@ BOOL CNetwork::IsSelfIP(const IN_ADDR& nAddress) const
 
 	CQuickLock oHALock( m_pHASection );
 	return ( m_pHostAddresses.Find( nAddress.s_addr ) != NULL );
+}
+
+BOOL CNetwork::IsSelfIP(const IN6_ADDR& nAddress) const
+{
+	return memcmp( &nAddress, &m_pHostIPv6.sin6_addr, 16 ) == 0;
 }
 
 HINTERNET CNetwork::InternetOpen()
@@ -412,19 +419,31 @@ BOOL CNetwork::ConnectTo(LPCTSTR pszAddress, int nPort, PROTOCOLID nProtocol, BO
 		nPort = protocolPorts[ ( nProtocol == PROTOCOL_ANY ) ? PROTOCOL_NULL : nProtocol ];
 	}
 
-	// Try to quick resolve dotted IP address
-	SOCKADDR_IN saHost;
-	if ( ! Resolve( pszAddress, nPort, &saHost, FALSE ) )
-		// Bad address
-		return FALSE;
-
-	if ( saHost.sin_addr.s_addr != INADDR_ANY )
+	SOCKADDR_IN6 saHost;
+	if ( Network.IPv6FromString( pszAddress, &saHost ) )
 	{
-		// It's dotted IP address
-		HostCache.ForProtocol( nProtocol )->Add( &saHost.sin_addr, ntohs( saHost.sin_port ), NULL );
+		// It's IPv6 address
+		HostCache.ForProtocol( nProtocol )->AddIPv6( &saHost.sin6_addr, ntohs( saHost.sin6_port ), NULL );
 
-		Neighbours.ConnectTo( saHost.sin_addr, ntohs( saHost.sin_port ), nProtocol, FALSE, bNoUltraPeer );
+		Neighbours.ConnectTo( saHost.sin6_addr, ntohs( saHost.sin6_port ), nProtocol, FALSE, bNoUltraPeer );
 		return TRUE;
+	}
+	else
+	{
+		// Try to quick resolve dotted IP address
+		SOCKADDR_IN saHost;
+		if ( ! Resolve( pszAddress, nPort, &saHost, FALSE ) )
+			// Bad address
+			return FALSE;
+
+		if ( saHost.sin_addr.s_addr != INADDR_ANY )
+		{
+			// It's dotted IP address
+			HostCache.ForProtocol( nProtocol )->Add( &saHost.sin_addr, ntohs( saHost.sin_port ), NULL );
+
+			Neighbours.ConnectTo( saHost.sin_addr, ntohs( saHost.sin_port ), nProtocol, FALSE, bNoUltraPeer );
+			return TRUE;
+		}
 	}
 
 	return AsyncResolve( pszAddress, (WORD)nPort, nProtocol, bNoUltraPeer ? (BYTE)RESOLVE_CONNECT : (BYTE)RESOLVE_CONNECT_ULTRAPEER );
@@ -439,12 +458,19 @@ BOOL CNetwork::AcquireLocalAddress(SOCKET hSocket)
 	SOCKADDR_IN pAddress = {};
 	int nSockLen = sizeof( pAddress );
 	if ( getsockname( hSocket, (SOCKADDR*)&pAddress, &nSockLen ) != 0 )
-		return FALSE;
+	{
+		SOCKADDR_IN6 pAddress = {};
+		nSockLen = sizeof( pAddress );
+		if ( getsockname( hSocket, (SOCKADDR*)&pAddress, &nSockLen ) != 0 )
+			return FALSE;
 
-	return AcquireLocalAddress( pAddress.sin_addr );
+		return AcquireLocalAddress( pAddress.sin6_addr );
+	}
+	else
+		return AcquireLocalAddress( pAddress.sin_addr );
 }
 
-BOOL CNetwork::AcquireLocalAddress(LPCTSTR pszHeader, WORD nPort, const IN_ADDR* pFromAddress)
+BOOL CNetwork::AcquireLocalAddress(LPCTSTR pszHeader, WORD nPort, const IN_ADDR* pFromAddress, const IN6_ADDR* pFromIPv6Address)
 {
 	int nIPb1, nIPb2, nIPb3, nIPb4;
 	if ( _stscanf( pszHeader, _T("%i.%i.%i.%i"), &nIPb1, &nIPb2, &nIPb3, &nIPb4 ) != 4 ||
@@ -452,7 +478,14 @@ BOOL CNetwork::AcquireLocalAddress(LPCTSTR pszHeader, WORD nPort, const IN_ADDR*
 		nIPb2 < 0 || nIPb2 > 255 ||
 		nIPb3 < 0 || nIPb3 > 255 ||
 		nIPb4 < 0 || nIPb4 > 255 )
-		return FALSE;
+	{
+		SOCKADDR_IN6 pHost;
+
+		if ( Network.IPv6FromString( pszHeader, &pHost ) )
+			return AcquireLocalAddress( pHost.sin6_addr, nPort, pFromIPv6Address );
+		else
+			return FALSE;
+	}
 
 	IN_ADDR pAddress;
 	pAddress.S_un.S_un_b.s_b1 = (BYTE)nIPb1;
@@ -509,6 +542,16 @@ BOOL CNetwork::AcquireLocalAddress(const IN_ADDR& pAddress, WORD nPort, const IN
 			m_pHost.sin_addr.s_addr = pAddress.s_addr;
 		}
 	}
+
+	return TRUE;
+}
+
+BOOL CNetwork::AcquireLocalAddress(const IN6_ADDR& pAddress, WORD nPort, const IN6_ADDR* pFromAddress)
+{
+	if ( nPort )
+		m_pHostIPv6.sin6_port = htons( nPort );
+
+	m_pHostIPv6.sin6_addr = pAddress;
 
 	return TRUE;
 }
@@ -856,6 +899,16 @@ BOOL CNetwork::IsFirewalledAddress(const IN_ADDR* pAddress, BOOL bIncludeSelf, B
 		return TRUE;
 	return FALSE;
 #endif // LAN_MODE
+}
+
+BOOL CNetwork::IsFirewalledAddress(const IN6_ADDR* pAddress, BOOL bIncludeSelf, BOOL bIgnoreLocalIP) const
+{
+	if ( ! pAddress )
+		return TRUE;
+	if ( bIncludeSelf && IsSelfIP( *pAddress ) )
+		return TRUE;
+
+	return FALSE;
 }
 
 // Get external incoming port (in host byte order)
@@ -1639,6 +1692,47 @@ SOCKET CNetwork::AcceptSocket(SOCKET hSocket, SOCKADDR_IN* addr, LPCONDITIONPROC
 	}
 }
 
+SOCKET CNetwork::AcceptSocket(SOCKET hSocket, SOCKADDR_IN6* addr, LPCONDITIONPROC lpfnCondition, DWORD_PTR dwCallbackData)
+{
+	__try	// Fix against stupid firewalls like (iS3 Anti-Spyware or Norman Virus Control)
+	{
+		int len = sizeof( SOCKADDR_IN6 );
+		return WSAAccept( hSocket, (SOCKADDR*)addr, &len, lpfnCondition, dwCallbackData );
+	}
+	__except( EXCEPTION_EXECUTE_HANDLER )
+	{
+		return INVALID_SOCKET;
+	}
+}
+
+BOOL CNetwork::IPv6FromString(CString sIPv6, SOCKADDR_IN6* nAddress)
+{
+	LPWSTR psIPv6 = sIPv6.GetBuffer();
+
+	int size = sizeof(SOCKADDR_IN6);
+
+	return ( WSAStringToAddress( psIPv6, AF_INET6, NULL, (struct sockaddr *) nAddress, &size ) == 0 );
+}
+
+CString CNetwork::IPv6ToString(const IN6_ADDR* pAddress)
+{
+	SOCKADDR_IN6 pHost = { AF_INET6 };
+	pHost.sin6_addr = (*pAddress);
+	return IPv6ToString( &pHost );
+}
+
+CString CNetwork::IPv6ToString(const SOCKADDR_IN6* pAddress)
+{
+	CString sIPv6;
+
+	LPWSTR pBuffer = sIPv6.GetBuffer( IP6_ADDRESS_STRING_LENGTH + 1);
+	unsigned long nBuffer = ( IP6_ADDRESS_STRING_LENGTH + 1 ) * sizeof(WCHAR) ;
+		
+	WSAAddressToString( (struct sockaddr *) pAddress, sizeof( SOCKADDR_IN6 ), NULL, pBuffer, &nBuffer );
+
+	return sIPv6;
+}
+
 void CNetwork::CloseSocket(SOCKET& hSocket, const bool bForce)
 {
 	if ( hSocket != INVALID_SOCKET )
@@ -1687,6 +1781,18 @@ int CNetwork::SendTo(SOCKET s, const char* buf, int len, const SOCKADDR_IN* pTo)
 	}
 }
 
+int CNetwork::SendToIPv6(SOCKET s, const char* buf, int len, const SOCKADDR_IN6* pTo)
+{
+	__try	// Fix against stupid firewalls like (iS3 Anti-Spyware or Norman Virus Control)
+	{
+		return sendto( s, buf, len, 0, (const SOCKADDR*)pTo, sizeof( SOCKADDR_IN6 ) );
+	}
+	__except( EXCEPTION_EXECUTE_HANDLER )
+	{
+		return -1;
+	}
+}
+
 int CNetwork::Recv(SOCKET s, char* buf, int len)
 {
 	__try	// Fix against stupid firewalls like (iS3 Anti-Spyware or Norman Virus Control)
@@ -1704,6 +1810,19 @@ int CNetwork::RecvFrom(SOCKET s, char* buf, int len, SOCKADDR_IN* pFrom)
 	__try	// Fix against stupid firewalls like (iS3 Anti-Spyware or Norman Virus Control)
 	{
 		int nFromLen = sizeof( SOCKADDR_IN );
+		return recvfrom( s, buf, len, 0, (SOCKADDR*)pFrom, &nFromLen );
+	}
+	__except( EXCEPTION_EXECUTE_HANDLER )
+	{
+		return -1;
+	}
+}
+
+int CNetwork::RecvFromIPv6(SOCKET s, char* buf, int len, SOCKADDR_IN6* pFrom)
+{
+	__try	// Fix against stupid firewalls like (iS3 Anti-Spyware or Norman Virus Control)
+	{
+		int nFromLen = sizeof( SOCKADDR_IN6 );
 		return recvfrom( s, buf, len, 0, (SOCKADDR*)pFrom, &nFromLen );
 	}
 	__except( EXCEPTION_EXECUTE_HANDLER )

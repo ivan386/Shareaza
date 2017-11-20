@@ -82,6 +82,8 @@ class CBENode;
 
 const LPCSTR BT_DICT_ADDED			= "added";
 const LPCSTR BT_DICT_ADDED_F		= "added.f";
+const LPCSTR BT_DICT_ADDED6			= "added6";
+const LPCSTR BT_DICT_ADDED6_F		= "added6.f";
 const LPCSTR BT_DICT_ANNOUNCE_PEER	= "announce_peer";
 const LPCSTR BT_DICT_COMPLETE		= "complete";
 const LPCSTR BT_DICT_DATA			= "a";
@@ -146,6 +148,7 @@ public:
 	virtual	void		ToBuffer(CBuffer* pBuffer, bool bTCP = true);
 	static	CBTPacket*	ReadBuffer(CBuffer* pBuffer);
 	virtual void		SmartDump(const SOCKADDR_IN* pAddress, BOOL bUDP, BOOL bOutgoing, DWORD_PTR nNeighbourUnique = 0);
+	virtual void		SmartDump(const SOCKADDR_IN6* pAddress, BOOL bUDP, BOOL bOutgoing, DWORD_PTR nNeighbourUnique = 0);
 	virtual CString		GetType() const;
 	virtual CString		ToHex()   const;
 	virtual CString		ToASCII() const;
@@ -185,6 +188,7 @@ public:
 
 	// Packet handler
 	virtual BOOL OnPacket(const SOCKADDR_IN* pHost);
+	virtual BOOL OnPacket(const SOCKADDR_IN6* pHost);
 
 //	BOOL OnPing(const SOCKADDR_IN* pHost);
 //	BOOL OnError(const SOCKADDR_IN* pHost);
@@ -239,12 +243,14 @@ public:
 
 	// Ping this host
 	bool Ping(const IN_ADDR* pAddress, WORD nPort);
+	bool Ping(const IN6_ADDR* pAddress, WORD nPort);
 
 	// Run this periodically
 	void OnRun();
 
 	// Packet processor
 	void OnPacket(const SOCKADDR_IN* pHost, CBTPacket* pPacket);
+	void OnPacket(const SOCKADDR_IN6* pHost, CBTPacket* pPacket);
 
 protected:
 	bool	m_bConnected;

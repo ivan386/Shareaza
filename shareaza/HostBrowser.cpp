@@ -149,6 +149,7 @@ BOOL CHostBrowser::Browse()
 		oURL.m_nProtocol		= PROTOCOL_DC;
 		oURL.m_nAction			= CShareazaURL::uriDownload;
 		oURL.m_pServerAddress	= m_pAddress;
+		oURL.m_pIPv6ServerAddress= m_pIPv6Address;
 		oURL.m_nServerPort		= m_nPort;
 		oURL.m_sLogin			= m_sNick;
 		oURL.m_sName.Format( _T("Files of %s.xml.bz2"), (LPCTSTR)SafeFilename( m_sNick ) );
@@ -430,6 +431,7 @@ BOOL CHostBrowser::OnPush(const Hashes::Guid& oClientID, CConnection* pConnectio
 	AttachTo( pConnection );
 
 	m_pAddress	= m_pHost.sin_addr;
+	m_pIPv6Address =  m_pHostIPv6.sin6_addr;
 	m_nPort		= htons( m_pHost.sin_port );
 
 	SendRequest();
@@ -544,6 +546,7 @@ BOOL CHostBrowser::LoadDCDirectory(CXMLElement* pRoot, CQueryHit*& pHits)
 				pHit->m_bBusy		= TRI_FALSE;
 				pHit->m_bPush		= TRI_TRUE;
 				pHit->m_pAddress	= m_pAddress;
+				pHit->m_pIPv6Address= m_pIPv6Address;
 				pHit->m_nPort		= m_nPort;
 				pHit->m_sCountry	= theApp.GetCountryCode( m_pAddress );
 				pHit->m_pVendor		= m_pVendor ? m_pVendor : VendorCache.m_pNull;
@@ -1039,6 +1042,7 @@ BOOL CHostBrowser::StreamHTML()
 			CQueryHit* pHit = new CQueryHit( PROTOCOL_NULL );
 
 			pHit->m_pAddress	= m_pHost.sin_addr;
+			pHit->m_pIPv6Address= m_pHostIPv6.sin6_addr;
 			pHit->m_nPort		= htons( m_pHost.sin_port );
 			pHit->m_pVendor		= m_pVendor ? m_pVendor : VendorCache.m_pNull;
 			pHit->m_bPush		= ( m_tPushed ) ? TRI_TRUE : TRI_FALSE;

@@ -107,7 +107,11 @@ BOOL CBTClient::Connect(CDownloadTransferBT* pDownloadTransfer)
 
 	const CDownloadSource* pSource = pDownloadTransfer->GetSource();
 
-	if ( ! CTransfer::ConnectTo( &pSource->m_pAddress, pSource->m_nPort ) ) return FALSE;
+	if ( pSource->IsIPv6Source() )
+	{
+		if ( ! CTransfer::ConnectToIPv6( &pSource->m_pIPv6Address, pSource->m_nPort ) ) return FALSE;
+	}
+	else if ( ! CTransfer::ConnectTo( &pSource->m_pAddress, pSource->m_nPort ) ) return FALSE;
 
 	m_pDownload			= pDownloadTransfer->GetDownload();
 	m_pDownloadTransfer	= pDownloadTransfer;
@@ -183,7 +187,10 @@ void CBTClient::Send(CBTPacket* pPacket, BOOL bRelease)
 
 		Statistics.Current.BitTorrent.Outgoing++;
 
-		pPacket->SmartDump( &m_pHost, FALSE, TRUE );
+		if ( m_pHost.sin_addr.s_addr )
+			pPacket->SmartDump( &m_pHost, FALSE, TRUE );
+		else
+			pPacket->SmartDump( &m_pHostIPv6, FALSE, TRUE );
 
 		Write( pPacket );
 		if ( bRelease ) pPacket->Release();
@@ -422,7 +429,7 @@ BOOL CBTClient::OnHandshake1()
 			Close( IDS_BT_CLIENT_INACTIVE_FILE );
 			return FALSE;
 		}
-		else if ( m_pDownload->UploadExists( &m_pHost.sin_addr ) )	// If there is already an upload of this file to this client
+		else if ( m_pHost.sin_addr.s_addr ? m_pDownload->UploadExists( &m_pHost.sin_addr ) : m_pDownload->UploadExists( &m_pHostIPv6.sin6_addr ) )	// If there is already an upload of this file to this client
 		{
 			// Display an error and exit
 			m_pDownload = NULL;
@@ -989,7 +996,10 @@ BOOL CBTClient::OnPacket(CBTPacket* pPacket)
 {
 	Statistics.Current.BitTorrent.Incoming++;
 
-	pPacket->SmartDump( &m_pHost, FALSE, FALSE );
+	if ( m_pHost.sin_addr.s_addr )
+		pPacket->SmartDump( &m_pHost, FALSE, FALSE );
+	else
+		pPacket->SmartDump( &m_pHostIPv6, FALSE, FALSE );
 
 	switch ( pPacket->m_nType )
 	{
@@ -1206,7 +1216,10 @@ BOOL CBTClient::OnDHTPort(CBTPacket* pPacket)
 	if ( pPacket && pPacket->GetRemaining() == 2 )
 	{
 		// Test this node via UDP
-		DHT.Ping( &m_pHost.sin_addr, pPacket->ReadShortBE() );
+		if ( m_pHost.sin_addr.s_addr )
+			DHT.Ping( &m_pHost.sin_addr, pPacket->ReadShortBE() );
+		else
+			DHT.Ping( &m_pHostIPv6.sin6_addr, pPacket->ReadShortBE() );
 	}
 	return TRUE;
 }
@@ -1516,6 +1529,21 @@ BOOL CBTClient::OnUtPex(CBTPacket* pPacket)
 			{
 				const IN_ADDR* pAddress = (const IN_ADDR*)pPointer;
 				WORD nPort = *(const WORD*)( pPointer + 4 );
+				m_pDownload->AddSourceBT( Hashes::BtGuid(), pAddress, ntohs( nPort ) );
+			}
+		}
+	}
+
+	if ( CBENode* pPeersAdd = pRoot->GetNode( BT_DICT_ADDED6 ) )
+	{
+		if ( 0 == ( pPeersAdd->m_nValue % 18 ) ) // IPv6
+		{
+			const BYTE* pPointer = (const BYTE*)pPeersAdd->m_pValue;
+
+			for ( int nPeer = (int)pPeersAdd->m_nValue / 18 ; nPeer > 0; nPeer --, pPointer += 18 )
+			{
+				const IN6_ADDR* pAddress = (const IN6_ADDR*)pPointer;
+				WORD nPort = *(const WORD*)( pPointer + 16 );
 				m_pDownload->AddSourceBT( Hashes::BtGuid(), pAddress, ntohs( nPort ) );
 			}
 		}

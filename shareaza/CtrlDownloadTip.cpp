@@ -24,6 +24,7 @@
 #include "Settings.h"
 #include "CoolInterface.h"
 #include "ShellIcons.h"
+#include "Network.h"
 #include "Transfers.h"
 #include "Downloads.h"
 #include "Download.h"
@@ -655,17 +656,27 @@ void CDownloadTipCtrl::OnCalcSize(CDC* pDC, CDownloadSource* pSource)
 	// Or an active transfer
 	else if ( ! pSource->IsIdle() )
 	{
-		m_sName.Format( _T("%s:%u"),
-			(LPCTSTR)pSource->GetAddress(),
-			ntohs( pSource->GetPort() ) );
+		if ( pSource->IsIPv6Source() )
+			m_sName.Format( _T("[%s]:%u"),
+				(LPCTSTR)pSource->GetAddress(),
+				 ntohs( pSource->GetPort() )  );
+		else
+			m_sName.Format( _T("%s:%u"),
+				(LPCTSTR)pSource->GetAddress(),
+				 ntohs( pSource->GetPort() ) );
 	}
 
 	// Or just queued
 	else
 	{
-		m_sName.Format( _T("%s:%u"),
-			(LPCTSTR)CString( inet_ntoa( pSource->m_pAddress ) ),
-			pSource->m_nPort );
+		if ( pSource->IsIPv6Source() )
+			m_sName.Format( _T("[%s]:%u"),
+				Network.IPv6ToString( &pSource->m_pIPv6Address ),
+				pSource->m_nPort );
+		else
+			m_sName.Format( _T("%s:%u"),
+				(LPCTSTR)CString( inet_ntoa( pSource->m_pAddress ) ),
+				pSource->m_nPort );
 	}
 
 	// Add the Nickname if there is one and they are being shown

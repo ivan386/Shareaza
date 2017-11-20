@@ -90,6 +90,7 @@ BOOL CDownloadTransferBT::Initiate()
 	SetState( dtsConnecting );
 	m_tConnected	= GetTickCount();
 	m_pHost			= m_pClient->m_pHost;
+	m_pHostIPv6		= m_pClient->m_pHostIPv6;
 	m_sAddress		= m_pClient->m_sAddress;
 	UpdateCountry();
 

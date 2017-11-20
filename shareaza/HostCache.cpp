@@ -338,6 +338,12 @@ void CHostCacheList::Clear()
 		delete (*i).second;
 	}
 	m_Hosts.clear();
+
+	for( CHostCacheMapItrIPv6 i = m_HostsIPv6.begin(); i != m_HostsIPv6.end(); ++i )
+	{
+		delete (*i).second;
+	}
+	m_HostsIPv6.clear();
 	m_HostsTime.clear();
 
 	m_nCookie++;
@@ -368,6 +374,15 @@ CHostCacheHostPtr CHostCacheList::Add(const IN_ADDR* pAddress, WORD nPort, const
 {
 	ASSERT( pAddress || szAddress );
 
+	if ( ! pAddress )
+	{
+		SOCKADDR_IN6 saHost;
+		if ( Network.IPv6FromString( CString( szAddress ), &saHost ) )
+		{
+			return AddIPv6( &saHost.sin6_addr, nPort, NULL, tSeen, pszVendor, nUptime, nCurrentLeaves, nLeafLimit, szAddress );
+		}
+	}
+
 	if ( ! nPort )
 		// Use default port
 		nPort = protocolPorts[ m_nProtocol ];
@@ -375,11 +390,13 @@ CHostCacheHostPtr CHostCacheList::Add(const IN_ADDR* pAddress, WORD nPort, const
 	SOCKADDR_IN saHost;
 	if ( ! pAddress )
 	{
+
 		// Try to quick resolve dotted IP address
 		if (  ! Network.Resolve( szAddress, nPort, &saHost, FALSE ) )
+		{
 			// Bad address
 			return NULL;
-
+		}
 		pAddress = &saHost.sin_addr;
 		nPort = ntohs( saHost.sin_port );
 
@@ -456,7 +473,43 @@ CHostCacheHostPtr CHostCacheList::Add(const IN_ADDR* pAddress, WORD nPort, const
 		Update( pHost, nPort, tSeen, pszVendor, nUptime, nCurrentLeaves, nLeafLimit );
 	}
 
-	ASSERT( m_Hosts.size() == m_HostsTime.size() );
+	ASSERT( m_Hosts.size() + m_HostsIPv6.size() == m_HostsTime.size() );
+
+	return pHost;
+}
+
+CHostCacheHostPtr CHostCacheList::AddIPv6(const IN6_ADDR* pAddress, WORD nPort, const IN6_ADDR* /* pFromAddress */, DWORD tSeen, LPCTSTR pszVendor, DWORD nUptime, DWORD nCurrentLeaves, DWORD nLeafLimit, LPCTSTR szAddress)
+{
+	ASSERT( pAddress );
+
+	if ( ! nPort )
+		// Use default port
+		nPort = protocolPorts[ m_nProtocol ];
+
+	// Check if we already have the host
+	CHostCacheHostPtr pHost = Find( pAddress );
+
+	if ( ! pHost )
+	{
+		// Create new host
+		pHost = new CHostCacheHost( m_nProtocol );
+		if ( pHost )
+		{
+			PruneHosts();
+
+			pHost->m_pIPv6Address = *pAddress;
+			pHost->m_sAddress = Network.IPv6ToString( &pHost->m_pIPv6Address );
+			if ( szAddress ) pHost->m_sAddress = szAddress;
+
+			pHost->Update( nPort, tSeen, pszVendor, nUptime, nCurrentLeaves, nLeafLimit );
+
+			// Add host to map and index
+			m_HostsIPv6.insert( CHostCacheMapPairIPv6( pHost->m_pIPv6Address, pHost ) );
+			m_HostsTime.insert( pHost );
+
+			m_nCookie++;
+		}
+	}
 
 	return pHost;
 }
@@ -465,7 +518,7 @@ void CHostCacheList::Update(CHostCacheHostPtr pHost, WORD nPort, DWORD tSeen, LP
 {
 	CQuickLock oLock( m_pSection );
 
-	ASSERT( m_Hosts.size() == m_HostsTime.size() );
+	ASSERT( m_Hosts.size() + m_HostsIPv6.size() == m_HostsTime.size() );
 
 	// Update host
 	if ( pHost->Update( nPort, tSeen, pszVendor, nUptime, nCurrentLeaves, nLeafLimit ) )
@@ -477,7 +530,7 @@ void CHostCacheList::Update(CHostCacheHostPtr pHost, WORD nPort, DWORD tSeen, LP
 		// Add host to new sorted position
 		m_HostsTime.insert( pHost );
 
-		ASSERT( m_Hosts.size() == m_HostsTime.size() );
+		ASSERT( m_Hosts.size() + m_HostsIPv6.size() == m_HostsTime.size() );
 	}
 
 	m_nCookie++;
@@ -497,13 +550,22 @@ CHostCacheMapItr CHostCacheList::Remove(CHostCacheHostPtr pHost)
 	m_HostsTime.erase( j );
 
 	CHostCacheMapItr i = std::find_if( m_Hosts.begin(), m_Hosts.end(), std::bind2nd( is_host(), pHost ) );
-	ASSERT( i != m_Hosts.end() );
-	i = m_Hosts.erase( i );
+
+	if ( i != m_Hosts.end() )
+		i = m_Hosts.erase( i );
+	else
+	{
+		CHostCacheMapItrIPv6 x = std::find_if( m_HostsIPv6.begin(), m_HostsIPv6.end(), std::bind2nd( is_host_ipv6(), pHost ) );
+		if ( x != m_HostsIPv6.end() )
+			x = m_HostsIPv6.erase( x );
+
+		ASSERT( x != m_HostsIPv6.end() );
+	}
 
 	delete pHost;
 	m_nCookie++;
 
-	ASSERT( m_Hosts.size() == m_HostsTime.size() );
+	ASSERT( m_Hosts.size() + m_HostsIPv6.size() == m_HostsTime.size() );
 
 	return i;
 }
@@ -572,7 +634,7 @@ void CHostCacheList::OnResolve(LPCTSTR szAddress, const IN_ADDR* pAddress, WORD 
 
 			m_nCookie++;
 
-			ASSERT( m_Hosts.size() == m_HostsTime.size() );
+			ASSERT( m_Hosts.size() + m_HostsIPv6.size() == m_HostsTime.size() );
 		}
 		else
 		{
@@ -640,6 +702,23 @@ CHostCacheHostPtr CHostCacheList::OnSuccess(const IN_ADDR* pAddress, WORD nPort,
 	CQuickLock oLock( m_pSection );
 
 	CHostCacheHostPtr pHost = Add( const_cast< IN_ADDR* >( pAddress ), nPort );
+	if ( pHost && ( ! nPort || pHost->m_nPort == nPort ) )
+	{
+		m_nCookie++;
+		pHost->m_tFailure = 0;
+		pHost->m_nFailures = 0;
+		pHost->m_bCheckedLocally = TRUE;
+		if ( bUpdate )
+			Update( pHost, nPort );
+	}
+	return pHost;
+}
+
+CHostCacheHostPtr CHostCacheList::OnSuccess(const IN6_ADDR* pAddress, WORD nPort, bool bUpdate)
+{
+	CQuickLock oLock( m_pSection );
+
+	CHostCacheHostPtr pHost = AddIPv6( const_cast< IN6_ADDR* >( pAddress ), nPort );
 	if ( pHost && ( ! nPort || pHost->m_nPort == nPort ) )
 	{
 		m_nCookie++;
@@ -721,7 +800,7 @@ void CHostCacheList::PruneHosts()
 	CQuickLock oLock( m_pSection );
 
 	for( CHostCacheIndex::iterator i = m_HostsTime.end();
-		m_Hosts.size() > Settings.Gnutella.HostCacheSize && i != m_HostsTime.begin(); )
+		m_HostsTime.size() > Settings.Gnutella.HostCacheSize && i != m_HostsTime.begin(); )
 	{
 		--i;
 		CHostCacheHostPtr pHost = (*i);
@@ -729,27 +808,53 @@ void CHostCacheList::PruneHosts()
 		if ( ! pHost->m_bPriority )
 		{
 			i = m_HostsTime.erase( i );
-			m_Hosts.erase( std::find_if( m_Hosts.begin(), m_Hosts.end(),
-				std::bind2nd( is_host(), pHost ) ) );
+			
+			CHostCacheMapItr index = std::find_if( m_Hosts.begin(), m_Hosts.end(),
+				std::bind2nd( is_host(), pHost ) );
+
+			if ( index != m_Hosts.end() )
+				m_Hosts.erase( index );
+			else
+			{
+				CHostCacheMapItrIPv6 index = std::find_if( m_HostsIPv6.begin(), m_HostsIPv6.end(),
+					std::bind2nd( is_host_ipv6(), pHost ) );
+
+				if ( index != m_HostsIPv6.end() )
+					m_HostsIPv6.erase( index );
+			}
+
 			delete pHost;
 			m_nCookie++;
 		}
 	}
 
 	for( CHostCacheIndex::iterator i = m_HostsTime.end();
-		m_Hosts.size() > Settings.Gnutella.HostCacheSize && i != m_HostsTime.begin(); )
+		m_HostsTime.size() > Settings.Gnutella.HostCacheSize && i != m_HostsTime.begin(); )
 	{
 		--i;
 		CHostCacheHostPtr pHost = (*i);
 
 		i = m_HostsTime.erase( i );
-		m_Hosts.erase( std::find_if( m_Hosts.begin(), m_Hosts.end(),
-			std::bind2nd( is_host(), pHost ) ) );
+			
+		CHostCacheMapItr index = std::find_if( m_Hosts.begin(), m_Hosts.end(),
+				std::bind2nd( is_host(), pHost ) );
+
+		if ( index != m_Hosts.end() )
+			m_Hosts.erase( index );
+		else
+		{
+			CHostCacheMapItrIPv6 index = std::find_if( m_HostsIPv6.begin(), m_HostsIPv6.end(),
+				std::bind2nd( is_host_ipv6(), pHost ) );
+
+			if ( index != m_HostsIPv6.end() )
+				m_HostsIPv6.erase( index );
+		}
+
 		delete pHost;
 		m_nCookie++;
 	}
 
-	ASSERT( m_Hosts.size() == m_HostsTime.size() );
+	ASSERT( m_Hosts.size() + m_HostsIPv6.size() == m_HostsTime.size() );
 }
 
 //////////////////////////////////////////////////////////////////////
@@ -762,9 +867,9 @@ void CHostCacheList::Serialize(CArchive& ar, int nVersion)
 	if ( ar.IsStoring() )
 	{
 		ar.WriteCount( GetCount() );
-		for( CHostCacheMapItr i = m_Hosts.begin(); i != m_Hosts.end(); ++i )
+		for(  CHostCacheIndex::iterator i = m_HostsTime.begin(); i != m_HostsTime.end(); ++i )
 		{
-			CHostCacheHostPtr pHost = (*i).second;
+			CHostCacheHostPtr pHost = (*i);
 			pHost->Serialize( ar, nVersion );
 		}
 	}
@@ -777,16 +882,32 @@ void CHostCacheList::Serialize(CArchive& ar, int nVersion)
 			if ( pHost )
 			{
 				pHost->Serialize( ar, nVersion );
-				if ( ! Security.IsDenied( &pHost->m_pAddress ) &&
-					 ! Find( &pHost->m_pAddress ) &&
-					 ! Find( pHost->m_sAddress ) )
-				{
-					m_Hosts.insert( CHostCacheMapPair( pHost->m_pAddress, pHost ) );
-					m_HostsTime.insert( pHost );
+				if ( pHost->m_pAddress.s_addr != 0 )
+				{ //IPv4
+					if ( ! Security.IsDenied( &pHost->m_pAddress ) &&
+						 ! Find( &pHost->m_pAddress ) &&
+						 ! Find( pHost->m_sAddress ) )
+					{
+						m_Hosts.insert( CHostCacheMapPair( pHost->m_pAddress, pHost ) );
+						m_HostsTime.insert( pHost );
+					}
+					else
+						// Remove bad or duplicated host
+						delete pHost;
 				}
 				else
-					// Remove bad or duplicated host
-					delete pHost;
+				{ //IPv6
+					if ( ! Security.IsDenied( &pHost->m_pIPv6Address ) &&
+						 ! Find( &pHost->m_pIPv6Address ) &&
+						 ! Find( pHost->m_sAddress ) )
+					{
+						m_HostsIPv6.insert( CHostCacheMapPairIPv6( pHost->m_pIPv6Address, pHost ) );
+						m_HostsTime.insert( pHost );
+					}
+					else
+						// Remove bad or duplicated host
+						delete pHost;
+				}
 			}
 		}
 
@@ -1263,6 +1384,7 @@ CHostCacheHost::CHostCacheHost(PROTOCOLID nProtocol) :
 	m_nKADVersion(0)
 {
 	m_pAddress.s_addr = INADDR_ANY;
+	memset(&m_pIPv6Address, 0, sizeof(m_pIPv6Address));
 
 	// 10 sec cooldown to avoid neighbor add-remove oscillation
 	DWORD tNow = static_cast< DWORD >( time( NULL ) );
@@ -1300,6 +1422,8 @@ void CHostCacheHost::Serialize(CArchive& ar, int nVersion)
 {
 	if ( ar.IsStoring() )
 	{
+		// Version 20
+		ar.Write( &m_pIPv6Address, sizeof(m_pIPv6Address) );
 		ar.Write( &m_pAddress, sizeof(m_pAddress) );
 		ar << m_nPort;
 
@@ -1363,11 +1487,16 @@ void CHostCacheHost::Serialize(CArchive& ar, int nVersion)
 		ar << m_sUser;
 		ar << m_sPass;
 
-		// Version 18
+		// Version 19
 		ar << m_sAddress;
 	}
 	else
 	{
+		if ( nVersion >= 20 )
+		{
+			ReadArchive( ar, &m_pIPv6Address, sizeof(m_pIPv6Address) );
+		}
+
 		ReadArchive( ar, &m_pAddress, sizeof(m_pAddress) );
 		ar >> m_nPort;
 
@@ -1550,6 +1679,8 @@ bool CHostCacheHost::ConnectTo(BOOL bAutomatic)
 
 	if ( m_pAddress.s_addr != INADDR_ANY )
 		return Neighbours.ConnectTo( m_pAddress, m_nPort, m_nProtocol, bAutomatic ) != NULL;
+	else if ( IsIPv6Host() )
+		return Neighbours.ConnectTo( m_pIPv6Address, m_nPort, m_nProtocol, bAutomatic ) != NULL;
 
 	m_tConnect += 30; // Throttle for 30 seconds
 	return Network.ConnectTo( m_sAddress, m_nPort, m_nProtocol ) != FALSE;

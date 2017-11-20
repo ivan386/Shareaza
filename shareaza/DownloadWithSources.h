@@ -89,6 +89,7 @@ public:
 	BOOL				AddSourceHit(const CShareazaURL& oURL, BOOL bForce = FALSE, int nRedirectionCount = 0);
 	BOOL				AddSourceED2K(DWORD nClientID, WORD nClientPort, DWORD nServerIP, WORD nServerPort, const Hashes::Guid& oGUID);
     BOOL				AddSourceBT(const Hashes::BtGuid& oGUID, const IN_ADDR* pAddress, WORD nPort, BOOL bIgnoreLocalIP = FALSE);
+	BOOL				AddSourceBT(const Hashes::BtGuid& oGUID, const IN6_ADDR* pAddress, WORD nPort, BOOL bIgnoreLocalIP = FALSE);
 	BOOL				AddSourceURL(LPCTSTR pszURL, FILETIME* pLastSeen = NULL, int nRedirectionCount = 0, BOOL bFailed = FALSE, BOOL bForce = FALSE, BOOL bPartialSame = FALSE);
 	int					AddSourceURLs(LPCTSTR pszURLs, BOOL bFailed = FALSE, BOOL bPartialSame = FALSE);
 	// Remove source from list, add it to failed sources if bBan == TRUE

@@ -45,8 +45,10 @@ public:
 	CAutoPtr< CBTInfo >	m_pTorrent;
 	CString				m_sAddress;
 	IN_ADDR				m_pAddress;
+	IN6_ADDR			m_pIPv6Address;
 	WORD				m_nPort;
 	IN_ADDR				m_pServerAddress;
+	IN6_ADDR			m_pIPv6ServerAddress;
 	WORD				m_nServerPort;
 	CString				m_sLogin;
 	CString				m_sPassword;

@@ -83,6 +83,7 @@ public:
 	void			Clear();
 	BOOL			IsIgnoredCountry(const CString& strCountry);
 	BOOL			IsDenied(const IN_ADDR* pAddress);
+	BOOL			IsDenied(const IN6_ADDR* pAddress);
 	BOOL			IsDenied(LPCTSTR pszContent);
 	BOOL			IsDenied(const CShareazaFile* pFile);
 	BOOL			IsDenied(const CQuerySearch* pQuery, const CString& strContent);

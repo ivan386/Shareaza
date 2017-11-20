@@ -1021,6 +1021,20 @@ BOOL CDownloadWithTorrent::UploadExists(in_addr* pIP) const
 	return FALSE;
 }
 
+BOOL CDownloadWithTorrent::UploadExists(in6_addr* pIPv6) const
+{
+	for ( POSITION pos = m_pTorrentUploads.GetHeadPosition() ; pos ; )
+	{
+		CUploadTransferBT* pTransfer = m_pTorrentUploads.GetNext( pos );
+
+		if ( ( pTransfer->m_nProtocol == PROTOCOL_BT ) &&
+			 ( pTransfer->m_nState != upsNull ) &&
+			 ( memcmp( &pTransfer->m_pHostIPv6.sin6_addr, pIPv6, 16 ) == 0 ) )
+			return TRUE;
+	}
+	return FALSE;
+}
+
 BOOL CDownloadWithTorrent::UploadExists(const Hashes::BtGuid& oGUID) const
 {
 	for ( POSITION pos = m_pTorrentUploads.GetHeadPosition() ; pos ; )

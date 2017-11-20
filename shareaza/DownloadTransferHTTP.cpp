@@ -95,7 +95,7 @@ BOOL CDownloadTransferHTTP::Initiate()
 		m_pDownload->RemoveSource( m_pSource, FALSE );
 		return FALSE;
 	}
-	else if ( ConnectTo( &m_pSource->m_pAddress, m_pSource->m_nPort ) )
+	else if ( m_pSource->m_pAddress.s_addr ? ConnectTo( &m_pSource->m_pAddress, m_pSource->m_nPort ) : ConnectToIPv6( &m_pSource->m_pIPv6Address, m_pSource->m_nPort ) )
 	{
 		SetState( dtsConnecting );
 		

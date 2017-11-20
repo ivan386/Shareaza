@@ -480,6 +480,15 @@ BOOL CDownloadWithSources::AddSourceBT(const Hashes::BtGuid& oGUID, const IN_ADD
 	return AddSourceInternal( new CDownloadSource( (CDownload*)this, oGUID, pAddress, nPort ) );
 }
 
+BOOL CDownloadWithSources::AddSourceBT(const Hashes::BtGuid& oGUID, const IN6_ADDR* pAddress, WORD nPort, BOOL bIgnoreLocalIP)
+{
+	// Unreachable (Push) BT sources should never be added.
+	//if ( Network.IsFirewalledAddress( pAddress, Settings.Connection.IgnoreOwnIP, bIgnoreLocalIP ) )
+	//	return FALSE;
+
+	return AddSourceInternal( new CDownloadSource( (CDownload*)this, oGUID, pAddress, nPort ) );
+}
+
 //////////////////////////////////////////////////////////////////////
 // CDownloadWithSources add a single URL source
 
@@ -604,8 +613,11 @@ BOOL CDownloadWithSources::AddSourceInternal(CDownloadSource* pSource)
 		//Reject invalid IPs (Sometimes ed2k sends invalid 0.x.x.x sources)
 		if ( pSource->m_pAddress.S_un.S_un_b.s_b1 == 0 || pSource->m_nPort == 0 )
 		{
-			delete pSource;
-			return FALSE;
+			if ( ! pSource->IsIPv6Source() )
+			{
+				delete pSource;
+				return FALSE;
+			}
 		}
 
 		//Reject if source is the local IP/port

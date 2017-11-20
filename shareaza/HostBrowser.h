@@ -43,6 +43,7 @@ public:
 
 	CGProfile*		m_pProfile;
 	IN_ADDR			m_pAddress;
+	IN6_ADDR		m_pIPv6Address;
 	WORD			m_nPort;
 	Hashes::Guid	m_oClientID;
 	BOOL			m_bMustPush;

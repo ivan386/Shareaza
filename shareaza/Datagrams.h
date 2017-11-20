@@ -75,6 +75,7 @@ public:
 	DWORD				m_nOutPackets;
 
 	BOOL	Listen();
+	BOOL	ListenIPv6();
 	void	Disconnect();
 
 	// True if the socket is valid, false if its closed
@@ -95,11 +96,16 @@ public:
 	}
 
 	BOOL	Send(const IN_ADDR* pAddress, WORD nPort, CPacket* pPacket, BOOL bRelease = TRUE, LPVOID pToken = NULL, BOOL bAck = TRUE);
+	BOOL	SendIPv6(const IN6_ADDR* pAddress, WORD nPort, CPacket* pPacket, BOOL bRelease = TRUE, LPVOID pToken = NULL, BOOL bAck = TRUE);
+	
 	BOOL	Send(const SOCKADDR_IN* pHost, CPacket* pPacket, BOOL bRelease = TRUE, LPVOID pToken = NULL, BOOL bAck = TRUE);
+	BOOL	SendIPv6(const SOCKADDR_IN6* pHost, CPacket* pPacket, BOOL bRelease = TRUE, LPVOID pToken = NULL, BOOL bAck = TRUE);
+	
 	void	PurgeToken(LPVOID pToken);
 	void	OnRun();
 
 protected:
+	SOCKET			m_hSocketIPv6;		// IPv6 socket
 	SOCKET			m_hSocket[ 5 ];		// [ 0 ] - Main Shareaza port (0.0.0.0:6346)
 										// [ 1 ] - Broadcast Shareaza port (0.0.0.0:6346)
 										// [ 2 ] - eD2K multi-cast port: 224.0.0.1:5000
@@ -141,7 +147,9 @@ protected:
 	void	Remove(CDatagramOut* pDG);
 
 	BOOL	TryRead(int nIndex);
+	BOOL	TryReadIPv6();
 	BOOL	OnDatagram(const SOCKADDR_IN* pHost, const BYTE* pBuffer, DWORD nLength);
+	BOOL	OnDatagram(const SOCKADDR_IN6* pHost, const BYTE* pBuffer, DWORD nLength);
 	BOOL	OnReceiveSGP(const SOCKADDR_IN* pHost, const SGP_HEADER* pHeader, DWORD nLength);
 	BOOL	OnAcknowledgeSGP(const SOCKADDR_IN* pHost, const SGP_HEADER* pHeader, DWORD nLength);
 	void	ManagePartials();

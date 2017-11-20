@@ -527,6 +527,11 @@ BOOL CSecurity::IsDenied(const IN_ADDR* pAddress)
 	return m_bDenyPolicy;
 }
 
+BOOL CSecurity::IsDenied(const IN6_ADDR* pAddress)
+{
+	return FALSE;
+}
+
 BOOL CSecurity::IsDenied(LPCTSTR pszContent)
 {
 	CQuickLock oLock( m_pSection );

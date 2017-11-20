@@ -77,6 +77,20 @@ CHandshake::CHandshake(SOCKET hSocket, SOCKADDR_IN* pHost)
 	theApp.Message( MSG_INFO, IDS_CONNECTION_ACCEPTED, (LPCTSTR)m_sAddress, htons( m_pHost.sin_port ) );
 }
 
+CHandshake::CHandshake(SOCKET hSocket, SOCKADDR_IN6* pHost)
+	: m_bPushing( FALSE )
+	, m_nIndex	( 0 )
+{
+	// Call CConnection::AcceptFrom to setup this object with the socket and
+	AcceptFrom( hSocket, pHost );
+
+	// Set pointers so the input and output bandwidth limits are read from the DWORD in settings
+	m_mInput.pLimit = m_mOutput.pLimit = &Settings.Bandwidth.Request;
+
+	// Record that the program accepted this connection
+	theApp.Message( MSG_INFO, IDS_CONNECTION_ACCEPTED, (LPCTSTR)m_sAddress, htons( m_pHost.sin_port ) );
+}
+
 // Copy a CHandshake object
 // Takes pCopy, a pointer to the CHandshake object to make this new one a copy of
 CHandshake::CHandshake(CHandshake* pCopy)

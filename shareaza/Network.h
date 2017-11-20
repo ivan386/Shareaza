@@ -67,6 +67,8 @@ public:
 
 	CMutexEx		m_pSection;
 	SOCKADDR_IN		m_pHost;					// Structure (Windows Sockets) which holds address of the local machine
+	SOCKADDR_IN6	m_pHostIPv6;				// Structure (Windows Sockets) which holds address of the local machine
+	
 	BOOL			m_bAutoConnect;
 	volatile bool	m_bConnected;				// Network has finished initializing and is connected
 	DWORD			m_tStartedConnecting;		// The time Shareaza started trying to connect
@@ -184,6 +186,7 @@ public:
 	// Shutdown network
 	void		Clear();
 	BOOL		IsSelfIP(const IN_ADDR& nAddress) const;
+	BOOL		IsSelfIP(const IN6_ADDR& nAddress) const;
 	bool		IsAvailable() const;
 	bool		IsConnected() const;
 	bool		IsListening() const;
@@ -198,8 +201,9 @@ public:
 	void		Disconnect();
 	BOOL		ConnectTo(LPCTSTR pszAddress, int nPort = 0, PROTOCOLID nProtocol = PROTOCOL_NULL, BOOL bNoUltraPeer = FALSE);
 	BOOL		AcquireLocalAddress(SOCKET hSocket);
-	BOOL		AcquireLocalAddress(LPCTSTR pszHeader, WORD nPort = 0, const IN_ADDR* pFromAddress = NULL);
+	BOOL		AcquireLocalAddress(LPCTSTR pszHeader, WORD nPort = 0, const IN_ADDR* pFromAddress = NULL, const IN6_ADDR* pFromIPv6Address = NULL);
 	BOOL		AcquireLocalAddress(const IN_ADDR& pAddress, WORD nPort = 0, const IN_ADDR* pFromAddress = NULL);
+	BOOL		AcquireLocalAddress(const IN6_ADDR& pAddress, WORD nPort = 0, const IN6_ADDR* pFromAddress = NULL);
 	static BOOL	Resolve(LPCTSTR pszHost, int nPort, SOCKADDR_IN* pHost, BOOL bNames = TRUE);
 	BOOL		AsyncResolve(LPCTSTR pszAddress, WORD nPort, PROTOCOLID nProtocol, BYTE nCommand);
 	// Pending network name resolves queue size
@@ -208,6 +212,7 @@ public:
 	WORD		RandomPort() const;
 	void		CreateID(Hashes::Guid& oID);
 	BOOL		IsFirewalledAddress(const IN_ADDR* pAddress, BOOL bIncludeSelf = FALSE, BOOL bIgnoreLocalIP = Settings.Connection.IgnoreLocalIP) const;
+	BOOL		IsFirewalledAddress(const IN6_ADDR* pAddress, BOOL bIncludeSelf = FALSE, BOOL bIgnoreLocalIP = Settings.Connection.IgnoreLocalIP) const;
 	BOOL		IsValidAddressFor(const IN_ADDR* pForAddress, const IN_ADDR* pAddress) const;
 	BOOL		IsHomeNetwork(const IN_ADDR* pAddress) const;
 	BOOL		IsLocalAreaNetwork(const IN_ADDR* pAddress) const;
@@ -232,16 +237,24 @@ public:
 
 	// Safe way to accept socket
 	static SOCKET AcceptSocket(SOCKET hSocket, SOCKADDR_IN* addr, LPCONDITIONPROC lpfnCondition, DWORD_PTR dwCallbackData = 0);
+	static SOCKET AcceptSocket(SOCKET hSocket, SOCKADDR_IN6* addr, LPCONDITIONPROC lpfnCondition, DWORD_PTR dwCallbackData = 0);
+
+	static BOOL		IPv6FromString(CString sIPv6, SOCKADDR_IN6* nAddress);
+	static CString	IPv6ToString(const IN6_ADDR* pAddress);
+	static CString	IPv6ToString(const SOCKADDR_IN6* pAddress);
+
 	// Safe way to close socket
 	static void	CloseSocket(SOCKET& hSocket, const bool bForce);
 	// Safe way to send TCP data
 	static int Send(SOCKET s, const char* buf, int len);
 	// Safe way to send UDP data
 	static int SendTo(SOCKET s, const char* buf, int len, const SOCKADDR_IN* pTo);
+	static int SendToIPv6(SOCKET s, const char* buf, int len, const SOCKADDR_IN6* pTo);
 	// Safe way to receive TCP data
 	static int Recv(SOCKET s, char* buf, int len);
 	// Safe way to receive UDP data
 	static int RecvFrom(SOCKET s, char* buf, int len, SOCKADDR_IN* pFrom);
+	static int RecvFromIPv6(SOCKET s, char* buf, int len, SOCKADDR_IN6* pFrom);
 	// Safe way to call InternetOpen
 	static HINTERNET InternetOpen();
 	// Safe way to call InternetOpenUrl

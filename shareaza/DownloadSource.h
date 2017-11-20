@@ -36,6 +36,7 @@ public:
 	CDownloadSource(const CDownload* pDownload, const CQueryHit* pHit);
 	CDownloadSource(const CDownload* pDownload, DWORD nClientID, WORD nClientPort, DWORD nServerIP, WORD nServerPort, const Hashes::Guid& oGUID);
     CDownloadSource(const CDownload* pDownload, const Hashes::BtGuid& oGUID, const IN_ADDR* pAddress, WORD nPort);
+	CDownloadSource(const CDownload* pDownload, const Hashes::BtGuid& oGUID, const IN6_ADDR* pAddress, WORD nPort);
 	CDownloadSource(const CDownload* pDownload, LPCTSTR pszURL, BOOL bHashAuth = FALSE, FILETIME* pLastSeen = NULL, int nRedirectionCount = 0, BOOL bPartialSame = FALSE);
 	~CDownloadSource();
 
@@ -51,8 +52,10 @@ public:
 	PROTOCOLID			m_nProtocol;
 	Hashes::Guid		m_oGUID;
 	IN_ADDR				m_pAddress;
+	IN6_ADDR			m_pIPv6Address;
 	WORD				m_nPort;
 	IN_ADDR				m_pServerAddress;
+	IN6_ADDR			m_pIPv6ServerAddress;
 	WORD				m_nServerPort;
 	CString				m_sCountry;
 	CString				m_sCountryName;
@@ -163,6 +166,25 @@ public:
 		return ( m_nProtocol == PROTOCOL_HTTP || m_nProtocol == PROTOCOL_G2 );
 	}
 
+	inline bool IsIPv6Source() const
+	{
+		if ( m_pAddress.s_addr == 0 )
+		{
+			int i = 0;
+
+			for (; i < 8 && m_pIPv6Address.u.Word[i] == 0 ; i++ );
+
+			if ( i < 8 )
+				return true;
+			else
+			{
+				ASSUME_LOCK( Transfers.m_pSection );
+				return m_pTransfer ? m_pTransfer->IsIPv6Host() : false;
+			}
+		}
+		return false;
+	}
+
 	// Source have live connection
 	inline bool IsConnected() const
 	{
@@ -209,7 +231,10 @@ public:
 	inline WORD GetPort() const
 	{
 		ASSUME_LOCK( Transfers.m_pSection );
-		return ( m_pTransfer ? m_pTransfer->m_pHost.sin_port : 0 );
+		if ( m_pTransfer ? m_pTransfer->IsIPv6Host() : 0 )
+			return ( m_pTransfer ? m_pTransfer->m_pHostIPv6.sin6_port : 0 );
+		else
+			return ( m_pTransfer ? m_pTransfer->m_pHost.sin_port : 0 );
 	}
 
 	// Source transfer downloaded bytes

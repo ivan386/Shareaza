@@ -71,6 +71,7 @@ public:
 	bool			IsSingleFileTorrent() const;
 	float			GetRatio() const;
 	BOOL			UploadExists(in_addr* pIP) const;
+	BOOL			UploadExists(in6_addr* pIPv6) const;
 	BOOL			UploadExists(const Hashes::BtGuid& oGUID) const;
 	virtual void	OnTrackerEvent(bool bSuccess, LPCTSTR pszReason, LPCTSTR pszTip, CBTTrackerRequest* pEvent);
 	void			ChokeTorrent(DWORD tNow = 0);

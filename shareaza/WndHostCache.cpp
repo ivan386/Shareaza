@@ -183,7 +183,12 @@ void CHostCacheWnd::Update(BOOL bForce)
 		pItem->SetMaskOverlay( pHost->m_bPriority );
 
 		if ( pHost->m_sAddress.IsEmpty() )
-			pItem->Set( 0, CString( inet_ntoa( pHost->m_pAddress ) ) );
+		{
+			if ( pHost->m_pAddress.s_addr == INADDR_ANY )
+				pItem->Set( 0, Network.IPv6ToString( &pHost->m_pIPv6Address ) ) ;
+			else
+				pItem->Set( 0, CString( inet_ntoa( pHost->m_pAddress ) ) );
+		}
 		else if ( pHost->m_pAddress.s_addr == INADDR_ANY )
 			pItem->Set( 0, pHost->m_sAddress );
 		else

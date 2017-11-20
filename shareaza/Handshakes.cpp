@@ -49,7 +49,8 @@ CHandshakes Handshakes;
 CHandshakes::CHandshakes() :
 	m_nStableCount( 0 ),
 	m_tStableTime( 0 ),
-	m_hSocket( INVALID_SOCKET )
+	m_hSocket( INVALID_SOCKET ),
+	m_hSocketIPv6( INVALID_SOCKET )
 {
 }
 
@@ -134,8 +135,41 @@ BOOL CHandshakes::Listen()
 
 	Network.AcquireLocalAddress( m_hSocket );
 
+	ListenIPv6();
+
 	// Create a new thread to run the ThreadStart method, passing it a pointer to this C
 	return BeginThread( "Handshakes" );
+}
+
+BOOL CHandshakes::ListenIPv6()
+{
+	m_hSocketIPv6 = socket( PF_INET6, SOCK_STREAM, IPPROTO_TCP );
+	
+	if ( m_hSocketIPv6 == INVALID_SOCKET )
+		return FALSE;
+
+	SOCKADDR_IN6 saHost = IN6ADDR_ANY_INIT;
+	saHost.sin6_family = PF_INET6;
+	saHost.sin6_port = Network.m_pHost.sin_port;
+	
+	if ( bind( m_hSocketIPv6, (SOCKADDR*)&saHost, sizeof( saHost ) ) != 0 )
+		return FALSE;
+
+	theApp.Message( MSG_INFO, IDS_NETWORK_LISTENING_TCP, (LPCTSTR) Network.IPv6ToString( &saHost.sin6_addr ), htons( saHost.sin6_port ) );
+
+
+		// Set it up so that when a remote computer connects to us, the m_pWakeup event is fired
+	WSAEventSelect(		// Specify an event object to associate with the specified set of FD_XXX network events
+		m_hSocketIPv6,		// Our listening socket
+		GetWakeupEvent(),		// Our event, a CEvent object member variable
+		FD_ACCEPT );	// The network event to trigger this is us accepting a remote computer's connection
+
+	// Have the socket wait, listening for remote computer on the Internet to connect to it
+	listen(			// Place a socket in a state in which it is listening for an incoming connection
+		m_hSocketIPv6,	// Our socket
+		256 );		// Maximum length of the queue of pending connections, let 256 computers try to call us at once (do)
+
+	return TRUE;
 }
 
 //////////////////////////////////////////////////////////////////////
@@ -145,6 +179,7 @@ BOOL CHandshakes::Listen()
 void CHandshakes::Disconnect()
 {
 	CNetwork::CloseSocket( m_hSocket, false );
+	CNetwork::CloseSocket( m_hSocketIPv6, false );
 
 	CloseThread();
 
@@ -254,7 +289,7 @@ void CHandshakes::OnRun()
 		Doze( 1000 );
 
 		// Accept the connection from the remote computer, making a new CHandshake object for it in the list
-		while ( AcceptConnection() );
+		while ( AcceptConnection() || AcceptConnectionIPv6() );
 
 		// Send and receive data with each remote computer in the list
 		RunHandshakes();
@@ -321,6 +356,45 @@ BOOL CHandshakes::AcceptConnection()
 	if ( CHandshake* pHandshake = new CHandshake( hSocket, &pHost ) )
 	{
 		Add( pHandshake );
+		return TRUE;
+	}
+
+	return FALSE;
+}
+
+
+BOOL CHandshakes::AcceptConnectionIPv6()
+{
+	SOCKADDR_IN6 pHost = { AF_INET6 };
+	SOCKET hSocket = CNetwork::AcceptSocket( m_hSocketIPv6, &pHost, AcceptCheck );
+	if ( hSocket == INVALID_SOCKET )
+		return FALSE;
+
+	// Disables the Nagle algorithm for send coalescing
+	setsockopt( hSocket, IPPROTO_TCP, TCP_NODELAY, "\x01", 1 );
+
+	
+	// We've listened for and accepted one more stable connection
+	InterlockedIncrement( (PLONG)&m_nStableCount ); // Use an interlocked function to do this in a thread-safe way
+
+	// Setup the socket so when there is data to read or write, or it closes, the m_pWakeup event happens
+	WSAEventSelect(							// Associate the m_pWakeup event with the FD_READ, FD_WRITE, and FD_CLOSE events
+		hSocket,							// The local socket we just made when accepting a new connection
+		GetWakeupEvent(),					// The handshakes object's wakeup event
+		FD_READ | FD_WRITE | FD_CLOSE );	// Make the event happen when the socket is ready to read, write, or has closed
+	
+	if ( CHandshake* pHandshake = new CHandshake( hSocket, &pHost ) )
+	{
+		Add( pHandshake );
+
+		SOCKADDR_IN6 pAddress;
+		int nSockLen = sizeof( pAddress );
+
+		if ( getsockname( hSocket, (SOCKADDR*)&pAddress, &nSockLen ) != 0 )
+			return TRUE;
+
+		Network.AcquireLocalAddress( hSocket );
+
 		return TRUE;
 	}
 

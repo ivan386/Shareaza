@@ -34,6 +34,7 @@ public:
 	virtual ~CHandshakes();
 
 	BOOL Listen();						// Listen on the socket
+	BOOL ListenIPv6();					// Listen on the socket
 	void Disconnect();					// Stop listening
 
 	BOOL PushTo(IN_ADDR* pAddress, WORD nPort, DWORD nIndex = 0);	// Connect to the given IP
@@ -43,6 +44,7 @@ protected:
 	DWORD m_nStableCount;				// The number of connections our listening socket has received
 	DWORD m_tStableTime;				// The time at least one has been connected (do)
 	SOCKET m_hSocket;					// Our one listening socket
+	SOCKET m_hSocketIPv6;				// Our one listening socket
 	CList< CHandshake* > m_pList;		// The list of pointers to CHandshake objects
 	mutable CMutex m_pSection;			// Use to make sure only one thread accesses the list at a time
 
@@ -51,6 +53,8 @@ protected:
 	void OnRun();						// Accept incoming connections from remote computers
 	void RunHandshakes();				// Send and receive data with each remote computer in the list
 	BOOL AcceptConnection();			// Accept a connection, making a new CHandshake object in the list for it
+	BOOL AcceptConnectionIPv6();			// Accept a connection, making a new CHandshake object in the list for it
+	
 	void RunStableUpdate();				// Update the discovery services (do)
 
 	// Tell WSAAccept if we want to accept a connection from a computer that just called us

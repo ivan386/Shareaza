@@ -187,6 +187,34 @@ CDownloadSource::CDownloadSource(const CDownload* pDownload,
 	ResolveURL();
 }
 
+CDownloadSource::CDownloadSource(const CDownload* pDownload,
+	const Hashes::BtGuid& oGUID, const IN6_ADDR* pAddress, WORD nPort)
+	: m_oAvailable		( pDownload->m_nSize )
+	, m_oPastFragments	( pDownload->m_nSize )
+{
+	Construct( pDownload );
+
+	if ( oGUID )
+	{
+		m_sURL.Format( _T("btc://[%s]:%u/%s/%s/"),
+			(LPCTSTR)Network.IPv6ToString( pAddress ), nPort,
+            (LPCTSTR)oGUID.toString(),
+			(LPCTSTR)pDownload->m_oBTH.toString() );
+	}
+	else
+	{
+		m_sURL.Format( _T("btc://[%s]:%u//%s/"),
+			(LPCTSTR)Network.IPv6ToString( pAddress ), nPort,
+			(LPCTSTR)pDownload->m_oBTH.toString() );
+	}
+
+	m_bBTH		= TRUE;
+	m_oGUID		= transformGuid( oGUID );
+	m_sServer	= protocolNames[ PROTOCOL_BT ];
+
+	ResolveURL();
+}
+
 //////////////////////////////////////////////////////////////////////
 // CDownloadSource construction from URL
 
@@ -226,6 +254,7 @@ void CDownloadSource::Construct(const CDownload* pDownload)
 	m_bSelected				= FALSE;
 	m_nProtocol				= PROTOCOL_NULL;
 	m_pAddress.s_addr		= 0;
+	memset( &m_pIPv6Address, 0, sizeof( m_pIPv6Address ) );
 	m_nPort					= 0;
 	m_pServerAddress.s_addr	= 0;
 	m_nServerPort			= 0;
@@ -283,6 +312,7 @@ BOOL CDownloadSource::ResolveURL()
 
 	m_nProtocol	= pURL.m_nProtocol;
 	m_pAddress	= pURL.m_pAddress;
+	m_pIPv6Address = pURL.m_pIPv6Address;
 	m_nPort		= pURL.m_nPort;
 	m_sName		= pURL.m_sName;
 	
@@ -333,9 +363,17 @@ void CDownloadSource::Serialize(CArchive& ar, int nVersion /* DOWNLOAD_SER_VERSI
 		SerializeOut( ar, m_oGUID );
 		
 		ar << m_nPort;
-		if ( m_nPort ) ar.Write( &m_pAddress, sizeof(m_pAddress) );
+		if ( m_nPort ) 
+		{
+			ar.Write( &m_pAddress, sizeof(m_pAddress) );
+			ar.Write( &m_pIPv6Address, sizeof(m_pIPv6Address) );
+		}
 		ar << m_nServerPort;
-		if ( m_nServerPort ) ar.Write( &m_pServerAddress, sizeof(m_pServerAddress) );
+		if ( m_nServerPort )
+		{
+			ar.Write( &m_pServerAddress, sizeof(m_pServerAddress) );
+			ar.Write( &m_pServerAddress, sizeof(m_pIPv6ServerAddress) );
+		}
 		
 		ar << m_sName;
 		ar << m_nIndex;
@@ -369,10 +407,19 @@ void CDownloadSource::Serialize(CArchive& ar, int nVersion /* DOWNLOAD_SER_VERSI
 		SerializeIn( ar, m_oGUID, nVersion);
 		
 		ar >> m_nPort;
-		if ( m_nPort ) ReadArchive( ar, &m_pAddress, sizeof(m_pAddress) );
+		if ( m_nPort )
+		{ 
+			ReadArchive( ar, &m_pAddress, sizeof(m_pAddress) );
+			if ( nVersion >= 43 ) ReadArchive( ar, &m_pIPv6Address, sizeof(m_pIPv6Address) );
+
+		}
+
 		ar >> m_nServerPort;
-		if ( m_nServerPort ) ReadArchive( ar, &m_pServerAddress, sizeof(m_pServerAddress) );
-		
+		if ( m_nServerPort )
+		{
+			ReadArchive( ar, &m_pServerAddress, sizeof(m_pServerAddress) );
+			if ( nVersion >= 43 ) ReadArchive( ar, &m_pIPv6ServerAddress, sizeof(m_pIPv6ServerAddress) );
+		}
 		ar >> m_sName;
 		ar >> m_nIndex;
 		ar >> m_bHashAuth;

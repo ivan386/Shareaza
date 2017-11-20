@@ -35,6 +35,7 @@
 #include "CtrlDownloads.h"
 #include "WndDownloads.h"
 #include "Flags.h"
+#include "Network.h"
 
 #ifdef _DEBUG
 #undef THIS_FILE
@@ -1329,16 +1330,26 @@ void CDownloadsCtrl::PaintSource(CDC& dc, const CRect& rcRow, CDownload* pDownlo
 			// Or an active transfer
 			else if ( ! pSource->IsIdle() )
 			{
-				strText.Format( _T("%s:%u"),
-					(LPCTSTR)pSource->GetAddress(),
-					ntohs( pSource->GetPort() ) );
+				if ( pSource->IsIPv6Source() )
+					strText.Format( _T("[%s]:%u"),
+						(LPCTSTR)pSource->GetAddress(),
+						 ntohs( pSource->GetPort() )  );
+				else
+					strText.Format( _T("%s:%u"),
+						(LPCTSTR)pSource->GetAddress(),
+						 ntohs( pSource->GetPort() ) );
 			}
 			// Or just queued
 			else
 			{
-				strText.Format( _T("%s:%u"),
-					(LPCTSTR)CString( inet_ntoa( pSource->m_pAddress ) ),
-					pSource->m_nPort );
+				if ( pSource->IsIPv6Source() )
+					strText.Format( _T("[%s]:%u"),
+						Network.IPv6ToString( &pSource->m_pIPv6Address ),
+						pSource->m_nPort );
+				else
+					strText.Format( _T("%s:%u"),
+						(LPCTSTR)CString( inet_ntoa( pSource->m_pAddress ) ),
+						pSource->m_nPort );
 			}
 
 			// Add the Nickname if there is one and they are being shown

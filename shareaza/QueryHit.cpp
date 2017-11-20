@@ -52,6 +52,8 @@ CQueryHit::CQueryHit(PROTOCOLID nProtocol, const Hashes::Guid& oSearchID) :
 	m_pNext			( NULL ),
 	m_oSearchID		( oSearchID ),
 	m_nProtocol		( nProtocol ),
+	m_pAddress		(),
+	m_pIPv6Address	(),
 	m_nPort			( 0 ),
 	m_nSpeed		( 0 ),
 	m_pVendor		( VendorCache.m_pNull ),
@@ -82,7 +84,6 @@ CQueryHit::CQueryHit(PROTOCOLID nProtocol, const Hashes::Guid& oSearchID) :
 	m_bSelected		( FALSE ),
 	m_bResolveURL	( TRUE )
 {
-	m_pAddress.s_addr = 0;
 }
 
 CQueryHit::CQueryHit(const CQueryHit& pHit) :
@@ -326,6 +327,7 @@ CQueryHit* CQueryHit::FromG2Packet(CG2Packet* pPacket, int* pnHops)
 	Hashes::Guid oClientID;
 
 	DWORD		nAddress	= 0;
+	IN6_ADDR	nIPv6Address = { 0 };
 	WORD		nPort		= 0;
 	BOOL		bBusy		= FALSE;
 	BOOL		bPush		= FALSE;
@@ -448,7 +450,7 @@ CQueryHit* CQueryHit::FromG2Packet(CG2Packet* pPacket, int* pnHops)
 				break;
 
 			case G2_PACKET_NEIGHBOUR_HUB:
-				if ( nLength >= 6 )
+				if ( nLength == 6 )
 				{
 					SOCKADDR_IN pHub;
 					pHub.sin_addr.S_un.S_addr = pPacket->ReadLongLE();
@@ -477,11 +479,17 @@ CQueryHit* CQueryHit::FromG2Packet(CG2Packet* pPacket, int* pnHops)
 
 			case G2_PACKET_NODE_ADDRESS:
 			case G2_PACKET_NODE_INFO:
-				if ( nLength >= 6 )
+				if ( nLength == 6 ) // IPv4
 				{
 					nAddress = pPacket->ReadLongLE();
 					if ( Network.IsReserved( (IN_ADDR*)&nAddress ) || Security.IsDenied( (IN_ADDR*)&nAddress ) )
 						bSpam = true;
+					nPort = pPacket->ReadShortBE();
+				}
+				else if( nLength == 18 ) // IPv6
+				{
+					pPacket->Read( &nIPv6Address, 16 );
+
 					nPort = pPacket->ReadShortBE();
 				}
 				else
@@ -617,6 +625,7 @@ CQueryHit* CQueryHit::FromG2Packet(CG2Packet* pPacket, int* pnHops)
 		pHit->m_oSearchID	= oSearchID;
 		pHit->m_oClientID	= oClientID;
 		pHit->m_pAddress	= *(IN_ADDR*)&nAddress;
+		pHit->m_pIPv6Address = nIPv6Address;
 		pHit->m_sCountry	= theApp.GetCountryCode( pHit->m_pAddress );
 		pHit->m_nPort		= nPort;
 		pHit->m_pVendor		= pVendor;
@@ -1980,6 +1989,7 @@ void CQueryHit::Serialize(CArchive& ar, int nVersion /* MATCHLIST_SER_VERSION */
 		ar << m_nProtocol;
 		ar.Write( &m_oClientID[ 0 ], Hashes::Guid::byteCount );
 		ar.Write( &m_pAddress, sizeof(IN_ADDR) );
+		ar.Write( &m_pIPv6Address, sizeof(IN6_ADDR) );
 		ar << m_nPort;
 		ar << m_nSpeed;
 		ar << m_sSpeed;
@@ -2033,6 +2043,7 @@ void CQueryHit::Serialize(CArchive& ar, int nVersion /* MATCHLIST_SER_VERSION */
 		ReadArchive( ar, &m_oClientID[ 0 ], Hashes::Guid::byteCount );
 		m_oClientID.validate();
 		ReadArchive( ar, &m_pAddress, sizeof(IN_ADDR) );
+		if ( nVersion >= 16 ) ReadArchive( ar, &m_pIPv6Address, sizeof(IN6_ADDR) );
 		m_sCountry = theApp.GetCountryCode( m_pAddress );
 		ar >> m_nPort;
 		ar >> m_nSpeed;

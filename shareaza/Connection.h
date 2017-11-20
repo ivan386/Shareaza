@@ -39,6 +39,7 @@ protected:
 // Attributes
 public:
 	SOCKADDR_IN	m_pHost;		// The remote computer's IP address in Windows Sockets format
+	SOCKADDR_IN6 m_pHostIPv6;		// The remote computer's IPv6 address in Windows Sockets format
 	CString		m_sAddress;		// The same IP address in a string like "1.2.3.4"
 	CString		m_sCountry;		// The two letter country code of this host
 	CString		m_sCountryName;	// The full name of the country
@@ -98,6 +99,20 @@ public:
 	inline BOOL IsValid() const throw()
 	{
 		return ( m_hSocket != INVALID_SOCKET );
+	}
+
+	inline bool IsIPv6Host() const throw()
+	{
+		if ( m_pHost.sin_addr.s_addr == 0 )
+		{
+			int i = 0;
+
+			for (; i < 8 && m_pHostIPv6.sin6_addr.u.Word[i] == 0 ; i++ );
+
+			if ( i < 8 )
+				return true;
+		}
+		return false;
 	}
 
 	inline bool IsOutputExist() const throw()
@@ -268,7 +283,9 @@ public:
 	// Make a connection, accept a connection, copy a connection, and close a connection
 	virtual BOOL ConnectTo(const SOCKADDR_IN* pHost);                  // Connect to an IP address and port number
 	virtual BOOL ConnectTo(const IN_ADDR* pAddress, WORD nPort);
+	virtual BOOL ConnectToIPv6(const IN6_ADDR* pAddress, WORD nPort);
 	virtual void AcceptFrom(SOCKET hSocket, SOCKADDR_IN* pHost); // Accept a connection from a remote computer
+	virtual void AcceptFrom(SOCKET hSocket, SOCKADDR_IN6* pHost); // Accept a connection from a remote computer
 	virtual void AttachTo(CConnection* pConnection);             // Copy a connection (do)
 	virtual void Close(UINT nError = 0);		// Disconnect from the remote computer
 	virtual void DelayClose(UINT nError);		// Send the buffer then close the socket, record the error given

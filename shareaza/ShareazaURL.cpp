@@ -46,6 +46,7 @@ CShareazaURL::CShareazaURL(LPCTSTR pszURL)
 	, m_nAction			( uriNull )
 	, m_pTorrent		()
 	, m_pAddress		()
+	, m_pIPv6Address	()
 	, m_nPort			( 0 )
 	, m_pServerAddress	()
 	, m_nServerPort		( 0 )
@@ -59,6 +60,7 @@ CShareazaURL::CShareazaURL(CBTInfo* pTorrent)
 	, m_nAction			( uriDownload )
 	, m_pTorrent		( pTorrent )
 	, m_pAddress		()
+	, m_pIPv6Address	()
 	, m_nPort			( 0 )
 	, m_pServerAddress	()
 	, m_nServerPort		( 0 )
@@ -72,6 +74,7 @@ CShareazaURL::CShareazaURL(const CShareazaURL& pURL)
 	, m_pTorrent		( pURL.m_pTorrent )
 	, m_sAddress		( pURL.m_sAddress )
 	, m_pAddress		( pURL.m_pAddress )
+	, m_pIPv6Address	( pURL.m_pIPv6Address )
 	, m_nPort			( pURL.m_nPort )
 	, m_pServerAddress	( pURL.m_pServerAddress )
 	, m_nServerPort		( pURL.m_nServerPort )
@@ -107,6 +110,7 @@ void CShareazaURL::Clear()
 	m_pTorrent.Free();
 	m_sAddress.Empty();
 	m_pAddress.s_addr		= 0;
+	memset( &m_pIPv6Address, 0, sizeof( m_pIPv6Address ) );
 	m_nPort					= 0;
 	m_pServerAddress.s_addr = 0;
 	m_nServerPort			= 0;
@@ -291,12 +295,27 @@ BOOL CShareazaURL::ParseHTTP(LPCTSTR pszURL, BOOL bResolve)
 		}
 	}
 
-	SOCKADDR_IN saHost;
+	
+	BOOL bResult = 0;
+	SOCKADDR_IN6 pHost = {};
+	if ( bResult = Network.IPv6FromString( m_sAddress, &pHost ) )
+	{
+		m_pIPv6Address = pHost.sin6_addr;
 
-	BOOL bResult = Network.Resolve( m_sAddress, INTERNET_DEFAULT_HTTP_PORT, &saHost, bResolve );
+		if ( pHost.sin6_port )
+			m_nPort = ntohs( pHost.sin6_port );
+		else
+			m_nPort = INTERNET_DEFAULT_HTTP_PORT;
+	}
+	else
+	{
+		SOCKADDR_IN saHost;
 
-	m_pAddress	= saHost.sin_addr;
-	m_nPort		= htons( saHost.sin_port );
+		bResult = Network.Resolve( m_sAddress, INTERNET_DEFAULT_HTTP_PORT, &saHost, bResolve );
+
+		m_pAddress	= saHost.sin_addr;
+		m_nPort		= htons( saHost.sin_port );
+	}
 
 	m_sURL.Format( _T("http://%s"), pszURL );
 	m_nProtocol	= PROTOCOL_HTTP;
@@ -524,11 +543,25 @@ BOOL CShareazaURL::ParseBTC(LPCTSTR pszURL, BOOL bResolve)
 
 	if ( !m_oBTH.fromString( strURL ) ) return FALSE;
 
-	SOCKADDR_IN saHost = {};
-	BOOL bResult = Network.Resolve( m_sAddress, protocolPorts[ PROTOCOL_BT ], &saHost, bResolve );
+	BOOL bResult = 0;
+	SOCKADDR_IN6 pHost = {};
+	if ( bResult = Network.IPv6FromString( m_sAddress, &pHost ) )
+	{
+		m_pIPv6Address = pHost.sin6_addr;
 
-	m_pAddress	= saHost.sin_addr;
-	m_nPort		= htons( saHost.sin_port );
+		if ( pHost.sin6_port )
+			m_nPort = ntohs( pHost.sin6_port );
+		else
+			m_nPort = protocolPorts[ PROTOCOL_BT ];
+	}
+	else
+	{
+		SOCKADDR_IN saHost = {};
+		bResult = Network.Resolve( m_sAddress, protocolPorts[ PROTOCOL_BT ], &saHost, bResolve );
+
+		m_pAddress	= saHost.sin_addr;
+		m_nPort		= htons( saHost.sin_port );
+	}
 
 	m_sURL.Format( _T("btc://%s"), pszURL );
 	m_nProtocol	= PROTOCOL_BT;
