@@ -1714,21 +1714,28 @@ BOOL CNetwork::IPv6FromString(CString sIPv6, SOCKADDR_IN6* nAddress)
 	return ( WSAStringToAddress( psIPv6, AF_INET6, NULL, (struct sockaddr *) nAddress, &size ) == 0 );
 }
 
-CString CNetwork::IPv6ToString(const IN6_ADDR* pAddress)
+CString CNetwork::IPv6ToString(const IN6_ADDR* pAddress, bool ForUrl)
 {
+	ASSERT( pAddress );
 	SOCKADDR_IN6 pHost = { AF_INET6 };
 	pHost.sin6_addr = (*pAddress);
-	return IPv6ToString( &pHost );
+	if ( ForUrl )
+	{
+		pHost.sin6_port = 1;
+		CString IPv6 = IPv6HostToString( &pHost );
+		return IPv6.Left( IPv6.GetLength() - 2 );
+	}
+	return IPv6HostToString( &pHost );
 }
 
-CString CNetwork::IPv6ToString(const SOCKADDR_IN6* pAddress)
+CString CNetwork::IPv6HostToString(const SOCKADDR_IN6* pHost)
 {
 	CString sIPv6;
 
 	LPWSTR pBuffer = sIPv6.GetBuffer( IP6_ADDRESS_STRING_LENGTH + 1);
 	unsigned long nBuffer = ( IP6_ADDRESS_STRING_LENGTH + 1 ) * sizeof(WCHAR) ;
 		
-	WSAAddressToString( (struct sockaddr *) pAddress, sizeof( SOCKADDR_IN6 ), NULL, pBuffer, &nBuffer );
+	WSAAddressToString( (struct sockaddr *) pHost, sizeof( SOCKADDR_IN6 ), NULL, pBuffer, &nBuffer );
 
 	return sIPv6;
 }

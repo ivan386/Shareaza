@@ -32,6 +32,7 @@ class CDCPacket;
 #include "Schema.h"
 #include "ShareazaFile.h"
 #include "VendorCache.h"
+#include "Network.h"
 
 
 class CQueryHit : public CShareazaFile
@@ -118,6 +119,28 @@ protected:
 	BOOL		ParseXML(CXMLElement* pXML, DWORD nRealIndex);
 
 // Inlines
+
+	inline bool IsIPv6Hit() const
+	{
+		if ( m_pAddress.s_addr == 0 )
+		{
+			int i = 0;
+
+			for (; i < 8 && m_pIPv6Address.u.Word[i] == 0 ; i++ );
+
+			if ( i < 8 )
+				return true;
+		}
+		return false;
+	}
+
+	inline CString GetIPForURL() const
+	{
+		if ( IsIPv6Hit() )
+			return Network.IPv6ToString( &m_pIPv6Address, true );
+		else
+			return CString( inet_ntoa( m_pAddress ) );
+	}
 public:
 	inline DWORD GetSources() const
 	{

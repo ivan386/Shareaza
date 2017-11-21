@@ -734,8 +734,13 @@ CDownloadTransferBT* CDownloadWithTorrent::CreateTorrentTransfer(CBTClient* pCli
 
 	if ( pSource == NULL )
 	{
-		pSource = new CDownloadSource( static_cast< CDownload* >( this ),
-			pClient->m_oGUID, &pClient->m_pHost.sin_addr, htons( pClient->m_pHost.sin_port ) );
+		if ( pClient->IsIPv6Host() )
+			pSource = new CDownloadSource( static_cast< CDownload* >( this ),
+				pClient->m_oGUID, &pClient->m_pHostIPv6.sin6_addr, htons( pClient->m_pHostIPv6.sin6_port ) );
+		else
+			pSource = new CDownloadSource( static_cast< CDownload* >( this ),
+				pClient->m_oGUID, &pClient->m_pHost.sin_addr, htons( pClient->m_pHost.sin_port ) );
+		
 		pSource->m_bPushOnly = !(pClient->m_bInitiated);
 
 		if ( ! AddSourceInternal( pSource ) ) return NULL;

@@ -1796,7 +1796,7 @@ void CQueryHit::Resolve()
 	if ( m_bPreview && m_oSHA1 && m_sPreview.IsEmpty() )
 	{
 		m_sPreview.Format( _T("http://%s:%u/gnutella/preview/v1?%s"),
-			(LPCTSTR)CString( inet_ntoa( m_pAddress ) ), m_nPort,
+			(LPCTSTR)GetIPForURL(), m_nPort,
 			(LPCTSTR)m_oSHA1.toUrn() );
 	}
 
@@ -1823,7 +1823,7 @@ void CQueryHit::Resolve()
 		else
 		{
 			m_sURL.Format( _T("ed2kftp://%s:%u/%s/%I64u/"),
-				(LPCTSTR)CString( inet_ntoa( m_pAddress ) ), m_nPort,
+				(LPCTSTR)GetIPForURL(), m_nPort,
 				(LPCTSTR)m_oED2K.toString(), m_bSize ? m_nSize : 0 );
 		}
 		return;
@@ -1832,7 +1832,7 @@ void CQueryHit::Resolve()
 	{
 		m_sURL.Format( _T("dchub://%s@%s:%u/TTH:%s/%I64u/"),
 			(LPCTSTR)URLEncode( m_sNick ),
-			(LPCTSTR)CString( inet_ntoa( m_pAddress ) ),
+			(LPCTSTR)GetIPForURL(),
 			m_nPort,
 			(LPCTSTR)m_oTiger.toString(),
 			m_bSize ? m_nSize : 0 );
@@ -1841,7 +1841,7 @@ void CQueryHit::Resolve()
 
 	if ( Settings.Downloads.RequestHash || m_nIndex == 0 )
 	{
-		m_sURL = GetURL( m_pAddress, m_nPort );
+		m_sURL = GetURL( GetIPForURL(), m_nPort );
 		if ( m_sURL.GetLength() )
 			return;
 	}
@@ -1849,13 +1849,13 @@ void CQueryHit::Resolve()
 	if ( Settings.Downloads.RequestURLENC )
 	{
 		m_sURL.Format( _T("http://%s:%u/get/%lu/%s"),
-			(LPCTSTR)CString( inet_ntoa( m_pAddress ) ), m_nPort, m_nIndex,
+			(LPCTSTR)GetIPForURL(), m_nPort, m_nIndex,
 			(LPCTSTR)URLEncode( m_sName ) );
 	}
 	else
 	{
 		m_sURL.Format( _T("http://%s:%u/get/%lu/%s"),
-			(LPCTSTR)CString( inet_ntoa( m_pAddress ) ), m_nPort, m_nIndex,
+			(LPCTSTR)GetIPForURL(), m_nPort, m_nIndex,
 			(LPCTSTR)m_sName );
 	}
 }
@@ -1900,6 +1900,7 @@ CQueryHit& CQueryHit::operator=(const CQueryHit& pOther)
 	m_nProtocol		= pOther.m_nProtocol;
 	m_oClientID		= pOther.m_oClientID;
 	m_pAddress		= pOther.m_pAddress;
+	m_pIPv6Address	= pOther.m_pIPv6Address;
 	m_sCountry		= pOther.m_sCountry;
 	m_nPort			= pOther.m_nPort;
 	m_nSpeed		= pOther.m_nSpeed;

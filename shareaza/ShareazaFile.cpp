@@ -158,35 +158,45 @@ bool CShareazaFile::operator!=(const CShareazaFile& pFile) const
 
 CString CShareazaFile::GetURL(const IN_ADDR& nAddress, WORD nPort) const
 {
+	return GetURL( CString( inet_ntoa( nAddress ) ), nPort );
+}
+
+CString CShareazaFile::GetURL(const IN6_ADDR& nAddress, WORD nPort) const
+{
+	return GetURL( Network.IPv6ToString( &nAddress, true), nPort );
+}
+
+CString CShareazaFile::GetURL(CString sAddress, WORD nPort) const
+{
 	CString strURL;
 	if ( m_oSHA1 )
 	{
 		strURL.Format( _T("http://%s:%u/uri-res/N2R?%s"),
-			(LPCTSTR)CString( inet_ntoa( nAddress ) ),
+			(LPCTSTR)sAddress,
 			nPort, (LPCTSTR)m_oSHA1.toUrn() );
 	}
 	else if ( m_oTiger )
 	{
 		strURL.Format( _T("http://%s:%u/uri-res/N2R?%s"),
-			(LPCTSTR)CString( inet_ntoa( nAddress ) ),
+			(LPCTSTR)sAddress,
 			nPort, (LPCTSTR)m_oTiger.toUrn() );
 	}
 	else if ( m_oED2K )
 	{
 		strURL.Format( _T("http://%s:%u/uri-res/N2R?%s"),
-			(LPCTSTR)CString( inet_ntoa( nAddress ) ),
+			(LPCTSTR)sAddress,
 			nPort, (LPCTSTR)m_oED2K.toUrn() );
 	}
 	else if ( m_oMD5 )
 	{
 		strURL.Format( _T("http://%s:%u/uri-res/N2R?%s"),
-			(LPCTSTR)CString( inet_ntoa( nAddress ) ),
+			(LPCTSTR)sAddress,
 			nPort, (LPCTSTR)m_oMD5.toUrn() );
 	}
 	else if ( m_oBTH )
 	{
 		strURL.Format( _T("http://%s:%u/uri-res/N2R?%s"),
-			(LPCTSTR)CString( inet_ntoa( nAddress ) ),
+			(LPCTSTR)sAddress,
 			nPort, (LPCTSTR)m_oBTH.toUrn() );
 	}
 	return strURL;

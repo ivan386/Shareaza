@@ -65,6 +65,8 @@ public:
 
 	// Returns "http://nAddress:nPort/uri-res/N2R?{SHA1|TIGER|ED2K|MD5|BTH}"
 	CString GetURL(const IN_ADDR& nAddress, WORD nPort) const;
+	CString GetURL(const IN6_ADDR& nAddress, WORD nPort) const;
+	CString GetURL(CString sAddress, WORD nPort) const;
 
 	// Split string of URLs delimited by commas to URL list
 	bool SplitStringToURLs(LPCTSTR pszURLs, CMapStringToFILETIME& oUrls) const;

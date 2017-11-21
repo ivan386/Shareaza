@@ -240,8 +240,8 @@ public:
 	static SOCKET AcceptSocket(SOCKET hSocket, SOCKADDR_IN6* addr, LPCONDITIONPROC lpfnCondition, DWORD_PTR dwCallbackData = 0);
 
 	static BOOL		IPv6FromString(CString sIPv6, SOCKADDR_IN6* nAddress);
-	static CString	IPv6ToString(const IN6_ADDR* pAddress);
-	static CString	IPv6ToString(const SOCKADDR_IN6* pAddress);
+	static CString	IPv6ToString(const IN6_ADDR* pAddress, bool ForURL = false);
+	static CString	IPv6HostToString(const SOCKADDR_IN6* pHost);
 
 	// Safe way to close socket
 	static void	CloseSocket(SOCKET& hSocket, const bool bForce);
