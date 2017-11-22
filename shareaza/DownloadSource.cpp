@@ -254,7 +254,7 @@ void CDownloadSource::Construct(const CDownload* pDownload)
 	m_bSelected				= FALSE;
 	m_nProtocol				= PROTOCOL_NULL;
 	m_pAddress.s_addr		= 0;
-	memset( &m_pIPv6Address, 0, sizeof( m_pIPv6Address ) );
+	IN6_SET_ADDR_UNSPECIFIED( &m_pIPv6Address );
 	m_nPort					= 0;
 	m_pServerAddress.s_addr	= 0;
 	m_nServerPort			= 0;

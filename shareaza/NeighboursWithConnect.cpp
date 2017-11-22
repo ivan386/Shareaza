@@ -219,7 +219,7 @@ CNeighbour* CNeighboursWithConnect::ConnectTo(
 }
 
 CNeighbour* CNeighboursWithConnect::ConnectTo(
-	const IN6_ADDR& pAddress, // IP address from the host cache to connect to, like 67.163.208.23
+	const IN6_ADDR& pAddress, // IPv6 address from the host cache to connect to, like 67.163.208.23
 	WORD       nPort,        // Port number that goes with that IP address, like 6346
 	PROTOCOLID nProtocol,    // Protocol name, like PROTOCOL_G1 for Gnutella
 	BOOL       bAutomatic,   // True to (do)
@@ -236,7 +236,7 @@ CNeighbour* CNeighboursWithConnect::ConnectTo(
 		if ( bAutomatic ) return NULL;
 
 		// Report that this address is on the block list, and return no new connection made
-		theApp.Message( MSG_ERROR, IDS_SECURITY_OUTGOING, Network.IPv6ToString( &pAddress ) );
+		theApp.Message( MSG_ERROR, IDS_SECURITY_OUTGOING, (LPCTSTR)Network.IPv6ToString( &pAddress ) );
 		return NULL;
 	}
 
@@ -249,16 +249,16 @@ CNeighbour* CNeighboursWithConnect::ConnectTo(
 		return NULL;
 
 	// If the list of connected computers already has this IP address
-/*	if ( Get( pAddress ) )
+	if ( Get( pAddress ) )
 	{
 		// If automatic (do) leave without making a note of the error
 		if ( bAutomatic ) return NULL;
 
 		// Report that we're already connected to that computer, and return no new connection made
-		theApp.Message( MSG_ERROR, IDS_CONNECTION_ALREADY_ABORT, (LPCTSTR)CString( inet_ntoa( pAddress ) ) );
+		theApp.Message( MSG_ERROR, IDS_CONNECTION_ALREADY_ABORT, (LPCTSTR)Network.IPv6ToString( &pAddress ) );
 		return NULL;
 	}
-*/
+
 	// If the caller wants automatic behavior, then make this connection request also connect the network it is for
 	if ( ! bAutomatic )
 	{
@@ -301,7 +301,7 @@ CNeighbour* CNeighboursWithConnect::ConnectTo(
 	// The computer at the IP address we have is running eDonkey2000 software
 	switch ( nProtocol )
 	{
-/*	case PROTOCOL_ED2K:
+	case PROTOCOL_ED2K:
 		{
 			auto_ptr< CEDNeighbour > pNeighbour( new CEDNeighbour() );
 			if ( pNeighbour->ConnectTo( &pAddress, nPort, bAutomatic ) )
@@ -310,16 +310,16 @@ CNeighbour* CNeighboursWithConnect::ConnectTo(
 			}
 		}
 		break;
-*/
+
 	case PROTOCOL_BT:
 		{
 			DHT.Ping( &pAddress, nPort );
 		}
 		break;
 
-/*	case PROTOCOL_KAD:
+	case PROTOCOL_KAD:
 		{
-			SOCKADDR_IN pHost = { AF_INET, htons( nPort ), pAddress };
+			SOCKADDR_IN6 pHost = { AF_INET6, htons( nPort ), 0, pAddress };
 			Kademlia.Bootstrap( &pHost );
 		}
 		break;
@@ -346,7 +346,7 @@ CNeighbour* CNeighboursWithConnect::ConnectTo(
 				return pNeighbour.release();
 			}
 		}
-*/	}
+	}
 
 	return NULL; // Not able to connect
 }

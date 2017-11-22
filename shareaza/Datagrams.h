@@ -96,10 +96,10 @@ public:
 	}
 
 	BOOL	Send(const IN_ADDR* pAddress, WORD nPort, CPacket* pPacket, BOOL bRelease = TRUE, LPVOID pToken = NULL, BOOL bAck = TRUE);
-	BOOL	SendIPv6(const IN6_ADDR* pAddress, WORD nPort, CPacket* pPacket, BOOL bRelease = TRUE, LPVOID pToken = NULL, BOOL bAck = TRUE);
+	BOOL	Send(const IN6_ADDR* pAddress, WORD nPort, CPacket* pPacket, BOOL bRelease = TRUE, LPVOID pToken = NULL, BOOL bAck = TRUE);
 	
 	BOOL	Send(const SOCKADDR_IN* pHost, CPacket* pPacket, BOOL bRelease = TRUE, LPVOID pToken = NULL, BOOL bAck = TRUE);
-	BOOL	SendIPv6(const SOCKADDR_IN6* pHost, CPacket* pPacket, BOOL bRelease = TRUE, LPVOID pToken = NULL, BOOL bAck = TRUE);
+	BOOL	Send(const SOCKADDR_IN6* pHost, CPacket* pPacket, BOOL bRelease = TRUE, LPVOID pToken = NULL, BOOL bAck = TRUE);
 	
 	void	PurgeToken(LPVOID pToken);
 	void	OnRun();
@@ -151,7 +151,9 @@ protected:
 	BOOL	OnDatagram(const SOCKADDR_IN* pHost, const BYTE* pBuffer, DWORD nLength);
 	BOOL	OnDatagram(const SOCKADDR_IN6* pHost, const BYTE* pBuffer, DWORD nLength);
 	BOOL	OnReceiveSGP(const SOCKADDR_IN* pHost, const SGP_HEADER* pHeader, DWORD nLength);
+	BOOL	OnReceiveSGP(const SOCKADDR_IN6* pHost, const SGP_HEADER* pHeader, DWORD nLength);
 	BOOL	OnAcknowledgeSGP(const SOCKADDR_IN* pHost, const SGP_HEADER* pHeader, DWORD nLength);
+	BOOL	OnAcknowledgeSGP(const SOCKADDR_IN6* pHost, const SGP_HEADER* pHeader, DWORD nLength);
 	void	ManagePartials();
 	void	Remove(CDatagramIn* pDG, BOOL bReclaimOnly = FALSE);
 };

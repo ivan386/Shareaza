@@ -111,7 +111,7 @@ extern "C"
 			// TODO: Remove extra copy
 			CBTPacket* pPacket = CBTPacket::New( BT_PACKET_EXTENSION, BT_EXTENSION_NOP, (const BYTE*)buf, len );
 
-			return Datagrams.SendIPv6( pHost, pPacket ) ?  len : -1;
+			return Datagrams.Send( pHost, pPacket ) ?  len : -1;
 		}
 
 

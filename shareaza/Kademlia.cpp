@@ -48,12 +48,36 @@ BOOL CKademlia::Send(const SOCKADDR_IN* pHost, CEDPacket* pPacket)
 	return Datagrams.Send( pHost, pPacket );
 }
 
+BOOL CKademlia::Send(const SOCKADDR_IN6* pHost, CEDPacket* pPacket)
+{
+	// TODO: Kademlia packets statistics
+
+	return Datagrams.Send( pHost, pPacket );
+}
+
 BOOL CKademlia::Send(const SOCKADDR_IN* pHost, BYTE nType)
 {
 	return Send( pHost, CEDPacket::New( nType, ED2K_PROTOCOL_KAD ) );
 }
 
+BOOL CKademlia::Send(const SOCKADDR_IN6* pHost, BYTE nType)
+{
+	return Send( pHost, CEDPacket::New( nType, ED2K_PROTOCOL_KAD ) );
+}
+
 BOOL CKademlia::Bootstrap(const SOCKADDR_IN* pHost, bool bKad2)
+{
+	if ( bKad2 )
+	{
+		return Send( pHost, KADEMLIA2_BOOTSTRAP_REQ );
+	}
+	else
+	{
+		return SendMyDetails( pHost, KADEMLIA_BOOTSTRAP_REQ, false );
+	}
+}
+
+BOOL CKademlia::Bootstrap(const SOCKADDR_IN6* pHost, bool bKad2)
 {
 	if ( bKad2 )
 	{
@@ -87,6 +111,33 @@ BOOL CKademlia::SendMyDetails(const SOCKADDR_IN* pHost, BYTE nType, bool bKad2)
 		pPacket->WriteLongLE( Network.m_pHost.sin_addr.S_un.S_addr );
 		pPacket->WriteShortLE( htons( Network.m_pHost.sin_port ) );	// UDP
 		pPacket->WriteShortLE( htons( Network.m_pHost.sin_port ) );	// TCP
+		pPacket->WriteByte( 0 );
+		return Send( pHost, pPacket );
+	}
+}
+
+BOOL CKademlia::SendMyDetails(const SOCKADDR_IN6* pHost, BYTE nType, bool bKad2)
+{
+	CEDPacket* pPacket = CEDPacket::New( nType, ED2K_PROTOCOL_KAD );
+	if ( ! pPacket )
+		return FALSE;
+
+	Hashes::Guid oGUID = MyProfile.oGUID;
+
+	if ( bKad2 )
+	{
+		pPacket->Write( oGUID );
+		pPacket->WriteShortLE( htons( Network.m_pHostIPv6.sin6_port ) );	// TCP
+		pPacket->WriteByte( KADEMLIA_VERSION );
+		pPacket->WriteByte( 0 );
+		return Send( pHost, pPacket );
+	}
+	else
+	{
+		pPacket->Write( oGUID );
+		pPacket->Write( &Network.m_pHostIPv6.sin6_addr, sizeof( IN6_ADDR ) );
+		pPacket->WriteShortLE( htons( Network.m_pHostIPv6.sin6_port ) );	// UDP
+		pPacket->WriteShortLE( htons( Network.m_pHostIPv6.sin6_port ) );	// TCP
 		pPacket->WriteByte( 0 );
 		return Send( pHost, pPacket );
 	}

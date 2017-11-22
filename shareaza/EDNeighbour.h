@@ -67,6 +67,7 @@ private:
 // Overrides
 public:
 	virtual BOOL	ConnectTo(const IN_ADDR* pAddress, WORD nPort, BOOL bAutomatic);
+	virtual BOOL	ConnectTo(const IN6_ADDR* pAddress, WORD nPort, BOOL bAutomatic);
 	virtual BOOL	Send(CPacket* pPacket, BOOL bRelease = TRUE, BOOL bBuffered = FALSE);
 	virtual DWORD	GetUserCount() const { return m_nUserCount; }
 	virtual DWORD	GetUserLimit() const { return m_nUserLimit; }

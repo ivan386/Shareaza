@@ -719,10 +719,84 @@ BOOL CG2Packet::OnPacket(const SOCKADDR_IN* pHost)
 	return TRUE;
 }
 
+BOOL CG2Packet::OnPacket(const SOCKADDR_IN6* pHost)
+{
+	Statistics.Current.Gnutella2.Incoming++;
+
+	SmartDump( pHost, TRUE, FALSE );
+
+	if ( ! Settings.Gnutella2.EnableToday ) return TRUE;
+
+	// Is it neigbour's packet or stranger's packet?
+	CNeighbour* pNeighbour = Neighbours.Get( pHost->sin6_addr );
+//	CG1Neighbour* pNeighbour1 = static_cast< CG1Neighbour* >
+//		( ( pNeighbour && pNeighbour->m_nProtocol == PROTOCOL_G1 ) ? pNeighbour : NULL );
+	CG2Neighbour* pNeighbour2 = static_cast< CG2Neighbour* >
+		( ( pNeighbour && pNeighbour->m_nProtocol == PROTOCOL_G2 ) ? pNeighbour : NULL );
+
+	if ( Network.RoutePacket( this ) ) return TRUE;
+
+	switch( m_nType )
+	{
+	case G2_PACKET_QUERY:
+//		return OnQuery( pHost );
+	case G2_PACKET_QUERY_KEY_REQ:
+//		return OnQueryKeyRequest( pHost );
+	case G2_PACKET_HIT:
+//		return OnCommonHit( pHost );
+	case G2_PACKET_HIT_WRAP:
+//		return OnCommonHit( pHost );
+	case G2_PACKET_QUERY_WRAP:
+		// G2_PACKET_QUERY_WRAP deprecated and ignored
+		break;
+	case G2_PACKET_QUERY_ACK:
+//		return OnQueryAck( pHost );
+	case G2_PACKET_QUERY_KEY_ANS:
+//		return OnQueryKeyAnswer( pHost );
+	case G2_PACKET_PING:
+		// Pass packet handling to neighbour if any
+		return pNeighbour2 ? pNeighbour2->OnPing( this, FALSE ) : OnPing( pHost );
+	case G2_PACKET_PONG:
+		// Pass packet handling to neighbour if any
+		return pNeighbour2 ? pNeighbour2->OnPong( this, FALSE ) : OnPong( pHost );
+	case G2_PACKET_PUSH:
+//		return OnPush( pHost );
+	case G2_PACKET_CRAWL_REQ:
+//		return OnCrawlRequest( pHost );
+	case G2_PACKET_CRAWL_ANS:
+//		return OnCrawlAnswer( pHost );
+	case G2_PACKET_KHL_ANS:
+//		return OnKHLA( pHost );
+	case G2_PACKET_KHL_REQ:
+//		return OnKHLR( pHost );
+	case G2_PACKET_DISCOVERY:
+//		return OnDiscovery( pHost );
+	case G2_PACKET_KHL:
+//		return OnKHL( pHost );
+
+#ifdef _DEBUG
+	default:
+		CString tmp;
+		tmp.Format( _T("Unknown packet from %s:%u."),
+			(LPCTSTR)Network.IPv6ToString( &pHost->sin6_addr ) ,
+			htons( pHost->sin6_port ) );
+		Debug( tmp );
+#endif // _DEBUG
+	}
+
+	return TRUE;
+}
+
 //////////////////////////////////////////////////////////////////////
 // CDatagrams PING packet handler
 
 BOOL CG2Packet::OnPing(const SOCKADDR_IN* pHost)
+{
+	Datagrams.Send( pHost, CG2Packet::New( G2_PACKET_PONG ) );
+	return TRUE;
+}
+
+BOOL CG2Packet::OnPing(const SOCKADDR_IN6* pHost)
 {
 	Datagrams.Send( pHost, CG2Packet::New( G2_PACKET_PONG ) );
 	return TRUE;
@@ -747,6 +821,36 @@ BOOL CG2Packet::OnPong(const SOCKADDR_IN* pHost)
 
 	if ( bRelayed && ! Datagrams.IsStable() && ! Network.IsConnectedTo( &pHost->sin_addr ) ){
 		CHostCacheHostPtr pCache = HostCache.Gnutella2.Find( &pHost->sin_addr );
+		DWORD tNow = static_cast< DWORD >( time( NULL ) );
+		//If we firewaled than we can't get udp packed from host that we don't send it
+		if ( ! pCache )
+			Datagrams.SetStable();
+	}
+			
+	
+
+	return TRUE;
+}
+
+BOOL CG2Packet::OnPong(const SOCKADDR_IN6* pHost)
+{
+	if ( ! m_bCompound ) return TRUE;
+
+	BOOL bRelayed = FALSE;
+	G2_PACKET nType;
+	DWORD nLength;
+
+	while ( ReadPacket( nType, nLength ) )
+	{
+		DWORD nOffset = m_nPosition + nLength;
+		if ( nType == G2_PACKET_RELAY ) bRelayed = TRUE;
+		m_nPosition = nOffset;
+	}
+
+	
+
+	if ( bRelayed && ! Datagrams.IsStable() && ! Network.IsConnectedTo( &pHost->sin6_addr ) ){
+		CHostCacheHostPtr pCache = HostCache.Gnutella2.Find( &pHost->sin6_addr );
 		DWORD tNow = static_cast< DWORD >( time( NULL ) );
 		//If we firewaled than we can't get udp packed from host that we don't send it
 		if ( ! pCache )
@@ -839,7 +943,86 @@ BOOL CG2Packet::OnQuery(const SOCKADDR_IN* pHost)
 
 	return TRUE;
 }
+/*
+BOOL CG2Packet::OnQuery(const SOCKADDR_IN6* pHost)
+{
+	Statistics.Current.Gnutella2.Queries++;
 
+	CQuerySearchPtr pSearch = CQuerySearch::FromPacket( this, pHost );
+	if ( ! pSearch || pSearch->m_bDropMe ||	// Malformed query
+		 ! pSearch->m_bUDP )	// Forbid query with firewalled return address
+	{
+		if ( ! pSearch || ! pSearch->m_bUDP )
+		{
+			DEBUG_ONLY( Debug( _T("Malformed Query.") ) );
+			theApp.Message( MSG_WARNING, IDS_PROTOCOL_BAD_QUERY, (LPCTSTR)Network.IPv6HostToString( pHost ) ) );
+		}
+		Statistics.Current.Gnutella2.Dropped++;
+		return FALSE;
+	}
+
+	if ( Security.IsDenied( &pSearch->m_pEndpoint.sin_addr ) )
+	{
+		Statistics.Current.Gnutella2.Dropped++;
+		return FALSE;
+	}
+
+	if ( ! Network.QueryKeys->Check( pSearch->m_pEndpoint.sin_addr.S_un.S_addr, pSearch->m_nKey ) )
+	{
+		DWORD nKey = Network.QueryKeys->Create( pSearch->m_pEndpoint.sin_addr.S_un.S_addr );
+
+		CString strNode( inet_ntoa( pSearch->m_pEndpoint.sin_addr ) );
+		theApp.Message( MSG_DEBUG, _T("Issuing correction for node %s's query key for %s"),
+			(LPCTSTR)Network.IPv6HostToString( pHost ), (LPCTSTR)strNode );
+
+		CG2Packet* pAnswer = CG2Packet::New( G2_PACKET_QUERY_KEY_ANS, TRUE );
+		pAnswer->WritePacket( G2_PACKET_QUERY_KEY, 4 );
+		pAnswer->WriteLongBE( nKey );
+
+		if ( pHost->sin_addr.S_un.S_addr != pSearch->m_pEndpoint.sin_addr.S_un.S_addr )
+		{
+			pAnswer->WritePacket( G2_PACKET_SEND_ADDRESS, 4 );
+			pAnswer->WriteLongLE( pHost->sin_addr.S_un.S_addr );
+		}
+
+		Datagrams.Send( &pSearch->m_pEndpoint, pAnswer, TRUE );
+
+		return TRUE;
+	}
+
+	if ( ! Network.QueryRoute->Add( pSearch->m_oGUID, &pSearch->m_pEndpoint ) )
+	{
+		// Ack without hub list
+		Datagrams.Send( &pSearch->m_pEndpoint, Neighbours.CreateQueryWeb( pSearch->m_oGUID, false ) );
+
+		Statistics.Current.Gnutella2.Dropped++;
+		return TRUE;
+	}
+
+	if ( ! Neighbours.CheckQuery( pSearch ) )
+	{
+		// Ack without hub list with retry time
+		Datagrams.Send( &pSearch->m_pEndpoint, Neighbours.CreateQueryWeb( pSearch->m_oGUID, false, NULL, false ) );
+
+		theApp.Message( MSG_WARNING, IDS_PROTOCOL_EXCESS,
+			(LPCTSTR)( Network.IPv6HostToString( pHost ) + _T(" [UDP]") ),
+			(LPCTSTR)CString( inet_ntoa( pSearch->m_pEndpoint.sin_addr ) ) );
+		Statistics.Current.Gnutella2.Dropped++;
+		return TRUE;
+	}
+
+	Neighbours.RouteQuery( pSearch, this, NULL, TRUE );
+
+	Network.OnQuerySearch( new CLocalSearch( pSearch, PROTOCOL_G2 ) );
+
+	// Ack with hub list
+	Datagrams.Send( &pSearch->m_pEndpoint, Neighbours.CreateQueryWeb( pSearch->m_oGUID, true ) );
+
+	Statistics.Current.Gnutella2.QueriesProcessed++;
+
+	return TRUE;
+}
+*/
 //////////////////////////////////////////////////////////////////////
 // CDatagrams QUERY ACK packet handler
 

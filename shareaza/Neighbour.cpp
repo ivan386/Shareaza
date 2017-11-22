@@ -201,6 +201,11 @@ void CNeighbour::DelayClose(UINT nError)
 	CConnection::DelayClose( nError );
 }
 
+BOOL CNeighbour::ConnectTo(const IN6_ADDR* /*pAddress*/, WORD /*nPort*/, BOOL /*bAutomatic*/)
+{
+	return FALSE;
+}
+
 BOOL CNeighbour::ConnectTo(const IN_ADDR* /*pAddress*/, WORD /*nPort*/, BOOL /*bAutomatic*/)
 {
 	return FALSE;

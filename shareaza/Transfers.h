@@ -37,6 +37,7 @@ public:
 	mutable CMutexEx	m_pSection;
 
 	BOOL		IsConnectedTo(const IN_ADDR* pAddress) const;
+	BOOL		IsConnectedTo(const IN6_ADDR* pAddress) const;
 	BOOL		StartThread();
 	void		StopThread();
 	void		Add(CTransfer* pTransfer);

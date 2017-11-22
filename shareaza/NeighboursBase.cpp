@@ -94,6 +94,15 @@ CNeighbour* CNeighboursBase::Get(const IN_ADDR& pAddress) const
 	return NULL;
 }
 
+CNeighbour* CNeighboursBase::Get(const IN6_ADDR& pAddress) const
+{
+	CA6Map::const_iterator in = m_pNeighboursIPv6.find(pAddress);
+	if ( in != m_pNeighboursIPv6.end() )
+		return in->second;
+	else
+		return NULL;
+}
+
 // Finds the newest neighbour object
 CNeighbour* CNeighboursBase::GetNewest(PROTOCOLID nProtocol, int nState, int nNodeType) const
 {
@@ -264,12 +273,21 @@ void CNeighboursBase::OnRun()
 void CNeighboursBase::Add(CNeighbour* pNeighbour)
 {
 	ASSUME_LOCK( Network.m_pSection );
-	ASSERT( pNeighbour->m_pHost.sin_addr.s_addr != INADDR_ANY );
-	ASSERT( pNeighbour->m_pHost.sin_addr.s_addr != INADDR_NONE );
-	ASSERT( Get( pNeighbour->m_pHost.sin_addr ) == NULL );
+	if ( pNeighbour->IsIPv6Host() )
+	{
+		ASSERT( Get( pNeighbour->m_pHostIPv6.sin6_addr ) == NULL );
+		m_pNeighboursIPv6[pNeighbour->m_pHostIPv6.sin6_addr] = pNeighbour;
+	}
+	else
+	{
+		ASSERT( pNeighbour->m_pHost.sin_addr.s_addr != INADDR_ANY );
+		ASSERT( pNeighbour->m_pHost.sin_addr.s_addr != INADDR_NONE );
+		ASSERT( Get( pNeighbour->m_pHost.sin_addr ) == NULL );
+		m_pNeighbours.SetAt( pNeighbour->m_pHost.sin_addr, pNeighbour );
+	}
+
 	ASSERT( Get( (DWORD_PTR)pNeighbour ) == NULL );
 
-	m_pNeighbours.SetAt( pNeighbour->m_pHost.sin_addr, pNeighbour );
 	m_pIndex.SetAt( (DWORD_PTR)pNeighbour, pNeighbour );
 }
 
@@ -294,6 +312,17 @@ void CNeighboursBase::Remove(CNeighbour* pNeighbour)
 			VERIFY( m_pNeighbours.RemoveKey( nCurAddress ) );
 			break;
 		}
+	}
+
+	for ( CA6Map::iterator pos = m_pNeighboursIPv6.begin(); pos == m_pNeighboursIPv6.end(); )
+	{
+		if ( pos->second == pNeighbour )
+		{
+			pos = m_pNeighboursIPv6.erase( pos );
+			break;
+		}
+		else
+			pos++;
 	}
 	VERIFY( m_pIndex.RemoveKey( (DWORD_PTR)pNeighbour ) );
 }

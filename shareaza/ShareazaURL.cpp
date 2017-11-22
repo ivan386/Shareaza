@@ -110,9 +110,10 @@ void CShareazaURL::Clear()
 	m_pTorrent.Free();
 	m_sAddress.Empty();
 	m_pAddress.s_addr		= 0;
-	memset( &m_pIPv6Address, 0, sizeof( m_pIPv6Address ) );
+	IN6_SET_ADDR_UNSPECIFIED( &m_pIPv6Address );
 	m_nPort					= 0;
 	m_pServerAddress.s_addr = 0;
+	IN6_SET_ADDR_UNSPECIFIED( &m_pIPv6ServerAddress );
 	m_nServerPort			= 0;
 	m_sLogin.Empty ();
 	m_sPassword.Empty ();

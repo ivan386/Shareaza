@@ -148,7 +148,7 @@ struct std::less< IN6_ADDR > : public std::binary_function< IN6_ADDR, IN6_ADDR, 
 {
 	inline bool operator()(const IN6_ADDR& _Left, const IN6_ADDR& _Right) const throw()
 	{
-		return ( memcmp( &_Left, &_Right, 16 ) > 0 );
+		return ( memcmp( &_Left, &_Right, sizeof( IN6_ADDR ) ) > 0 );
 	}
 };
 

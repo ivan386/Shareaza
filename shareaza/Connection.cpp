@@ -154,6 +154,12 @@ BOOL CConnection::ConnectTo(const SOCKADDR_IN* pHost)
 	return ConnectTo( &pHost->sin_addr, htons( pHost->sin_port ) );
 }
 
+BOOL CConnection::ConnectTo(const SOCKADDR_IN6* pHost)
+{
+	// Call the next ConnectTo method, and return the result
+	return ConnectTo( &pHost->sin6_addr, htons( pHost->sin6_port ) );
+}
+
 // Connect this CConnection object to a remote computer on the Internet
 // Takes pAddress, a Windows Sockets structure that holds an IP address, and takes the port number seprately
 // Returns true if connected
@@ -272,7 +278,7 @@ BOOL CConnection::ConnectTo(const IN_ADDR* pAddress, WORD nPort)
 	return TRUE;
 }
 
-BOOL CConnection::ConnectToIPv6(const IN6_ADDR* pAddress, WORD nPort)
+BOOL CConnection::ConnectTo(const IN6_ADDR* pAddress, WORD nPort)
 {
 	if ( IsValid() )
 		return FALSE;

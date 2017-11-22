@@ -254,8 +254,23 @@ BOOL CConnectToDlg::UpdateItems()
 	int n = m_sHost.Find( _T(':') );
 	if ( n != -1 )
 	{
-		m_nPort = _tstoi( m_sHost.Mid( n + 1 ) );
-		m_sHost = m_sHost.Left( n );
+		int n1 = m_sHost.Find( _T(':'), n + 1 );
+		if ( n1 < n )
+		{
+			// address with port
+			m_nPort = _tstoi( m_sHost.Mid( n + 1 ) );
+			m_sHost = m_sHost.Left( n );
+		}
+		else
+		{
+			// IPv6
+			int n = m_sHost.Find( _T("]:") );
+			if (  n != -1 )
+			{			
+				m_nPort = _tstoi( m_sHost.Mid( n + 2 ) );
+				m_sHost = m_sHost.Left( n + 1 );
+			}
+		}
 	}
 	if ( m_sHost.IsEmpty() || m_nPort <= 0 || m_nPort >= 65536 )
 	{

@@ -35,6 +35,7 @@ public:
 	virtual ~CDCNeighbour();
 
 	virtual BOOL	ConnectTo(const IN_ADDR* pAddress, WORD nPort, BOOL bAutomatic);
+	virtual BOOL	ConnectTo(const IN6_ADDR* pAddress, WORD nPort, BOOL bAutomatic);
 	virtual BOOL	Send(CPacket* pPacket, BOOL bRelease = TRUE, BOOL bBuffered = FALSE);
 	virtual DWORD	GetUserCount() const { return (DWORD)m_oUsers.GetCount(); }
 

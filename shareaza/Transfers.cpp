@@ -77,6 +77,20 @@ BOOL CTransfers::IsConnectedTo(const IN_ADDR* pAddress) const
 	return FALSE;
 }
 
+BOOL CTransfers::IsConnectedTo(const IN6_ADDR* pAddress) const
+{
+	CSingleLock pLock( &m_pSection );
+	if ( ! pLock.Lock( 250 ) )
+		return FALSE;
+
+	for ( POSITION pos = m_pList.GetHeadPosition() ; pos ; )
+	{
+		if ( IN6_ADDR_EQUAL( &m_pList.GetNext( pos )->m_pHostIPv6.sin6_addr, pAddress ) )
+			return TRUE;
+	}
+
+	return FALSE;
+}
 //////////////////////////////////////////////////////////////////////
 // CTransfers thread start and stop
 

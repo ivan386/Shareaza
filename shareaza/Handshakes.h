@@ -39,6 +39,7 @@ public:
 
 	BOOL PushTo(IN_ADDR* pAddress, WORD nPort, DWORD nIndex = 0);	// Connect to the given IP
 	BOOL IsConnectedTo(const IN_ADDR* pAddress) const;				// Looks for the IP in the handshake objects list
+	BOOL IsConnectedTo(const IN6_ADDR* pAddress) const;				// Looks for the IP in the handshake objects list
 
 protected:
 	DWORD m_nStableCount;				// The number of connections our listening socket has received

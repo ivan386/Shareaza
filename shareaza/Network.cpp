@@ -222,7 +222,7 @@ BOOL CNetwork::IsSelfIP(const IN_ADDR& nAddress) const
 
 BOOL CNetwork::IsSelfIP(const IN6_ADDR& nAddress) const
 {
-	return memcmp( &nAddress, &m_pHostIPv6.sin6_addr, 16 ) == 0;
+	return IN6_ADDR_EQUAL( &nAddress, &m_pHostIPv6.sin6_addr );
 }
 
 HINTERNET CNetwork::InternetOpen()
@@ -343,6 +343,14 @@ BOOL CNetwork::IsConnectedTo(const IN_ADDR* pAddress) const
 		Transfers.IsConnectedTo( pAddress );
 }
 
+BOOL CNetwork::IsConnectedTo(const IN6_ADDR* pAddress) const
+{
+	return IsSelfIP( *pAddress ) ||
+		Handshakes.IsConnectedTo( pAddress ) ||
+		Neighbours.Get( *pAddress ) ||
+		Transfers.IsConnectedTo( pAddress );
+}
+
 BOOL CNetwork::ReadyToTransfer(DWORD tNow) const
 {
 	if ( !IsConnected() )
@@ -422,6 +430,9 @@ BOOL CNetwork::ConnectTo(LPCTSTR pszAddress, int nPort, PROTOCOLID nProtocol, BO
 	SOCKADDR_IN6 saHost;
 	if ( Network.IPv6FromString( pszAddress, &saHost ) )
 	{
+		if ( saHost.sin6_port == 0 )
+			saHost.sin6_port = htons( nPort );
+
 		// It's IPv6 address
 		HostCache.ForProtocol( nProtocol )->AddIPv6( &saHost.sin6_addr, ntohs( saHost.sin6_port ), NULL );
 
@@ -1710,8 +1721,9 @@ BOOL CNetwork::IPv6FromString(CString sIPv6, SOCKADDR_IN6* nAddress)
 	LPWSTR psIPv6 = sIPv6.GetBuffer();
 
 	int size = sizeof(SOCKADDR_IN6);
-
-	return ( WSAStringToAddress( psIPv6, AF_INET6, NULL, (struct sockaddr *) nAddress, &size ) == 0 );
+	BOOL bCoverted = ( WSAStringToAddress( psIPv6, AF_INET6, NULL, (struct sockaddr *) nAddress, &size ) == 0 );
+	sIPv6.ReleaseBuffer();
+	return bCoverted;
 }
 
 CString CNetwork::IPv6ToString(const IN6_ADDR* pAddress, bool ForUrl)
@@ -1721,9 +1733,9 @@ CString CNetwork::IPv6ToString(const IN6_ADDR* pAddress, bool ForUrl)
 	pHost.sin6_addr = (*pAddress);
 	if ( ForUrl )
 	{
-		pHost.sin6_port = 1;
+		pHost.sin6_port = htons( 1 );
 		CString IPv6 = IPv6HostToString( &pHost );
-		return IPv6.Left( IPv6.GetLength() - 2 );
+		return IPv6.Left( IPv6.GetLength() - 3 );
 	}
 	return IPv6HostToString( &pHost );
 }
@@ -1734,9 +1746,10 @@ CString CNetwork::IPv6HostToString(const SOCKADDR_IN6* pHost)
 
 	LPWSTR pBuffer = sIPv6.GetBuffer( IP6_ADDRESS_STRING_LENGTH + 1);
 	unsigned long nBuffer = ( IP6_ADDRESS_STRING_LENGTH + 1 ) * sizeof(WCHAR) ;
-		
+
 	WSAAddressToString( (struct sockaddr *) pHost, sizeof( SOCKADDR_IN6 ), NULL, pBuffer, &nBuffer );
 
+	sIPv6.ReleaseBuffer( nBuffer );
 	return sIPv6;
 }
 
@@ -1788,7 +1801,7 @@ int CNetwork::SendTo(SOCKET s, const char* buf, int len, const SOCKADDR_IN* pTo)
 	}
 }
 
-int CNetwork::SendToIPv6(SOCKET s, const char* buf, int len, const SOCKADDR_IN6* pTo)
+int CNetwork::SendTo(SOCKET s, const char* buf, int len, const SOCKADDR_IN6* pTo)
 {
 	__try	// Fix against stupid firewalls like (iS3 Anti-Spyware or Norman Virus Control)
 	{
@@ -1825,7 +1838,7 @@ int CNetwork::RecvFrom(SOCKET s, char* buf, int len, SOCKADDR_IN* pFrom)
 	}
 }
 
-int CNetwork::RecvFromIPv6(SOCKET s, char* buf, int len, SOCKADDR_IN6* pFrom)
+int CNetwork::RecvFrom(SOCKET s, char* buf, int len, SOCKADDR_IN6* pFrom)
 {
 	__try	// Fix against stupid firewalls like (iS3 Anti-Spyware or Norman Virus Control)
 	{

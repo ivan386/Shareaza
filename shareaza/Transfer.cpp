@@ -75,7 +75,7 @@ BOOL CTransfer::ConnectToIPv6(const IN6_ADDR* pAddress, WORD nPort)
 {
 	m_nState = 0;
 
-	if ( CConnection::ConnectToIPv6( pAddress, nPort ) )
+	if ( CConnection::ConnectTo( pAddress, nPort ) )
 	{
 		Transfers.Add( this );
 		return TRUE;

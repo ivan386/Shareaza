@@ -131,6 +131,7 @@ protected:
 // Operations
 public:
 	virtual BOOL	ConnectTo(const IN_ADDR* pAddress, WORD nPort, BOOL bAutomatic);
+	virtual BOOL	ConnectTo(const IN6_ADDR* pAddress, WORD nPort, BOOL bAutomatic);
 	virtual BOOL	Send(CPacket* pPacket, BOOL bRelease = TRUE, BOOL bBuffered = FALSE);
 	virtual void	Close(UINT nError = IDS_CONNECTION_CLOSED);
 

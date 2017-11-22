@@ -43,6 +43,7 @@ CDatagramOut::CDatagramOut()
 	, m_pNextTime	( NULL )
 	, m_pPrevTime	( NULL )
 	, m_pHost		()
+	, m_pHostIPv6	()
 	, m_nSequence	( 0 )
 	, m_pBuffer		( NULL )
 	, m_pToken		( NULL )
@@ -70,6 +71,54 @@ void CDatagramOut::Create(const SOCKADDR_IN* pHost, CG2Packet* pPacket, WORD nSe
 	ASSERT( m_pBuffer == NULL );
 
 	m_pHost		= *pHost;
+	m_nSequence	= nSequence;
+	m_pBuffer	= pBuffer;
+
+	pPacket->ToBuffer( m_pBuffer, false );
+
+	m_bCompressed = m_pBuffer->Deflate( TRUE );
+
+	m_nPacket	= Settings.Gnutella2.UdpMTU;
+	m_nCount	= (BYTE)( ( m_pBuffer->m_nLength + m_nPacket - 1 ) / m_nPacket );
+	m_nAcked	= m_nCount;
+
+	SGP_HEADER pHeader;
+
+	memcpy( pHeader.szTag, SGP_TAG_2, 3 );
+	pHeader.nFlags = m_bCompressed ? SGP_DEFLATE : 0;
+	m_bAck = bAck;
+	if ( bAck ) pHeader.nFlags |= SGP_ACKNOWLEDGE;
+
+	pHeader.nSequence	= m_nSequence;
+	pHeader.nCount		= m_nCount;
+
+	DWORD nOffset = 0;
+	DWORD nPacket = m_nPacket + sizeof(SGP_HEADER);
+
+	for ( BYTE nPart = 0 ; nPart < m_nCount && m_pBuffer ; nPart++, nOffset += nPacket )
+	{
+		pHeader.nPart = nPart + 1;
+		m_pBuffer->Insert( nOffset, &pHeader, sizeof(pHeader) );
+	}
+
+	if ( ! m_pLocked || m_nLocked < m_nCount )
+	{
+		if ( m_pLocked ) delete [] m_pLocked;
+
+		m_nLocked	= m_nCount;
+		m_pLocked	= new DWORD[ m_nLocked ];
+	}
+
+	ZeroMemory( m_pLocked, sizeof(DWORD) * m_nCount );
+
+	m_tSent = GetTickCount();
+}
+
+void CDatagramOut::Create(const SOCKADDR_IN6* pHost, CG2Packet* pPacket, WORD nSequence, CBuffer* pBuffer, BOOL bAck)
+{
+	ASSERT( m_pBuffer == NULL );
+
+	m_pHostIPv6	= *pHost;
 	m_nSequence	= nSequence;
 	m_pBuffer	= pBuffer;
 

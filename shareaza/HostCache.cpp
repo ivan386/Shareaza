@@ -510,7 +510,14 @@ CHostCacheHostPtr CHostCacheList::AddIPv6(const IN6_ADDR* pAddress, WORD nPort, 
 			m_nCookie++;
 		}
 	}
+	else
+	{
+		if ( szAddress ) pHost->m_sAddress = szAddress;
+		if ( pHost->m_sAddress.Find( _T("]") ) > 0 ) //Is IPv6?
+			pHost->m_sAddress = pHost->m_sAddress.SpanIncluding( _T("]") );
 
+		Update( pHost, nPort, tSeen, pszVendor, nUptime, nCurrentLeaves, nLeafLimit );
+	}
 	return pHost;
 }
 
@@ -1384,7 +1391,7 @@ CHostCacheHost::CHostCacheHost(PROTOCOLID nProtocol) :
 	m_nKADVersion(0)
 {
 	m_pAddress.s_addr = INADDR_ANY;
-	memset(&m_pIPv6Address, 0, sizeof(m_pIPv6Address));
+	IN6_SET_ADDR_UNSPECIFIED( &m_pIPv6Address );
 
 	// 10 sec cooldown to avoid neighbor add-remove oscillation
 	DWORD tNow = static_cast< DWORD >( time( NULL ) );
@@ -1411,6 +1418,8 @@ CString CHostCacheHost::Address() const
 {
 	if ( m_pAddress.s_addr != INADDR_ANY )
 		return CString( inet_ntoa( m_pAddress ) );
+	else if( IsIPv6Host() )
+		return Network.IPv6ToString( &m_pIPv6Address, true );
 	else
 		return m_sAddress;
 }

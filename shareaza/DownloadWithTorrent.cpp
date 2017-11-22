@@ -1034,7 +1034,7 @@ BOOL CDownloadWithTorrent::UploadExists(in6_addr* pIPv6) const
 
 		if ( ( pTransfer->m_nProtocol == PROTOCOL_BT ) &&
 			 ( pTransfer->m_nState != upsNull ) &&
-			 ( memcmp( &pTransfer->m_pHostIPv6.sin6_addr, pIPv6, 16 ) == 0 ) )
+			 IN6_ADDR_EQUAL( &pTransfer->m_pHostIPv6.sin6_addr, pIPv6 ) )
 			return TRUE;
 	}
 	return FALSE;

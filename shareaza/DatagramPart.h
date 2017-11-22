@@ -37,6 +37,7 @@ public:
 	CDatagramOut*	m_pPrevTime;
 
 	SOCKADDR_IN		m_pHost;
+	SOCKADDR_IN6	m_pHostIPv6;
 	WORD			m_nSequence;
 	CBuffer*		m_pBuffer;
 	LPVOID			m_pToken;
@@ -44,8 +45,23 @@ public:
 	BOOL			m_bAck;
 
 	void	Create(const SOCKADDR_IN* pHost, CG2Packet* pPacket, WORD nSequence, CBuffer* pBuffer, BOOL bAck);
+	void	Create(const SOCKADDR_IN6* pHost, CG2Packet* pPacket, WORD nSequence, CBuffer* pBuffer, BOOL bAck);
 	BOOL	GetPacket(DWORD tNow, BYTE** ppPacket, DWORD* pnPacket, BOOL bResend);
 	BOOL	Acknowledge(BYTE nPart);
+
+	inline bool IsIPv6DG() const throw()
+	{
+		if ( m_pHost.sin_addr.s_addr == INADDR_ANY || m_pHost.sin_addr.s_addr == INADDR_NONE )
+		{
+			int i = 0;
+
+			for (; i < 8 && m_pHostIPv6.sin6_addr.u.Word[i] == 0 ; i++ );
+
+			if ( i < 8 )
+				return true;
+		}
+		return false;
+	}
 
 protected:
 	BOOL			m_bCompressed;

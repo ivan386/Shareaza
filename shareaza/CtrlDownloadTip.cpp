@@ -669,14 +669,11 @@ void CDownloadTipCtrl::OnCalcSize(CDC* pDC, CDownloadSource* pSource)
 	// Or just queued
 	else
 	{
-		if ( pSource->IsIPv6Source() )
-			m_sName.Format( _T("[%s]:%u"),
-				Network.IPv6ToString( &pSource->m_pIPv6Address ),
-				pSource->m_nPort );
-		else
-			m_sName.Format( _T("%s:%u"),
-				(LPCTSTR)CString( inet_ntoa( pSource->m_pAddress ) ),
-				pSource->m_nPort );
+		m_sName.Format( _T("%s:%u"),
+			pSource->IsIPv6Source() ? 
+			Network.IPv6ToString( &pSource->m_pIPv6Address ) 
+			: (LPCTSTR)CString( inet_ntoa( pSource->m_pAddress ) ),
+			pSource->m_nPort );
 	}
 
 	// Add the Nickname if there is one and they are being shown

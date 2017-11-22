@@ -103,7 +103,7 @@ public:
 
 	inline bool IsIPv6Host() const throw()
 	{
-		if ( m_pHost.sin_addr.s_addr == 0 )
+		if ( m_pHost.sin_addr.s_addr == INADDR_ANY || m_pHost.sin_addr.s_addr == INADDR_NONE )
 		{
 			int i = 0;
 
@@ -282,8 +282,9 @@ public:
 public:
 	// Make a connection, accept a connection, copy a connection, and close a connection
 	virtual BOOL ConnectTo(const SOCKADDR_IN* pHost);                  // Connect to an IP address and port number
+	virtual BOOL ConnectTo(const SOCKADDR_IN6* pHost);
 	virtual BOOL ConnectTo(const IN_ADDR* pAddress, WORD nPort);
-	virtual BOOL ConnectToIPv6(const IN6_ADDR* pAddress, WORD nPort);
+	virtual BOOL ConnectTo(const IN6_ADDR* pAddress, WORD nPort);
 	virtual void AcceptFrom(SOCKET hSocket, SOCKADDR_IN* pHost); // Accept a connection from a remote computer
 	virtual void AcceptFrom(SOCKET hSocket, SOCKADDR_IN6* pHost); // Accept a connection from a remote computer
 	virtual void AttachTo(CConnection* pConnection);             // Copy a connection (do)

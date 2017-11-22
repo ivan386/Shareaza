@@ -250,6 +250,23 @@ BOOL CHandshakes::IsConnectedTo(const IN_ADDR* pAddress) const
 	return FALSE;
 }
 
+BOOL CHandshakes::IsConnectedTo(const IN6_ADDR* pAddress) const
+{
+	CSingleLock pLock( &m_pSection, TRUE );
+
+	for ( POSITION pos = m_pList.GetHeadPosition() ; pos ; )
+	{
+		const CHandshake* pHandshake = m_pList.GetNext( pos );
+
+		// If the IP address in the list handshake object matches the one given this method, we've found it
+		if ( IN6_ADDR_EQUAL( &pHandshake->m_pHostIPv6.sin6_addr, pAddress ) )
+			return TRUE;
+	}
+
+	// We didn't find it
+	return FALSE;
+}
+
 //////////////////////////////////////////////////////////////////////
 // CHandshakes list modification
 

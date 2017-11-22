@@ -114,6 +114,39 @@ BOOL CShakeNeighbour::ConnectTo(const IN_ADDR* pAddress, WORD nPort, BOOL bAutom
 	return TRUE;
 }
 
+BOOL CShakeNeighbour::ConnectTo(const IN6_ADDR* pAddress, WORD nPort, BOOL bAutomatic, BOOL bNoUltraPeer)
+{
+	// Connect the socket in this object to the given ip address and port number
+	if ( CConnection::ConnectTo( pAddress, nPort ) )
+	{
+		// Have Windows signal our event when the state of the socket changes
+		WSAEventSelect(                                   // Associate an event object with a specified set of network events
+			m_hSocket,                                    // The socket
+			Network.GetWakeupEvent(),                     // Signal this event when the following network events happen
+			FD_CONNECT | FD_READ | FD_WRITE | FD_CLOSE ); // Connection completed, ready to read or write, or socket closed
+
+		// Report that we are attempting this connection
+		theApp.Message( MSG_INFO, IDS_CONNECTION_ATTEMPTING, (LPCTSTR)m_sAddress, htons( m_pHostIPv6.sin6_port ) );
+	} // ConnectTo reported that the socket could not be made
+	else
+	{
+		// Report the connection failure
+		theApp.Message( MSG_ERROR, IDS_CONNECTION_CONNECT_FAIL, (LPCTSTR)Network.IPv6ToString( &m_pHostIPv6.sin6_addr ) );
+		return FALSE;
+	}
+
+	// Initialize more member variables
+	m_nState		= nrsConnecting;                        // We've connected the socket, and are waiting for the connection to be made
+	m_bAutomatic	= bAutomatic;                           // Copy the given automatic setting into the member variable (do)
+	m_bUltraPeerSet	= bNoUltraPeer ? TRI_FALSE : TRI_UNKNOWN; // Set m_bUltraPeerSet to false or unknown (do)
+
+	// Add this CShakeNeighbour object to the list of them
+	Neighbours.Add( this );
+
+	// The connection was made without error
+	return TRUE;
+}
+
 //////////////////////////////////////////////////////////////////////
 // CShakeNeighbour accept from
 

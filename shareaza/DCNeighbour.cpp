@@ -151,6 +151,35 @@ BOOL CDCNeighbour::ConnectTo(const IN_ADDR* pAddress, WORD nPort, BOOL bAutomati
 	return TRUE;
 }
 
+BOOL CDCNeighbour::ConnectTo(const IN6_ADDR* pAddress, WORD nPort, BOOL bAutomatic)
+{
+	CString sHost( Network.IPv6ToString( pAddress ) );
+
+	if ( CConnection::ConnectTo( pAddress, nPort ) )
+	{
+		WSAEventSelect( m_hSocket, Network.GetWakeupEvent(),
+			FD_CONNECT | FD_READ | FD_WRITE | FD_CLOSE );
+
+		theApp.Message( MSG_INFO, IDS_CONNECTION_ATTEMPTING,
+			(LPCTSTR)sHost, htons( m_pHost.sin_port ) );
+	}
+	else
+	{
+		theApp.Message( MSG_ERROR, IDS_CONNECTION_CONNECT_FAIL,
+			(LPCTSTR)sHost );
+		return FALSE;
+	}
+
+	m_nState = nrsConnecting;
+
+	m_bAutomatic = bAutomatic;
+
+	Neighbours.Add( this );
+
+	return TRUE;
+}
+
+
 BOOL CDCNeighbour::OnRead()
 {
 	CNeighbour::OnRead();

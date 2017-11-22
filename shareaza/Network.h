@@ -195,6 +195,7 @@ public:
 	BOOL		IsFirewalled(int nCheck = CHECK_UDP) const;
 	DWORD		GetStableTime() const;
 	BOOL		IsConnectedTo(const IN_ADDR* pAddress) const;
+	BOOL		IsConnectedTo(const IN6_ADDR* pAddress) const;
 	BOOL		ReadyToTransfer(DWORD tNow) const;		// Are we ready to start downloading?
 
 	BOOL		Connect(BOOL bAutoConnect = FALSE);
@@ -240,7 +241,7 @@ public:
 	static SOCKET AcceptSocket(SOCKET hSocket, SOCKADDR_IN6* addr, LPCONDITIONPROC lpfnCondition, DWORD_PTR dwCallbackData = 0);
 
 	static BOOL		IPv6FromString(CString sIPv6, SOCKADDR_IN6* nAddress);
-	static CString	IPv6ToString(const IN6_ADDR* pAddress, bool ForURL = false);
+	static CString	IPv6ToString(const IN6_ADDR* pAddress, bool ForURL = true);
 	static CString	IPv6HostToString(const SOCKADDR_IN6* pHost);
 
 	// Safe way to close socket
@@ -249,12 +250,12 @@ public:
 	static int Send(SOCKET s, const char* buf, int len);
 	// Safe way to send UDP data
 	static int SendTo(SOCKET s, const char* buf, int len, const SOCKADDR_IN* pTo);
-	static int SendToIPv6(SOCKET s, const char* buf, int len, const SOCKADDR_IN6* pTo);
+	static int SendTo(SOCKET s, const char* buf, int len, const SOCKADDR_IN6* pTo);
 	// Safe way to receive TCP data
 	static int Recv(SOCKET s, char* buf, int len);
 	// Safe way to receive UDP data
 	static int RecvFrom(SOCKET s, char* buf, int len, SOCKADDR_IN* pFrom);
-	static int RecvFromIPv6(SOCKET s, char* buf, int len, SOCKADDR_IN6* pFrom);
+	static int RecvFrom(SOCKET s, char* buf, int len, SOCKADDR_IN6* pFrom);
 	// Safe way to call InternetOpen
 	static HINTERNET InternetOpen();
 	// Safe way to call InternetOpenUrl
