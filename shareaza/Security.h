@@ -97,6 +97,15 @@ public:
 			   IsDenied( pAddress );
 	}
 
+	inline  BOOL    IsDeniedComplexCheck(const IN6_ADDR* pAddress, const IN6_ADDR* pForAddress, BOOL bIncludeSelf = FALSE)
+	{
+		return Network.IsFirewalledAddress( pAddress, bIncludeSelf ) ||
+			   Network.IsReserved( pAddress ) ||
+			   ! Network.IsValidAddressFor( pForAddress , pAddress ) ||
+		       //IsIgnoredCountry( theApp.GetCountryCode( *pAddress ) ) || 
+			   IsDenied( pAddress );
+	}
+
 	void			Expire();
 	BOOL			Load();
 	BOOL			Save();

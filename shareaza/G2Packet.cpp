@@ -1499,7 +1499,7 @@ BOOL CG2Packet::OnDiscovery(const SOCKADDR_IN* pHost)
 
 BOOL CG2Packet::OnKHL(const SOCKADDR_IN* pHost)
 {
-	return CG2Neighbour::ParseKHLPacket( this, pHost );
+	return CG2Neighbour::ParseKHLPacket( this, (SOCKADDR*) pHost );
 }
 
 // KHLA - KHL(Known Hub List) Answer, go over G2 UDP packet more like Gnutella2 version of UDPHC

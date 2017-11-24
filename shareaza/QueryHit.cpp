@@ -53,7 +53,7 @@ CQueryHit::CQueryHit(PROTOCOLID nProtocol, const Hashes::Guid& oSearchID) :
 	m_oSearchID		( oSearchID ),
 	m_nProtocol		( nProtocol ),
 	m_pAddress		(),
-	m_pIPv6Address	(),
+	m_pAddressIPv6	(),
 	m_nPort			( 0 ),
 	m_nSpeed		( 0 ),
 	m_pVendor		( VendorCache.m_pNull ),
@@ -625,7 +625,7 @@ CQueryHit* CQueryHit::FromG2Packet(CG2Packet* pPacket, int* pnHops)
 		pHit->m_oSearchID	= oSearchID;
 		pHit->m_oClientID	= oClientID;
 		pHit->m_pAddress	= *(IN_ADDR*)&nAddress;
-		pHit->m_pIPv6Address = nIPv6Address;
+		pHit->m_pAddressIPv6 = nIPv6Address;
 		pHit->m_sCountry	= theApp.GetCountryCode( pHit->m_pAddress );
 		pHit->m_nPort		= nPort;
 		pHit->m_pVendor		= pVendor;
@@ -1900,7 +1900,7 @@ CQueryHit& CQueryHit::operator=(const CQueryHit& pOther)
 	m_nProtocol		= pOther.m_nProtocol;
 	m_oClientID		= pOther.m_oClientID;
 	m_pAddress		= pOther.m_pAddress;
-	m_pIPv6Address	= pOther.m_pIPv6Address;
+	m_pAddressIPv6	= pOther.m_pAddressIPv6;
 	m_sCountry		= pOther.m_sCountry;
 	m_nPort			= pOther.m_nPort;
 	m_nSpeed		= pOther.m_nSpeed;
@@ -1990,7 +1990,7 @@ void CQueryHit::Serialize(CArchive& ar, int nVersion /* MATCHLIST_SER_VERSION */
 		ar << m_nProtocol;
 		ar.Write( &m_oClientID[ 0 ], Hashes::Guid::byteCount );
 		ar.Write( &m_pAddress, sizeof(IN_ADDR) );
-		ar.Write( &m_pIPv6Address, sizeof(IN6_ADDR) );
+		ar.Write( &m_pAddressIPv6, sizeof(IN6_ADDR) );
 		ar << m_nPort;
 		ar << m_nSpeed;
 		ar << m_sSpeed;
@@ -2044,7 +2044,7 @@ void CQueryHit::Serialize(CArchive& ar, int nVersion /* MATCHLIST_SER_VERSION */
 		ReadArchive( ar, &m_oClientID[ 0 ], Hashes::Guid::byteCount );
 		m_oClientID.validate();
 		ReadArchive( ar, &m_pAddress, sizeof(IN_ADDR) );
-		if ( nVersion >= 16 ) ReadArchive( ar, &m_pIPv6Address, sizeof(IN6_ADDR) );
+		if ( nVersion >= 16 ) ReadArchive( ar, &m_pAddressIPv6, sizeof(IN6_ADDR) );
 		m_sCountry = theApp.GetCountryCode( m_pAddress );
 		ar >> m_nPort;
 		ar >> m_nSpeed;

@@ -109,7 +109,7 @@ BOOL CBTClient::Connect(CDownloadTransferBT* pDownloadTransfer)
 
 	if ( pSource->IsIPv6Source() )
 	{
-		if ( ! CTransfer::ConnectToIPv6( &pSource->m_pIPv6Address, pSource->m_nPort ) ) return FALSE;
+		if ( ! CTransfer::ConnectToIPv6( &pSource->m_pAddressIPv6, pSource->m_nPort ) ) return FALSE;
 	}
 	else if ( ! CTransfer::ConnectTo( &pSource->m_pAddress, pSource->m_nPort ) ) return FALSE;
 

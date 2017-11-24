@@ -36,9 +36,10 @@ class CHostCache;
 // 17 - Added m_tConnect (ryo-oh-ki)
 // 18 - Added m_sUser and m_sPass (ryo-oh-ki)
 // 19 - Added m_sAddress (ryo-oh-ki)
-// 20 - Added m_pIPv6Address (ivan386)
+// 20 - Added m_pAddressIPv6 (ivan386)
+// 21 - Added m_nKeyHostIPv6 (ivan386)
 
-#define HOSTCACHE_SER_VERSION 20
+#define HOSTCACHE_SER_VERSION 21
 
 
 class CHostCacheHost
@@ -50,7 +51,7 @@ public:
 	PROTOCOLID	m_nProtocol;		// Host protocol (PROTOCOL_*)
 	CString		m_sAddress;			// Host full address (unresolved)
 	IN_ADDR		m_pAddress;			// Host IP address
-	IN6_ADDR	m_pIPv6Address;		// Host IPv6 address
+	IN6_ADDR	m_pAddressIPv6;		// Host IPv6 address
 	WORD		m_nPort;			// Host TCP port number
 	WORD		m_nUDPPort;			// Host UDP port number
 	CVendorPtr	m_pVendor;			// Vendor handler from VendorCache
@@ -82,6 +83,7 @@ public:
 	DWORD		m_tKeyTime;			// G2 time when query key was received
 	DWORD		m_nKeyValue;		// G2 query key
 	DWORD		m_nKeyHost;			// G2 query key host
+	IN6_ADDR	m_nKeyHostIPv6;		// G2 query key host ipv6
 
 	// Attributes: DHT
 	BOOL			m_bDHT;			// Host is DHT capable (UNUSED)
@@ -100,6 +102,7 @@ public:
 	bool		CanQuote(DWORD tNow) const;			// Is this a recently seen host?
 	bool		CanQuery(DWORD tNow) const;			// Can we UDP query this host? (G2/ed2k)
 	void		SetKey(DWORD nKey, const IN_ADDR* pHost = NULL);
+	void		SetKeyIPv6(DWORD nKey, const IN6_ADDR* pHost = NULL);
 
 	DWORD		Seen() const;						// Get host last seen time
 	CString		Address() const;					// Get host address as string
@@ -110,7 +113,7 @@ public:
 		{
 			int i = 0;
 
-			for (; i < 8 && m_pIPv6Address.u.Word[i] == 0 ; i++ );
+			for (; i < 8 && m_pAddressIPv6.u.Word[i] == 0 ; i++ );
 
 			if ( i < 8 )
 				return true;

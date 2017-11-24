@@ -52,7 +52,7 @@ public:
 	PROTOCOLID			m_nProtocol;
 	Hashes::Guid		m_oGUID;
 	IN_ADDR				m_pAddress;
-	IN6_ADDR			m_pIPv6Address;
+	IN6_ADDR			m_pAddressIPv6;
 	WORD				m_nPort;
 	IN_ADDR				m_pServerAddress;
 	IN6_ADDR			m_pIPv6ServerAddress;
@@ -172,7 +172,7 @@ public:
 		{
 			int i = 0;
 
-			for (; i < 8 && m_pIPv6Address.u.Word[i] == 0 ; i++ );
+			for (; i < 8 && m_pAddressIPv6.u.Word[i] == 0 ; i++ );
 
 			if ( i < 8 )
 				return true;

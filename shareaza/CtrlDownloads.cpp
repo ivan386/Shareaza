@@ -1344,7 +1344,7 @@ void CDownloadsCtrl::PaintSource(CDC& dc, const CRect& rcRow, CDownload* pDownlo
 			{
 				if ( pSource->IsIPv6Source() )
 					strText.Format( _T("[%s]:%u"),
-						Network.IPv6ToString( &pSource->m_pIPv6Address ),
+						Network.IPv6ToString( &pSource->m_pAddressIPv6 ),
 						pSource->m_nPort );
 				else
 					strText.Format( _T("%s:%u"),

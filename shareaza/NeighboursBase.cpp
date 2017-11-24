@@ -314,7 +314,7 @@ void CNeighboursBase::Remove(CNeighbour* pNeighbour)
 		}
 	}
 
-	for ( CA6Map::iterator pos = m_pNeighboursIPv6.begin(); pos == m_pNeighboursIPv6.end(); )
+	for ( CA6Map::iterator pos = m_pNeighboursIPv6.begin(); pos != m_pNeighboursIPv6.end(); )
 	{
 		if ( pos->second == pNeighbour )
 		{

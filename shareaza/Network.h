@@ -210,11 +210,13 @@ public:
 	// Pending network name resolves queue size
 	UINT		GetResolveCount() const;
 	BOOL		IsReserved(const IN_ADDR* pAddress) const;
+	BOOL		IsReserved(const IN6_ADDR* pAddress) const;
 	WORD		RandomPort() const;
 	void		CreateID(Hashes::Guid& oID);
 	BOOL		IsFirewalledAddress(const IN_ADDR* pAddress, BOOL bIncludeSelf = FALSE, BOOL bIgnoreLocalIP = Settings.Connection.IgnoreLocalIP) const;
 	BOOL		IsFirewalledAddress(const IN6_ADDR* pAddress, BOOL bIncludeSelf = FALSE, BOOL bIgnoreLocalIP = Settings.Connection.IgnoreLocalIP) const;
 	BOOL		IsValidAddressFor(const IN_ADDR* pForAddress, const IN_ADDR* pAddress) const;
+	BOOL		IsValidAddressFor(const IN6_ADDR* pForAddress, const IN6_ADDR* pAddress) const;
 	BOOL		IsHomeNetwork(const IN_ADDR* pAddress) const;
 	BOOL		IsLocalAreaNetwork(const IN_ADDR* pAddress) const;
 	int			GetNetworkLevel(const IN_ADDR* pAddress) const;

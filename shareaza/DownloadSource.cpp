@@ -254,7 +254,7 @@ void CDownloadSource::Construct(const CDownload* pDownload)
 	m_bSelected				= FALSE;
 	m_nProtocol				= PROTOCOL_NULL;
 	m_pAddress.s_addr		= 0;
-	IN6_SET_ADDR_UNSPECIFIED( &m_pIPv6Address );
+	IN6_SET_ADDR_UNSPECIFIED( &m_pAddressIPv6 );
 	m_nPort					= 0;
 	m_pServerAddress.s_addr	= 0;
 	m_nServerPort			= 0;
@@ -312,7 +312,7 @@ BOOL CDownloadSource::ResolveURL()
 
 	m_nProtocol	= pURL.m_nProtocol;
 	m_pAddress	= pURL.m_pAddress;
-	m_pIPv6Address = pURL.m_pIPv6Address;
+	m_pAddressIPv6 = pURL.m_pAddressIPv6;
 	m_nPort		= pURL.m_nPort;
 	m_sName		= pURL.m_sName;
 	
@@ -366,7 +366,7 @@ void CDownloadSource::Serialize(CArchive& ar, int nVersion /* DOWNLOAD_SER_VERSI
 		if ( m_nPort ) 
 		{
 			ar.Write( &m_pAddress, sizeof(m_pAddress) );
-			ar.Write( &m_pIPv6Address, sizeof(m_pIPv6Address) );
+			ar.Write( &m_pAddressIPv6, sizeof(m_pAddressIPv6) );
 		}
 		ar << m_nServerPort;
 		if ( m_nServerPort )
@@ -410,7 +410,7 @@ void CDownloadSource::Serialize(CArchive& ar, int nVersion /* DOWNLOAD_SER_VERSI
 		if ( m_nPort )
 		{ 
 			ReadArchive( ar, &m_pAddress, sizeof(m_pAddress) );
-			if ( nVersion >= 43 ) ReadArchive( ar, &m_pIPv6Address, sizeof(m_pIPv6Address) );
+			if ( nVersion >= 43 ) ReadArchive( ar, &m_pAddressIPv6, sizeof(m_pAddressIPv6) );
 
 		}
 

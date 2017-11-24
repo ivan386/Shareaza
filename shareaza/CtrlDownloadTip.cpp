@@ -671,7 +671,7 @@ void CDownloadTipCtrl::OnCalcSize(CDC* pDC, CDownloadSource* pSource)
 	{
 		m_sName.Format( _T("%s:%u"),
 			pSource->IsIPv6Source() ? 
-			Network.IPv6ToString( &pSource->m_pIPv6Address ) 
+			Network.IPv6ToString( &pSource->m_pAddressIPv6 ) 
 			: (LPCTSTR)CString( inet_ntoa( pSource->m_pAddress ) ),
 			pSource->m_nPort );
 	}

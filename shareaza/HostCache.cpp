@@ -379,6 +379,8 @@ CHostCacheHostPtr CHostCacheList::Add(const IN_ADDR* pAddress, WORD nPort, const
 		SOCKADDR_IN6 saHost;
 		if ( Network.IPv6FromString( CString( szAddress ), &saHost ) )
 		{
+			if ( saHost.sin6_port )
+				nPort = ntohs( saHost.sin6_port );
 			return AddIPv6( &saHost.sin6_addr, nPort, NULL, tSeen, pszVendor, nUptime, nCurrentLeaves, nLeafLimit, szAddress );
 		}
 	}
@@ -497,14 +499,14 @@ CHostCacheHostPtr CHostCacheList::AddIPv6(const IN6_ADDR* pAddress, WORD nPort, 
 		{
 			PruneHosts();
 
-			pHost->m_pIPv6Address = *pAddress;
-			pHost->m_sAddress = Network.IPv6ToString( &pHost->m_pIPv6Address );
+			pHost->m_pAddressIPv6 = *pAddress;
+			pHost->m_sAddress = Network.IPv6ToString( &pHost->m_pAddressIPv6 );
 			if ( szAddress ) pHost->m_sAddress = szAddress;
 
 			pHost->Update( nPort, tSeen, pszVendor, nUptime, nCurrentLeaves, nLeafLimit );
 
 			// Add host to map and index
-			m_HostsIPv6.insert( CHostCacheMapPairIPv6( pHost->m_pIPv6Address, pHost ) );
+			m_HostsIPv6.insert( CHostCacheMapPairIPv6( pHost->m_pAddressIPv6, pHost ) );
 			m_HostsTime.insert( pHost );
 
 			m_nCookie++;
@@ -904,11 +906,11 @@ void CHostCacheList::Serialize(CArchive& ar, int nVersion)
 				}
 				else
 				{ //IPv6
-					if ( ! Security.IsDenied( &pHost->m_pIPv6Address ) &&
-						 ! Find( &pHost->m_pIPv6Address ) &&
+					if ( ! Security.IsDenied( &pHost->m_pAddressIPv6 ) &&
+						 ! Find( &pHost->m_pAddressIPv6 ) &&
 						 ! Find( pHost->m_sAddress ) )
 					{
-						m_HostsIPv6.insert( CHostCacheMapPairIPv6( pHost->m_pIPv6Address, pHost ) );
+						m_HostsIPv6.insert( CHostCacheMapPairIPv6( pHost->m_pAddressIPv6, pHost ) );
 						m_HostsTime.insert( pHost );
 					}
 					else
@@ -1391,7 +1393,7 @@ CHostCacheHost::CHostCacheHost(PROTOCOLID nProtocol) :
 	m_nKADVersion(0)
 {
 	m_pAddress.s_addr = INADDR_ANY;
-	IN6_SET_ADDR_UNSPECIFIED( &m_pIPv6Address );
+	IN6_SET_ADDR_UNSPECIFIED( &m_pAddressIPv6 );
 
 	// 10 sec cooldown to avoid neighbor add-remove oscillation
 	DWORD tNow = static_cast< DWORD >( time( NULL ) );
@@ -1419,7 +1421,7 @@ CString CHostCacheHost::Address() const
 	if ( m_pAddress.s_addr != INADDR_ANY )
 		return CString( inet_ntoa( m_pAddress ) );
 	else if( IsIPv6Host() )
-		return Network.IPv6ToString( &m_pIPv6Address, true );
+		return Network.IPv6ToString( &m_pAddressIPv6, true );
 	else
 		return m_sAddress;
 }
@@ -1432,7 +1434,7 @@ void CHostCacheHost::Serialize(CArchive& ar, int nVersion)
 	if ( ar.IsStoring() )
 	{
 		// Version 20
-		ar.Write( &m_pIPv6Address, sizeof(m_pIPv6Address) );
+		ar.Write( &m_pAddressIPv6, sizeof(m_pAddressIPv6) );
 		ar.Write( &m_pAddress, sizeof(m_pAddress) );
 		ar << m_nPort;
 
@@ -1470,6 +1472,8 @@ void CHostCacheHost::Serialize(CArchive& ar, int nVersion)
 		{
 			ar << m_tKeyTime;
 			ar << m_nKeyHost;
+			// Version 21
+			ar.Write( &m_nKeyHostIPv6, sizeof( m_nKeyHostIPv6 ) );
 		}
 
 		ar << m_tFailure;
@@ -1503,7 +1507,7 @@ void CHostCacheHost::Serialize(CArchive& ar, int nVersion)
 	{
 		if ( nVersion >= 20 )
 		{
-			ReadArchive( ar, &m_pIPv6Address, sizeof(m_pIPv6Address) );
+			ReadArchive( ar, &m_pAddressIPv6, sizeof(m_pAddressIPv6) );
 		}
 
 		ReadArchive( ar, &m_pAddress, sizeof(m_pAddress) );
@@ -1566,6 +1570,10 @@ void CHostCacheHost::Serialize(CArchive& ar, int nVersion)
 		{
 			ar >> m_tKeyTime;
 			ar >> m_nKeyHost;
+			if ( nVersion >= 21 )
+			{
+				ReadArchive( ar, &m_nKeyHostIPv6, sizeof( m_nKeyHostIPv6 ) );
+			}
 		}
 
 		if ( nVersion >= 11 )
@@ -1689,7 +1697,7 @@ bool CHostCacheHost::ConnectTo(BOOL bAutomatic)
 	if ( m_pAddress.s_addr != INADDR_ANY )
 		return Neighbours.ConnectTo( m_pAddress, m_nPort, m_nProtocol, bAutomatic ) != NULL;
 	else if ( IsIPv6Host() )
-		return Neighbours.ConnectTo( m_pIPv6Address, m_nPort, m_nProtocol, bAutomatic ) != NULL;
+		return Neighbours.ConnectTo( m_pAddressIPv6, m_nPort, m_nProtocol, bAutomatic ) != NULL;
 
 	m_tConnect += 30; // Throttle for 30 seconds
 	return Network.ConnectTo( m_sAddress, m_nPort, m_nProtocol ) != FALSE;
@@ -1868,5 +1876,20 @@ void CHostCacheHost::SetKey(const DWORD nKey, const IN_ADDR* pHost)
 		m_tKeyTime	= static_cast< DWORD >( time( NULL ) );
 		m_nKeyValue	= nKey;
 		m_nKeyHost	= pHost ? pHost->S_un.S_addr : Network.m_pHost.sin_addr.S_un.S_addr;
+		IN6_SET_ADDR_UNSPECIFIED( &m_nKeyHostIPv6 );
+	}
+}
+
+void CHostCacheHost::SetKeyIPv6(const DWORD nKey, const IN6_ADDR* pHost)
+{
+	if ( nKey )
+	{
+		m_tAck		= 0;
+		m_nFailures	= 0;
+		m_tFailure	= 0;
+		m_tKeyTime	= static_cast< DWORD >( time( NULL ) );
+		m_nKeyValue	= nKey;
+		m_nKeyHost = 0;
+		m_nKeyHostIPv6	= pHost ? *pHost: Network.m_pHostIPv6.sin6_addr;
 	}
 }

@@ -222,6 +222,12 @@ BOOL CNetwork::IsSelfIP(const IN_ADDR& nAddress) const
 
 BOOL CNetwork::IsSelfIP(const IN6_ADDR& nAddress) const
 {
+	if ( IN6_IS_ADDR_UNSPECIFIED( &nAddress ) )
+		return FALSE;
+
+	if ( IN6_IS_ADDR_LOOPBACK( &nAddress ) )
+		return TRUE;
+
 	return IN6_ADDR_EQUAL( &nAddress, &m_pHostIPv6.sin6_addr );
 }
 
@@ -726,6 +732,17 @@ BOOL CNetwork::IsValidAddressFor(const IN_ADDR* pForAddress, const IN_ADDR* pAdd
 	return TRUE;
 }
 
+BOOL CNetwork::IsValidAddressFor(const IN6_ADDR* pForAddress, const IN6_ADDR* pAddress) const
+{
+	if ( pForAddress == NULL || pAddress == NULL )
+		return FALSE;
+
+	if ( IN6_IS_ADDR_UNSPECIFIED( pAddress ) && ! IN6_IS_ADDR_GLOBAL( pAddress ) )
+		return FALSE;
+
+	return TRUE;
+}
+
 int CNetwork::GetNetworkLevel( const IN_ADDR* pAddress ) const
 {
 	if ( pAddress->s_net == 127 ) 
@@ -918,6 +935,14 @@ BOOL CNetwork::IsFirewalledAddress(const IN6_ADDR* pAddress, BOOL bIncludeSelf, 
 		return TRUE;
 	if ( bIncludeSelf && IsSelfIP( *pAddress ) )
 		return TRUE;
+	if ( ! bIgnoreLocalIP )
+		return FALSE;
+	if ( IN6_IS_ADDR_LINKLOCAL( pAddress ) )
+		return TRUE;
+	if ( IN6_IS_ADDR_SITELOCAL( pAddress ) )
+		return TRUE;
+	if ( IN6_IS_ADDR_LOOPBACK( pAddress ) )
+		return TRUE;
 
 	return FALSE;
 }
@@ -974,6 +999,13 @@ BOOL CNetwork::IsReserved(const IN_ADDR* pAddress) const
 	// 255.255.255.255, we already tested for i1
 	if ( i2 == 255 && i3 == 255 && i4 == 255 ) return TRUE;
 
+	return FALSE;
+}
+
+BOOL CNetwork::IsReserved(const IN6_ADDR* pAddress) const
+{
+	if ( IN6_IS_ADDR_UNSPECIFIED( pAddress ) ) return TRUE;
+	if ( IN6_IS_ADDR_MULTICAST( pAddress ) ) return TRUE;
 	return FALSE;
 }
 

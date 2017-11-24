@@ -24,7 +24,7 @@
 #define MATCHLIST_SER_VERSION	16
 // History:
 // 15 - added CQueryHit::m_sNick for DC++ hits (ryo-oh-ki)
-// 16 - added CQueryHit::m_pIPv6Address (ivan386)
+// 16 - added CQueryHit::m_pAddressIPv6 (ivan386)
 
 #include "ShareazaFile.h"
 #include "Schema.h"

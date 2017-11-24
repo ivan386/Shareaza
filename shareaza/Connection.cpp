@@ -58,7 +58,7 @@ CConnection::CConnection(PROTOCOLID nProtocol)
 	ZeroMemory( &m_pHost, sizeof( m_pHost ) );
 	m_pHost.sin_family = AF_INET;
 	ZeroMemory( &m_pHostIPv6, sizeof( m_pHostIPv6 ) );
-	m_pHost.sin_family = AF_INET6;
+	m_pHostIPv6.sin6_family = AF_INET6;
 	ZeroMemory( &m_mInput, sizeof( m_mInput ) );
 	ZeroMemory( &m_mOutput, sizeof( m_mOutput ) );
 	m_pInputSection.reset( new CCriticalSection() );

@@ -152,8 +152,13 @@ BOOL CHandshakes::ListenIPv6()
 	saHost.sin6_family = PF_INET6;
 	saHost.sin6_port = Network.m_pHost.sin_port;
 	
+	//VERIFY( setsockopt( m_hSocket, IPPROTO_TCP, TCP_NODELAY, "\x01", 1) == 0 );
+	//VERIFY( setsockopt( m_hSocket, IPPROTO_IPV6, IPV6_V6ONLY, "\x00", 1 ) == 0 );
+
 	if ( bind( m_hSocketIPv6, (SOCKADDR*)&saHost, sizeof( saHost ) ) != 0 )
 		return FALSE;
+
+	
 
 	theApp.Message( MSG_INFO, IDS_NETWORK_LISTENING_TCP, (LPCTSTR) Network.IPv6ToString( &saHost.sin6_addr ), htons( saHost.sin6_port ) );
 

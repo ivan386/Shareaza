@@ -46,7 +46,7 @@ CShareazaURL::CShareazaURL(LPCTSTR pszURL)
 	, m_nAction			( uriNull )
 	, m_pTorrent		()
 	, m_pAddress		()
-	, m_pIPv6Address	()
+	, m_pAddressIPv6	()
 	, m_nPort			( 0 )
 	, m_pServerAddress	()
 	, m_nServerPort		( 0 )
@@ -60,7 +60,7 @@ CShareazaURL::CShareazaURL(CBTInfo* pTorrent)
 	, m_nAction			( uriDownload )
 	, m_pTorrent		( pTorrent )
 	, m_pAddress		()
-	, m_pIPv6Address	()
+	, m_pAddressIPv6	()
 	, m_nPort			( 0 )
 	, m_pServerAddress	()
 	, m_nServerPort		( 0 )
@@ -74,7 +74,7 @@ CShareazaURL::CShareazaURL(const CShareazaURL& pURL)
 	, m_pTorrent		( pURL.m_pTorrent )
 	, m_sAddress		( pURL.m_sAddress )
 	, m_pAddress		( pURL.m_pAddress )
-	, m_pIPv6Address	( pURL.m_pIPv6Address )
+	, m_pAddressIPv6	( pURL.m_pAddressIPv6 )
 	, m_nPort			( pURL.m_nPort )
 	, m_pServerAddress	( pURL.m_pServerAddress )
 	, m_nServerPort		( pURL.m_nServerPort )
@@ -110,7 +110,7 @@ void CShareazaURL::Clear()
 	m_pTorrent.Free();
 	m_sAddress.Empty();
 	m_pAddress.s_addr		= 0;
-	IN6_SET_ADDR_UNSPECIFIED( &m_pIPv6Address );
+	IN6_SET_ADDR_UNSPECIFIED( &m_pAddressIPv6 );
 	m_nPort					= 0;
 	m_pServerAddress.s_addr = 0;
 	IN6_SET_ADDR_UNSPECIFIED( &m_pIPv6ServerAddress );
@@ -301,7 +301,7 @@ BOOL CShareazaURL::ParseHTTP(LPCTSTR pszURL, BOOL bResolve)
 	SOCKADDR_IN6 pHost = {};
 	if ( bResult = Network.IPv6FromString( m_sAddress, &pHost ) )
 	{
-		m_pIPv6Address = pHost.sin6_addr;
+		m_pAddressIPv6 = pHost.sin6_addr;
 
 		if ( pHost.sin6_port )
 			m_nPort = ntohs( pHost.sin6_port );
@@ -548,7 +548,7 @@ BOOL CShareazaURL::ParseBTC(LPCTSTR pszURL, BOOL bResolve)
 	SOCKADDR_IN6 pHost = {};
 	if ( bResult = Network.IPv6FromString( m_sAddress, &pHost ) )
 	{
-		m_pIPv6Address = pHost.sin6_addr;
+		m_pAddressIPv6 = pHost.sin6_addr;
 
 		if ( pHost.sin6_port )
 			m_nPort = ntohs( pHost.sin6_port );

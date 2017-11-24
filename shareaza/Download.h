@@ -33,7 +33,7 @@
 // 40 - added virtual fragmented file (Ryo-oh-ki)
 // 41 - added m_sName to CFragmentedFile (Ryo-oh-ki)
 // 42 - added m_bMetaIgnore to CDownloadSource (Ryo-oh-ki)
-// 43 - added m_pIPv6Address and m_pIPv6ServerAddress to CDownloadSource (ivan386)
+// 43 - added m_pAddressIPv6 and m_pIPv6ServerAddress to CDownloadSource (ivan386)
 
 #include "DownloadWithExtras.h"
 

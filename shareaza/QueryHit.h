@@ -51,7 +51,7 @@ public:
 	PROTOCOLID		m_nProtocol;
 	Hashes::Guid	m_oClientID;
 	IN_ADDR			m_pAddress;
-	IN6_ADDR		m_pIPv6Address;
+	IN6_ADDR		m_pAddressIPv6;
 	CString			m_sCountry;
 	WORD			m_nPort;
 	DWORD			m_nSpeed;
@@ -126,7 +126,7 @@ protected:
 		{
 			int i = 0;
 
-			for (; i < 8 && m_pIPv6Address.u.Word[i] == 0 ; i++ );
+			for (; i < 8 && m_pAddressIPv6.u.Word[i] == 0 ; i++ );
 
 			if ( i < 8 )
 				return true;
@@ -137,7 +137,7 @@ protected:
 	inline CString GetIPForURL() const
 	{
 		if ( IsIPv6Hit() )
-			return Network.IPv6ToString( &m_pIPv6Address, true );
+			return Network.IPv6ToString( &m_pAddressIPv6, true );
 		else
 			return CString( inet_ntoa( m_pAddress ) );
 	}
