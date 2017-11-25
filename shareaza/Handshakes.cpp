@@ -232,6 +232,31 @@ BOOL CHandshakes::PushTo(IN_ADDR* pAddress, WORD nPort, DWORD nIndex)
 	return FALSE;
 }
 
+BOOL CHandshakes::PushTo(IN6_ADDR* pAddress, WORD nPort, DWORD nIndex)
+{
+	CSingleLock pLock1( &Transfers.m_pSection );
+	if ( pLock1.Lock( 250 ) && Uploads.AllowMoreTo( pAddress ) )
+	{
+		pLock1.Unlock();
+
+		// Make a new CHandshake object, and open a connection to the computer at pAddress and pPort
+		if ( CHandshake* pHandshake = new CHandshake() )
+		{
+			if ( pHandshake->Push( pAddress, nPort, nIndex ) )
+			{
+				Add( pHandshake );
+				return TRUE;
+			}
+
+			delete pHandshake;
+		}
+	}
+	else
+		theApp.Message( MSG_ERROR, IDS_UPLOAD_PUSH_BUSY, (LPCTSTR)Network.IPv6ToString( pAddress ) );
+
+	return FALSE;
+}
+
 //////////////////////////////////////////////////////////////////////
 // CHandshakes connection test
 

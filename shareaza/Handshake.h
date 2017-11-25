@@ -53,6 +53,7 @@ public:
 
 	// Push open a connection to the remote computer with the given IP address
 	virtual BOOL Push(IN_ADDR* pAddress, WORD nPort, DWORD nIndex);
+	virtual BOOL Push(IN6_ADDR* pAddress, WORD nPort, DWORD nIndex);
 
 protected:
 

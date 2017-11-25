@@ -630,9 +630,18 @@ void CHostCacheList::OnResolve(LPCTSTR szAddress, const IN_ADDR* pAddress, WORD 
 
 		if ( pHost )
 		{
+			CHostCacheMapItr i = std::find_if( m_Hosts.begin(), m_Hosts.end(),
+				std::bind2nd( is_host(), pHost ) );
 			// Remove from old place
-			m_Hosts.erase( std::find_if( m_Hosts.begin(), m_Hosts.end(),
-				std::bind2nd( is_host(), pHost ) ) );
+			if ( i != m_Hosts.end() )
+				m_Hosts.erase( i );
+			else
+			{
+				CHostCacheMapItrIPv6 i = std::find_if( m_HostsIPv6.begin(), m_HostsIPv6.end(),
+					std::bind2nd( is_host_ipv6(), pHost ) );
+				if ( i != m_HostsIPv6.end() )
+					m_HostsIPv6.erase( i );
+			}
 
 			pHost->m_pAddress = *pAddress;
 			pHost->m_nPort = nPort;

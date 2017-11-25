@@ -565,11 +565,14 @@ BOOL CNetwork::AcquireLocalAddress(const IN_ADDR& pAddress, WORD nPort, const IN
 
 BOOL CNetwork::AcquireLocalAddress(const IN6_ADDR& pAddress, WORD nPort, const IN6_ADDR* pFromAddress)
 {
-	if ( nPort )
-		m_pHostIPv6.sin6_port = htons( nPort );
 
-	m_pHostIPv6.sin6_addr = pAddress;
+	if ( ! pFromAddress || ( IN6_IS_ADDR_GLOBAL( pFromAddress ) && IN6_IS_ADDR_GLOBAL( &pAddress ) ) )
+	{
+		if ( nPort )
+			m_pHostIPv6.sin6_port = htons( nPort );
 
+		m_pHostIPv6.sin6_addr = pAddress;
+	}
 	return TRUE;
 }
 
