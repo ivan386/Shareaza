@@ -68,6 +68,7 @@ public:
 	BYTE				m_nHops;		// G1: Received packet hops
 	BOOL				m_bUDP;			// G2: Packet received over UDP
 	SOCKADDR_IN			m_pEndpoint;	// G1,G2: Packet received from this host
+	SOCKADDR_IN6		m_pEndpointIPv6;// G1,G2: Packet received from this ipv6 host
 	DWORD				m_nKey;			// G2: Hub query key
 	bool				m_bFirewall;	// G1: Firewalled host
 	bool				m_bDynamic;		// G1: Leaf Guided Dynamic Query
@@ -124,7 +125,7 @@ public:
 private:
 	BOOL					ReadG1Packet(CG1Packet* pPacket, const SOCKADDR_IN* pEndpoint = NULL);
 	void					ReadGGEP(CG1Packet* pPacket);
-	BOOL					ReadG2Packet(CG2Packet* pPacket, const SOCKADDR_IN* pEndpoint = NULL);
+	BOOL					ReadG2Packet(CG2Packet* pPacket, const SOCKADDR* pEndpoint = NULL);
 	BOOL					ReadDCPacket(CDCPacket* pPacket, const SOCKADDR_IN* pEndpoint = NULL);
 
 // Operations

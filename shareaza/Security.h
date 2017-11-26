@@ -102,7 +102,7 @@ public:
 		return Network.IsFirewalledAddress( pAddress, bIncludeSelf ) ||
 			   Network.IsReserved( pAddress ) ||
 			   ! Network.IsValidAddressFor( pForAddress , pAddress ) ||
-		       //IsIgnoredCountry( theApp.GetCountryCode( *pAddress ) ) || 
+		       IsIgnoredCountry( theApp.GetCountryCode( *pAddress ) ) || 
 			   IsDenied( pAddress );
 	}
 

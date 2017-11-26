@@ -725,7 +725,7 @@ CQuerySearchPtr CQuerySearch::FromPacket(CPacket* pPacket, const SOCKADDR_IN* pE
 		}
 		else if ( pPacket->m_nProtocol == PROTOCOL_G2 )
 		{
-			if ( pSearch->ReadG2Packet( (CG2Packet*)pPacket, pEndpoint ) )
+			if ( pSearch->ReadG2Packet( (CG2Packet*)pPacket, (SOCKADDR*) pEndpoint ) )
 				return pSearch;
 		}
 		else if ( pPacket->m_nProtocol == PROTOCOL_DC )
@@ -986,7 +986,7 @@ void CQuerySearch::ReadGGEP(CG1Packet* pPacket)
 //////////////////////////////////////////////////////////////////////
 // CQuerySearch from G2 packet
 
-BOOL CQuerySearch::ReadG2Packet(CG2Packet* pPacket, const SOCKADDR_IN* pEndpoint)
+BOOL CQuerySearch::ReadG2Packet(CG2Packet* pPacket, const SOCKADDR * pEndpoint)
 {
 	if ( ! pPacket->m_bCompound )
 		return FALSE;
@@ -996,31 +996,72 @@ BOOL CQuerySearch::ReadG2Packet(CG2Packet* pPacket, const SOCKADDR_IN* pEndpoint
 
 	m_bAndG1 = FALSE;
 
+	SOCKADDR_IN* pEndpointIPv4 = NULL;
+	SOCKADDR_IN6* pEndpointIPv6 = NULL;
+
+
+	if ( pEndpoint->sa_family == AF_INET6 )
+		pEndpointIPv6 = (SOCKADDR_IN6*) pEndpoint;
+	else
+	{
+		ASSERT( pEndpoint->sa_family == AF_INET );
+		pEndpointIPv4 = (SOCKADDR_IN*) pEndpoint;
+	}
+
 	while ( pPacket->ReadPacket( nType, nLength ) )
 	{
 		DWORD nOffset = pPacket->m_nPosition + nLength;
 
 		if ( nType == G2_PACKET_QKY && nLength >= 4 )
 		{
-			if ( m_pEndpoint.sin_addr.S_un.S_addr == 0 && pEndpoint != NULL )
-				m_pEndpoint = *pEndpoint;
+			if ( pEndpointIPv4 )
+			{
+				if ( m_pEndpoint.sin_addr.S_un.S_addr == 0 )
+					m_pEndpoint = *pEndpointIPv4;
+				
+			}
+			else if( pEndpointIPv6 )
+			{
+				if ( IN6_IS_ADDR_UNSPECIFIED( &m_pEndpointIPv6.sin6_addr ) )
+					m_pEndpointIPv6 = *pEndpointIPv6;
+				
+			}
+			
 			m_bUDP = ! Network.IsFirewalledAddress( &m_pEndpoint.sin_addr );
+			m_bUDP = m_bUDP || ! Network.IsFirewalledAddress( &m_pEndpointIPv6.sin6_addr );
 
 			m_nKey = pPacket->ReadLongBE();
 			DWORD* pZero = (DWORD*)( pPacket->m_pBuffer + pPacket->m_nPosition - 4 );
 			*pZero = 0;
 		}
-		else if ( nType == G2_PACKET_UDP && nLength >= 6 )
+		else if ( nType == G2_PACKET_UDP && ( nLength == 6 || nLength == 10 ) ) // IPv4
 		{
 			m_pEndpoint.sin_addr.S_un.S_addr = pPacket->ReadLongLE();
 			m_pEndpoint.sin_port = htons( pPacket->ReadShortBE() );
 
 			if ( m_pEndpoint.sin_addr.S_un.S_addr == 0 && pEndpoint != NULL )
-				m_pEndpoint = *pEndpoint;
+				m_pEndpoint = *pEndpointIPv4;
 			m_bUDP = ! Network.IsFirewalledAddress( &m_pEndpoint.sin_addr );
 			if ( m_bUDP ) m_pEndpoint.sin_family = PF_INET;
 
-			if ( nLength >= 10 )
+			if ( nLength == 10 )
+			{
+				m_nKey = pPacket->ReadLongBE();
+				DWORD* pZero = (DWORD*)( pPacket->m_pBuffer + pPacket->m_nPosition - 4 );
+				*pZero = 0;
+			}
+		}
+		else if ( nType == G2_PACKET_UDP && ( nLength == 18 || nLength == 22 ) ) // IPv6
+		{
+			pPacket->Read( &m_pEndpointIPv6.sin6_addr, sizeof( IN6_ADDR ) );
+			m_pEndpointIPv6.sin6_port = htons( pPacket->ReadShortBE() );
+
+			if ( IN6_IS_ADDR_UNSPECIFIED( &m_pEndpointIPv6.sin6_addr ) )
+				m_pEndpointIPv6 = *pEndpointIPv6;
+			m_bUDP = ! Network.IsFirewalledAddress( &m_pEndpointIPv6.sin6_addr );
+			if ( m_bUDP ) m_pEndpointIPv6.sin6_family = PF_INET6;
+
+			if ( nLength == 22 )
 			{
 				m_nKey = pPacket->ReadLongBE();
 				DWORD* pZero = (DWORD*)( pPacket->m_pBuffer + pPacket->m_nPosition - 4 );

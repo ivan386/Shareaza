@@ -1527,6 +1527,20 @@ CString CShareazaApp::GetCountryName(IN_ADDR pAddress) const
 	return _T("");
 }
 
+CString CShareazaApp::GetCountryCode(IN6_ADDR pAddress) const
+{
+	if ( m_pfnGeoIP_country_code_by_ipnum_v6 && m_pGeoIP )
+		return CString( m_pfnGeoIP_country_code_by_ipnum_v6( m_pGeoIP, pAddress ) );
+	return _T("");
+}
+
+CString CShareazaApp::GetCountryName(IN6_ADDR pAddress) const
+{
+	if ( m_pfnGeoIP_country_name_by_ipnum_v6 && m_pGeoIP )
+		return CString( m_pfnGeoIP_country_name_by_ipnum_v6( m_pGeoIP, pAddress ) );
+	return _T("");
+}
+
 void CShareazaApp::LoadCountry()
 {
 	if ( ( m_hGeoIP = CustomLoadLibrary( _T("geoip.dll") ) ) != NULL )
@@ -1536,6 +1550,8 @@ void CShareazaApp::LoadCountry()
 		m_pfnGeoIP_delete = (GeoIP_deleteFunc)GetProcAddress( m_hGeoIP, "GeoIP_delete" );
 		m_pfnGeoIP_country_code_by_ipnum = (GeoIP_country_code_by_ipnumFunc)GetProcAddress( m_hGeoIP, "GeoIP_country_code_by_ipnum" );
 		m_pfnGeoIP_country_name_by_ipnum = (GeoIP_country_name_by_ipnumFunc)GetProcAddress( m_hGeoIP, "GeoIP_country_name_by_ipnum" );
+		m_pfnGeoIP_country_code_by_ipnum_v6 = (GeoIP_country_code_by_ipnumFunc_v6)GetProcAddress( m_hGeoIP, "GeoIP_country_code_by_ipnum_v6" );
+		m_pfnGeoIP_country_name_by_ipnum_v6 = (GeoIP_country_name_by_ipnumFunc_v6)GetProcAddress( m_hGeoIP, "GeoIP_country_name_by_ipnum_v6" );
 		if ( pfnGeoIP_new )
 			m_pGeoIP = pfnGeoIP_new( GEOIP_MEMORY_CACHE );
 	}

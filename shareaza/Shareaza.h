@@ -146,10 +146,14 @@ public:
 	typedef void (*GeoIP_deleteFunc)(GeoIP* gi);
 	typedef const char * (*GeoIP_country_code_by_ipnumFunc) (GeoIP* gi, unsigned long ipnum);
 	typedef const char * (*GeoIP_country_name_by_ipnumFunc) (GeoIP* gi, unsigned long ipnum);
+	typedef const char * (*GeoIP_country_code_by_ipnumFunc_v6) (GeoIP* gi, geoipv6_t ipnum);
+	typedef const char * (*GeoIP_country_name_by_ipnumFunc_v6) (GeoIP* gi, geoipv6_t ipnum);
 	GeoIP_cleanupFunc				m_pfnGeoIP_cleanup;
 	GeoIP_deleteFunc				m_pfnGeoIP_delete;
 	GeoIP_country_code_by_ipnumFunc	m_pfnGeoIP_country_code_by_ipnum;
 	GeoIP_country_name_by_ipnumFunc	m_pfnGeoIP_country_name_by_ipnum;
+	GeoIP_country_code_by_ipnumFunc_v6	m_pfnGeoIP_country_code_by_ipnum_v6;
+	GeoIP_country_name_by_ipnumFunc_v6	m_pfnGeoIP_country_name_by_ipnum_v6;
 
 	HINSTANCE			m_hLibGFL;
 
@@ -172,6 +176,8 @@ public:
 
 	CString				GetCountryCode(IN_ADDR pAddress) const;
 	CString				GetCountryName(IN_ADDR pAddress) const;
+	CString				GetCountryCode(IN6_ADDR pAddress) const;
+	CString				GetCountryName(IN6_ADDR pAddress) const;
 
 	// Open file or url. Returns NULL always.
 	virtual CDocument*	OpenDocumentFile(LPCTSTR lpszFileName);

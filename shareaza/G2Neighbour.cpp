@@ -674,9 +674,18 @@ CG2Packet* CG2Neighbour::CreateLNIPacket(CG2Neighbour* pOwner)
 		}
 	}
 
-	pPacket->WritePacket( G2_PACKET_NODE_ADDRESS, 6 );
-	pPacket->WriteLongLE( Network.m_pHost.sin_addr.S_un.S_addr );
-	pPacket->WriteShortBE( htons( Network.m_pHost.sin_port ) );
+	if ( pOwner->IsIPv6Host() )
+	{
+		pPacket->WritePacket( G2_PACKET_NODE_ADDRESS, 18 );
+		pPacket->Write( &Network.m_pHostIPv6.sin6_addr, sizeof( IN6_ADDR ) );
+		pPacket->WriteShortBE( htons( Network.m_pHostIPv6.sin6_port ) );
+	}
+	else
+	{
+		pPacket->WritePacket( G2_PACKET_NODE_ADDRESS, 6 );
+		pPacket->WriteLongLE( Network.m_pHost.sin_addr.S_un.S_addr );
+		pPacket->WriteShortBE( htons( Network.m_pHost.sin_port ) );
+	}
 
 	pPacket->WritePacket( G2_PACKET_NODE_GUID, 16 );
 	pPacket->Write( Hashes::Guid( MyProfile.oGUID ) );

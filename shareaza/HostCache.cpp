@@ -900,7 +900,7 @@ void CHostCacheList::Serialize(CArchive& ar, int nVersion)
 			if ( pHost )
 			{
 				pHost->Serialize( ar, nVersion );
-				if ( pHost->m_pAddress.s_addr != 0 )
+				if ( ! pHost->IsIPv6Host() )
 				{ //IPv4
 					if ( ! Security.IsDenied( &pHost->m_pAddress ) &&
 						 ! Find( &pHost->m_pAddress ) &&
