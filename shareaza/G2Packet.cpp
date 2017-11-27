@@ -692,7 +692,7 @@ BOOL CG2Packet::OnPacket(const SOCKADDR_IN* pHost)
 		// Pass packet handling to neighbour if any
 		return pNeighbour2 ? pNeighbour2->OnPong( this, FALSE ) : OnPong( pHost );
 	case G2_PACKET_PUSH:
-		return OnPush( pHost );
+		return OnPush( ( SOCKADDR* ) pHost );
 	case G2_PACKET_CRAWL_REQ:
 		return OnCrawlRequest( pHost );
 	case G2_PACKET_CRAWL_ANS:
@@ -760,7 +760,7 @@ BOOL CG2Packet::OnPacket(const SOCKADDR_IN6* pHost)
 		// Pass packet handling to neighbour if any
 		return pNeighbour2 ? pNeighbour2->OnPong( this, FALSE ) : OnPong( pHost );
 	case G2_PACKET_PUSH:
-//		return OnPush( pHost );
+		return OnPush( (SOCKADDR*) pHost );
 	case G2_PACKET_CRAWL_REQ:
 //		return OnCrawlRequest( pHost );
 	case G2_PACKET_CRAWL_ANS:
@@ -943,86 +943,7 @@ BOOL CG2Packet::OnQuery(const SOCKADDR_IN* pHost)
 
 	return TRUE;
 }
-/*
-BOOL CG2Packet::OnQuery(const SOCKADDR_IN6* pHost)
-{
-	Statistics.Current.Gnutella2.Queries++;
 
-	CQuerySearchPtr pSearch = CQuerySearch::FromPacket( this, pHost );
-	if ( ! pSearch || pSearch->m_bDropMe ||	// Malformed query
-		 ! pSearch->m_bUDP )	// Forbid query with firewalled return address
-	{
-		if ( ! pSearch || ! pSearch->m_bUDP )
-		{
-			DEBUG_ONLY( Debug( _T("Malformed Query.") ) );
-			theApp.Message( MSG_WARNING, IDS_PROTOCOL_BAD_QUERY, (LPCTSTR)Network.IPv6HostToString( pHost ) ) );
-		}
-		Statistics.Current.Gnutella2.Dropped++;
-		return FALSE;
-	}
-
-	if ( Security.IsDenied( &pSearch->m_pEndpoint.sin_addr ) )
-	{
-		Statistics.Current.Gnutella2.Dropped++;
-		return FALSE;
-	}
-
-	if ( ! Network.QueryKeys->Check( pSearch->m_pEndpoint.sin_addr.S_un.S_addr, pSearch->m_nKey ) )
-	{
-		DWORD nKey = Network.QueryKeys->Create( pSearch->m_pEndpoint.sin_addr.S_un.S_addr );
-
-		CString strNode( inet_ntoa( pSearch->m_pEndpoint.sin_addr ) );
-		theApp.Message( MSG_DEBUG, _T("Issuing correction for node %s's query key for %s"),
-			(LPCTSTR)Network.IPv6HostToString( pHost ), (LPCTSTR)strNode );
-
-		CG2Packet* pAnswer = CG2Packet::New( G2_PACKET_QUERY_KEY_ANS, TRUE );
-		pAnswer->WritePacket( G2_PACKET_QUERY_KEY, 4 );
-		pAnswer->WriteLongBE( nKey );
-
-		if ( pHost->sin_addr.S_un.S_addr != pSearch->m_pEndpoint.sin_addr.S_un.S_addr )
-		{
-			pAnswer->WritePacket( G2_PACKET_SEND_ADDRESS, 4 );
-			pAnswer->WriteLongLE( pHost->sin_addr.S_un.S_addr );
-		}
-
-		Datagrams.Send( &pSearch->m_pEndpoint, pAnswer, TRUE );
-
-		return TRUE;
-	}
-
-	if ( ! Network.QueryRoute->Add( pSearch->m_oGUID, &pSearch->m_pEndpoint ) )
-	{
-		// Ack without hub list
-		Datagrams.Send( &pSearch->m_pEndpoint, Neighbours.CreateQueryWeb( pSearch->m_oGUID, false ) );
-
-		Statistics.Current.Gnutella2.Dropped++;
-		return TRUE;
-	}
-
-	if ( ! Neighbours.CheckQuery( pSearch ) )
-	{
-		// Ack without hub list with retry time
-		Datagrams.Send( &pSearch->m_pEndpoint, Neighbours.CreateQueryWeb( pSearch->m_oGUID, false, NULL, false ) );
-
-		theApp.Message( MSG_WARNING, IDS_PROTOCOL_EXCESS,
-			(LPCTSTR)( Network.IPv6HostToString( pHost ) + _T(" [UDP]") ),
-			(LPCTSTR)CString( inet_ntoa( pSearch->m_pEndpoint.sin_addr ) ) );
-		Statistics.Current.Gnutella2.Dropped++;
-		return TRUE;
-	}
-
-	Neighbours.RouteQuery( pSearch, this, NULL, TRUE );
-
-	Network.OnQuerySearch( new CLocalSearch( pSearch, PROTOCOL_G2 ) );
-
-	// Ack with hub list
-	Datagrams.Send( &pSearch->m_pEndpoint, Neighbours.CreateQueryWeb( pSearch->m_oGUID, true ) );
-
-	Statistics.Current.Gnutella2.QueriesProcessed++;
-
-	return TRUE;
-}
-*/
 //////////////////////////////////////////////////////////////////////
 // CDatagrams QUERY ACK packet handler
 
@@ -1261,29 +1182,53 @@ BOOL CG2Packet::OnQueryKeyAnswer(const SOCKADDR_IN* pHost)
 //////////////////////////////////////////////////////////////////////
 // CDatagrams PUSH packet handler
 
-BOOL CG2Packet::OnPush(const SOCKADDR_IN* pHost)
+BOOL CG2Packet::OnPush(const SOCKADDR* pHost)
 {
 	DWORD nLength = GetRemaining();
 
 	if ( ! SkipCompound( nLength, 6 ) )
 	{
 		theApp.Message( MSG_ERROR, _T("[G2] Invalid PUSH packet received from %s"),
-			(LPCTSTR)inet_ntoa( pHost->sin_addr ) );
+			(LPCTSTR) HostToString( pHost ) );
 		Statistics.Current.Gnutella2.Dropped++;
 		return FALSE;
 	}
 
-	DWORD nAddress	= ReadLongLE();
-	WORD nPort		= ReadShortBE();
+	BOOL bConnected = FALSE;
 
-	if ( Security.IsDenied( (IN_ADDR*)&nAddress ) ||
-		 Network.IsFirewalledAddress( (IN_ADDR*)&nAddress ) )
+	if ( nLength == 6 || nLength == 6 + 18 )
 	{
-		Statistics.Current.Gnutella2.Dropped++;
-		return TRUE;
-	}
+		DWORD nAddress	= ReadLongLE();
+		WORD nPort		= ReadShortBE();
 
-	Handshakes.PushTo( (IN_ADDR*)&nAddress, nPort );
+		if ( !nPort || Network.IsReserved( (IN_ADDR*) &nAddress ) ||
+			 Security.IsDenied( (IN_ADDR*)&nAddress ) ||
+			 Network.IsFirewalledAddress( (IN_ADDR*)&nAddress ) )
+		{
+			Statistics.Current.Gnutella2.Dropped++;
+			return TRUE;
+		}
+
+		bConnected = Handshakes.PushTo( (IN_ADDR*)&nAddress, nPort );
+	}
+	
+	if ( nLength == 18 || nLength == 6 + 18 )
+	{
+		IN6_ADDR nAddress	= IN6ADDR_ANY_INIT;
+		Read( &nAddress, sizeof( IN6_ADDR ) );
+		WORD nPort		= ReadShortBE();
+
+		if ( !nPort || Network.IsReserved( &nAddress ) || 
+			 Security.IsDenied( &nAddress ) ||
+			 Network.IsFirewalledAddress( &nAddress ) )
+		{
+			Statistics.Current.Gnutella2.Dropped++;
+			return TRUE;
+		}
+
+		if ( !bConnected )
+			Handshakes.PushTo( &nAddress, nPort );
+	}
 
 	return TRUE;
 }

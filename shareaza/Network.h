@@ -201,7 +201,7 @@ public:
 	BOOL		Connect(BOOL bAutoConnect = FALSE);
 	void		Disconnect();
 	BOOL		ConnectTo(LPCTSTR pszAddress, int nPort = 0, PROTOCOLID nProtocol = PROTOCOL_NULL, BOOL bNoUltraPeer = FALSE);
-	BOOL		AcquireLocalAddress(SOCKET hSocket);
+	BOOL		AcquireLocalAddress(SOCKET hSocket, bool bPort = false);
 	BOOL		AcquireLocalAddress(LPCTSTR pszHeader, WORD nPort = 0, const IN_ADDR* pFromAddress = NULL, const IN6_ADDR* pFromIPv6Address = NULL);
 	BOOL		AcquireLocalAddress(const IN_ADDR& pAddress, WORD nPort = 0, const IN_ADDR* pFromAddress = NULL);
 	BOOL		AcquireLocalAddress(const IN6_ADDR& pAddress, WORD nPort = 0, const IN6_ADDR* pFromAddress = NULL);
@@ -220,6 +220,7 @@ public:
 	BOOL		IsHomeNetwork(const IN_ADDR* pAddress) const;
 	BOOL		IsLocalAreaNetwork(const IN_ADDR* pAddress) const;
 	int			GetNetworkLevel(const IN_ADDR* pAddress) const;
+	int			GetNetworkLevel(const IN6_ADDR* pAddress) const;
 	IN_ADDR		GetMyAddressFor(const IN_ADDR* pAddress) const;
 	WORD		GetPort() const;
 
@@ -244,7 +245,6 @@ public:
 
 	static BOOL		IPv6FromString(CString sIPv6, SOCKADDR_IN6* nAddress);
 	static CString	IPv6ToString(const IN6_ADDR* pAddress, bool ForURL = true);
-	static CString	IPv6HostToString(const SOCKADDR_IN6* pHost);
 
 	// Safe way to close socket
 	static void	CloseSocket(SOCKET& hSocket, const bool bForce);

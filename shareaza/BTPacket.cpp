@@ -142,14 +142,23 @@ void CDHT::Connect()
 		CQuickLock oLock( HostCache.BitTorrent.m_pSection );
 
 		int nCount = 0;
-		for ( CHostCacheIterator i = HostCache.BitTorrent.Begin() ; i != HostCache.BitTorrent.End() && nCount < 100; ++i )
+		for ( CHostCacheRIterator i = HostCache.BitTorrent.RBegin() ; i != HostCache.BitTorrent.REnd(); ++i )
 		{
 			CHostCacheHostPtr pCache = (*i);
 
 			if ( pCache->m_oBtGUID )
 			{
-				SOCKADDR_IN sa = { AF_INET, htons( pCache->m_nPort ), pCache->m_pAddress };
-				dht_insert_node( &pCache->m_oBtGUID[ 0 ], (sockaddr*)&sa, sizeof( SOCKADDR_IN ) );
+				if ( pCache->IsIPv6Host() )
+				{
+					SOCKADDR_IN6 sa6 = { AF_INET6, htons( pCache->m_nPort ), 0, pCache->m_pAddressIPv6 };
+					dht_insert_node( &pCache->m_oBtGUID[ 0 ], (sockaddr*)&sa6, sizeof( SOCKADDR_IN6 ) );
+				}
+				else
+				{
+					SOCKADDR_IN sa = { AF_INET, htons( pCache->m_nPort ), pCache->m_pAddress };
+					dht_insert_node( &pCache->m_oBtGUID[ 0 ], (sockaddr*)&sa, sizeof( SOCKADDR_IN ) );
+				}
+
 				nCount++;
 			}
 		}
@@ -413,6 +422,16 @@ void CDHT::OnEvent(void* /*closure*/, int evt, const unsigned char* info_hash, c
 			CQuickLock oLock( HostCache.BitTorrent.m_pSection );
 
 			HostCache.BitTorrent.Remove( &pHost->sin_addr );
+
+			HostCache.BitTorrent.m_nCookie++;
+		}
+		else if ( data_len == sizeof( SOCKADDR_IN6 ) )
+		{
+			const SOCKADDR_IN6* pHost = (const SOCKADDR_IN6*)data;
+
+			CQuickLock oLock( HostCache.BitTorrent.m_pSection );
+
+			HostCache.BitTorrent.Remove( &pHost->sin6_addr );
 
 			HostCache.BitTorrent.m_nCookie++;
 		}
@@ -958,6 +977,21 @@ BOOL CBTPacket::OnPacket(const SOCKADDR_IN6* pHost)
 			}
 
 			HostCache.BitTorrent.m_nCookie++;
+		}
+	}
+
+	const CBENode* pYourIPPort = m_pNode->GetNode( BT_DICT_YOURIPPORT );
+	if ( pYourIPPort && pYourIPPort->IsType( CBENode::beString ) )
+	{
+		if ( pYourIPPort->m_nValue == 18 )
+		{
+			// IPv6
+			Network.AcquireLocalAddress( *(const IN6_ADDR*)pYourIPPort->m_pValue, 0, &pHost->sin6_addr );
+
+			// Port
+			u_short* pPort = ( (u_short*) pYourIPPort->m_pValue ) + 8;
+
+			ASSERT( *pPort == Network.m_pHostIPv6.sin6_port );
 		}
 	}
 

@@ -148,17 +148,13 @@ BOOL CHandshakes::ListenIPv6()
 	if ( m_hSocketIPv6 == INVALID_SOCKET )
 		return FALSE;
 
-	SOCKADDR_IN6 saHost = IN6ADDR_ANY_INIT;
-	saHost.sin6_family = PF_INET6;
-	saHost.sin6_port = Network.m_pHost.sin_port;
+	Network.m_pHostIPv6.sin6_port = Network.m_pHost.sin_port;
+	SOCKADDR_IN6 saHost = Network.m_pHostIPv6;
 	
-	//VERIFY( setsockopt( m_hSocket, IPPROTO_TCP, TCP_NODELAY, "\x01", 1) == 0 );
-	//VERIFY( setsockopt( m_hSocket, IPPROTO_IPV6, IPV6_V6ONLY, "\x00", 1 ) == 0 );
+	setsockopt( m_hSocketIPv6, IPPROTO_TCP, TCP_NODELAY, "\x01", 1);
 
 	if ( bind( m_hSocketIPv6, (SOCKADDR*)&saHost, sizeof( saHost ) ) != 0 )
 		return FALSE;
-
-	
 
 	theApp.Message( MSG_INFO, IDS_NETWORK_LISTENING_TCP, (LPCTSTR) Network.IPv6ToString( &saHost.sin6_addr ), htons( saHost.sin6_port ) );
 
@@ -173,6 +169,8 @@ BOOL CHandshakes::ListenIPv6()
 	listen(			// Place a socket in a state in which it is listening for an incoming connection
 		m_hSocketIPv6,	// Our socket
 		256 );		// Maximum length of the queue of pending connections, let 256 computers try to call us at once (do)
+
+	Network.AcquireLocalAddress( m_hSocketIPv6, true );
 
 	return TRUE;
 }

@@ -856,8 +856,8 @@ BOOL CConnection::OnHeaderLine(CString& strHeader, CString& strValue)
 		m_bClientExtended = VendorCache.IsExtended( m_sUserAgent );
 
 	} // It's the remote IP header
-	else if (  strHeader.CompareNoCase( _T("Remote-IP") ) == 0
-			|| strHeader.CompareNoCase( _T("Host") ) == 0)
+	else if ( strHeader.CompareNoCase( _T("Remote-IP") ) == 0
+			  || strHeader.CompareNoCase( _T("Host") ) == 0 )
 	{
 		// Add this address to our record of them
 		Network.AcquireLocalAddress( strValue, 0, &m_pHost.sin_addr, &m_pHostIPv6.sin6_addr );
@@ -869,7 +869,11 @@ BOOL CConnection::OnHeaderLine(CString& strHeader, CString& strValue)
 			|| strHeader.CompareNoCase( _T("Node") ) == 0 )
 	{
 		// Find another colon in the value
-		int nColon = strValue.Find( ':' );
+		int nColon = strValue.Find( _T("]:") );
+		if ( nColon > 0 )
+			nColon++;
+		else
+			nColon = strValue.Find( ':' );
 
 		// If the remote computer first contacted us and the colon is there but not first
 		if ( ! m_bInitiated && nColon > 0 )
@@ -918,15 +922,26 @@ BOOL CConnection::SendMyAddress()
 	{
 		// Compose header text
 		CString strHeader;
+		
+		if ( IsIPv6Host() )
+		{
+			strHeader.Format(
+				_T("Listen-IP: %s\r\n"),								// Make it like "Listen-IP: [FFFF:FFFF:FFFF:FFFF:FFFF:FFFF:FFFF:FFFF]:6346\r\n"
+				(LPCTSTR) HostToString( &Network.m_pHostIPv6 ) );
+			
+			// Print the line into the bottom of the output buffer
+			Write( strHeader ); // It will be sent to the remote computer on the next write
+		}
+		else
+		{
+			strHeader.Format(
+				_T("Listen-IP: %s:%hu\r\n"),								// Make it like "Listen-IP: 67.176.34.172:6346\r\n"
+				(LPCTSTR)CString( inet_ntoa( Network.GetMyAddressFor( &m_pHost.sin_addr ) ) ),	// Insert the IP address like "67.176.34.172"
+				htons( Network.m_pHost.sin_port ) );						// Our port number in big endian
 
-		strHeader.Format(
-			_T("Listen-IP: %s:%hu\r\n"),								// Make it like "Listen-IP: 67.176.34.172:6346\r\n"
-			(LPCTSTR)CString( inet_ntoa( Network.GetMyAddressFor( &m_pHost.sin_addr ) ) ),	// Insert the IP address like "67.176.34.172"
-			htons( Network.m_pHost.sin_port ) );						// Our port number in big endian
-
-		// Print the line into the bottom of the output buffer
-		Write( strHeader ); // It will be sent to the remote computer on the next write
-
+			// Print the line into the bottom of the output buffer
+			Write( strHeader ); // It will be sent to the remote computer on the next write
+		}
 		// Report that we are listening on a port, and the header is sent
 		return TRUE;
 	}

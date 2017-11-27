@@ -775,11 +775,32 @@ fail:
 }
 
 #ifdef _WINSOCKAPI_
+CString HostToString(const SOCKADDR* pHost)
+{
+	if ( pHost->sa_family == AF_INET )
+		return HostToString( (SOCKADDR_IN*) pHost );
+	else if( pHost->sa_family == AF_INET6 )
+		return HostToString( (SOCKADDR_IN6*) pHost );
+}
+
 CString HostToString(const SOCKADDR_IN* pHost)
 {
 	CString sHost;
 	sHost.Format( _T("%s:%hu"), (LPCTSTR)CString( inet_ntoa( pHost->sin_addr ) ), ntohs( pHost->sin_port ) );
 	return sHost;
+}
+
+CString HostToString(const SOCKADDR_IN6* pHost)
+{
+	CString sIPv6;
+
+	LPWSTR pBuffer = sIPv6.GetBuffer( IP6_ADDRESS_STRING_LENGTH + 1);
+	unsigned long nBuffer = ( IP6_ADDRESS_STRING_LENGTH + 1 ) * sizeof(WCHAR) ;
+
+	WSAAddressToString( (struct sockaddr *) pHost, sizeof( SOCKADDR_IN6 ), NULL, pBuffer, &nBuffer );
+
+	sIPv6.ReleaseBuffer( nBuffer - 1 );
+	return sIPv6;
 }
 #endif // _WINSOCKAPI_
 

@@ -168,7 +168,8 @@
 #include <winioctl.h>		// Sparse files support
 #include <winsock2.h>		// Windows sockets V2
 #include <winsvc.h>			// Services (excluded by VC_EXTRALEAN)
-#include <ws2tcpip.h> 
+#include <ws2tcpip.h>
+#include <ws2ipdef.h>
 #include <wspiapi.h>
 
 // Work-around for Microsoft double declaration

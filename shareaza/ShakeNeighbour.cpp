@@ -382,9 +382,17 @@ void CShakeNeighbour::SendPublicHeaders()
 	// Tell the remote computer our IP address with a header like "Listen-IP: 67.176.34.172:6346"
 	m_bSentAddress |= SendMyAddress(); // Returns true if the header is sent, set m_bSentAddress true once its sent
 
-	// Tell the remote computer what IP address it has from here with a header like "Remote-IP: 81.103.192.245"
-	strHeader.Format( _T("Remote-IP: %s:%i\r\n"), (LPCTSTR)CString( inet_ntoa( m_pHost.sin_addr ) ), htons( m_pHost.sin_port ) );
-	Write( strHeader );
+	if ( IsIPv6Host() )
+	{
+		strHeader.Format( _T("Remote-IP: %s\r\n"), (LPCTSTR)HostToString( &m_pHostIPv6 ) );
+		Write( strHeader );
+	}
+	else
+	{
+		// Tell the remote computer what IP address it has from here with a header like "Remote-IP: 81.103.192.245"
+		strHeader.Format( _T("Remote-IP: %s:%i\r\n"), (LPCTSTR)CString( inet_ntoa( m_pHost.sin_addr ) ), htons( m_pHost.sin_port ) );
+		Write( strHeader );
+	}
 
 	// Shareaza Settings allow us to exchange compressed data with this computer
 	if ( m_bCanDeflate )
@@ -732,10 +740,11 @@ BOOL CShakeNeighbour::OnHeaderLine(CString& strHeader, CString& strValue)
 			m_bDelayClose = IDS_HANDSHAKE_REJECTED;
 		}
 	} // The remote computer is telling us our IP address
-	else if ( strHeader.CompareNoCase( _T("Remote-IP") ) == 0 )
+	else if ( strHeader.CompareNoCase( _T("Remote-IP") ) == 0 
+			  || strHeader.CompareNoCase( _T("Host") ) == 0 )
 	{
 		// Give the value, which is text like "1.2.3.4", to the Network object
-		Network.AcquireLocalAddress( strValue, 0, &m_pHost.sin_addr );
+		Network.AcquireLocalAddress( strValue, 0, &m_pHost.sin_addr, &m_pHostIPv6.sin6_addr );
 	} // The remote computer is telling us its IP address
 	else if (	strHeader.CompareNoCase( _T("X-My-Address") ) == 0 ||
 				strHeader.CompareNoCase( _T("Listen-IP") ) == 0 ||
@@ -743,7 +752,12 @@ BOOL CShakeNeighbour::OnHeaderLine(CString& strHeader, CString& strValue)
 				strHeader.CompareNoCase( _T("Node") ) == 0 )
 	{
 		// Find the index of the first colon in the text
-		int nColon = strValue.Find( ':' );
+		int nColon = strValue.Find( _T("]:") );
+		if ( nColon > 0 )
+			nColon++;
+		else
+			nColon = strValue.Find( ':' );
+
 		if ( nColon > 0 ) // There is a colon and it's not at the start of the text
 		{
 			// Save the default Gnutella port, 6346, in nPort to use it if we can't read the port number from the header value text
@@ -1165,6 +1179,7 @@ BOOL CShakeNeighbour::OnHeadersCompleteG2()
 			if ( m_bUltraPeerSet == TRI_FALSE )
 			{
 				HostCache.Gnutella2.Remove( &m_pHost.sin_addr );
+				HostCache.Gnutella2.Remove( &m_pHostIPv6.sin6_addr );
 			}
 			// Tell the remote computer we can't connect because we are a shielded leaf right now
 			SendHostHeaders( _P("GNUTELLA/0.6 503 Shielded leaf node") );
@@ -1383,6 +1398,7 @@ BOOL CShakeNeighbour::OnHeadersCompleteG1()
 			if ( m_bUltraPeerSet == TRI_FALSE )
 			{
 				HostCache.Gnutella1.Remove( &m_pHost.sin_addr );
+				HostCache.Gnutella1.Remove( &m_pHostIPv6.sin6_addr );
 			}
 			// Tell the remote computer we can't connect because we are a shielded leaf right now
 			SendHostHeaders( _P("GNUTELLA/0.6 503 Shielded leaf node") );

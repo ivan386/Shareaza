@@ -460,7 +460,7 @@ int CMainWnd::OnCreate(LPCREATESTRUCT lpCreateStruct)
 	m_wndStatusBar.SetIndicators( wID, _countof( wID ) );
 	m_wndStatusBar.SetPaneInfo( 0, ID_SEPARATOR, SBPS_STRETCH, 0 );
 	m_wndStatusBar.SetPaneInfo( 1, ID_SEPARATOR, SBPS_NORMAL, 200 );
-	m_wndStatusBar.SetPaneInfo( 2, ID_SEPARATOR, SBPS_NORMAL, 200 );
+	m_wndStatusBar.SetPaneInfo( 2, ID_SEPARATOR, SBPS_NORMAL, 400 );
 
 	EnableDocking( CBRS_ALIGN_ANY );
 
@@ -1567,7 +1567,7 @@ void CMainWnd::UpdateMessages()
 			m_wndStatusBar.SetPaneText( 1, strStatusbar );
 
 		// StatusBar pane 2
-		strStatusbar = HostToString( &Network.m_pHost );
+		strStatusbar = HostToString( &Network.m_pHost ) + _T(", ") + HostToString( &Network.m_pHostIPv6 );
 		m_wndStatusBar.GetPaneText( 2, strOld );
 		if ( strOld != strStatusbar )
 			m_wndStatusBar.SetPaneText( 2, strStatusbar );

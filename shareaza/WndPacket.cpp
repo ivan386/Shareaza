@@ -408,12 +408,11 @@ void CPacketWnd::SmartDump(const CPacket* pPacket, const SOCKADDR_IN6* pAddress,
 	CString strNow;
 	strNow.Format( _T("%0.2i:%0.2i:%0.2i"),
 		pNow.GetHour(), pNow.GetMinute(), pNow.GetSecond() );
-	CString sAddress( Network.IPv6HostToString( pAddress ) );
+	CString sAddress( HostToString( pAddress ) );
 	CString sProtocol( protocolAbbr[ pPacket->m_nProtocol ] );
 
 	pItem->Set( 0, strNow );
-	//sAddress = bUDP ? _T("+") + sAddress + _T("+") : sAddress;
-	pItem->Set( 1, sAddress );
+	pItem->Set( 1, bUDP ? _T("(") + sAddress + _T(")") : sAddress );
 	pItem->Set( 2, sProtocol + ( bUDP ? _T(" UDP") : _T(" TCP") ) );
 	pItem->Set( 3, pPacket->GetType() );
 	pItem->Set( 5, pPacket->ToHex() );

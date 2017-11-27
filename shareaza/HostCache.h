@@ -232,8 +232,9 @@ public:
 	// Add host in form of "{IP|FQDN}[:Port][ SeenTime]"
 	CHostCacheHostPtr 	Add(LPCTSTR pszHost, WORD nPort = 0, const IN_ADDR* pFromAddress = NULL, DWORD tSeen = 0, LPCTSTR pszVendor = NULL, DWORD nUptime = 0, DWORD nCurrentLeaves = 0, DWORD nLeafLimit = 0);
 	void				Update(CHostCacheHostPtr pHost, WORD nPort = 0, DWORD tSeen = 0, LPCTSTR pszVendor = NULL, DWORD nUptime = 0, DWORD nCurrentLeaves = 0, DWORD nLeafLimit = 0);
-	CHostCacheMapItr	Remove(CHostCacheHostPtr pHost);
-	CHostCacheMapItr	Remove(const IN_ADDR* pAddress);
+	CHostCacheIterator	Remove(CHostCacheHostPtr pHost);
+	void				Remove(const IN_ADDR* pAddress);
+	void				Remove(const IN6_ADDR* pAddress);
 	void				SanityCheck();
 	void				OnResolve(LPCTSTR szAddress, const IN_ADDR* pAddress, WORD nPort);
 	void				OnFailure(const IN_ADDR* pAddress, WORD nPort, bool bRemove = true);

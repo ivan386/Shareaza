@@ -114,8 +114,13 @@ CString LoadFile(LPCTSTR pszPath);
 BOOL ReplaceNoCase(CString& sInStr, LPCTSTR pszOldStr, LPCTSTR pszNewStr);
 
 #ifdef _WINSOCKAPI_
+CString HostToString(const SOCKADDR* pHost);
+
 // Returns "a.a.a.a:port"
 CString HostToString(const SOCKADDR_IN* pHost);
+
+// Returns "[FFFF:FFFF:FFFF:FFFF:FFFF:FFFF:FFFF:FFFF]:port"
+CString HostToString(const SOCKADDR_IN6* pHost);
 #endif // _WINSOCKAPI_
 
 // Function is used to split a phrase in Asian languages to separate keywords

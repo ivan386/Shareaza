@@ -469,7 +469,7 @@ BOOL CNetwork::ConnectTo(LPCTSTR pszAddress, int nPort, PROTOCOLID nProtocol, BO
 //////////////////////////////////////////////////////////////////////
 // CNetwork local IP acquisition and sending
 
-BOOL CNetwork::AcquireLocalAddress(SOCKET hSocket)
+BOOL CNetwork::AcquireLocalAddress(SOCKET hSocket, bool bPort)
 {
 	// Ask the socket what it thinks our IP address on this end is
 	SOCKADDR_IN pAddress = {};
@@ -481,7 +481,10 @@ BOOL CNetwork::AcquireLocalAddress(SOCKET hSocket)
 		if ( getsockname( hSocket, (SOCKADDR*)&pAddress, &nSockLen ) != 0 )
 			return FALSE;
 
-		return AcquireLocalAddress( pAddress.sin6_addr );
+		if ( bPort && pAddress.sin6_port )
+			return AcquireLocalAddress( pAddress.sin6_addr, ntohs( pAddress.sin6_port ) );
+		else
+			return AcquireLocalAddress( pAddress.sin6_addr );
 	}
 	else
 		return AcquireLocalAddress( pAddress.sin_addr );
@@ -566,12 +569,22 @@ BOOL CNetwork::AcquireLocalAddress(const IN_ADDR& pAddress, WORD nPort, const IN
 BOOL CNetwork::AcquireLocalAddress(const IN6_ADDR& pAddress, WORD nPort, const IN6_ADDR* pFromAddress)
 {
 
-	if ( ! pFromAddress || ( IN6_IS_ADDR_GLOBAL( pFromAddress ) && IN6_IS_ADDR_GLOBAL( &pAddress ) ) )
+	int nFromNet = 0;
+	if ( pFromAddress )
+		nFromNet = GetNetworkLevel( pFromAddress );
+	int nNet = GetNetworkLevel( &pAddress );
+	int nMyNet = GetNetworkLevel( &m_pHostIPv6.sin6_addr );
+
+	if ( ! pFromAddress || ( nFromNet < 4 && nFromNet >= nNet ) )
 	{
 		if ( nPort )
 			m_pHostIPv6.sin6_port = htons( nPort );
+		
+		if ( nNet >= 3 ) // loopback or reserved
+			return FALSE;
 
-		m_pHostIPv6.sin6_addr = pAddress;
+		if ( nMyNet >= nNet )
+			m_pHostIPv6.sin6_addr = pAddress;
 	}
 	return TRUE;
 }
@@ -740,10 +753,30 @@ BOOL CNetwork::IsValidAddressFor(const IN6_ADDR* pForAddress, const IN6_ADDR* pA
 	if ( pForAddress == NULL || pAddress == NULL )
 		return FALSE;
 
-	if ( IN6_IS_ADDR_UNSPECIFIED( pAddress ) && ! IN6_IS_ADDR_GLOBAL( pAddress ) )
+	if ( IN6_IS_ADDR_UNSPECIFIED( pForAddress ) && ! IN6_IS_ADDR_GLOBAL( pAddress ) )
+		return FALSE;
+
+	if ( GetNetworkLevel( pForAddress ) < GetNetworkLevel( pAddress ) )
 		return FALSE;
 
 	return TRUE;
+}
+
+int CNetwork::GetNetworkLevel( const IN6_ADDR* pAddress ) const
+{
+	if ( IN6_IS_ADDR_LOOPBACK( pAddress ) ) 
+		return 3; // loopback
+
+	if ( IsReserved( pAddress ) )
+		return 4; // reserved
+
+	if ( IN6_IS_ADDR_LINKLOCAL( pAddress ) )
+		return 2; // home network
+
+	if ( IN6_IS_ADDR_SITELOCAL( pAddress ) )
+		return 1; // local area network
+
+	return 0; // internet
 }
 
 int CNetwork::GetNetworkLevel( const IN_ADDR* pAddress ) const
@@ -1009,6 +1042,7 @@ BOOL CNetwork::IsReserved(const IN6_ADDR* pAddress) const
 {
 	if ( IN6_IS_ADDR_UNSPECIFIED( pAddress ) ) return TRUE;
 	if ( IN6_IS_ADDR_MULTICAST( pAddress ) ) return TRUE;
+	if ( IN6_IS_ADDR_LOOPBACK( pAddress ) ) return TRUE;
 	return FALSE;
 }
 
@@ -1388,6 +1422,8 @@ BOOL CNetwork::SendPush(const Hashes::Guid& oGUID, DWORD nIndex)
 			pPacket->WriteByte( 0 );
 			pPacket->WriteLongLE( m_pHost.sin_addr.S_un.S_addr );
 			pPacket->WriteShortBE( htons( m_pHost.sin_port ) );
+			pPacket->Write( &m_pHostIPv6.sin6_addr, sizeof( IN6_ADDR ) );
+			pPacket->WriteShortBE( htons( m_pHostIPv6.sin6_port ) );
 
 			if ( pOrigin != NULL )
 			{
@@ -1769,23 +1805,10 @@ CString CNetwork::IPv6ToString(const IN6_ADDR* pAddress, bool ForUrl)
 	if ( ForUrl )
 	{
 		pHost.sin6_port = htons( 1 );
-		CString IPv6 = IPv6HostToString( &pHost );
-		return IPv6.Left( IPv6.GetLength() - 3 );
+		CString IPv6 = HostToString( &pHost );
+		return IPv6.Left( IPv6.GetLength() - 2 );
 	}
-	return IPv6HostToString( &pHost );
-}
-
-CString CNetwork::IPv6HostToString(const SOCKADDR_IN6* pHost)
-{
-	CString sIPv6;
-
-	LPWSTR pBuffer = sIPv6.GetBuffer( IP6_ADDRESS_STRING_LENGTH + 1);
-	unsigned long nBuffer = ( IP6_ADDRESS_STRING_LENGTH + 1 ) * sizeof(WCHAR) ;
-
-	WSAAddressToString( (struct sockaddr *) pHost, sizeof( SOCKADDR_IN6 ), NULL, pBuffer, &nBuffer );
-
-	sIPv6.ReleaseBuffer( nBuffer );
-	return sIPv6;
+	return HostToString( &pHost );
 }
 
 void CNetwork::CloseSocket(SOCKET& hSocket, const bool bForce)

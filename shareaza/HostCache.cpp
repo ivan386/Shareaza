@@ -548,27 +548,27 @@ void CHostCacheList::Update(CHostCacheHostPtr pHost, WORD nPort, DWORD tSeen, LP
 //////////////////////////////////////////////////////////////////////
 // CHostCacheList host remove
 
-CHostCacheMapItr CHostCacheList::Remove(CHostCacheHostPtr pHost)
+CHostCacheIterator CHostCacheList::Remove(CHostCacheHostPtr pHost)
 {
 	CQuickLock oLock( m_pSection );
 
 	CHostCacheIterator j = std::find( m_HostsTime.begin(), m_HostsTime.end(), pHost );
+
 	if ( j == m_HostsTime.end() )
 		// Wrong cache
-		return m_Hosts.end();
-	m_HostsTime.erase( j );
+		return m_HostsTime.end();
+
+	j = m_HostsTime.erase( j );
 
 	CHostCacheMapItr i = std::find_if( m_Hosts.begin(), m_Hosts.end(), std::bind2nd( is_host(), pHost ) );
 
 	if ( i != m_Hosts.end() )
-		i = m_Hosts.erase( i );
+		m_Hosts.erase( i );
 	else
 	{
 		CHostCacheMapItrIPv6 x = std::find_if( m_HostsIPv6.begin(), m_HostsIPv6.end(), std::bind2nd( is_host_ipv6(), pHost ) );
 		if ( x != m_HostsIPv6.end() )
-			x = m_HostsIPv6.erase( x );
-
-		ASSERT( x != m_HostsIPv6.end() );
+			m_HostsIPv6.erase( x );
 	}
 
 	delete pHost;
@@ -576,28 +576,40 @@ CHostCacheMapItr CHostCacheList::Remove(CHostCacheHostPtr pHost)
 
 	ASSERT( m_Hosts.size() + m_HostsIPv6.size() == m_HostsTime.size() );
 
-	return i;
+	return j;
 }
 
-CHostCacheMapItr CHostCacheList::Remove(const IN_ADDR* pAddress)
+void CHostCacheList::Remove(const IN_ADDR* pAddress)
 {
+	if ( !pAddress || pAddress->s_addr == 0 ) return;
+
 	CQuickLock oLock( m_pSection );
 
 	CHostCacheMapItr i = m_Hosts.find( *pAddress );
-	if ( i == m_Hosts.end() )
+	if ( i != m_Hosts.end() )
 		// Wrong cache/address
-		return m_Hosts.end();
+		Remove( (*i).second );
+}
 
-	return Remove( (*i).second );
+void CHostCacheList::Remove(const IN6_ADDR* pAddress)
+{
+	if ( !pAddress || IN6_IS_ADDR_UNSPECIFIED( pAddress ) ) return;
+
+	CQuickLock oLock( m_pSection );
+
+	CHostCacheMapItrIPv6 i = m_HostsIPv6.find( *pAddress );
+	if ( i != m_HostsIPv6.end() )
+		// Wrong cache/address
+		Remove( (*i).second );
 }
 
 void CHostCacheList::SanityCheck()
 {
 	CQuickLock oLock( m_pSection );
 
-	for( CHostCacheMapItr i = m_Hosts.begin(); i != m_Hosts.end(); )
+	for( CHostCacheIterator i = m_HostsTime.begin(); i != m_HostsTime.end(); )
 	{
-		CHostCacheHostPtr pHost = (*i).second;
+		CHostCacheHostPtr pHost = (*i);
 		if ( Security.IsDenied( &pHost->m_pAddress ) ||
 			( pHost->m_pVendor && Security.IsVendorBlocked( pHost->m_pVendor->m_sCode ) ) )
 		{
@@ -756,9 +768,9 @@ void CHostCacheList::PruneOldHosts(DWORD tNow)
 {
 	CQuickLock oLock( m_pSection );
 
-	for( CHostCacheMapItr i = m_Hosts.begin(); i != m_Hosts.end(); )
+	for( CHostCacheIterator i = m_HostsTime.begin(); i != m_HostsTime.end(); )
 	{
-		CHostCacheHostPtr pHost = (*i).second;
+		CHostCacheHostPtr pHost = (*i);
 
 		switch ( pHost->m_nProtocol )
 		{

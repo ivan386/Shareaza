@@ -1000,12 +1000,15 @@ BOOL CQuerySearch::ReadG2Packet(CG2Packet* pPacket, const SOCKADDR * pEndpoint)
 	SOCKADDR_IN6* pEndpointIPv6 = NULL;
 
 
-	if ( pEndpoint->sa_family == AF_INET6 )
-		pEndpointIPv6 = (SOCKADDR_IN6*) pEndpoint;
-	else
+	if ( pEndpoint )
 	{
-		ASSERT( pEndpoint->sa_family == AF_INET );
-		pEndpointIPv4 = (SOCKADDR_IN*) pEndpoint;
+		if ( pEndpoint->sa_family == AF_INET6 )
+			pEndpointIPv6 = (SOCKADDR_IN6*) pEndpoint;
+		else
+		{
+			ASSERT( pEndpoint->sa_family == AF_INET );
+			pEndpointIPv4 = (SOCKADDR_IN*) pEndpoint;
+		}
 	}
 
 	while ( pPacket->ReadPacket( nType, nLength ) )

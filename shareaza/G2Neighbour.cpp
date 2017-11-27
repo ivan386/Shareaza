@@ -1547,7 +1547,7 @@ bool CG2Neighbour::OnPush(CG2Packet* pPacket)
 	if ( !pPacket->m_bCompound )
 		return true;
 
-	DWORD nLength = pPacket->GetRemaining();
+	DWORD nLength = pPacket->GetRemaining(); 
 
 	// Check if packet is too small
 	if ( !pPacket->SkipCompound( nLength, 6 ) )
@@ -1559,8 +1559,12 @@ bool CG2Neighbour::OnPush(CG2Packet* pPacket)
 		++m_nDropCount;
 		return true;
 	}
+	
+	// 6 = IPv4Host, 18 = IPv6Host, 6 + 18 = IPv4Host + IPv6Host 
+	
+	BOOL bConnected = FALSE;
 
-	if ( nLength == 6 )
+	if ( nLength == 6 || nLength == 6 + 18 )
 	{
 		// Get IP address and port
 		DWORD nAddress	= pPacket->ReadLongLE();
@@ -1590,9 +1594,10 @@ bool CG2Neighbour::OnPush(CG2Packet* pPacket)
 		}
 
 		// Set up push connection
-		Handshakes.PushTo( (IN_ADDR*)&nAddress, nPort );
+		bConnected = Handshakes.PushTo( (IN_ADDR*)&nAddress, nPort );
 	}
-	else if( nLength == 18 )
+	
+	if( nLength == 18 || nLength == 6 + 18 )
 	{
 		// Get IPv6 address and port
 		IN6_ADDR nAddress	= IN6ADDR_ANY_INIT;
@@ -1624,7 +1629,8 @@ bool CG2Neighbour::OnPush(CG2Packet* pPacket)
 		}
 
 		// Set up push connection
-		Handshakes.PushTo( &nAddress, nPort );
+		if ( !bConnected )
+			Handshakes.PushTo( &nAddress, nPort );
 	}
 
 	// Return that packet was handled

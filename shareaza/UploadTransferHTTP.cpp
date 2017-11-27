@@ -975,9 +975,17 @@ void CUploadTransferHTTP::SendDefaultHeaders()
 
 	if ( ! m_bInitiated )
 	{
-		strLine.Format( _T("Remote-IP: %s\r\n"),
-			(LPCTSTR)CString( inet_ntoa( m_pHost.sin_addr ) ) );
-		Write( strLine );
+		if ( IsIPv6Host() )
+		{
+			strLine.Format( _T("Remote-IP: %s\r\n"), (LPCTSTR)HostToString( &m_pHostIPv6 ) );
+			Write( strLine );
+		}
+		else
+		{
+			// Tell the remote computer what IP address it has from here with a header like "Remote-IP: 81.103.192.245"
+			strLine.Format( _T("Remote-IP: %s:%i\r\n"), (LPCTSTR)CString( inet_ntoa( m_pHost.sin_addr ) ), htons( m_pHost.sin_port ) );
+			Write( strLine );
+		}
 	}
 
 	if ( IsNetworkDisabled() )
