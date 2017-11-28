@@ -89,6 +89,7 @@ const LPCSTR BT_DICT_COMPLETE		= "complete";
 const LPCSTR BT_DICT_DATA			= "a";
 const LPCSTR BT_DICT_DOWNLOADED		= "downloaded";
 const LPCSTR BT_DICT_DROPPED		= "dropped";
+const LPCSTR BT_DICT_DROPPED6		= "dropped6";
 const LPCSTR BT_DICT_ERROR			= "e";
 const LPCSTR BT_DICT_ERROR_LONG		= "error";
 const LPCSTR BT_DICT_EXT_MSG		= "m";					// Dictionary of supported extension messages

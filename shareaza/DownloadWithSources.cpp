@@ -477,14 +477,17 @@ BOOL CDownloadWithSources::AddSourceBT(const Hashes::BtGuid& oGUID, const IN_ADD
 	if ( Network.IsFirewalledAddress( pAddress, Settings.Connection.IgnoreOwnIP, bIgnoreLocalIP ) )
 		return FALSE;
 
+	if ( GetCount() > 1000 )
+		return FALSE;
+
 	return AddSourceInternal( new CDownloadSource( (CDownload*)this, oGUID, pAddress, nPort ) );
 }
 
 BOOL CDownloadWithSources::AddSourceBT(const Hashes::BtGuid& oGUID, const IN6_ADDR* pAddress, WORD nPort, BOOL bIgnoreLocalIP)
 {
 	// Unreachable (Push) BT sources should never be added.
-	//if ( Network.IsFirewalledAddress( pAddress, Settings.Connection.IgnoreOwnIP, bIgnoreLocalIP ) )
-	//	return FALSE;
+	if ( Network.IsFirewalledAddress( pAddress, Settings.Connection.IgnoreOwnIP, bIgnoreLocalIP ) )
+		return FALSE;
 
 	return AddSourceInternal( new CDownloadSource( (CDownload*)this, oGUID, pAddress, nPort ) );
 }
@@ -738,7 +741,7 @@ BOOL CDownloadWithSources::AddSourceInternal(CDownloadSource* pSource)
 				if ( pExisting->m_nFailures || pExisting->m_nBusyCount )
 				{
 #ifdef _DEBUG
-					theApp.Message( MSG_DEBUG, _T( "Removed extra source %s %s (%I64d seconds old)" ), (LPCTSTR)CString( inet_ntoa( pExisting->m_pAddress ) ),
+					theApp.Message( MSG_DEBUG, _T( "Removed extra source %s %s (%I64d seconds old)" ), (LPCTSTR) pExisting->m_sURL,
 						(LPCTSTR)pExisting->m_oGUID.toString< Hashes::base16Encoding >().MakeUpper(),
 						( *( (LONGLONG*)&tNow ) - *( (LONGLONG*)&pExisting->m_tLastSeen ) ) / 10000000 );
 #endif
@@ -757,7 +760,7 @@ BOOL CDownloadWithSources::AddSourceInternal(CDownloadSource* pSource)
 		{
 			CDownloadSource* pExisting = (*i);
 #ifdef _DEBUG
-			theApp.Message( MSG_DEBUG, _T( "Removed extra source %s %s (%I64d seconds old)" ), (LPCTSTR)CString( inet_ntoa( pExisting->m_pAddress ) ),
+			theApp.Message( MSG_DEBUG, _T( "Removed extra source %s %s (%I64d seconds old)" ), (LPCTSTR) pExisting->m_sURL,
 				(LPCTSTR)pExisting->m_oGUID.toString< Hashes::base16Encoding >().MakeUpper(),
 				( *( (LONGLONG*)&tNow ) - *( (LONGLONG*)&pExisting->m_tLastSeen ) ) / 10000000 );
 #endif
@@ -769,7 +772,7 @@ BOOL CDownloadWithSources::AddSourceInternal(CDownloadSource* pSource)
 		{
 			// Still too many sources
 #ifdef _DEBUG
-			theApp.Message( MSG_DEBUG, _T( "Ignored extra source %s %s due sources limit %u" ), (LPCTSTR)CString( inet_ntoa( pSource->m_pAddress ) ),
+			theApp.Message( MSG_DEBUG, _T( "Ignored extra source %s %s due sources limit %u" ), (LPCTSTR) pSource->m_sURL,
 				(LPCTSTR)pSource->m_oGUID.toString< Hashes::base16Encoding >().MakeUpper(), Settings.Downloads.SourcesWanted );
 #endif
 			delete pSource;

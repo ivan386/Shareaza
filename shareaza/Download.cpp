@@ -316,6 +316,9 @@ QWORD CDownload::GetNonRandomEnd(bool bForce)
 	if ( m_nBitrate < 8 )
 		return 0;
 
+	if ( m_nBitrate == ~(QWORD)0 )
+		return this->m_nSize;
+
 	QWORD nByterate = ( m_nBitrate / 8 );
 
 	if ( Settings.Downloads.MediaBuffer && m_tStartFromSet > 0 &&

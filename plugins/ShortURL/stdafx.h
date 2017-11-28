@@ -49,6 +49,7 @@
 #include <Shlobj.h>
 #include <Shellapi.h>
 #include <Wininet.h>
+#include <ws2ipdef.h>
 
 using namespace ATL;
 

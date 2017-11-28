@@ -424,12 +424,14 @@ blockPair CDownloadTransfer::SelectBlock(const Fragments::List& oPossible, const
 
 		if ( pItr->begin() < nNonRandomEnd && pItr->end() > nStartFrom )
 		{
-			QWORD nBlock = nBlockBegin;
-			for (; nBlock <= nBlockEnd && ( ( nBlock * nBlockSize ) < nNonRandomEnd ); ++nBlock)
+			
+			for ( QWORD nBlock = nBlockBegin;
+				  nBlock <= nBlockEnd && ( ( nBlock * nBlockSize ) < nNonRandomEnd );
+				  ++nBlock )
 			{
 				QWORD nPos = max( pItr->begin(), nBlockSize * nBlock );
 
-				if ( nPos >= nStartFrom && ( pAvailable.empty() || pAvailable[ nBlockBegin ] ) )
+				if ( nPos >= nStartFrom && ( pAvailable.empty() || pAvailable[ nBlock ] ) )
 				{
 					QWORD nLength = min( pItr->end(), nBlockSize * ( nBlock + 1ull ) );
 					nLength -=  nPos;

@@ -1448,18 +1448,8 @@ BOOL CBTClient::OnMetadataRequest(CBTPacket* pPacket)
 	return TRUE;
 }
 
-/*
- The PEX message payload is a bencoded dictionary with three keys:
- 'added': the set of peers met since the last PEX
- 'added.f': a flag for every peer, apparently with the following values:
-    \x00: unknown, assuming default
-    \x01: Prefers encryption
-    \x02: Is seeder
-  OR-ing them together is allowed
- 'dropped': the set of peers dropped since last PEX
-*/
 
-void CBTClient::SendUtPex(DWORD tConnectedAfter)
+void CBTClient::SendUtPex(DWORD tAfter)
 {
 	if ( m_nUtPexID == 0 )
 		// Unsupported
@@ -1467,40 +1457,96 @@ void CBTClient::SendUtPex(DWORD tConnectedAfter)
 
 	CBuffer pAddedBuffer;
 	CBuffer pAddedFalgsBuffer;
-	BYTE* pnFlagsByte = NULL;
-	DWORD nPeersCount = 0;
+	CBuffer pDroppedBuffer;
+
+	CBuffer pAddedBufferIPv6;
+	CBuffer pAddedFalgsBufferIPv6;
+	CBuffer pDroppedBufferIPv6;
+
+	// http://bittorrent.org/beps/bep_0011.html
+	// The extension message itself consists of the bittorrent/extension message header 
+	// and the following bencoded payload:
+
+	// {
+	//   added: <one or more contacts in IPv4 compact format (string)>
+	//   added.f: <optional, bit-flags, 1 byte per added IPv4 peer (string)>
+	//   added6: <one or more contacts IPv6 compact format (string)>,
+	//   added6.f: <optional, bit-flags, 1 byte per added IPv6 peer (string)>,
+	//   dropped: <one or more contacts in IPv6 compact format (string)>,
+	//   dropped6: <one or more contacts in IPv6 compact format (string)>
+	// }
+
+	if ( !IsIPv6Host() && tAfter == 0 && IN6_IS_ADDR_GLOBAL( &Network.m_pHostIPv6.sin6_addr ) )
+	{
+		pAddedBufferIPv6.Add( &Network.m_pHostIPv6.sin6_addr, sizeof( IN6_ADDR ) );
+		pAddedBufferIPv6.Add( &Network.m_pHostIPv6.sin6_port, 2 );
+		BYTE nFlag = 0x10;
+		pAddedFalgsBufferIPv6.Add ( &nFlag, 1 );
+	}
+
+
 	for ( POSITION posSource = m_pDownload->GetIterator(); posSource ; )
 	{
 		CDownloadSource* pSource = m_pDownload->GetNext( posSource );
 
-		if ( ! pSource->IsConnected() ||
-			   pSource->GetTransfer()->m_tConnected < tConnectedAfter ||
-			   pSource->m_nProtocol != PROTOCOL_BT )
-			continue;
+		if ( pSource->m_nProtocol != PROTOCOL_BT )
+			 continue;
+
+		const CDownloadTransfer* pTransfer = pSource->GetTransfer();
 
 		WORD nPort = htons( pSource->m_nPort );
-		pAddedBuffer.Add( &pSource->m_pAddress, 4 );
-		pAddedBuffer.Add( &nPort, 2 );
 
-		nPeersCount += 1;
-
-		const CDownloadTransferBT* pBTDownload =
-			static_cast< const CDownloadTransferBT* >( pSource->GetTransfer() );
-
-		BYTE nFlag = (pBTDownload->m_pClient->m_bPrefersEncryption ? 1 : 0 ) |
-					 (pBTDownload->m_pClient->m_bSeeder ? 2 : 0);
-
-		DWORD nFalgInBytePos = (nPeersCount - 1 ) % 4;
-
-		if ( nFalgInBytePos == 0 )
+		if ( ! pTransfer ||								 // Not connected
+			 pTransfer->m_nState <= dtsConnecting ) 	 // Not connected
 		{
-			pAddedFalgsBuffer.EnsureBuffer( 1 );
-			pnFlagsByte = pAddedFalgsBuffer.GetDataEnd();
-			pAddedFalgsBuffer.m_nLength += 1;
-			*pnFlagsByte = 0;
+			if ( pSource->m_tDropped > 0 && pSource->m_tDropped > tAfter )
+			{
+				if ( pSource->IsIPv6Source() )
+				{
+					pDroppedBufferIPv6.Add( &pSource->m_pAddressIPv6, sizeof( IN6_ADDR ) );
+					pDroppedBufferIPv6.Add( &nPort, 2 );
+				}
+				else
+				{
+					pDroppedBuffer.Add( &pSource->m_pAddress, 4 );
+					pDroppedBuffer.Add( &nPort, 2 );
+				}
+			}
+		
+			continue;
 		}
 
-		*pnFlagsByte |= ( nFlag & 3 ) << ( 6 - nFalgInBytePos * 2 );
+		if ( pTransfer->m_tConnected < tAfter ) // Not new
+			continue;
+		
+		const CDownloadTransferBT* pBTDownload =
+			static_cast< const CDownloadTransferBT* >( pTransfer );
+
+		// 0x01 	prefers encryption, as indicated by e field in extension handshake
+		// 0x02 	seed/upload_only
+		// 0x04 	supports uTP
+		// 0x08 	peer indicated ut_holepunch support in extension handshake
+		// 0x10 	outgoing connection, peer is reachable
+
+		BYTE nFlag = ( pBTDownload->m_pClient->m_bPrefersEncryption ? 1 : 0 ) |
+					 ( pBTDownload->m_pClient->m_bSeeder ? 2 : 0 ) |
+					 ( pBTDownload->m_pClient->m_bInitiated ? 0x10 : 0 );
+
+		if ( pSource->IsIPv6Source() )
+		{
+			pAddedBufferIPv6.Add( &pSource->m_pAddressIPv6, sizeof( IN6_ADDR ) );
+			pAddedBufferIPv6.Add( &nPort, 2 );
+
+			pAddedFalgsBufferIPv6.Add ( &nFlag, 1 );
+		}
+		else
+		{
+			pAddedBuffer.Add( &pSource->m_pAddress, 4 );
+			pAddedBuffer.Add( &nPort, 2 );
+
+			pAddedFalgsBuffer.Add ( &nFlag, 1 );
+		}
+
 	}
 
 	if ( pAddedBuffer.m_nLength )
@@ -1510,6 +1556,12 @@ void CBTClient::SendUtPex(DWORD tConnectedAfter)
 
 		pRoot->Add( BT_DICT_ADDED )->SetString( pAddedBuffer.GetData(), pAddedBuffer.GetCount() );
 		pRoot->Add( BT_DICT_ADDED_F )->SetString( pAddedFalgsBuffer.GetData(), pAddedFalgsBuffer.GetCount() );
+		
+		pRoot->Add( BT_DICT_ADDED6 )->SetString( pAddedBufferIPv6.GetData(), pAddedBufferIPv6.GetCount() );
+		pRoot->Add( BT_DICT_ADDED6_F )->SetString( pAddedFalgsBufferIPv6.GetData(), pAddedFalgsBufferIPv6.GetCount() );
+
+		pRoot->Add( BT_DICT_DROPPED )->SetString( pDroppedBuffer.GetData(), pDroppedBuffer.GetCount() );
+		pRoot->Add( BT_DICT_DROPPED6 )->SetString( pDroppedBufferIPv6.GetData(), pDroppedBufferIPv6.GetCount() );
 
 		Send( pResponse );
 	}
@@ -1519,47 +1571,101 @@ BOOL CBTClient::OnUtPex(CBTPacket* pPacket)
 {
 	const CBENode* pRoot = pPacket->m_pNode.get();
 
-	if ( CBENode* pPeersAdd = pRoot->GetNode( BT_DICT_ADDED ) )
-	{
-		if ( 0 == ( pPeersAdd->m_nValue % 6 ) ) // IPv4?
-		{
-			const BYTE* pPointer = (const BYTE*)pPeersAdd->m_pValue;
+	CBENode* pPeersAdd = pRoot->GetNode( BT_DICT_ADDED );
+    QWORD	 nPeersAddCount = 0;
+	if ( pPeersAdd && pPeersAdd->m_nValue && 0 == ( pPeersAdd->m_nValue % 6 ) )
+		nPeersAddCount = pPeersAdd->m_nValue / 6;
 
-			for ( int nPeer = (int)pPeersAdd->m_nValue / 6 ; nPeer > 0; nPeer --, pPointer += 6 )
+	CBENode* pPeersAddIPv6 = pRoot->GetNode( BT_DICT_ADDED6 );
+	QWORD	 nPeersAddIPv6Count = 0;
+	if ( pPeersAddIPv6 && pPeersAddIPv6->m_nValue && 0 == ( pPeersAddIPv6->m_nValue % 18 )  )
+		nPeersAddIPv6Count = pPeersAddIPv6->m_nValue / 18;
+
+	CBENode* pPeersDrop = pRoot->GetNode( BT_DICT_DROPPED );
+    QWORD	 nPeersDropCount = 0;
+	if ( pPeersDrop && pPeersDrop->m_nValue )
+		nPeersDropCount = pPeersDrop->m_nValue / 6;
+
+	CBENode* pPeersDropIPv6 = pRoot->GetNode( BT_DICT_DROPPED6 );
+	QWORD	 nPeersDropIPv6Count = 0;
+	if ( pPeersDropIPv6 && pPeersDropIPv6->m_nValue && 0 == ( pPeersDropIPv6->m_nValue % 18 )  )
+		nPeersDropIPv6Count = pPeersDropIPv6->m_nValue / 18;
+
+
+	for ( POSITION posSource = m_pDownload->GetIterator(); 
+		  posSource && ( nPeersAddCount > 0 
+		  || nPeersAddIPv6Count > 0 
+		  ||  nPeersDropCount > 0
+		  || nPeersDropIPv6Count > 0 ) ; )
+	{
+		CDownloadSource* pSource = m_pDownload->GetNext( posSource );
+
+		if ( pSource->m_nProtocol != PROTOCOL_BT )
+			continue;
+
+		if ( pSource->IsIPv6Source() )
+		{
+			if ( nPeersAddIPv6Count > 0 ) // IPv6 + Port
 			{
-				const IN_ADDR* pAddress = (const IN_ADDR*)pPointer;
-				WORD nPort = *(const WORD*)( pPointer + 4 );
-				m_pDownload->AddSourceBT( Hashes::BtGuid(), pAddress, ntohs( nPort ) );
+				WORD nPort = htons( pSource->m_nPort );
+				BYTE* pPointer = (BYTE*)pPeersAddIPv6->m_pValue;
+
+				for ( int nPeer = (int)pPeersAddIPv6->m_nValue / 18 ; nPeer > 0 ; nPeer --, pPointer += 18 )
+				{
+					if ( memcmp( &pSource->m_pAddressIPv6, pPointer, 16 ) == 0
+						 && memcmp( &nPort, (pPointer + 16), 2 ) == 0 )
+					{
+						nPeersAddIPv6Count--;
+						memset( (void*) pPointer, 0, 18 );
+						break;
+					}
+				}
 			}
 		}
-	}
-
-	if ( CBENode* pPeersAdd = pRoot->GetNode( BT_DICT_ADDED6 ) )
-	{
-		if ( 0 == ( pPeersAdd->m_nValue % 18 ) ) // IPv6
+		else
 		{
-			const BYTE* pPointer = (const BYTE*)pPeersAdd->m_pValue;
-
-			for ( int nPeer = (int)pPeersAdd->m_nValue / 18 ; nPeer > 0; nPeer --, pPointer += 18 )
+			if ( nPeersAddCount  > 0 ) // IPv4 + Port
 			{
-				const IN6_ADDR* pAddress = (const IN6_ADDR*)pPointer;
-				WORD nPort = *(const WORD*)( pPointer + 16 );
-				m_pDownload->AddSourceBT( Hashes::BtGuid(), pAddress, ntohs( nPort ) );
+				WORD nPort = htons( pSource->m_nPort );
+				BYTE* pPointer = (BYTE*)pPeersAdd->m_pValue;
+
+				for ( int nPeer = (int)pPeersAdd->m_nValue / 6 ; nPeer > 0 ; nPeer --, pPointer += 6 )
+				{
+					if ( memcmp( &pSource->m_pAddress, pPointer, 4 ) == 0
+						 && memcmp( &nPort, (pPointer + 4), 2 ) == 0 )
+					{
+						nPeersAddCount--;
+						memset( (void *)pPointer, 0, 6 );
+						break;
+					}
+				}
 			}
 		}
-	}
 
-	if ( CBENode* pPeersDrop = pRoot->GetNode( BT_DICT_DROPPED ) )
-	{
-		if ( 0 == ( pPeersDrop->m_nValue % 6 ) ) // IPv4?
+		if ( pSource->IsIPv6Source() )
 		{
-			for ( POSITION posSource = m_pDownload->GetIterator(); posSource ; )
+			if ( nPeersDropIPv6Count > 0 ) // IPv6 + Port
 			{
-				CDownloadSource* pSource = m_pDownload->GetNext( posSource );
+				WORD nPort = htons( pSource->m_nPort );
+				const BYTE* pPointer = (const BYTE*)pPeersDropIPv6->m_pValue;
 
-				if ( pSource->IsConnected() || pSource->m_nProtocol != PROTOCOL_BT )
-					continue;
-
+				for ( int nPeer = (int)pPeersDropIPv6->m_nValue / 18 ; nPeer > 0 ; nPeer --, pPointer += 18 )
+				{
+					if ( memcmp( &pSource->m_pAddressIPv6, pPointer, 16 ) == 0
+						 && memcmp( &nPort, (pPointer + 16), 2 ) == 0 )
+					{
+						nPeersDropIPv6Count--;
+						if ( !pSource->IsConnected() )
+							pSource->m_tAttempt = pSource->CalcFailureDelay();
+						break;
+					}
+				}
+			}
+		}
+		else
+		{
+			if ( nPeersDropCount  > 0 ) // IPv4 + Port
+			{
 				WORD nPort = htons( pSource->m_nPort );
 				const BYTE* pPointer = (const BYTE*)pPeersDrop->m_pValue;
 
@@ -1567,9 +1673,38 @@ BOOL CBTClient::OnUtPex(CBTPacket* pPacket)
 				{
 					if ( memcmp( &pSource->m_pAddress, pPointer, 4 ) == 0
 						 && memcmp( &nPort, (pPointer + 4), 2 ) == 0 )
-						pSource->m_tAttempt = pSource->CalcFailureDelay();
+					{
+						nPeersDropCount--;
+						if ( !pSource->IsConnected() )
+							pSource->m_tAttempt = pSource->CalcFailureDelay();
+						break;
+					}
 				}
 			}
+		}
+	}
+	
+	if ( nPeersAddCount ) // IPv4
+	{
+		const BYTE* pPointer = (const BYTE*)pPeersAdd->m_pValue;
+
+		for ( int nPeer = (int)pPeersAdd->m_nValue / 6 ; nPeer > 0; nPeer --, pPointer += 6 )
+		{
+			const IN_ADDR* pAddress = (const IN_ADDR*)pPointer;
+			WORD nPort = *(const WORD*)( pPointer + 4 );
+			m_pDownload->AddSourceBT( Hashes::BtGuid(), pAddress, ntohs( nPort ) );
+		}
+	}
+
+	if ( nPeersAddIPv6Count ) // IPv6
+	{
+		const BYTE* pPointer = (const BYTE*)pPeersAddIPv6->m_pValue;
+
+		for ( int nPeer = (int)pPeersAddIPv6->m_nValue / 18 ; nPeer > 0; nPeer --, pPointer += 18 )
+		{
+			const IN6_ADDR* pAddress = (const IN6_ADDR*)pPointer;
+			WORD nPort = *(const WORD*)( pPointer + 16 );
+			m_pDownload->AddSourceBT( Hashes::BtGuid(), pAddress, ntohs( nPort ) );
 		}
 	}
 

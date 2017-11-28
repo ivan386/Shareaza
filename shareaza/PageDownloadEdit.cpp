@@ -97,7 +97,7 @@ BOOL CDownloadEditPage::OnInitDialog()
 	if ( pDownload->m_nSize != SIZE_UNKNOWN )
 		m_sFileSize.Format( _T("%I64u"), pDownload->m_nSize );
 
-	if ( pDownload->m_nBitrate != SIZE_UNKNOWN )
+	if ( pDownload->m_nBitrate != 0 )
 		m_sBitrate.Format( _T("%I64u"), pDownload->m_nBitrate );
 
 	if ( pDownload->m_oSHA1 )

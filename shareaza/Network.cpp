@@ -946,9 +946,9 @@ BOOL CNetwork::IsFirewalledAddress(const IN_ADDR* pAddress, BOOL bIncludeSelf, B
 {
 	if ( ! pAddress )
 		return TRUE;
-	if ( bIncludeSelf && IsSelfIP( *pAddress ) )
-		return TRUE;
 	if ( ! pAddress->S_un.S_addr )						// 0.0.0.0
+		return TRUE;
+	if ( bIncludeSelf && IsSelfIP( *pAddress ) )
 		return TRUE;
 #ifdef LAN_MODE
 	if ( IsLocalAreaNetwork( pAddress ) )
@@ -968,6 +968,8 @@ BOOL CNetwork::IsFirewalledAddress(const IN_ADDR* pAddress, BOOL bIncludeSelf, B
 BOOL CNetwork::IsFirewalledAddress(const IN6_ADDR* pAddress, BOOL bIncludeSelf, BOOL bIgnoreLocalIP) const
 {
 	if ( ! pAddress )
+		return TRUE;
+	if ( IN6_IS_ADDR_UNSPECIFIED( pAddress ) )
 		return TRUE;
 	if ( bIncludeSelf && IsSelfIP( *pAddress ) )
 		return TRUE;

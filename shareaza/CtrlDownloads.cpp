@@ -1032,6 +1032,15 @@ void CDownloadsCtrl::PaintDownload(CDC& dc, const CRect& rcRow, CDownload* pDown
 		GetCursorPos(&ptHover);
 		ScreenToClient(&ptHover);
 
+		CRect client_rect;
+		GetClientRect( &client_rect );
+
+		if ( client_rect.right < rcCell.left ||
+			 client_rect.left > rcCell.right ||
+			 client_rect.top > rcCell.bottom ||
+			 client_rect.bottom < rcCell.top )
+			 continue;
+
 		switch ( pColumn.lParam )
 		{
 		case DOWNLOAD_COLUMN_TITLE:
@@ -1301,6 +1310,15 @@ void CDownloadsCtrl::PaintSource(CDC& dc, const CRect& rcRow, CDownload* pDownlo
 		
 		crLeftAligned = ( rcRow.left == rcCell.left ? crNatural : crBack ) ;
 
+		CRect client_rect;
+		GetClientRect( &client_rect );
+
+		if ( client_rect.right < rcCell.left ||
+			 client_rect.left > rcCell.right ||
+			 client_rect.top > rcCell.bottom ||
+			 client_rect.bottom < rcCell.top )
+			 continue;
+
 		switch ( pColumn.lParam )
 		{
 		case DOWNLOAD_COLUMN_TITLE:
@@ -1330,20 +1348,15 @@ void CDownloadsCtrl::PaintSource(CDC& dc, const CRect& rcRow, CDownload* pDownlo
 			// Or an active transfer
 			else if ( ! pSource->IsIdle() )
 			{
-				if ( pSource->IsIPv6Source() )
-					strText.Format( _T("[%s]:%u"),
-						(LPCTSTR)pSource->GetAddress(),
-						 ntohs( pSource->GetPort() )  );
-				else
-					strText.Format( _T("%s:%u"),
-						(LPCTSTR)pSource->GetAddress(),
-						 ntohs( pSource->GetPort() ) );
+				strText.Format( _T("%s:%u"),
+					(LPCTSTR)pSource->GetAddress(),
+					 ntohs( pSource->GetPort() ) );
 			}
 			// Or just queued
 			else
 			{
 				if ( pSource->IsIPv6Source() )
-					strText.Format( _T("[%s]:%u"),
+					strText.Format( _T("%s:%u"),
 						Network.IPv6ToString( &pSource->m_pAddressIPv6 ),
 						pSource->m_nPort );
 				else

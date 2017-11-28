@@ -200,7 +200,7 @@ BOOL CTransferFile::Open(BOOL bWrite)
 	m_hFile = CreateFile( CString( _T("\\\\?\\") ) + m_sPath,
 		GENERIC_READ | ( bWrite ? GENERIC_WRITE : 0 ),
 		FILE_SHARE_READ | FILE_SHARE_WRITE | FILE_SHARE_DELETE,
-		NULL, ( bWrite ? OPEN_ALWAYS : OPEN_EXISTING ), FILE_ATTRIBUTE_NORMAL, NULL );
+		NULL, ( bWrite ? OPEN_ALWAYS : OPEN_EXISTING ), FILE_FLAG_NO_BUFFERING, NULL );
 	if ( m_hFile != INVALID_HANDLE_VALUE )
 	{
 		m_bWrite = bWrite;

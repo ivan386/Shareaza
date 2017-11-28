@@ -84,6 +84,7 @@ public:
 	DWORD				m_nSortOrder;			// How should this source be sorted in the list?
 	COLORREF			m_crColour;
 	DWORD				m_tAttempt;
+	DWORD				m_tDropped;
 	BOOL				m_bKeep;				// Source keeped by NeverDrop == TRUE flag
 	DWORD				m_nFailures;			// failure count.
 	DWORD				m_nBusyCount;			// busy count. (used for incrementing RetryDelay)
@@ -144,12 +145,15 @@ public:
 		{
 			// Push
 			if ( m_pServerAddress.S_un.S_addr != pSource->m_pServerAddress.S_un.S_addr ) return FALSE;
+			if ( IN6_ADDR_EQUAL( &m_pIPv6ServerAddress, &pSource->m_pIPv6ServerAddress ) ) return FALSE;
 			if ( m_pAddress.S_un.S_addr != pSource->m_pAddress.S_un.S_addr ) return FALSE;
+			if ( IN6_ADDR_EQUAL( &m_pAddressIPv6, &pSource->m_pAddressIPv6 ) ) return FALSE;
 		}
 		else
 		{
 			// Direct
 			if ( m_pAddress.S_un.S_addr != pSource->m_pAddress.S_un.S_addr ) return FALSE;
+			if ( IN6_ADDR_EQUAL( &m_pAddressIPv6, &pSource->m_pAddressIPv6 ) ) return FALSE;
 			if ( m_nPort != pSource->m_nPort ) return FALSE;
 		}
 

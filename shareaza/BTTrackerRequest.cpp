@@ -352,6 +352,12 @@ CBTTrackerRequest::CBTTrackerRequest(CDownload* pDownload, BTTrackerEvent nEvent
 			m_sURL += _T("&key=");
 			m_sURL += pDownload->m_sKey;
 		}
+
+		if ( IN6_IS_ADDR_GLOBAL( &Network.m_pHostIPv6.sin6_addr ) && ! m_sURL.IsEmpty() )
+		{
+			m_sURL += _T("&ipv6=");
+			m_sURL += Network.IPv6ToString( &Network.m_pHostIPv6.sin6_addr, false );
+		}
 	}
 	else if ( StartsWith( m_sAddress, _PT("udp:") ) )
 	{

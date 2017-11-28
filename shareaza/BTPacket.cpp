@@ -217,6 +217,7 @@ void CDHT::Search(const Hashes::BtHash& oBTH, bool bAnnounce)
 	if ( oLock.Lock( 250 ) )
 	{
 		dht_search( &oBTH[ 0 ], ( bAnnounce ? Network.GetPort() : 0 ), AF_INET, &CDHT::OnEvent, NULL );
+		dht_search( &oBTH[ 0 ], ( bAnnounce ? Network.GetPort() : 0 ), AF_INET6, &CDHT::OnEvent, NULL );
 	}
 }
 
