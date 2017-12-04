@@ -811,9 +811,8 @@ void CHostCacheList::PruneOldHosts(DWORD tNow)
 
 		if ( ! pHost->m_bPriority &&
 			 ( pHost->m_nFailures > Settings.Connection.FailureLimit ||
-			   ( pHost->IsExpired( tNow ) && 
-			     ( pHost->m_nProtocol != PROTOCOL_G2 ||
-			       m_Hosts.size() >= 100 ) ) ) )
+			   ( pHost->IsExpired( tNow ) &&
+				  HostCache.EnoughServers( pHost->m_nProtocol ) ) ) )
 		{
 			i = Remove( pHost );
 		}
@@ -1803,11 +1802,9 @@ bool CHostCacheHost::CanConnect(DWORD tNow) const
 		// Let failed host rest some time...
 		( ! m_tFailure || ( tNow >= m_tFailure + Settings.Connection.FailurePenalty ) ) &&
 		// ...and we lost no hope on this host...
-		( m_nFailures <= Settings.Connection.FailureLimit ) &&
+		( m_nFailures <= Settings.Connection.FailureLimit || ! HostCache.EnoughServers( m_nProtocol ) ) &&
 		// ...and host isn't expired...
-		( m_bPriority || ! IsExpired( tNow ) ||
-			( this->m_nProtocol == PROTOCOL_G2 &&
-			  Neighbours.GetCount( PROTOCOL_G2, 7, 1 ) <= 1 ) ) &&
+		( m_bPriority || ! IsExpired( tNow ) || ! HostCache.EnoughServers( m_nProtocol ) ) &&
 		// ...and make sure we reconnect not too fast...
 		( ! IsThrottled( tNow ) );
 		// ...then we can connect!
