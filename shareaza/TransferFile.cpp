@@ -200,9 +200,19 @@ BOOL CTransferFile::Open(BOOL bWrite)
 	m_hFile = CreateFile( CString( _T("\\\\?\\") ) + m_sPath,
 		GENERIC_READ | ( bWrite ? GENERIC_WRITE : 0 ),
 		FILE_SHARE_READ | FILE_SHARE_WRITE | FILE_SHARE_DELETE,
-		NULL, ( bWrite ? OPEN_ALWAYS : OPEN_EXISTING ), FILE_FLAG_NO_BUFFERING, NULL );
+		NULL, ( bWrite ? OPEN_ALWAYS : OPEN_EXISTING ), FILE_FLAG_RANDOM_ACCESS, NULL );
 	if ( m_hFile != INVALID_HANDLE_VALUE )
 	{
+
+		if ( bWrite )
+		{
+			DWORD dwOut = 0;
+			if ( ! DeviceIoControl( m_hFile, FSCTL_SET_SPARSE, NULL, 0, NULL, 0, &dwOut, NULL ) )
+			{
+				DWORD nError = GetLastError();
+				theApp.Message( MSG_ERROR, _T("Unable to set sparse file: \"%s\", Win32 error %x."), (LPCTSTR)m_sPath, nError );
+			}
+		}
 		m_bWrite = bWrite;
 		return TRUE;
 	}

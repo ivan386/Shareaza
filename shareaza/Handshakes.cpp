@@ -387,7 +387,7 @@ BOOL CHandshakes::AcceptConnection()
 	// Allows the socket to be bound to an address that is already in use
 	setsockopt( m_hSocket, SOL_SOCKET, SO_REUSEADDR, "\x01", 1 );
 
-	Network.AcquireLocalAddress( hSocket );
+	Network.AcquireLocalAddress( hSocket, false, &pHost.sin_addr );
 
 	// We've listened for and accepted one more stable connection
 	InterlockedIncrement( (PLONG)&m_nStableCount ); // Use an interlocked function to do this in a thread-safe way
@@ -438,7 +438,7 @@ BOOL CHandshakes::AcceptConnectionIPv6()
 		if ( getsockname( hSocket, (SOCKADDR*)&pAddress, &nSockLen ) != 0 )
 			return TRUE;
 
-		Network.AcquireLocalAddress( hSocket );
+		Network.AcquireLocalAddress( hSocket, false, NULL, &pHost.sin6_addr );
 
 		return TRUE;
 	}

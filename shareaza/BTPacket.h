@@ -107,6 +107,7 @@ const LPCSTR BT_DICT_NAME			= "name";
 const LPCSTR BT_DICT_NICKNAME		= "nickname";
 const LPCSTR BT_DICT_NODES			= "nodes";
 const LPCSTR BT_DICT_PEERS			= "peers";
+const LPCSTR BT_DICT_PEERS6			= "peers6";
 const LPCSTR BT_DICT_PEER_ID		= "peer id";
 const LPCSTR BT_DICT_PEER_IP		= "ip";
 const LPCSTR BT_DICT_PEER_PORT		= "port";
@@ -116,6 +117,7 @@ const LPCSTR BT_DICT_PING			= "ping";
 const LPCSTR BT_DICT_PORT			= "p";					// Local TCP listen port
 const LPCSTR BT_DICT_QUERY			= "q";
 const LPCSTR BT_DICT_RESPONSE		= "r";
+const LPCSTR BT_DICT_REQQ			= "reqq";
 const LPCSTR BT_DICT_SRC_EXCHANGE	= "source-exchange";
 const LPCSTR BT_DICT_TOKEN			= "token";
 const LPCSTR BT_DICT_TOTAL_SIZE		= "total_size";
@@ -129,7 +131,8 @@ const LPCSTR BT_DICT_VALUES			= "values";
 const LPCSTR BT_DICT_VENDOR			= "v";					// Client name and version (as a utf-8 string)
 const LPCSTR BT_DICT_YOURIP			= "yourip";				// External IP (IPv4 or IPv6)
 const LPCSTR BT_DICT_YOURIPPORT		= "ip";				    // External IP Port (IPv4 or IPv6) http://www.rasterbar.com/products/libtorrent/dht_sec.html
-
+const LPCSTR BT_DICT_IPV6			= "ipv6";
+const LPCSTR BT_DICT_IPV4			= "ipv4";
 //
 // Packet
 //

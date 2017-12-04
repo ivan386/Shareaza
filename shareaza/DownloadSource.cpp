@@ -1076,10 +1076,27 @@ void CDownloadSource::Draw(CDC* pDC, CRect* prcBar, COLORREF crNatural)
 	{
 		Fragments::List::const_iterator pItr = m_oAvailable.begin();
 		const Fragments::List::const_iterator pEnd = m_oAvailable.end();
-		for ( ; pItr != pEnd; ++pItr )
+
+		if ( pItr != pEnd )
 		{
+			QWORD nOffset = pItr->begin();
+			QWORD nLength = pItr->size();
+
+			for ( ++pItr; pItr != pEnd; ++pItr )
+			{
+				if ( pItr->begin() == nOffset + nLength )
+					nLength += pItr->size();
+				else
+				{
+					CFragmentBar::DrawFragment( pDC, prcBar, m_pDownload->m_nSize,
+						nOffset, nLength, crNatural, false );
+					nOffset = pItr->begin();
+					nLength = pItr->size();
+				}
+			}
+
 			CFragmentBar::DrawFragment( pDC, prcBar, m_pDownload->m_nSize,
-				pItr->begin(), pItr->size(), crNatural, false );
+						nOffset, nLength, crNatural, false );
 		}
 
 		pDC->FillSolidRect( prcBar, CoolInterface.m_crWindow );
@@ -1123,9 +1140,25 @@ void CDownloadSource::Draw(CDC* pDC, CRect* prcBar)
 
 	Fragments::List::const_iterator pItr = m_oPastFragments.begin();
 	const Fragments::List::const_iterator pEnd = m_oPastFragments.end();
-	for ( ; pItr != pEnd ; ++pItr )
+	if ( pItr != pEnd )
 	{
+		QWORD nOffset = pItr->begin();
+		QWORD nLength = pItr->size();
+
+		for ( ++pItr ; pItr != pEnd; ++pItr )
+		{
+			if ( pItr->begin() == nOffset + nLength )
+				nLength += pItr->size();
+			else
+			{
+				CFragmentBar::DrawFragment( pDC, prcBar, m_pDownload->m_nSize,
+					nOffset, nLength, crTransfer, true );
+				nOffset = pItr->begin();
+				nLength = pItr->size();
+			}
+		}
+
 		CFragmentBar::DrawFragment( pDC, prcBar, m_pDownload->m_nSize,
-			pItr->begin(), pItr->size(), crTransfer, true );
+			nOffset, nLength, crTransfer, true );
 	}
 }

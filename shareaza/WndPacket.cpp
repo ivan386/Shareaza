@@ -311,6 +311,12 @@ void CPacketWnd::SmartDump(const CPacket* pPacket, const SOCKADDR_IN* pAddress, 
 
 	if ( ! theApp.m_pPacketWnd )
 		return;
+	
+	for (; m_pQueue.GetCount() > Settings.Search.MonitorQueue ;)
+	{
+		CLiveItem* pItem = m_pQueue.RemoveHead();
+		delete pItem;
+	}
 
 	m_pQueue.AddTail( pItem.Detach() );
 }
@@ -432,6 +438,12 @@ void CPacketWnd::SmartDump(const CPacket* pPacket, const SOCKADDR_IN6* pAddress,
 	if ( ! theApp.m_pPacketWnd )
 		return;
 
+	for (; m_pQueue.GetCount() > Settings.Search.MonitorQueue ;)
+	{
+		CLiveItem* pItem = m_pQueue.RemoveHead();
+		delete pItem;
+	}
+
 	m_pQueue.AddTail( pItem.Detach() );
 }
 
@@ -449,6 +461,13 @@ void CPacketWnd::OnTimer(UINT_PTR nIDEvent)
 		pLock.Lock();
 
 		if ( m_pQueue.GetCount() == 0 ) break;
+
+		for (; m_pQueue.GetCount() > Settings.Search.MonitorQueue ;)
+		{
+			CLiveItem* pItem = m_pQueue.RemoveHead();
+			delete pItem;
+		}
+
 		CLiveItem* pItem = m_pQueue.RemoveHead();
 
 		pLock.Unlock();

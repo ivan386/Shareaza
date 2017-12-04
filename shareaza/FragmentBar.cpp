@@ -186,10 +186,27 @@ void CFragmentBar::DrawDownload(CDC* pDC, CRect* prcBar, CDownload* pDownload, C
 	Fragments::List oList( pDownload->GetEmptyFragmentList() );
 	Fragments::List::const_iterator pItr = oList.begin();
 	const Fragments::List::const_iterator pEnd = oList.end();
-	for ( ; pItr != pEnd ; ++pItr )
+	
+	if ( pItr != pEnd )
 	{
-		DrawFragment( pDC, prcBar, pDownload->m_nSize, pItr->begin(),
-			pItr->size(), crNatural, false );
+		QWORD nOffset = pItr->begin();
+		QWORD nLength = pItr->size();
+
+		for ( ++pItr ; pItr != pEnd; ++pItr )
+		{
+			if ( pItr->begin() == nOffset + nLength )
+				nLength += pItr->size();
+			else
+			{
+				DrawFragment( pDC, prcBar, pDownload->m_nSize, nOffset,
+					nLength, crNatural, false );
+				nOffset = pItr->begin();
+				nLength = pItr->size();
+			}
+		}
+
+		DrawFragment( pDC, prcBar, pDownload->m_nSize, nOffset,
+			nLength, crNatural, false );
 	}
 
 	for ( POSITION posSource = pDownload->GetIterator(); posSource ; )

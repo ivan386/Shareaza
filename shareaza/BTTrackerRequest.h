@@ -145,18 +145,28 @@ public:
 	CBTTrackerSource()
 		: m_pPeerID	()
 		, m_pAddress()
+		, m_pAddressIPv6 ()
 	{
 	}
 
 	CBTTrackerSource(const Hashes::BtGuid& pPeerID, const SOCKADDR_IN& pAddress)
 		: m_pPeerID	( pPeerID )
 		, m_pAddress( pAddress )
+		, m_pAddressIPv6()
+	{
+	}
+
+	CBTTrackerSource(const Hashes::BtGuid& pPeerID, const SOCKADDR_IN6& pAddress)
+		: m_pPeerID	( pPeerID )
+		, m_pAddress()
+		, m_pAddressIPv6( pAddress )
 	{
 	}
 
 	CBTTrackerSource(const CBTTrackerSource& source)
 		: m_pPeerID	( source.m_pPeerID )
 		, m_pAddress( source.m_pAddress )
+		, m_pAddressIPv6 ( source.m_pAddressIPv6 )
 	{
 	}
 
@@ -164,11 +174,25 @@ public:
 	{
 		m_pPeerID = source.m_pPeerID;
 		m_pAddress = source.m_pAddress;
+		m_pAddressIPv6 = source.m_pAddressIPv6;
 		return *this;
+	}
+
+	inline bool IsIPV6Source() const
+	{
+		if ( m_pAddress.sin_addr.s_addr == 0 )
+		{
+			if ( IN6_IS_ADDR_UNSPECIFIED( &m_pAddressIPv6.sin6_addr ) )
+				return false;
+
+			return true;
+		}
+		return false;
 	}
 
 	Hashes::BtGuid	m_pPeerID;
 	SOCKADDR_IN		m_pAddress;
+	SOCKADDR_IN6	m_pAddressIPv6;
 };
 
 typedef CList< CBTTrackerSource > CBTTrackerSourceList;

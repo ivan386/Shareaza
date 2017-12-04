@@ -662,7 +662,10 @@ void CDownloadWithTorrent::OnTrackerEvent(bool bSuccess, LPCTSTR pszReason, LPCT
 		for ( POSITION pos = pEvent->GetSources(); pos; )
 		{
 			const CBTTrackerSource& pSource = pEvent->GetNextSource( pos );
-			AddSourceBT( pSource.m_pPeerID, &pSource.m_pAddress.sin_addr, ntohs( pSource.m_pAddress.sin_port ) );
+			if ( pSource.IsIPV6Source() )
+				AddSourceBT( pSource.m_pPeerID, &pSource.m_pAddressIPv6.sin6_addr, ntohs( pSource.m_pAddressIPv6.sin6_port ) );
+			else
+				AddSourceBT( pSource.m_pPeerID, &pSource.m_pAddress.sin_addr, ntohs( pSource.m_pAddress.sin_port ) );
 		}
 
 		// Lock on this tracker if we were searching for one

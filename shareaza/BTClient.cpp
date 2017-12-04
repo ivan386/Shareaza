@@ -71,6 +71,8 @@ CBTClient::CBTClient()
 	, m_nUtPexID			( 0 )	// 0 or BT_EXTENSION_UT_PEX
 	, m_nLtTexID			( 0 )	// 0 or BT_EXTENSION_LT_TEX
 	, m_nSrcExchangeID		( 0 )	// 0 or BT_HANDSHAKE_SOURCE
+	, m_nRequestPipe		( 0 )
+	, m_nRequested			( 0 )
 {
 	m_sUserAgent = protocolNames[ PROTOCOL_BT ];
 	m_mInput.pLimit = m_mOutput.pLimit = &Settings.Bandwidth.Request;
@@ -1036,6 +1038,7 @@ BOOL CBTClient::OnPacket(CBTPacket* pPacket)
 		return m_pUploadTransfer->OnRequest( pPacket );
 
 	case BT_PACKET_PIECE:
+		if ( m_nRequested > 0 ) m_nRequested--;
 		return m_pDownloadTransfer == NULL || m_pDownloadTransfer->OnPiece( pPacket );
 
 	case BT_PACKET_CANCEL:
@@ -1257,6 +1260,21 @@ void CBTClient::SendExtendedHandshake()
 				pRoot->Add( BT_DICT_PORT )->SetInt( Network.GetPort() );
 				pRoot->Add( BT_DICT_VENDOR )->SetString( Settings.SmartAgent() );
 
+				if ( IsIPv6Host() )
+					pRoot->Add( BT_DICT_YOURIP )->SetString( &m_pHostIPv6.sin6_addr, 16 );
+				else
+					pRoot->Add( BT_DICT_YOURIP )->SetString( &m_pHost.sin_addr, 4 );
+
+				IN6_ADDR nMyAddressIPv6 = Network.GetMyAddressFor( &m_pHostIPv6.sin6_addr );
+				if ( !IN6_IS_ADDR_UNSPECIFIED( &nMyAddressIPv6 ) )
+						pRoot->Add( BT_DICT_IPV6 )->SetString( &nMyAddressIPv6, 16 );
+
+				IN_ADDR nMyAddress = Network.GetMyAddressFor( &m_pHost.sin_addr );
+				if ( nMyAddress.s_addr != 0 )
+					pRoot->Add( BT_DICT_IPV4 )->SetString( &nMyAddress, 4 );
+
+				pRoot->Add( BT_DICT_REQQ )->SetInt( Settings.BitTorrent.RequestLimit );
+
 				Send( pResponse, FALSE );
 			}
 			// else Out of Memory
@@ -1304,12 +1322,73 @@ BOOL CBTClient::OnExtendedHandshake(CBTPacket* pPacket)
 	const CBENode* pYourIP = pRoot->GetNode( BT_DICT_YOURIP );
 	if ( pYourIP && pYourIP->IsType( CBENode::beString ) )
 	{
-		if ( pYourIP->m_nValue == 4 )
+		if ( IsIPv6Host() )
 		{
-			// IPv4
-			Network.AcquireLocalAddress( *(const IN_ADDR*)pYourIP->m_pValue, 0, &m_pHost.sin_addr );
+			if ( pYourIP->m_nValue == 16 )
+				// IPv6
+				Network.AcquireLocalAddress( *(const IN6_ADDR*)pYourIP->m_pValue, 0, &m_pHostIPv6.sin6_addr);
+			
+		}
+		else
+		{
+			if ( pYourIP->m_nValue == 4 )
+				// IPv4
+				Network.AcquireLocalAddress( *(const IN_ADDR*)pYourIP->m_pValue, 0, &m_pHost.sin_addr );
 		}
 	}
+
+	if ( const CBENode* pRequestPipe = pRoot->GetNode( BT_DICT_REQQ ) )
+		m_nRequestPipe = pRequestPipe->GetInt();
+
+	if ( m_pDownload )
+	{
+		WORD nPort = 0;
+
+		if ( const CBENode* pPort = pRoot->GetNode( BT_DICT_PORT ) )
+			nPort = pPort->GetInt();
+
+		if ( IsIPv6Host() )
+		{
+			if ( nPort == 0 )
+			{
+				if ( m_bInitiated )
+					nPort = ntohs( m_pHostIPv6.sin6_port );
+			}
+			else if ( nPort != ntohs( m_pHostIPv6.sin6_port ) )
+				m_pDownload->AddSourceBT( Hashes::BtGuid(), &m_pHostIPv6.sin6_addr, nPort );
+			
+			if ( nPort )
+				if ( const CBENode* pIPv4 = pRoot->GetNode( BT_DICT_IPV4 ) )
+				{
+					if ( pIPv4->m_nValue == 4 )
+					{
+						IN_ADDR nAddress = * ( IN_ADDR * ) pIPv4->m_pValue;
+						m_pDownload->AddSourceBT( Hashes::BtGuid(), &nAddress, nPort );
+					}
+				}
+		}
+		else
+		{
+			if ( nPort == 0 )
+			{
+				if ( m_bInitiated )
+					nPort = ntohs( m_pHost.sin_port );
+			}
+			else if ( nPort != ntohs( m_pHost.sin_port ) )
+				m_pDownload->AddSourceBT( Hashes::BtGuid(), &m_pHost.sin_addr, nPort );
+
+			if ( nPort )
+				if ( const CBENode* pIPv6 = pRoot->GetNode( BT_DICT_IPV6 ) )
+				{
+					if ( pIPv6->m_nValue == 16 )
+					{
+						IN6_ADDR nAddress = * ( IN6_ADDR * ) pIPv6->m_pValue;
+						m_pDownload->AddSourceBT( Hashes::BtGuid(), &nAddress, nPort );
+					}
+				}
+		}
+	}
+
 
 	if ( const CBENode* pMetadata = pRoot->GetNode( BT_DICT_EXT_MSG ) )
 	{
@@ -1475,15 +1554,6 @@ void CBTClient::SendUtPex(DWORD tAfter)
 	//   dropped: <one or more contacts in IPv6 compact format (string)>,
 	//   dropped6: <one or more contacts in IPv6 compact format (string)>
 	// }
-
-	if ( !IsIPv6Host() && tAfter == 0 && IN6_IS_ADDR_GLOBAL( &Network.m_pHostIPv6.sin6_addr ) )
-	{
-		pAddedBufferIPv6.Add( &Network.m_pHostIPv6.sin6_addr, sizeof( IN6_ADDR ) );
-		pAddedBufferIPv6.Add( &Network.m_pHostIPv6.sin6_port, 2 );
-		BYTE nFlag = 0x10;
-		pAddedFalgsBufferIPv6.Add ( &nFlag, 1 );
-	}
-
 
 	for ( POSITION posSource = m_pDownload->GetIterator(); posSource ; )
 	{
@@ -1780,6 +1850,7 @@ void CBTClient::NotInterested()
 
 void CBTClient::Request(DWORD nBlock, DWORD nOffset, DWORD nLength)
 {
+	m_nRequested++;
 	CBTPacket* pPacket = CBTPacket::New( BT_PACKET_REQUEST );
 	pPacket->WriteLongBE( nBlock );
 	pPacket->WriteLongBE( nOffset );
@@ -1789,6 +1860,7 @@ void CBTClient::Request(DWORD nBlock, DWORD nOffset, DWORD nLength)
 
 void CBTClient::Cancel(DWORD nBlock, DWORD nOffset, DWORD nLength)
 {
+	if ( m_nRequested > 0 ) m_nRequested--;
 	CBTPacket* pPacket = CBTPacket::New( BT_PACKET_CANCEL );
 	pPacket->WriteLongBE( nBlock );
 	pPacket->WriteLongBE( nOffset );

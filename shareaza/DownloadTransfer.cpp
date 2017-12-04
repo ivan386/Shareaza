@@ -75,9 +75,30 @@ void CDownloadTransfer::DrawStateBar(CDC* pDC, CRect* prcBar, COLORREF crFill, b
 
 	if ( m_nProtocol == PROTOCOL_ED2K || m_nProtocol == PROTOCOL_BT )
 	{
-		for ( Fragments::Queue::const_iterator pItr = m_oRequested.begin(); pItr != m_oRequested.end(); ++pItr )
+		Fragments::Queue::const_iterator pItr = m_oRequested.begin();
+		const Fragments::Queue::const_iterator pEnd = m_oRequested.end();
+
+		if ( pItr != pEnd )
 		{
-			CFragmentBar::DrawStateBar( pDC, prcBar, m_pDownload->m_nSize, pItr->begin(), pItr->size(), crFill, bTop );
+			QWORD nOffset = pItr->begin();
+			QWORD nLength = pItr->size();
+
+			for ( ++pItr; pItr != pEnd; ++pItr )
+			{
+				if ( pItr->begin() == nOffset + nLength )
+					nLength += pItr->size();
+				else
+				{
+					CFragmentBar::DrawStateBar( pDC, prcBar, m_pDownload->m_nSize,
+						nOffset, nLength, crFill, bTop );
+
+					nOffset = pItr->begin();
+					nLength = pItr->size();
+				}
+			}
+
+			CFragmentBar::DrawStateBar( pDC, prcBar, m_pDownload->m_nSize,
+									nOffset, nLength, crFill, bTop );
 		}
 	}
 }
@@ -410,11 +431,12 @@ blockPair CDownloadTransfer::SelectBlock(const Fragments::List& oPossible, const
 
 	QWORD nNonRandomEnd = this->m_pDownload->GetNonRandomEnd();
 	QWORD nStartFrom = this->m_pDownload->m_nStartFrom;
-	
-	std::vector< QWORD > oBlocks;
+
 	QWORD nRangeBlock = 0ull;
 	QWORD nRange[3] = { 0ull, 0ull, 0ull };
 	QWORD nBestRange[3] = { 0ull, 0ull, 0ull };
+
+	Fragments::Fragment oBiggest( 0, 0, 0 ) ;
 
 	for ( ; pItr != pEnd ; ++pItr )
 	{
@@ -460,27 +482,61 @@ blockPair CDownloadTransfer::SelectBlock(const Fragments::List& oPossible, const
 		}
 
 		// This fragment contains one or more aligned empty blocks
-		if ( !nRange[2] )
-		{
-			for ( ; nBlockBegin <= nBlockEnd
-				&& oBlocks.size() < oBlocks.max_size() ; ++nBlockBegin )
-			{
-				if ( nBlockBegin >= pAvailable.size() || pAvailable[ (DWORD)nBlockBegin ] )
-					oBlocks.push_back( nBlockBegin );
-			}
-		}
+		if ( oBiggest.size() < (*pItr).size() )
+			oBiggest = (*pItr);
 	}
 
 	CheckRange( nRange, nBestRange );
 
 	if ( !nBestRange[2] )
 	{
-		if ( oBlocks.empty() )
-			return std::make_pair( 0ull, 0ull );
+		if ( oBiggest.size() )
+		{
+			QWORD nPartStart = oBiggest.begin();
+			QWORD nPartEnd = oBiggest.end();
 
-		nRange[0] = oBlocks[ GetRandomNum< size_t >( 0u, oBlocks.size() - 1u ) ];
-		nRange[0] *= nBlockSize;
-		return std::make_pair( nRange[0], nBlockSize );
+			QWORD nBlockBegin = nPartStart / nBlockSize;
+			QWORD nBlockEnd = ( nPartEnd - 1ull ) / nBlockSize;
+			QWORD nBlockCount = nBlockEnd - nBlockBegin + 1;
+			
+			for ( QWORD  nCount = 0 ; nCount < nBlockCount; nCount++ )
+			{
+				QWORD nBlock = GetRandomNum< size_t >( nBlockBegin, nBlockEnd );
+
+				if ( nBlock >= pAvailable.size() || pAvailable[ (DWORD)nBlock ] )
+				{
+					nPartStart = max( nPartStart, nBlock * nBlockSize );
+
+					return std::make_pair( nPartStart , min( (nPartEnd - nPartStart), nBlockSize ) );
+				}
+			}
+		}
+
+		Fragments::List::const_iterator pItr = oPossible.random_range();
+
+		for ( ; pItr != pEnd ; ++pItr )
+		{
+			QWORD nPartStart = pItr->begin();
+			QWORD nPartEnd = pItr->end();
+
+			QWORD nBlockBegin = nPartStart / nBlockSize;
+			QWORD nBlockEnd = ( nPartEnd - 1ull ) / nBlockSize;
+			QWORD nBlockCount = nBlockEnd - nBlockBegin + 1;
+			
+			for ( QWORD  nCount = 0 ; nCount < nBlockCount; nCount++ )
+			{
+				QWORD nBlock = GetRandomNum< size_t >( nBlockBegin, nBlockEnd );
+
+				if ( nBlock >= pAvailable.size() || pAvailable[ (DWORD)nBlock ] )
+				{
+					nPartStart = max( nPartStart, nBlock * nBlockSize );
+
+					return std::make_pair( nPartStart , min( (nPartEnd - nPartStart), nBlockSize ) );
+				}
+			}
+		}
+
+		return std::make_pair( 0ull, 0ull );
 	}
 
 	return std::make_pair( nBestRange[0], nBestRange[1] );
@@ -534,7 +590,7 @@ bool CDownloadTransfer::SelectFragment(const Fragments::List& oPossible,
 	return nLength > 0ull;
 }
 
-bool CDownloadTransfer::UnrequestRange(QWORD /*nOffset*/, QWORD /*nLength*/)
+bool CDownloadTransfer::UnrequestRange(QWORD /*nOffset*/, QWORD /*nLength*/, bool /* bSendCancel */)
 {
 	ASSUME_LOCK( Transfers.m_pSection );
 

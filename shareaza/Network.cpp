@@ -228,7 +228,11 @@ BOOL CNetwork::IsSelfIP(const IN6_ADDR& nAddress) const
 	if ( IN6_IS_ADDR_LOOPBACK( &nAddress ) )
 		return TRUE;
 
-	return IN6_ADDR_EQUAL( &nAddress, &m_pHostIPv6.sin6_addr );
+	if ( IN6_ADDR_EQUAL( &nAddress, &m_pHostIPv6.sin6_addr ) )
+		return TRUE;
+
+	CQuickLock oHALock( m_pHASection );
+	return m_pHostAddressesIPv6.find( nAddress ) != m_pHostAddressesIPv6.end();
 }
 
 HINTERNET CNetwork::InternetOpen()
@@ -469,7 +473,7 @@ BOOL CNetwork::ConnectTo(LPCTSTR pszAddress, int nPort, PROTOCOLID nProtocol, BO
 //////////////////////////////////////////////////////////////////////
 // CNetwork local IP acquisition and sending
 
-BOOL CNetwork::AcquireLocalAddress(SOCKET hSocket, bool bPort)
+BOOL CNetwork::AcquireLocalAddress(SOCKET hSocket, bool bPort, const IN_ADDR* pFromAddress, const IN6_ADDR* pFromIPv6Address)
 {
 	// Ask the socket what it thinks our IP address on this end is
 	SOCKADDR_IN pAddress = {};
@@ -482,12 +486,12 @@ BOOL CNetwork::AcquireLocalAddress(SOCKET hSocket, bool bPort)
 			return FALSE;
 
 		if ( bPort && pAddress.sin6_port )
-			return AcquireLocalAddress( pAddress.sin6_addr, ntohs( pAddress.sin6_port ) );
+			return AcquireLocalAddress( pAddress.sin6_addr, ntohs( pAddress.sin6_port ), pFromIPv6Address );
 		else
-			return AcquireLocalAddress( pAddress.sin6_addr );
+			return AcquireLocalAddress( pAddress.sin6_addr, 0, pFromIPv6Address );
 	}
 	else
-		return AcquireLocalAddress( pAddress.sin_addr );
+		return AcquireLocalAddress( pAddress.sin_addr, 0, pFromAddress );
 }
 
 BOOL CNetwork::AcquireLocalAddress(LPCTSTR pszHeader, WORD nPort, const IN_ADDR* pFromAddress, const IN6_ADDR* pFromIPv6Address)
@@ -569,22 +573,30 @@ BOOL CNetwork::AcquireLocalAddress(const IN_ADDR& pAddress, WORD nPort, const IN
 BOOL CNetwork::AcquireLocalAddress(const IN6_ADDR& pAddress, WORD nPort, const IN6_ADDR* pFromAddress)
 {
 
-	int nFromNet = 0;
-	if ( pFromAddress )
-		nFromNet = GetNetworkLevel( pFromAddress );
+	if ( nPort )
+		m_pHostIPv6.sin6_port = htons( nPort );
+
+	int nFromNet = GetNetworkLevel( pFromAddress );
 	int nNet = GetNetworkLevel( &pAddress );
 	int nMyNet = GetNetworkLevel( &m_pHostIPv6.sin6_addr );
 
 	if ( ! pFromAddress || ( nFromNet < 4 && nFromNet >= nNet ) )
 	{
-		if ( nPort )
-			m_pHostIPv6.sin6_port = htons( nPort );
-		
 		if ( nNet >= 3 ) // loopback or reserved
 			return FALSE;
 
+		CQuickLock oHALock( m_pHASection );
+
+		if ( m_pHostAddressesIPv6.find( pAddress ) == m_pHostAddressesIPv6.end() )
+			m_pHostAddressesIPv6.insert( pAddress );
+
 		if ( nMyNet >= nNet )
+		{
+			if ( m_pHostAddressesIPv6.find( m_pHostIPv6.sin6_addr ) == m_pHostAddressesIPv6.end() )
+				m_pHostAddressesIPv6.insert( m_pHostIPv6.sin6_addr );
+
 			m_pHostIPv6.sin6_addr = pAddress;
+		}
 	}
 	return TRUE;
 }
@@ -762,25 +774,11 @@ BOOL CNetwork::IsValidAddressFor(const IN6_ADDR* pForAddress, const IN6_ADDR* pA
 	return TRUE;
 }
 
-int CNetwork::GetNetworkLevel( const IN6_ADDR* pAddress ) const
-{
-	if ( IN6_IS_ADDR_LOOPBACK( pAddress ) ) 
-		return 3; // loopback
-
-	if ( IsReserved( pAddress ) )
-		return 4; // reserved
-
-	if ( IN6_IS_ADDR_LINKLOCAL( pAddress ) )
-		return 2; // home network
-
-	if ( IN6_IS_ADDR_SITELOCAL( pAddress ) )
-		return 1; // local area network
-
-	return 0; // internet
-}
-
 int CNetwork::GetNetworkLevel( const IN_ADDR* pAddress ) const
 {
+	if ( pAddress == NULL )
+		return 5; // null
+
 	if ( pAddress->s_net == 127 ) 
 		return 3; // loopback
 
@@ -791,6 +789,26 @@ int CNetwork::GetNetworkLevel( const IN_ADDR* pAddress ) const
 		return 2; // home network
 
 	if ( IsLocalAreaNetwork( pAddress ) )
+		return 1; // local area network
+
+	return 0; // internet
+}
+
+int CNetwork::GetNetworkLevel( const IN6_ADDR* pAddress ) const
+{
+	if ( pAddress == NULL )
+		return 5; // null
+
+	if ( IN6_IS_ADDR_LOOPBACK( pAddress ) ) 
+		return 3; // loopback
+
+	if ( IsReserved( pAddress ) )
+		return 4; // reserved
+
+	if ( IN6_IS_ADDR_LINKLOCAL( pAddress ) )
+		return 2; // home network
+
+	if ( IN6_IS_ADDR_SITELOCAL( pAddress ) )
 		return 1; // local area network
 
 	return 0; // internet
@@ -830,13 +848,12 @@ IN_ADDR CNetwork::GetMyAddressFor( const IN_ADDR* pAddress ) const
 			nMyLanAddress = m_pHost.sin_addr;
 	break;
 	case 0:
-		if ( nNet == 0 ) // For internet host
+		if ( nNet == 0 || nNet >= 4 ) // For null, reserved or internet host
 			return m_pHost.sin_addr; // Our internet address
 		else
 			nMyInternetAddress = m_pHost.sin_addr;
 	break;
 	}
-	
 
 	for ( POSITION pos = m_pHostAddresses.GetHeadPosition(); pos; )
 	{
@@ -862,7 +879,7 @@ IN_ADDR CNetwork::GetMyAddressFor( const IN_ADDR* pAddress ) const
 				nMyLanAddress = nMyAddress;
 		break;
 		case 0:
-			if ( nNet == 0 ) // For internet host
+			if ( nNet == 0 || nNet >= 4 ) // For null, reserved or internet host
 				return nMyAddress; // Our internet address
 			else
 				nMyInternetAddress = nMyAddress;
@@ -876,6 +893,86 @@ IN_ADDR CNetwork::GetMyAddressFor( const IN_ADDR* pAddress ) const
 	
 	if ( nNet == 1 &&  // For Local Area Network host
 		 nMyHomeAddress.S_un.S_addr ) // Perhaps we are connected to a local network without a home router.
+		return nMyHomeAddress;
+	
+	// By default we give our internet address or zero net.
+	return nMyInternetAddress;
+}
+
+IN6_ADDR CNetwork::GetMyAddressFor( const IN6_ADDR* pAddress ) const
+{
+	IN6_ADDR nMyHomeAddress = {};
+	IN6_ADDR nMyLanAddress = {};
+	IN6_ADDR nMyInternetAddress = {};
+
+
+	int nNet = GetNetworkLevel( pAddress );
+
+	if ( nNet <= 1 && IsSelfIP( *pAddress ) )
+		nNet++;
+
+	if ( nNet == 3 ) // loopback
+		return in6addr_loopback;
+
+	switch ( GetNetworkLevel( &m_pHostIPv6.sin6_addr ) )
+	{
+	case 2:
+		if ( nNet == 2 ) // For home network host
+			return m_pHostIPv6.sin6_addr; // Our home address
+		else
+			nMyHomeAddress = m_pHostIPv6.sin6_addr;
+	break;
+	case 1:
+		if ( nNet == 1 ) // For Local Area Network host
+			return m_pHostIPv6.sin6_addr; // Our LAN address
+		else
+			nMyLanAddress = m_pHostIPv6.sin6_addr;
+	break;
+	case 0:
+		if ( nNet == 0 || nNet >= 4 ) // For null, reserved or internet host
+			return m_pHostIPv6.sin6_addr; // Our internet address
+		else
+			nMyInternetAddress = m_pHostIPv6.sin6_addr;
+	break;
+	}
+
+	for (  ipv6_set::const_iterator pos = m_pHostAddressesIPv6.begin(); pos != m_pHostAddressesIPv6.end(); pos++ )
+	{
+		
+		IN6_ADDR nMyAddress = *pos;
+		
+		if ( IN6_ADDR_EQUAL( &m_pHostIPv6.sin6_addr, &nMyAddress ) )
+			continue;
+
+		switch ( GetNetworkLevel( &nMyAddress ) )
+		{
+		case 2:
+			if ( nNet == 2 ) // For home network host
+				return nMyAddress; // Our home address
+			else
+				nMyHomeAddress = nMyAddress;
+		break;
+		case 1:
+			if ( nNet == 1 ) // For Local Area Network host
+				return nMyAddress; // Our LAN address
+			else
+				nMyLanAddress = nMyAddress;
+		break;
+		case 0:
+			if ( nNet == 0 || nNet >= 4 ) // For null, reserved or internet host
+				return nMyAddress; // Our internet address
+			else
+				nMyInternetAddress = nMyAddress;
+		break;
+		}
+	}
+
+	if ( nNet == 2 && // For home host
+		 !IN6_IS_ADDR_UNSPECIFIED( &nMyLanAddress ) ) // It can not be that we do not know our home address, but we know the LAN address.
+		return nMyLanAddress;
+	
+	if ( nNet == 1 &&  // For Local Area Network host
+		 !IN6_IS_ADDR_UNSPECIFIED( &nMyHomeAddress ) ) // Perhaps we are connected to a local network without a home router.
 		return nMyHomeAddress;
 	
 	// By default we give our internet address or zero net.

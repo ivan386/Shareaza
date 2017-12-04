@@ -47,6 +47,8 @@ public:
 	BOOL					m_bPrefersEncryption;
 	CDownload*				m_pDownload;
 	CDownloadTransferBT*	m_pDownloadTransfer;
+	QWORD					m_nRequestPipe;
+	QWORD					m_nRequested;
 
 protected:
 	BOOL					m_bShake;

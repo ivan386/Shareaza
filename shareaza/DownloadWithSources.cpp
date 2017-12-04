@@ -477,9 +477,6 @@ BOOL CDownloadWithSources::AddSourceBT(const Hashes::BtGuid& oGUID, const IN_ADD
 	if ( Network.IsFirewalledAddress( pAddress, Settings.Connection.IgnoreOwnIP, bIgnoreLocalIP ) )
 		return FALSE;
 
-	if ( GetCount() > 1000 )
-		return FALSE;
-
 	return AddSourceInternal( new CDownloadSource( (CDownload*)this, oGUID, pAddress, nPort ) );
 }
 

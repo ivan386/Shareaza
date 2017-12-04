@@ -154,6 +154,16 @@ CString CDownloadTransferBT::GetStateText(BOOL bLong)
 		else LoadString( str, IDS_STATUS_REQUESTING );
 		return str;
 	}
+
+	if ( m_pClient->m_nRequested > 0 || m_oRequested.size() > 0 )
+	{
+		CString str;
+		if ( ! m_bInterested ) LoadString( str, IDS_STATUS_UNINTERESTED );
+		else if ( m_bChoked ) LoadString( str, IDS_STATUS_CHOKED );
+		else str = CDownloadTransfer::GetStateText( bLong );
+		str.Format( _T("%s (%I64u/%I32u)"), str, m_pClient->m_nRequested, m_oRequested.size() );
+		return str;
+	}
 	return CDownloadTransfer::GetStateText( bLong );
 }
 
@@ -193,7 +203,6 @@ BOOL CDownloadTransferBT::OnRun()
 	if ( bShowInterest )
 	{
 		m_tRunThrottle = tNow;
-		ShowInterest();
 		if ( m_nState == dtsTorrent || m_nState == dtsRequesting || m_nState == dtsDownloading )
 		{
 			SendFragmentRequests();
@@ -338,14 +347,17 @@ BOOL CDownloadTransferBT::OnHave(CBTPacket* pPacket)
 	}
 
 	m_pAvailable[ nBlock ] = true;
-	ShowInterest();
+	
+	if ( !m_bInterested )
+		ShowInterest();
+
 	return TRUE;
 }
 
 //////////////////////////////////////////////////////////////////////
 // CDownloadTransferBT interest control
 
-void CDownloadTransferBT::ShowInterest()
+BOOL CDownloadTransferBT::ShowInterest(Fragments::List* oPossible)
 {
 	ASSUME_LOCK( Transfers.m_pSection );
 
@@ -359,7 +371,7 @@ void CDownloadTransferBT::ShowInterest()
 
 	if ( ! m_pAvailable.empty() && nBlockSize )
 	{
-		Fragments::List oList( m_pDownload->GetWantedFragmentList() );
+		Fragments::List oList( oPossible ? *oPossible: m_pDownload->GetWantedFragmentList() );
 		Fragments::List::const_iterator pItr = oList.begin();
 		const Fragments::List::const_iterator pEnd = oList.end();
 		for ( ; !bInterested && pItr != pEnd ; ++pItr )
@@ -386,9 +398,11 @@ void CDownloadTransferBT::ShowInterest()
 		else
 			m_pClient->NotInterested();
 
-		if ( ! bInterested )
-			m_oRequested.clear();
+		//if ( ! bInterested )
+		//	m_oRequested.clear();
 	}
+
+	return bInterested;
 }
 
 //////////////////////////////////////////////////////////////////////
@@ -415,7 +429,7 @@ BOOL CDownloadTransferBT::OnChoked(CBTPacket* /*pPacket*/)
 			(DWORD)( pFragment->size() ) );
 	}*/
 
-	m_oRequested.clear();
+	//m_oRequested.clear();
 
 	return TRUE;
 }
@@ -426,7 +440,7 @@ BOOL CDownloadTransferBT::OnUnchoked(CBTPacket* /*pPacket*/)
 
 	m_bChoked = FALSE;
 	SetState( dtsTorrent );
-	m_oRequested.clear();
+	//m_oRequested.clear();
 
 	theApp.Message( MSG_DEBUG, _T("Download from %s was Unchoked."), (LPCTSTR)m_sAddress );
 
@@ -449,7 +463,9 @@ bool CDownloadTransferBT::SendFragmentRequests()
 		return true;
 	}
 
-	if ( m_oRequested.size() >= (int)Settings.BitTorrent.RequestPipe )
+	QWORD nRequestPipe = m_pClient->m_nRequestPipe ? m_pClient->m_nRequestPipe : (int)Settings.BitTorrent.RequestPipe;
+
+	if ( m_pClient->m_nRequested >= nRequestPipe )
 	{
 		if ( m_nState != dtsDownloading )
 		{
@@ -460,12 +476,23 @@ bool CDownloadTransferBT::SendFragmentRequests()
 		return true;
 	}
 
+	if ( m_pClient->m_nRequested > 2 ) // Wait for pipe empty
+		return true;
+
 	QWORD nBlockSize = m_pDownload->m_pTorrent.m_nBlockSize;
 	ASSERT( nBlockSize != 0 );
 	if ( !nBlockSize )
 		return true;
 
 	Fragments::List oPossible( m_pDownload->GetWantedFragmentList() );
+
+	if ( ! ShowInterest( &oPossible ) )
+	{
+		if ( m_oRequested.empty() )
+			SetState( dtsTorrent );
+
+		return true;
+	}
 
 	if ( ! m_pDownload->m_bTorrentEndgame )
 	{
@@ -474,14 +501,44 @@ bool CDownloadTransferBT::SendFragmentRequests()
 			pTransfer->SubtractRequested( oPossible );
 		}
 	}
+	else
+		SubtractRequested( oPossible );
 
-	while ( m_oRequested.size() < (int)Settings.BitTorrent.RequestPipe )
+	while ( m_pClient->m_nRequested < nRequestPipe )
 	{
 		QWORD nOffset, nLength;
 		if ( SelectFragment( oPossible, nOffset, nLength, m_pDownload->m_bTorrentEndgame ) )
 		{
-			ChunkifyRequest( &nOffset, &nLength, Settings.BitTorrent.RequestSize, FALSE );
+			DWORD nFreePipe = nRequestPipe - m_pClient->m_nRequested;
 
+			if ( nLength <= Settings.BitTorrent.RequestSize ) 
+			{ // Can request all fragment in one chunk
+				m_pClient->Request(
+					(DWORD)( nOffset / nBlockSize ),
+					(DWORD)( nOffset % nBlockSize ),
+					(DWORD)( nLength ) );
+			}
+			else  
+			{ // Can request several chunks
+				
+				if ( nFreePipe < nLength / Settings.BitTorrent.RequestSize )
+					ChunkifyRequest( &nOffset, &nLength, Settings.BitTorrent.RequestSize * nFreePipe, FALSE );
+
+				DWORD nChunkLength = Settings.BitTorrent.RequestSize;
+				DWORD nChunkStart = nOffset;
+
+				for (;nFreePipe && nOffset + nLength > nChunkStart; nFreePipe--, nChunkStart += nChunkLength )
+				{
+					if ( nOffset + nLength < nChunkStart + nChunkLength )
+						nChunkLength = nOffset + nLength - nChunkStart;
+
+					m_pClient->Request(
+						(DWORD)( nChunkStart / nBlockSize ),
+						(DWORD)( nChunkStart % nBlockSize ),
+						(DWORD)( nChunkLength ) );
+				}
+			}
+			
 			Fragments::Fragment Selected( nOffset, nOffset + nLength );
 			oPossible.erase( Selected );
 
@@ -491,11 +548,6 @@ bool CDownloadTransferBT::SendFragmentRequests()
 				theApp.Message( MSG_INFO, IDS_DOWNLOAD_FRAGMENT_REQUEST,
 					nOffset, nOffset + nLength - 1,
 					(LPCTSTR)m_pDownload->GetDisplayName(), (LPCTSTR)m_sAddress );
-
-			m_pClient->Request(
-				(DWORD)( nOffset / nBlockSize ),
-				(DWORD)( nOffset % nBlockSize ),
-				(DWORD)( nLength ) );
 		}
 		else
 		{
@@ -541,7 +593,7 @@ BOOL CDownloadTransferBT::SubtractRequested(Fragments::List& ppFragments) const
 	return TRUE;
 }
 
-bool CDownloadTransferBT::UnrequestRange(QWORD nOffset, QWORD nLength)
+bool CDownloadTransferBT::UnrequestRange(QWORD nOffset, QWORD nLength, bool bSendCancel)
 {
 	ASSUME_LOCK( Transfers.m_pSection );
 
@@ -558,11 +610,36 @@ bool CDownloadTransferBT::UnrequestRange(QWORD nOffset, QWORD nLength)
 	for ( Fragments::Queue::const_iterator pFragment = oUnrequests.begin();
 		pFragment != oUnrequests.end(); ++pFragment )
 	{
-		m_pClient->Cancel(
-			(DWORD)( pFragment->begin() / m_pDownload->m_pTorrent.m_nBlockSize ),
-			(DWORD)( pFragment->begin() % m_pDownload->m_pTorrent.m_nBlockSize ),
-			(DWORD)( pFragment->size() ) );
+		// Надо вырезать из отрезков ( nOffset, nOffset + nLength ) и вернуть оставшиеся отрезки в очередь.
+		// Вырезанное отменить (cancel) кусками по 16 кб.
+
+		QWORD UnrequestStart = max( pFragment->begin(), nOffset );
+		QWORD UnrequestEnd = min( pFragment->end(), nOffset + nLength );
+		QWORD UnrequestEndAligment = ( pFragment->begin() - UnrequestEnd ) % Settings.BitTorrent.RequestSize;
+
+		UnrequestStart -= ( pFragment->begin() - UnrequestStart ) % Settings.BitTorrent.RequestSize;
+		
+		if ( UnrequestEndAligment )
+			UnrequestEnd += Settings.BitTorrent.RequestSize - UnrequestEndAligment;
+
+		if ( UnrequestEnd > pFragment->end() )
+			UnrequestEnd = pFragment->end();
+
+		if ( pFragment->begin() < UnrequestStart )
+			m_oRequested.push_back( Fragments::Fragment( pFragment->begin(), UnrequestStart ) );
+
+		if ( pFragment->end() > UnrequestEnd )
+			m_oRequested.push_back( Fragments::Fragment( UnrequestEnd, pFragment->end() ) );
+
+		if ( bSendCancel )
+			for (;UnrequestStart < UnrequestEnd; UnrequestStart += Settings.BitTorrent.RequestSize)
+				m_pClient->Cancel(
+					(DWORD)( UnrequestStart / m_pDownload->m_pTorrent.m_nBlockSize ),
+					(DWORD)( UnrequestStart % m_pDownload->m_pTorrent.m_nBlockSize ),
+					(DWORD)( min( Settings.BitTorrent.RequestSize, ( UnrequestEnd - UnrequestStart ) ) ) );
 	}
+
+
 
 	return !oUnrequests.empty();
 }
@@ -587,7 +664,10 @@ BOOL CDownloadTransferBT::OnPiece(CBTPacket* pPacket)
 	m_pDownload->m_pTorrent.m_nTotalDownload += nLength;
 	m_pSource->AddFragment( nOffset, nLength );
 	m_pSource->SetValid();
-	m_oRequested.erase( Fragments::Fragment( nOffset, nOffset + nLength ) );
+ 
+	ASSERT( nLength <= Settings.BitTorrent.RequestSize );
+
+	UnrequestRange( nOffset, nLength, false );
 
 	BOOL bSuccess = m_pDownload->SubmitData( nOffset,
 		pPacket->m_pBuffer + pPacket->m_nPosition, nLength );
@@ -596,7 +676,6 @@ BOOL CDownloadTransferBT::OnPiece(CBTPacket* pPacket)
 
 	// TODO: SendRequests and ShowInterest could be combined.. SendRequests
 	// is probably going to tell us if we are interested or not
-	ShowInterest();
 	return SendFragmentRequests();
 }
 

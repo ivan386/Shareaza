@@ -79,6 +79,16 @@ protected:
 	mutable CCriticalSection	m_pHASection;
 	CList< ULONG >	m_pHostAddresses;
 
+	struct ipv6_compare {
+		inline bool operator()(const IN6_ADDR& _Left, const IN6_ADDR& _Right) const throw()
+		{
+			return ( memcmp( &_Left, &_Right, sizeof( IN6_ADDR ) ) > 0 );
+		}
+	};
+
+	typedef std::set< IN6_ADDR, ipv6_compare > ipv6_set;
+	ipv6_set m_pHostAddressesIPv6;
+
 	DWORD			m_nUPnPTier;				// UPnP tier number (0..UPNP_MAX)
 	DWORD			m_tUPnPMap;					// Time of last UPnP port mapping
 	BOOL			m_bHomeNetworkNAT;				// Home network NAT> LAN NAT> Internet
@@ -201,7 +211,7 @@ public:
 	BOOL		Connect(BOOL bAutoConnect = FALSE);
 	void		Disconnect();
 	BOOL		ConnectTo(LPCTSTR pszAddress, int nPort = 0, PROTOCOLID nProtocol = PROTOCOL_NULL, BOOL bNoUltraPeer = FALSE);
-	BOOL		AcquireLocalAddress(SOCKET hSocket, bool bPort = false);
+	BOOL		AcquireLocalAddress(SOCKET hSocket, bool bPort = false, const IN_ADDR* pFromAddress = NULL, const IN6_ADDR* pFromIPv6Address = NULL);
 	BOOL		AcquireLocalAddress(LPCTSTR pszHeader, WORD nPort = 0, const IN_ADDR* pFromAddress = NULL, const IN6_ADDR* pFromIPv6Address = NULL);
 	BOOL		AcquireLocalAddress(const IN_ADDR& pAddress, WORD nPort = 0, const IN_ADDR* pFromAddress = NULL);
 	BOOL		AcquireLocalAddress(const IN6_ADDR& pAddress, WORD nPort = 0, const IN6_ADDR* pFromAddress = NULL);
@@ -222,6 +232,7 @@ public:
 	int			GetNetworkLevel(const IN_ADDR* pAddress) const;
 	int			GetNetworkLevel(const IN6_ADDR* pAddress) const;
 	IN_ADDR		GetMyAddressFor(const IN_ADDR* pAddress) const;
+	IN6_ADDR	GetMyAddressFor(const IN6_ADDR* pAddress) const;
 	WORD		GetPort() const;
 
 	BOOL		GetNodeRoute(const Hashes::Guid& oGUID, CNeighbour** ppNeighbour, SOCKADDR_IN* pEndpoint);

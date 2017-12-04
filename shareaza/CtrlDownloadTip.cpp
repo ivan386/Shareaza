@@ -654,17 +654,11 @@ void CDownloadTipCtrl::OnCalcSize(CDC* pDC, CDownloadSource* pSource)
 	}
 
 	// Or an active transfer
-	else if ( ! pSource->IsIdle() )
-	{
-		if ( pSource->IsIPv6Source() )
-			m_sName.Format( _T("[%s]:%u"),
-				(LPCTSTR)pSource->GetAddress(),
-				 ntohs( pSource->GetPort() )  );
-		else
-			m_sName.Format( _T("%s:%u"),
-				(LPCTSTR)pSource->GetAddress(),
-				 ntohs( pSource->GetPort() ) );
-	}
+//	else if ( ! pSource->IsIdle() )
+//	{
+//			(LPCTSTR)pSource->GetAddress(),
+//			 ntohs( pSource->GetPort() ) );
+//	}
 
 	// Or just queued
 	else

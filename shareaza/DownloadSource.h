@@ -145,15 +145,15 @@ public:
 		{
 			// Push
 			if ( m_pServerAddress.S_un.S_addr != pSource->m_pServerAddress.S_un.S_addr ) return FALSE;
-			if ( IN6_ADDR_EQUAL( &m_pIPv6ServerAddress, &pSource->m_pIPv6ServerAddress ) ) return FALSE;
+			if ( !IN6_ADDR_EQUAL( &m_pIPv6ServerAddress, &pSource->m_pIPv6ServerAddress ) ) return FALSE;
 			if ( m_pAddress.S_un.S_addr != pSource->m_pAddress.S_un.S_addr ) return FALSE;
-			if ( IN6_ADDR_EQUAL( &m_pAddressIPv6, &pSource->m_pAddressIPv6 ) ) return FALSE;
+			if ( !IN6_ADDR_EQUAL( &m_pAddressIPv6, &pSource->m_pAddressIPv6 ) ) return FALSE;
 		}
 		else
 		{
 			// Direct
 			if ( m_pAddress.S_un.S_addr != pSource->m_pAddress.S_un.S_addr ) return FALSE;
-			if ( IN6_ADDR_EQUAL( &m_pAddressIPv6, &pSource->m_pAddressIPv6 ) ) return FALSE;
+			if ( !IN6_ADDR_EQUAL( &m_pAddressIPv6, &pSource->m_pAddressIPv6 ) ) return FALSE;
 			if ( m_nPort != pSource->m_nPort ) return FALSE;
 		}
 

@@ -1107,6 +1107,16 @@ void CDownloadsCtrl::PaintDownload(CDC& dc, const CRect& rcRow, CDownload* pDown
 			if ( rcCell.Width() > 75 )
 			{
 				bDisplayText = FALSE;
+
+				CRect client_rect;
+				GetClientRect( &client_rect );
+
+				if ( client_rect.right < rcCell.left ||
+				 client_rect.left > rcCell.right ||
+				 client_rect.top > rcCell.bottom ||
+				 client_rect.bottom < rcCell.top )
+				 break;
+
 				dc.Draw3dRect( &rcCell, crBack, crBack );
 				rcCell.DeflateRect( 1, 1 );
 				dc.Draw3dRect( &rcCell, crBack, crBack );
@@ -1390,6 +1400,7 @@ void CDownloadsCtrl::PaintSource(CDC& dc, const CRect& rcRow, CDownload* pDownlo
 			if ( rcCell.Width() > 75 )
 			{
 				bDisplayText = FALSE;
+
 				dc.Draw3dRect( &rcCell, crBack, crBack );
 				rcCell.DeflateRect( 1, 1 );
 				dc.Draw3dRect( &rcCell, crBack, crBack );

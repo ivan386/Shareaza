@@ -82,7 +82,7 @@ public:
 	virtual DWORD	GetAverageSpeed();
 	virtual DWORD	GetMeasuredSpeed();
 	virtual BOOL	SubtractRequested(Fragments::List& ppFragments) const = 0;
-	virtual bool	UnrequestRange(QWORD /*nOffset*/, QWORD /*nLength*/);
+	virtual bool	UnrequestRange(QWORD /*nOffset*/, QWORD /*nLength*/, bool /* bSendCancel */ = true);
 	virtual CString	GetStateText(BOOL bLong);
 	virtual BOOL	OnRun();
 protected:

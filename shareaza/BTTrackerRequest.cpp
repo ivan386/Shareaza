@@ -634,6 +634,7 @@ void CBTTrackerRequest::Process(const CBENode* pRoot)
 	else
 	{
 		SOCKADDR_IN saPeer = { AF_INET };
+		SOCKADDR_IN6 saPeerIPv6 = { AF_INET6 };
 
 		// Get the interval (next tracker contact)
 		m_nInterval = 0;
@@ -664,7 +665,8 @@ void CBTTrackerRequest::Process(const CBENode* pRoot)
 				if ( ! pPort || ! pPort->IsType( CBENode::beInt ) )
 					continue;
 
-				if ( ! Network.Resolve( pIP->GetString(), (int)pPort->GetInt(), &saPeer ) )
+				if ( ! Network.IPv6FromString( pIP->GetString(), &saPeerIPv6 ) &&
+					 ! Network.Resolve( pIP->GetString(), (int)pPort->GetInt(), &saPeer ) )
 					continue;
 
 				if ( pID && pID->IsType( CBENode::beString ) && pID->m_nValue == Hashes::BtGuid::byteCount )
@@ -690,6 +692,21 @@ void CBTTrackerRequest::Process(const CBENode* pRoot)
 					saPeer.sin_addr = *(const IN_ADDR*)pPointer;
 					saPeer.sin_port = *(const WORD*)( pPointer + 4 );
 					m_pSources.AddTail( CBTTrackerSource( Hashes::BtGuid(), saPeer ) );
+				}
+			}
+		}
+		
+		if ( const CBENode* pPeers = pRoot->GetNode( BT_DICT_PEERS6 ) )
+		{
+			if ( 0 == ( pPeers->m_nValue % 18 ) )
+			{
+				const BYTE* pPointer = (const BYTE*)pPeers->m_pValue;
+
+				for ( int nPeer = (int)pPeers->m_nValue / 18 ; nPeer > 0 ; nPeer --, pPointer += 18 )
+				{
+					saPeerIPv6.sin6_addr = *(const IN6_ADDR*)pPointer;
+					saPeerIPv6.sin6_port = *(const WORD*)( pPointer + 16 );
+					m_pSources.AddTail( CBTTrackerSource( Hashes::BtGuid(), saPeerIPv6 ) );
 				}
 			}
 		}

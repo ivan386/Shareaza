@@ -1026,11 +1026,10 @@ BOOL CDownloadWithTiger::GetFragment(CDownloadTransfer* pTransfer)
 	{
 		CDownload* pDownload = static_cast< CDownload* >( this );
 
-		
 		Fragments::List::const_iterator pRange = oPossible.begin();
-		
+
 		QWORD nChunkSize = 0;
-		if ( pDownload->m_nBitrate > 8 )
+		if ( pDownload->m_nBitrate > 8 && pDownload->m_nBitrate < (QWORD) -1 )
 			nChunkSize = max( pDownload->m_nBitrate / 8, (QWORD) Settings.Downloads.ChunkSize );
 
 		if ( nChunkSize 
@@ -1131,6 +1130,8 @@ BOOL CDownloadWithTiger::GetFragment(CDownloadTransfer* pTransfer)
 	else
 	{
 		CDownloadTransfer* pExisting = NULL;
+		CDownloadTransfer* pExistingBackwards = NULL;
+		CDownloadTransfer* pExistingTowards = NULL;
 
 		for ( CDownloadTransfer* pOther = GetFirstTransfer() ; pOther ; pOther = pOther->m_pDlNext )
 		{
@@ -1145,7 +1146,14 @@ BOOL CDownloadWithTiger::GetFragment(CDownloadTransfer* pTransfer)
 			}
 
 			pExisting = pOther;
-			break;
+
+			if ( pOther->m_bRecvBackwards )
+				pExistingBackwards = pOther;
+			else
+				pExistingTowards = pOther;
+			
+			if ( pExistingBackwards && pExistingTowards )
+				break;
 		}
 
 		if ( pExisting == NULL )
@@ -1155,8 +1163,14 @@ BOOL CDownloadWithTiger::GetFragment(CDownloadTransfer* pTransfer)
 			return TRUE;
 		}
 
-		QWORD nOldSpeed	= pExisting->GetAverageSpeed();
-		QWORD nNewSpeed	= pTransfer->GetAverageSpeed();
+		QWORD nOldSpeed	= pExistingBackwards && pExistingTowards ? 
+			pExistingBackwards->GetAverageSpeed() 
+			:  pExisting->GetAverageSpeed();
+		
+		QWORD nNewSpeed	= pExistingBackwards && pExistingTowards ? 
+			pExistingTowards->GetAverageSpeed() 
+			: pTransfer->GetAverageSpeed();
+
 		QWORD nLength	= oLargest.size() / 2;
 
 		if ( nOldSpeed == 0 )
@@ -1167,7 +1181,13 @@ BOOL CDownloadWithTiger::GetFragment(CDownloadTransfer* pTransfer)
 		if ( nLength == 0 )
 			nLength = 1;
 
-		if ( pExisting->m_bRecvBackwards )
+		if ( pExistingBackwards && pExistingTowards )
+		{ 
+			pTransfer->m_nOffset		= oLargest.begin();
+			pTransfer->m_nLength		= nLength;
+			pTransfer->m_bWantBackwards	= TRUE;
+		}
+		else if ( pExistingBackwards )
 		{
 			pTransfer->m_nOffset		= oLargest.begin();
 			pTransfer->m_nLength		= nLength;
