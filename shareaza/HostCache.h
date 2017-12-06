@@ -238,6 +238,7 @@ public:
 	void				SanityCheck();
 	void				OnResolve(LPCTSTR szAddress, const IN_ADDR* pAddress, WORD nPort);
 	void				OnFailure(const IN_ADDR* pAddress, WORD nPort, bool bRemove = true);
+	void				OnFailure(const IN6_ADDR* pAddress, WORD nPort, bool bRemove = true);
 	void				OnFailure(LPCTSTR szAddress, bool bRemove = true);
 	CHostCacheHostPtr 	OnSuccess(const IN_ADDR* pAddress, WORD nPort, bool bUpdate = true);
 	CHostCacheHostPtr 	OnSuccess(const IN6_ADDR* pAddress, WORD nPort, bool bUpdate = true);
@@ -364,13 +365,16 @@ public:
 
 	bool				CheckMinimumServers(PROTOCOLID nProtocol);
 	CHostCacheHostPtr	Find(const IN_ADDR* pAddress) const;
+	CHostCacheHostPtr	Find(const IN6_ADDR* pAddress) const;
 	CHostCacheHostPtr	Find(LPCTSTR szAddress) const;
 	BOOL				Check(const CHostCacheHostPtr pHost) const;
 	void				Remove(CHostCacheHostPtr pHost);
 	void				SanityCheck();
 	void				OnResolve(PROTOCOLID nProtocol, LPCTSTR szAddress, const IN_ADDR* pAddress = NULL, WORD nPort = 0);
 	void				OnFailure(const IN_ADDR* pAddress, WORD nPort, PROTOCOLID nProtocol = PROTOCOL_NULL, bool bRemove = true);
+	void				OnFailure(const IN6_ADDR* pAddress, WORD nPort, PROTOCOLID nProtocol = PROTOCOL_NULL, bool bRemove = true);
 	void				OnSuccess(const IN_ADDR* pAddress, WORD nPort, PROTOCOLID nProtocol = PROTOCOL_NULL, bool bUpdate = true);
+	void				OnSuccess(const IN6_ADDR* pAddress, WORD nPort, PROTOCOLID nProtocol = PROTOCOL_NULL, bool bUpdate = true);
 	void				PruneOldHosts();
 
 	bool EnoughServers(PROTOCOLID nProtocol) const;

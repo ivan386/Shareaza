@@ -210,7 +210,12 @@ void CShakeNeighbour::Close(UINT nError)
 	}
 
 	if ( bFail && m_bInitiated )
-		HostCache.OnFailure( &m_pHost.sin_addr, htons( m_pHost.sin_port ), m_nProtocol, bRemove );
+	{
+		if ( IsIPv6Host() )
+			HostCache.OnFailure( &m_pHostIPv6.sin6_addr, htons( m_pHostIPv6.sin6_port ), m_nProtocol, bRemove );
+		else
+			HostCache.OnFailure( &m_pHost.sin_addr, htons( m_pHost.sin_port ), m_nProtocol, bRemove );
+	}
 
 	// Have CNeighbour remove this object from the list, and put away the socket
 	CNeighbour::Close( nError );
@@ -1525,7 +1530,10 @@ void CShakeNeighbour::OnHandshakeComplete()
 	// Remove leaf from host cache
 	if ( m_nNodeType == ntLeaf )
 	{
-		HostCache.OnFailure( &m_pHost.sin_addr, htons( m_pHost.sin_port ), m_nProtocol, true );
+		if ( IsIPv6Host() )
+			HostCache.OnFailure( &m_pHostIPv6.sin6_addr, htons( m_pHostIPv6.sin6_port ), m_nProtocol, true );
+		else
+			HostCache.OnFailure( &m_pHost.sin_addr, htons( m_pHost.sin_port ), m_nProtocol, true );
 	}
 
 	// If the remote computer is G2, or can send and understand Gnutella2 packets and isn't G1
@@ -1534,7 +1542,10 @@ void CShakeNeighbour::OnHandshakeComplete()
 		// Add good hub to host cache
 		if ( m_nNodeType == ntHub || m_nNodeType == ntNode )
 		{
-			HostCache.OnSuccess( &m_pHost.sin_addr, htons( m_pHost.sin_port ), m_nProtocol, true );
+			if ( IsIPv6Host() )
+				HostCache.OnSuccess( &m_pHostIPv6.sin6_addr, htons( m_pHostIPv6.sin6_port ), m_nProtocol, true );
+			else
+				HostCache.OnSuccess( &m_pHost.sin_addr, htons( m_pHost.sin_port ), m_nProtocol, true );
 		}
 
 		// check if this connection is still needed at this point
@@ -1564,7 +1575,10 @@ void CShakeNeighbour::OnHandshakeComplete()
 		// Add good hub to host cache
 		if ( m_nNodeType == ntHub || m_nNodeType == ntNode )
 		{
-			HostCache.OnSuccess( &m_pHost.sin_addr, htons( m_pHost.sin_port ), m_nProtocol, true );
+			if ( IsIPv6Host() )
+				HostCache.OnSuccess( &m_pHostIPv6.sin6_addr, htons( m_pHostIPv6.sin6_port ), m_nProtocol, true );
+			else
+				HostCache.OnSuccess( &m_pHost.sin_addr, htons( m_pHost.sin_port ), m_nProtocol, true );
 		}
 
 		// check if this connection is still needed at this point

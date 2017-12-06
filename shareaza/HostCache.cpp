@@ -244,6 +244,16 @@ CHostCacheHostPtr CHostCache::Find(const IN_ADDR* pAddress) const
 	return NULL;
 }
 
+CHostCacheHostPtr CHostCache::Find(const IN6_ADDR* pAddress) const
+{
+	for ( POSITION pos = m_pList.GetHeadPosition() ; pos ; )
+	{
+		CHostCacheList* pCache = m_pList.GetNext( pos );
+		if ( CHostCacheHostPtr pHost = pCache->Find( pAddress ) ) return pHost;
+	}
+	return NULL;
+}
+
 CHostCacheHostPtr CHostCache::Find(LPCTSTR szAddress) const
 {
 	for ( POSITION pos = m_pList.GetHeadPosition() ; pos ; )
@@ -302,7 +312,27 @@ void CHostCache::OnFailure(const IN_ADDR* pAddress, WORD nPort, PROTOCOLID nProt
 	}
 }
 
+void CHostCache::OnFailure(const IN6_ADDR* pAddress, WORD nPort, PROTOCOLID nProtocol, bool bRemove)
+{
+	for ( POSITION pos = m_pList.GetHeadPosition() ; pos ; )
+	{
+		CHostCacheList* pCache = m_pList.GetNext( pos );
+		if ( nProtocol == PROTOCOL_NULL || nProtocol == pCache->m_nProtocol )
+			pCache->OnFailure( pAddress, nPort, bRemove );
+	}
+}
+
 void CHostCache::OnSuccess(const IN_ADDR* pAddress, WORD nPort, PROTOCOLID nProtocol, bool bUpdate)
+{
+	for ( POSITION pos = m_pList.GetHeadPosition() ; pos ; )
+	{
+		CHostCacheList* pCache = m_pList.GetNext( pos );
+		if ( nProtocol == PROTOCOL_NULL || nProtocol == pCache->m_nProtocol )
+			pCache->OnSuccess( pAddress, nPort, bUpdate );
+	}
+}
+
+void CHostCache::OnSuccess(const IN6_ADDR* pAddress, WORD nPort, PROTOCOLID nProtocol, bool bUpdate)
 {
 	for ( POSITION pos = m_pList.GetHeadPosition() ; pos ; )
 	{
@@ -610,7 +640,8 @@ void CHostCacheList::SanityCheck()
 	for( CHostCacheIterator i = m_HostsTime.begin(); i != m_HostsTime.end(); )
 	{
 		CHostCacheHostPtr pHost = (*i);
-		if ( Security.IsDenied( &pHost->m_pAddress ) ||
+
+		if ( Security.IsDenied( &pHost->m_pAddress ) || Security.IsDenied( &pHost->m_pAddressIPv6 ) ||
 			( pHost->m_pVendor && Security.IsVendorBlocked( pHost->m_pVendor->m_sCode ) ) )
 		{
 			i = Remove( pHost );
@@ -695,8 +726,36 @@ void CHostCacheList::OnFailure(const IN_ADDR* pAddress, WORD nPort, bool bRemove
 		pHost->m_bCheckedLocally = TRUE;
 
 		if ( ! pHost->m_sAddress.IsEmpty() )
+		{
 			// Clear current IP address to re-resolve name later
 			pHost->m_pAddress.s_addr = INADDR_ANY;
+			IN6_SET_ADDR_UNSPECIFIED( &pHost->m_pAddressIPv6 );
+		}
+
+		if ( ! pHost->m_bPriority && ( bRemove || pHost->m_nFailures > Settings.Connection.FailureLimit ) )
+			Remove( pHost );
+	}
+}
+
+void CHostCacheList::OnFailure(const IN6_ADDR* pAddress, WORD nPort, bool bRemove)
+{
+	CQuickLock oLock( m_pSection );
+
+	CHostCacheHostPtr pHost = Find( pAddress );
+
+	if ( pHost && ( ! nPort || pHost->m_nPort == nPort ) )
+	{
+		m_nCookie++;
+		pHost->m_nFailures++;
+		pHost->m_tFailure = static_cast< DWORD >( time( NULL ) );
+		pHost->m_bCheckedLocally = TRUE;
+
+		if ( ! pHost->m_sAddress.IsEmpty() )
+		{
+			// Clear current IP address to re-resolve name later
+			pHost->m_pAddress.s_addr = INADDR_ANY;
+			IN6_SET_ADDR_UNSPECIFIED( &pHost->m_pAddressIPv6 );
+		}
 
 		if ( ! pHost->m_bPriority && ( bRemove || pHost->m_nFailures > Settings.Connection.FailureLimit ) )
 			Remove( pHost );
@@ -809,10 +868,9 @@ void CHostCacheList::PruneOldHosts(DWORD tNow)
 			;
 		}
 
-		if ( ! pHost->m_bPriority &&
+		if ( ! pHost->m_bPriority && HostCache.EnoughServers( pHost->m_nProtocol ) &&
 			 ( pHost->m_nFailures > Settings.Connection.FailureLimit ||
-			   ( pHost->IsExpired( tNow ) &&
-				  HostCache.EnoughServers( pHost->m_nProtocol ) ) ) )
+			    pHost->IsExpired( tNow ) ) )
 		{
 			i = Remove( pHost );
 		}

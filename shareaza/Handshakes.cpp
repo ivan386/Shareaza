@@ -148,8 +148,8 @@ BOOL CHandshakes::ListenIPv6()
 	if ( m_hSocketIPv6 == INVALID_SOCKET )
 		return FALSE;
 
-	Network.m_pHostIPv6.sin6_port = Network.m_pHost.sin_port;
-	SOCKADDR_IN6 saHost = Network.m_pHostIPv6;
+	SOCKADDR_IN6 saHost = { AF_INET6 };
+	saHost.sin6_port = Network.m_pHostIPv6.sin6_port = Network.m_pHost.sin_port;
 	
 	setsockopt( m_hSocketIPv6, IPPROTO_TCP, TCP_NODELAY, "\x01", 1);
 
