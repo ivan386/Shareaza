@@ -156,7 +156,7 @@ BOOL CHandshakes::ListenIPv6()
 	if ( bind( m_hSocketIPv6, (SOCKADDR*)&saHost, sizeof( saHost ) ) != 0 )
 		return FALSE;
 
-	theApp.Message( MSG_INFO, IDS_NETWORK_LISTENING_TCP, (LPCTSTR) Network.IPv6ToString( &saHost.sin6_addr ), htons( saHost.sin6_port ) );
+	theApp.Message( MSG_INFO, IDS_NETWORK_LISTENING_TCP, (LPCTSTR) IPv6ToString( &saHost.sin6_addr ), htons( saHost.sin6_port ) );
 
 
 		// Set it up so that when a remote computer connects to us, the m_pWakeup event is fired
@@ -250,7 +250,7 @@ BOOL CHandshakes::PushTo(IN6_ADDR* pAddress, WORD nPort, DWORD nIndex)
 		}
 	}
 	else
-		theApp.Message( MSG_ERROR, IDS_UPLOAD_PUSH_BUSY, (LPCTSTR)Network.IPv6ToString( pAddress ) );
+		theApp.Message( MSG_ERROR, IDS_UPLOAD_PUSH_BUSY, (LPCTSTR)IPv6ToString( pAddress ) );
 
 	return FALSE;
 }

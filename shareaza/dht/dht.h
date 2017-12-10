@@ -30,10 +30,10 @@ dht_callback(void *closure, int event,
 #define DHT_EVENT_VALUES6 2
 #define DHT_EVENT_SEARCH_DONE 3
 #define DHT_EVENT_SEARCH_DONE6 4
-#define DHT_EVENT_ADDED 5			// Node was added
-#define DHT_EVENT_SENT 6			// We sent request to node
-#define DHT_EVENT_REPLY 7			// Node sent us a reply
-#define DHT_EVENT_REMOVED 8			// Node was removed from DHT table
+#define DHT_EVENT_ADDED 5           // Node was added
+#define DHT_EVENT_SENT 6            // We sent request to node
+#define DHT_EVENT_REPLY 7           // Node sent us a reply
+#define DHT_EVENT_REMOVED 8         // Node was removed from DHT table
 
 extern FILE *dht_debug;
 
@@ -43,7 +43,7 @@ int dht_ping_node(struct sockaddr *sa, int salen);
 int dht_periodic(const unsigned char *buf, size_t buflen,
                  const struct sockaddr *from, int fromlen,
                  time_t *tosleep, dht_callback *callback, void *closure);
-int dht_search(const unsigned char *id, int port, int af,
+int dht_search(const unsigned char *id, int port, bool seed, bool noseed, int af,
                dht_callback *callback, void *closure);
 int dht_nodes(int af,
               int *good_return, int *dubious_return, int *cached_return,

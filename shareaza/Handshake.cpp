@@ -147,7 +147,7 @@ BOOL CHandshake::Push(IN_ADDR* pAddress, WORD nPort, DWORD nIndex)
 BOOL CHandshake::Push(IN6_ADDR* pAddress, WORD nPort, DWORD nIndex)
 {
 	// Report we are about to push open a connection to the given IP address and port number now
-	theApp.Message( MSG_INFO, IDS_UPLOAD_CONNECT, (LPCTSTR)Network.IPv6ToString( pAddress ), _T("") );
+	theApp.Message( MSG_INFO, IDS_UPLOAD_CONNECT, (LPCTSTR)IPv6ToString( pAddress ), _T("") );
 
 	// Connect the socket in this CHandshake object to the IP address and port number the method got passed
 	if ( ! ConnectTo( pAddress, nPort ) ) return FALSE; // If the connection was not made, leave now

@@ -243,7 +243,7 @@ public:
 	void Disconnect();
 
 	// Search for hash (and announce it if needed)
-	void Search(const Hashes::BtHash& oBTH, bool bAnnounce = true);
+	void Search(const Hashes::BtHash& oBTH, bool bSeed = false, bool bAnnounce = true );
 
 	// Ping this host
 	bool Ping(const IN_ADDR* pAddress, WORD nPort);

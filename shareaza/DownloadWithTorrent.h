@@ -45,6 +45,7 @@ public:
 	BOOL		m_bTorrentStarted;
 	DWORD		m_tTorrentTracker;
 	DWORD		m_tTorrentSources;
+	DWORD		m_tTorrentSourcesDHT;
 	QWORD		m_nTorrentUploaded;
 	QWORD		m_nTorrentDownloaded;
 	BOOL		m_bTorrentTrackerError;

@@ -775,12 +775,67 @@ fail:
 }
 
 #ifdef _WINSOCKAPI_
+
+BOOL IPv6FromString(CString sIPv6, IN6_ADDR* pAddress)
+{
+	SOCKADDR_IN6 nHost = { AF_INET6 };
+	if ( IPv6FromString( sIPv6, &nHost ) )
+	{
+		*pAddress = nHost.sin6_addr;
+		return TRUE;
+	}
+	return FALSE;
+}
+
+BOOL IPv6FromString(CString sIPv6, SOCKADDR_IN6* pAddress)
+{
+	LPWSTR psIPv6 = sIPv6.GetBuffer();
+
+	int size = sizeof(SOCKADDR_IN6);
+	BOOL bCoverted = ( WSAStringToAddress( psIPv6, AF_INET6, NULL, (struct sockaddr *) pAddress, &size ) == 0 );
+	sIPv6.ReleaseBuffer();
+	return bCoverted;
+}
+
+CString IPv4Or6ToString(IN_ADDR* pIPv4, IN6_ADDR* pIPv6)
+{
+	if ( pIPv4 && pIPv6 )
+	{
+		if ( ( pIPv4->s_addr == 0 ) && !IN6_IS_ADDR_UNSPECIFIED( pIPv6 ) )
+			return IPv6ToString( pIPv6 );
+		else
+			return CString( inet_ntoa( *pIPv4 ) );
+	}
+	else if( pIPv6 )
+		return IPv6ToString( pIPv6 );
+	else if( pIPv4 )
+		return CString( inet_ntoa( *pIPv4 ) );
+	else
+		return CString();
+}
+
+CString IPv6ToString(const IN6_ADDR* pAddress, bool bForUrl)
+{
+	ASSERT( pAddress );
+	SOCKADDR_IN6 pHost = { AF_INET6 };
+	pHost.sin6_addr = (*pAddress);
+	if ( bForUrl )
+	{
+		pHost.sin6_port = htons( 1 );
+		CString IPv6 = HostToString( &pHost );
+		return IPv6.Left( IPv6.GetLength() - 2 );
+	}
+	return HostToString( &pHost );
+}
+
 CString HostToString(const SOCKADDR* pHost)
 {
 	if ( pHost->sa_family == AF_INET )
 		return HostToString( (SOCKADDR_IN*) pHost );
 	else if( pHost->sa_family == AF_INET6 )
 		return HostToString( (SOCKADDR_IN6*) pHost );
+	else
+		return CString();
 }
 
 CString HostToString(const SOCKADDR_IN* pHost)
@@ -796,10 +851,10 @@ CString HostToString(const SOCKADDR_IN6* pHost)
 
 	LPWSTR pBuffer = sIPv6.GetBuffer( IP6_ADDRESS_STRING_LENGTH + 1);
 	unsigned long nBuffer = ( IP6_ADDRESS_STRING_LENGTH + 1 ) * sizeof(WCHAR) ;
-
+	
 	WSAAddressToString( (struct sockaddr *) pHost, sizeof( SOCKADDR_IN6 ), NULL, pBuffer, &nBuffer );
 
-	sIPv6.ReleaseBuffer( nBuffer - 1 );
+	sIPv6.ReleaseBuffer();
 	return sIPv6;
 }
 #endif // _WINSOCKAPI_

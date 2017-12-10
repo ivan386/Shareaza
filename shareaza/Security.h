@@ -25,9 +25,10 @@
 #include "Network.h"
 
 
-#define SECURITY_SER_VERSION	5
+#define SECURITY_SER_VERSION	6
 // History:
 // 5 - extended security rule type (ryo-oh-ki)
+// 6 - m_nIPv6, m_nIPv6PrefixLen in CSecureRule (ivan386)
 
 enum
 {
@@ -77,6 +78,7 @@ public:
 	void			MoveDown(CSecureRule* pRule);
 
 	void			Ban(const IN_ADDR* pAddress, int nBanLength, BOOL bMessage = TRUE, LPCTSTR szComment = NULL);
+	void			Ban(const IN6_ADDR* pAddress, int nBanLength, BOOL bMessage = TRUE, LPCTSTR szComment = NULL);
 	void			Ban(const CShareazaFile* pFile, int nBanLength, BOOL bMessage = TRUE, LPCTSTR szComment = NULL);
 
 	bool			Complain(const IN_ADDR* pAddress, int nBanLength = ban5Mins, int nExpire = 10, int nCount = 3);

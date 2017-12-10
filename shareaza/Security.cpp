@@ -415,6 +415,80 @@ void CSecurity::Ban(const IN_ADDR* pAddress, int nBanLength, BOOL bMessage, LPCT
 	}
 }
 
+void CSecurity::Ban(const IN6_ADDR* pAddress, int nBanLength, BOOL bMessage, LPCTSTR szComment)
+{
+	CQuickLock oLock( m_pSection );
+
+	DWORD tNow = static_cast< DWORD >( time( NULL ) );
+
+
+	for ( POSITION pos = m_pRules.GetHeadPosition() ; pos ; )
+	{
+		CSecureRule* pIPRule = m_pRules.GetNext( pos );
+
+		if ( IN6_ADDR_EQUAL( &pIPRule->m_nIPv6, pAddress ) && pIPRule->m_nAction == CSecureRule::srDeny )
+		{
+			if ( ( nBanLength == banWeek ) && ( pIPRule->m_nExpire < tNow + 604000 ) )
+			{
+				pIPRule->m_nExpire = tNow + 604800;
+			}
+			else if ( ( nBanLength == banForever ) && ( pIPRule->m_nExpire != CSecureRule::srIndefinite ) )
+			{
+				pIPRule->m_nExpire = CSecureRule::srIndefinite;
+			}
+			return;
+		}
+	}
+
+	CSecureRule* pIPRule = new CSecureRule();
+	pIPRule->m_nAction	= CSecureRule::srDeny;
+	pIPRule->m_nType	= CSecureRule::srAddressIPv6;
+
+	switch ( nBanLength )
+	{
+	case banSession:
+		pIPRule->m_nExpire	= CSecureRule::srSession;
+		pIPRule->m_sComment	= _T("Session Ban");
+		break;
+	case ban5Mins:
+		pIPRule->m_nExpire	= tNow + 300;
+		pIPRule->m_sComment	= _T("Temp Ignore");
+		break;
+	case ban30Mins:
+		pIPRule->m_nExpire	= tNow + 1800;
+		pIPRule->m_sComment	= _T("Temp Ignore");
+		break;
+	case ban2Hours:
+		pIPRule->m_nExpire	= tNow + 7200;
+		pIPRule->m_sComment	= _T("Temp Ignore");
+		break;
+	case banWeek:
+		pIPRule->m_nExpire	= tNow + 604800;
+		pIPRule->m_sComment	= _T("Client Block");
+		break;
+	case banForever:
+		pIPRule->m_nExpire	= CSecureRule::srIndefinite;
+		pIPRule->m_sComment	= _T("Ban");
+		break;
+	default:
+		pIPRule->m_nExpire	= CSecureRule::srSession;
+		pIPRule->m_sComment	= _T("Session Ban");
+	}
+
+	if ( szComment )
+		pIPRule->m_sComment = szComment;
+
+	pIPRule->m_nIPv6 = *pAddress;
+
+	Add( pIPRule );
+
+	if ( bMessage )
+	{
+		theApp.Message( MSG_NOTICE, IDS_SECURITY_BLOCKED,
+			(LPCTSTR) IPv6ToString( pAddress ) );
+	}
+}
+
 
 //////////////////////////////////////////////////////////////////////
 // CSecurity complain
@@ -529,6 +603,36 @@ BOOL CSecurity::IsDenied(const IN_ADDR* pAddress)
 
 BOOL CSecurity::IsDenied(const IN6_ADDR* pAddress)
 {
+	CQuickLock oLock( m_pSection );
+
+	DWORD nNow = static_cast< DWORD >( time( NULL ) );
+
+	// Third, check whether the IP is still stored in one of the old rules or the IP range blocking rules.
+	for ( POSITION pos = GetIterator() ; pos ; )
+	{
+		POSITION posLast = pos;
+		CSecureRule* pRule = GetNext( pos );
+
+		if ( pRule->IsExpired( nNow ) )
+		{
+			m_pRules.RemoveAt( posLast );
+			delete pRule;
+		}
+		else if ( pRule->Match( pAddress ) )
+		{
+			pRule->m_nToday ++;
+			pRule->m_nEver ++;
+
+			if ( pRule->m_nExpire > CSecureRule::srSession && pRule->m_nExpire < nNow + 300 )
+				// Add 5 min penalty for early access
+				pRule->m_nExpire = nNow + 300;
+
+			if ( pRule->m_nAction == CSecureRule::srAccept )
+				return FALSE;
+			else if ( pRule->m_nAction == CSecureRule::srDeny )
+				return TRUE;
+		}
+	}
 	return FALSE;
 }
 

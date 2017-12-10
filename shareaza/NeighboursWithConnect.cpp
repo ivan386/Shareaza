@@ -236,7 +236,7 @@ CNeighbour* CNeighboursWithConnect::ConnectTo(
 		if ( bAutomatic ) return NULL;
 
 		// Report that this address is on the block list, and return no new connection made
-		theApp.Message( MSG_ERROR, IDS_SECURITY_OUTGOING, (LPCTSTR)Network.IPv6ToString( &pAddress ) );
+		theApp.Message( MSG_ERROR, IDS_SECURITY_OUTGOING, (LPCTSTR)IPv6ToString( &pAddress ) );
 		return NULL;
 	}
 
@@ -255,7 +255,7 @@ CNeighbour* CNeighboursWithConnect::ConnectTo(
 		if ( bAutomatic ) return NULL;
 
 		// Report that we're already connected to that computer, and return no new connection made
-		theApp.Message( MSG_ERROR, IDS_CONNECTION_ALREADY_ABORT, (LPCTSTR)Network.IPv6ToString( &pAddress ) );
+		theApp.Message( MSG_ERROR, IDS_CONNECTION_ALREADY_ABORT, (LPCTSTR)IPv6ToString( &pAddress ) );
 		return NULL;
 	}
 

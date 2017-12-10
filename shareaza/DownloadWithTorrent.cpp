@@ -65,6 +65,7 @@ CDownloadWithTorrent::CDownloadWithTorrent() :
 
 ,	m_tTorrentChoke			( 0 )
 ,	m_tTorrentSources		( 0 )
+,	m_tTorrentSourcesDHT	( 0 )
 {
 	// Generate random Key value
 	for ( int nChar = 1 ; nChar < 6 ; nChar++ )
@@ -445,6 +446,12 @@ void CDownloadWithTorrent::RunTorrent(DWORD tNow)
 	if ( !m_pPeerID )
 		GenerateTorrentDownloadID();
 
+	if ( tNow - m_tTorrentSourcesDHT > Settings.BitTorrent.DefaultTrackerPeriod )
+	{
+		DHT.Search( m_oBTH, m_bSeeding == TRUE );
+		m_tTorrentSourcesDHT = tNow;
+	}
+
 	// Store some values for later
 	DWORD nSourcesCount = 0ul;
 	DWORD nSourcesMax = 0ul;
@@ -573,8 +580,6 @@ void CDownloadWithTorrent::SendStarted(DWORD nNumWant)
 	m_tTorrentTracker += Settings.BitTorrent.DefaultTrackerPeriod;
 	m_nTorrentDownloaded = m_nTorrentUploaded = 0ull;
 
-	DHT.Search( m_oBTH );
-
 	// Return if there is no tracker
 	if ( ! m_pTorrent.HasTracker() )
 		return;
@@ -591,8 +596,6 @@ void CDownloadWithTorrent::SendUpdate(DWORD nNumWant)
 	// Record that an update has been sent
 	m_tTorrentTracker = m_tTorrentSources = GetTickCount();
 	m_tTorrentTracker += Settings.BitTorrent.DefaultTrackerPeriod;
-
-	DHT.Search( m_oBTH );
 
 	// Return if there is no tracker
 	if ( ! m_pTorrent.HasTracker() )

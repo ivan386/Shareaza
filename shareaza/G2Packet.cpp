@@ -778,7 +778,7 @@ BOOL CG2Packet::OnPacket(const SOCKADDR_IN6* pHost)
 	default:
 		CString tmp;
 		tmp.Format( _T("Unknown packet from %s:%u."),
-			(LPCTSTR)Network.IPv6ToString( &pHost->sin6_addr ) ,
+			(LPCTSTR)IPv6ToString( &pHost->sin6_addr ) ,
 			htons( pHost->sin6_port ) );
 		Debug( tmp );
 #endif // _DEBUG

@@ -356,7 +356,7 @@ CBTTrackerRequest::CBTTrackerRequest(CDownload* pDownload, BTTrackerEvent nEvent
 		if ( IN6_IS_ADDR_GLOBAL( &Network.m_pHostIPv6.sin6_addr ) && ! m_sURL.IsEmpty() )
 		{
 			m_sURL += _T("&ipv6=");
-			m_sURL += Network.IPv6ToString( &Network.m_pHostIPv6.sin6_addr, false );
+			m_sURL += IPv6ToString( &Network.m_pHostIPv6.sin6_addr, false );
 		}
 	}
 	else if ( StartsWith( m_sAddress, _PT("udp:") ) )
@@ -665,7 +665,7 @@ void CBTTrackerRequest::Process(const CBENode* pRoot)
 				if ( ! pPort || ! pPort->IsType( CBENode::beInt ) )
 					continue;
 
-				if ( ! Network.IPv6FromString( pIP->GetString(), &saPeerIPv6 ) &&
+				if ( ! IPv6FromString( pIP->GetString(), &saPeerIPv6 ) &&
 					 ! Network.Resolve( pIP->GetString(), (int)pPort->GetInt(), &saPeer ) )
 					continue;
 

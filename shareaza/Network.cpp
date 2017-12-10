@@ -438,7 +438,7 @@ BOOL CNetwork::ConnectTo(LPCTSTR pszAddress, int nPort, PROTOCOLID nProtocol, BO
 	}
 
 	SOCKADDR_IN6 saHost;
-	if ( Network.IPv6FromString( pszAddress, &saHost ) )
+	if ( IPv6FromString( pszAddress, &saHost ) )
 	{
 		if ( saHost.sin6_port == 0 )
 			saHost.sin6_port = htons( nPort );
@@ -505,7 +505,7 @@ BOOL CNetwork::AcquireLocalAddress(LPCTSTR pszHeader, WORD nPort, const IN_ADDR*
 	{
 		SOCKADDR_IN6 pHost;
 
-		if ( Network.IPv6FromString( pszHeader, &pHost ) )
+		if ( IPv6FromString( pszHeader, &pHost ) )
 			return AcquireLocalAddress( pHost.sin6_addr, nPort, pFromIPv6Address );
 		else
 			return FALSE;
@@ -1884,30 +1884,6 @@ SOCKET CNetwork::AcceptSocket(SOCKET hSocket, SOCKADDR_IN6* addr, LPCONDITIONPRO
 	{
 		return INVALID_SOCKET;
 	}
-}
-
-BOOL CNetwork::IPv6FromString(CString sIPv6, SOCKADDR_IN6* nAddress)
-{
-	LPWSTR psIPv6 = sIPv6.GetBuffer();
-
-	int size = sizeof(SOCKADDR_IN6);
-	BOOL bCoverted = ( WSAStringToAddress( psIPv6, AF_INET6, NULL, (struct sockaddr *) nAddress, &size ) == 0 );
-	sIPv6.ReleaseBuffer();
-	return bCoverted;
-}
-
-CString CNetwork::IPv6ToString(const IN6_ADDR* pAddress, bool ForUrl)
-{
-	ASSERT( pAddress );
-	SOCKADDR_IN6 pHost = { AF_INET6 };
-	pHost.sin6_addr = (*pAddress);
-	if ( ForUrl )
-	{
-		pHost.sin6_port = htons( 1 );
-		CString IPv6 = HostToString( &pHost );
-		return IPv6.Left( IPv6.GetLength() - 2 );
-	}
-	return HostToString( &pHost );
 }
 
 void CNetwork::CloseSocket(SOCKET& hSocket, const bool bForce)

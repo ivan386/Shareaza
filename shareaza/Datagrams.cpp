@@ -326,17 +326,17 @@ BOOL CDatagrams::ListenIPv6()
 	// First attempt to bind socket
 	if ( bind( m_hSocketIPv6, (SOCKADDR*)&saHost, sizeof( saHost ) ) != 0 )
 	{
-		theApp.Message( MSG_ERROR, IDS_NETWORK_CANT_LISTEN, (LPCTSTR)CString( Network.IPv6ToString( &saHost.sin6_addr ) ), htons( saHost.sin6_port ) );
+		theApp.Message( MSG_ERROR, IDS_NETWORK_CANT_LISTEN, (LPCTSTR)CString( IPv6ToString( &saHost.sin6_addr ) ), htons( saHost.sin6_port ) );
 
 
 		if ( bind( m_hSocketIPv6, (SOCKADDR*)&saHost, sizeof( saHost ) ) != 0 )
 		{
-			theApp.Message( MSG_ERROR, IDS_NETWORK_CANT_LISTEN, (LPCTSTR)CString( Network.IPv6ToString( &saHost.sin6_addr ) ), htons( saHost.sin6_port ) );
+			theApp.Message( MSG_ERROR, IDS_NETWORK_CANT_LISTEN, (LPCTSTR)CString( IPv6ToString( &saHost.sin6_addr ) ), htons( saHost.sin6_port ) );
 			return FALSE;
 		}
 	}
 
-	theApp.Message( MSG_INFO, IDS_NETWORK_LISTENING_UDP, (LPCTSTR)CString( Network.IPv6ToString( &saHost.sin6_addr ) ), htons( saHost.sin6_port ) );
+	theApp.Message( MSG_INFO, IDS_NETWORK_LISTENING_UDP, (LPCTSTR)CString( IPv6ToString( &saHost.sin6_addr ) ), htons( saHost.sin6_port ) );
 
 	WSAEventSelect( m_hSocketIPv6, Network.GetWakeupEvent(), FD_READ );
 
@@ -964,7 +964,7 @@ BOOL CDatagrams::TryReadIPv6()
 		}
 		theApp.Message( MSG_DEBUG | MSG_FACILITY_INCOMING,
 			_T("UDP: Received unknown packet (%i bytes) from %s: %s"),
-			nLength, (LPCTSTR)CString( Network.IPv6ToString( &pFrom.sin6_addr ) ), (LPCTSTR)strText );
+			nLength, (LPCTSTR)CString( IPv6ToString( &pFrom.sin6_addr ) ), (LPCTSTR)strText );
 		return TRUE;
 	}
 

@@ -2120,5 +2120,8 @@ void CQueryHit::Serialize(CArchive& ar, int nVersion /* MATCHLIST_SER_VERSION */
 
 void CQueryHit::Ban(int nBanLength)
 {
-	Security.Ban( &m_pAddress, nBanLength );
+	if ( IsIPv6Hit() )
+		Security.Ban( &m_pAddressIPv6, nBanLength );
+	else
+		Security.Ban( &m_pAddress, nBanLength );
 }

@@ -163,7 +163,7 @@ CString CShareazaFile::GetURL(const IN_ADDR& nAddress, WORD nPort) const
 
 CString CShareazaFile::GetURL(const IN6_ADDR& nAddress, WORD nPort) const
 {
-	return GetURL( Network.IPv6ToString( &nAddress, true), nPort );
+	return GetURL( IPv6ToString( &nAddress, true), nPort );
 }
 
 CString CShareazaFile::GetURL(CString sAddress, WORD nPort) const

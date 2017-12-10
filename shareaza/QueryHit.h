@@ -137,7 +137,7 @@ protected:
 	inline CString GetIPForURL() const
 	{
 		if ( IsIPv6Hit() )
-			return Network.IPv6ToString( &m_pAddressIPv6, true );
+			return IPv6ToString( &m_pAddressIPv6, true );
 		else
 			return CString( inet_ntoa( m_pAddress ) );
 	}

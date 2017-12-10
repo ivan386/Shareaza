@@ -86,9 +86,9 @@ set_nonblocking(int fd, int nonblocking)
         errno = WSAGetLastError();
     return (rc == 0 ? 0 : -1);
 */
-	fd;
-	nonblocking;
-	return 0;
+    fd;
+    nonblocking;
+    return 0;
 }
 
 static int
@@ -129,39 +129,39 @@ set_nonblocking(int fd, int nonblocking)
 #if !defined(gettimeofday)	// Define gettimeofday() undefined in Win32
 
 struct timeval64 {
-	time_t tv_sec;		/* seconds */
-	time_t tv_usec;		/* and microseconds */
+    time_t tv_sec;		/* seconds */
+    time_t tv_usec;		/* and microseconds */
 };
 
 struct timezone {
-	int tz_minuteswest;	/* minutes W of Greenwich */
-	int tz_dsttime;		/* type of dst correction */
+    int tz_minuteswest;	/* minutes W of Greenwich */
+    int tz_dsttime;		/* type of dst correction */
 };
 
 static int
 gettimeofday(struct timeval64 *tv, struct timezone *tz)
 {
-	FILETIME ft;
-	unsigned __int64 tmpres;
-	long zone = 0;
-	int daylight = 0;
+    FILETIME ft;
+    unsigned __int64 tmpres;
+    long zone = 0;
+    int daylight = 0;
 
-	if(tv) {
-		GetSystemTimeAsFileTime(&ft);
-		tmpres = ((((unsigned __int64)ft.dwHighDateTime << 32) | ft.dwLowDateTime) - 11644473600000000ULL) / 10ULL;
-		tv->tv_sec = (tmpres / 1000000ULL);
-		tv->tv_usec = (tmpres % 1000000ULL);
-	}
+    if(tv) {
+        GetSystemTimeAsFileTime(&ft);
+        tmpres = ((((unsigned __int64)ft.dwHighDateTime << 32) | ft.dwLowDateTime) - 11644473600000000ULL) / 10ULL;
+        tv->tv_sec = (tmpres / 1000000ULL);
+        tv->tv_usec = (tmpres % 1000000ULL);
+    }
 
-	if(tz) {
-		_get_timezone(&zone);
-		tz->tz_minuteswest = zone / 60;
+    if(tz) {
+        _get_timezone(&zone);
+        tz->tz_minuteswest = zone / 60;
 
-		_get_daylight(&daylight);
-		tz->tz_dsttime = daylight;
-	}
+        _get_daylight(&daylight);
+        tz->tz_dsttime = daylight;
+    }
 
-	return 0;
+    return 0;
 }
 
 #endif
@@ -234,6 +234,8 @@ struct search {
     time_t step_time;           /* the time of the last search_step */
     unsigned char id[20];
     unsigned short port;        /* 0 for pure searches */
+    bool seed;                  /* announce we are seed */
+    bool noseed;                /* search only peers */
     int done;
     struct search_node nodes[SEARCH_NODES];
     int numnodes;
@@ -245,6 +247,7 @@ struct peer {
     unsigned char ip[16];
     unsigned short len;
     unsigned short port;
+    bool seed;
 };
 
 /* The maximum number of peers we store for a given hash. */
@@ -288,19 +291,19 @@ static int send_nodes_peers(const struct sockaddr *sa, int salen,
                             const unsigned char *tid, int tid_len,
                             const unsigned char *nodes, int nodes_len,
                             const unsigned char *nodes6, int nodes6_len,
-                            int af, struct storage *st,
+                            bool noseed, int af, struct storage *st,
                             const unsigned char *token, int token_len);
 static int send_closest_nodes(const struct sockaddr *sa, int salen,
                               const unsigned char *tid, int tid_len,
-                              const unsigned char *id, int want,
+                              const unsigned char *id, int want, bool noseed,
                               int af, struct storage *st,
                               const unsigned char *token, int token_len);
 static int send_get_peers(const struct sockaddr *sa, int salen,
                           unsigned char *tid, int tid_len,
-                          unsigned char *infohash, int want, int confirm);
+                          unsigned char *infohash, int want, int confirm, bool noseed);
 static int send_announce_peer(const struct sockaddr *sa, int salen,
                               unsigned char *tid, int tid_len,
-                              unsigned char *infohas, unsigned short port,
+                              unsigned char *infohas, unsigned short port, bool seed,
                               unsigned char *token, int token_len, int confirm);
 static int send_peer_announced(const struct sockaddr *sa, int salen,
                                unsigned char *tid, int tid_len);
@@ -329,7 +332,8 @@ static int parse_message(const unsigned char *buf, int buflen,
                          unsigned char *nodes6_return, int *nodes6_len,
                          unsigned char *values_return, int *values_len,
                          unsigned char *values6_return, int *values6_len,
-                         int *want_return);
+                         int *want_return, unsigned short *seed_return,
+                         unsigned short *noseed_return );
 
 static const unsigned char zeroes[20] = {0};
 static const unsigned char ones[20] = {
@@ -821,19 +825,19 @@ new_node(const unsigned char *id, const struct sockaddr *sa, int salen,
     if(is_martian(sa) || node_blacklisted(sa, salen))
         return NULL;
 
-	if(callback) {
-		switch(confirm) {
-		case 0:
-			(*callback)(closure, DHT_EVENT_ADDED, id, (void*)sa, salen);
-			break;
-		case 1:
-			(*callback)(closure, DHT_EVENT_SENT, id, (void*)sa, salen);
-			break;
-		case 2:
-			(*callback)(closure, DHT_EVENT_REPLY, id, (void*)sa, salen);
-			break;
-		}
-	}
+    if(callback) {
+        switch(confirm) {
+        case 0:
+            (*callback)(closure, DHT_EVENT_ADDED, id, (void*)sa, salen);
+            break;
+        case 1:
+            (*callback)(closure, DHT_EVENT_SENT, id, (void*)sa, salen);
+            break;
+        case 2:
+            (*callback)(closure, DHT_EVENT_REPLY, id, (void*)sa, salen);
+            break;
+        }
+    }
 
     mybucket = in_bucket(myid, b);
 
@@ -965,8 +969,8 @@ expire_buckets(struct bucket *b, dht_callback *callback, void *closure)
             b->nodes = n->next;
             b->count--;
             changed = 1;
-			if(callback)
-				(*callback)(closure, DHT_EVENT_REMOVED, n->id, (void*)&n->ss, n->sslen);
+            if(callback)
+                (*callback)(closure, DHT_EVENT_REMOVED, n->id, (void*)&n->ss, n->sslen);
             free(n);
         }
 
@@ -977,8 +981,8 @@ expire_buckets(struct bucket *b, dht_callback *callback, void *closure)
                 p->next = n->next;
                 b->count--;
                 changed = 1;
-				if(callback)
-					(*callback)(closure, DHT_EVENT_REMOVED, n->id, (void*)&n->ss, n->sslen);
+                if(callback)
+                    (*callback)(closure, DHT_EVENT_REMOVED, n->id, (void*)&n->ss, n->sslen);
                 free(n);
             }
             p = p->next;
@@ -1127,7 +1131,7 @@ search_send_get_peers(struct search *sr, struct search_node *n)
     debugf("Sending get_peers.\n");
     make_tid(tid, "gp", sr->tid);
     send_get_peers((struct sockaddr*)&n->ss, n->sslen, tid, 4, sr->id, -1,
-                   n->reply_time >= now.tv_sec - 15);
+                   n->reply_time >= now.tv_sec - 15, sr->noseed);
     n->pinged++;
     n->request_time = now.tv_sec;
     /* If the node happens to be in our main routing table, mark it
@@ -1181,8 +1185,8 @@ search_step(struct search *sr, dht_callback *callback, void *closure)
                     debugf("Sending announce_peer.\n");
                     make_tid(tid, "ap", sr->tid);
                     send_announce_peer((struct sockaddr*)&n->ss,
-                                       sizeof(struct sockaddr_storage),
-                                       tid, 4, sr->id, sr->port,
+                                       n->sslen,
+                                       tid, 4, sr->id, sr->port, sr->seed,
                                        n->token, n->token_len,
                                        n->reply_time >= now.tv_sec - 15);
                     n->pinged++;
@@ -1270,7 +1274,7 @@ insert_search_bucket(struct bucket *b, struct search *sr)
 /* Start a search.  If port is non-zero, perform an announce when the
    search is complete. */
 int
-dht_search(const unsigned char *id, int port, int af,
+dht_search(const unsigned char *id, int port, bool seed, bool noseed, int af,
            dht_callback *callback, void *closure)
 {
     struct search *sr;
@@ -1297,16 +1301,18 @@ dht_search(const unsigned char *id, int port, int af,
 
             for(i = 0; i < st->numpeers; i++) {
                 swapped = htons(st->peers[i].port);
-                if(st->peers[i].len == 4) {
-                    memcpy(buf, st->peers[i].ip, 4);
-                    memcpy(buf + 4, &swapped, 2);
-                    (*callback)(closure, DHT_EVENT_VALUES, id,
-                                (void*)buf, 6);
-                } else if(st->peers[i].len == 16) {
-                    memcpy(buf, st->peers[i].ip, 16);
-                    memcpy(buf + 16, &swapped, 2);
-                    (*callback)(closure, DHT_EVENT_VALUES6, id,
-                                (void*)buf, 18);
+                if ( noseed ? !st->peers[i].seed : true ) {
+                    if(st->peers[i].len == 4) {
+                        memcpy(buf, st->peers[i].ip, 4);
+                        memcpy(buf + 4, &swapped, 2);
+                        (*callback)(closure, DHT_EVENT_VALUES, id,
+                                    (void*)buf, 6);
+                    } else if(st->peers[i].len == 16) {
+                        memcpy(buf, st->peers[i].ip, 16);
+                        memcpy(buf + 16, &swapped, 2);
+                        (*callback)(closure, DHT_EVENT_VALUES6, id,
+                                    (void*)buf, 18);
+                    }
                 }
             }
         }
@@ -1324,6 +1330,8 @@ dht_search(const unsigned char *id, int port, int af,
            means that we can merge replies for both searches. */
         int i;
         sr->done = 0;
+        sr->seed = seed;
+        sr->noseed = noseed;
     again:
         for(i = 0; i < sr->numnodes; i++) {
             struct search_node *n;
@@ -1350,6 +1358,8 @@ dht_search(const unsigned char *id, int port, int af,
         memcpy(sr->id, id, 20);
         sr->done = 0;
         sr->numnodes = 0;
+        sr->seed = seed;
+        sr->noseed = noseed;
     }
 
     sr->port = (unsigned short)port;
@@ -1389,7 +1399,7 @@ find_storage(const unsigned char *id)
 
 static int
 storage_store(const unsigned char *id,
-              const struct sockaddr *sa, unsigned short port)
+              const struct sockaddr *sa, unsigned short port, bool seed)
 {
     int i, len;
     struct storage *st;
@@ -1429,6 +1439,7 @@ storage_store(const unsigned char *id,
     if(i < st->numpeers) {
         /* Already there, only need to refresh */
         st->peers[i].time = now.tv_sec;
+        st->peers[i].seed = seed;
         return 0;
     } else {
         struct peer *p;
@@ -1451,6 +1462,7 @@ storage_store(const unsigned char *id,
         p->len = (unsigned short)len;
         memcpy(p->ip, ip, len);
         p->port = port;
+        p->seed = seed;
         return 1;
     }
 }
@@ -1993,6 +2005,8 @@ dht_periodic(const unsigned char *buf, size_t buflen,
         int tid_len = 16, token_len = 128;
         int nodes_len = 26*16, nodes6_len = 38*16;
         unsigned short port;
+        unsigned short seed;
+        unsigned short noseed;
         unsigned char values[2048], values6[2048];
         int values_len = 2048, values6_len = 2048;
         int want;
@@ -2016,7 +2030,7 @@ dht_periodic(const unsigned char *buf, size_t buflen,
                                 target, &port, token, &token_len,
                                 nodes, &nodes_len, nodes6, &nodes6_len,
                                 values, &values_len, values6, &values6_len,
-                                &want);
+                                &want, &seed, &noseed);
 
         if(message < 0 || message == ERROR || id_cmp(id, zeroes) == 0) {
             debugf("Unparseable message: ");
@@ -2168,7 +2182,7 @@ dht_periodic(const unsigned char *buf, size_t buflen,
             debugf("Sending closest nodes (%d).\n", want);
             send_closest_nodes(from, fromlen,
                                tid, tid_len, target, want,
-                               0, NULL, NULL, 0);
+                               false, 0, NULL, NULL, 0);
             break;
         case GET_PEERS:
             debugf("Get_peers!\n");
@@ -2187,14 +2201,14 @@ dht_periodic(const unsigned char *buf, size_t buflen,
                             from->sa_family == AF_INET6 ? " IPv6" : "");
                      send_closest_nodes(from, fromlen,
                                         tid, tid_len,
-                                        info_hash, want,
+                                        info_hash, want, noseed == 1,
                                         from->sa_family, st,
                                         token, TOKEN_SIZE);
                 } else {
                     debugf("Sending nodes for get_peers.\n");
                     send_closest_nodes(from, fromlen,
                                        tid, tid_len, info_hash, want,
-                                       0, NULL, token, TOKEN_SIZE);
+                                       false, 0, NULL, token, TOKEN_SIZE);
                 }
             }
             break;
@@ -2219,7 +2233,7 @@ dht_periodic(const unsigned char *buf, size_t buflen,
                            203, "Announce_peer with forbidden port number");
                 break;
             }
-            storage_store(info_hash, from, port);
+            storage_store(info_hash, from, port, seed == 1);
             /* Note that if storage_store failed, we lie to the requestor.
                This is to prevent them from backtracking, and hence
                polluting the DHT. */
@@ -2388,7 +2402,7 @@ dht_insert_node(const unsigned char *id, struct sockaddr *sa, int salen)
 {
     struct node *n;
 
-    if(sa->sa_family != AF_INET) {
+    if(sa->sa_family != AF_INET && sa->sa_family != AF_INET6) {
         errno = EAFNOSUPPORT;
         return -1;
     }
@@ -2530,7 +2544,7 @@ send_nodes_peers(const struct sockaddr *sa, int salen,
                  const unsigned char *tid, int tid_len,
                  const unsigned char *nodes, int nodes_len,
                  const unsigned char *nodes6, int nodes6_len,
-                 int af, struct storage *st,
+                 bool noseed, int af, struct storage *st,
                  const unsigned char *token, int token_len)
 {
     char buf[2048];
@@ -2566,7 +2580,8 @@ send_nodes_peers(const struct sockaddr *sa, int salen,
 
         rc = snprintf(buf + i, 2048 - i, "6:valuesl"); INC(i, rc, 2048);
         do {
-            if(st->peers[j].len == len) {
+            if(st->peers[j].len == len && 
+                ( noseed ? !st->peers[j].seed : true ) ) {
                 unsigned short swapped;
                 swapped = htons(st->peers[j].port);
                 rc = snprintf(buf + i, 2048 - i, "%d:", len + 2);
@@ -2655,7 +2670,7 @@ buffer_closest_nodes(unsigned char *nodes, int numnodes,
 int
 send_closest_nodes(const struct sockaddr *sa, int salen,
                    const unsigned char *tid, int tid_len,
-                   const unsigned char *id, int want,
+                   const unsigned char *id, int want, bool noseed,
                    int af, struct storage *st,
                    const unsigned char *token, int token_len)
 {
@@ -2695,14 +2710,14 @@ send_closest_nodes(const struct sockaddr *sa, int salen,
 
     return send_nodes_peers(sa, salen, tid, tid_len,
                             nodes, numnodes * 26,
-                            nodes6, numnodes6 * 38,
+                            nodes6, numnodes6 * 38, noseed,
                             af, st, token, token_len);
 }
 
 int
 send_get_peers(const struct sockaddr *sa, int salen,
                unsigned char *tid, int tid_len, unsigned char *infohash,
-               int want, int confirm)
+               int want, int confirm, bool noseed)
 {
     char buf[512];
     int i = 0, rc;
@@ -2716,6 +2731,9 @@ send_get_peers(const struct sockaddr *sa, int salen,
                       (want & WANT4) ? "2:n4" : "",
                       (want & WANT6) ? "2:n6" : "");
         INC(i, rc, 512);
+    }
+    if (noseed) {
+        rc = snprintf(buf + i, 512 - i, "6:noseedi1e"); INC(i, rc, 512);
     }
     rc = snprintf(buf + i, 512 - i, "e1:q9:get_peers1:t%d:", tid_len);
     INC(i, rc, 512);
@@ -2732,7 +2750,7 @@ send_get_peers(const struct sockaddr *sa, int salen,
 int
 send_announce_peer(const struct sockaddr *sa, int salen,
                    unsigned char *tid, int tid_len,
-                   unsigned char *infohash, unsigned short port,
+                   unsigned char *infohash, unsigned short port, bool seed,
                    unsigned char *token, int token_len, int confirm)
 {
     char buf[512];
@@ -2746,6 +2764,9 @@ send_announce_peer(const struct sockaddr *sa, int salen,
                   token_len);
     INC(i, rc, 512);
     COPY(buf, i, token, token_len, 512);
+    if (seed) {
+        rc = snprintf(buf + i, 512 - i, "4:seedi1e"); INC(i, rc, 512);
+    }
     rc = snprintf(buf + i, 512 - i, "e1:q13:announce_peer1:t%d:", tid_len);
     INC(i, rc, 512);
     COPY(buf, i, tid, tid_len, 512);
@@ -2850,7 +2871,8 @@ parse_message(const unsigned char *buf, int buflen,
               unsigned char *nodes6_return, int *nodes6_len,
               unsigned char *values_return, int *values_len,
               unsigned char *values6_return, int *values6_len,
-              int *want_return)
+              int *want_return, unsigned short *seed_return,
+              unsigned short *noseed_return )
 {
     const unsigned char *p;
 
@@ -2907,6 +2929,32 @@ parse_message(const unsigned char *buf, int buflen,
                 *port_return = 0;
         } else
             *port_return = 0;
+    }
+    if(seed_return) {
+        p = (const unsigned char*)dht_memmem(buf, buflen, "4:seedi", 7);
+        if(p) {
+            long l;
+            char *q;
+            l = strtol((char*)p + 7, &q, 10);
+            if(q && *q == 'e' && l > 0 && l < 0x10000)
+                *seed_return = (unsigned short)l;
+            else
+                *seed_return = 0;
+        } else
+            *seed_return = 0;
+    }
+    if(noseed_return) {
+        p = (const unsigned char*)dht_memmem(buf, buflen, "6:noseedi", 9);
+        if(p) {
+            long l;
+            char *q;
+            l = strtol((char*)p + 9, &q, 10);
+            if(q && *q == 'e' && l > 0 && l < 0x10000)
+                *noseed_return = (unsigned short)l;
+            else
+                *noseed_return = 0;
+        } else
+            *noseed_return = 0;
     }
     if(target_return) {
         p = (const unsigned char*)dht_memmem(buf, buflen, "6:target20:", 11);

@@ -208,16 +208,16 @@ void CDHT::Disconnect()
 	}
 }
 
-void CDHT::Search(const Hashes::BtHash& oBTH, bool bAnnounce)
+void CDHT::Search(const Hashes::BtHash& oBTH, bool bSeed, bool bAnnounce )
 {
-	if ( ! m_bConnected || ! Settings.BitTorrent.EnableToday || ! Settings.BitTorrent.EnableDHT )
+	if ( ! Settings.BitTorrent.EnableToday || ! Settings.BitTorrent.EnableDHT )
 		return;
 
 	CSingleLock oLock( &Network.m_pSection, FALSE );
 	if ( oLock.Lock( 250 ) )
 	{
-		dht_search( &oBTH[ 0 ], ( bAnnounce ? Network.GetPort() : 0 ), AF_INET, &CDHT::OnEvent, NULL );
-		dht_search( &oBTH[ 0 ], ( bAnnounce ? Network.GetPort() : 0 ), AF_INET6, &CDHT::OnEvent, NULL );
+		dht_search( &oBTH[ 0 ], ( bAnnounce ? Network.GetPort() : 0 ), bSeed, bSeed, AF_INET, &CDHT::OnEvent, NULL );
+		dht_search( &oBTH[ 0 ], ( bAnnounce ? Network.GetPort() : 0 ), bSeed, bSeed, AF_INET6, &CDHT::OnEvent, NULL );
 	}
 }
 
@@ -735,7 +735,13 @@ CString CBTPacket::GetType() const
 			sType = _T("Handshake");
 			break;
 		case BT_EXTENSION_NOP:
-			sType = _T("DHT");
+			{
+				CBENode* m_pNodeQ = m_pNode->GetNode("q");
+				if ( m_pNodeQ )
+					sType = _T("DHT ") + CString( (LPCSTR) m_pNodeQ->m_pValue, m_pNodeQ->m_nValue );
+				else
+					sType = _T("DHT");
+			}
 			break;
 		default:
 			sType.Format( _T("Ext %02u"), m_nExtension );
@@ -781,6 +787,7 @@ CString CBTPacket::ToASCII() const
 			return sLength;
 		}
 	}
+
 	return HasEncodedData() ? m_pNode->Encode() : CPacket::ToASCII();
 }
 

@@ -185,7 +185,7 @@ void CHostCacheWnd::Update(BOOL bForce)
 		if ( pHost->m_sAddress.IsEmpty() )
 		{
 			if ( pHost->m_pAddress.s_addr == INADDR_ANY )
-				pItem->Set( 0, Network.IPv6ToString( &pHost->m_pAddressIPv6 ) ) ;
+				pItem->Set( 0, IPv6ToString( &pHost->m_pAddressIPv6 ) ) ;
 			else
 				pItem->Set( 0, CString( inet_ntoa( pHost->m_pAddress ) ) );
 		}

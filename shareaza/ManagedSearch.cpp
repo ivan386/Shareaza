@@ -374,7 +374,7 @@ BOOL CManagedSearch::ExecuteNeighbours(const DWORD tTicks, const DWORD tSecs)
 				m_tMoreResults = 0;
 
 				//Display message in system window
-				theApp.Message( MSG_INFO, IDS_NETWORK_SEARCH_SENT, (LPCTSTR)m_pSearch->GetSearch(), (LPCTSTR)CString( inet_ntoa( pNeighbour->m_pHost.sin_addr ) ) );
+				theApp.Message( MSG_INFO, IDS_NETWORK_SEARCH_SENT, (LPCTSTR)m_pSearch->GetSearch(), (LPCTSTR) pNeighbour->m_sAddress );
 
 				switch ( pNeighbour->m_nProtocol )
 				{
@@ -509,7 +509,7 @@ BOOL CManagedSearch::ExecuteG2Mesh(const DWORD /*tTicks*/, const DWORD tSecs)
 
 			// Set the last query time for this host for this search
 
-			m_pNodes.SetAt( pHost->m_pAddress.s_addr, tSecs );
+			m_pNodes.SetAt( pHost->m_pAddress.s_addr ^ pHost->m_pAddressIPv6.u.Word[7] ^ ( pHost->m_pAddressIPv6.u.Word[6] << 16 ) , tSecs );
 
 			// Record the query time on the host, for all searches
 
@@ -523,7 +523,10 @@ BOOL CManagedSearch::ExecuteG2Mesh(const DWORD /*tTicks*/, const DWORD tSecs)
 
 			if ( CPacket* pPacket = m_pSearch->ToG2Packet( pReceiver, pHost->m_nKeyValue ) )
 			{
-				if ( Datagrams.Send( &pHost->m_pAddress, pHost->m_nPort, pPacket, TRUE, this, TRUE ) )
+
+				if ( pHost->IsIPv6Host() ? 
+					Datagrams.Send( &pHost->m_pAddressIPv6, pHost->m_nPort, pPacket, TRUE, this, TRUE ) 
+					: Datagrams.Send( &pHost->m_pAddress, pHost->m_nPort, pPacket, TRUE, this, TRUE ) )
 				{
 					theApp.Message( MSG_DEBUG | MSG_FACILITY_SEARCH,
 						_T("Querying %s"),

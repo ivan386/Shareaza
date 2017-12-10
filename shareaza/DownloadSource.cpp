@@ -197,14 +197,14 @@ CDownloadSource::CDownloadSource(const CDownload* pDownload,
 	if ( oGUID )
 	{
 		m_sURL.Format( _T("btc://%s:%u/%s/%s/"),
-			(LPCTSTR)Network.IPv6ToString( pAddress ), nPort,
+			(LPCTSTR)IPv6ToString( pAddress ), nPort,
             (LPCTSTR)oGUID.toString(),
 			(LPCTSTR)pDownload->m_oBTH.toString() );
 	}
 	else
 	{
 		m_sURL.Format( _T("btc://%s:%u//%s/"),
-			(LPCTSTR)Network.IPv6ToString( pAddress ), nPort,
+			(LPCTSTR)IPv6ToString( pAddress ), nPort,
 			(LPCTSTR)pDownload->m_oBTH.toString() );
 	}
 

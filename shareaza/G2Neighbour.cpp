@@ -783,7 +783,7 @@ BOOL CG2Neighbour::OnLNI(CG2Packet* pPacket)
 
 			if ( IsIPv6Host() )
 			{
-				sAddress = Network.IPv6ToString( &m_pHostIPv6.sin6_addr );
+				sAddress = IPv6ToString( &m_pHostIPv6.sin6_addr );
 				nPort = htons( m_pHostIPv6.sin6_port );
 			}
 			else
@@ -1160,7 +1160,7 @@ BOOL CG2Neighbour::ParseKHLPacket(CG2Packet* pPacket, const SOCKADDR* pHost)
 
 	if ( bInvalid )
 		theApp.Message( MSG_ERROR, _T("[G2] Invalid KHL packet received from %s"),
-		(LPCTSTR) ( pHostIPv6 ? Network.IPv6ToString( &pHostIPv6->sin6_addr ) 
+		(LPCTSTR) ( pHostIPv6 ? IPv6ToString( &pHostIPv6->sin6_addr ) 
 		: CString( inet_ntoa( pHostIPv4->sin_addr ) ) ) );
 
 	return TRUE;
@@ -1524,7 +1524,7 @@ BOOL CG2Neighbour::OnQueryKeyAns(CG2Packet* pPacket)
 	if ( pCache != NULL )
 	{
 
-		CString sAddress = pCache->IsIPv6Host() ? Network.IPv6ToString( &nAddressIPv6 ) 
+		CString sAddress = pCache->IsIPv6Host() ? IPv6ToString( &nAddressIPv6 ) 
 			: CString( inet_ntoa( *(IN_ADDR*)&nAddress ) );
 
 		theApp.Message( MSG_DEBUG, _T("Got a query key for %s:%i via neighbour %s: 0x%x"),

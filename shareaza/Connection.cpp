@@ -298,7 +298,7 @@ BOOL CConnection::ConnectTo(const IN6_ADDR* pAddress, WORD nPort)
 	// Fill in more parts of the m_pHost structure
 	m_pHostIPv6.sin6_family	= AF_INET6;							// AF_INET6 means just normal IPv6
 	m_pHostIPv6.sin6_port	= htons( nPort );					// Copy the port number into the m_pHost structure
-	m_sAddress			= Network.IPv6ToString( &m_pHostIPv6.sin6_addr );	// Save the IP address as a string of text
+	m_sAddress			= IPv6ToString( &m_pHostIPv6.sin6_addr );	// Save the IP address as a string of text
 
 	// Create a socket and store it in m_hSocket
 	m_hSocket = socket( AF_INET6, SOCK_STREAM, IPPROTO_TCP );
@@ -403,7 +403,7 @@ void CConnection::AcceptFrom(SOCKET hSocket, SOCKADDR_IN6* pHost)
 	// Record the connection information here
 	m_hSocket		= hSocket;							// Keep the socket here
 	m_pHostIPv6		= *pHost;							// Copy the remote IP address into this object
-	m_sAddress		= Network.IPv6ToString( &m_pHostIPv6.sin6_addr );	// Store it as a string also
+	m_sAddress		= IPv6ToString( &m_pHostIPv6.sin6_addr );	// Store it as a string also
 	UpdateCountry();
 
 	// Make new input and output buffer objects

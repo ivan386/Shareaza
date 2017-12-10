@@ -153,7 +153,7 @@ BOOL CDCNeighbour::ConnectTo(const IN_ADDR* pAddress, WORD nPort, BOOL bAutomati
 
 BOOL CDCNeighbour::ConnectTo(const IN6_ADDR* pAddress, WORD nPort, BOOL bAutomatic)
 {
-	CString sHost( Network.IPv6ToString( pAddress ) );
+	CString sHost( IPv6ToString( pAddress ) );
 
 	if ( CConnection::ConnectTo( pAddress, nPort ) )
 	{

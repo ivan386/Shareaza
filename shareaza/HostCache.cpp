@@ -407,7 +407,7 @@ CHostCacheHostPtr CHostCacheList::Add(const IN_ADDR* pAddress, WORD nPort, const
 	if ( ! pAddress )
 	{
 		SOCKADDR_IN6 saHost;
-		if ( Network.IPv6FromString( CString( szAddress ), &saHost ) )
+		if ( IPv6FromString( CString( szAddress ), &saHost ) )
 		{
 			if ( saHost.sin6_port )
 				nPort = ntohs( saHost.sin6_port );
@@ -530,7 +530,7 @@ CHostCacheHostPtr CHostCacheList::AddIPv6(const IN6_ADDR* pAddress, WORD nPort, 
 			PruneHosts();
 
 			pHost->m_pAddressIPv6 = *pAddress;
-			pHost->m_sAddress = Network.IPv6ToString( &pHost->m_pAddressIPv6 );
+			pHost->m_sAddress = IPv6ToString( &pHost->m_pAddressIPv6 );
 			if ( szAddress ) pHost->m_sAddress = szAddress;
 
 			pHost->Update( nPort, tSeen, pszVendor, nUptime, nCurrentLeaves, nLeafLimit );
@@ -641,8 +641,8 @@ void CHostCacheList::SanityCheck()
 	{
 		CHostCacheHostPtr pHost = (*i);
 
-		if ( Security.IsDenied( &pHost->m_pAddress ) || Security.IsDenied( &pHost->m_pAddressIPv6 ) ||
-			( pHost->m_pVendor && Security.IsVendorBlocked( pHost->m_pVendor->m_sCode ) ) )
+		if ( ( pHost->IsIPv6Host() ? Security.IsDenied( &pHost->m_pAddressIPv6 ) : Security.IsDenied( &pHost->m_pAddress ) ) ||
+			 ( pHost->m_pVendor && Security.IsVendorBlocked( pHost->m_pVendor->m_sCode ) ) )
 		{
 			i = Remove( pHost );
 		}
@@ -732,7 +732,8 @@ void CHostCacheList::OnFailure(const IN_ADDR* pAddress, WORD nPort, bool bRemove
 			IN6_SET_ADDR_UNSPECIFIED( &pHost->m_pAddressIPv6 );
 		}
 
-		if ( ! pHost->m_bPriority && ( bRemove || pHost->m_nFailures > Settings.Connection.FailureLimit ) )
+		if ( ! pHost->m_bPriority && HostCache.EnoughServers( m_nProtocol ) &&
+			( bRemove || pHost->m_nFailures > Settings.Connection.FailureLimit ) )
 			Remove( pHost );
 	}
 }
@@ -1499,7 +1500,7 @@ CString CHostCacheHost::Address() const
 	if ( m_pAddress.s_addr != INADDR_ANY )
 		return CString( inet_ntoa( m_pAddress ) );
 	else if( IsIPv6Host() )
-		return Network.IPv6ToString( &m_pAddressIPv6, true );
+		return IPv6ToString( &m_pAddressIPv6, true );
 	else
 		return m_sAddress;
 }

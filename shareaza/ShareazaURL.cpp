@@ -299,7 +299,7 @@ BOOL CShareazaURL::ParseHTTP(LPCTSTR pszURL, BOOL bResolve)
 	
 	BOOL bResult = 0;
 	SOCKADDR_IN6 pHost = {};
-	if ( bResult = Network.IPv6FromString( m_sAddress, &pHost ) )
+	if ( bResult = IPv6FromString( m_sAddress, &pHost ) )
 	{
 		m_pAddressIPv6 = pHost.sin6_addr;
 
@@ -546,7 +546,7 @@ BOOL CShareazaURL::ParseBTC(LPCTSTR pszURL, BOOL bResolve)
 
 	BOOL bResult = 0;
 	SOCKADDR_IN6 pHost = {};
-	if ( bResult = Network.IPv6FromString( m_sAddress, &pHost ) )
+	if ( bResult = IPv6FromString( m_sAddress, &pHost ) )
 	{
 		m_pAddressIPv6 = pHost.sin6_addr;
 

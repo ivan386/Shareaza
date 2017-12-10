@@ -564,12 +564,22 @@ void CUploadsWnd::OnSecurityBan()
 		if ( UploadFiles.Check( pFile ) && pFile->GetActive() != NULL )
 		{
 			CUploadTransfer* pUpload = pFile->GetActive();
-
-			IN_ADDR pAddress = pUpload->m_pHost.sin_addr;
-			pUpload->Remove( FALSE );
-			pLock.Unlock();
-			Security.Ban( &pAddress, banSession );
-			pLock.Lock();
+			if ( pUpload->IsIPv6Host() )
+			{
+				IN6_ADDR pAddress = pUpload->m_pHostIPv6.sin6_addr;
+				pUpload->Remove( FALSE );
+				pLock.Unlock();
+				Security.Ban( &pAddress, banSession );
+				pLock.Lock();
+			}
+			else
+			{
+				IN_ADDR pAddress = pUpload->m_pHost.sin_addr;
+				pUpload->Remove( FALSE );
+				pLock.Unlock();
+				Security.Ban( &pAddress, banSession );
+				pLock.Lock();
+			}
 		}
 	}
 }

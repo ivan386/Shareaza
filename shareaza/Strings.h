@@ -114,6 +114,13 @@ CString LoadFile(LPCTSTR pszPath);
 BOOL ReplaceNoCase(CString& sInStr, LPCTSTR pszOldStr, LPCTSTR pszNewStr);
 
 #ifdef _WINSOCKAPI_
+BOOL IPv6FromString(CString sIPv6, SOCKADDR_IN6* pAddress);
+BOOL IPv6FromString(CString sIPv6, IN6_ADDR* pAddress);
+
+CString IPv4Or6ToString(IN_ADDR* pIPv4, IN6_ADDR* pIPv6);
+
+CString IPv6ToString(const IN6_ADDR* pAddress, bool bForUrl = true);
+
 CString HostToString(const SOCKADDR* pHost);
 
 // Returns "a.a.a.a:port"

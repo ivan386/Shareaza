@@ -502,7 +502,10 @@ BOOL CUploadTransferHTTP::OnHeadersComplete()
 			SendResponse( IDR_HTML_DISABLED );
 
 		theApp.Message( MSG_ERROR, IDS_UPLOAD_DISABLED, (LPCTSTR)m_sAddress, (LPCTSTR)m_sUserAgent );
-		Security.Ban( &m_pHost.sin_addr, ban30Mins, FALSE ); // Anti-hammer protection if client doesn't understand 403
+		if ( IsIPv6Host() )
+			Security.Ban( &m_pHostIPv6.sin6_addr, ban30Mins, FALSE );
+		else
+			Security.Ban( &m_pHost.sin_addr, ban30Mins, FALSE ); // Anti-hammer protection if client doesn't understand 403
 		Remove( FALSE );
 		return FALSE;
 	}

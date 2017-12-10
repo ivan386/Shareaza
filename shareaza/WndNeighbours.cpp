@@ -455,11 +455,23 @@ void CNeighboursWnd::OnSecurityBan()
 	{
 		if ( CNeighbour* pNeighbour = GetItem( nItem ) )
 		{
-			IN_ADDR pAddress = pNeighbour->m_pHost.sin_addr;
-			pNeighbour->Close();
-			pLock.Unlock();
-			Security.Ban( &pAddress, banSession );
-			pLock.Lock();
+			if ( pNeighbour->IsIPv6Host() )
+			{
+				IN6_ADDR pAddress = pNeighbour->m_pHostIPv6.sin6_addr;
+				pNeighbour->Close();
+				pLock.Unlock();
+				Security.Ban( &pAddress, banSession );
+				pLock.Lock();
+			}
+			else
+			{
+				IN_ADDR pAddress = pNeighbour->m_pHost.sin_addr;
+				pNeighbour->Close();
+				pLock.Unlock();
+				Security.Ban( &pAddress, banSession );
+				pLock.Lock();
+			}
+
 		}
 	}
 }
@@ -497,8 +509,10 @@ void CNeighboursWnd::OnBrowseLaunch()
 			Hashes::Guid oGUID = pNeighbour->m_oGUID;
 
 			pLock.Unlock();
-
-			new CBrowseHostWnd( nProtocol, &pAddress, FALSE, oGUID );
+			if ( pAddress.sin_addr.s_addr == 0 )
+				new CBrowseHostWnd( nProtocol, &pAddress, TRUE, oGUID );
+			else
+				new CBrowseHostWnd( nProtocol, &pAddress, FALSE, oGUID );
 		}
 	}
 }
