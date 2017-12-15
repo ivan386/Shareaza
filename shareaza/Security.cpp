@@ -104,11 +104,12 @@ void CSecurity::Add(CSecureRule* pRule)
 	{
 		CQuickLock oLock( m_pSection );
 
+		pRule->MaskFix();
+
 		// If an address rule is added, the mask fix is performed and the miss cache is cleared either in whole or just the relevant address
 		// erase does support ranges but this should cover auto bans and get reasonable performance without tripping on incorrect masks
 		if ( pRule->m_nType == CSecureRule::srAddress )
 		{
-			pRule->MaskFix();
 			if ( *(DWORD*)pRule->m_nMask == 0xffffffff )
 			{
 				m_Cache.erase( *(DWORD*)pRule->m_nIP );
@@ -118,8 +119,17 @@ void CSecurity::Add(CSecureRule* pRule)
 				m_Cache.clear();
 			}
 		}
-
-		pRule->MaskFix();
+		else if ( pRule->m_nType == CSecureRule::srAddressIPv6 )
+		{
+			if ( pRule->m_nIPv6PrefixLen == 128 )
+			{
+				m_CacheIPv6.erase( pRule->m_nIPv6 );
+			}
+			else
+			{
+				m_CacheIPv6.clear();
+			}
+		}
 
 		// special treatment for single IP security rules
 		if ( pRule->m_nType == CSecureRule::srAddress &&
@@ -129,6 +139,22 @@ void CSecurity::Add(CSecureRule* pRule)
 			if ( i == m_pIPRules.end() )
 			{
 				m_pIPRules[ *(DWORD*)pRule->m_nIP ] = pRule;
+			}
+			else if ( (*i).second != pRule )
+			{
+				// replace old rule with new one.
+				CSecureRule* pOldRule = (*i).second;
+				(*i).second = pRule;
+				delete pOldRule;
+			}
+		}
+		else if ( pRule->m_nType == CSecureRule::srAddressIPv6 &&
+			pRule->m_nIPv6PrefixLen == 128 )
+		{
+			CAddressIPv6RuleMap::iterator i = m_pIPv6Rules.find( pRule->m_nIPv6 );
+			if ( i == m_pIPv6Rules.end() )
+			{
+				m_pIPv6Rules[ pRule->m_nIPv6 ] = pRule;
 			}
 			else if ( (*i).second != pRule )
 			{
@@ -420,13 +446,13 @@ void CSecurity::Ban(const IN6_ADDR* pAddress, int nBanLength, BOOL bMessage, LPC
 	CQuickLock oLock( m_pSection );
 
 	DWORD tNow = static_cast< DWORD >( time( NULL ) );
-
-
-	for ( POSITION pos = m_pRules.GetHeadPosition() ; pos ; )
+	
+	CAddressIPv6RuleMap::const_iterator i = m_pIPv6Rules.find( *pAddress );
+	if ( i != m_pIPv6Rules.end() )
 	{
-		CSecureRule* pIPRule = m_pRules.GetNext( pos );
+		CSecureRule* pIPRule = (*i).second; 
 
-		if ( IN6_ADDR_EQUAL( &pIPRule->m_nIPv6, pAddress ) && pIPRule->m_nAction == CSecureRule::srDeny )
+		if ( pIPRule->m_nAction == CSecureRule::srDeny )
 		{
 			if ( ( nBanLength == banWeek ) && ( pIPRule->m_nExpire < tNow + 604000 ) )
 			{
@@ -607,6 +633,37 @@ BOOL CSecurity::IsDenied(const IN6_ADDR* pAddress)
 
 	DWORD nNow = static_cast< DWORD >( time( NULL ) );
 
+	// First check the fast IP lookup map.
+	CAddressIPv6RuleMap::const_iterator i = m_pIPv6Rules.find( *pAddress );
+	if ( i != m_pIPv6Rules.end() )
+	{
+		CSecureRule* pIPRule = (*i).second;
+		if ( pIPRule->IsExpired( nNow ) )
+		{
+			m_pIPv6Rules.erase( i );
+		}
+		else
+		{
+			pIPRule->m_nToday ++;
+			pIPRule->m_nEver ++;
+
+			if ( pIPRule->m_nExpire > CSecureRule::srSession && pIPRule->m_nExpire < nNow + 300 )
+				// Add 5 min penalty for early access
+				pIPRule->m_nExpire = nNow + 300;
+
+			if ( pIPRule->m_nAction == CSecureRule::srAccept )
+				return FALSE;
+			else if ( pIPRule->m_nAction == CSecureRule::srDeny )
+				return TRUE;
+		}
+	}
+
+	
+	// Second, check the miss cache if the IP has already been checked and found to be OK.
+	// if the address is in cache, it is a miss and no lookup is needed
+	if ( m_CacheIPv6.count( *pAddress ) )
+		return m_bDenyPolicy;
+
 	// Third, check whether the IP is still stored in one of the old rules or the IP range blocking rules.
 	for ( POSITION pos = GetIterator() ; pos ; )
 	{
@@ -633,6 +690,10 @@ BOOL CSecurity::IsDenied(const IN6_ADDR* pAddress)
 				return TRUE;
 		}
 	}
+
+	// If the IP is clean, add it to the miss cache
+	m_CacheIPv6.insert( *pAddress );
+
 	return FALSE;
 }
 
@@ -919,6 +980,11 @@ void CSecurity::Serialize(CArchive& ar)
 		{
 			(*i).second->Serialize( ar, nVersion );
 		}
+
+		for ( CAddressIPv6RuleMap::const_iterator i = m_pIPv6Rules.begin(); i != m_pIPv6Rules.end(); ++i )
+		{
+			(*i).second->Serialize( ar, nVersion );
+		}
 	}
 	else
 	{
@@ -945,6 +1011,11 @@ void CSecurity::Serialize(CArchive& ar)
 					*(DWORD*)pRule->m_nMask == 0xffffffff )
 				{
 					m_pIPRules[ *(DWORD*)pRule->m_nIP ] = pRule;
+				}
+				else if( pRule->m_nType == CSecureRule::srAddressIPv6 &&
+					pRule->m_nIPv6PrefixLen == 128 )
+				{
+					m_pIPv6Rules[ pRule->m_nIPv6 ] = pRule;
 				}
 				else
 				{
@@ -1272,6 +1343,11 @@ CLiveList* CSecurity::GetList() const
 	}
 
 	for ( CAddressRuleMap::const_iterator i = m_pIPRules.begin(); i != m_pIPRules.end(); ++i, ++nCount )
+	{
+		(*i).second->ToList( pLiveList, nCount, tNow );
+	}
+
+	for ( CAddressIPv6RuleMap::const_iterator i = m_pIPv6Rules.begin(); i != m_pIPv6Rules.end(); ++i, ++nCount )
 	{
 		(*i).second->ToList( pLiveList, nCount, tNow );
 	}

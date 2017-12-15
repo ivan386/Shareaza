@@ -301,13 +301,22 @@ void CSearchMonitorWnd::OnSecurityBan()
 	int nItem = m_wndList.GetNextItem( -1, LVNI_SELECTED );
 	if ( nItem >= 0 )
 	{
-		SOCKADDR_IN pHost = { 0 };
-		pHost.sin_family = AF_INET;
 		CString strNode = m_wndList.GetItemText( nItem, 3 );
-		int nPos = strNode.Find( _T(':') );
-		pHost.sin_addr.s_addr = inet_addr( CT2CA( (LPCTSTR)strNode.Left( nPos ) ) );
-		pHost.sin_port = htons( (WORD)_tstoi( strNode.Mid( nPos + 1 ) ) );
-		Security.Ban( &pHost.sin_addr, banSession );
+		int nPos = strNode.Find( _T("]:") );
+		if ( nPos > 0 )
+		{
+			SOCKADDR_IN6 pHost = { AF_INET6 };
+			IPv6FromString( strNode, &pHost );
+			Security.Ban( &pHost.sin6_addr, banSession );
+		}
+		else
+		{
+			SOCKADDR_IN pHost = { AF_INET };
+			nPos = strNode.Find( _T(':') );
+			pHost.sin_addr.s_addr = inet_addr( CT2CA( (LPCTSTR)strNode.Left( nPos ) ) );
+			//pHost.sin_port = htons( (WORD)_tstoi( strNode.Mid( nPos + 1 ) ) );
+			Security.Ban( &pHost.sin_addr, banSession );
+		}
 	}
 }
 

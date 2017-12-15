@@ -510,13 +510,26 @@ CHostCacheHostPtr CHostCacheList::Add(const IN_ADDR* pAddress, WORD nPort, const
 	return pHost;
 }
 
-CHostCacheHostPtr CHostCacheList::AddIPv6(const IN6_ADDR* pAddress, WORD nPort, const IN6_ADDR* /* pFromAddress */, DWORD tSeen, LPCTSTR pszVendor, DWORD nUptime, DWORD nCurrentLeaves, DWORD nLeafLimit, LPCTSTR szAddress)
+CHostCacheHostPtr CHostCacheList::AddIPv6(const IN6_ADDR* pAddress, WORD nPort, const IN6_ADDR* pFromAddress, DWORD tSeen, LPCTSTR pszVendor, DWORD nUptime, DWORD nCurrentLeaves, DWORD nLeafLimit, LPCTSTR szAddress)
 {
 	ASSERT( pAddress );
 
 	if ( ! nPort )
 		// Use default port
 		nPort = protocolPorts[ m_nProtocol ];
+
+	// Don't add invalid addresses
+	// check against IANA Reserved address.
+	if ( Network.IsReserved( pAddress ) ||
+	// Don't add own firewalled IPs
+		Network.IsFirewalledAddress( pAddress, TRUE ) ||
+	// Check address is valid
+		( pFromAddress != NULL && ! Network.IsValidAddressFor( pFromAddress, pAddress ) ) ||
+	// Check security settings, don't add blocked IPs
+		Security.IsDenied( pAddress ) )
+		// Bad IP
+		return NULL;
+
 
 	// Check if we already have the host
 	CHostCacheHostPtr pHost = Find( pAddress );

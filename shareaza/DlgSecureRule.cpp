@@ -191,7 +191,13 @@ void CSecureRuleDlg::OnSelChangeRuleType()
 	UpdateData();
 
 	ShowGroup( &m_wndGroupNetwork, m_nType == 0 );
-	ShowGroup( &m_wndGroupContent, m_nType >= 1 );
+	ShowGroup( &m_wndGroupContent, m_nType == 1 );
+
+	if ( m_nType == 2 )
+	{
+		m_wndGroupNetwork.ShowWindow( SW_SHOW );
+		m_wndContent.ShowWindow( SW_SHOW );
+	}
 
 	if ( m_nType == 0 )
 	{
