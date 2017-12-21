@@ -286,7 +286,7 @@ void CDownloadWithTorrent::Serialize(CArchive& ar, int nVersion)
 
 BOOL CDownloadWithTorrent::SubmitData(QWORD nOffset, LPBYTE pData, QWORD nLength)
 {
-	if ( IsTorrent() )
+	if ( IsTorrentSet() )
 	{
 		CSingleLock oLock( &Transfers.m_pSection );
 		if ( oLock.Lock( 250 ) )

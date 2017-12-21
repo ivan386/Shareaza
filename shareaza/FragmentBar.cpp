@@ -176,11 +176,137 @@ void CFragmentBar::DrawDownload(CDC* pDC, CRect* prcBar, CDownload* pDownload, C
 			RGB( 0, 255, 0 ), true );
 	}
 
-	for ( nvOffset = 0 ; pDownload->GetNextVerifyRange( nvOffset, nvLength, bvSuccess ) ; )
+	int nHash[3] = { HASH_TORRENT, HASH_TIGERTREE, HASH_ED2K };
+	
+	if ( pDownload->IsTorrentSet() && pDownload->m_pTorrent.m_nBlockCount < 256 )
 	{
-		DrawStateBar( pDC, prcBar, pDownload->m_nSize, nvOffset, nvLength,
-			bvSuccess ? CoolInterface.m_crFragmentPass : CoolInterface.m_crFragmentFail );
-		nvOffset += nvLength;
+		nHash[0] = HASH_TIGERTREE;
+		nHash[1] = HASH_TORRENT;
+	}
+	else if ( pDownload->m_nSize / ED2K_PART_SIZE > 256 )
+	{
+		nHash[1] = HASH_ED2K;
+		nHash[2] = HASH_TIGERTREE;
+	}
+
+	for ( int i = 0; i < 3; i++ )
+		for ( nvOffset = 0 ; pDownload->GetNextVerifyRange( nvOffset, nvLength, bvSuccess, nHash[i] ) ; )
+		{
+			DrawStateBar( pDC, prcBar, pDownload->m_nSize, nvOffset, nvLength,
+				bvSuccess ? CoolInterface.m_crFragmentPass : CoolInterface.m_crFragmentFail );
+			nvOffset += nvLength;
+		}
+
+	if ( pDownload->IsTorrentSet() )
+	{
+		QWORD nOffset = 0;
+		QWORD nLength = 0;
+
+		uint32 nBlockCount = pDownload->m_pTorrent.m_nBlockCount;
+		uint32 nBlockLength = pDownload->m_pTorrent.m_nBlockSize;
+
+		for ( DWORD nBlockIndex = 0 ; nBlockIndex < nBlockCount ; nBlockIndex++ )
+		{
+			if ( pDownload->m_pTorrent.IsZeroBlock( nBlockIndex ) )
+			{
+
+				if ( nOffset + nLength == nBlockIndex * nBlockLength )
+					nLength += nBlockLength;
+				else
+				{
+					if ( nLength > 0 )
+						CFragmentBar::DrawStateBar( pDC, prcBar, pDownload->m_nSize,
+							nOffset, nLength, CoolInterface.m_crFragmentFail , true );
+
+					nOffset = nBlockIndex * nBlockLength;
+					nLength = nBlockLength;
+				}
+			}
+
+			
+		}
+
+		if ( nOffset + nLength > pDownload->m_nSize )
+			nLength = pDownload->m_nSize - nOffset;
+
+		if ( nLength > 0 )
+			CFragmentBar::DrawStateBar( pDC, prcBar, pDownload->m_nSize,
+				nOffset, nLength, CoolInterface.m_crFragmentFail , true );
+	}
+
+	if ( pDownload->IsTigerSet() )
+	{
+		QWORD nOffset = 0;
+		QWORD nLength = 0;
+
+		const CTigerTree* pTigerTree = pDownload->GetTigerTree();
+		if ( pTigerTree )
+		{
+			uint32 nBlockCount = pTigerTree->GetBlockCount();
+			uint32 nBlockLength = pTigerTree->GetBlockLength();
+
+			for ( DWORD nBlockIndex = 0 ; nBlockIndex < nBlockCount ; nBlockIndex++ )
+			{
+				if ( pTigerTree->IsZeroBlock( nBlockIndex ) )
+				{
+					if ( nOffset + nLength == nBlockIndex * nBlockLength )
+						nLength += nBlockLength;
+					else
+					{
+						if ( nLength > 0 )
+							CFragmentBar::DrawStateBar( pDC, prcBar, pDownload->m_nSize,
+								nOffset, nLength, CoolInterface.m_crFragmentFail , true );
+
+						nOffset = nBlockIndex * nBlockLength;
+						nLength = nBlockLength;
+					}
+				}
+			}
+
+			if ( nOffset + nLength > pDownload->m_nSize )
+				nLength = pDownload->m_nSize - nOffset;
+
+			if ( nLength > 0 )
+				CFragmentBar::DrawStateBar( pDC, prcBar, pDownload->m_nSize,
+					nOffset, nLength, CoolInterface.m_crFragmentFail , true );
+		}
+	}
+
+	if ( pDownload->IsHashsetSet() )
+	{
+		QWORD nOffset = 0;
+		QWORD nLength = 0;
+
+		const CED2K* pHashset = pDownload->GetHashset();
+		if ( pHashset )
+		{
+			uint32 nBlockCount = pHashset->GetBlockCount();
+
+			for ( DWORD nBlockIndex = 0 ; nBlockIndex < nBlockCount ; nBlockIndex++ )
+			{
+				if ( pHashset->IsZeroBlock( nBlockIndex ) )
+				{
+					if ( nOffset + nLength == nBlockIndex * ED2K_PART_SIZE )
+						nLength += ED2K_PART_SIZE;
+					else
+					{
+						if ( nLength > 0 )
+							CFragmentBar::DrawStateBar( pDC, prcBar, pDownload->m_nSize,
+								nOffset, nLength, CoolInterface.m_crFragmentFail , true );
+
+						nOffset = nBlockIndex * ED2K_PART_SIZE;
+						nLength = ED2K_PART_SIZE;
+					}
+				}
+			}
+
+			if ( nOffset + nLength > pDownload->m_nSize )
+				nLength = pDownload->m_nSize - nOffset;
+
+			if ( nLength > 0 )
+				CFragmentBar::DrawStateBar( pDC, prcBar, pDownload->m_nSize,
+					nOffset, nLength, CoolInterface.m_crFragmentFail , true );
+		}
 	}
 
 	Fragments::List oList( pDownload->GetEmptyFragmentList() );

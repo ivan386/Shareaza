@@ -53,6 +53,8 @@ private:
 	QWORD		m_nVerifyLength;
 	DWORD		m_tVerifyLast;
 
+	bool m_bZerosRangesTested;
+
 	mutable CMutexEx			m_pTigerSection;
 
 	mutable QWORD				m_nWFLCookie;		// Wanted fragment list cookie
@@ -95,10 +97,6 @@ public:
 		return m_pHashsetBlock != NULL && m_nHashsetBlock > 0;
 	}
 
-	inline BOOL IsTorrentSet() const{
-		return m_pTorrentBlock != NULL && m_nTorrentBlock > 0;
-	}
-
 protected:
 	bool		IsFullyVerified() const;
 
@@ -109,6 +107,7 @@ private:
 	BOOL		FindNewValidationBlock(int nHash);
 	void		ContinueValidation();
 	void		FinishValidation();
+	void		FindZerosRanges();
 	void		SubtractHelper(Fragments::List& ppCorrupted, BYTE* pBlock, QWORD nBlock, QWORD nSize);
 
 	// Get list of all fragments which must be downloaded

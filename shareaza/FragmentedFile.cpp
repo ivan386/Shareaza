@@ -890,31 +890,45 @@ BOOL CFragmentedFile::Write(QWORD nOffset, LPCVOID pData, QWORD nLength, QWORD* 
 
 	Fragments::Fragment oMatch( nOffset, nOffset + nLength );
 	Fragments::List::const_iterator_pair pMatches = m_oFList.equal_range( oMatch );
-	if ( pMatches.first == pMatches.second )
-		// Empty range
-		return FALSE;
-
-	QWORD nProcessed = 0;
-	for ( ; pMatches.first != pMatches.second; ++pMatches.first )
-	{
-		QWORD nStart = max( pMatches.first->begin(), oMatch.begin() );
-		QWORD nToWrite = min( pMatches.first->end(), oMatch.end() ) - nStart;
-
-		const char* pSource
-			= static_cast< const char* >( pData ) + ( nStart - oMatch.begin() );
-
-		QWORD nWritten = 0;
-		if ( ! VirtualWrite( nStart, pSource, nToWrite, &nWritten ) )
-			// Write error
+		if ( pMatches.first == pMatches.second )
+			// Empty range
 			return FALSE;
 
-		if ( pnWritten )
-			*pnWritten += nWritten;
+	QWORD nProcessed = 0;
 
-		nProcessed += nWritten;
+	if ( pData )
+	{
+		for ( ; pMatches.first != pMatches.second; ++pMatches.first )
+		{
+			QWORD nStart = max( pMatches.first->begin(), oMatch.begin() );
+			QWORD nToWrite = min( pMatches.first->end(), oMatch.end() ) - nStart;
+
+			const char* pSource
+				= static_cast< const char* >( pData ) + ( nStart - oMatch.begin() );
+
+			QWORD nWritten = 0;
+			if ( ! VirtualWrite( nStart, pSource, nToWrite, &nWritten ) )
+				// Write error
+				return FALSE;
+
+			if ( pnWritten )
+				*pnWritten += nWritten;
+
+			nProcessed += nWritten;
+		}
+
+		m_nUnflushed += nProcessed;
 	}
+	else
+	{
+		for ( ; pMatches.first != pMatches.second; ++pMatches.first )
+		{
+			QWORD nStart = max( pMatches.first->begin(), oMatch.begin() );
+			QWORD nToWrite = min( pMatches.first->end(), oMatch.end() ) - nStart;
 
-	m_nUnflushed += nProcessed;
+			VirtualSparse( nStart, nToWrite );
+		}
+	}
 	m_oFList.erase( oMatch );
 	return nProcessed > 0;
 }
@@ -1050,6 +1064,48 @@ BOOL CFragmentedFile::VirtualWrite(QWORD nOffset, const char* pBuffer, QWORD nBu
 	return TRUE;
 }
 
+
+BOOL CFragmentedFile::VirtualSparse(QWORD nOffset, QWORD nLength)
+{
+
+	// Find first file
+	CVirtualFile::const_iterator i = std::find_if( m_oFile.begin(), m_oFile.end(),
+		bind2nd( Greater(), nOffset ) );
+	if ( i != m_oFile.begin() )
+		--i;
+
+	for ( ; nLength; ++i )
+	{
+		if ( i == m_oFile.end() )
+			// EOF
+			return FALSE;
+		const CVirtualFilePart& file = (*i);
+		if ( file.m_nOffset > nOffset )
+			// EOF
+			return FALSE;
+		QWORD nPartOffset = ( nOffset - file.m_nOffset );
+		if ( file.m_nSize < nPartOffset )
+			// EOF
+			return FALSE;
+		QWORD nPartLength = min( nLength, file.m_nSize - nPartOffset );
+		if ( ! nPartLength )
+			// Skip zero length files
+			continue;
+
+		if ( file.m_bWrite )
+		{
+			if ( ! file.m_pFile )
+				return FALSE;
+
+			file.m_pFile->ExtendSize( nPartOffset + nPartLength );
+		}
+
+		nOffset += nPartLength;
+		nLength -= nPartLength;
+	}
+
+	return TRUE;
+}
 //////////////////////////////////////////////////////////////////////
 // CFragmentedFile invalidate a range
 

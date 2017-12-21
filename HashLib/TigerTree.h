@@ -70,6 +70,7 @@ public:
 	BOOL	FromBytesLevel1(const uint8* pInput, uint32 nInput, uint64 nLength);
 
 	BOOL	IsAvailable() const;
+	BOOL	IsZeroBlock(uint32 nBlock) const;
 	void	SetHeight(uint32 nHeight);
 	uint32	GetHeight() const;
 	uint32	GetBlockLength() const;
@@ -77,6 +78,7 @@ public:
 
 private:
 	uint32		m_nHeight;
+	uint32		m_nActualHeight;
 	CTigerNode*	m_pNode;
 	uint32		m_nNodeCount;
 

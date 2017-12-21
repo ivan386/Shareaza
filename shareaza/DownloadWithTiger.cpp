@@ -60,6 +60,7 @@ CDownloadWithTiger::CDownloadWithTiger()
 	, m_nVerifyOffset	( 0ul )
 	, m_nVerifyLength	( 0ul )
 	, m_tVerifyLast		( 0ul )
+	, m_bZerosRangesTested ( false )
 	, m_nWFLCookie		( SIZE_UNKNOWN )
 	, m_oWFLCache		( 0 )
 {
@@ -599,6 +600,9 @@ void CDownloadWithTiger::RunValidation()
 	if ( ! IsFileOpen() )
 		return;
 
+	if ( ! m_bZerosRangesTested )
+		FindZerosRanges();
+
 	if ( ( m_nVerifyHash > HASH_NULL && m_nVerifyBlock < 0xFFFFFFFF ) ||
 		FindNewValidationBlock( HASH_TORRENT ) ||
 		FindNewValidationBlock( HASH_TIGERTREE ) ||
@@ -786,6 +790,58 @@ void CDownloadWithTiger::ContinueValidation()
 
 	if ( m_nVerifyLength == 0 )
 		FinishValidation();
+}
+
+void CDownloadWithTiger::FindZerosRanges()
+{
+
+	if ( IsHashsetSet() )
+	{
+		m_bZerosRangesTested = true;
+
+		for ( uint32 i = 0; i < m_nHashsetBlock; i++ )
+			if ( m_pHashset.IsZeroBlock( i ) )
+			{
+				QWORD nOffset = ED2K_PART_SIZE * i;
+				QWORD nLength = min( nOffset + ED2K_PART_SIZE, m_nSize ) - nOffset;
+				SubmitData( nOffset, NULL, nLength );
+			}
+
+		SetModified();
+	}
+
+	if ( IsTigerSet() )
+	{
+		m_bZerosRangesTested = true;
+
+		uint32 nBlockLength = m_pTigerTree.GetBlockLength();
+		uint32 nBlockCount = m_pTigerTree.GetBlockCount();
+
+		for ( uint32 i = 0; i < nBlockCount; i++ )
+			if ( m_pTigerTree.IsZeroBlock( i ) )
+			{
+				QWORD nOffset = nBlockLength * i;
+				QWORD nLength = min( nOffset + nBlockLength, m_nSize ) - nOffset;
+				SubmitData( nOffset, NULL, nLength );
+			}
+
+		SetModified();
+	}
+
+	if ( IsTorrentSet() )
+	{
+		m_bZerosRangesTested = true;
+
+		for ( uint32 i = 0; i < m_nTorrentBlock; i++ )
+			if ( m_pTorrent.IsZeroBlock( i ) )
+			{
+				QWORD nOffset = m_nTorrentSize * i;
+				QWORD nLength = min( nOffset + m_nTorrentSize, m_nSize ) - nOffset;
+				SubmitData( nOffset, NULL, nLength );
+			}
+
+		SetModified();
+	}
 }
 
 void CDownloadWithTiger::FinishValidation()
@@ -1028,9 +1084,10 @@ BOOL CDownloadWithTiger::GetFragment(CDownloadTransfer* pTransfer)
 
 		Fragments::List::const_iterator pRange = oPossible.begin();
 
-		QWORD nChunkSize = 0;
+		QWORD nChunkSize = (QWORD) Settings.Downloads.ChunkSize;
+
 		if ( pDownload->m_nBitrate > 8 && pDownload->m_nBitrate < (QWORD) -1 )
-			nChunkSize = max( pDownload->m_nBitrate / 8, (QWORD) Settings.Downloads.ChunkSize );
+			nChunkSize = max( pDownload->m_nBitrate / 8, nChunkSize );
 
 		if ( nChunkSize 
 			 && pRange->begin() > nChunkSize 

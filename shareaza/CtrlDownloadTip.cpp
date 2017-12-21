@@ -564,6 +564,12 @@ void CDownloadTipCtrl::PrepareDownloadInfo(CDownload* pDownload)
 		{
 			m_sTiger += _T(" (") + strUntrusted + _T(")");
 		}
+		else
+		{
+			CString sTemp;
+			sTemp.Format( _T(" (%I32u)"), pDownload->GetTigerTree()->GetBlockCount() );
+			m_sTiger += sTemp;
+		}
 	}
 
 	m_sED2K = pDownload->m_oED2K.toShortUrn();
@@ -584,6 +590,12 @@ void CDownloadTipCtrl::PrepareDownloadInfo(CDownload* pDownload)
 		{
 			m_sED2K += _T(" (") + strUntrusted + _T(")");
 		}
+		else
+		{
+			CString sTemp;
+			sTemp.Format( _T(" (%I32u)"), pDownload->GetHashset()->GetBlockCount() );
+			m_sED2K += sTemp;
+		}
 	}
 
 	m_sBTH = pDownload->m_oBTH.toShortUrn();
@@ -603,6 +615,12 @@ void CDownloadTipCtrl::PrepareDownloadInfo(CDownload* pDownload)
 		else if ( ! pDownload->m_bBTHTrusted )
 		{
 			m_sBTH += _T(" (") + strUntrusted + _T(")");
+		}
+		else
+		{
+			CString sTemp;
+			sTemp.Format( _T(" (%I32u)"), pDownload->m_pTorrent.m_nBlockCount );
+			m_sBTH += sTemp;
 		}
 	}
 

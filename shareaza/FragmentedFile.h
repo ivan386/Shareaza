@@ -152,6 +152,7 @@ protected:
 
 	BOOL	VirtualRead(QWORD nOffset, char* pBuffer, QWORD nBuffer, QWORD* pnRead);
 	BOOL	VirtualWrite(QWORD nOffset, const char* pBuffer, QWORD nBuffer, QWORD* pnWritten);
+	BOOL	VirtualSparse(QWORD nOffset, QWORD nLength);
 
 	// Get completed size of defined range (in bytes)
 	QWORD GetCompleted(QWORD nOffset, QWORD nLength) const;

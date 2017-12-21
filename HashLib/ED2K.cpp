@@ -331,6 +331,13 @@ BOOL CED2K::IsAvailable() const
 	return m_pList != NULL;
 }
 
+BOOL CED2K::IsZeroBlock(uint32 nBlock) const
+{
+	// Hash: D7DEF262A127CD79096A108E7A9FC138      Size: 9728000
+	static const uint32 ZeroHash[ 4 ] = { 0x62F2DED7, 0x79CD27A1, 0x8E106A09, 0x38C19F7A };
+	return memcmp( &ZeroHash, m_pList[ nBlock ].data, sizeof( ZeroHash ) ) == 0;
+}
+
 uint32 CED2K::GetBlockCount() const
 {
 	return m_nList;

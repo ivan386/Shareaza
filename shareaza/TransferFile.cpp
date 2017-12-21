@@ -232,6 +232,17 @@ QWORD CTransferFile::GetSize() const
 		return SIZE_UNKNOWN;
 }
 
+void CTransferFile::ExtendSize(QWORD nSize)
+{
+	if ( m_hFile != INVALID_HANDLE_VALUE && nSize > GetSize() )
+	{
+		DWORD nOffsetLow	= (DWORD)( nSize & 0x00000000FFFFFFFF );
+		DWORD nOffsetHigh	= (DWORD)( ( nSize & 0xFFFFFFFF00000000 ) >> 32 );
+		SetFilePointer( m_hFile, nOffsetLow, (PLONG)&nOffsetHigh, FILE_BEGIN );
+		SetEndOfFile( m_hFile );
+	}
+}
+
 //////////////////////////////////////////////////////////////////////
 // CTransferFile write access management
 

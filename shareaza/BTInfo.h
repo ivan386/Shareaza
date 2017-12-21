@@ -167,6 +167,8 @@ public:
 	DWORD		GetTrackerNextTry() const;
 	void		OnTrackerFailure();
 
+	BOOL		IsZeroBlock(uint32 nBlock) const;
+
 	// Count of files
 	inline INT_PTR GetCount() const
 	{

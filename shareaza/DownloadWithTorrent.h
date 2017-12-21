@@ -84,6 +84,10 @@ public:
 	BOOL			GenerateTorrentDownloadID();
 	virtual BOOL	SubmitData(QWORD nOffset, LPBYTE pData, QWORD nLength);
 
+	inline BOOL IsTorrentSet() const{
+		return m_pTorrentBlock != NULL && m_nTorrentBlock > 0;
+	}
+
 protected:
 	void			RunTorrent(DWORD tNow);
 	void			SendCompleted();

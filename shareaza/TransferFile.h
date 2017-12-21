@@ -58,6 +58,7 @@ public:
 	ULONG		Release();
 	HANDLE		GetHandle(BOOL bWrite = FALSE);
 	QWORD		GetSize() const;
+	void		ExtendSize(QWORD nSize);
 	BOOL		Read(QWORD nOffset, LPVOID pBuffer, QWORD nBuffer, QWORD* pnRead);
 	BOOL		Write(QWORD nOffset, LPCVOID pBuffer, QWORD nBuffer, QWORD* pnWritten);
 	BOOL		EnsureWrite();

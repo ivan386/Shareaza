@@ -320,7 +320,7 @@ DWORD CDownloadWithFile::MoveFile(LPCTSTR pszDestination, LPPROGRESS_ROUTINE lpP
 		theApp.Message( MSG_ERROR | MSG_TRAY, _T("%s"), (LPCTSTR)( strMessage + _T(" ") + GetErrorString( ret ) ) );
 	}
 
-	ClearSources();
+	//ClearSources();
 
 	return ret;
 }

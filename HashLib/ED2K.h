@@ -51,6 +51,7 @@ public:
 	BOOL	FromBytes(BYTE* pOutput, uint32 nOutput, uint64 nSize = 0);
 	
 	BOOL	IsAvailable() const;
+	BOOL	IsZeroBlock(uint32 nBlock) const;
 	void	SetSize(uint32 nSize);
 	uint32	GetSize() const;
 	uint32	GetBlockCount() const;
