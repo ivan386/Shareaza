@@ -216,8 +216,8 @@ void CDHT::Search(const Hashes::BtHash& oBTH, bool bSeed, bool bAnnounce )
 	CSingleLock oLock( &Network.m_pSection, FALSE );
 	if ( oLock.Lock( 250 ) )
 	{
-		dht_search( &oBTH[ 0 ], ( bAnnounce ? Network.GetPort() : 0 ), bSeed, bSeed, AF_INET, &CDHT::OnEvent, NULL );
 		dht_search( &oBTH[ 0 ], ( bAnnounce ? Network.GetPort() : 0 ), bSeed, bSeed, AF_INET6, &CDHT::OnEvent, NULL );
+		dht_search( &oBTH[ 0 ], ( bAnnounce ? Network.GetPort() : 0 ), bSeed, bSeed, AF_INET, &CDHT::OnEvent, NULL );
 	}
 }
 

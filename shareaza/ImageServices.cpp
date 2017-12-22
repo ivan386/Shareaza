@@ -24,6 +24,10 @@
 #include "Plugins.h"
 #include "ImageServices.h"
 #include "ImageFile.h"
+#include "ThumbCache.h"
+#include "Library.h"
+#include "LibraryMaps.h"
+#include "BTInfo.h"
 
 #include <atlimage.h>
 
@@ -121,6 +125,25 @@ BOOL CImageServices::LoadFromFile(CImageFile* pFile, LPCTSTR szFilename, BOOL bS
 {
 	// Get file extension
 	LPCTSTR szType = PathFindExtension( szFilename ); // ".ext"
+
+	if ( _tcsicmp( szType, _T(".torrent") ) == 0 )
+	{
+		CBTInfo pTorrent;
+		if ( pTorrent.LoadTorrentFile( szFilename ) && !pTorrent.m_pFiles.IsEmpty() )
+		{
+			CSingleLock oLock( &Library.m_pSection );
+
+			if ( oLock.Lock( 1000 ) )
+			{
+				CFileList* pShared = LibraryMaps.LookupFilesByHash( pTorrent.m_pFiles.GetHead() );
+				
+				oLock.Unlock();
+
+				if ( pShared && !pShared->IsEmpty() )
+					return CThumbCache::Cache( pShared->GetHead()->GetPath(), pFile );
+			}
+		}
+	}
 
 	// Try to load common types first (JPEG/GIF/BMP/PNG)
 	{
