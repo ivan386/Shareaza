@@ -62,6 +62,7 @@ CDownloadWithTorrent::CDownloadWithTorrent() :
 ,	m_nTorrentSize			( 0 )
 ,	m_nTorrentSuccess		( 0 )
 ,	m_bSeeding				( FALSE )
+,	m_bZerosRangesTested	( false )
 
 ,	m_tTorrentChoke			( 0 )
 ,	m_tTorrentSources		( 0 )
@@ -426,6 +427,8 @@ BOOL CDownloadWithTorrent::SetTorrent(const CBTInfo* pTorrent)
 	DownloadGroups.Link( static_cast< CDownload* >( this ) );
 
 	SetModified();
+
+	m_bZerosRangesTested = false;
 
 	return TRUE;
 }

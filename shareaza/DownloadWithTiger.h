@@ -53,8 +53,6 @@ private:
 	QWORD		m_nVerifyLength;
 	DWORD		m_tVerifyLast;
 
-	bool m_bZerosRangesTested;
-
 	mutable CMutexEx			m_pTigerSection;
 
 	mutable QWORD				m_nWFLCookie;		// Wanted fragment list cookie

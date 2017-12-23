@@ -59,6 +59,7 @@ protected:
 	DWORD		m_nTorrentSuccess;
 	DWORD		m_nTorrentSize;
 	CAutoVectorPtr< BYTE >		m_pTorrentBlock;
+	bool		m_bZerosRangesTested;
 private:
 	CList< CUploadTransferBT* >	m_pTorrentUploads;
 	DWORD						m_tTorrentChoke;

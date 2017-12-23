@@ -60,7 +60,6 @@ CDownloadWithTiger::CDownloadWithTiger()
 	, m_nVerifyOffset	( 0ul )
 	, m_nVerifyLength	( 0ul )
 	, m_tVerifyLast		( 0ul )
-	, m_bZerosRangesTested ( false )
 	, m_nWFLCookie		( SIZE_UNKNOWN )
 	, m_oWFLCache		( 0 )
 {
@@ -333,6 +332,8 @@ BOOL CDownloadWithTiger::SetTigerTree(BYTE* pTiger, DWORD nTiger, BOOL bLevel1)
 
 	theApp.Message( MSG_INFO, IDS_DOWNLOAD_TIGER_READY, (LPCTSTR)GetDisplayName(), m_pTigerTree.GetHeight(), (LPCTSTR)Settings.SmartVolume( m_nTigerSize ) );
 
+	m_bZerosRangesTested = false;
+
 	return TRUE;
 }
 
@@ -399,6 +400,8 @@ BOOL CDownloadWithTiger::SetHashset(BYTE* pSource, DWORD nSource)
 	theApp.Message( MSG_INFO, IDS_DOWNLOAD_HASHSET_READY, (LPCTSTR)GetDisplayName(), (LPCTSTR)Settings.SmartVolume( ED2K_PART_SIZE ) );
 
 	Neighbours.SendDonkeyDownload( this );
+
+	m_bZerosRangesTested = false;
 
 	return TRUE;
 }
@@ -800,7 +803,7 @@ void CDownloadWithTiger::FindZerosRanges()
 		m_bZerosRangesTested = true;
 
 		for ( uint32 i = 0; i < m_nHashsetBlock; i++ )
-			if ( m_pHashset.IsZeroBlock( i ) )
+			if ( m_pHashsetBlock[i] != TRI_TRUE && m_pHashset.IsZeroBlock( i ) )
 			{
 				QWORD nOffset = ED2K_PART_SIZE * i;
 				QWORD nLength = min( nOffset + ED2K_PART_SIZE, m_nSize ) - nOffset;
@@ -818,7 +821,7 @@ void CDownloadWithTiger::FindZerosRanges()
 		uint32 nBlockCount = m_pTigerTree.GetBlockCount();
 
 		for ( uint32 i = 0; i < nBlockCount; i++ )
-			if ( m_pTigerTree.IsZeroBlock( i ) )
+			if ( m_pTigerBlock[i] != TRI_TRUE && m_pTigerTree.IsZeroBlock( i ) )
 			{
 				QWORD nOffset = nBlockLength * i;
 				QWORD nLength = min( nOffset + nBlockLength, m_nSize ) - nOffset;
@@ -833,7 +836,7 @@ void CDownloadWithTiger::FindZerosRanges()
 		m_bZerosRangesTested = true;
 
 		for ( uint32 i = 0; i < m_nTorrentBlock; i++ )
-			if ( m_pTorrent.IsZeroBlock( i ) )
+			if ( m_pTorrentBlock[i] != TRI_TRUE && m_pTorrent.IsZeroBlock( i ) )
 			{
 				QWORD nOffset = m_nTorrentSize * i;
 				QWORD nLength = min( nOffset + m_nTorrentSize, m_nSize ) - nOffset;
