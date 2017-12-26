@@ -135,12 +135,20 @@ BOOL CImageServices::LoadFromFile(CImageFile* pFile, LPCTSTR szFilename, BOOL bS
 
 			if ( oLock.Lock( 1000 ) )
 			{
-				CFileList* pShared = LibraryMaps.LookupFilesByHash( pTorrent.m_pFiles.GetHead() );
+				CFileList* pFound = LibraryMaps.LookupFilesByHash( pTorrent.m_pFiles.GetHead() );
 				
 				oLock.Unlock();
 
-				if ( pShared && !pShared->IsEmpty() )
-					return CThumbCache::Cache( pShared->GetHead()->GetPath(), pFile );
+				if ( pFound && !pFound->IsEmpty() )
+				{
+					CString sPath = pFound->GetHead()->GetPath();
+					
+					delete pFound;
+
+					return CThumbCache::Cache( sPath, pFile );
+				}
+
+				delete pFound;
 			}
 		}
 	}

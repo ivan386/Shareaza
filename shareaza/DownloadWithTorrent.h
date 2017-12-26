@@ -59,10 +59,10 @@ protected:
 	DWORD		m_nTorrentSuccess;
 	DWORD		m_nTorrentSize;
 	CAutoVectorPtr< BYTE >		m_pTorrentBlock;
-	bool		m_bZerosRangesTested;
 private:
 	CList< CUploadTransferBT* >	m_pTorrentUploads;
 	DWORD						m_tTorrentChoke;
+	bool						m_bZerosBlocksChecked;
 
 // Operations
 public:
@@ -82,6 +82,9 @@ public:
 	// Apply new .torrent file to download or update from existing one
 	BOOL			SetTorrent(const CBTInfo* pTorrent = NULL);
 	// Generate Peer ID
+
+	void			FindZerosRangesTorrent();
+
 	BOOL			GenerateTorrentDownloadID();
 	virtual BOOL	SubmitData(QWORD nOffset, LPBYTE pData, QWORD nLength);
 

@@ -388,6 +388,7 @@ BOOL CDownloadTransferED2K::OnHashsetAnswer(CEDPacket* pPacket)
 	else if ( m_pDownload->SetHashset(	pPacket->m_pBuffer + pPacket->m_nPosition,
 										pPacket->GetRemaining() ) )
 	{
+		m_pDownload->FindZerosRangesHashset();
 		return SendSecondaryRequest();
 	}
 

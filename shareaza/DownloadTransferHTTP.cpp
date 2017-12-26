@@ -1488,7 +1488,9 @@ BOOL CDownloadTransferHTTP::ReadTiger(bool bDropped)
 	
 	if ( m_sContentType.CompareNoCase( _T("application/tigertree-breadthfirst") ) == 0 )
 	{
-		m_pDownload->SetTigerTree( pInput->m_pBuffer, (DWORD)m_nLength );
+		if ( m_pDownload->SetTigerTree( pInput->m_pBuffer, (DWORD)m_nLength ) )
+			m_pDownload->FindZerosRangesTreeTiger();
+
 		pInput->Remove( (DWORD)m_nLength );
 	}
 	else if ( m_sContentType.CompareNoCase( _T("application/dime") ) == 0 ||
@@ -1542,11 +1544,13 @@ BOOL CDownloadTransferHTTP::ReadTiger(bool bDropped)
 			}
 			else if ( ( strID == strUUID || strID.IsEmpty() ) && strType.CompareNoCase( _T("http://open-content.net/spec/thex/breadthfirst") ) == 0 )
 			{
-				m_pDownload->SetTigerTree( pInput->m_pBuffer, nBody );
+				if ( m_pDownload->SetTigerTree( pInput->m_pBuffer, nBody ) )
+					m_pDownload->FindZerosRangesTreeTiger();
 			}
 			else if ( strType.CompareNoCase( _T("http://edonkey2000.com/spec/md4-hashset") ) == 0 )
 			{
-				m_pDownload->SetHashset( pInput->m_pBuffer, nBody );
+				if ( m_pDownload->SetHashset( pInput->m_pBuffer, nBody ) )
+					m_pDownload->FindZerosRangesHashset();
 			}
 			
 			pInput->Remove( ( nBody + 3 ) & ~3 );

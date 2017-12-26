@@ -62,7 +62,7 @@ CDownloadWithTorrent::CDownloadWithTorrent() :
 ,	m_nTorrentSize			( 0 )
 ,	m_nTorrentSuccess		( 0 )
 ,	m_bSeeding				( FALSE )
-,	m_bZerosRangesTested	( false )
+,	m_bZerosBlocksChecked	( false )
 
 ,	m_tTorrentChoke			( 0 )
 ,	m_tTorrentSources		( 0 )
@@ -426,12 +426,47 @@ BOOL CDownloadWithTorrent::SetTorrent(const CBTInfo* pTorrent)
 	// Re-link
 	DownloadGroups.Link( static_cast< CDownload* >( this ) );
 
-	SetModified();
+	m_bZerosBlocksChecked = false;
 
-	m_bZerosRangesTested = false;
+	SetModified();
 
 	return TRUE;
 }
+
+void CDownloadWithTorrent::FindZerosRangesTorrent()
+{
+	if ( IsTorrentSet() )
+	{
+		m_bZerosBlocksChecked = true;
+
+		QWORD nOffset = 0;
+		QWORD nLength = 0;
+
+		for ( uint32 i = 0; i < m_nTorrentBlock; i++ )
+		{
+			if ( !m_pTorrentBlock[i] && m_pTorrent.IsZeroBlock( i ) )
+			{
+				if ( nLength == 0 )
+					nOffset = m_nTorrentSize * i;
+
+				nLength += m_nTorrentSize;
+			}
+			else
+			{
+				if ( nLength > 0 )
+					SubmitData( nOffset, NULL, min( nLength, ( m_nSize - nOffset ) ) );
+
+				nLength = 0;
+			}
+		}
+
+		if ( nLength > 0 )
+			SubmitData( nOffset, NULL, min( nLength, ( m_nSize - nOffset ) ) );
+
+		SetModified();
+	}
+}
+
 
 //////////////////////////////////////////////////////////////////////
 // CDownloadWithTorrent run
@@ -444,6 +479,9 @@ void CDownloadWithTorrent::RunTorrent(DWORD tNow)
 	// Choke torrents every 10 seconds
 	if ( tNow > m_tTorrentChoke && tNow - m_tTorrentChoke >= 10000ul )
 		ChokeTorrent( tNow );
+
+	if ( !m_bZerosBlocksChecked )
+		FindZerosRangesTorrent();
 
 	// Generate a peerid if there isn't one
 	if ( !m_pPeerID )

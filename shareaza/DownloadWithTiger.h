@@ -67,6 +67,10 @@ public:
 	BOOL		NeedHashset() const;
 	BOOL		SetHashset(BYTE* pSource, DWORD nSource);
 	const CED2K* GetHashset() const;
+
+	void		FindZerosRangesHashset();
+	void		FindZerosRangesTreeTiger();
+
 	bool		RunMergeFile(LPCTSTR szFilename, BOOL bMergeValidation, const Fragments::List& oMissedGaps, CDownloadTask* pTask);
 	void		ResetVerification();
 	void		ClearVerification();
@@ -105,7 +109,6 @@ private:
 	BOOL		FindNewValidationBlock(int nHash);
 	void		ContinueValidation();
 	void		FinishValidation();
-	void		FindZerosRanges();
 	void		SubtractHelper(Fragments::List& ppCorrupted, BYTE* pBlock, QWORD nBlock, QWORD nSize);
 
 	// Get list of all fragments which must be downloaded

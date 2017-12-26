@@ -332,8 +332,6 @@ BOOL CDownloadWithTiger::SetTigerTree(BYTE* pTiger, DWORD nTiger, BOOL bLevel1)
 
 	theApp.Message( MSG_INFO, IDS_DOWNLOAD_TIGER_READY, (LPCTSTR)GetDisplayName(), m_pTigerTree.GetHeight(), (LPCTSTR)Settings.SmartVolume( m_nTigerSize ) );
 
-	m_bZerosRangesTested = false;
-
 	return TRUE;
 }
 
@@ -400,8 +398,6 @@ BOOL CDownloadWithTiger::SetHashset(BYTE* pSource, DWORD nSource)
 	theApp.Message( MSG_INFO, IDS_DOWNLOAD_HASHSET_READY, (LPCTSTR)GetDisplayName(), (LPCTSTR)Settings.SmartVolume( ED2K_PART_SIZE ) );
 
 	Neighbours.SendDonkeyDownload( this );
-
-	m_bZerosRangesTested = false;
 
 	return TRUE;
 }
@@ -603,9 +599,6 @@ void CDownloadWithTiger::RunValidation()
 	if ( ! IsFileOpen() )
 		return;
 
-	if ( ! m_bZerosRangesTested )
-		FindZerosRanges();
-
 	if ( ( m_nVerifyHash > HASH_NULL && m_nVerifyBlock < 0xFFFFFFFF ) ||
 		FindNewValidationBlock( HASH_TORRENT ) ||
 		FindNewValidationBlock( HASH_TIGERTREE ) ||
@@ -795,53 +788,70 @@ void CDownloadWithTiger::ContinueValidation()
 		FinishValidation();
 }
 
-void CDownloadWithTiger::FindZerosRanges()
+void CDownloadWithTiger::FindZerosRangesHashset()
 {
 
 	if ( IsHashsetSet() )
 	{
-		m_bZerosRangesTested = true;
+		QWORD nOffset = 0;
+		QWORD nLength = 0;
 
 		for ( uint32 i = 0; i < m_nHashsetBlock; i++ )
-			if ( m_pHashsetBlock[i] != TRI_TRUE && m_pHashset.IsZeroBlock( i ) )
+		{
+			if ( !m_pHashsetBlock[i] && m_pHashset.IsZeroBlock( i ) )
 			{
-				QWORD nOffset = ED2K_PART_SIZE * i;
-				QWORD nLength = min( nOffset + ED2K_PART_SIZE, m_nSize ) - nOffset;
-				SubmitData( nOffset, NULL, nLength );
+				if ( nLength == 0 )
+					nOffset = ED2K_PART_SIZE * i;
+				
+				nLength +=  ED2K_PART_SIZE;
 			}
+			else
+			{
+				if ( nLength > 0 )
+					SubmitData( nOffset, NULL, min( nLength, ( m_nSize - nOffset ) ) );
+
+				nLength = 0;
+			}
+		}
+
+		if ( nLength > 0 )
+			SubmitData( nOffset, NULL, min( nLength, ( m_nSize - nOffset ) ) );
 
 		SetModified();
 	}
+}
+
+void CDownloadWithTiger::FindZerosRangesTreeTiger()
+{
 
 	if ( IsTigerSet() )
 	{
-		m_bZerosRangesTested = true;
-
 		uint32 nBlockLength = m_pTigerTree.GetBlockLength();
 		uint32 nBlockCount = m_pTigerTree.GetBlockCount();
 
+		QWORD nOffset = 0;
+		QWORD nLength = 0;
+
 		for ( uint32 i = 0; i < nBlockCount; i++ )
-			if ( m_pTigerBlock[i] != TRI_TRUE && m_pTigerTree.IsZeroBlock( i ) )
+		{
+			if ( !m_pTigerBlock[i] && m_pTigerTree.IsZeroBlock( i ) )
 			{
-				QWORD nOffset = nBlockLength * i;
-				QWORD nLength = min( nOffset + nBlockLength, m_nSize ) - nOffset;
-				SubmitData( nOffset, NULL, nLength );
+				if ( nLength == 0 )
+					nOffset = nBlockLength * i;
+
+				nLength += nBlockLength;
 			}
-
-		SetModified();
-	}
-
-	if ( IsTorrentSet() )
-	{
-		m_bZerosRangesTested = true;
-
-		for ( uint32 i = 0; i < m_nTorrentBlock; i++ )
-			if ( m_pTorrentBlock[i] != TRI_TRUE && m_pTorrent.IsZeroBlock( i ) )
+			else
 			{
-				QWORD nOffset = m_nTorrentSize * i;
-				QWORD nLength = min( nOffset + m_nTorrentSize, m_nSize ) - nOffset;
-				SubmitData( nOffset, NULL, nLength );
+				if ( nLength > 0 )
+					SubmitData( nOffset, NULL, min( nLength, ( m_nSize - nOffset ) ) );
+
+				nLength = 0;
 			}
+		}
+
+		if ( nLength > 0 )
+			SubmitData( nOffset, NULL, min( nLength, ( m_nSize - nOffset ) ) );
 
 		SetModified();
 	}
