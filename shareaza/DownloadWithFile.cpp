@@ -319,8 +319,9 @@ DWORD CDownloadWithFile::MoveFile(LPCTSTR pszDestination, LPPROGRESS_ROUTINE lpP
 		strMessage.Format( LoadString( IDS_DOWNLOAD_CANT_MOVE ), (LPCTSTR)GetDisplayName(), pszDestination );
 		theApp.Message( MSG_ERROR | MSG_TRAY, _T("%s"), (LPCTSTR)( strMessage + _T(" ") + GetErrorString( ret ) ) );
 	}
-
-	//ClearSources();
+	
+	if ( Settings.Downloads.ClearSourcesAfter )
+		ClearSources();
 
 	return ret;
 }

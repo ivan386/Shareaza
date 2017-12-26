@@ -542,6 +542,7 @@ public:
 		bool		AutoExpand;
 		bool		AutoClear;
 		DWORD		ClearDelay;
+		bool		ClearSourcesAfter;			// Clear sources list after download end.
 		DWORD		FilterMask;
 		bool		ShowMonitorURLs;
 		bool		SortColumns;				// Allow user to sort downloads by clicking column headers

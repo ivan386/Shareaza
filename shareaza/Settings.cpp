@@ -499,6 +499,7 @@ void CSettings::Load()
 	Add( _T("Downloads"), _T("ChunkSize"), &Downloads.ChunkSize, 512*Kilo, Kilo, 0, 10*Kilo, _T(" KB") );
 	Add( _T("Downloads"), _T("ChunkStrap"), &Downloads.ChunkStrap, 128*Kilo, Kilo, 0, 10*Kilo, _T(" KB") );
 	Add( _T("Downloads"), _T("ClearDelay"), &Downloads.ClearDelay, 30*1000, 1000, 1, 30*60, _T(" s") );
+	Add( _T("Downloads"), _T("ClearSourcesAfter"), &Downloads.ClearSourcesAfter, true );
 	Add( _T("Downloads"), _T("CollectionPath"), &Downloads.CollectionPath );
 	Add( _T("Downloads"), _T("CompletePath"), &Downloads.CompletePath );
 	Add( _T("Downloads"), _T("ConnectThrottle"), &Downloads.ConnectThrottle, 250, 1, 0, 5000, _T(" ms") );
