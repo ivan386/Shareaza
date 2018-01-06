@@ -96,10 +96,22 @@ DWORD CQueryKeys::Create(DWORD nAddress)
 	return m_pTable[ nHash & ( m_nTable - 1 ) ];
 }
 
+DWORD CQueryKeys::Create(IN6_ADDR nAddress)
+{
+	DWORD* n = (DWORD*) &nAddress;
+	return Create( n[0] ^ n[1] ^ n[2] ^ n[3] );
+}
+
+
 //////////////////////////////////////////////////////////////////////
 // CQueryKeys check
 
 BOOL CQueryKeys::Check(DWORD nAddress, DWORD nKey)
+{
+	return nKey == Create( nAddress );
+}
+
+BOOL CQueryKeys::Check(IN6_ADDR nAddress, DWORD nKey)
 {
 	return nKey == Create( nAddress );
 }

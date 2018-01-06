@@ -321,6 +321,8 @@ BOOL CNetwork::IsFirewalled(int nCheck) const
 		return FALSE;		// We know we are not firewalled on both TCP and UDP
 	else if ( nCheck == CHECK_IP )
 		return IsFirewalledAddress( &Network.m_pHost.sin_addr ) || IsReserved( &Network.m_pHost.sin_addr );
+	else if ( nCheck == CHECK_IP6 )
+		return IsFirewalledAddress( &Network.m_pHostIPv6.sin6_addr ) || IsReserved( &Network.m_pHostIPv6.sin6_addr );
 	else if ( Settings.Connection.FirewallState == CONNECTION_OPEN_TCPONLY && nCheck == CHECK_TCP )
 		return FALSE;		// We know we are not firewalled on TCP port
 	else if ( Settings.Connection.FirewallState == CONNECTION_OPEN_UDPONLY && nCheck == CHECK_UDP )
@@ -329,12 +331,18 @@ BOOL CNetwork::IsFirewalled(int nCheck) const
 	{
 		BOOL bTCPOpened = IsStable();
 		BOOL bUDPOpened = Datagrams.IsStable();
+		BOOL bTCP6Opened = TRUE;
+		BOOL bUDP6Opened = TRUE;
 		if( nCheck == CHECK_BOTH && bTCPOpened && bUDPOpened )
 			return FALSE;	// We know we are not firewalled on both TCP and UDP
 		else if ( nCheck == CHECK_TCP && bTCPOpened )
 			return FALSE;	// We know we are not firewalled on TCP port
 		else if ( nCheck == CHECK_UDP && bUDPOpened )
 			return FALSE;	// We know we are not firewalled on UDP port
+		else if ( nCheck == CHECK_TCP6 && bTCP6Opened)
+			return FALSE;	// We know we are not firewalled on TCP6 port
+		else if ( nCheck == CHECK_UDP6 && bUDP6Opened)
+			return FALSE;	// We know we are not firewalled on UDP6 port
 	}
 	return TRUE;			// We know we are firewalled
 #endif // LAN_MODE

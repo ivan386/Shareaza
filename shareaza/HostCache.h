@@ -121,6 +121,20 @@ public:
 		return false;
 	}
 
+	inline bool IsIPv6KeyHost() const throw()
+	{
+		if ( m_nKeyHost == 0 )
+		{
+			int i = 0;
+
+			for (; i < 8 && m_nKeyHostIPv6.u.Word[i] == 0 ; i++ );
+
+			if ( i < 8 )
+				return true;
+		}
+		return false;
+	}
+
 protected:
 	DWORD			m_tSeen;		// Host last seen time
 
@@ -377,7 +391,7 @@ public:
 	void				OnSuccess(const IN6_ADDR* pAddress, WORD nPort, PROTOCOLID nProtocol = PROTOCOL_NULL, bool bUpdate = true);
 	void				PruneOldHosts();
 
-	bool EnoughServers(PROTOCOLID nProtocol) const;
+	bool EnoughServers(PROTOCOLID nProtocol, DWORD* nCount = NULL) const;
 
 	inline CHostCacheList* ForProtocol(PROTOCOLID nProtocol)
 	{

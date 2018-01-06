@@ -45,6 +45,7 @@ public:
 	CLocalSearch(CBuffer* pBuffer, PROTOCOLID nProtocol);
 
 	SOCKADDR_IN		m_pEndpoint;	// Endpoint or neighbour address
+	SOCKADDR_IN6	m_pEndpointIPv6;// Endpoint or neighbour address
 	BOOL			m_bUDP;			// Send packets via UDP or TCP
 
 	// Search library and downloads (-1 - use default limit, 0 - no limit)

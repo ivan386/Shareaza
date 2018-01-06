@@ -745,8 +745,9 @@ void CHostCacheList::OnFailure(const IN_ADDR* pAddress, WORD nPort, bool bRemove
 			IN6_SET_ADDR_UNSPECIFIED( &pHost->m_pAddressIPv6 );
 		}
 
-		if ( ! pHost->m_bPriority && HostCache.EnoughServers( m_nProtocol ) &&
-			( bRemove || pHost->m_nFailures > Settings.Connection.FailureLimit ) )
+		if ( ! pHost->m_bPriority 
+			&& ( bRemove || pHost->m_nFailures > Settings.Connection.FailureLimit ) 
+			&& HostCache.EnoughServers( m_nProtocol ) )
 			Remove( pHost );
 	}
 }
@@ -841,6 +842,8 @@ void CHostCacheList::PruneOldHosts(DWORD tNow)
 {
 	CQuickLock oLock( m_pSection );
 
+	DWORD nCount = 0;
+
 	for( CHostCacheIterator i = m_HostsTime.begin(); i != m_HostsTime.end(); )
 	{
 		CHostCacheHostPtr pHost = (*i);
@@ -882,11 +885,15 @@ void CHostCacheList::PruneOldHosts(DWORD tNow)
 			;
 		}
 
-		if ( ! pHost->m_bPriority && HostCache.EnoughServers( pHost->m_nProtocol ) &&
+		if ( nCount > 0 && !HostCache.EnoughServers( pHost->m_nProtocol, &nCount ) )
+			nCount = 0; // Count hosts again
+
+		if ( ! pHost->m_bPriority && 
 			 ( pHost->m_nFailures > Settings.Connection.FailureLimit ||
-			    pHost->IsExpired( tNow ) ) )
+			    pHost->IsExpired( tNow ) ) && HostCache.EnoughServers( pHost->m_nProtocol, &nCount ) )
 		{
 			i = Remove( pHost );
+			nCount--;
 		}
 		else
 			++i;
@@ -1276,20 +1283,65 @@ int CHostCache::ImportNodes(CFile* pFile)
 	return nServers;
 }
 
-bool CHostCache::EnoughServers(PROTOCOLID nProtocol) const
+bool CHostCache::EnoughServers(PROTOCOLID nProtocol, DWORD* pCount) const
 {
 	switch ( nProtocol )
 	{
 	case PROTOCOL_G1:
-		return ! Settings.Gnutella1.EnableToday || Gnutella1.CountHosts( TRUE ) > 20;
+		if ( Settings.Gnutella1.EnableToday )
+		{
+			if ( pCount && *pCount > 0 )
+				return *pCount > 20;
+			else if ( pCount )
+				return ( *pCount = Gnutella1.CountHosts( TRUE ) ) > 20;
+			else
+				return Gnutella1.CountHosts( TRUE ) > 20;
+		}
+		return true;
 	case PROTOCOL_G2:
-		return ! Settings.Gnutella2.EnableToday || Gnutella2.CountHosts( TRUE ) > 25;
+		if ( Settings.Gnutella2.EnableToday )
+		{
+			if ( pCount && *pCount > 0 )
+				return *pCount > 25;
+			else if ( pCount )
+				return ( *pCount = Gnutella2.CountHosts( TRUE ) ) > 25;
+			else
+				return Gnutella2.CountHosts( TRUE ) > 25;
+		}
+		return true;
 	case PROTOCOL_ED2K:
-		return ! Settings.eDonkey.EnableToday || eDonkey.CountHosts( TRUE ) > 0;
+		if ( Settings.eDonkey.EnableToday )
+		{
+			if ( pCount && *pCount > 0 )
+				return true;
+			else if ( pCount )
+				return ( *pCount = eDonkey.CountHosts( TRUE ) ) > 0;
+			else
+				return eDonkey.CountHosts( TRUE ) > 0;
+		}
+		return true;
 	case PROTOCOL_DC:
-		return ! Settings.DC.EnableToday || DC.CountHosts( TRUE ) > 0;
+		if ( Settings.DC.EnableToday )
+		{
+			if ( pCount && *pCount > 0 )
+				return true;
+			else if ( pCount )
+				return ( *pCount = DC.CountHosts( TRUE ) ) > 0;
+			else
+				return DC.CountHosts( TRUE ) > 0;
+		}
+		return true;
 	case PROTOCOL_BT:
-		return ! Settings.BitTorrent.EnableToday || BitTorrent.CountHosts( TRUE ) > 0;
+		if ( Settings.BitTorrent.EnableToday )
+		{
+			if ( pCount && *pCount > 0 )
+				return true;
+			else if ( pCount )
+				return ( *pCount = BitTorrent.CountHosts( TRUE ) ) > 0;
+			else
+				return BitTorrent.CountHosts( TRUE ) > 0;
+		}
+		return true;
 	default:
 		return true;
 	}
@@ -1870,13 +1922,15 @@ bool CHostCacheHost::CanConnect(DWORD tNow) const
 	// Don't connect to self
 	if ( Settings.Connection.IgnoreOwnIP && Network.IsSelfIP( m_pAddress ) ) return false;
 
+	DWORD nCount = 0;
+
 	return
 		// Let failed host rest some time...
 		( ! m_tFailure || ( tNow >= m_tFailure + Settings.Connection.FailurePenalty ) ) &&
 		// ...and we lost no hope on this host...
-		( m_nFailures <= Settings.Connection.FailureLimit || ! HostCache.EnoughServers( m_nProtocol ) ) &&
+		( m_nFailures <= Settings.Connection.FailureLimit || ! HostCache.EnoughServers( m_nProtocol, &nCount ) ) &&
 		// ...and host isn't expired...
-		( m_bPriority || ! IsExpired( tNow ) || ! HostCache.EnoughServers( m_nProtocol ) ) &&
+		( m_bPriority || ! IsExpired( tNow ) || ! HostCache.EnoughServers( m_nProtocol, &nCount ) ) &&
 		// ...and make sure we reconnect not too fast...
 		( ! IsThrottled( tNow ) );
 		// ...then we can connect!

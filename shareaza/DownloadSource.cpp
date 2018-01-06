@@ -276,6 +276,7 @@ void CDownloadSource::Construct(const CDownload* pDownload)
 	m_nSortOrder			= 0xFFFFFFFF;
 	m_crColour				= RGB( 0, 0, 0 );
 	m_tAttempt				= 0;
+	m_tLastQuery			= 0;
 	m_bKeep					= FALSE;
 	m_nFailures				= 0;
 	m_nBusyCount			= 0;

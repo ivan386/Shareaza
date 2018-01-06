@@ -40,7 +40,7 @@ class CUPnP;
 
 enum // It is used from CNetwork::IsFirewalled
 {
-	CHECK_BOTH, CHECK_TCP, CHECK_UDP, CHECK_IP
+	CHECK_BOTH, CHECK_TCP, CHECK_UDP, CHECK_IP, CHECK_TCP6, CHECK_UDP6, CHECK_IP6
 };
 
 enum // AsyncResolver command

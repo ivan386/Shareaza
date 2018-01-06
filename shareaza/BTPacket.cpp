@@ -413,6 +413,23 @@ void CDHT::OnEvent(void* /*closure*/, int evt, const unsigned char* info_hash, c
 				HostCache.BitTorrent.m_nCookie++;
 			}
 		}
+		else if ( data_len == sizeof( SOCKADDR_IN6 ) )
+		{
+			// Assume UDP is stable
+			Datagrams.SetStable();
+
+			const SOCKADDR_IN6* pHost = (const SOCKADDR_IN6*)data;
+
+			CQuickLock oLock( HostCache.BitTorrent.m_pSection );
+
+			// Got reply from node
+			if ( CHostCacheHostPtr pCache = HostCache.BitTorrent.OnSuccess( &pHost->sin6_addr, htons( pHost->sin6_port ) ) )
+			{
+				pCache->m_tAck = 0;
+
+				HostCache.BitTorrent.m_nCookie++;
+			}
+		}
 		break;
 
 	case DHT_EVENT_REMOVED:
@@ -1000,6 +1017,16 @@ BOOL CBTPacket::OnPacket(const SOCKADDR_IN6* pHost)
 			u_short* pPort = ( (u_short*) pYourIPPort->m_pValue ) + 8;
 
 			ASSERT( *pPort == Network.m_pHostIPv6.sin6_port );
+		}
+	}
+
+	const CBENode* pYourIP = m_pNode->GetNode( BT_DICT_YOURIP );
+	if ( pYourIP && pYourIP->IsType( CBENode::beString ) )
+	{
+		if ( pYourIP->m_nValue == 16 )
+		{
+			// IPv6
+			Network.AcquireLocalAddress( *(const IN6_ADDR*)pYourIP->m_pValue, 0, &pHost->sin6_addr );
 		}
 	}
 

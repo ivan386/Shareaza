@@ -814,7 +814,7 @@ BOOL CG1Packet::OnQuery(const SOCKADDR_IN* pHost)
 		return TRUE;
 	}
 
-	CQuerySearchPtr pSearch = CQuerySearch::FromPacket( this, pHost );
+	CQuerySearchPtr pSearch = CQuerySearch::FromPacket( this, (SOCKADDR*) pHost );
 	if ( ! pSearch || pSearch->m_bDropMe )
 	{
 		if ( ! pSearch )

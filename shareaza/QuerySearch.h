@@ -119,7 +119,7 @@ private:
 // Packet Operations
 public:
 	CG1Packet*				ToG1Packet(DWORD nTTL = 0) const;
-	CG2Packet*				ToG2Packet(SOCKADDR_IN* pUDP, DWORD nKey) const;
+	CG2Packet*				ToG2Packet(SOCKADDR* pUDP, DWORD nKey) const;
 	CEDPacket*				ToEDPacket(BOOL bUDP, DWORD nServerFlags = 0) const;
 	CDCPacket*				ToDCPacket() const;
 private:
@@ -156,12 +156,26 @@ public:
 	// Note: \s* - matches any number of white-space symbols (including zero).
 	CString					BuildRegExp(const CString& strPattern) const;
 
+	inline bool IsIPv6Endpoint() const throw()
+	{
+		if ( m_pEndpoint.sin_addr.s_addr == 0 )
+		{
+			int i = 0;
+
+			for (; i < 8 && m_pEndpointIPv6.sin6_addr.u.Word[i] == 0 ; i++ );
+
+			if ( i < 8 )
+				return true;
+		}
+		return false;
+	}
+
 private:
 	BOOL					WriteHashesToEDPacket(CEDPacket* pPacket, BOOL bUDP, BOOL bLargeFiles) const;
 
 // Utilities
 public:
-	static CQuerySearchPtr	FromPacket(CPacket* pPacket, const SOCKADDR_IN* pEndpoint = NULL, BOOL bGUID = FALSE);
+	static CQuerySearchPtr	FromPacket(CPacket* pPacket, const SOCKADDR* pEndpoint = NULL, BOOL bGUID = FALSE);
 	static CSearchWnd*		OpenWindow(CQuerySearch* pSearch);
 	static BOOL				WordMatch(LPCTSTR pszString, LPCTSTR pszFind, bool* bReject = NULL);
 	static BOOL				NumberMatch(const CString& strValue, const CString& strRange);

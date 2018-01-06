@@ -75,6 +75,7 @@ public:
 	BOOL				m_bCloseConn;
 	BOOL				m_bReadContent;
 	FILETIME			m_tLastSeen;
+	DWORD				m_tLastQuery;
 	int					m_nGnutella;			// Gnutella functionality:
 												// 0 - Pure HTTP
 												// 1 - Pure G1

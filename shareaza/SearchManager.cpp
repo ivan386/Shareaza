@@ -300,7 +300,10 @@ BOOL CSearchManager::OnQueryHits(const CQueryHit* pHits)
 
 	if ( CSearchPtr pSearch = Find( pHits->m_oSearchID ) )
 	{
-		pSearch->OnHostAcknowledge( *(DWORD*)&pHits->m_pAddress );
+		if ( pHits->IsIPv6Hit() )
+			pSearch->OnHostAcknowledge( CManagedSearch::Compress( pHits->m_pAddressIPv6 ) );
+		else
+			pSearch->OnHostAcknowledge( *(DWORD*)&pHits->m_pAddress );
 
 		while ( pHits != NULL )
 		{

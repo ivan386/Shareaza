@@ -67,6 +67,7 @@ static char THIS_FILE[]=__FILE__;
 CLocalSearch::CLocalSearch(CQuerySearch* pSearch, const CNeighbour* pNeighbour) :
 	m_pSearch		( pSearch ),
 	m_pEndpoint		( pNeighbour->m_pHost ),
+	m_pEndpointIPv6	( pNeighbour->m_pHostIPv6 ),
 	m_pBuffer		( NULL ),
 	m_bUDP			( FALSE ),
 	m_nProtocol		( pNeighbour->m_nProtocol )
@@ -76,6 +77,7 @@ CLocalSearch::CLocalSearch(CQuerySearch* pSearch, const CNeighbour* pNeighbour) 
 CLocalSearch::CLocalSearch(CQuerySearch* pSearch, PROTOCOLID nProtocol) :
 	m_pSearch		( pSearch ),
 	m_pEndpoint		( pSearch->m_pEndpoint ),
+	m_pEndpointIPv6	( pSearch->m_pEndpointIPv6 ),
 	m_pBuffer		( NULL ),
 	m_bUDP			( TRUE ),
 	m_nProtocol		( nProtocol )
@@ -85,6 +87,7 @@ CLocalSearch::CLocalSearch(CQuerySearch* pSearch, PROTOCOLID nProtocol) :
 CLocalSearch::CLocalSearch(CBuffer* pBuffer, PROTOCOLID nProtocol) :
 	m_pSearch		( NULL ),
 	m_pEndpoint		(),
+	m_pEndpointIPv6	(),
 	m_pBuffer		( pBuffer ),
 	m_bUDP			( FALSE ),
 	m_nProtocol		( nProtocol )

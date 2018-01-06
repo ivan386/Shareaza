@@ -671,7 +671,7 @@ BOOL CG2Packet::OnPacket(const SOCKADDR_IN* pHost)
 	switch( m_nType )
 	{
 	case G2_PACKET_QUERY:
-		return OnQuery( pHost );
+		return OnQuery( ( SOCKADDR* ) pHost );
 	case G2_PACKET_QUERY_KEY_REQ:
 		return OnQueryKeyRequest( pHost );
 	case G2_PACKET_HIT:
@@ -865,7 +865,7 @@ BOOL CG2Packet::OnPong(const SOCKADDR_IN6* pHost)
 //////////////////////////////////////////////////////////////////////
 // CDatagrams QUERY packet handler
 
-BOOL CG2Packet::OnQuery(const SOCKADDR_IN* pHost)
+BOOL CG2Packet::OnQuery(const SOCKADDR* pHost)
 {
 	Statistics.Current.Gnutella2.Queries++;
 
@@ -876,13 +876,13 @@ BOOL CG2Packet::OnQuery(const SOCKADDR_IN* pHost)
 		if ( ! pSearch || ! pSearch->m_bUDP )
 		{
 			DEBUG_ONLY( Debug( _T("Malformed Query.") ) );
-			theApp.Message( MSG_WARNING, IDS_PROTOCOL_BAD_QUERY, (LPCTSTR)CString( inet_ntoa( pHost->sin_addr ) ) );
+			theApp.Message( MSG_WARNING, IDS_PROTOCOL_BAD_QUERY, (LPCTSTR) HostToString( pHost ) );
 		}
 		Statistics.Current.Gnutella2.Dropped++;
 		return FALSE;
 	}
 
-	if ( Security.IsDenied( &pSearch->m_pEndpoint.sin_addr ) )
+	if ( pSearch->IsIPv6Endpoint() ? Security.IsDenied( &pSearch->m_pEndpointIPv6.sin6_addr ) : Security.IsDenied( &pSearch->m_pEndpoint.sin_addr ) )
 	{
 		Statistics.Current.Gnutella2.Dropped++;
 		return FALSE;
@@ -894,19 +894,35 @@ BOOL CG2Packet::OnQuery(const SOCKADDR_IN* pHost)
 
 		CString strNode( inet_ntoa( pSearch->m_pEndpoint.sin_addr ) );
 		theApp.Message( MSG_DEBUG, _T("Issuing correction for node %s's query key for %s"),
-			(LPCTSTR)CString( inet_ntoa( pHost->sin_addr ) ), (LPCTSTR)strNode );
+			(LPCTSTR) HostToString( pHost ), (LPCTSTR)strNode );
 
 		CG2Packet* pAnswer = CG2Packet::New( G2_PACKET_QUERY_KEY_ANS, TRUE );
 		pAnswer->WritePacket( G2_PACKET_QUERY_KEY, 4 );
 		pAnswer->WriteLongBE( nKey );
 
-		if ( pHost->sin_addr.S_un.S_addr != pSearch->m_pEndpoint.sin_addr.S_un.S_addr )
+		if ( pHost->sa_family == AF_INET )
 		{
-			pAnswer->WritePacket( G2_PACKET_SEND_ADDRESS, 4 );
-			pAnswer->WriteLongLE( pHost->sin_addr.S_un.S_addr );
+			SOCKADDR_IN* pHostIPv4 = (SOCKADDR_IN*) pHost;
+			if ( pSearch->IsIPv6Endpoint() || pHostIPv4->sin_addr.s_addr != pSearch->m_pEndpoint.sin_addr.s_addr )
+			{
+				pAnswer->WritePacket( G2_PACKET_SEND_ADDRESS, 4 );
+				pAnswer->WriteLongLE( pHostIPv4->sin_addr.S_un.S_addr );
+			}
+		}
+		else if ( pHost->sa_family == AF_INET6 )
+		{
+			SOCKADDR_IN6* pHostIPv6 = (SOCKADDR_IN6*) pHost;
+			if ( !pSearch->IsIPv6Endpoint() || !IN6_ADDR_EQUAL( &pHostIPv6->sin6_addr, &pSearch->m_pEndpointIPv6.sin6_addr ) )
+			{
+				pAnswer->WritePacket( G2_PACKET_SEND_ADDRESS, sizeof( IN6_ADDR ) );
+				pAnswer->Write( &pHostIPv6->sin6_addr, sizeof( IN6_ADDR ) );
+			}
 		}
 
-		Datagrams.Send( &pSearch->m_pEndpoint, pAnswer, TRUE );
+		if ( pSearch->IsIPv6Endpoint() )
+			Datagrams.Send( &pSearch->m_pEndpointIPv6, pAnswer, TRUE );
+		else
+			Datagrams.Send( &pSearch->m_pEndpoint, pAnswer, TRUE );
 
 		return TRUE;
 	}
@@ -923,10 +939,13 @@ BOOL CG2Packet::OnQuery(const SOCKADDR_IN* pHost)
 	if ( ! Neighbours.CheckQuery( pSearch ) )
 	{
 		// Ack without hub list with retry time
-		Datagrams.Send( &pSearch->m_pEndpoint, Neighbours.CreateQueryWeb( pSearch->m_oGUID, false, NULL, false ) );
+		if( pSearch->IsIPv6Endpoint() )
+			Datagrams.Send( &pSearch->m_pEndpointIPv6, Neighbours.CreateQueryWeb( pSearch->m_oGUID, false, NULL, false ) );
+		else	
+			Datagrams.Send( &pSearch->m_pEndpoint, Neighbours.CreateQueryWeb( pSearch->m_oGUID, false, NULL, false ) );
 
 		theApp.Message( MSG_WARNING, IDS_PROTOCOL_EXCESS,
-			(LPCTSTR)( CString( inet_ntoa( pHost->sin_addr ) ) + _T(" [UDP]") ),
+			(LPCTSTR)( HostToString( pHost ) + _T(" [UDP]") ),
 			(LPCTSTR)CString( inet_ntoa( pSearch->m_pEndpoint.sin_addr ) ) );
 		Statistics.Current.Gnutella2.Dropped++;
 		return TRUE;
@@ -937,7 +956,10 @@ BOOL CG2Packet::OnQuery(const SOCKADDR_IN* pHost)
 	Network.OnQuerySearch( new CLocalSearch( pSearch, PROTOCOL_G2 ) );
 
 	// Ack with hub list
-	Datagrams.Send( &pSearch->m_pEndpoint, Neighbours.CreateQueryWeb( pSearch->m_oGUID, true ) );
+	if( pSearch->IsIPv6Endpoint() )
+		Datagrams.Send( &pSearch->m_pEndpointIPv6, Neighbours.CreateQueryWeb( pSearch->m_oGUID, true ) );
+	else
+		Datagrams.Send( &pSearch->m_pEndpoint, Neighbours.CreateQueryWeb( pSearch->m_oGUID, true ) );
 
 	Statistics.Current.Gnutella2.QueriesProcessed++;
 
@@ -1001,11 +1023,20 @@ BOOL CG2Packet::OnCommonHit(const SOCKADDR_IN* pHost)
 	// If it doesn't we'll drop it.
 	if ( pHits->m_pAddress.S_un.S_addr != pHost->sin_addr.S_un.S_addr )
 	{
-		theApp.Message( MSG_ERROR, IDS_PROTOCOL_BAD_HIT, (LPCTSTR)HostToString( pHost ) );
-		DEBUG_ONLY( Debug( _T("Hit sender IP does not match \"Node Address\"") ) );
-		Statistics.Current.Gnutella2.Dropped++;
-		pHits->Delete();
-		return TRUE;
+		if ( !HostCache.Gnutella2.Find( &pHost->sin_addr ) )
+		{
+			theApp.Message( MSG_ERROR, IDS_PROTOCOL_BAD_HIT, (LPCTSTR)HostToString( pHost ) );
+			theApp.Message( MSG_DEBUG, _T("%s != %s"),
+									(LPCTSTR)CString( inet_ntoa( pHits->m_pAddress ) ),
+									(LPCTSTR)CString( inet_ntoa( pHost->sin_addr ) ) );
+
+			DEBUG_ONLY( Debug( _T("Hit sender IP does not match \"Node Address\"") ) );
+
+
+			Statistics.Current.Gnutella2.Dropped++;
+			pHits->Delete();
+			return TRUE;
+		}
 	}
 
 	if ( Security.IsDenied( &pHits->m_pAddress ) )

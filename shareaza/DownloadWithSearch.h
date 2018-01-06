@@ -35,7 +35,7 @@ public:
 	DWORD			m_tLastED2KLocal;	// Time the last ed2k TCP GetSources was done on this download
 
 	virtual BOOL	FindMoreSources();
-	BOOL			IsSearching() const;
+	BOOL			IsSearching(int* pPriority = NULL) const;
 
 protected:
 	CDownloadWithSearch();

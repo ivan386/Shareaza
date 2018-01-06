@@ -740,8 +740,10 @@ BOOL CG2Neighbour::OnLNI(CG2Packet* pPacket)
 			WORD nPort = pPacket->ReadShortBE();
 			if ( nPort && nAddress ) // skip 0.0.0.0:0
 			{
-				m_pHost.sin_addr.s_addr = nAddress;
-				m_pHost.sin_port = htons( nPort );
+				// m_pHost.sin_addr.s_addr = nAddress; // We allready know it
+
+				if ( !m_bInitiated ) // We know incoming port if we initiated connection
+					m_pHost.sin_port = htons( nPort );
 			}
 		}
 		else if ( nType == G2_PACKET_NODE_ADDRESS && nLength == 18 ) // IPv6
@@ -751,8 +753,10 @@ BOOL CG2Neighbour::OnLNI(CG2Packet* pPacket)
 			WORD nPort = pPacket->ReadShortBE();
 			if ( nPort && ! IN6_IS_ADDR_UNSPECIFIED( &nAddress ) ) // skip [::]:0
 			{
-				m_pHostIPv6.sin6_addr = nAddress;
-				m_pHostIPv6.sin6_port = htons( nPort );
+				// m_pHostIPv6.sin6_addr = nAddress;  // We allready know it
+
+				if ( !m_bInitiated ) // We know incoming port if we initiated connection
+					m_pHostIPv6.sin6_port = htons( nPort );
 			}
 		}
 		else if ( nType == G2_PACKET_NODE_GUID && nLength >= 16 )
@@ -1340,8 +1344,17 @@ BOOL CG2Neighbour::OnQuery(CG2Packet* pPacket)
 		return TRUE;
 	}
 
-	BOOL bUseUDP = pSearch->m_bUDP &&
-		pSearch->m_pEndpoint.sin_addr.s_addr != m_pHost.sin_addr.s_addr;
+	bool bIPv6 = pSearch->IsIPv6Endpoint();
+
+	BOOL bUseUDP = pSearch->m_bUDP;
+
+	if ( bUseUDP && ( IsIPv6Host() == bIPv6 ) )
+	{
+		if ( bIPv6 && IN6_ADDR_EQUAL( &pSearch->m_pEndpointIPv6.sin6_addr, &m_pHostIPv6.sin6_addr ) )
+			bUseUDP = FALSE;
+		else if( !bIPv6 && pSearch->m_pEndpoint.sin_addr.s_addr == m_pHost.sin_addr.s_addr )
+			bUseUDP = FALSE;
+	}
 
 	if ( ( bUseUDP && m_nNodeType == ntLeaf ) ||				// Forbid UDP answer for leaf query
 		! Network.QueryRoute->Add( pSearch->m_oGUID, this ) )	// Forbid looped query
@@ -1351,7 +1364,7 @@ BOOL CG2Neighbour::OnQuery(CG2Packet* pPacket)
 		return TRUE;
 	}
 
-	if ( Security.IsDenied( &pSearch->m_pEndpoint.sin_addr ) )
+	if ( pSearch->IsIPv6Endpoint() ? Security.IsDenied( &pSearch->m_pEndpointIPv6.sin6_addr ) : Security.IsDenied( &pSearch->m_pEndpoint.sin_addr ) )
 	{
 		Statistics.Current.Gnutella2.Dropped++;
 		m_nDropCount++;
@@ -1368,8 +1381,8 @@ BOOL CG2Neighbour::OnQuery(CG2Packet* pPacket)
 		}
 
 		theApp.Message( MSG_WARNING, IDS_PROTOCOL_EXCESS,
-			(LPCTSTR)( CString( inet_ntoa( m_pHost.sin_addr ) ) + _T(" [TCP]") ),
-			(LPCTSTR)CString( inet_ntoa( pSearch->m_pEndpoint.sin_addr ) ) );
+			(LPCTSTR)( ( IsIPv6Host() ? HostToString( &m_pHostIPv6 ) : HostToString( &m_pHost ) ) + _T(" [TCP]") ),
+			(LPCTSTR)( pSearch->IsIPv6Endpoint() ? HostToString( &pSearch->m_pEndpointIPv6 ) : HostToString( &pSearch->m_pEndpoint ) ) );
 		Statistics.Current.Gnutella2.Dropped++;
 		m_nDropCount++;
 		return TRUE;

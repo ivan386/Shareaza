@@ -531,7 +531,7 @@ BOOL CDCNeighbour::OnQuery(CDCPacket* pPacket)
 
 	if ( pSearch->m_bUDP )
 	{
-		if ( Security.IsDenied( &pSearch->m_pEndpoint.sin_addr ) )
+		if ( pSearch->IsIPv6Endpoint() ? Security.IsDenied( &pSearch->m_pEndpointIPv6.sin6_addr ) : Security.IsDenied( &pSearch->m_pEndpoint.sin_addr ) )
 		{
 			m_nDropCount++;
 			return TRUE;

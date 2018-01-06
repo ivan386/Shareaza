@@ -1195,10 +1195,17 @@ void CDownloadsCtrl::PaintDownload(CDC& dc, const CRect& rcRow, CDownload* pDown
 			break;
 
 		case DOWNLOAD_COLUMN_STATUS:
-			if ( m_bShowSearching && pDownload->IsSearching() )
-				LoadString( strText, IDS_STATUS_SEARCHING );
-			else
-				strText = pDownload->GetDownloadStatus();
+			{
+				int nPriority = 0;
+				if ( m_bShowSearching && pDownload->IsSearching(&nPriority) )
+				{
+					CString strTemp;
+					LoadString( strTemp, IDS_STATUS_SEARCHING );
+					strText.Format( _T("%s (%i)"), strTemp, nPriority );
+				}
+				else
+					strText = pDownload->GetDownloadStatus();
+			}
 			break;
 
 		case DOWNLOAD_COLUMN_CLIENT:

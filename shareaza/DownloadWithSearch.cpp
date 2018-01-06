@@ -127,8 +127,15 @@ void CDownloadWithSearch::StartManualSearch()
 	m_pSearch->Start();
 }
 
-BOOL CDownloadWithSearch::IsSearching() const
+BOOL CDownloadWithSearch::IsSearching(int* pPriority) const
 {
+	if ( m_pSearch )
+	{
+		if ( pPriority )
+			*pPriority = m_pSearch->GetPriority();
+
+		return m_pSearch->IsActive();
+	}
 	return m_pSearch && m_pSearch->IsActive();
 }
 

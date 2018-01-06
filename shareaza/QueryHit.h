@@ -120,20 +120,6 @@ protected:
 
 // Inlines
 
-	inline bool IsIPv6Hit() const
-	{
-		if ( m_pAddress.s_addr == 0 )
-		{
-			int i = 0;
-
-			for (; i < 8 && m_pAddressIPv6.u.Word[i] == 0 ; i++ );
-
-			if ( i < 8 )
-				return true;
-		}
-		return false;
-	}
-
 	inline CString GetIPForURL() const
 	{
 		if ( IsIPv6Hit() )
@@ -149,6 +135,19 @@ public:
 	inline BOOL IsRated() const
 	{
 		return ( m_nRating || m_sComments.GetLength() );
+	}
+	inline bool IsIPv6Hit() const
+	{
+		if ( m_pAddress.s_addr == 0 )
+		{
+			int i = 0;
+
+			for (; i < 8 && m_pAddressIPv6.u.Word[i] == 0 ; i++ );
+
+			if ( i < 8 )
+				return true;
+		}
+		return false;
 	}
 };
 

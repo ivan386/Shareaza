@@ -224,10 +224,13 @@ void CSearchMonitorWnd::OnQuerySearch(const CQuerySearch* pSearch)
 	CString strSchema;
 	CString strURN;
 	CString strNode;
+
 	if ( pSearch->m_pEndpoint.sin_addr.s_addr )
 		strNode.Format( _T("%hs:%u"),
 			inet_ntoa( pSearch->m_pEndpoint.sin_addr ),
 			ntohs( pSearch->m_pEndpoint.sin_port ) );
+	else if ( pSearch->IsIPv6Endpoint() )
+		strNode = HostToString( &pSearch->m_pEndpointIPv6 );
 
 	if ( pSearch->HasHash() )
 		strURN = pSearch->GetShortURN();

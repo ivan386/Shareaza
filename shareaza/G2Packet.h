@@ -309,7 +309,7 @@ protected:
 	BOOL OnPing(const SOCKADDR_IN6* pHost);
 	BOOL OnPong(const SOCKADDR_IN* pHost);
 	BOOL OnPong(const SOCKADDR_IN6* pHost);
-	BOOL OnQuery(const SOCKADDR_IN* pHost);
+	BOOL OnQuery(const SOCKADDR* pHost);
 	BOOL OnQueryAck(const SOCKADDR_IN* pHost);
 	BOOL OnCommonHit(const SOCKADDR_IN* pHost);
 	BOOL OnQueryKeyRequest(const SOCKADDR_IN* pHost);
