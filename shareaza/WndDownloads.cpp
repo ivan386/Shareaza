@@ -439,7 +439,7 @@ void CDownloadsWnd::OnContextMenu(CWnd* /*pWnd*/, CPoint point)
 	m_wndDownloads.ScreenToClient( &ptLocal );
 	m_tSel = 0;
 
-	int nMenu;
+	int nMenu = 4;
 	CStringList pList;
 	{
 		CSingleLock pLock( &Transfers.m_pSection, TRUE );
@@ -450,25 +450,24 @@ void CDownloadsWnd::OnContextMenu(CWnd* /*pWnd*/, CPoint point)
 		if ( ( point.x < 0 && point.y < 0 && m_wndDownloads.GetAt( m_wndDownloads.m_nFocus, &pDownload, &pSource ) )
 			 || m_wndDownloads.HitTest( ptLocal, &pDownload, &pSource, NULL, NULL ) )
 		{
-			if ( pDownload )
+			if ( pDownload && pDownload->m_bSelected )
 			{
 				for ( DWORD i = 0; i < pDownload->GetFileCount(); ++i )
 				{
 					pList.AddTail( pDownload->GetPath( i ) );
 				}
+
+				nMenu = 3;
+
+				if ( pDownload->IsSeeding() )
+					nMenu = 1;
+				else if ( pDownload->IsCompleted() )
+					nMenu = 2;
 			}
 
-			if ( pSource )
+			if ( pSource && pSource->m_bSelected )
 				nMenu = 0;
-			else if ( pDownload->IsSeeding() )
-				nMenu = 1;
-			else if ( pDownload->IsCompleted() )
-				nMenu = 2;
-			else
-				nMenu = 3;
 		}
-		else
-			nMenu = 4;
 	}
 
 	Skin.TrackPopupMenu( ContextMenus[ nMenu ].szMenu, point, ContextMenus[ nMenu ].nDefaultID, pList );
@@ -630,10 +629,13 @@ void CDownloadsWnd::Prepare()
 				m_bSelAny = TRUE;
 				m_bSelSource = TRUE;
 				m_bSelSourceExtended = pSource->m_bClientExtended;
+
 				if ( pSource->IsIdle() )
 					m_bSelIdleSource = TRUE;
 				else
 					m_bSelActiveSource = TRUE;
+
+
 				if ( pSource->m_bClientExtended || pSource->m_nProtocol == PROTOCOL_ED2K )
 				{
 					m_bSelBrowse = TRUE;
@@ -645,6 +647,9 @@ void CDownloadsWnd::Prepare()
 					// m_bSelChat = TRUE;
 					m_bSelBrowse = TRUE;
 				}
+				else if ( Settings.Downloads.ForceBrowse )
+					m_bSelBrowse = TRUE;
+
 				if ( ! pSource->m_bPushOnly ) m_bSelSourceAcceptConnections = TRUE;
 			}
 

@@ -503,6 +503,7 @@ void CSettings::Load()
 	Add( _T("Downloads"), _T("CollectionPath"), &Downloads.CollectionPath );
 	Add( _T("Downloads"), _T("CompletePath"), &Downloads.CompletePath );
 	Add( _T("Downloads"), _T("ConnectThrottle"), &Downloads.ConnectThrottle, 250, 1, 0, 5000, _T(" ms") );
+	Add( _T("Downloads"), _T("ForceBrowse"), &Downloads.ForceBrowse, false );
 	Add( _T("Downloads"), _T("FilterMask"), &Downloads.FilterMask, 0xFFFFFFFF );
 	Add( _T("Downloads"), _T("FlushSD"), &Downloads.FlushSD, true );
 	Add( _T("Downloads"), _T("IncompletePath"), &Downloads.IncompletePath );

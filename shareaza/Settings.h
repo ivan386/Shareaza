@@ -549,6 +549,7 @@ public:
 		bool		SortSources;				// Automatically sort sources (Status, protocol, queue)
 		DWORD		SourcesWanted;				// Number of sources Shareaza 'wants'. (Will not request more than this number of sources from ed2k)
 		DWORD		MaxReviews;					// Maximum number of reviews to store per download
+		bool		ForceBrowse;				// All download sources activate browse host menu item
 		bool		WebHookEnable;
 		string_set	WebHookExtensions;
 	} Downloads;
