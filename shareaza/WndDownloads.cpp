@@ -446,7 +446,9 @@ void CDownloadsWnd::OnContextMenu(CWnd* /*pWnd*/, CPoint point)
 
 		CDownloadSource* pSource;
 		CDownload* pDownload;
-		if ( m_wndDownloads.HitTest( ptLocal, &pDownload, &pSource, NULL, NULL ) )
+
+		if ( ( point.x < 0 && point.y < 0 && m_wndDownloads.GetAt( m_wndDownloads.m_nFocus, &pDownload, &pSource ) )
+			 || m_wndDownloads.HitTest( ptLocal, &pDownload, &pSource, NULL, NULL ) )
 		{
 			if ( pDownload )
 			{
