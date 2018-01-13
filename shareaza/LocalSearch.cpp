@@ -956,9 +956,11 @@ CG2Packet* CLocalSearch::CreatePacketG2()
 	pPacket->WritePacket( G2_PACKET_NODE_GUID, Hashes::Guid::byteCount );
 	pPacket->Write( Hashes::Guid( MyProfile.oGUID ) );
 
-	pPacket->WritePacket( G2_PACKET_NODE_ADDRESS, 6 );
+	pPacket->WritePacket( G2_PACKET_NODE_ADDRESS, 24 );
 	pPacket->WriteLongLE( Network.m_pHost.sin_addr.s_addr );
 	pPacket->WriteShortBE( htons( Network.m_pHost.sin_port ) );
+	pPacket->Write( &Network.m_pHostIPv6.sin6_addr, 16 );
+	pPacket->WriteShortBE( htons( Network.m_pHostIPv6.sin6_port ) );
 
 	pPacket->WritePacket( G2_PACKET_VENDOR, 4 );
 	pPacket->WriteString( VENDOR_CODE, FALSE );

@@ -849,12 +849,12 @@ BOOL CG2Packet::OnPong(const SOCKADDR_IN6* pHost)
 
 	
 
-	if ( bRelayed && ! Datagrams.IsStable() && ! Network.IsConnectedTo( &pHost->sin6_addr ) ){
+	if ( bRelayed && ! Datagrams.IsStable( true ) && ! Network.IsConnectedTo( &pHost->sin6_addr ) ){
 		CHostCacheHostPtr pCache = HostCache.Gnutella2.Find( &pHost->sin6_addr );
 		DWORD tNow = static_cast< DWORD >( time( NULL ) );
 		//If we firewaled than we can't get udp packed from host that we don't send it
 		if ( ! pCache )
-			Datagrams.SetStable();
+			Datagrams.SetStableIPv6();
 	}
 			
 	
@@ -888,9 +888,13 @@ BOOL CG2Packet::OnQuery(const SOCKADDR* pHost)
 		return FALSE;
 	}
 
-	if ( ! Network.QueryKeys->Check( pSearch->m_pEndpoint.sin_addr.S_un.S_addr, pSearch->m_nKey ) )
+	if ( pSearch->IsIPv6Endpoint() ?
+		! Network.QueryKeys->Check( pSearch->m_pEndpointIPv6.sin6_addr, pSearch->m_nKey )
+		: ! Network.QueryKeys->Check( pSearch->m_pEndpoint.sin_addr.S_un.S_addr, pSearch->m_nKey ) )
 	{
-		DWORD nKey = Network.QueryKeys->Create( pSearch->m_pEndpoint.sin_addr.S_un.S_addr );
+		DWORD nKey = pSearch->IsIPv6Endpoint() ? 
+			Network.QueryKeys->Create( pSearch->m_pEndpointIPv6.sin6_addr )
+			: Network.QueryKeys->Create( pSearch->m_pEndpoint.sin_addr.S_un.S_addr );
 
 		CString strNode( inet_ntoa( pSearch->m_pEndpoint.sin_addr ) );
 		theApp.Message( MSG_DEBUG, _T("Issuing correction for node %s's query key for %s"),
@@ -914,7 +918,8 @@ BOOL CG2Packet::OnQuery(const SOCKADDR* pHost)
 			SOCKADDR_IN6* pHostIPv6 = (SOCKADDR_IN6*) pHost;
 			if ( !pSearch->IsIPv6Endpoint() || !IN6_ADDR_EQUAL( &pHostIPv6->sin6_addr, &pSearch->m_pEndpointIPv6.sin6_addr ) )
 			{
-				pAnswer->WritePacket( G2_PACKET_SEND_ADDRESS, sizeof( IN6_ADDR ) );
+				pAnswer->WritePacket( G2_PACKET_SEND_ADDRESS, sizeof( IN6_ADDR ) + 4 );
+				pAnswer->WriteLongLE( 0 );
 				pAnswer->Write( &pHostIPv6->sin6_addr, sizeof( IN6_ADDR ) );
 			}
 		}
@@ -927,10 +932,13 @@ BOOL CG2Packet::OnQuery(const SOCKADDR* pHost)
 		return TRUE;
 	}
 
-	if ( ! Network.QueryRoute->Add( pSearch->m_oGUID, &pSearch->m_pEndpoint ) )
+	if ( ! Network.QueryRoute->Add( pSearch->m_oGUID, pSearch->IsIPv6Endpoint() ? (SOCKADDR*) &pSearch->m_pEndpointIPv6: (SOCKADDR*) &pSearch->m_pEndpoint ) )
 	{
 		// Ack without hub list
-		Datagrams.Send( &pSearch->m_pEndpoint, Neighbours.CreateQueryWeb( pSearch->m_oGUID, false ) );
+		if ( pSearch->IsIPv6Endpoint() )
+			Datagrams.Send( &pSearch->m_pEndpointIPv6, Neighbours.CreateQueryWeb( pSearch->m_oGUID, false ) );
+		else
+			Datagrams.Send( &pSearch->m_pEndpoint, Neighbours.CreateQueryWeb( pSearch->m_oGUID, false ) );
 
 		Statistics.Current.Gnutella2.Dropped++;
 		return TRUE;
@@ -1048,7 +1056,7 @@ BOOL CG2Packet::OnCommonHit(const SOCKADDR_IN* pHost)
 
 	if ( ! pHits->m_bBogus )
 	{
-		Network.NodeRoute->Add( pHits->m_oClientID, pHost );
+		Network.NodeRoute->Add( pHits->m_oClientID,(SOCKADDR*) pHost );
 
 		// Don't route exceeded hits
 		if ( nHops <= (int)Settings.Gnutella1.MaximumTTL &&
@@ -1140,6 +1148,7 @@ BOOL CG2Packet::OnQueryKeyAnswer(const SOCKADDR_IN* pHost)
 
 	DWORD nKey = 0;
 	IN_ADDR nAddress = {};
+	IN6_ADDR nAddressIPv6 = {};
 
 	G2_PACKET nType;
 	DWORD nLength;
@@ -1152,9 +1161,17 @@ BOOL CG2Packet::OnQueryKeyAnswer(const SOCKADDR_IN* pHost)
 		{
 			nKey = ReadLongBE();
 		}
-		else if ( nType == G2_PACKET_SEND_ADDRESS && nLength >= 4 )
+		else if ( nType == G2_PACKET_SEND_ADDRESS )
 		{
-			nAddress.s_addr = ReadLongLE();
+			if ( nLength == 4 )
+				nAddress.s_addr = ReadLongLE();
+			else if ( nLength == 16 )
+				Read( &nAddressIPv6, sizeof( IN6_ADDR ) );
+			else if ( nLength == 20 )
+			{
+				nAddress.s_addr = ReadLongLE();
+				Read( &nAddressIPv6, sizeof( IN6_ADDR ) );
+			}
 		}
 
 		m_nPosition = nOffset;
@@ -1518,6 +1535,8 @@ BOOL CG2Packet::OnKHLA(const SOCKADDR_IN* pHost)
 		{
 			DWORD nAddress = 0, tSeen = tNow;
 			WORD nPort = 0;
+			IN6_ADDR nAddressIPv6 = {};
+			WORD nPortIPv6 = 0;
 			CString strVendor;
 
 			if ( bCompound || G2_PACKET_NEIGHBOUR_HUB == nType )
@@ -1526,10 +1545,18 @@ BOOL CG2Packet::OnKHLA(const SOCKADDR_IN* pHost)
 				{
 					DWORD nNextX = m_nPosition + nInnerLength;
 
-					if ( nInner == G2_PACKET_NODE_ADDRESS && nInnerLength >= 6 )
+					if ( nInner == G2_PACKET_NODE_ADDRESS )
 					{
-						nAddress = ReadLongLE();
-						nPort = ReadShortBE();
+						if ( nInnerLength == 6 || nInnerLength == 24 )
+						{
+							nAddress = ReadLongLE();
+							nPort = ReadShortBE();
+						}
+						if ( nInnerLength == 18 || nInnerLength == 24 )
+						{
+							Read( &nAddressIPv6, sizeof( nAddressIPv6 ) );
+							nPortIPv6	= ReadShortBE();
+						}
 					}
 					else if ( nInner == G2_PACKET_VENDOR && nInnerLength >= 4 )
 					{
@@ -1546,16 +1573,25 @@ BOOL CG2Packet::OnKHLA(const SOCKADDR_IN* pHost)
 				nLength = nNext - m_nPosition;
 			}
 
-			if ( nLength >= 6 )
+			if ( nLength == 6 || nLength == 10 || nLength == 28 || nLength == 32 )
 			{
 				nAddress = ReadLongLE();
 				nPort = ReadShortBE();
-				if ( nLength >= 10 )
+				if ( nLength == 10 || nLength == 28 )
+					tSeen = ReadLongBE() + tAdjust;
+			}
+
+			if ( nLength == 18 || nLength == 22 || nLength == 28 || nLength == 32 )
+			{
+				Read( &nAddressIPv6, sizeof( nAddressIPv6 ) );
+				nPortIPv6	= ReadShortBE();
+				if ( nLength == 22 || nLength == 32 )
 					tSeen = ReadLongBE() + tAdjust;
 			}
 
 			CHostCacheHostPtr pCached = HostCache.Gnutella2.Add(
 				(IN_ADDR*)&nAddress, nPort, &pHost->sin_addr, tSeen, strVendor );
+
 			if ( pCached != NULL )
 			{
 				nCount++;

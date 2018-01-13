@@ -79,20 +79,28 @@ public:
 	void	Disconnect();
 
 	// True if the socket is valid, false if its closed
-	inline BOOL IsValid() const
+	inline BOOL IsValid(bool bIPv6 = false) const
 	{
-		return ( m_hSocket[ 0 ] != INVALID_SOCKET );
+		if ( bIPv6 )
+			return ( m_hSocketIPv6 != INVALID_SOCKET );
+		else
+			return ( m_hSocket[ 0 ] != INVALID_SOCKET );
 	}
 
 	// Avoid using this function directly, use !Network.IsFirewalled(CHECK_UDP) instead
-	inline BOOL IsStable() const
+	inline BOOL IsStable(bool bIPv6 = false) const
 	{
-		return IsValid() && m_bStable;
+		return IsValid(bIPv6) && ( bIPv6 ? m_bStableIPv6: m_bStable );
 	}
 
 	inline void SetStable(BOOL bStable = TRUE)
 	{
 		m_bStable = bStable;
+	}
+
+	inline void SetStableIPv6(BOOL bStable = TRUE)
+	{
+		m_bStableIPv6 = bStable;
 	}
 
 	BOOL	Send(const IN_ADDR* pAddress, WORD nPort, CPacket* pPacket, BOOL bRelease = TRUE, LPVOID pToken = NULL, BOOL bAck = TRUE);
@@ -113,6 +121,7 @@ protected:
 										// [ 4 ] - BitTorrent multi-cast port (http://bittorrent.org/beps/bep_0014.html): 239.192.152.143:6771
 	WORD			m_nSequence;
 	BOOL			m_bStable;
+	BOOL			m_bStableIPv6;
 	DWORD			m_tLastWrite;
 
 	CBuffer*		m_pBufferBuffer;	// Output buffers

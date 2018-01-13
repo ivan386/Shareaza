@@ -39,8 +39,10 @@ CRouteCacheItem::CRouteCacheItem()
 	, m_oGUID		()
 	, m_pNeighbour	( NULL )
 	, m_pEndpoint	()
+	, m_pEndpointIPv6 ()
 {
 	m_pEndpoint.sin_family = AF_INET;
+	m_pEndpointIPv6.sin6_family = AF_INET6;
 }
 
 //////////////////////////////////////////////////////////////////////
@@ -88,12 +90,18 @@ BOOL CRouteCache::Add(const Hashes::Guid& oGUID, const CNeighbour* pNeighbour)
 	return TRUE;
 }
 
-BOOL CRouteCache::Add(const Hashes::Guid& oGUID, const SOCKADDR_IN* pEndpoint)
+BOOL CRouteCache::Add(const Hashes::Guid& oGUID, const SOCKADDR* pEndpoint)
 {
 	if ( CRouteCacheItem* pItem = Lookup( oGUID ) )
 	{
 		pItem->m_pNeighbour	= NULL;
-		pItem->m_pEndpoint	= *pEndpoint;
+		if ( pEndpoint )
+		{	
+			if ( pEndpoint->sa_family == AF_INET6 )
+				pItem->m_pEndpointIPv6 =  *(SOCKADDR_IN6*) pEndpoint;
+			else
+				pItem->m_pEndpoint = *(SOCKADDR_IN*) pEndpoint;
+		}
 		return FALSE;
 	}
 
@@ -113,12 +121,9 @@ BOOL CRouteCache::Add(const Hashes::Guid& oGUID, const SOCKADDR_IN* pEndpoint)
 
 CRouteCacheItem* CRouteCache::Add(const Hashes::Guid& oGUID,		// GUID of node
 								  const CNeighbour* pNeighbour,		// pointer to CNeighbour for Destination of GUID
-								  const SOCKADDR_IN* pEndpoint,		// pointer to SOCKADDR_IN structure containing Destination
+								  const SOCKADDR* pEndpoint,		// pointer to SOCKADDR structure containing Destination
 								  DWORD tAdded)						// Time the node added ( TickCount )
 {
-	SOCKADDR_IN cEndpoint;
-	if ( pEndpoint != NULL ) cEndpoint = *pEndpoint;
-
 	if ( m_pRecent->IsFull() )
 	{
 		CRouteCacheTable* pTemp = m_pRecent;
@@ -128,10 +133,10 @@ CRouteCacheItem* CRouteCache::Add(const Hashes::Guid& oGUID,		// GUID of node
 		m_pRecent->Resize( m_pHistory->GetNextSize( m_nSeconds ) );
 	}
 
-	return m_pRecent->Add( oGUID, pNeighbour, pEndpoint != NULL ? &cEndpoint : NULL, tAdded );
+	return m_pRecent->Add( oGUID, pNeighbour, pEndpoint, tAdded );
 }
 
-CRouteCacheItem* CRouteCache::Lookup(const Hashes::Guid& oGUID, CNeighbour** ppNeighbour, SOCKADDR_IN* pEndpoint)
+CRouteCacheItem* CRouteCache::Lookup(const Hashes::Guid& oGUID, CNeighbour** ppNeighbour, SOCKADDR_IN* pEndpoint, SOCKADDR_IN6* pEndpointIPv6)
 {
 	CRouteCacheItem* pItem = m_pRecent->Find( oGUID );
 
@@ -143,6 +148,7 @@ CRouteCacheItem* CRouteCache::Lookup(const Hashes::Guid& oGUID, CNeighbour** ppN
 		{
 			if ( ppNeighbour ) *ppNeighbour = NULL;
 			if ( pEndpoint ) ZeroMemory( pEndpoint, sizeof(SOCKADDR_IN) );
+			if ( pEndpointIPv6 ) ZeroMemory( pEndpointIPv6, sizeof(SOCKADDR_IN6) );
 
 			return NULL;
 		}
@@ -156,13 +162,15 @@ CRouteCacheItem* CRouteCache::Lookup(const Hashes::Guid& oGUID, CNeighbour** ppN
 		Hashes::Guid oTempGUID( pItem->m_oGUID);
 		CNeighbour* pTempNeighbour = const_cast<CNeighbour*>(pItem->m_pNeighbour);
 		SOCKADDR_IN pTempEndPoint = pItem->m_pEndpoint;
+		SOCKADDR_IN6 pTempEndPointIPv6 = pItem->m_pEndpointIPv6;
 		DWORD tTempAddTime = pItem->m_tAdded;
 
-		pItem = Add( oTempGUID, pTempNeighbour, &pTempEndPoint, tTempAddTime );
+		pItem = Add( oTempGUID, pTempNeighbour, pTempEndPoint.sin_addr.s_addr ? (SOCKADDR*)&pTempEndPoint : (SOCKADDR*)&pTempEndPointIPv6, tTempAddTime );
 	}
 
 	if ( ppNeighbour ) *ppNeighbour = (CNeighbour*)pItem->m_pNeighbour;
 	if ( pEndpoint ) *pEndpoint = pItem->m_pEndpoint;
+	if ( pEndpointIPv6 ) *pEndpointIPv6 = pItem->m_pEndpointIPv6;
 
 	return pItem;
 }
@@ -218,7 +226,7 @@ CRouteCacheItem* CRouteCacheTable::Find(const Hashes::Guid& oGUID)
 	return NULL;
 }
 
-CRouteCacheItem* CRouteCacheTable::Add(const Hashes::Guid& oGUID, const CNeighbour* pNeighbour, const SOCKADDR_IN* pEndpoint, DWORD nTime)
+CRouteCacheItem* CRouteCacheTable::Add(const Hashes::Guid& oGUID, const CNeighbour* pNeighbour, const SOCKADDR* pEndpoint, DWORD nTime)
 {
 	if ( m_nUsed == m_nBuffer || ! m_pFree ) return NULL;
 	
@@ -240,7 +248,13 @@ CRouteCacheItem* CRouteCacheTable::Add(const Hashes::Guid& oGUID, const CNeighbo
 	pItem->m_oGUID			= oGUID;
 	pItem->m_tAdded			= nTime ? nTime : GetTickCount();
 	pItem->m_pNeighbour		= pNeighbour;
-	if ( pEndpoint ) pItem->m_pEndpoint = *pEndpoint;
+	if ( pEndpoint )
+	{	
+		if ( pEndpoint->sa_family == AF_INET6 )
+			pItem->m_pEndpointIPv6 =  * (SOCKADDR_IN6*) pEndpoint;
+		else
+			pItem->m_pEndpoint = * (SOCKADDR_IN*)pEndpoint;
+	}
 
 	if ( ! m_nUsed++ )
 	{

@@ -440,15 +440,19 @@ void CDownloadsWnd::OnContextMenu(CWnd* /*pWnd*/, CPoint point)
 	m_tSel = 0;
 
 	int nMenu = 4;
+
+	bool bControl = ( GetAsyncKeyState( VK_CONTROL ) & 0x8000 ) != 0;
+
 	CStringList pList;
 	{
 		CSingleLock pLock( &Transfers.m_pSection, TRUE );
 
-		CDownloadSource* pSource;
-		CDownload* pDownload;
+		CDownloadSource* pSource = NULL;
+		CDownload* pDownload = NULL;
 
-		if ( ( point.x < 0 && point.y < 0 && m_wndDownloads.GetAt( m_wndDownloads.m_nFocus, &pDownload, &pSource ) )
-			 || m_wndDownloads.HitTest( ptLocal, &pDownload, &pSource, NULL, NULL ) )
+		if ( ( point.x < 0 && point.y < 0 ) ? !bControl &&
+			m_wndDownloads.GetAt( m_wndDownloads.m_nFocus, &pDownload, &pSource )
+			: m_wndDownloads.HitTest( ptLocal, &pDownload, &pSource, NULL, NULL ) )
 		{
 			if ( pDownload && pDownload->m_bSelected )
 			{
@@ -457,12 +461,12 @@ void CDownloadsWnd::OnContextMenu(CWnd* /*pWnd*/, CPoint point)
 					pList.AddTail( pDownload->GetPath( i ) );
 				}
 
-				nMenu = 3;
-
 				if ( pDownload->IsSeeding() )
 					nMenu = 1;
 				else if ( pDownload->IsCompleted() )
 					nMenu = 2;
+				else
+					nMenu = 3;
 			}
 
 			if ( pSource && pSource->m_bSelected )

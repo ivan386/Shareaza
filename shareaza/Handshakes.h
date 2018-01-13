@@ -64,9 +64,12 @@ protected:
 
 public:
 	// True if the socket is valid, false if its closed
-	inline BOOL IsValid() const throw()
+	inline BOOL IsValid(bool bIPv6 = false) const throw()
 	{
-		return ( m_hSocket != INVALID_SOCKET );
+		if ( bIPv6 )
+			return ( m_hSocketIPv6 != INVALID_SOCKET );
+		else
+			return ( m_hSocket != INVALID_SOCKET );
 	}
 
 	// The time at least one has been connected (seconds)

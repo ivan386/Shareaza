@@ -297,6 +297,16 @@ bool CNetwork::IsListening() const
 		&& ( Datagrams.IsValid() );
 }
 
+
+bool CNetwork::IsListeningIPv6() const
+{
+	return ( IsConnected() )
+		&& ( !IN6_IS_ADDR_UNSPECIFIED( &m_pHostIPv6.sin6_addr ) )
+		&& ( m_pHostIPv6.sin6_port != 0 )
+		&& ( Handshakes.IsValid( true ) )
+		&& ( Datagrams.IsValid( true ) );
+}
+
 bool CNetwork::IsWellConnected() const
 {
 	return IsConnected() && ( Neighbours.GetStableCount() != 0 );
@@ -311,13 +321,22 @@ bool CNetwork::IsStable() const
 #endif // LAN_MODE
 }
 
+bool CNetwork::IsStableIPv6() const
+{
+#ifdef LAN_MODE
+	return IsListeningIPv6();
+#else // LAN_MODE
+	return IsListeningIPv6() && IsWellConnected();
+#endif // LAN_MODE
+}
+
 BOOL CNetwork::IsFirewalled(int nCheck) const
 {
 #ifdef LAN_MODE
 	UNUSED_ALWAYS( nCheck );
 	return FALSE;
 #else // LAN_MODE
-	if ( Settings.Connection.FirewallState == CONNECTION_OPEN )	// CHECK_BOTH, CHECK_TCP, CHECK_UDP
+	if ( Settings.Connection.FirewallState == CONNECTION_OPEN )	// CHECK_BOTH, CHECK_TCP, CHECK_UDP, CHECK_TCP6, CHECK_UDP6
 		return FALSE;		// We know we are not firewalled on both TCP and UDP
 	else if ( nCheck == CHECK_IP )
 		return IsFirewalledAddress( &Network.m_pHost.sin_addr ) || IsReserved( &Network.m_pHost.sin_addr );
@@ -331,8 +350,8 @@ BOOL CNetwork::IsFirewalled(int nCheck) const
 	{
 		BOOL bTCPOpened = IsStable();
 		BOOL bUDPOpened = Datagrams.IsStable();
-		BOOL bTCP6Opened = TRUE;
-		BOOL bUDP6Opened = TRUE;
+		BOOL bTCP6Opened = IsStableIPv6();
+		BOOL bUDP6Opened = Datagrams.IsStable( true );
 		if( nCheck == CHECK_BOTH && bTCPOpened && bUDPOpened )
 			return FALSE;	// We know we are not firewalled on both TCP and UDP
 		else if ( nCheck == CHECK_TCP && bTCPOpened )

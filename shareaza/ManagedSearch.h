@@ -77,9 +77,9 @@ public:
 		return m_nPriority;
 	}
 
-	inline static DWORD Compress(IN6_ADDR nAddress)
+	inline static DWORD Compress(const IN6_ADDR nAddress)
 	{
-		DWORD* n = (DWORD*) &nAddress;
+		const DWORD* n = (DWORD*) &nAddress;
 		return n[0] ^ n[1] ^ n[2] ^ n[3];
 	}
 

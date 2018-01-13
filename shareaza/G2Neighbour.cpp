@@ -172,14 +172,17 @@ BOOL CG2Neighbour::OnRun()
 
 	// We are unsure in our UDP capabilities therefore
 	// we perform limited "two hop" ping ourself using this neighbour
-	if ( Network.IsListening() && Network.IsFirewalled(CHECK_UDP) &&
+	if ( ( IsIPv6Host() ? Network.IsListeningIPv6() && Network.IsFirewalled(CHECK_UDP6)
+		: Network.IsListening() && Network.IsFirewalled(CHECK_UDP) ) &&
 		m_nCountRelayPingOut < 3 &&
 		tNow - m_tLastRelayPingOut >= Settings.Gnutella2.PingRate )
 	{
 		CG2Packet* pPing = CG2Packet::New( G2_PACKET_PING, TRUE );
 		if ( IsIPv6Host() )
 		{
-			pPing->WritePacket( G2_PACKET_UDP, 18 );
+			pPing->WritePacket( G2_PACKET_UDP, 24 );
+			pPing->WriteLongLE( 0 );
+			pPing->WriteShortBE( 0 );
 			pPing->Write( &Network.m_pHostIPv6.sin6_addr, sizeof( IN6_ADDR ) );
 			pPing->WriteShortBE( htons( Network.m_pHostIPv6.sin6_port ) );
 		}
@@ -277,7 +280,9 @@ void CG2Neighbour::SendStartups()
 	{
 		if ( IsIPv6Host() )
 		{
-			pPing->WritePacket( G2_PACKET_UDP, 18 );
+			pPing->WritePacket( G2_PACKET_UDP, 24 );
+			pPing->WriteLongLE( 0 );
+			pPing->WriteShortBE( 0 );
 			pPing->Write( &Network.m_pHost.sin_addr, 16 );
 			pPing->WriteShortBE( htons( Network.m_pHostIPv6.sin6_port ) );
 		}
@@ -470,17 +475,20 @@ BOOL CG2Neighbour::OnPing(CG2Packet* pPacket, BOOL bTCP)
 		while ( pPacket->ReadPacket( nType, nLength ) )
 		{
 			DWORD nNext = pPacket->m_nPosition + nLength;
-			if ( nType == G2_PACKET_UDP && nLength == 6 )
+			if ( nType == G2_PACKET_UDP )
 			{
-				nAddress	= pPacket->ReadLongLE();
-				nPort		= pPacket->ReadShortBE();
-				bUDP = TRUE;
-			}
-			else if ( nType == G2_PACKET_UDP && nLength == 18 )
-			{
-				pPacket->Read( &nAddressIPv6, 16 );
-				nPort		= pPacket->ReadShortBE();
-				bUDP = TRUE;
+				if ( nLength == 6 || nLength == 24 )
+				{
+					nAddress	= pPacket->ReadLongLE();
+					nPort		= pPacket->ReadShortBE();
+					bUDP = TRUE;
+				}
+				if ( nLength == 18 || nLength == 24 )
+				{
+					pPacket->Read( &nAddressIPv6, 16 );
+					nPort		= pPacket->ReadShortBE();
+					bUDP = TRUE;
+				}
 			}
 			else if ( nType == G2_PACKET_RELAY )
 			{
@@ -633,8 +641,8 @@ BOOL CG2Neighbour::OnPong(CG2Packet* pPacket, BOOL bTCP)
 		}
 	}
 
-	if ( bRelayed && ! bTCP && IsIPv6Host() ? ! Network.IsConnectedTo( &m_pHostIPv6.sin6_addr ) : ! Network.IsConnectedTo( &m_pHost.sin_addr ) )
-		Datagrams.SetStable();
+	if ( bRelayed && ! bTCP && ( IsIPv6Host() ? ! Network.IsConnectedTo( &m_pHostIPv6.sin6_addr ) : ! Network.IsConnectedTo( &m_pHost.sin_addr ) ) )
+		IsIPv6Host() ? Datagrams.SetStableIPv6() : Datagrams.SetStable();
 
 	return TRUE;
 }
@@ -676,7 +684,9 @@ CG2Packet* CG2Neighbour::CreateLNIPacket(CG2Neighbour* pOwner)
 
 	if ( pOwner->IsIPv6Host() )
 	{
-		pPacket->WritePacket( G2_PACKET_NODE_ADDRESS, 18 );
+		pPacket->WritePacket( G2_PACKET_NODE_ADDRESS, 22 );
+		pPacket->WriteLongLE( 0 );
+		pPacket->WriteShortBE( 0 );
 		pPacket->Write( &Network.m_pHostIPv6.sin6_addr, sizeof( IN6_ADDR ) );
 		pPacket->WriteShortBE( htons( Network.m_pHostIPv6.sin6_port ) );
 	}
@@ -696,7 +706,7 @@ CG2Packet* CG2Neighbour::CreateLNIPacket(CG2Neighbour* pOwner)
 	pPacket->WritePacket( G2_PACKET_LIBRARY_STATUS, 8 );
 	pPacket->WriteLongBE( (DWORD)nMyFiles );
 	pPacket->WriteLongBE( (DWORD)nMyVolume );
-	if (Network.IsFirewalled())
+	if ( pOwner->IsIPv6Host() ? Network.IsFirewalled( CHECK_UDP6 ) : Network.IsFirewalled())
 	{
 		theApp.Message( MSG_DEBUG, _T("Sending LNI/FW") );
 		pPacket->WritePacket( G2_PACKET_FW, 0 );
@@ -734,29 +744,33 @@ BOOL CG2Neighbour::OnLNI(CG2Packet* pPacket)
 	{
 		DWORD nNext = pPacket->m_nPosition + nLength;
 
-		if ( nType == G2_PACKET_NODE_ADDRESS && nLength == 6 )
+		if ( nType == G2_PACKET_NODE_ADDRESS )
 		{
-			DWORD nAddress = pPacket->ReadLongLE();
-			WORD nPort = pPacket->ReadShortBE();
-			if ( nPort && nAddress ) // skip 0.0.0.0:0
+			if ( nLength == 6 || nLength == 24 )
 			{
-				// m_pHost.sin_addr.s_addr = nAddress; // We allready know it
+				DWORD nAddress = pPacket->ReadLongLE();
+				WORD nPort = pPacket->ReadShortBE();
+				if ( nPort && nAddress ) // skip 0.0.0.0:0
+				{
+					// m_pHost.sin_addr.s_addr = nAddress; // We allready know it
 
-				if ( !m_bInitiated ) // We know incoming port if we initiated connection
-					m_pHost.sin_port = htons( nPort );
+					if ( !m_bInitiated ) // We know incoming port if we initiated connection
+						m_pHost.sin_port = htons( nPort );
+				}
 			}
-		}
-		else if ( nType == G2_PACKET_NODE_ADDRESS && nLength == 18 ) // IPv6
-		{
-			IN6_ADDR nAddress = {};
-			pPacket->Read( &nAddress, sizeof( nAddress ) );
-			WORD nPort = pPacket->ReadShortBE();
-			if ( nPort && ! IN6_IS_ADDR_UNSPECIFIED( &nAddress ) ) // skip [::]:0
-			{
-				// m_pHostIPv6.sin6_addr = nAddress;  // We allready know it
 
-				if ( !m_bInitiated ) // We know incoming port if we initiated connection
-					m_pHostIPv6.sin6_port = htons( nPort );
+			if ( nLength == 18 || nLength == 24 ) // IPv6
+			{
+				IN6_ADDR nAddress = {};
+				pPacket->Read( &nAddress, sizeof( nAddress ) );
+				WORD nPort = pPacket->ReadShortBE();
+				if ( nPort && ! IN6_IS_ADDR_UNSPECIFIED( &nAddress ) ) // skip [::]:0
+				{
+					// m_pHostIPv6.sin6_addr = nAddress;  // We allready know it
+
+					if ( !m_bInitiated ) // We know incoming port if we initiated connection
+						m_pHostIPv6.sin6_port = htons( nPort );
+				}
 			}
 		}
 		else if ( nType == G2_PACKET_NODE_GUID && nLength >= 16 )
@@ -1033,6 +1047,13 @@ BOOL CG2Neighbour::ParseKHLPacket(CG2Packet* pPacket, const SOCKADDR* pHost)
 							pPacket->Read( &nAddressIPv6, sizeof( IN6_ADDR ) );
 							nPort = pPacket->ReadShortBE();
 						}
+						else if ( nInnerType == G2_PACKET_NODE_ADDRESS && nInner == 22 ) //IPv4 + IPv6
+						{
+							nAddress = pPacket->ReadLongLE();
+							nPort = pPacket->ReadShortBE();
+							pPacket->Read( &nAddressIPv6, sizeof( IN6_ADDR ) );
+							nPort = pPacket->ReadShortBE();
+						}
 						else if ( nInnerType == G2_PACKET_VENDOR && nInner >= 4 )
 						{
 							strVendor = pPacket->ReadString( 4 );
@@ -1072,17 +1093,21 @@ BOOL CG2Neighbour::ParseKHLPacket(CG2Packet* pPacket, const SOCKADDR* pHost)
 					nLength = nNext - pPacket->m_nPosition;
 				}
 
-				if ( nLength >= 6 || nLength < 18  )
+				//      IPv4      ||  IPv4 + tSeen ||  IPv4 + IPv6  ||  IPv4s + IPv6 || IPv4s + IPv6s
+				if ( nLength == 6 || nLength == 10 || nLength == 24 || nLength == 28 || nLength == 32 )
 				{
 					nAddress = pPacket->ReadLongLE();
 					nPort = pPacket->ReadShortBE();
-					if ( nLength >= 10 ) tSeen = pPacket->ReadLongBE() + tAdjust;
+					if ( nLength == 10 || nLength == 28 || nLength == 32 ) 
+						tSeen = pPacket->ReadLongBE() + tAdjust;
 				}
-				else if( nLength >= 18 )
+
+				//      IPv6      ||  IPv6 + tSeen  ||  IPv4 + IPv6  ||  IPv4s + IPv6 || IPv4s + IPv6s
+				if( nLength == 18 || nLength == 22 || nLength == 24 || nLength == 28 || nLength == 32 )
 				{
 					pPacket->Read( &nAddressIPv6, sizeof( IN6_ADDR ) );
 					nPort = pPacket->ReadShortBE();
-					if ( nLength >= 22 ) tSeen = pPacket->ReadLongBE() + tAdjust;
+					if ( nLength == 22 || nLength == 32 ) tSeen = pPacket->ReadLongBE() + tAdjust;
 				}
 
 				if ( nPort &&
@@ -1196,8 +1221,10 @@ void CG2Neighbour::SendHAW()
 
 	if ( IsIPv6Host() )
 	{
-		pPacket->WritePacket( G2_PACKET_NODE_ADDRESS, 18 );
-		pPacket->Write( &Network.m_pHostIPv6.sin6_addr, 16);
+		pPacket->WritePacket( G2_PACKET_NODE_ADDRESS, 24 );
+		pPacket->WriteLongLE( 0 );
+		pPacket->WriteShortBE( 0 );
+		pPacket->Write( &Network.m_pHostIPv6.sin6_addr, 16 );
 		pPacket->WriteShortBE( htons( Network.m_pHostIPv6.sin6_port ) );
 	}
 	else
@@ -1259,6 +1286,13 @@ BOOL CG2Neighbour::OnHAW(CG2Packet* pPacket)
 		}
 		else if ( nType == G2_PACKET_NODE_ADDRESS && nLength == 18 )
 		{
+			pPacket->Read( &nAddressIPv6, sizeof( nAddressIPv6 ) );
+			nPortIPv6	= pPacket->ReadShortBE();
+		}
+		else if ( nType == G2_PACKET_NODE_ADDRESS && nLength == 24 )
+		{
+			nAddress	= pPacket->ReadLongLE();
+			nPort		= pPacket->ReadShortBE();
 			pPacket->Read( &nAddressIPv6, sizeof( nAddressIPv6 ) );
 			nPortIPv6	= pPacket->ReadShortBE();
 		}

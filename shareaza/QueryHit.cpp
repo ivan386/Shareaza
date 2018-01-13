@@ -484,6 +484,7 @@ CQueryHit* CQueryHit::FromG2Packet(CG2Packet* pPacket, int* pnHops)
 					nAddress = pPacket->ReadLongLE();
 					if ( Network.IsReserved( (IN_ADDR*)&nAddress ) || Security.IsDenied( (IN_ADDR*)&nAddress ) )
 						bSpam = true;
+
 					nPort = pPacket->ReadShortBE();
 				}
 				else if( nLength == 18 ) // IPv6
@@ -491,6 +492,23 @@ CQueryHit* CQueryHit::FromG2Packet(CG2Packet* pPacket, int* pnHops)
 					pPacket->Read( &nIPv6Address, 16 );
 
 					nPort = pPacket->ReadShortBE();
+					if ( Network.IsReserved( &nIPv6Address ) || Security.IsDenied( &nIPv6Address ) )
+					{
+						nIPv6Address = in6addr_any;
+						bSpam |= ( nAddress == 0 );
+					}
+				}
+				else if( nLength == 24 ) // IPv4 + IPv6
+				{
+					nAddress = pPacket->ReadLongLE();
+					nPort = pPacket->ReadShortBE();
+					if ( Network.IsReserved( (IN_ADDR*)&nAddress ) || Security.IsDenied( (IN_ADDR*)&nAddress ) )
+						nAddress = 0;
+
+					pPacket->Read( &nIPv6Address, 16 );
+					nPort = pPacket->ReadShortBE();
+					if ( Network.IsReserved( &nIPv6Address ) || Security.IsDenied( &nIPv6Address ) )
+						bSpam |= ( nAddress == 0 );
 				}
 				else
 					theApp.Message( MSG_DEBUG | MSG_FACILITY_SEARCH, _T("[G2] Hit Error: Got node address with invalid length (%u bytes)"), nLength );
@@ -678,7 +696,7 @@ CQueryHit* CQueryHit::FromG2Packet(CG2Packet* pPacket, int* pnHops)
 			SOCKADDR_IN pHub = { AF_INET };
 			pHub.sin_addr.s_addr = iter->first;
 			pHub.sin_port = iter->second;
-			Network.NodeRoute->Add( oClientID, &pHub );
+			Network.NodeRoute->Add( oClientID, (SOCKADDR*) &pHub );
 		}
 	}
 

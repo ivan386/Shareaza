@@ -66,6 +66,7 @@ CDatagrams::CDatagrams()
 	, m_nOutPackets		( 0 )
 	, m_nSequence		( 0 )
 	, m_bStable			( FALSE )
+	, m_bStableIPv6		( FALSE )
 	, m_tLastWrite		( 0 )
 	, m_pBufferBuffer	( NULL )
 	, m_nBufferBuffer	( 0 )
@@ -374,6 +375,7 @@ void CDatagrams::Disconnect()
 	m_nInBandwidth	= m_nInFrags	= m_nInPackets	= 0;
 	m_nOutBandwidth	= m_nOutFrags	= m_nOutPackets	= 0;
 	m_bStable = FALSE;
+	m_bStableIPv6 = FALSE;
 }
 
 //////////////////////////////////////////////////////////////////////

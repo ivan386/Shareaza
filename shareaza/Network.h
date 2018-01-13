@@ -200,8 +200,10 @@ public:
 	bool		IsAvailable() const;
 	bool		IsConnected() const;
 	bool		IsListening() const;
+	bool		IsListeningIPv6() const;
 	bool		IsWellConnected() const;
 	bool		IsStable() const;
+	bool		IsStableIPv6() const;
 	BOOL		IsFirewalled(int nCheck = CHECK_UDP) const;
 	DWORD		GetStableTime() const;
 	BOOL		IsConnectedTo(const IN_ADDR* pAddress) const;

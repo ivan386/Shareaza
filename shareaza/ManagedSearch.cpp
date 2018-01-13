@@ -431,34 +431,40 @@ BOOL CManagedSearch::ExecuteSources(const DWORD tTicks, const DWORD tSecs)
 			if ( !pSource->m_bPushOnly && pSource->m_bClientExtended && tSecs - pSource->m_tLastQuery > Settings.Gnutella2.QueryThrottle )
 			{
 
-				DWORD tLastQuery;
-
-				if ( m_pNodes.Lookup( bIPv6 ? Compress( pSource->m_pAddressIPv6 ) : pSource->m_pAddress.s_addr, tLastQuery ) )
-				{
-					// Check per-hub re-query time
-					DWORD nFrequency;
-
-					if ( m_nPriority >=  spLowest )
-					{
-						// Low priority "auto find" sources
-						if ( m_pSearch->m_oSHA1 )		// Has SHA1- probably exists on G2
-							nFrequency = 16 * 60 * 60;
-						else							// Reduce frequency if no SHA1.
-							nFrequency = 32 * 60 * 60;
-					}
-					else
-						nFrequency = Settings.Gnutella2.RequeryDelay * ( m_nPriority + 1 );
-					if ( tSecs - tLastQuery < nFrequency )
-						continue;
-				}
-
 				CHostCacheHostPtr pHost = bIPv6 ? 
 					HostCache.Gnutella2.Find( &pSource->m_pAddressIPv6 ) 
 					: HostCache.Gnutella2.Find( &pSource->m_pAddress );
 
-				if ( !pHost )
+				if ( pHost && !pHost->CanQuery( tSecs ) ) 
+					continue;
+
+				DWORD tLastQuery;
+
+				if ( m_pNodes.Lookup( bIPv6 ? Compress( pSource->m_pAddressIPv6 ) : pSource->m_pAddress.s_addr, tLastQuery ) )
 				{
-					CG2Packet* pPacket = m_pSearch->ToG2Packet( NULL, 1 );
+					if ( !pHost || tLastQuery > pHost->m_tKeyTime )
+					{
+						// Check per-hub re-query time
+						DWORD nFrequency;
+
+						if ( m_nPriority >=  spLowest )
+						{
+							// Low priority "auto find" sources
+							if ( m_pSearch->m_oSHA1 )		// Has SHA1- probably exists on G2
+								nFrequency = 16 * 60 * 60;
+							else							// Reduce frequency if no SHA1.
+								nFrequency = 32 * 60 * 60;
+						}
+						else
+							nFrequency = Settings.Gnutella2.RequeryDelay * ( m_nPriority + 1 );
+						if ( tSecs - tLastQuery < nFrequency )
+							continue;
+					}
+				}
+
+				if ( !pHost || tSecs - pHost->m_tKeyTime >= max( Settings.Gnutella2.QueryThrottle * 5ul, 5ul * 60ul ) )
+				{
+					CG2Packet* pPacket = m_pSearch->ToG2Packet( NULL, ( pHost && pHost->m_nKeyValue ) ? pHost->m_nKeyValue : 1 );
 
 					if ( bIPv6 ? 
 						Datagrams.Send( &pSource->m_pAddressIPv6, pSource->m_nPort, pPacket ) 
@@ -475,6 +481,13 @@ BOOL CManagedSearch::ExecuteSources(const DWORD tTicks, const DWORD tSecs)
 							m_pNodes.SetAt( pSource->m_pAddress.s_addr, tSecs );
 
 						pSource->m_tLastQuery = tSecs;
+
+						if ( pHost )
+						{
+							pHost->m_tQuery = tSecs;
+							if ( pHost->m_tAck == 0 )
+								pHost->m_tAck = tSecs;
+						}
 
 						return TRUE;
 					}
@@ -585,21 +598,24 @@ BOOL CManagedSearch::ExecuteG2Mesh(const DWORD /*tTicks*/, const DWORD tSecs)
 
 			if ( m_pNodes.Lookup( pHost->IsIPv6Host() ? Compress( pHost->m_pAddressIPv6 ) : pHost->m_pAddress.s_addr, tLastQuery ) )
 			{
-				// Check per-hub re-query time
-				DWORD nFrequency;
-
-				if ( m_nPriority >=  spLowest )
+				if ( tLastQuery > pHost->m_tKeyTime )
 				{
-					// Low priority "auto find" sources
-					if ( m_pSearch->m_oSHA1 )		// Has SHA1- probably exists on G2
-						nFrequency = 16 * 60 * 60;
-					else							// Reduce frequency if no SHA1.
-						nFrequency = 32 * 60 * 60;
+					// Check per-hub re-query time
+					DWORD nFrequency;
+
+					if ( m_nPriority >=  spLowest )
+					{
+						// Low priority "auto find" sources
+						if ( m_pSearch->m_oSHA1 )		// Has SHA1- probably exists on G2
+							nFrequency = 16 * 60 * 60;
+						else							// Reduce frequency if no SHA1.
+							nFrequency = 32 * 60 * 60;
+					}
+					else
+						nFrequency = Settings.Gnutella2.RequeryDelay * ( m_nPriority + 1 );
+					if ( tSecs - tLastQuery < nFrequency )
+						continue;
 				}
-				else
-					nFrequency = Settings.Gnutella2.RequeryDelay * ( m_nPriority + 1 );
-				if ( tSecs - tLastQuery < nFrequency )
-					continue;
 			}
 
 			// Set the last query time for this host for this search

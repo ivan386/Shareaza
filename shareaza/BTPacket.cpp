@@ -416,7 +416,7 @@ void CDHT::OnEvent(void* /*closure*/, int evt, const unsigned char* info_hash, c
 		else if ( data_len == sizeof( SOCKADDR_IN6 ) )
 		{
 			// Assume UDP is stable
-			Datagrams.SetStable();
+			Datagrams.SetStableIPv6();
 
 			const SOCKADDR_IN6* pHost = (const SOCKADDR_IN6*)data;
 
@@ -1029,6 +1029,8 @@ BOOL CBTPacket::OnPacket(const SOCKADDR_IN6* pHost)
 			Network.AcquireLocalAddress( *(const IN6_ADDR*)pYourIP->m_pValue, 0, &pHost->sin6_addr );
 		}
 	}
+
+	Datagrams.SetStableIPv6();
 
 	DHT.OnPacket( pHost, this );
 
