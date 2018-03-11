@@ -988,7 +988,7 @@ BOOL CG2Packet::OnQueryAck(const SOCKADDR_IN* pHost)
 
 	Hashes::Guid oGUID;
 
-	if ( SearchManager.OnQueryAck( this, pHost, oGUID ) )
+	if ( SearchManager.OnQueryAck( this, (SOCKADDR*) pHost, oGUID ) )
 	{
 		CNeighbour* pNeighbour = NULL;
 		SOCKADDR_IN pEndpoint;

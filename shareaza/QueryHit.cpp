@@ -498,7 +498,7 @@ CQueryHit* CQueryHit::FromG2Packet(CG2Packet* pPacket, int* pnHops)
 						bSpam |= ( nAddress == 0 );
 					}
 				}
-				else if( nLength == 24 ) // IPv4 + IPv6
+				else if( nLength == 6 + 18 ) // IPv4 + IPv6
 				{
 					nAddress = pPacket->ReadLongLE();
 					nPort = pPacket->ReadShortBE();

@@ -156,12 +156,19 @@ void CSearchManager::OnRun()
 //////////////////////////////////////////////////////////////////////
 // CSearchManager query acknowledgment
 
-BOOL CSearchManager::OnQueryAck(CG2Packet* pPacket, const SOCKADDR_IN* pAddress, Hashes::Guid& oGUID)
+BOOL CSearchManager::OnQueryAck(CG2Packet* pPacket, const SOCKADDR* pAddress, Hashes::Guid& oGUID)
 {
 	if ( ! pPacket->m_bCompound )
 		AfxThrowUserException();
 
-	DWORD nFromIP = pAddress->sin_addr.S_un.S_addr;
+	SOCKADDR_IN* pAddressIPv4 = pAddress->sa_family == AF_INET ? ( SOCKADDR_IN* ) pAddress: NULL;
+	SOCKADDR_IN6* pAddressIPv6 = pAddress->sa_family == AF_INET6 ? ( SOCKADDR_IN6* ) pAddress: NULL;
+
+	DWORD nFromIP = pAddressIPv4 ? pAddressIPv4->sin_addr.S_un.S_addr: 0;
+	IN6_ADDR nFromIPv6 = {};
+	if ( pAddressIPv6 )
+		nFromIPv6 = pAddressIPv6->sin6_addr;
+
 	LONG tAdjust = 0;
 	DWORD tNow = static_cast< DWORD >( time( NULL ) );
 	DWORD nHubs = 0, nLeaves = 0, nSuggestedHubs = 0;
@@ -175,30 +182,68 @@ BOOL CSearchManager::OnQueryAck(CG2Packet* pPacket, const SOCKADDR_IN* pAddress,
 	{
 		DWORD nOffset = pPacket->m_nPosition + nLength;
 
-		if ( nType == G2_PACKET_QUERY_DONE && nLength >= 4 )
+		if ( nType == G2_PACKET_QUERY_DONE )
 		{
-			DWORD nAddress = pPacket->ReadLongLE();
-			pDone.Add( nAddress );
-
-			if ( nLength >= 6 )
+			if ( nLength == 4 || nLength == 4 + 2 || nLength == 4 + 2 + 2 )
 			{
-				WORD nPort = pPacket->ReadShortBE();
+				DWORD nAddress = pPacket->ReadLongLE();
+				pDone.Add( nAddress );
 
-				HostCache.Gnutella2.Add( (IN_ADDR*)&nAddress, nPort, &pAddress->sin_addr, tNow );
+				if ( nLength == 4 + 2 )
+				{
+					WORD nPort = pPacket->ReadShortBE();
+					if ( nAddress )
+						HostCache.Gnutella2.Add( (IN_ADDR*)&nAddress, nPort, &pAddressIPv4->sin_addr, tNow );
+				}
+
+				if ( nLength == 4 + 2 + 2 )
+					nLeaves += pPacket->ReadShortBE();
+
+				nHubs ++;
 			}
 
-			if ( nLength >= 8 )
-				nLeaves += pPacket->ReadShortBE();
-			nHubs ++;
-		}
-		else if ( nType == G2_PACKET_QUERY_SEARCH && nLength >= 6 )
-		{
-			DWORD nAddress	= pPacket->ReadLongLE();
-			WORD nPort		= pPacket->ReadShortBE();
-			DWORD tSeen		= ( nLength >= 10 ) ?
-				(DWORD)( (LONG)pPacket->ReadLongBE() + tAdjust ) : tNow;
+			if ( nLength == 16 || nLength == 16 + 2 || nLength == 16 + 2 + 2 || nLength == 4 + 2 + 2 + 16 )
+			{
+				IN6_ADDR nAddress = {};
+				pPacket->Read( &nAddress, sizeof(IN6_ADDR) );
+				pDone.Add( CManagedSearch::Compress( nAddress ) );
 
-			HostCache.Gnutella2.Add( (IN_ADDR*)&nAddress, nPort, &pAddress->sin_addr, min( tNow, tSeen ) );
+				if ( nLength == 16 + 2 )
+				{
+					WORD nPort = pPacket->ReadShortBE();
+
+					HostCache.Gnutella2.AddIPv6( &nAddress, nPort, &pAddressIPv6->sin6_addr, tNow );
+				}
+
+				if ( nLength == 16 + 2 + 2 )
+					nLeaves += pPacket->ReadShortBE();
+
+				nHubs ++;
+			}
+		}
+		else if ( nType == G2_PACKET_QUERY_SEARCH )
+		{
+			if ( nLength == 6 || nLength == 6 + 4 || nLength == 6 + 18 
+				|| nLength == 6 + 4 + 18 || nLength == 6 + 4 + 18 + 4 )
+			{
+				DWORD nAddress	= pPacket->ReadLongLE();
+				WORD nPort		= pPacket->ReadShortBE();
+				DWORD tSeen		= ( nLength == 6 + 4 || nLength == 6 + 4 + 18 || nLength == 6 + 4 + 18 + 4  ) ?
+					(DWORD)( (LONG)pPacket->ReadLongBE() + tAdjust ) : tNow;
+				if ( nAddress )
+					HostCache.Gnutella2.Add( (IN_ADDR*)&nAddress, nPort, &pAddressIPv4->sin_addr, min( tNow, tSeen ) );
+			}
+			
+			if ( nLength == 18 || nLength == 18 + 4 || nLength == 6 + 18 
+				|| nLength == 6 + 4 + 18 || nLength == 6 + 4 + 18 + 4 )
+			{
+				IN6_ADDR nAddressIPv6 = {};
+				pPacket->Read( &nAddressIPv6, sizeof( IN6_ADDR ) );
+				WORD nPort = pPacket->ReadShortBE();
+				DWORD tSeen		= ( nLength == 18 + 4 || nLength == 6 + 4 + 18 + 4 ) ?
+					(DWORD)( (LONG)pPacket->ReadLongBE() + tAdjust ) : tNow;
+				HostCache.Gnutella2.AddIPv6( &nAddressIPv6, nPort, &pAddressIPv6->sin6_addr, min( tNow, tSeen ) );
+			}
 
 			nSuggestedHubs ++;
 		}
@@ -217,9 +262,13 @@ BOOL CSearchManager::OnQueryAck(CG2Packet* pPacket, const SOCKADDR_IN* pAddress,
 				nRetryAfter = pPacket->ReadShortBE();
 			}
 		}
-		else if ( nType == G2_PACKET_FROM_ADDRESS && nLength >= 4 )
+		else if ( nType == G2_PACKET_FROM_ADDRESS )
 		{
-			nFromIP = pPacket->ReadLongLE();
+			if ( nLength == 4 || nLength == 4 + 16 )
+				nFromIP = pPacket->ReadLongLE();
+
+			if ( nLength == 16 || nLength == 4 + 16 )
+				pPacket->Read( &nFromIPv6, sizeof(IN6_ADDR) );
 		}
 
 		pPacket->m_nPosition = nOffset;
@@ -232,7 +281,7 @@ BOOL CSearchManager::OnQueryAck(CG2Packet* pPacket, const SOCKADDR_IN* pAddress,
 
 	theApp.Message( MSG_DEBUG | MSG_FACILITY_SEARCH,
 		_T("Processing query acknowledge from %s (time adjust %+d seconds): %d hubs, %d leaves, %d suggested hubs, retry after %d seconds."),
-		(LPCTSTR)CString( inet_ntoa( pAddress->sin_addr ) ), tAdjust,
+		(LPCTSTR)CString( inet_ntoa( pAddressIPv4->sin_addr ) ), tAdjust,
 		nHubs, nLeaves, nSuggestedHubs, nRetryAfter );
 
 	// Update host cache
@@ -269,8 +318,9 @@ BOOL CSearchManager::OnQueryAck(CG2Packet* pPacket, const SOCKADDR_IN* pAddress,
 		pSearch->m_nHubs += nHubs;
 		pSearch->m_nLeaves += nLeaves;
 
+
 		// (technically not required, but..)
-		pSearch->OnHostAcknowledge( nFromIP );
+		pSearch->OnHostAcknowledge( nFromIP ? nFromIP : CManagedSearch::Compress( nFromIPv6 ) );
 
 		for ( int nItem = 0 ; nItem < pDone.GetSize() ; nItem++ )
 		{

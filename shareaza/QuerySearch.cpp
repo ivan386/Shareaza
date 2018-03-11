@@ -1039,10 +1039,12 @@ BOOL CQuerySearch::ReadG2Packet(CG2Packet* pPacket, const SOCKADDR * pEndpoint)
 		}
 		else if ( nType == G2_PACKET_UDP )	
 		{
-			// Use only IPv4, IPv4 + Key, IPv4 + Key + IPv6
+			// Use only IPv4p, IPv4p + Key, IPv4p + Key + IPv6p, IPv4p + Key + IPv6p + Key
 
-			//       IPv4     ||  IPv4 + Key   ||  IPv4 + IPv6  || IPv4 + Key + IPv6
-			if ( nLength == 6 || nLength == 10 || nLength == 24 || nLength == 28 ) // IPv4
+			//       IPv4p    ||    IPv4p + Key   ||  IPv4p + IPv6p
+			if ( nLength == 6 || nLength == 6 + 4 || nLength == 6 + 18 
+			//	||   IPv4p + Key + IPv6p || IPv4p + Key + IPv6p + Key
+				|| nLength == 6 + 4 + 18 || nLength == 6 + 4 + 18 + 4 ) // IPv4
 			{
 				m_pEndpoint.sin_addr.S_un.S_addr = pPacket->ReadLongLE();
 				m_pEndpoint.sin_port = htons( pPacket->ReadShortBE() );
@@ -1055,16 +1057,18 @@ BOOL CQuerySearch::ReadG2Packet(CG2Packet* pPacket, const SOCKADDR * pEndpoint)
 				if ( m_bUDP ) m_pEndpoint.sin_family = PF_INET;
 			}
 
-			//	  IPv4 + Key   || IPv4 + Key + IPv6
-			if ( nLength == 10 || nLength == 28 ) // Key
+			//	    IPv4 + Key    ||   IPv4 + Key + IPv6   || IPv4p + Key + IPv6p + Key
+			if ( nLength == 6 + 4 || nLength == 6 + 4 + 18 || nLength == 6 + 4 + 18 + 4 ) // Key
 			{
 				m_nKey = pPacket->ReadLongBE();
 				DWORD* pZero = (DWORD*)( pPacket->m_pBuffer + pPacket->m_nPosition - 4 );
 				*pZero = 0;
 			}
 		
-			//       IPv6      ||   IPv6 + Key  ||   IPv4 + IPv6  || IPv4 + Key + IPv6 
-			if ( nLength == 18 || nLength == 22 ||  nLength == 24 || nLength == 28 ) // IPv6
+			//       IPv6p     ||    IPv6p + Key    ||   IPv4p + IPv6p    
+			if ( nLength == 18 || nLength == 18 + 4 ||  nLength == 6 + 18 
+			//  ||  IPv4p + Key + IPv6p  || IPv4p + Key + IPv6p + Key
+				|| nLength == 6 + 4 + 18 || nLength == 6 + 4 + 18 + 4 ) // IPv6
 			{
 				pPacket->Read( &m_pEndpointIPv6.sin6_addr, sizeof( IN6_ADDR ) );
 				m_pEndpointIPv6.sin6_port = htons( pPacket->ReadShortBE() );
@@ -1077,8 +1081,8 @@ BOOL CQuerySearch::ReadG2Packet(CG2Packet* pPacket, const SOCKADDR * pEndpoint)
 				if ( m_bUDP ) m_pEndpointIPv6.sin6_family = PF_INET6;
 			}
 
-			//	 IPv6 + Key
-			if ( nLength == 22 ) // Key
+			//	    IPv6p + Key    || IPv4p + Key + IPv6p + Key
+			if ( nLength == 18 + 4 || nLength == 6 + 4 + 18 + 4) // Key
 			{
 				m_nKey = pPacket->ReadLongBE();
 				DWORD* pZero = (DWORD*)( pPacket->m_pBuffer + pPacket->m_nPosition - 4 );

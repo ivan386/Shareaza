@@ -34,8 +34,9 @@ protected:
 
 	typedef struct
 	{
-		IN_ADDR	m_pAddress;
 		DWORD	m_nTime;
+		IN_ADDR	m_pAddress;
+		IN6_ADDR m_pAddressIPv6;
 	} CIPTime;
 
 	CList< CIPTime > m_pQueries;

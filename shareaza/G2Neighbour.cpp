@@ -477,13 +477,13 @@ BOOL CG2Neighbour::OnPing(CG2Packet* pPacket, BOOL bTCP)
 			DWORD nNext = pPacket->m_nPosition + nLength;
 			if ( nType == G2_PACKET_UDP )
 			{
-				if ( nLength == 6 || nLength == 24 )
+				if ( nLength == 6 || nLength == 6 + 18 )
 				{
 					nAddress	= pPacket->ReadLongLE();
 					nPort		= pPacket->ReadShortBE();
 					bUDP = TRUE;
 				}
-				if ( nLength == 18 || nLength == 24 )
+				if ( nLength == 18 || nLength == 6 + 18 )
 				{
 					pPacket->Read( &nAddressIPv6, 16 );
 					nPort		= pPacket->ReadShortBE();
@@ -746,7 +746,7 @@ BOOL CG2Neighbour::OnLNI(CG2Packet* pPacket)
 
 		if ( nType == G2_PACKET_NODE_ADDRESS )
 		{
-			if ( nLength == 6 || nLength == 24 )
+			if ( nLength == 6 || nLength == 6 + 18 )
 			{
 				DWORD nAddress = pPacket->ReadLongLE();
 				WORD nPort = pPacket->ReadShortBE();
@@ -759,7 +759,7 @@ BOOL CG2Neighbour::OnLNI(CG2Packet* pPacket)
 				}
 			}
 
-			if ( nLength == 18 || nLength == 24 ) // IPv6
+			if ( nLength == 18 || nLength == 6 + 18 ) // IPv6
 			{
 				IN6_ADDR nAddress = {};
 				pPacket->Read( &nAddress, sizeof( nAddress ) );
@@ -1093,21 +1093,25 @@ BOOL CG2Neighbour::ParseKHLPacket(CG2Packet* pPacket, const SOCKADDR* pHost)
 					nLength = nNext - pPacket->m_nPosition;
 				}
 
-				//      IPv4      ||  IPv4 + tSeen ||  IPv4 + IPv6  ||  IPv4s + IPv6 || IPv4s + IPv6s
-				if ( nLength == 6 || nLength == 10 || nLength == 24 || nLength == 28 || nLength == 32 )
+				//      IPv4p     ||   IPv4p + tSeen  ||     IPv4p + IPv6  ||   
+				if ( nLength == 6 || nLength == 6 + 4 || nLength == 6 + 18 ||
+				//	 IPv4p + tSeen + IPv6 || IPv4p + tSeen + IPv6p + tSeen
+					nLength == 6 + 4 + 18 || nLength == 6 + 4 + 18 + 4 )
 				{
 					nAddress = pPacket->ReadLongLE();
 					nPort = pPacket->ReadShortBE();
-					if ( nLength == 10 || nLength == 28 || nLength == 32 ) 
+					if ( nLength == 6 + 4 || nLength == 6 + 4 + 18 || nLength == 6 + 4 + 18 + 4 ) 
 						tSeen = pPacket->ReadLongBE() + tAdjust;
 				}
 
-				//      IPv6      ||  IPv6 + tSeen  ||  IPv4 + IPv6  ||  IPv4s + IPv6 || IPv4s + IPv6s
-				if( nLength == 18 || nLength == 22 || nLength == 24 || nLength == 28 || nLength == 32 )
+				//      IPv6p      ||    IPv6p + tSeen   ||    IPv4p + IPv6p    ||
+				if( nLength == 18 || nLength == 18 + 4 || nLength == 6 + 18 ||
+				//  IPv4p + tSeen + IPv6p || IPv4p + tSeen + IPv6p + tSeen
+					nLength == 6 + 4 + 18 || nLength == 6 + 4 + 18 + 4 )
 				{
 					pPacket->Read( &nAddressIPv6, sizeof( IN6_ADDR ) );
 					nPort = pPacket->ReadShortBE();
-					if ( nLength == 22 || nLength == 32 ) tSeen = pPacket->ReadLongBE() + tAdjust;
+					if ( nLength == 18 + 4 || nLength == 6 + 4 + 18 + 4 ) tSeen = pPacket->ReadLongBE() + tAdjust;
 				}
 
 				if ( nPort &&
@@ -1279,22 +1283,19 @@ BOOL CG2Neighbour::OnHAW(CG2Packet* pPacket)
 		{
 			strVendor = pPacket->ReadString( 4 );
 		}
-		else if ( nType == G2_PACKET_NODE_ADDRESS && nLength == 6 )
+		else if ( nType == G2_PACKET_NODE_ADDRESS )
 		{
-			nAddress	= pPacket->ReadLongLE();
-			nPort		= pPacket->ReadShortBE();
-		}
-		else if ( nType == G2_PACKET_NODE_ADDRESS && nLength == 18 )
-		{
-			pPacket->Read( &nAddressIPv6, sizeof( nAddressIPv6 ) );
-			nPortIPv6	= pPacket->ReadShortBE();
-		}
-		else if ( nType == G2_PACKET_NODE_ADDRESS && nLength == 24 )
-		{
-			nAddress	= pPacket->ReadLongLE();
-			nPort		= pPacket->ReadShortBE();
-			pPacket->Read( &nAddressIPv6, sizeof( nAddressIPv6 ) );
-			nPortIPv6	= pPacket->ReadShortBE();
+			if ( nLength == 6 || nLength == 6 + 18 )
+			{
+				nAddress	= pPacket->ReadLongLE();
+				nPort		= pPacket->ReadShortBE();
+			}
+
+			if ( nLength == 18 || nLength == 6 + 18 )
+			{
+				pPacket->Read( &nAddressIPv6, sizeof( nAddressIPv6 ) );
+				nPortIPv6	= pPacket->ReadShortBE();
+			}
 		}
 
 		pPacket->m_nPosition = nNext;
@@ -1398,7 +1399,9 @@ BOOL CG2Neighbour::OnQuery(CG2Packet* pPacket)
 		return TRUE;
 	}
 
-	if ( pSearch->IsIPv6Endpoint() ? Security.IsDenied( &pSearch->m_pEndpointIPv6.sin6_addr ) : Security.IsDenied( &pSearch->m_pEndpoint.sin_addr ) )
+	if ( pSearch->IsIPv6Endpoint() ?
+		Security.IsDenied( &pSearch->m_pEndpointIPv6.sin6_addr ) 
+		: Security.IsDenied( &pSearch->m_pEndpoint.sin_addr ) )
 	{
 		Statistics.Current.Gnutella2.Dropped++;
 		m_nDropCount++;
@@ -1449,9 +1452,13 @@ BOOL CG2Neighbour::OnQuery(CG2Packet* pPacket)
 
 BOOL CG2Neighbour::OnQueryAck(CG2Packet* pPacket)
 {
-	HostCache.Gnutella2.Add( &m_pHost.sin_addr, htons( m_pHost.sin_port ) );
+	if ( IsIPv6Host() )
+		HostCache.Gnutella2.AddIPv6( &m_pHostIPv6.sin6_addr, htons( m_pHostIPv6.sin6_port ) );
+	else
+		HostCache.Gnutella2.Add( &m_pHost.sin_addr, htons( m_pHost.sin_port ) );
+
 	Hashes::Guid oGuid;
-	SearchManager.OnQueryAck( pPacket, &m_pHost, oGuid );
+	SearchManager.OnQueryAck( pPacket, (SOCKADDR*) &m_pHost, oGuid );
 	return TRUE;
 }
 
@@ -1464,18 +1471,29 @@ BOOL CG2Neighbour::OnQueryKeyReq(CG2Packet* pPacket)
 	if ( m_nNodeType != ntLeaf ) return TRUE;
 
 	DWORD nLength, nAddress = 0;
+	IN6_ADDR nAddressIPv6 = {};
 	BOOL bCacheOkay = TRUE;
 	G2_PACKET nType;
 	WORD nPort = 0;
+	WORD nPortIPv6 = 0;
 
 	while ( pPacket->ReadPacket( nType, nLength ) )
 	{
 		DWORD nOffset = pPacket->m_nPosition + nLength;
 
-		if ( nType == G2_PACKET_QUERY_ADDRESS && nLength >= 6 )
+		if ( nType == G2_PACKET_QUERY_ADDRESS )
 		{
-			nAddress	= pPacket->ReadLongLE();
-			nPort		= pPacket->ReadShortBE();
+			if ( nLength == 6 || nLength == 6 + 18 )
+			{
+				nAddress	= pPacket->ReadLongLE();
+				nPort		= pPacket->ReadShortBE();
+			}
+			
+			if ( nLength == 18 || nLength == 6 + 18 )
+			{
+				pPacket->Read( &nAddressIPv6, sizeof( nAddressIPv6 ) );
+				nPortIPv6	= pPacket->ReadShortBE();
+			}
 		}
 		else if ( nType == G2_PACKET_QUERY_REFRESH )
 		{
@@ -1485,35 +1503,79 @@ BOOL CG2Neighbour::OnQueryKeyReq(CG2Packet* pPacket)
 		pPacket->m_nPosition = nOffset;
 	}
 
-	if ( ! nPort ||
+	if ( nPort &&
+		( Network.IsReserved( (IN_ADDR*)&nAddress ) ||
 		Network.IsFirewalledAddress( (IN_ADDR*)&nAddress, TRUE ) ||
-		Network.IsReserved( (IN_ADDR*)&nAddress ) ||
-		Security.IsDenied( (IN_ADDR*)&nAddress ) ) return TRUE;
+		Security.IsDenied( (IN_ADDR*)&nAddress ) ) ) return TRUE;
+
+	if ( nPortIPv6 &&
+		( Network.IsReserved( &nAddressIPv6 ) ||
+		Network.IsFirewalledAddress( &nAddressIPv6, TRUE ) ||
+		Security.IsDenied( &nAddressIPv6 ) ) ) return TRUE;
+
+	if ( nPort == 0 && nPortIPv6 == 0 )
+		return TRUE;
 
 	if ( bCacheOkay )
 	{
 		CQuickLock oLock( HostCache.Gnutella2.m_pSection );
-
-		CHostCacheHostPtr pCached = HostCache.Gnutella2.Find( (IN_ADDR*)&nAddress );
-		if ( pCached != NULL && pCached->m_nKeyValue != 0 &&
-			pCached->m_nKeyHost == Network.m_pHost.sin_addr.S_un.S_addr )
+		if ( nPort )
 		{
-			CG2Packet* pAnswer = CG2Packet::New( G2_PACKET_QUERY_KEY_ANS, TRUE );
-			pAnswer->WritePacket( G2_PACKET_QUERY_ADDRESS, 6 );
-			pAnswer->WriteLongLE( nAddress );
-			pAnswer->WriteShortBE( nPort );
-			pAnswer->WritePacket( G2_PACKET_QUERY_KEY, 4 );
-			pAnswer->WriteLongBE( pCached->m_nKeyValue );
-			pAnswer->WritePacket( G2_PACKET_QUERY_CACHED, 0 );
-			Send( pAnswer );
-			return TRUE;
+			CHostCacheHostPtr pCached = HostCache.Gnutella2.Find( (IN_ADDR*)&nAddress );
+			if ( pCached != NULL && pCached->m_nKeyValue != 0 &&
+				 pCached->m_nKeyHost == Network.m_pHost.sin_addr.S_un.S_addr &&
+				 !pCached->IsIPv6KeyHost() )
+			{
+				CG2Packet* pAnswer = CG2Packet::New( G2_PACKET_QUERY_KEY_ANS, TRUE );
+				pAnswer->WritePacket( G2_PACKET_QUERY_ADDRESS, 6 );
+				pAnswer->WriteLongLE( nAddress );
+				pAnswer->WriteShortBE( nPort );
+				pAnswer->WritePacket( G2_PACKET_QUERY_KEY, 4 );
+				pAnswer->WriteLongBE( pCached->m_nKeyValue );
+				pAnswer->WritePacket( G2_PACKET_QUERY_CACHED, 0 );
+				Send( pAnswer );
+				return TRUE;
+			}
+		}
+		else
+		{
+			CHostCacheHostPtr pCached = HostCache.Gnutella2.Find( &nAddressIPv6 );
+			if ( pCached != NULL && pCached->m_nKeyValue != 0 &&
+				pCached->IsIPv6KeyHost() &&
+				IN6_ADDR_EQUAL( &pCached->m_nKeyHostIPv6, &Network.m_pHostIPv6.sin6_addr ) )
+			{
+				CG2Packet* pAnswer = CG2Packet::New( G2_PACKET_QUERY_KEY_ANS, TRUE );
+				pAnswer->WritePacket( G2_PACKET_QUERY_ADDRESS, 6 + 18 );
+				pAnswer->WriteLongLE( 0 );
+				pAnswer->WriteShortBE( 0 );
+				pAnswer->Write( &nAddressIPv6, sizeof( IN6_ADDR ) );
+				pAnswer->WriteShortBE( nPortIPv6 );
+				pAnswer->WritePacket( G2_PACKET_QUERY_KEY, 4 );
+				pAnswer->WriteLongBE( pCached->m_nKeyValue );
+				pAnswer->WritePacket( G2_PACKET_QUERY_CACHED, 0 );
+				Send( pAnswer );
+				return TRUE;
+			}
 		}
 	}
 
 	CG2Packet* pRequest = CG2Packet::New( G2_PACKET_QUERY_KEY_REQ, TRUE );
-	pRequest->WritePacket( G2_PACKET_SEND_ADDRESS, 4 );
-	pRequest->WriteLongLE( m_pHost.sin_addr.S_un.S_addr );
-	Datagrams.Send( (IN_ADDR*)&nAddress, nPort, pRequest, TRUE, NULL, FALSE );
+	if ( IsIPv6Host() )
+	{
+		pRequest->WritePacket( G2_PACKET_SEND_ADDRESS, 4 + 16 );
+		pRequest->WriteLongLE( 0 );
+		pRequest->Write( &m_pHostIPv6, sizeof( IN6_ADDR ) );
+	}
+	else
+	{
+		pRequest->WritePacket( G2_PACKET_SEND_ADDRESS, 4 );
+		pRequest->WriteLongLE( m_pHost.sin_addr.S_un.S_addr );
+	}
+
+	if ( nPort )
+		Datagrams.Send( (IN_ADDR*)&nAddress, nPort, pRequest, TRUE, NULL, FALSE );
+	else
+		Datagrams.Send( &nAddressIPv6, nPortIPv6, pRequest, TRUE, NULL, FALSE );
 
 	return TRUE;
 }
