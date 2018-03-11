@@ -1185,7 +1185,7 @@ void CDownloadWithSources::SortSource(CDownloadSource* pSource)
 		posSource = posCompare;
 		CDownloadSource* pCompare = GetNext( posCompare );
 
-		if ( pCompare->m_nSortOrder >= pSource->m_nSortOrder )
+		if ( pCompare->m_nSortOrder > pSource->m_nSortOrder )
 			break;
 	}
 

@@ -91,7 +91,7 @@ protected:
 
 enum
 {
-	dtsNull, dtsConnecting, dtsRequesting, dtsHeaders, dtsDownloading,
+	dtsNull, dtsKeepSource, dtsConnecting, dtsRequesting, dtsHeaders, dtsDownloading,
 	dtsFlushing, dtsTiger, dtsHashset, dtsMetadata, dtsBusy, dtsEnqueue, dtsQueued,
 	dtsTorrent,
 

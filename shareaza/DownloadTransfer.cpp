@@ -116,7 +116,10 @@ void CDownloadTransfer::Close(TRISTATE bKeepSource, DWORD nRetryAfter)
 {
 	ASSUME_LOCK( Transfers.m_pSection );
 
-	SetState( dtsNull );
+	if ( bKeepSource == TRI_TRUE )
+		SetState( dtsKeepSource );
+	else
+		SetState( dtsNull );
 
 	CTransfer::Close();
 
@@ -269,20 +272,46 @@ void CDownloadTransfer::SetState(int nState)
 {
 	ASSUME_LOCK( Transfers.m_pSection );
 
+	if ( m_pSource->m_nSortOrder < ~0u )
+	{
+		switch (nState)
+		{
+		case dtsHeaders:
+		case dtsRequesting:
+		case dtsFlushing:
+			m_nState = nState;
+			return;
+		}
+	}
+
 	if ( m_pDownload && m_pDownload->CheckSource( m_pSource ) )
 	{
 		if ( Settings.Downloads.SortSources )
 		{	//Proper sort
 
-			static BYTE StateSortOrder[13]={ 13 ,12 ,10 ,4 ,0 ,4 ,1 ,2 ,3 ,12 ,8 ,6 ,9};
-				//dtsNull, dtsConnecting, dtsRequesting, dtsHeaders, dtsDownloading, dtsFlushing,
-				//dtsTiger, dtsHashset, dtsMetadata, dtsBusy, dtsEnqueue, dtsQueued, dtsTorrent
+			static BYTE StateSortOrder[14]={ 
+				14  //dtsNull
+				,13 //dtsKeepSource
+				,12 //dtsConnecting
+				,10 //dtsRequesting
+				,4  //dtsHeaders
+				,0  //dtsDownloading
+				,4  //dtsFlushing
+				,1  //dtsTiger
+				,2  //dtsHashset
+				,3  //dtsMetadata
+				,12 //dtsBusy
+				,8  //dtsEnqueue
+				,6  //dtsQueued
+				,9  //dtsTorrent
+			};
 
+			DWORD nOldSortOrder = m_pSource->m_nSortOrder;
 
 			//Assemble the sort order DWORD
-			m_pSource->m_nSortOrder = StateSortOrder[ min( nState, 13 ) ];          //Get state sort order
+			m_pSource->m_nSortOrder = StateSortOrder[ min( nState, 14 ) ];          //Get state sort order
 
-			if ( m_pSource->m_nSortOrder >= 13 )
+			if ( m_pSource->m_nSortOrder >= 14 )
 			{	//Don't bother wasting CPU sorting 'dead' sources- Simply send to bottom.
 				m_pDownload->SortSource( m_pSource, FALSE );
 				m_pSource->m_nSortOrder = ~0u;
@@ -314,8 +343,10 @@ void CDownloadTransfer::SetState(int nState)
 					m_pSource->m_nSortOrder += ( ( m_pSource->m_pAddress.S_un.S_un_b.s_b1 << 8 ) |
 												 ( m_pSource->m_pAddress.S_un.S_un_b.s_b2      ) );
 
-				//Do the sort
-				m_pDownload->SortSource( m_pSource );
+
+				if ( nOldSortOrder != m_pSource->m_nSortOrder )
+					//Do the sort
+					m_pDownload->SortSource( m_pSource );
 			}
 		}
 		else
