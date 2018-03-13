@@ -290,7 +290,7 @@ BOOL CDownloadsCtrl::IsExpandable(CDownload* pDownload)
 		{
 			CDownloadSource* pSource = pDownload->GetNext( posSource );
 
-			if ( pSource->IsConnected() )
+			if ( pSource->IsOnline() )
 			{
 				return TRUE;
 			}
@@ -552,7 +552,7 @@ BOOL CDownloadsCtrl::HitTest(const CPoint& point, CDownload** ppDownload, CDownl
 		{
 			CDownloadSource* pSource = pDownload->GetNext( posSource );
 
-			if ( Settings.Downloads.ShowSources || pSource->IsConnected() )
+			if ( Settings.Downloads.ShowSources || pSource->IsOnline() )
 			{
 				if ( nScroll > 0 )
 				{
@@ -610,7 +610,7 @@ BOOL CDownloadsCtrl::GetAt(int nSelect, CDownload** ppDownload, CDownloadSource*
 		{
 			CDownloadSource* pSource = pDownload->GetNext( posSource );
 
-			if ( Settings.Downloads.ShowSources || pSource->IsConnected() )
+			if ( Settings.Downloads.ShowSources || pSource->IsOnline() )
 			{
 				if ( nIndex++ == nSelect )
 				{
@@ -671,7 +671,7 @@ BOOL CDownloadsCtrl::GetRect(CDownload* pSelect, RECT* prcItem)
 		{
 			CDownloadSource* pSource = pDownload->GetNext( posSource );
 
-			if ( pSource->IsConnected() )
+			if ( pSource->IsOnline() )
 			{
 				rcItem.OffsetRect( 0, ITEM_HEIGHT );
 			}
@@ -824,7 +824,7 @@ void CDownloadsCtrl::OnSize(UINT nType, int cx, int cy)
 			{
 				CDownloadSource* pSource = pDownload->GetNext( posSource );
 
-				if ( Settings.Downloads.ShowSources || pSource->IsConnected() )
+				if ( Settings.Downloads.ShowSources || pSource->IsOnline() )
 				{
 					nHeight ++;
 				}
@@ -927,7 +927,7 @@ void CDownloadsCtrl::OnPaint()
 			if ( rcItem.top > rcClient.bottom )
 				break;
 
-			if ( Settings.Downloads.ShowSources || pSource->IsConnected() )
+			if ( Settings.Downloads.ShowSources || pSource->IsOnline() )
 			{
 				if ( nScroll > 0 )
 					--nScroll;
