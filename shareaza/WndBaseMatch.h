@@ -54,6 +54,7 @@ protected:
 	BOOL			m_bBMWActive;
 	DWORD			m_nCacheFiles;
 	DWORD			m_tModify;			// Last modify time (0 if not modified)
+	DWORD			m_tSave;
 
 // Operations
 public:

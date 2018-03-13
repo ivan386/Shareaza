@@ -127,7 +127,8 @@ CBaseMatchWnd::CBaseMatchWnd() :
 	m_bUpdate( FALSE ),
 	m_bBMWActive( TRUE ),
 	m_nCacheFiles( 0 ),
-	m_tModify( static_cast< DWORD >( time( NULL ) ) )
+	m_tModify( static_cast< DWORD >( time( NULL ) ) ),
+	m_tSave( 0 )
 {
 	m_pMatches = new CMatchList( this );
 }
@@ -832,9 +833,11 @@ void CBaseMatchWnd::OnTimer(UINT_PTR nIDEvent)
 		}
 	}
 
+
 	// Lazy save
-	if ( m_tModify && static_cast< DWORD >( time( NULL ) ) - m_tModify > 10 )
+	if ( m_tModify && m_tModify - m_tSave > 1000 && static_cast< DWORD >( time( NULL ) ) - m_tModify > 10 )
 	{
+		m_tSave = static_cast< DWORD >( time( NULL ) );
 		m_tModify = 0;
 
 		if ( IsKindOf( RUNTIME_CLASS(CSearchWnd) ) )
