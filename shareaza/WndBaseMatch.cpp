@@ -835,15 +835,20 @@ void CBaseMatchWnd::OnTimer(UINT_PTR nIDEvent)
 
 
 	// Lazy save
-	if ( m_tModify && m_tModify - m_tSave > 1000 && static_cast< DWORD >( time( NULL ) ) - m_tModify > 10 )
+	if ( m_tModify )
 	{
-		m_tSave = static_cast< DWORD >( time( NULL ) );
-		m_tModify = 0;
+		DWORD tTime = static_cast< DWORD >( time( NULL ) );
+		if ( tTime - m_tSave > 1000 && tTime - m_tModify > 10 )
+		{
+			m_tModify = 0;
 
-		if ( IsKindOf( RUNTIME_CLASS(CSearchWnd) ) )
-			GetManager()->SaveSearchWindows();
-		else if ( IsKindOf( RUNTIME_CLASS(CBrowseHostWnd) ) )
-			GetManager()->SaveBrowseHostWindows();
+			if ( IsKindOf( RUNTIME_CLASS(CSearchWnd) ) )
+				GetManager()->SaveSearchWindows();
+			else if ( IsKindOf( RUNTIME_CLASS(CBrowseHostWnd) ) )
+				GetManager()->SaveBrowseHostWindows();
+
+			m_tSave = static_cast< DWORD >( time( NULL ) );
+		}
 	}
 }
 
