@@ -239,8 +239,14 @@ void CSearchDetailPanel::OnDestroy()
 	CancelPreview();
 
 	CloseThread();
-
-	CPanelCtrl::OnDestroy();
+	try
+	{
+		CPanelCtrl::OnDestroy();
+	}
+	catch ( CException* pException )
+	{
+		pException->Delete();
+	}
 }
 
 void CSearchDetailPanel::OnVScroll(UINT nSBCode, UINT nPos, CScrollBar* pScrollBar)
