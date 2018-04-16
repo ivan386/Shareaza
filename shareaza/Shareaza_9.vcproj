@@ -4305,6 +4305,10 @@
 				>
 			</File>
 			<File
+				RelativePath=".\Res\ShareazaFileListStyle.xsl"
+				>
+			</File>
+			<File
 				RelativePath="Res\ShareazaIcon.ico"
 				>
 			</File>
@@ -4463,10 +4467,6 @@
 		</Filter>
 		<File
 			RelativePath="revision.js"
-			>
-		</File>
-		<File
-			RelativePath=".\Res\ShareazaFileListStyle.xsl"
 			>
 		</File>
 	</Files>
