@@ -929,4 +929,6 @@ void CBaseMatchWnd::Serialize(CArchive& ar)
 		pException->Delete();
 		m_pMatches->Clear();
 	}
+
+	m_tSave = static_cast< DWORD >( time( NULL ) );
 }
