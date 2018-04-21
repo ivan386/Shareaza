@@ -100,12 +100,11 @@ void CDownloadWithSearch::RunSearch(DWORD tNow)
 	}
 	else if ( tNow > m_tSearchCheck + 1000 )
 	{
-		BOOL bFewSources = GetEffectiveSourceCount() < Settings.Downloads.MinSources;
 		BOOL bDataStarve = tNow > m_tReceived + Settings.Downloads.StarveTimeout;
 		
 		m_tSearchCheck = tNow;
 		
-		if ( bFewSources || bDataStarve )
+		if ( bDataStarve || IsFewOnlineSources() )
 		{
 			StartAutomaticSearch();
 		}

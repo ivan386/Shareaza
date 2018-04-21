@@ -106,6 +106,22 @@ bool CDownloadWithSources::HasMetadata() const
 	return ( m_pXML != NULL );
 }
 
+bool CDownloadWithSources::IsFewOnlineSources() const
+{
+	CQuickLock pLock( Transfers.m_pSection );
+	DWORD nCount = 0;
+	
+	for ( POSITION posSource = GetIterator() ; posSource ; )
+	{
+		CDownloadSource* pSource = GetNext( posSource );
+		if ( pSource->IsOnline() ) 
+			nCount++;
+		if ( nCount >= Settings.Downloads.MinSources ) 
+			return false;
+	}
+	return true;
+}
+
 DWORD CDownloadWithSources::GetSourceCount(BOOL bNoPush, BOOL bSane) const
 {
 	CQuickLock pLock( Transfers.m_pSection );

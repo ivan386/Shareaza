@@ -77,6 +77,7 @@ public:
 	DWORD				GetBTSourceCount(BOOL bNoPush = FALSE) const;
 	DWORD				GetED2KCompleteSourceCount() const;
 	BOOL				CheckSource(CDownloadSource* pSource) const;
+	bool				IsFewOnlineSources() const;
 	void				AddFailedSource(const CDownloadSource* pSource, bool bLocal = true, bool bOffline = false);
 	void				AddFailedSource(LPCTSTR pszUrl, bool bLocal = true, bool bOffline = false);
 	CFailedSource*		LookupFailedSource(LPCTSTR pszUrl, bool bReliable = false);
