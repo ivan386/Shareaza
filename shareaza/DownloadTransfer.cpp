@@ -409,13 +409,19 @@ void CDownloadTransfer::ChunkifyRequest(QWORD* pnOffset, QWORD* pnLength, DWORD 
 		if ( *pnLength % nChunk ) nCount++;
 
 		QWORD nNonRandomEnd = this->m_pDownload->GetNonRandomEnd();
+		QWORD nStartFrom = this->m_pDownload->m_nStartFrom;
+		QWORD nIndex = 0;
 
-		if (*pnOffset >= nNonRandomEnd)
-			nCount = GetRandomNum( 0ui64, nCount - 1 );
+		if ( *pnOffset < nNonRandomEnd && nStartFrom < *pnOffset + *pnLength )
+		{
+			QWORD nStart = max( nStartFrom, *pnOffset );
+			*pnLength -= nStart - *pnOffset;
+			*pnOffset = nStart;
+		}
 		else
-			nCount = 0;
+			nIndex = GetRandomNum( 0ui64, nCount - 1 );
 
-		QWORD nStart = *pnOffset + nChunk * nCount;
+		QWORD nStart = *pnOffset + nChunk * nIndex;
 		*pnLength = min( (QWORD)nChunk, *pnOffset + *pnLength - nStart );
 		*pnOffset = nStart;
 	}
