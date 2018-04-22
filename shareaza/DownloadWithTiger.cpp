@@ -1096,71 +1096,141 @@ BOOL CDownloadWithTiger::GetFragment(CDownloadTransfer* pTransfer)
 		CDownload* pDownload = static_cast< CDownload* >( this );
 
 		Fragments::List::const_iterator pRange = oPossible.begin();
+		Fragments::List::const_reverse_iterator pLastRange = oPossible.rbegin();
 
 		QWORD nChunkSize = (QWORD) Settings.Downloads.ChunkSize;
 
 		if ( pDownload->m_nBitrate > 8 && pDownload->m_nBitrate < (QWORD) -1 )
 			nChunkSize = max( pDownload->m_nBitrate / 8, nChunkSize );
 
-		if ( nChunkSize 
-			 && pRange->begin() > nChunkSize 
-			 && pDownload->GetSize() > nChunkSize * 2 )
+		if ( pDownload->GetSize() > nChunkSize )
 		{
-			QWORD nLastChunk = pDownload->GetSize() - nChunkSize;
-			BOOL bTransferFound = FALSE;
+			// Download firts and last chunk
 
-			if ( oPossible.rbegin()->end() >= pDownload->GetSize() - nChunkSize )
+			QWORD nEndSize = pDownload->GetSize() - pLastRange->end();
+			if ( pRange->begin() > nEndSize	&& nEndSize < nChunkSize )
 			{
 				pTransfer->m_bWantBackwards	= TRUE;
-				pTransfer->m_nOffset = oPossible.rbegin()->begin();
-				pTransfer->m_nLength = oPossible.rbegin()->size();
+				pTransfer->m_nLength = min( pLastRange->size(), nChunkSize - nEndSize );
+				pTransfer->m_nOffset = max( pLastRange->begin(), pDownload->GetSize() - nChunkSize );
 
 				return TRUE;
 			}
+			else if ( pRange->begin() < nChunkSize )
+			{
+				pTransfer->m_bWantBackwards	= FALSE;
+				pTransfer->m_nOffset = pRange->begin();
+				pTransfer->m_nLength = min( nChunkSize, pRange->end() ) - pTransfer->m_nOffset;
 
-			Fragments::List oWantedAndAvailable( oAvailable );
-			
-			if ( oAvailable.empty() )
-			{
-				oWantedAndAvailable = GetWantedFragmentList();
+				return TRUE;
 			}
-			else
-			{
-				Fragments::List tmp = inverse( GetWantedFragmentList() );
-				oWantedAndAvailable.erase( tmp.begin(), tmp.end() );
-			}
-			
-			if ( ( ! oWantedAndAvailable.empty() ) 
-				 && oWantedAndAvailable.begin()->begin() < nChunkSize  )
-			{
-				bTransferFound = FALSE;
-				for ( CDownloadTransfer* pOther = GetFirstTransfer() ; pOther ; pOther = pOther->m_pDlNext )
-				{
-					if ( bTransferFound = ( pTransfer != pOther && pOther->m_nPosition <= nChunkSize && pOther->m_bWantBackwards ) )
-						break;
-				}
-				if ( ! bTransferFound ){
-					pTransfer->m_nOffset = oWantedAndAvailable.begin()->begin();
-					pTransfer->m_nLength = min( oWantedAndAvailable.begin()->end(),  nChunkSize ) - pTransfer->m_nOffset;
-					pTransfer->m_bWantBackwards	= TRUE;
-					return TRUE;
-				}
-			}
+		}
 
-			if ( ( ! oWantedAndAvailable.empty() )
-				&&  oWantedAndAvailable.rbegin()->end() > nLastChunk )
+		if ( nChunkSize
+			&& pDownload->GetSize() > nChunkSize * 2 )
+		{
+			QWORD nNewSpeed	= pTransfer->GetAverageSpeed();
+
+			if ( nNewSpeed )
 			{
-				bTransferFound = FALSE;
-				for ( CDownloadTransfer* pOther = GetFirstTransfer() ; pOther ; pOther = pOther->m_pDlNext )
+				// Try download incomlete first and last chink
+
+				Fragments::List oWantedAndAvailable( oAvailable );
+				
+				if ( oAvailable.empty() )
 				{
-					if ( bTransferFound = ( pTransfer != pOther && pOther->m_nPosition >= nLastChunk && ! pOther->m_bWantBackwards ) )
-						break;
+					oWantedAndAvailable = GetWantedFragmentList();
 				}
-				if ( ! bTransferFound ){
-					pTransfer->m_nOffset = max( oWantedAndAvailable.rbegin()->begin() , nLastChunk );
-					pTransfer->m_nLength = oWantedAndAvailable.rbegin()->end() - pTransfer->m_nOffset;
-					pTransfer->m_bWantBackwards	= FALSE;
-					return TRUE;
+				else
+				{
+					Fragments::List tmp = inverse( GetWantedFragmentList() );
+					oWantedAndAvailable.erase( tmp.begin(), tmp.end() );
+				}
+
+				BOOL bTransferFound = FALSE;
+
+				if ( ( ! oWantedAndAvailable.empty() ) 
+					 && oWantedAndAvailable.begin()->begin() < nChunkSize  )
+				{
+
+					QWORD nOffset = oWantedAndAvailable.begin()->begin();
+					QWORD nLength = 0;
+					
+					for ( CDownloadTransfer* pOther = GetFirstTransfer() ; pOther ; pOther = pOther->m_pDlNext )
+					{
+						if ( pTransfer != pOther && pOther->m_nPosition <= nChunkSize )
+						{
+							if ( pOther->m_bWantBackwards )
+							{
+								bTransferFound = TRUE;
+								break;
+							}
+							else if( pOther->m_nPosition == nOffset )
+							{
+								QWORD nOldSpeed	= pOther->GetAverageSpeed();
+								if ( nNewSpeed > nOldSpeed )
+								{
+									nLength = min( oWantedAndAvailable.begin()->end(),  nChunkSize ) - nOffset;
+									if ( nOldSpeed > 0 )
+										nLength = ( nLength * nNewSpeed ) / ( nNewSpeed + nOldSpeed );
+									if ( nLength > 8 * 1024 )
+										nLength /= 2;
+								}
+								else
+									break;
+							}
+						}
+					}
+					if ( ! bTransferFound && nLength > 0 ){
+						pTransfer->m_nOffset = nOffset;
+						pTransfer->m_nLength = nLength;
+						pTransfer->m_bWantBackwards	= TRUE;
+						return TRUE;
+					}
+				}
+				
+				bTransferFound = FALSE;
+				
+				QWORD nLastChunk = pDownload->GetSize() - nChunkSize;
+				
+				if ( ( ! oWantedAndAvailable.empty() )
+					&&  oWantedAndAvailable.rbegin()->end() > nLastChunk )
+				{
+					QWORD nOffset = max( oWantedAndAvailable.rbegin()->begin() , nLastChunk );
+					QWORD nPosition = oWantedAndAvailable.rbegin()->end();
+					QWORD nLength = 0;
+					
+					for ( CDownloadTransfer* pOther = GetFirstTransfer() ; pOther ; pOther = pOther->m_pDlNext )
+					{
+						if ( pTransfer != pOther && pOther->m_nPosition >= nLastChunk  )
+						{
+							if ( ! pOther->m_bWantBackwards )
+							{
+								bTransferFound = TRUE;
+								break;
+							}
+							else if( pOther->m_nPosition == nPosition )
+							{
+								QWORD nOldSpeed	= pOther->GetAverageSpeed();
+								if ( nNewSpeed > nOldSpeed )
+								{
+									nLength = nPosition - nOffset;
+									if ( nOldSpeed > 0 )
+										nLength = ( nLength * nNewSpeed ) / ( nNewSpeed + nOldSpeed );
+									if ( nLength > 8 * 1024 )
+										nLength /= 2;
+								}
+								else
+									break;
+							}
+						}
+					}
+					if ( ! bTransferFound && nLength > 0 ){
+						pTransfer->m_nOffset = nOffset;
+						pTransfer->m_nLength = nLength;
+						pTransfer->m_bWantBackwards	= FALSE;
+						return TRUE;
+					}
 				}
 			}
 
@@ -1185,15 +1255,14 @@ BOOL CDownloadWithTiger::GetFragment(CDownloadTransfer* pTransfer)
 					}
 				}
 			}
-
-			pRange = oPossible.random_range();
 		}
-		else if( pRange->begin() > nChunkSize )
-			pRange = oPossible.random_range();
-		
 
+		// Get random range to download
+			
+		pRange = oPossible.random_range();
 		pTransfer->m_nOffset = pRange->begin();
 		pTransfer->m_nLength = pRange->size();
+		pTransfer->m_bWantBackwards	= FALSE;
 
 		return TRUE;
 	}
