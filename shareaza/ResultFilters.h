@@ -32,6 +32,8 @@ public:
 	CString m_sName; // the options set name
 	CString	m_sFilter;
 	BOOL	m_bFilterBusy;
+	BOOL	m_bFilterComments;
+	BOOL	m_bFilterPartial;
 	BOOL	m_bFilterPush;
 	BOOL	m_bFilterUnstable;
 	BOOL	m_bFilterLocal;

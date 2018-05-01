@@ -825,6 +825,8 @@
 #define IDC_EDIT_HEX                    1626
 #define IDC_QUICKFILTER                 1627
 #define IDC_QUICKFILTER_ICON            1628
+#define IDC_FILTER_PARTIAL              1629
+#define IDC_FILTER_COMMETS              1630
 #define IDS_FILTER_DELETE_CONFIRM       7000
 #define IDS_SCHEMAS                     7001
 #define IDS_MULTIPLE_VALUES             7002
@@ -1954,7 +1956,7 @@
 #define _APS_3D_CONTROLS                     1
 #define _APS_NEXT_RESOURCE_VALUE        353
 #define _APS_NEXT_COMMAND_VALUE         33329
-#define _APS_NEXT_CONTROL_VALUE         1629
+#define _APS_NEXT_CONTROL_VALUE         1631
 #define _APS_NEXT_SYMED_VALUE           104
 #endif
 #endif

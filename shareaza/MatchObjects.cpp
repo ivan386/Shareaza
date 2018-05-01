@@ -67,6 +67,8 @@ CMatchList::CMatchList(CBaseMatchWnd* pParent) : m_pParent( pParent )
 	{
 		m_sFilter			= m_pResultFilters->m_pFilters[nDefaultFilter]->m_sFilter;
 		m_bFilterBusy		= m_pResultFilters->m_pFilters[nDefaultFilter]->m_bFilterBusy;
+		m_bFilterComments	= m_pResultFilters->m_pFilters[nDefaultFilter]->m_bFilterComments;
+		m_bFilterPartial	= m_pResultFilters->m_pFilters[nDefaultFilter]->m_bFilterPartial;
 		m_bFilterPush		= m_pResultFilters->m_pFilters[nDefaultFilter]->m_bFilterPush;
 		m_bFilterUnstable	= m_pResultFilters->m_pFilters[nDefaultFilter]->m_bFilterUnstable;
 		m_bFilterReject		= m_pResultFilters->m_pFilters[nDefaultFilter]->m_bFilterReject;
@@ -91,6 +93,8 @@ CMatchList::CMatchList(CBaseMatchWnd* pParent) : m_pParent( pParent )
 		m_bFilterDRM		= ( Settings.Search.FilterMask & ( 1 << 6 ) ) > 0;
 		m_bFilterAdult		= ( Settings.Search.FilterMask & ( 1 << 7 ) ) > 0;
 		m_bFilterSuspicious	= ( Settings.Search.FilterMask & ( 1 << 8 ) ) > 0;
+		m_bFilterComments	= ( Settings.Search.FilterMask & ( 1 << 10 ) ) > 0;
+		m_bFilterPartial	= ( Settings.Search.FilterMask & ( 1 << 11 ) ) > 0;
 		m_nFilterMinSize	= 1;
 		m_nFilterMaxSize	= 0;
 		m_nFilterSources	= 1;
@@ -731,6 +735,8 @@ void CMatchList::Filter()
 	if ( m_bFilterAdult	)		Settings.Search.FilterMask |= ( 1 << 7 );
 	if ( m_bFilterSuspicious )	Settings.Search.FilterMask |= ( 1 << 8 );
 	if ( m_bRegExp )			Settings.Search.FilterMask |= ( 1 << 9 );
+	if ( m_bFilterComments )	Settings.Search.FilterMask |= ( 1 << 10 );
+	if ( m_bFilterPartial )		Settings.Search.FilterMask |= ( 1 << 11 );
 
 	delete [] m_pszFilter;
 	m_pszFilter = NULL;
@@ -846,7 +852,9 @@ BOOL CMatchList::FilterHit(CQueryHit* pHit)
 		( m_bFilterReject && pHit->m_bMatched == FALSE ) ||
 		( m_bFilterBogus && pHit->m_bBogus ) ||
 		( m_nFilterMinSize > 0 && pHit->m_nSize < m_nFilterMinSize ) ||
-		( m_nFilterMaxSize > 0 && pHit->m_nSize > m_nFilterMaxSize ) )
+		( m_nFilterMaxSize > 0 && pHit->m_nSize > m_nFilterMaxSize ) ||
+		( m_bFilterComments && !pHit->m_sComments.IsEmpty() ) ||
+		( m_bFilterPartial && pHit->m_nPartial > 0))
 		return FALSE;
 
 	if ( m_pszFilter )
@@ -1102,6 +1110,9 @@ void CMatchList::Serialize(CArchive& ar, int nVersion /* MATCHLIST_SER_VERSION *
 		ar << m_bFilterSuspicious;
 		ar << m_bRegExp;
 
+		ar << m_bFilterComments;
+		ar << m_bFilterPartial;
+
 		ar << m_nFilterMinSize;
 		ar << m_nFilterMaxSize;
 		ar << m_nFilterSources;
@@ -1135,6 +1146,12 @@ void CMatchList::Serialize(CArchive& ar, int nVersion /* MATCHLIST_SER_VERSION *
 			ar >> m_bFilterAdult;
 			ar >> m_bFilterSuspicious;
 			ar >> m_bRegExp;
+		}
+
+		if ( nVersion >= 17 )
+		{
+			ar >> m_bFilterComments;
+			ar >> m_bFilterPartial;
 		}
 
 		if ( nVersion >= 10 )

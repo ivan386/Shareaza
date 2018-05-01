@@ -21,10 +21,11 @@
 
 #pragma once
 
-#define MATCHLIST_SER_VERSION	16
+#define MATCHLIST_SER_VERSION	17
 // History:
 // 15 - added CQueryHit::m_sNick for DC++ hits (ryo-oh-ki)
 // 16 - added CQueryHit::m_pAddressIPv6 (ivan386)
+// 17 - added CMatchList::m_bFilterComments and CMatchList::m_bFilterPartial (ivan386)
 
 #include "ShareazaFile.h"
 #include "Schema.h"
@@ -58,6 +59,8 @@ public:
 	CMutex			m_pSection;
 	CString			m_sFilter;
 	BOOL			m_bFilterBusy;
+	BOOL			m_bFilterComments;
+	BOOL			m_bFilterPartial;
 	BOOL			m_bFilterPush;
 	BOOL			m_bFilterUnstable;
 	BOOL			m_bFilterReject;

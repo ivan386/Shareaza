@@ -63,7 +63,7 @@ void CResultFilters::Clear()
 
 void CResultFilters::Serialize(CArchive & ar)
 {
-	int nVersion = 2;
+	int nVersion = 3;
 
 	if ( ar.IsStoring() )
 	{
@@ -262,6 +262,8 @@ CFilterOptions::CFilterOptions()
 	m_bFilterAdult		= ( Settings.Search.FilterMask & ( 1 << 7 ) ) > 0;
 	m_bFilterSuspicious = ( Settings.Search.FilterMask & ( 1 << 8 ) ) > 0;
 	m_bRegExp			= ( Settings.Search.FilterMask & ( 1 << 9 ) ) > 0;
+	m_bFilterComments	= ( Settings.Search.FilterMask & ( 1 << 10 ) ) > 0;
+	m_bFilterPartial	= ( Settings.Search.FilterMask & ( 1 << 11 ) ) > 0;
 	m_nFilterMinSize	= 1;
 	m_nFilterMaxSize	= 0;
 	m_nFilterSources	= 1;
@@ -283,6 +285,8 @@ void CFilterOptions::Serialize(CArchive & ar, int nVersion)
 		ar << m_bFilterAdult;
 		ar << m_bFilterSuspicious;
 		ar << m_bRegExp;
+		ar << m_bFilterComments;
+		ar << m_bFilterPartial;
 		ar << m_nFilterMinSize;
 		ar << m_nFilterMaxSize;
 		ar << m_nFilterSources;
@@ -306,6 +310,12 @@ void CFilterOptions::Serialize(CArchive & ar, int nVersion)
 			ar >> m_bRegExp;
 			if ( m_sFilter.IsEmpty() )
 				m_bRegExp = FALSE;
+		}
+
+		if ( nVersion >= 3 )
+		{
+			ar >> m_bFilterComments;
+			ar >> m_bFilterPartial;
 		}
 
 		ar >> m_nFilterMinSize;
