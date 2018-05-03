@@ -3469,8 +3469,9 @@
 			<control caption="OK"/>
 			<control caption="Cancel"/>
 			<control caption="Apply"/>
+			<control/>
 		</dialog>
-		<dialog name="CGeneralSettingsPage" cookie="BuBuBuBuStCoBuBuBuBuBuBuBuBuBuSyStEdmsStmsBuStCoStCo" caption="General">
+		<dialog name="CGeneralSettingsPage" cookie="BuBuBuBuStCoBuBuBuBuBuBuBuBuBuBuSyStEdmsStmsBuStCoStCo" caption="General">
 			<control caption="_General:"/>
 			<control caption="Auto-connect on Shareaza startup"/>
 			<control caption="Start Shareaza at Windows startup"/>
@@ -3479,6 +3480,7 @@
 			<control caption="bits/second|bytes/second|b/s|B/s|Kb/s|KB/s|Mb/s|MB/s"/>
 			<control caption="_Downloads:"/>
 			<control caption="Expand new downloads by default"/>
+			<control caption="Display simple progress bar"/>
 			<control caption="Open a download _monitor window"/>
 			<control caption="_Search:"/>
 			<control caption="Expand multi-source files by default"/>
@@ -4086,7 +4088,7 @@
 			<control caption="Search"/>
 			<control caption="Cancel"/>
 		</dialog>
-		<dialog name="CFilterSearchDlg" cookie="BuEdBuStBuStEdStEdStEdmsStBuBuBuBuBuBuBuBuBuBuBuCoBuBuBuBuBu" caption="Filter Matches">
+		<dialog name="CFilterSearchDlg" cookie="BuEdBuStBuStEdStEdStEdmsStBuBuBuBuBuBuBuBuBuBuBuBuBuCoBuBuBuBuBu" caption="Filter Matches">
 			<control caption="Only show matches which include the _words:"/>
 			<control/>
 			<control caption="Reg. Exp."/>
@@ -4110,6 +4112,8 @@
 			<control caption="DRM files"/>
 			<control caption="Adult results"/>
 			<control caption="Suspicious files"/>
+			<control caption="Partial sources"/>
+			<control caption="Comments"/>
 			<control caption="Filters:"/>
 			<control/>
 			<control caption="Set as default"/>
@@ -4265,7 +4269,7 @@
 		<dialog name="CSecureRuleDlg" cookie="BuStCoStEdBuStEdEdEdEdStEdEdEdEdBuEdBuBuBuBuStCoStCoEdStEdStEdStBuBu" caption="Security Rule">
 			<control caption="_Rule:"/>
 			<control caption="Type:"/>
-			<control caption="Network (IP) Address|Content Filter"/>
+			<control caption="Network (IP) Address|Content Filter|Network (IPv6) Address"/>
 			<control caption="Comment:"/>
 			<control/>
 			<control caption="_Network Address:"/>
