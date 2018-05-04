@@ -1212,7 +1212,7 @@ BOOL CSkin::Apply(LPCTSTR pszName, CDialog* pDialog, UINT nIconID, CToolTipCtrl*
 	else
 		strName = pszName;
 
-	CString strCaption, strTip;
+	CString strCookie, strTip;
 
 	for ( CWnd* pWnd = pDialog->GetWindow( GW_CHILD ) ; pWnd ; pWnd = pWnd->GetNextWindow() )
 	{
@@ -1237,8 +1237,10 @@ BOOL CSkin::Apply(LPCTSTR pszName, CDialog* pDialog, UINT nIconID, CToolTipCtrl*
 		if ( pWnd->IsKindOf( RUNTIME_CLASS( CSettingsPage ) ) )
 			continue;
 
-		strCaption += szClass;
+		strCookie += szClass;
 	}
+
+	CString strCaption;
 
 	if ( Settings.General.DialogScan )
 	{
@@ -1257,7 +1259,7 @@ BOOL CSkin::Apply(LPCTSTR pszName, CDialog* pDialog, UINT nIconID, CToolTipCtrl*
 		pFile.WriteString( strName );
 
 		pFile.WriteString( _T("\" cookie=\"") );
-		pFile.WriteString( strCaption );
+		pFile.WriteString( strCookie );
 
 		pFile.WriteString( _T("\" caption=\"") );
 		pDialog->GetWindowText( strCaption );
@@ -1337,9 +1339,9 @@ BOOL CSkin::Apply(LPCTSTR pszName, CDialog* pDialog, UINT nIconID, CToolTipCtrl*
 		// Naked dialog
 		return FALSE;
 
-	if ( strCaption != pBase->GetAttributeValue( _T("cookie") ) )
+	if ( strCookie != pBase->GetAttributeValue( _T("cookie") ) )
 	{
-		theApp.Message( MSG_ERROR, IDS_SKIN_ERROR, (LPCTSTR)( _T("Invalid [cookie] attribute in [dialog] element. Real cookie: ") + strCaption ),
+		theApp.Message( MSG_ERROR, IDS_SKIN_ERROR, (LPCTSTR)( _T("Invalid [cookie] attribute in [dialog] element. Real cookie: ") + strCookie ),
 			(LPCTSTR)pBase->ToString() );
 		return FALSE;
 	}
