@@ -709,7 +709,7 @@ void CSettings::Load()
 		{
 			// Delete old Shareaza installers
 			CFileFind ff;
-			BOOL res = ff.FindFile( Downloads.CompletePath + _T("\\") CLIENT_NAME_T _T("_*.exe") );
+			BOOL res = ff.FindFile( Downloads.CompletePath + _T("\\") MOD_CLIENT_NAME_T _T("_*.exe") );
 			while ( res )
 			{
 				res = ff.FindNextFile();
