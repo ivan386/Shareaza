@@ -260,7 +260,7 @@ BOOL CDownloadTransferHTTP::StartNextFragment()
 
 	if ( m_pDownload->GetFragment( this ) )
 	{
-		ChunkifyRequest( &m_nOffset, &m_nLength, Settings.Downloads.ChunkSize, TRUE );
+		m_bWantBackwards = ChunkifyRequest( &m_nOffset, &m_nLength, Settings.Downloads.ChunkSize, TRUE );
 		
 		theApp.Message( MSG_INFO, IDS_DOWNLOAD_FRAGMENT_REQUEST, m_nOffset, m_nOffset + m_nLength - 1, (LPCTSTR)m_pDownload->GetDisplayName(), (LPCTSTR)m_sAddress );
 		

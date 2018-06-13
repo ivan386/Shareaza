@@ -368,13 +368,13 @@ void CDownloadTransfer::SetState(int nState)
 //////////////////////////////////////////////////////////////////////
 // CDownloadTransfer fragment size management
 
-void CDownloadTransfer::ChunkifyRequest(QWORD* pnOffset, QWORD* pnLength, DWORD nChunk, BOOL bVerifyLock) const
+bool CDownloadTransfer::ChunkifyRequest(QWORD* pnOffset, QWORD* pnLength, DWORD nChunk, BOOL bVerifyLock) const
 {
 	ASSUME_LOCK( Transfers.m_pSection );
 
 	ASSERT( pnOffset != NULL && pnLength != NULL );
 
-	if ( m_pSource->m_bCloseConn ) return;
+	if ( m_pSource->m_bCloseConn ) return m_bWantBackwards;
 
 	nChunk = min( nChunk, Settings.Downloads.ChunkSize );
 
@@ -392,7 +392,7 @@ void CDownloadTransfer::ChunkifyRequest(QWORD* pnOffset, QWORD* pnLength, DWORD 
 		}
 	}
 
-	if ( nChunk == 0 || *pnLength <= nChunk ) return;
+	if ( nChunk == 0 || *pnLength <= nChunk ) return m_bWantBackwards;
 
 	if ( m_pDownload->GetVolumeComplete() == 0 || *pnOffset == 0 )
 	{
@@ -411,6 +411,8 @@ void CDownloadTransfer::ChunkifyRequest(QWORD* pnOffset, QWORD* pnLength, DWORD 
 		QWORD nNonRandomEnd = this->m_pDownload->GetNonRandomEnd();
 		QWORD nStartFrom = this->m_pDownload->m_nStartFrom;
 		QWORD nIndex = 0;
+		QWORD nLength = *pnLength;
+		QWORD nOffset = *pnOffset;
 
 		if ( *pnOffset < nNonRandomEnd && nStartFrom < *pnOffset + *pnLength )
 		{
@@ -424,7 +426,11 @@ void CDownloadTransfer::ChunkifyRequest(QWORD* pnOffset, QWORD* pnLength, DWORD 
 		QWORD nStart = *pnOffset + nChunk * nIndex;
 		*pnLength = min( (QWORD)nChunk, *pnOffset + *pnLength - nStart );
 		*pnOffset = nStart;
+
+		if ( *pnOffset - nOffset > nOffset + nLength - *pnOffset - *pnLength )
+			return true;
 	}
+	return m_bWantBackwards;
 }
 
 //////////////////////////////////////////////////////////////////////

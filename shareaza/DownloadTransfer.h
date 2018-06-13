@@ -67,7 +67,7 @@ public:
 	void				DrawStateBar(CDC* pDC, CRect* prcBar, COLORREF crFill, bool bTop = false) const;
 
 protected:
-	void				ChunkifyRequest(QWORD* pnOffset, QWORD* pnLength, DWORD nChunk, BOOL bVerifyLock) const;
+	bool				ChunkifyRequest(QWORD* pnOffset, QWORD* pnLength, DWORD nChunk, BOOL bVerifyLock) const;
 	bool				SelectFragment(const Fragments::List& oPossible, QWORD& nOffset, QWORD& nLength, bool bEndGame = false) const;
 private:
 	blockPair			SelectBlock(const Fragments::List& oPossible, const std::vector< bool >& pAvailable, bool bEndGame) const;
