@@ -216,6 +216,8 @@ void CSettings::Load()
 	Add( _T("Search"), _T("DetailPanelVisible"), &Search.DetailPanelVisible, true );
 	Add( _T("Search"), _T("ExpandMatches"), &Search.ExpandMatches, false );
 	Add( _T("Search"), _T("FilterMask"), &Search.FilterMask, 0x168 );
+	Add( _T("Search"), _T("LowestPriorityThrottle"), &Search.LowestPriorityThrottle, 30000, 1000, 1, 120, _T(" s") );
+	Add( _T("Search"), _T("MediumPriorityThrottle"), &Search.MediumPriorityThrottle, 800, 1, 100, 5000, _T(" ms") );
 	Add( _T("Search"), _T("GeneralThrottle"), &Search.GeneralThrottle, 200, 1, 200, 1000, _T(" ms") );
 	Add( _T("Search"), _T("HideSearchPanel"), &Search.HideSearchPanel, false );
 	Add( _T("Search"), _T("HighlightNew"), &Search.HighlightNew, true );

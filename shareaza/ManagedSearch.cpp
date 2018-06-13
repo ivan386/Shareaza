@@ -182,9 +182,9 @@ BOOL CManagedSearch::Execute(int nPriorityClass)
 	// Throttle this individual search (so it doesn't take up too many resources)
 	DWORD nThrottle = Settings.Search.GeneralThrottle;
 	if ( m_nPriority == spLowest )
-		nThrottle += 30000; // + 30 s
+		nThrottle += Settings.Search.LowestPriorityThrottle; // + 30 s
 	else if ( m_nPriority == spMedium )
-		nThrottle += 800;	// + 800 ms
+		nThrottle += Settings.Search.MediumPriorityThrottle; // + 800 ms
 
 	const DWORD tTicks = GetTickCount();
 	const DWORD tSecs = static_cast< DWORD >( time( NULL ) );
