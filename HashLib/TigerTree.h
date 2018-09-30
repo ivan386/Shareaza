@@ -71,6 +71,8 @@ public:
 
 	BOOL	IsAvailable() const;
 	BOOL	IsZeroBlock(uint32 nBlock) const;
+	uint32	CTigerTree::FindBlockCopy(uint32 nBlock) const;
+	COLORREF CTigerTree::GetColor(uint32 nBlock) const;
 	void	SetHeight(uint32 nHeight);
 	uint32	GetHeight() const;
 	uint32	GetBlockLength() const;
