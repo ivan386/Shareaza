@@ -823,7 +823,7 @@ bool CDownloads::AllowMoreTransfers() const
 	return m_bAllowMoreTransfers;
 }
 
-bool CDownloads::AllowMoreTransfers(IN_ADDR* pAddress) const
+bool CDownloads::AllowMoreTransfers(IN_ADDR* pAddress, bool bFirstAttempt) const
 {
 	DWORD nCount = 0, nLimit = 0;
 
@@ -836,7 +836,7 @@ bool CDownloads::AllowMoreTransfers(IN_ADDR* pAddress) const
 		nCount += GetNext( pos )->GetTransferCount( dtsCountAll, pAddress );
 	}
 
-	if ( pAddress == NULL ) return nCount < Settings.Downloads.MaxTransfers;
+	if ( bFirstAttempt || pAddress == NULL ) return nCount < Settings.Downloads.MaxTransfers;
 
 	if ( m_pHostLimits.Lookup( pAddress->S_un.S_addr, nLimit ) )
 	{

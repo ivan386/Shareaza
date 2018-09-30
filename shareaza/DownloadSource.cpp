@@ -536,7 +536,7 @@ CDownloadTransfer* CDownloadSource::CreateTransfer(LPVOID pParam)
 //////////////////////////////////////////////////////////////////////
 // CDownloadSource check
 
-BOOL CDownloadSource::CanInitiate(BOOL bNetwork, BOOL bEstablished)
+BOOL CDownloadSource::CanInitiate(BOOL bNetwork, BOOL bEstablished, bool bFirstAttempt)
 {
 	if( !Network.IsConnected() ) return FALSE;
 
@@ -611,7 +611,7 @@ BOOL CDownloadSource::CanInitiate(BOOL bNetwork, BOOL bEstablished)
 	if ( ( Settings.Connection.IgnoreOwnIP ) && Network.IsSelfIP( m_pAddress ) ) 
 		return FALSE;
 	
-	return bEstablished || Downloads.AllowMoreTransfers( (IN_ADDR*)&m_pAddress );
+	return bEstablished || Downloads.AllowMoreTransfers( (IN_ADDR*)&m_pAddress, bFirstAttempt );
 }
 
 bool CDownloadSource::IsPreviewCapable() const

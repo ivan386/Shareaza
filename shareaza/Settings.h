@@ -524,6 +524,7 @@ public:
 		DWORD		MediaBuffer;
 		bool		StaggardStart;
 		bool		AllowBackwards;				// Permit download to run in reverse when appropriate
+		bool		AllowUnlimitedFirstAttempt;	// Connect first time without host limit
 		DWORD		ChunkSize;
 		DWORD		ChunkStrap;
 		bool		Metadata;

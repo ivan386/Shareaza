@@ -495,6 +495,7 @@ void CSettings::Load()
 	Add( _T("BitTorrent"), _T("UtPexPeriod"), &BitTorrent.UtPexPeriod, 60*1000, 1000, 10, 60*10, _T(" s") );
 
 	Add( _T("Downloads"), _T("AllowBackwards"), &Downloads.AllowBackwards, true );
+	Add( _T("Downloads"), _T("AllowFirstAttempt"), &Downloads.AllowUnlimitedFirstAttempt, false );
 	Add( _T("Downloads"), _T("AutoClear"), &Downloads.AutoClear, false );
 	Add( _T("Downloads"), _T("AutoExpand"), &Downloads.AutoExpand, false );
 	Add( _T("Downloads"), _T("BufferSize"), &Downloads.BufferSize, 80*Kilo, Kilo, 0, 512, _T(" KB") );

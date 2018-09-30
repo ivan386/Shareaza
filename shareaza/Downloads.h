@@ -114,7 +114,7 @@ public:
 	void		UpdateAllows();
 	bool		AllowMoreDownloads() const;
 	bool		AllowMoreTransfers() const;
-	bool		AllowMoreTransfers(IN_ADDR* pAdress) const;
+	bool		AllowMoreTransfers(IN_ADDR* pAdress, bool bFirstAttempt = false) const;
 	void		Remove(CDownload* pDownload);
 
 	POSITION	GetIterator() const;
