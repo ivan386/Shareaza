@@ -309,7 +309,7 @@ void CDownloadTransfer::SetState(int nState)
 			DWORD nOldSortOrder = m_pSource->m_nSortOrder;
 
 			//Assemble the sort order DWORD
-			m_pSource->m_nSortOrder = StateSortOrder[ min( nState, 14 ) ];          //Get state sort order
+			m_pSource->m_nSortOrder = StateSortOrder[ max( min( nState, 14 ), 0 ) ];          //Get state sort order
 
 			if ( m_pSource->m_nSortOrder >= 14 )
 			{	//Don't bother wasting CPU sorting 'dead' sources- Simply send to bottom.
