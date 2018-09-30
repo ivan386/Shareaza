@@ -422,6 +422,7 @@ void CSettings::Load()
 	Add( _T("Gnutella2"), _T("UdpOutFrames"), &Gnutella2.UdpOutFrames, 256, 1, 16, 2048 );
 	Add( _T("Gnutella2"), _T("UdpOutResend"), &Gnutella2.UdpOutResend, 6000, 1000, 1, 300, _T(" s") );
 
+	Add( _T("eDonkey"), _T("CloseNeighboursOnConnect"), &eDonkey.CloseNeighboursOnConnect, true );
 	Add( _T("eDonkey"), _T("DefaultServerFlags"), &eDonkey.DefaultServerFlags, 0xFFFFFFFF );
 	Add( _T("eDonkey"), _T("DequeueTime"), &eDonkey.DequeueTime, 3600, 60, 2, 512, _T(" m") );
 	Add( _T("eDonkey"), _T("EnableAlways"), &eDonkey.EnableAlways, false );

@@ -141,7 +141,8 @@ CNeighbour* CNeighboursWithConnect::ConnectTo(
 
 		case PROTOCOL_ED2K:
 			Settings.eDonkey.EnableToday = true;
-			CloseDonkeys();
+			if ( Settings.eDonkey.CloseNeighboursOnConnect )
+				CloseDonkeys();
 			break;
 
 		case PROTOCOL_BT:
@@ -274,7 +275,8 @@ CNeighbour* CNeighboursWithConnect::ConnectTo(
 
 		case PROTOCOL_ED2K:
 			Settings.eDonkey.EnableToday = true;
-			CloseDonkeys();
+			if ( Settings.eDonkey.CloseNeighboursOnConnect )
+				CloseDonkeys();
 			break;
 
 		case PROTOCOL_BT:

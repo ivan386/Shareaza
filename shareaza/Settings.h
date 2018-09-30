@@ -417,6 +417,7 @@ public:
 
 	struct seDonkey
 	{
+		bool		CloseNeighboursOnConnect;
 		bool		EnableToday;
 		bool		EnableAlways;
 		bool		FastConnect;				// Try connecting to 2 servers to get online faster
