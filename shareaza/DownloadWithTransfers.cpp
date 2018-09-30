@@ -81,7 +81,7 @@ DWORD CDownloadWithTransfers::GetTransferCount() const
 
 	for ( CDownloadTransfer* pTransfer = m_pTransferFirst; pTransfer; pTransfer = pTransfer->m_pDlNext )
 	{
-		if ( ( pTransfer->m_nState > dtsNull ) &&
+		if ( ( pTransfer->m_nState >= dtsConnecting ) &&
 			 ( pTransfer->m_nProtocol != PROTOCOL_ED2K || pTransfer->m_nState != dtsQueued ) )
 		{
 			++nCount;
@@ -93,7 +93,7 @@ DWORD CDownloadWithTransfers::GetTransferCount() const
 bool CDownloadWithTransfers::ValidTransfer(const IN_ADDR* pAddress, const CDownloadTransfer* pTransfer) const
 {
 	return ( ! pAddress || pAddress->S_un.S_addr == pTransfer->m_pHost.sin_addr.S_un.S_addr ) &&
-		( pTransfer->m_nState > dtsNull ) &&
+		( pTransfer->m_nState >= dtsConnecting ) &&
 		( pTransfer->m_nProtocol != PROTOCOL_ED2K || pTransfer->m_nState != dtsQueued );
 }
 
@@ -270,7 +270,7 @@ BOOL CDownloadWithTransfers::StartNewTransfer(DWORD tNow)
 				 ( pSource->m_nProtocol == PROTOCOL_BT ) &&	// Is a BT source
 				 ( pSource->m_tAttempt == 0 ) )				// Is a "fresh" source from the tracker
 			{
-				if ( pSource->CanInitiate( bConnected, FALSE ) )
+				if ( pSource->CanInitiate( bConnected, FALSE, Settings.Downloads.AllowUnlimitedFirstAttempt ) )
 				{
 					CDownloadTransfer* pTransfer = pSource->CreateTransfer();
 					return pTransfer != NULL && pTransfer->Initiate();
@@ -297,7 +297,7 @@ BOOL CDownloadWithTransfers::StartNewTransfer(DWORD tNow)
 		{
 			if ( pSource->m_tAttempt == 0 )
 			{
-				if ( pSource->CanInitiate( bConnected, FALSE ) )
+				if ( pSource->CanInitiate( bConnected, FALSE, Settings.Downloads.AllowUnlimitedFirstAttempt ) )
 				{
 					pConnectHead = pSource;
 					break;
@@ -315,7 +315,7 @@ BOOL CDownloadWithTransfers::StartNewTransfer(DWORD tNow)
 		{
 			if ( pSource->m_tAttempt == 0 )
 			{
-				if ( pSource->CanInitiate( bConnected, FALSE ) )
+				if ( pSource->CanInitiate( bConnected, FALSE, Settings.Downloads.AllowUnlimitedFirstAttempt ) )
 				{
 					pConnectHead = pSource;
 					break;
@@ -333,7 +333,10 @@ BOOL CDownloadWithTransfers::StartNewTransfer(DWORD tNow)
 		if ( pConnectHead->m_bPushOnly &&
 			pConnectHead->m_nProtocol != PROTOCOL_ED2K )
 		{
-			if ( pConnectHead->PushRequest() )
+			if ( ( pConnectHead->IsIPv6Source() ? 
+					! Network.IsFirewalled( CHECK_TCP6 ): 
+					! Network.IsFirewalled( CHECK_TCP ) ) 
+				   && pConnectHead->PushRequest() )
 			{
 				return TRUE;
 			}
