@@ -915,7 +915,7 @@ void CDownloads::OnRun()
 			}
 
 			pDownload->m_nRunCookie = m_nRunCookie;
-			pDownload->OnRun();
+			pDownload->OnRun(tNow);
 		}
 		m_nComplete = nComplete;
 		m_nTotal = nTotal;
@@ -948,7 +948,7 @@ void CDownloads::OnRun()
 			{
 				CDownload* pDownload = GetNext( pos );
 				pDownload->m_nRunCookie = m_nRunCookie;
-				pDownload->OnRun();
+				pDownload->OnRun(tNow);
 
 				if ( pDownload->IsCompleted() )
 					continue;

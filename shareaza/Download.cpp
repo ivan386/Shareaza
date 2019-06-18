@@ -485,7 +485,7 @@ CString CDownload::GetDownloadSources() const
 //////////////////////////////////////////////////////////////////////
 // CDownload run handler
 
-void CDownload::OnRun()
+void CDownload::OnRun(DWORD tCycleStart)
 {
 	// Set the currently downloading state
 	// (Used to optimize display in Ctrl/Wnd functions)
@@ -607,7 +607,7 @@ void CDownload::OnRun()
 	}
 
 	// Don't save Downloads with many sources too often, since it's slow
-	if ( tNow - m_tSaved >=
+	if ( tCycleStart - tNow < 200 && tNow - m_tSaved >=
 		( GetCount() > 20 ? 5 * Settings.Downloads.SaveInterval : Settings.Downloads.SaveInterval ) )
 	{
 		if ( IsModified() )
