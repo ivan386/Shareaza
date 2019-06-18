@@ -545,6 +545,7 @@ public:
 		bool		ShowGroups;
 		bool		AutoExpand;
 		bool		AutoClear;
+		bool		AutoShow;					// Show window downloads when new added
 		DWORD		ClearDelay;
 		bool		ClearSourcesAfter;			// Clear sources list after download end.
 		DWORD		FilterMask;

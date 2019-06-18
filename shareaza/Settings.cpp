@@ -499,6 +499,7 @@ void CSettings::Load()
 	Add( _T("Downloads"), _T("AllowFirstAttempt"), &Downloads.AllowUnlimitedFirstAttempt, false );
 	Add( _T("Downloads"), _T("AutoClear"), &Downloads.AutoClear, false );
 	Add( _T("Downloads"), _T("AutoExpand"), &Downloads.AutoExpand, false );
+	Add( _T("Downloads"), _T("AutoShow"), &Downloads.AutoShow, true );
 	Add( _T("Downloads"), _T("BufferSize"), &Downloads.BufferSize, 80*Kilo, Kilo, 0, 512, _T(" KB") );
 	Add( _T("Downloads"), _T("ChunkSize"), &Downloads.ChunkSize, 512*Kilo, Kilo, 0, 10*Kilo, _T(" KB") );
 	Add( _T("Downloads"), _T("ChunkStrap"), &Downloads.ChunkStrap, 128*Kilo, Kilo, 0, 10*Kilo, _T(" KB") );

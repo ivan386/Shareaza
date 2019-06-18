@@ -2505,6 +2505,10 @@ void CMainWnd::OnUpdateToolsDownload(CCmdUI* pCmdUI)
 
 void CMainWnd::OnToolsDownload()
 {
+	CSingleLock pLock( &Transfers.m_pSection, TRUE );
+
+	bool bDownloadsOpen = false;
+
 	for ( BOOL bBreak = FALSE; ! bBreak; )
 	{
 		bBreak = TRUE;
@@ -2533,10 +2537,12 @@ void CMainWnd::OnToolsDownload()
 			{
 				if ( ( GetAsyncKeyState( VK_SHIFT ) & 0x8000 ) == 0 && ! Network.IsWellConnected() )
 					Network.Connect( TRUE );
-
-				m_pWindows.Open( RUNTIME_CLASS(CDownloadsWnd) );
-
-				CSingleLock pLock( &Transfers.m_pSection, TRUE );
+				
+				if ( !bDownloadsOpen && Settings.Downloads.AutoShow )
+				{
+					m_pWindows.Open( RUNTIME_CLASS(CDownloadsWnd) );
+					bDownloadsOpen = true;
+				}
 
 				if ( CDownload* pDownload = Downloads.Add( pURL ) )
 				{
