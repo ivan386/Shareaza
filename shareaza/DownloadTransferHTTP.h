@@ -78,6 +78,7 @@ public:
 	virtual BOOL	OnRun();
 
 protected:
+	void			GiveConnectionToNext();
 	BOOL			StartNextFragment();
 	BOOL			SendRequest();
 	BOOL			ReadResponseLine();

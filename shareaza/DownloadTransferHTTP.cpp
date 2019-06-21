@@ -149,8 +149,50 @@ void CDownloadTransferHTTP::Close( TRISTATE bKeepSource, DWORD nRetryAfter )
 			m_pSource->AddFragment( m_nOffset, m_nPosition );
 		}
 	}
+
+	if ( m_bKeepAlive && ! ( m_bBusyFault || m_bBadResponse ) )
+		GiveConnectionToNext();
 	
 	CDownloadTransfer::Close( bKeepSource, nRetryAfter );
+}
+
+void CDownloadTransferHTTP::GiveConnectionToNext()
+{
+	if ( m_hSocket == INVALID_SOCKET )
+		return;
+
+	ASSUME_LOCK( Transfers.m_pSection );
+
+	for ( POSITION pos = Downloads.GetIterator() ; pos != NULL ; )
+	{
+		CDownload* pDownload = Downloads.GetNext( pos );
+
+		if ( pDownload == m_pDownload )
+			continue;
+
+		if ( pDownload->IsComplete() || pDownload->IsCompleted() )
+			continue;
+		
+		for ( POSITION posSource = pDownload->GetIterator(); posSource ; )
+		{
+			CDownloadSource* pSource = pDownload->GetNext( posSource );
+
+			if ( pSource->IsHTTPSource() && pSource->Equals(m_pSource)
+				 && !pSource->IsConnected() )
+			{
+				if ( pSource->GetTransfer() )
+					continue;
+
+				CDownloadTransfer * pTransfer = pSource->CreateTransfer();
+
+				if ( pTransfer )
+				{
+					pTransfer->AttachTo(this);
+					return;
+				}
+			}
+		}
+	}
 }
 
 //////////////////////////////////////////////////////////////////////
