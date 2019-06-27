@@ -269,6 +269,7 @@ BOOL CDownloadWithSources::AddSource(const CShareazaFile* pHit, BOOL bForce)
 	ASSUME_LOCK( Transfers.m_pSection );
 
 	const bool bHasHash = HasHash();
+	const bool bHitHasHash = pHit->HasHash();
 	const bool bHitHasName = ( pHit->m_sName.GetLength() != 0 );
 	const bool bHitHasSize = ( pHit->m_nSize != 0 && pHit->m_nSize != SIZE_UNKNOWN );
 	bool bHash = FALSE;
@@ -341,11 +342,11 @@ BOOL CDownloadWithSources::AddSource(const CShareazaFile* pHit, BOOL bForce)
 		m_oMD5 = pHit->m_oMD5;
 		bUpdated = true;
 	}
-	if ( ( m_sName.IsEmpty() || ! bHasHash ) && bHitHasName )
+	if ( ( m_sName.IsEmpty() || ( !bHasHash && bHitHasHash ) ) && bHitHasName )
 	{
 		bUpdated = Rename( pHit->m_sName );
 	}
-	if ( ( m_nSize == SIZE_UNKNOWN || ! bHasHash ) && bHitHasSize )
+	if ( ( m_nSize == SIZE_UNKNOWN || ( !bHasHash && bHitHasHash ) ) && bHitHasSize )
 	{
 		bUpdated = Resize( pHit->m_nSize );
 	}
