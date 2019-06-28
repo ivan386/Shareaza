@@ -252,8 +252,9 @@ CXMLElement* CLibraryFile::CreateXML(CXMLElement* pRoot, BOOL bSharedOnly, XmlTy
 			{
 				if ( CXMLElement* pMetadata = pFile->AddElement( _T("metadata") ) )
 				{
-					pMetadata->AddAttribute( _T("xmlns:s"), m_pSchema->GetURI() );
-					pMetadata->AddElement( m_pMetadata->Prefix( _T("s:") ) );
+					CXMLElement* pMetadataContent = m_pMetadata->Clone();
+					pMetadataContent->AddAttribute( _T("xmlns"), m_pSchema->GetURI() );
+					pMetadata->AddElement( pMetadataContent );
 				}
 			}
 		}

@@ -1363,8 +1363,9 @@ CXMLElement* CAlbumFolder::CreateXML() const
 			{
 				if ( CXMLElement* pMeta = pProperties->AddElement( _T("metadata") ) )
 				{
-					pMeta->AddAttribute( _T("xmlns:s"), m_sSchemaURI );
-					pMeta->AddElement( m_pXML->Prefix( _T("s:") ) );
+					CXMLElement* pMetaContent = m_pXML->Clone();
+					pMetaContent->AddAttribute( _T("xmlns"), m_sSchemaURI );
+					pMeta->AddElement( pMetaContent );
 				}
 			}
 			else
