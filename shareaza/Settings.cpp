@@ -512,6 +512,7 @@ void CSettings::Load()
 	Add( _T("Downloads"), _T("FilterMask"), &Downloads.FilterMask, 0xFFFFFFFF );
 	Add( _T("Downloads"), _T("FlushSD"), &Downloads.FlushSD, true );
 	Add( _T("Downloads"), _T("IncompletePath"), &Downloads.IncompletePath );
+	Add( _T("Downloads"), _T("CountOnlyWithSources"), &Downloads.CountOnlyWithSources, false );
 	Add( _T("Downloads"), _T("MaxAllowedFailures"), &Downloads.MaxAllowedFailures, 10, 1, 3, 40 );
 	Add( _T("Downloads"), _T("MaxConnectingSources"), &Downloads.MaxConnectingSources, 28, 1, 5, 50 );
 	Add( _T("Downloads"), _T("MaxFileSearches"), &Downloads.MaxFileSearches, 2, 1, 0, 5 );

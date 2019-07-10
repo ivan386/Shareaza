@@ -263,6 +263,7 @@ void CDownload::StopTrying()
 
 	m_tBegan = 0;
 	m_bDownloading = false;
+	Downloads.m_nTryingCount--;
 
 	// if m_bTorrentRequested = TRUE, raza sends Stop
 	// CloseTorrent() additionally closes uploads
@@ -290,6 +291,7 @@ void CDownload::StartTrying()
 
 	m_tBegan = GetTickCount();
 	m_nCompletedAtBegan = GetVolumeComplete();
+	Downloads.m_nTryingCount++;
 
 	if ( ! GetEmptyFragmentList().empty() )
 		SetStartFrom( GetEmptyFragmentList().begin()->begin() );
@@ -509,6 +511,9 @@ void CDownload::OnRun(DWORD tCycleStart)
 		{
 			// This download is trying to download
 			OpenDownload();
+			
+			if (GetEffectiveSourceCount() == 0)
+				Downloads.m_nTryingNoSourcesCount++;
 
 			//'Dead download' check- if download appears dead, give up and allow another to start.
 			if ( ! IsCompleted() && ( tNow - GetStartTimer() ) > ( 3 * 60 * 60 * 1000 )  )

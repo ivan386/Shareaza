@@ -66,6 +66,7 @@ CDownloads::CDownloads()
 	, m_bAllowMoreTransfers	( true )
 	, m_nComplete			( 0 )
 	, m_nTotal				( 0 )
+	, m_nTryingCount		( 0 )
 {
 }
 
@@ -442,6 +443,14 @@ INT_PTR CDownloads::GetCount(BOOL bActiveOnly) const
 
 DWORD CDownloads::GetTryingCount(bool bTorrentsOnly) const
 {
+	if ( !bTorrentsOnly )
+	{
+		if ( Settings.Downloads.CountOnlyWithSources )
+			return m_nTryingCount - m_nTryingNoSourcesCount;
+		else
+			return m_nTryingCount;
+	}
+
 	DWORD nCount = 0;
 
 	CQuickLock pLock( Transfers.m_pSection );
@@ -891,6 +900,8 @@ void CDownloads::OnRun()
 		return;
 
 	DWORD tNow = GetTickCount();
+
+	m_nTryingNoSourcesCount = 0;
 
 	// Re-calculating bandwidth may be a little CPU heavy if there are a lot of transfers- limit
 	// it to 4 times per second
