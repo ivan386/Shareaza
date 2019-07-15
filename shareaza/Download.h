@@ -90,7 +90,7 @@ public:
 	CString		GetDownloadSources() const;
 	BOOL		Load(LPCTSTR pszPath);
 	BOOL		Save(BOOL bFlush = FALSE);
-	void		OnRun(DWORD tCycleStart);
+	void		OnRun();
 	void		ForceComplete();
 	BOOL		Launch(int nIndex, CSingleLock* pLock, BOOL bForceOriginal);
 	BOOL		Enqueue(int nIndex, CSingleLock* pLock);
