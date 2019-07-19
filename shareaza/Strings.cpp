@@ -1114,7 +1114,29 @@ CString Escape(const CString& strValue)
 		default:
 			if ( *pszValue < 32 || *pszValue > 127 )
 			{
-				int n = _stprintf_s( pszXML, nXMLLength, _T("&#%u;"), *pszValue );
+				unsigned long nCode = *pszValue;
+
+				if ( nCode >= 0xD800 && nCode <= 0xDFFF ) // Surrogate Pairs
+				{
+					if ( nCode <= 0xDBFF )
+					{
+						unsigned long nPair = *( pszValue + 1 );
+						
+						if ( nPair >= 0xDC00 && nPair <= 0xDFFF )
+						{
+							nCode = (nCode & 0x3FF) << 10;
+							nCode |= nPair & 0x3FF;
+							nCode += 0x10000;
+							++pszValue;
+						}
+						else
+							nCode = 0xFFFD; // Replacement character
+					}
+					else
+						nCode = 0xFFFD;
+				}
+
+				int n = _stprintf_s( pszXML, nXMLLength, _T("&#%u;"), nCode );
 				pszXML += n;
 				nXMLLength -= n;
 				bChanged = true;
