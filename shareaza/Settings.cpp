@@ -294,6 +294,7 @@ void CSettings::Load()
 	Add( _T("Connection"), _T("OutHost"), &Connection.OutHost );
 	Add( _T("Connection"), _T("RandomPort"), &Connection.RandomPort, false );
 	Add( _T("Connection"), _T("RequireForTransfers"), &Connection.RequireForTransfers, true );
+	Add( _T("Connection"), _T("Reuse"), &Connection.Reuse, false );
 	Add( _T("Connection"), _T("SendBuffer"), &Connection.SendBuffer, 8*Kilo, 1, 0, 64*Kilo, _T(" B") );
 	Add( _T("Connection"), _T("SkipWANIPSetup"), &Connection.SkipWANIPSetup, false );
 	Add( _T("Connection"), _T("SkipWANPPPSetup"), &Connection.SkipWANPPPSetup, false );

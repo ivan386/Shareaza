@@ -270,6 +270,7 @@ public:
 		DWORD		TimeoutTraffic;
 		DWORD		SendBuffer;
 		bool		RequireForTransfers;		// Only upload/download to connected networks
+		bool		Reuse;						// Give socket to another HTTP source with same ip:port
 		DWORD		ConnectThrottle;			// Delay between connection attempts to neighbors (milliseconds)
 		DWORD		FailurePenalty;				// Delay after connection failure (seconds, default = 300) (Neighbour connections)
 		DWORD		FailureLimit;				// Max allowed connection failures (default = 3) (Neighbour connections)

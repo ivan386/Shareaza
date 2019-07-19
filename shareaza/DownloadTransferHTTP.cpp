@@ -150,7 +150,7 @@ void CDownloadTransferHTTP::Close( TRISTATE bKeepSource, DWORD nRetryAfter )
 		}
 	}
 
-	if ( m_bKeepAlive && ! ( m_bBusyFault || m_bBadResponse ) )
+	if ( Settings.Connection.Reuse && m_bKeepAlive && ! ( m_bBusyFault || m_bBadResponse ) )
 		GiveConnectionToNext();
 	
 	CDownloadTransfer::Close( bKeepSource, nRetryAfter );
@@ -170,15 +170,17 @@ void CDownloadTransferHTTP::GiveConnectionToNext()
 		if ( pDownload == m_pDownload )
 			continue;
 
-		if ( pDownload->IsComplete() || pDownload->IsCompleted() )
+		if ( pDownload->IsComplete() || pDownload->IsCompleted() || pDownload->IsMoving() )
 			continue;
 		
 		for ( POSITION posSource = pDownload->GetIterator(); posSource ; )
 		{
 			CDownloadSource* pSource = pDownload->GetNext( posSource );
 
-			if ( pSource->IsHTTPSource() && pSource->Equals(m_pSource)
-				 && !pSource->IsConnected() )
+			if ( pSource->m_nBusyCount == 0 
+				 && pSource->IsHTTPSource()
+				 && !pSource->IsConnected()
+				 && pSource->Equals(m_pSource) )
 			{
 				if ( pSource->GetTransfer() )
 					continue;
