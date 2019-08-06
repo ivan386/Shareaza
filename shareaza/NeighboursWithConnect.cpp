@@ -1225,7 +1225,8 @@ void CNeighboursWithConnect::Maintain()
 			}
 
 			// Lower the needed hub number to avoid hitting Windows XP Service Pack 2's half open connection limit
-			nAttempt = min( nAttempt, Settings.Downloads.MaxConnectingSources );
+			if ( Settings.Downloads.MaxConnectingSources > 0 )
+				nAttempt = min( nAttempt, Settings.Downloads.MaxConnectingSources );
 
 			CHostCacheList* pCache = HostCache.ForProtocol( (PROTOCOLID)nProtocol );
 

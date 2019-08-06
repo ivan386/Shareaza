@@ -212,7 +212,7 @@ BOOL CDownloadWithTransfers::CanStartTransfers(DWORD tNow)
 		return FALSE;
 
 	// Limit the amount of connecting (half-open) sources. (Very important for XP sp2)
-	if ( Downloads.GetConnectingTransferCount( Settings.Downloads.MaxConnectingSources ) >= Settings.Downloads.MaxConnectingSources )
+	if ( Settings.Downloads.MaxConnectingSources > 0 && Downloads.GetConnectingTransferCount( Settings.Downloads.MaxConnectingSources ) >= Settings.Downloads.MaxConnectingSources )
 		return FALSE;
 
 	return TRUE;
