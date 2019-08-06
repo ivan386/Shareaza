@@ -526,7 +526,7 @@ void CDownload::OnRun()
 
 					if ( IsTorrent() )	//If it's a torrent
 					{
-						if ( Downloads.GetTryingCount( true ) >= Settings.BitTorrent.DownloadTorrents )
+						if ( Downloads.GetTryingCount( true, Settings.BitTorrent.DownloadTorrents ) >= Settings.BitTorrent.DownloadTorrents )
 						{	//If there are other torrents that could start
 							StopTrying();		//Give up for now, try again later
 							return;
@@ -602,7 +602,8 @@ void CDownload::OnRun()
 				{
 					if ( ! IsTorrent() ||
 						// Torrents only try when 'ready to go'. (Reduce tracker load)
-						Downloads.GetTryingCount( true ) < Settings.BitTorrent.DownloadTorrents )
+						( Downloads.GetCount() < Settings.BitTorrent.DownloadTorrents 
+						|| Downloads.GetTryingCount( true,  Settings.BitTorrent.DownloadTorrents ) < Settings.BitTorrent.DownloadTorrents ) )
 					{
 						Resume();
 					}

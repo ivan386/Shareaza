@@ -78,8 +78,8 @@ public:
 
 	int			GetSeedCount() const;
 	INT_PTR		GetCount(BOOL bActiveOnly = FALSE) const;
-	DWORD		GetTryingCount(bool bTorrentsOnly = false) const;
-	DWORD		GetConnectingTransferCount() const;
+	DWORD		GetTryingCount(bool bTorrentsOnly = false, DWORD nLimit = 0) const;
+	DWORD		GetConnectingTransferCount(DWORD nLimit = 0) const;
 	BOOL		Check(CDownloadSource* pSource) const;
 	bool		CheckActive(CDownload* pDownload, int nScope) const;
 	BOOL		Move(CDownload* pDownload, int nDelta);

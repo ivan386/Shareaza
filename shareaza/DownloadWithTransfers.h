@@ -45,7 +45,7 @@ private:
 public:
 	bool		HasActiveTransfers() const;
 	DWORD		GetTransferCount() const;
-	DWORD		GetTransferCount(int nState, const IN_ADDR* pAddress = NULL) const;
+	DWORD		GetTransferCount(int nState, const IN_ADDR* pAddress = NULL, DWORD nLimit = 0) const;
 	QWORD		GetAmountDownloadedFrom(const IN_ADDR* pAddress) const;
 	void		CloseTransfers();
 	DWORD		GetAverageSpeed() const;

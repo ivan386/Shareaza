@@ -441,7 +441,7 @@ INT_PTR CDownloads::GetCount(BOOL bActiveOnly) const
 	return nCount;
 }*/
 
-DWORD CDownloads::GetTryingCount(bool bTorrentsOnly) const
+DWORD CDownloads::GetTryingCount(bool bTorrentsOnly, DWORD nLimit) const
 {
 	if ( !bTorrentsOnly )
 	{
@@ -461,12 +461,15 @@ DWORD CDownloads::GetTryingCount(bool bTorrentsOnly) const
 
 		if ( pDownload->IsTrying() && ! pDownload->IsPaused() && ! pDownload->IsCompleted() && ( ! bTorrentsOnly || pDownload->IsTorrent() ) )
 			++nCount;
+		
+		if ( nLimit > 0 && nCount >= nLimit )
+			break; 
 	}
 
 	return nCount;
 }
 
-DWORD CDownloads::GetConnectingTransferCount() const
+DWORD CDownloads::GetConnectingTransferCount(DWORD nLimit) const
 {
 	DWORD nCount = 0;
 
@@ -476,7 +479,10 @@ DWORD CDownloads::GetConnectingTransferCount() const
 	{
 		const CDownload* pDownload = GetNext( pos );
 
-		nCount += pDownload->GetTransferCount( dtsConnecting );
+		nCount += pDownload->GetTransferCount( dtsConnecting, NULL, nLimit > 0 ? nLimit - nCount: 0 );
+
+		if ( nLimit > 0 && nLimit <= nCount )
+			break;
 	}
 
 	return nCount;
@@ -840,21 +846,27 @@ bool CDownloads::AllowMoreTransfers(IN_ADDR* pAddress, bool bFirstAttempt) const
 	if ( ! oLock.Lock( 100 ) )
 		return false;
 
-	for ( POSITION pos = GetIterator() ; pos ; )
+	if ( pAddress == NULL || bFirstAttempt )
 	{
-		nCount += GetNext( pos )->GetTransferCount( dtsCountAll, pAddress );
-	}
+		if ( Settings.Downloads.MaxTransfers == 0 )
+			return false;
 
-	if ( bFirstAttempt || pAddress == NULL ) return nCount < Settings.Downloads.MaxTransfers;
-
-	if ( m_pHostLimits.Lookup( pAddress->S_un.S_addr, nLimit ) )
-	{
-		return ( nCount < nLimit );
+		nLimit = Settings.Downloads.MaxTransfers;
 	}
 	else
+		m_pHostLimits.Lookup( pAddress->S_un.S_addr, nLimit );
+
+	for ( POSITION pos = GetIterator() ; pos ; )
 	{
-		return ( nCount == 0 );
+		nCount += GetNext( pos )->GetTransferCount( dtsCountAll, pAddress, nLimit > 0 ? nLimit - nCount : 1 );
+
+		if ( nLimit > 0 && nCount >= nLimit )
+			return false;
+		else if ( nLimit == 0 && nCount > nLimit )
+			return false;
 	}
+
+	return true;
 }
 
 void CDownloads::SetPerHostLimit(IN_ADDR* pAddress, DWORD nLimit)

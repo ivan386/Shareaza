@@ -97,9 +97,9 @@ bool CDownloadWithTransfers::ValidTransfer(const IN_ADDR* pAddress, const CDownl
 		( pTransfer->m_nProtocol != PROTOCOL_ED2K || pTransfer->m_nState != dtsQueued );
 }
 
-DWORD CDownloadWithTransfers::GetTransferCount(int nState, const IN_ADDR* pAddress) const
+DWORD CDownloadWithTransfers::GetTransferCount(int nState, const IN_ADDR* pAddress, DWORD nLimit) const
 {
-	int nCount = 0;
+	DWORD nCount = 0;
 
 	switch ( nState )
 	{
@@ -109,6 +109,9 @@ DWORD CDownloadWithTransfers::GetTransferCount(int nState, const IN_ADDR* pAddre
 			if ( ValidTransfer( pAddress, pTransfer ) )
 			{
 				++nCount;
+				
+				if ( nLimit > 0 && nLimit <= nCount )
+					break;
 			}
 		}
 		return nCount;
@@ -120,6 +123,9 @@ DWORD CDownloadWithTransfers::GetTransferCount(int nState, const IN_ADDR* pAddre
 
 			{
 				++nCount;
+				
+				if ( nLimit > 0 && nLimit <= nCount )
+					break;
 			}
 		}
 		return nCount;
@@ -130,6 +136,9 @@ DWORD CDownloadWithTransfers::GetTransferCount(int nState, const IN_ADDR* pAddre
 				 ( pTransfer->m_nState > dtsConnecting ) )
 			{
 				++nCount;
+				
+				if ( nLimit > 0 && nLimit <= nCount )
+					break;
 			}
 		}
 		return nCount;
@@ -145,6 +154,9 @@ DWORD CDownloadWithTransfers::GetTransferCount(int nState, const IN_ADDR* pAddre
 				case dtsDownloading:
 					++nCount;
 				}
+				
+				if ( nLimit > 0 && nLimit <= nCount )
+					break;
 			}
 		}
 		return nCount;
@@ -154,6 +166,9 @@ DWORD CDownloadWithTransfers::GetTransferCount(int nState, const IN_ADDR* pAddre
 			if ( pTransfer->m_nState == nState )
 			{
 				++nCount;
+				
+				if ( nLimit > 0 && nLimit <= nCount )
+					break;
 			}
 		}
 		return nCount;
@@ -197,7 +212,7 @@ BOOL CDownloadWithTransfers::CanStartTransfers(DWORD tNow)
 		return FALSE;
 
 	// Limit the amount of connecting (half-open) sources. (Very important for XP sp2)
-	if ( Downloads.GetConnectingTransferCount() >= Settings.Downloads.MaxConnectingSources )
+	if ( Downloads.GetConnectingTransferCount( Settings.Downloads.MaxConnectingSources ) >= Settings.Downloads.MaxConnectingSources )
 		return FALSE;
 
 	return TRUE;
