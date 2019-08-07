@@ -248,7 +248,7 @@ public:
 	// Is file has size?
 	inline BOOL IsValid() const
 	{
-		return m_oFList.limit() > 0;
+		return m_oFList.limit() > 0 && m_oFList.limit() < SIZE_UNKNOWN;
 	}
 	
 	// Returns file download progress ( < 0 - unknown or 0..100% )
