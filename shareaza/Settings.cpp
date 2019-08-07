@@ -527,6 +527,7 @@ void CSettings::Load()
 	Add( _T("Downloads"), _T("NeverDrop"), &Downloads.NeverDrop, false );
 	Add( _T("Downloads"), _T("PushTimeout"), &Downloads.PushTimeout, 45*1000, 1000, 5, 180, _T(" s") );
 	Add( _T("Downloads"), _T("QueueLimit"), &Downloads.QueueLimit, 0, 1, 0, 20000 );
+	Add( _T("Downloads"), _T("RenameIfExists"), &Downloads.RenameIfExists, false );
 	Add( _T("Downloads"), _T("RequestHTTP11"), &Downloads.RequestHTTP11, true );
 	Add( _T("Downloads"), _T("RequestHash"), &Downloads.RequestHash, true );
 	Add( _T("Downloads"), _T("RequestURLENC"), &Downloads.RequestURLENC, true );

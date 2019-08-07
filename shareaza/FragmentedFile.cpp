@@ -652,11 +652,23 @@ DWORD CFragmentedFile::Move(DWORD nIndex, LPCTSTR pszDestination, LPPROGRESS_ROU
 		if ( bSkip || bIsFolder )
 			bSuccess = DeleteFileEx( sPath, FALSE, TRUE, TRUE );
 		else
+		{
+			int nDot = sName.ReverseFind( _T('.') );
+			
+			if (Settings.Downloads.RenameIfExists)
+				for (int index = 0; GetFileAttributes( strTarget ) != INVALID_FILE_ATTRIBUTES; index++ )
+				{
+					if (nDot > 0)
+						strTarget.Format( _T("%s\\%s_%u%s"), pszDestination, sName.Left( nDot ), index, sName.Right( sName.GetLength() - nDot ) );
+					else
+						strTarget.Format( _T("%s\\%s_%u"), pszDestination, sName, index );
+				}
+
 			// Move/copy file using very long filenames
 			bSuccess = MoveFileWithProgress( CString( _T("\\\\?\\") ) + sPath,
 				CString( _T("\\\\?\\") ) + strTarget, lpProgressRoutine, pTask,
 				MOVEFILE_REPLACE_EXISTING | MOVEFILE_COPY_ALLOWED | MOVEFILE_WRITE_THROUGH );
-
+		}
 		dwError = ::GetLastError();
 	}
 

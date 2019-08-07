@@ -535,6 +535,7 @@ public:
 		bool		VerifyED2K;
 		bool		VerifyTorrent;
 		bool		NeverDrop;					// Do not drop bad sources (may pollute source list with many dead sources)
+		bool		RenameIfExists;
 		bool		RequestHash;
 		bool		RequestHTTP11;
 		bool		RequestURLENC;
