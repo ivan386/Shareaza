@@ -332,3 +332,7 @@ pip-log.txt
 /plugins/WindowsThumbnail/WindowsThumbnail.h
 /plugins/ZIPBuilder/Shareaza.h
 /plugins/ZIPBuilder/ZIPBuilder.h
+
+#NuGet
+/vc2022/.vs/*
+/vc2022/packages/*
