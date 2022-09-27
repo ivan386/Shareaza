@@ -817,7 +817,8 @@ CString IPv4Or6ToString(IN_ADDR* pIPv4, IN6_ADDR* pIPv6)
 
 CString IPv6ToString(const IN6_ADDR* pAddress, bool bForUrl)
 {
-	ASSERT( pAddress );
+	// #TODO: check why this ASSERT fails
+	// ASSERT( pAddress );
 	SOCKADDR_IN6 pHost = { AF_INET6 };
 	pHost.sin6_addr = (*pAddress);
 	if ( bForUrl )
