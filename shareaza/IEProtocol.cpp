@@ -449,7 +449,7 @@ HRESULT CIEProtocol::OnRequestCollection(LPCTSTR pszURL, CBuffer& oBuffer, CStri
 					}
 
 					CString strDCCollPath = pDCCollFile->GetPath();
-					CFile pDCFile = CFile(strDCCollPath, CFile::modeRead);
+					CFile pDCFile(strDCCollPath, CFile::modeRead);
 					ULONGLONG nInSize = pDCFile.GetLength();
 					
 					CBuffer pDCBuffer;
