@@ -21,6 +21,7 @@
 
 #include "StdAfx.h"
 #include "Strings.h"
+#include <WinDNS.h>
 
 bool IsCharacter(const WCHAR nChar)
 {
