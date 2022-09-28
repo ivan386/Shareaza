@@ -774,14 +774,14 @@ BOOL CG2Packet::OnPacket(const SOCKADDR_IN6* pHost)
 	case G2_PACKET_KHL:
 //		return OnKHL( pHost );
 
-#ifdef _DEBUG
 	default:
 		CString tmp;
 		tmp.Format( _T("Unknown packet from %s:%u."),
 			(LPCTSTR)IPv6ToString( &pHost->sin6_addr ) ,
 			htons( pHost->sin6_port ) );
-		Debug( tmp );
-#endif // _DEBUG
+		#ifdef _DEBUG
+			Debug( tmp );
+		#endif
 	}
 
 	return TRUE;
