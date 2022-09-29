@@ -30,9 +30,6 @@ http://download.microsoft.com/download/3/3/f/33f1af6e-c61b-4f14-a0de-3e9096ed4b3
 
  On some systems, possibly related to Windows 7 or Windows 64-bit, placing gzip in system32 will not be recognized.  In that case, just put it somewhere else in Visual Studio's executable path, such as under 'Microsoft Visual Studio 9.0/Common7/Tools'.
 
-### 7-Zip
-Download and install 7-Zip - http://www.7-zip.org/
-
 ### Download and install Unicode Inno Setup QuickStart Pack self-installing package
  from http://www.jrsoftware.org/isdl.php.
 
