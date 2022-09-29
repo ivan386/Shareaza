@@ -316,7 +316,7 @@
     <ResourceCompile Include="RazaWebHook.rc" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\shareaza\Shareaza_141.vcxproj">
+    <ProjectReference Include="..\..\shareaza\Shareaza_143.vcxproj">
       <Project>{f9c719b3-35fb-427d-a795-91105dfecaaf}</Project>
       <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
     </ProjectReference>
