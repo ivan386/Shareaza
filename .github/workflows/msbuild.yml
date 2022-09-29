@@ -37,4 +37,4 @@ jobs:
       working-directory: ${{env.GITHUB_WORKSPACE}}
       # Add additional options to the MSBuild command line here (like platform or verbosity level).
       # See https://docs.microsoft.com/visualstudio/msbuild/msbuild-command-line-reference
-      run: msbuild ${{env.SOLUTION_FILE_PATH}} /nologo /v:m /t:Rebuild /p:ForceImportBeforeCppTargets=${{env.RELEASEBUILD_FILE_PATH}} /p:Configuration=${{env.BUILD_CONFIGURATION}} /p:Platform=Win32 /fl /flp:Summary;Verbosity=normal
+      run: msbuild ${{env.SOLUTION_FILE_PATH}} /nologo /v:m /t:Rebuild /p:ForceImportBeforeCppTargets=${{env.RELEASEBUILD_FILE_PATH}} /p:Configuration=${{env.BUILD_CONFIGURATION}} /p:Platform=Win32 /fl /flp:Summary
