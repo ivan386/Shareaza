@@ -31,7 +31,7 @@ jobs:
 
     - name: Restore NuGet packages (zlibwapi)
       working-directory: ${{env.GITHUB_WORKSPACE}}
-      run: nuget restore zlibwapi/zlibwapi_143.vcxproj
+      run: nuget restore zlibwapi/zlibwapi_143.vcxproj -PackagesDirectory zlibwapi/packages
 
     - name: Restore NuGet packages (Shareaza)
       working-directory: ${{env.GITHUB_WORKSPACE}}
