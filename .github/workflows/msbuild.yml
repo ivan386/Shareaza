@@ -29,7 +29,11 @@ jobs:
     - name: Add MSBuild to PATH
       uses: microsoft/setup-msbuild@v1.0.2
 
-    - name: Restore NuGet packages
+    - name: Restore NuGet packages (zlibwapi)
+      working-directory: ${{env.GITHUB_WORKSPACE}}
+      run: nuget restore zlibwapi/zlibwapi_143.vcxproj
+
+    - name: Restore NuGet packages (Shareaza)
       working-directory: ${{env.GITHUB_WORKSPACE}}
       run: nuget restore ${{env.SOLUTION_FILE_PATH}}
 
