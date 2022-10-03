@@ -1,0 +1,3 @@
+1. Download file sqlite-amalgamation-*.zip from here: https://sqlite.org/download.html
+2. Unpack next files to Shareaza sources: sqlite3.h, sqlite3.c and sqlite3ext.h
+3. Update version information here in sqlite3.rc

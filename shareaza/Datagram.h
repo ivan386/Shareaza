@@ -40,6 +40,7 @@ public:
 	CDatagramIn*	m_pPrevTime;
 public:
 	SOCKADDR_IN		m_pHost;
+	SOCKADDR_IN6	m_pHostIPv6;
 	BOOL			m_bCompressed;
 	WORD			m_nSequence;
 	BYTE			m_nCount;
@@ -53,6 +54,7 @@ public:
 // Operations
 public:
 	void		Create(const SOCKADDR_IN* pHost, BYTE nFlags, WORD nSequence, BYTE nCount);
+	void		Create(const SOCKADDR_IN6* pHost, BYTE nFlags, WORD nSequence, BYTE nCount);
 	BOOL		Add(BYTE nPart, LPCVOID pData, DWORD nLength);
 	CG2Packet*	ToG2Packet();
 

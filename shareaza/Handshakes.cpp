@@ -1,7 +1,7 @@
 //
 // Handshakes.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2014.
+// Copyright (c) Shareaza Development Team, 2002-2015.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -49,7 +49,8 @@ CHandshakes Handshakes;
 CHandshakes::CHandshakes() :
 	m_nStableCount( 0 ),
 	m_tStableTime( 0 ),
-	m_hSocket( INVALID_SOCKET )
+	m_hSocket( INVALID_SOCKET ),
+	m_hSocketIPv6( INVALID_SOCKET )
 {
 }
 
@@ -93,7 +94,7 @@ BOOL CHandshakes::Listen()
 	SOCKADDR_IN saHost = Network.m_pHost; // This is the address of our computer as visible to remote computers on the Internet
 
 	// If the program connection settings disallow binding, zero the 4 bytes of the IP address
-	if ( ! Settings.Connection.InBind ) 
+	if ( ! Settings.Connection.InBind )
 		saHost.sin_addr.s_addr = INADDR_ANY; // s_addr is the IP address formatted as a single u_long
 	else
 	{
@@ -134,8 +135,44 @@ BOOL CHandshakes::Listen()
 
 	Network.AcquireLocalAddress( m_hSocket );
 
+	ListenIPv6();
+
 	// Create a new thread to run the ThreadStart method, passing it a pointer to this C
 	return BeginThread( "Handshakes" );
+}
+
+BOOL CHandshakes::ListenIPv6()
+{
+	m_hSocketIPv6 = socket( PF_INET6, SOCK_STREAM, IPPROTO_TCP );
+	
+	if ( m_hSocketIPv6 == INVALID_SOCKET )
+		return FALSE;
+
+	SOCKADDR_IN6 saHost = { AF_INET6 };
+	saHost.sin6_port = Network.m_pHostIPv6.sin6_port = Network.m_pHost.sin_port;
+	
+	setsockopt( m_hSocketIPv6, IPPROTO_TCP, TCP_NODELAY, "\x01", 1);
+
+	if ( bind( m_hSocketIPv6, (SOCKADDR*)&saHost, sizeof( saHost ) ) != 0 )
+		return FALSE;
+
+	theApp.Message( MSG_INFO, IDS_NETWORK_LISTENING_TCP, (LPCTSTR) IPv6ToString( &saHost.sin6_addr ), htons( saHost.sin6_port ) );
+
+
+		// Set it up so that when a remote computer connects to us, the m_pWakeup event is fired
+	WSAEventSelect(		// Specify an event object to associate with the specified set of FD_XXX network events
+		m_hSocketIPv6,		// Our listening socket
+		GetWakeupEvent(),		// Our event, a CEvent object member variable
+		FD_ACCEPT );	// The network event to trigger this is us accepting a remote computer's connection
+
+	// Have the socket wait, listening for remote computer on the Internet to connect to it
+	listen(			// Place a socket in a state in which it is listening for an incoming connection
+		m_hSocketIPv6,	// Our socket
+		256 );		// Maximum length of the queue of pending connections, let 256 computers try to call us at once (do)
+
+	Network.AcquireLocalAddress( m_hSocketIPv6, true );
+
+	return TRUE;
 }
 
 //////////////////////////////////////////////////////////////////////
@@ -145,6 +182,7 @@ BOOL CHandshakes::Listen()
 void CHandshakes::Disconnect()
 {
 	CNetwork::CloseSocket( m_hSocket, false );
+	CNetwork::CloseSocket( m_hSocketIPv6, false );
 
 	CloseThread();
 
@@ -192,6 +230,31 @@ BOOL CHandshakes::PushTo(IN_ADDR* pAddress, WORD nPort, DWORD nIndex)
 	return FALSE;
 }
 
+BOOL CHandshakes::PushTo(IN6_ADDR* pAddress, WORD nPort, DWORD nIndex)
+{
+	CSingleLock pLock1( &Transfers.m_pSection );
+	if ( pLock1.Lock( 250 ) && Uploads.AllowMoreTo( pAddress ) )
+	{
+		pLock1.Unlock();
+
+		// Make a new CHandshake object, and open a connection to the computer at pAddress and pPort
+		if ( CHandshake* pHandshake = new CHandshake() )
+		{
+			if ( pHandshake->Push( pAddress, nPort, nIndex ) )
+			{
+				Add( pHandshake );
+				return TRUE;
+			}
+
+			delete pHandshake;
+		}
+	}
+	else
+		theApp.Message( MSG_ERROR, IDS_UPLOAD_PUSH_BUSY, (LPCTSTR)IPv6ToString( pAddress ) );
+
+	return FALSE;
+}
+
 //////////////////////////////////////////////////////////////////////
 // CHandshakes connection test
 
@@ -208,6 +271,23 @@ BOOL CHandshakes::IsConnectedTo(const IN_ADDR* pAddress) const
 
 		// If the IP address in the list handshake object matches the one given this method, we've found it
 		if ( pHandshake->m_pHost.sin_addr.S_un.S_addr == pAddress->S_un.S_addr )
+			return TRUE;
+	}
+
+	// We didn't find it
+	return FALSE;
+}
+
+BOOL CHandshakes::IsConnectedTo(const IN6_ADDR* pAddress) const
+{
+	CSingleLock pLock( &m_pSection, TRUE );
+
+	for ( POSITION pos = m_pList.GetHeadPosition() ; pos ; )
+	{
+		const CHandshake* pHandshake = m_pList.GetNext( pos );
+
+		// If the IP address in the list handshake object matches the one given this method, we've found it
+		if ( IN6_ADDR_EQUAL( &pHandshake->m_pHostIPv6.sin6_addr, pAddress ) )
 			return TRUE;
 	}
 
@@ -254,7 +334,7 @@ void CHandshakes::OnRun()
 		Doze( 1000 );
 
 		// Accept the connection from the remote computer, making a new CHandshake object for it in the list
-		while ( AcceptConnection() );
+		while ( AcceptConnection() || AcceptConnectionIPv6() );
 
 		// Send and receive data with each remote computer in the list
 		RunHandshakes();
@@ -307,7 +387,7 @@ BOOL CHandshakes::AcceptConnection()
 	// Allows the socket to be bound to an address that is already in use
 	setsockopt( m_hSocket, SOL_SOCKET, SO_REUSEADDR, "\x01", 1 );
 
-	Network.AcquireLocalAddress( hSocket );
+	Network.AcquireLocalAddress( hSocket, false, &pHost.sin_addr );
 
 	// We've listened for and accepted one more stable connection
 	InterlockedIncrement( (PLONG)&m_nStableCount ); // Use an interlocked function to do this in a thread-safe way
@@ -321,6 +401,45 @@ BOOL CHandshakes::AcceptConnection()
 	if ( CHandshake* pHandshake = new CHandshake( hSocket, &pHost ) )
 	{
 		Add( pHandshake );
+		return TRUE;
+	}
+
+	return FALSE;
+}
+
+
+BOOL CHandshakes::AcceptConnectionIPv6()
+{
+	SOCKADDR_IN6 pHost = { AF_INET6 };
+	SOCKET hSocket = CNetwork::AcceptSocket( m_hSocketIPv6, &pHost, AcceptCheck );
+	if ( hSocket == INVALID_SOCKET )
+		return FALSE;
+
+	// Disables the Nagle algorithm for send coalescing
+	setsockopt( hSocket, IPPROTO_TCP, TCP_NODELAY, "\x01", 1 );
+
+	
+	// We've listened for and accepted one more stable connection
+	InterlockedIncrement( (PLONG)&m_nStableCount ); // Use an interlocked function to do this in a thread-safe way
+
+	// Setup the socket so when there is data to read or write, or it closes, the m_pWakeup event happens
+	WSAEventSelect(							// Associate the m_pWakeup event with the FD_READ, FD_WRITE, and FD_CLOSE events
+		hSocket,							// The local socket we just made when accepting a new connection
+		GetWakeupEvent(),					// The handshakes object's wakeup event
+		FD_READ | FD_WRITE | FD_CLOSE );	// Make the event happen when the socket is ready to read, write, or has closed
+	
+	if ( CHandshake* pHandshake = new CHandshake( hSocket, &pHost ) )
+	{
+		Add( pHandshake );
+
+		SOCKADDR_IN6 pAddress;
+		int nSockLen = sizeof( pAddress );
+
+		if ( getsockname( hSocket, (SOCKADDR*)&pAddress, &nSockLen ) != 0 )
+			return TRUE;
+
+		Network.AcquireLocalAddress( hSocket, false, NULL, &pHost.sin6_addr );
+
 		return TRUE;
 	}
 
@@ -348,7 +467,7 @@ int CALLBACK CHandshakes::AcceptCheck(IN LPWSABUF lpCallerId,
 	// If the remote computer's IP address is on the list of blocked IPs
 	if ( Security.IsDenied( &pHost->sin_addr ) )
 	{
-		theApp.Message( MSG_ERROR, IDS_NETWORK_SECURITY_DENIED, (LPCTSTR)CString( inet_ntoa( pHost->sin_addr ) ) );
+		theApp.Message( MSG_ERROR, IDS_SECURITY_DENIED, (LPCTSTR)CString( inet_ntoa( pHost->sin_addr ) ) );
 		return CF_REJECT;
 	}
 
@@ -365,7 +484,8 @@ void CHandshakes::RunStableUpdate()
 	if ( m_nStableCount > 0 )
 	{
 		// If there isn't a record of when we first connected yet, set it to the current time.
-		if ( m_tStableTime == 0 ) m_tStableTime = (DWORD)time( NULL ); // The function time( NULL ) resolves to the number of seconds since 1970
+		const DWORD tNow = static_cast< DWORD >( time( NULL ) );
+		if ( m_tStableTime == 0 || tNow < m_tStableTime ) m_tStableTime = tNow;
 
 		// Update the discovery services (do)
 		DiscoveryServices.Update();

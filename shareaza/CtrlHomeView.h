@@ -1,7 +1,7 @@
 //
 // CtrlHomeView.h
 //
-// Copyright (c) Shareaza Development Team, 2002-2007.
+// Copyright (c) Shareaza Development Team, 2002-2017.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -40,8 +40,6 @@ public:
 	CRichElement*	m_peRemote1;
 	CRichElement*	m_peRemote2;
 	CHomeSearchCtrl	m_wndSearch;
-	CBitmap			m_bmHeader1;
-	CBitmap			m_bmHeader2;
 
 	virtual BOOL	Create(const RECT& rect, CWnd* pParentWnd);
 	void			OnSkinChange();

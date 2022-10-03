@@ -1,7 +1,7 @@
 //
 // ChatSession.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2013.
+// Copyright (c) Shareaza Development Team, 2002-2015.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -245,7 +245,7 @@ BOOL CChatSession::OnPush(const Hashes::Guid& oGUID, CConnection* pConnection)
 
 void CChatSession::Close(UINT nError)
 {
-	CQuickLock pLock( ChatCore.m_pSection );
+	CQuickLock pLock1( ChatCore.m_pSection );
 
 	if ( m_nState != cssNull )
 	{
@@ -258,8 +258,8 @@ void CChatSession::Close(UINT nError)
 
 	if ( m_nProtocol == PROTOCOL_DC )
 	{
-		CSingleLock pLock( &Network.m_pSection );
-		if ( pLock.Lock( 250 ) )
+		CSingleLock pLock2( &Network.m_pSection );
+		if ( pLock2.Lock( 250 ) )
 		{
 			if ( CNeighbour* pNeighbour = Neighbours.Get( m_pHost.sin_addr ) )
 			{
@@ -298,7 +298,7 @@ BOOL CChatSession::OnConnected()
 			Write( _P("CHAT CONNECT/0.2\r\n") );
 
 		Write( _P("Accept: text/plain,application/x-gnutella2\r\n") );
-		
+
 		Write( _P("User-Agent: ") );
 		Write( Settings.SmartAgent() );
 		Write( _P("\r\n") );
@@ -813,7 +813,7 @@ BOOL CChatSession::OnChatMessage(CEDPacket* pPacket)
 BOOL CChatSession::OnCaptchaRequest(CEDPacket* pPacket)
 {
 	// Note: The message packet has already been validated by the EDClient.
-	
+
 	// Skip tags
 	for ( BYTE nCount = pPacket->ReadByte(); nCount && pPacket->GetRemaining(); --nCount )
 	{
@@ -1178,7 +1178,7 @@ BOOL CChatSession::OnChatAnswer(CG2Packet* pPacket)
 
 		case G2_PACKET_CHAT_AWAY:
 			MakeActive();
-			StatusMessage( cmtError, IDS_CHAT_PRIVATE_AWAY, (LPCTSTR)m_sNick, pPacket->ReadString( nLength ) );
+			StatusMessage( cmtError, IDS_CHAT_PRIVATE_AWAY, (LPCTSTR)m_sNick, (LPCTSTR)pPacket->ReadString( nLength ) );
 			break;
 		}
 		pPacket->m_nPosition = nOffset;
@@ -1225,7 +1225,7 @@ BOOL CChatSession::OnChatMessage(CG2Packet* pPacket)
 
 BOOL CChatSession::SendPrivateMessage(bool bAction, const CString& strText)
 {
-	CSingleLock pLock( &ChatCore.m_pSection, TRUE );
+	CSingleLock pLock1( &ChatCore.m_pSection, TRUE );
 
 	if ( m_nProtocol == PROTOCOL_ED2K )
 	{
@@ -1255,8 +1255,8 @@ BOOL CChatSession::SendPrivateMessage(bool bAction, const CString& strText)
 	}
 	else if ( m_nProtocol == PROTOCOL_DC )
 	{
-		CSingleLock pLock( &Network.m_pSection );
-		if ( pLock.Lock( 250 ) )
+		CSingleLock pLock2( &Network.m_pSection );
+		if ( pLock2.Lock( 250 ) )
 		{
 			if ( CNeighbour* pClient = Neighbours.Get( m_pHost.sin_addr ) )
 			{

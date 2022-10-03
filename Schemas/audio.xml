@@ -1483,15 +1483,4 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
                <type extension="wav"/>
                <type extension="wma"/>
        </typeFilter>
-       <bitziImport testExists="rdf:rdf/rdf:Description/bz:audioBitrate">
-               <mapping from="rdf:rdf/rdf:Description/mm:duration" to="seconds" factor="0.001"/>
-               <mapping from="rdf:rdf/rdf:Description/bz:audioBitrate" to="bitrate"/>
-               <mapping from="rdf:rdf/rdf:Description/bz:audioSamplerate" to="sampleRate"/>
-               <mapping from="rdf:rdf/rdf:Description/bz:audioChannels" to="channels"/>
-               <mapping from="rdf:rdf/rdf:Description/dc:description/dc:title" to="title"/>
-               <mapping from="rdf:rdf/rdf:Description/dc:description/dc:creator" to="artist"/>
-               <mapping from="rdf:rdf/rdf:Description/dc:description/bz:albumName" to="album"/>
-               <mapping from="rdf:rdf/rdf:Description/dc:description/mm:trackNum" to="track"/>
-               <mapping from="rdf:rdf/rdf:Description/dc:description/dc:date" to="year"/>
-       </bitziImport>
 </schemaDescriptor>

@@ -1,7 +1,7 @@
 //
 // Builder.cpp : Implementation of CBuilder
 //
-// Copyright (c) Nikolay Raspopov, 2005.
+// Copyright (c) Nikolay Raspopov, 2005-2014.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -21,16 +21,6 @@
 
 #include "stdafx.h"
 #include "Builder.h"
-
-HRESULT CBuilder::FinalConstruct () throw()
-{
-	return CoCreateFreeThreadedMarshaler (GetControllingUnknown(), &m_pUnkMarshaler.p);
-}
-
-void CBuilder::FinalRelease () throw()
-{
-	m_pUnkMarshaler.Release ();
-}
 
 STDMETHODIMP CBuilder::Process (
 	/* [in] */ BSTR sFile,
@@ -68,47 +58,60 @@ STDMETHODIMP CBuilder::Process (
 	hr = pXMLElement->get_Attributes(&pISXMLAttributes);
 	if (FAILED (hr))
 		return hr;
-	
-	GFL_FILE_INFORMATION inf = { 0 };
-	WCHAR pszPath[MAX_PATH] = { 0 };
 
-	GFL_ERROR err = gflGetFileInformationW ( sFile, -1, &inf);
-	
+	GFL_FILE_INFORMATION inf = {};
+	GFL_ERROR err = gflGetFileInformationW( (LPCWSTR)sFile, -1, &inf );
 	if ( err != GFL_NO_ERROR )
 	{
-		if ( GetShortPathNameW( sFile, pszPath, MAX_PATH ) )
-			err = gflGetFileInformationW ( pszPath, -1, &inf);
+		WCHAR pszPath[ MAX_PATH * 2 ] = {};
+		if ( GetShortPathNameW( (LPCWSTR)sFile, pszPath, MAX_PATH * 2 ) )
+			err = gflGetFileInformationW( pszPath, -1, &inf );
 		else err = GFL_ERROR_FILE_OPEN;
 	}
 
-	if (err == GFL_NO_ERROR) {
-		CString tmp;
-		
-		tmp.Format (_T("%d"), inf.Height);
-		pISXMLAttributes->Add (CComBSTR ("height"), CComBSTR (tmp));
-		
-		tmp.Format (_T("%d"), inf.Width);
-		pISXMLAttributes->Add (CComBSTR ("width"), CComBSTR (tmp));
+	if ( err == GFL_NO_ERROR )
+	{
+		if ( inf.Height > 0 )
+		{
+			CString height;
+			height.Format( _T("%d"), inf.Height );
+			pISXMLAttributes->Add( CComBSTR( "height" ), CComBSTR( height ) );
+		}
 
-		pISXMLAttributes->Add (CComBSTR ("description"), CComBSTR (inf.Description));
+		if ( inf.Width > 0 )
+		{
+			CString width;
+			width.Format( _T("%d"), inf.Width );
+			pISXMLAttributes->Add( CComBSTR( "width" ), CComBSTR( width ) );
+		}
+
+		if ( *inf.Description )
+		{
+			pISXMLAttributes->Add( CComBSTR( "description" ), CComBSTR( inf.Description ) );
+		}
 
 		CString colors;
-		int bits = inf.ComponentsPerPixel * inf.BitsPerComponent;
-		if (inf.ColorModel == GFL_CM_GREY)
+		GFL_UINT16 bits = inf.ComponentsPerPixel * inf.BitsPerComponent;
+		if ( inf.ColorModel == GFL_CM_GREY )
 			colors = _T("Greyscale");
-		else {
-			if (bits <= 4)
-				colors = _T("16");
-			else
-			if (bits <= 8)
-				colors = _T("256");
-			else
-			if (bits <= 16)
-				colors = _T("64K");
-			else
-				colors = _T("16.7M");
-		}
-		pISXMLAttributes->Add (CComBSTR ("colors"), CComBSTR (colors));
+		else if ( bits == 0 )
+			; // No bits
+		else if ( bits == 1 )
+			colors = _T("2");
+		else if ( bits == 2 )
+			colors = _T("4");
+		else if ( bits <= 4 )
+			colors = _T("16");
+		else if ( bits <= 8 )
+			colors = _T("256");
+		else if ( bits <= 16 )
+			colors = _T("64K");
+		else if ( bits <= 24 )
+			colors = _T("16.7M");
+		else
+			colors = _T("16.7M + Alpha");
+		if ( colors.GetLength() )
+			pISXMLAttributes->Add( CComBSTR ("colors"), CComBSTR( colors ) );
 	} else
 		hr = E_FAIL;
 	return hr;

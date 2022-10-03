@@ -139,8 +139,6 @@ static _CrtMemState g_MemState;
  */
 static BOOL RequestMorePrivileges(void)
 {
-	if (! g_bWinNT)
-		return TRUE; // simulation for Win9x
 	BOOL bResult = FALSE;
 	HANDLE hCurrentProcess = GetCurrentProcess();
 	HANDLE hToken;
@@ -377,7 +375,7 @@ static inline void ReadVersionInfo(void)
  * Generic unhandled exception handler.
  * @param rParams - symbolic engine parameters.
  */
-static void HandleException(CSymEngine::CEngineParams& rParams)
+static BOOL HandleException(CSymEngine::CEngineParams& rParams)
 {
 	// Block other threads.
 	EnterCriticalSection(&g_csHandlerSync);
@@ -387,6 +385,14 @@ static void HandleException(CSymEngine::CEngineParams& rParams)
 	{
 		// Flush log files and allocate symbolic engine.
 		InitSymEngine(rParams);
+		// Do other things only if stack trace contains module of interest
+		if (!g_pSymEngine->CheckStackTrace(g_hModule))
+		{
+			g_pExceptionPointers = NULL;
+			// Unlock other threads.
+			LeaveCriticalSection(&g_csHandlerSync);
+			return FALSE;
+		}
 		// Call user error handler before BugTrap user interface.
 		if (g_pfnPreErrHandler != NULL)
 			(*g_pfnPreErrHandler)(g_nPreErrHandlerParam);
@@ -415,6 +421,7 @@ static void HandleException(CSymEngine::CEngineParams& rParams)
 	g_pExceptionPointers = NULL;
 	// Unlock other threads.
 	LeaveCriticalSection(&g_csHandlerSync);
+  return TRUE;
 }
 
 /**
@@ -457,7 +464,8 @@ static LONG GenericFilter(PEXCEPTION_POINTERS pExceptionPointers, CSymEngine::EX
 		// Initialize symbolic engine parameters.
 		CSymEngine::CEngineParams params(pExceptionPointers, eExceptionType);
 		// Call exception handler.
-		HandleException(params);
+		if (!HandleException(params))
+			return EXCEPTION_CONTINUE_SEARCH;
 		// ~CSymEngine() will be called at this point.
 	}
 #if defined _CRTDBG_MAP_ALLOC && defined _DEBUG
@@ -2322,6 +2330,22 @@ extern "C" BUGTRAP_API BOOL APIENTRY BT_SendSnapshotEx(PEXCEPTION_POINTERS pExce
 	FreeSymEngine();
 	g_pExceptionPointers = NULL;
 	return bResult;
+}
+
+/**
+ * @return Module of interest handle.
+ */
+extern "C" BUGTRAP_API HMODULE APIENTRY BT_GetModule()
+{
+  return g_hModule;
+}
+
+/**
+ * @param nModule - module of interest handle.
+ */
+extern "C" BUGTRAP_API void APIENTRY BT_SetModule(HMODULE hModule)
+{
+  g_hModule = hModule;
 }
 
 static PTOP_LEVEL_EXCEPTION_FILTER WINAPI DummySetUnhandledExceptionFilter(PTOP_LEVEL_EXCEPTION_FILTER /*pTopLevelExceptionFilter*/)

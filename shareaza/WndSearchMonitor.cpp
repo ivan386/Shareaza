@@ -1,7 +1,7 @@
 //
 // WndSearchMonitor.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2013.
+// Copyright (c) Shareaza Development Team, 2002-2014.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -224,38 +224,16 @@ void CSearchMonitorWnd::OnQuerySearch(const CQuerySearch* pSearch)
 	CString strSchema;
 	CString strURN;
 	CString strNode;
+
 	if ( pSearch->m_pEndpoint.sin_addr.s_addr )
 		strNode.Format( _T("%hs:%u"),
 			inet_ntoa( pSearch->m_pEndpoint.sin_addr ),
 			ntohs( pSearch->m_pEndpoint.sin_port ) );
+	else if ( pSearch->IsIPv6Endpoint() )
+		strNode = HostToString( &pSearch->m_pEndpointIPv6 );
 
-	if ( pSearch->m_oSHA1 && pSearch->m_oTiger )
-	{
-		strURN	= _T("bitprint:")
-				+ pSearch->m_oSHA1.toString()
-				+ '.'
-				+ pSearch->m_oTiger.toString();
-	}
-	else if ( pSearch->m_oTiger )
-	{
-		strURN = pSearch->m_oTiger.toShortUrn();
-	}
-	else if ( pSearch->m_oSHA1 )
-	{
-		strURN = pSearch->m_oSHA1.toShortUrn();
-	}
-	else if ( pSearch->m_oED2K )
-	{
-		strURN = pSearch->m_oED2K.toShortUrn();
-	}
-	else if ( pSearch->m_oBTH )
-	{
-		strURN = pSearch->m_oBTH.toShortUrn();
-	}
-	else if ( pSearch->m_oMD5 )
-	{
-		strURN = pSearch->m_oMD5.toShortUrn();
-	}
+	if ( pSearch->HasHash() )
+		strURN = pSearch->GetShortURN();
 	else
 		strURN = _T("None");
 
@@ -326,13 +304,22 @@ void CSearchMonitorWnd::OnSecurityBan()
 	int nItem = m_wndList.GetNextItem( -1, LVNI_SELECTED );
 	if ( nItem >= 0 )
 	{
-		SOCKADDR_IN pHost = { 0 };
-		pHost.sin_family = AF_INET;
 		CString strNode = m_wndList.GetItemText( nItem, 3 );
-		int nPos = strNode.Find( _T(':') );
-		pHost.sin_addr.s_addr = inet_addr( CT2CA( (LPCTSTR)strNode.Left( nPos ) ) );
-		pHost.sin_port = htons( (WORD)_tstoi( strNode.Mid( nPos + 1 ) ) );
-		Security.Ban( &pHost.sin_addr, banSession );
+		int nPos = strNode.Find( _T("]:") );
+		if ( nPos > 0 )
+		{
+			SOCKADDR_IN6 pHost = { AF_INET6 };
+			IPv6FromString( strNode, &pHost );
+			Security.Ban( &pHost.sin6_addr, banSession );
+		}
+		else
+		{
+			SOCKADDR_IN pHost = { AF_INET };
+			nPos = strNode.Find( _T(':') );
+			pHost.sin_addr.s_addr = inet_addr( CT2CA( (LPCTSTR)strNode.Left( nPos ) ) );
+			//pHost.sin_port = htons( (WORD)_tstoi( strNode.Mid( nPos + 1 ) ) );
+			Security.Ban( &pHost.sin_addr, banSession );
+		}
 	}
 }
 

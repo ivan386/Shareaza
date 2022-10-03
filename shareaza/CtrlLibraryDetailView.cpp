@@ -1,7 +1,7 @@
 //
 // CtrlLibraryDetailView.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2010.
+// Copyright (c) Shareaza Development Team, 2002-2015.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -180,7 +180,7 @@ int CLibraryDetailView::OnCreate(LPCREATESTRUCT lpCreateStruct)
 
 	if ( CSchemaPtr pSchema = SchemaCache.Get( strSchemaURI ) )
 	{
-		CList< CSchemaMember* > pColumns;
+		CSchemaMemberList pColumns;
 		CSchemaColumnsDlg::LoadColumns( pSchema, &pColumns );
 		SetViewSchema( pSchema, &pColumns, FALSE, FALSE );
 	}
@@ -227,7 +227,7 @@ void CLibraryDetailView::OnDestroy()
 /////////////////////////////////////////////////////////////////////////////
 // CLibraryDetailView schema setup
 
-void CLibraryDetailView::SetViewSchema(CSchemaPtr pSchema, CList< CSchemaMember* >* pColumns, BOOL bSave, BOOL bUpdate)
+void CLibraryDetailView::SetViewSchema(CSchemaPtr pSchema, CSchemaMemberList* pColumns, BOOL bSave, BOOL bUpdate)
 {
 	GET_LIST();
 
@@ -259,7 +259,7 @@ void CLibraryDetailView::SetViewSchema(CSchemaPtr pSchema, CList< CSchemaMember*
 
 	for ( POSITION pos = m_pColumns.GetHeadPosition() ; pos ; nColumn++ )
 	{
-		CSchemaMember* pMember = m_pColumns.GetNext( pos );
+		CSchemaMemberPtr pMember = m_pColumns.GetNext( pos );
 		pList->InsertColumn( nColumn, pMember->m_sTitle, pMember->m_nColumnAlign, pMember->m_nColumnWidth, nColumn - 1 );
 	}
 
@@ -278,11 +278,11 @@ void CLibraryDetailView::Update()
 {
 //	GET_LIST();
 
-	CSchemaPtr pSchema	= SchemaCache.Get( Settings.Library.FilterURI );
+	CSchemaPtr pSchema1	= SchemaCache.Get( Settings.Library.FilterURI );
 	DWORD nCookie		= GetFolderCookie();
 	BOOL bGhostFolder	= FALSE;
 
-	if ( Settings.Library.ShowVirtual ) pSchema = NULL;
+	if ( Settings.Library.ShowVirtual ) pSchema1 = NULL;
 
 	CLibraryTreeItem* pTree = GetFolderSelection();
 
@@ -298,11 +298,11 @@ void CLibraryDetailView::Update()
 
 			if ( strURI.GetLength() && ( m_pSchema == NULL || ! m_pSchema->CheckURI( strURI ) ) )
 			{
-				if ( CSchemaPtr pSchema = SchemaCache.Get( strURI ) )
+				if ( CSchemaPtr pSchema2 = SchemaCache.Get( strURI ) )
 				{
-					CList< CSchemaMember* > pColumns;
-					CSchemaColumnsDlg::LoadColumns( pSchema, &pColumns );
-					SetViewSchema( pSchema, &pColumns, TRUE, FALSE );
+					CSchemaMemberList pColumns;
+					CSchemaColumnsDlg::LoadColumns( pSchema2, &pColumns );
+					SetViewSchema( pSchema2, &pColumns, TRUE, FALSE );
 				}
 			}
 		}
@@ -315,8 +315,8 @@ void CLibraryDetailView::Update()
 		CLibraryFile* pFile = Library.LookupFile( pItem->nIndex );
 
 		if ( pFile && pFile->m_nSelectCookie == nCookie && ( pFile->IsAvailable() || bGhostFolder ) &&
-			 ( ! pSchema || pSchema->Equals( pFile->m_pSchema ) ||
-			 ( ! pFile->m_pMetadata && pSchema->FilterType( pFile->m_sName ) ) ) )
+			 ( ! pSchema1 || pSchema1->Equals( pFile->m_pSchema ) ||
+			 ( ! pFile->m_pMetadata && pSchema1->FilterType( pFile->m_sName ) ) ) )
 		{
 			pFile->m_nListCookie = nCookie;
 		}
@@ -337,15 +337,18 @@ void CLibraryDetailView::Update()
 		if ( pFile->m_nSelectCookie == nCookie &&
 			 pFile->m_nListCookie != nCookie &&
 			 ( pFile->IsAvailable() || bGhostFolder ) &&
-			 ( ! pSchema || pSchema->Equals( pFile->m_pSchema ) ||
-			 ( ! pFile->m_pMetadata && pSchema->FilterType( pFile->m_sName ) ) ) )
+			 ( ! pSchema1 || pSchema1->Equals( pFile->m_pSchema ) ||
+			 ( ! pFile->m_pMetadata && pSchema1->FilterType( pFile->m_sName ) ) ) )
 		{
 			if ( m_nList == m_nBuffer )	// MUST EQUAL
 			{
 				m_nBuffer += 64;
 				LDVITEM* pList = new LDVITEM[ m_nBuffer ];
-				if ( m_nList ) CopyMemory( pList, m_pList, m_nList * sizeof(LDVITEM) );
-				if ( m_pList ) delete [] m_pList;
+				if ( m_pList )
+				{
+					if ( m_nList ) CopyMemory( pList, m_pList, m_nList * sizeof(LDVITEM) );
+					delete [] m_pList;
+				}
 				ZeroMemory( pList + m_nList, ( m_nBuffer - m_nList ) * sizeof(LDVITEM) );
 				m_pList = pList;
 			}
@@ -478,7 +481,7 @@ void CLibraryDetailView::CacheItem(int nItem)
 
 	for ( POSITION pos = m_pColumns.GetHeadPosition() ; pos ; nColumn++ )
 	{
-		CSchemaMember* pMember = m_pColumns.GetNext( pos );
+		CSchemaMemberPtr pMember = m_pColumns.GetNext( pos );
 
 		if ( pMember->m_sName.CompareNoCase( _T("SHA1") ) == 0 )
 		{
@@ -677,7 +680,7 @@ int CLibraryDetailView::ListCompare(LPCVOID pA, LPCVOID pB)
 				if ( nColumn >= m_pThis->m_pColumns.GetCount() ) return 0;
 				POSITION pos = m_pThis->m_pColumns.FindIndex( nColumn );
 				if ( pos == NULL ) return 0;
-				CSchemaMember* pMember = m_pThis->m_pColumns.GetAt( pos );
+				CSchemaMemberPtr pMember = m_pThis->m_pColumns.GetAt( pos );
 
 				CString strA, strB;
 				if ( pfA->m_pMetadata )
@@ -875,7 +878,7 @@ void CLibraryDetailView::OnEndLabelEditA(NMHDR* pNotify, LRESULT* pResult)
 
 void CLibraryDetailView::OnFindItemW(NMHDR* pNotify, LRESULT* pResult)
 {
-	CW2T pszFind( (LPCWSTR)((NMLVFINDITEM*) pNotify)->lvfi.psz );
+	CString sFind( (LPCWSTR)((NMLVFINDITEM*) pNotify)->lvfi.psz );
 
 	GET_LIST();
 	CQuickLock oLock( Library.m_pSection );
@@ -888,7 +891,7 @@ void CLibraryDetailView::OnFindItemW(NMHDR* pNotify, LRESULT* pResult)
 			{
 				if ( ((NMLVFINDITEM*) pNotify)->lvfi.flags & LVFI_STRING )
 				{
-					if ( _tcsnicmp( (LPCTSTR)pszFind, pFile->m_sName, _tcslen( (LPCTSTR)pszFind ) ) == 0 )
+					if ( _tcsnicmp( sFind, pFile->m_sName, sFind.GetLength() ) == 0 )
 					{
 						*pResult = nItem;
 						return;
@@ -1012,7 +1015,7 @@ void CLibraryDetailView::OnContextMenu(CWnd* pWnd, CPoint point)
 	}
 	else if ( nCmd )
 	{
-		CList< CSchemaMember* > pColumns;
+		CSchemaMemberList pColumns;
 		CSchemaColumnsDlg::ToggleColumnHelper( m_pSchema, &m_pColumns, &pColumns, nCmd, TRUE );
 		SetViewSchema( m_pSchema, &pColumns, TRUE, TRUE );
 	}

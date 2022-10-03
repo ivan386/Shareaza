@@ -1,7 +1,7 @@
 //
 // DownloadTransfer.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2013.
+// Copyright (c) Shareaza Development Team, 2002-2014.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -55,7 +55,6 @@ CDownloadTransfer::CDownloadTransfer(CDownloadSource* pSource, PROTOCOLID nProto
 	, m_bRecvBackwards	( false )
 	, m_pDownload		( pSource->m_pDownload )
 	, m_pSource			( pSource )
-	, m_pAvailable		( NULL )
 	, m_tSourceRequest	( 0ul )
 {
 	ASSUME_LOCK( Transfers.m_pSection );
@@ -68,8 +67,6 @@ CDownloadTransfer::~CDownloadTransfer()
 	ASSUME_LOCK( Transfers.m_pSection );
 
 	ASSERT( m_pSource == NULL );
-
-	delete m_pAvailable;
 }
 
 void CDownloadTransfer::DrawStateBar(CDC* pDC, CRect* prcBar, COLORREF crFill, bool bTop) const
@@ -78,9 +75,30 @@ void CDownloadTransfer::DrawStateBar(CDC* pDC, CRect* prcBar, COLORREF crFill, b
 
 	if ( m_nProtocol == PROTOCOL_ED2K || m_nProtocol == PROTOCOL_BT )
 	{
-		for ( Fragments::Queue::const_iterator pItr = m_oRequested.begin(); pItr != m_oRequested.end(); ++pItr )
+		Fragments::Queue::const_iterator pItr = m_oRequested.begin();
+		const Fragments::Queue::const_iterator pEnd = m_oRequested.end();
+
+		if ( pItr != pEnd )
 		{
-			CFragmentBar::DrawStateBar( pDC, prcBar, m_pDownload->m_nSize, pItr->begin(), pItr->size(), crFill, bTop );
+			QWORD nOffset = pItr->begin();
+			QWORD nLength = pItr->size();
+
+			for ( ++pItr; pItr != pEnd; ++pItr )
+			{
+				if ( pItr->begin() == nOffset + nLength )
+					nLength += pItr->size();
+				else
+				{
+					CFragmentBar::DrawStateBar( pDC, prcBar, m_pDownload->m_nSize,
+						nOffset, nLength, crFill, bTop );
+
+					nOffset = pItr->begin();
+					nLength = pItr->size();
+				}
+			}
+
+			CFragmentBar::DrawStateBar( pDC, prcBar, m_pDownload->m_nSize,
+									nOffset, nLength, crFill, bTop );
 		}
 	}
 }
@@ -98,7 +116,10 @@ void CDownloadTransfer::Close(TRISTATE bKeepSource, DWORD nRetryAfter)
 {
 	ASSUME_LOCK( Transfers.m_pSection );
 
-	SetState( dtsNull );
+	if ( bKeepSource == TRI_TRUE )
+		SetState( dtsKeepSource );
+	else
+		SetState( dtsNull );
 
 	CTransfer::Close();
 
@@ -251,20 +272,46 @@ void CDownloadTransfer::SetState(int nState)
 {
 	ASSUME_LOCK( Transfers.m_pSection );
 
+	if ( m_pSource->m_nSortOrder < ~0u )
+	{
+		switch (nState)
+		{
+		case dtsHeaders:
+		case dtsRequesting:
+		case dtsFlushing:
+			m_nState = nState;
+			return;
+		}
+	}
+
 	if ( m_pDownload && m_pDownload->CheckSource( m_pSource ) )
 	{
 		if ( Settings.Downloads.SortSources )
 		{	//Proper sort
 
-			static BYTE StateSortOrder[13]={ 13 ,12 ,10 ,4 ,0 ,4 ,1 ,2 ,3 ,12 ,8 ,6 ,9};
-				//dtsNull, dtsConnecting, dtsRequesting, dtsHeaders, dtsDownloading, dtsFlushing,
-				//dtsTiger, dtsHashset, dtsMetadata, dtsBusy, dtsEnqueue, dtsQueued, dtsTorrent
+			static BYTE StateSortOrder[14]={ 
+				14  //dtsNull
+				,13 //dtsKeepSource
+				,12 //dtsConnecting
+				,10 //dtsRequesting
+				,4  //dtsHeaders
+				,0  //dtsDownloading
+				,4  //dtsFlushing
+				,1  //dtsTiger
+				,2  //dtsHashset
+				,3  //dtsMetadata
+				,12 //dtsBusy
+				,8  //dtsEnqueue
+				,6  //dtsQueued
+				,9  //dtsTorrent
+			};
 
+			DWORD nOldSortOrder = m_pSource->m_nSortOrder;
 
 			//Assemble the sort order DWORD
-			m_pSource->m_nSortOrder = StateSortOrder[ min( nState, 13 ) ];          //Get state sort order
+			m_pSource->m_nSortOrder = StateSortOrder[ max( min( nState, 14 ), 0 ) ];          //Get state sort order
 
-			if ( m_pSource->m_nSortOrder >= 13 )
+			if ( m_pSource->m_nSortOrder >= 14 )
 			{	//Don't bother wasting CPU sorting 'dead' sources- Simply send to bottom.
 				m_pDownload->SortSource( m_pSource, FALSE );
 				m_pSource->m_nSortOrder = ~0u;
@@ -296,8 +343,10 @@ void CDownloadTransfer::SetState(int nState)
 					m_pSource->m_nSortOrder += ( ( m_pSource->m_pAddress.S_un.S_un_b.s_b1 << 8 ) |
 												 ( m_pSource->m_pAddress.S_un.S_un_b.s_b2      ) );
 
-				//Do the sort
-				m_pDownload->SortSource( m_pSource );
+
+				if ( nOldSortOrder != m_pSource->m_nSortOrder )
+					//Do the sort
+					m_pDownload->SortSource( m_pSource );
 			}
 		}
 		else
@@ -319,13 +368,13 @@ void CDownloadTransfer::SetState(int nState)
 //////////////////////////////////////////////////////////////////////
 // CDownloadTransfer fragment size management
 
-void CDownloadTransfer::ChunkifyRequest(QWORD* pnOffset, QWORD* pnLength, DWORD nChunk, BOOL bVerifyLock) const
+bool CDownloadTransfer::ChunkifyRequest(QWORD* pnOffset, QWORD* pnLength, DWORD nChunk, BOOL bVerifyLock) const
 {
 	ASSUME_LOCK( Transfers.m_pSection );
 
 	ASSERT( pnOffset != NULL && pnLength != NULL );
 
-	if ( m_pSource->m_bCloseConn ) return;
+	if ( m_pSource->m_bCloseConn ) return m_bWantBackwards;
 
 	nChunk = min( nChunk, Settings.Downloads.ChunkSize );
 
@@ -343,7 +392,7 @@ void CDownloadTransfer::ChunkifyRequest(QWORD* pnOffset, QWORD* pnLength, DWORD 
 		}
 	}
 
-	if ( nChunk == 0 || *pnLength <= nChunk ) return;
+	if ( nChunk == 0 || *pnLength <= nChunk ) return m_bWantBackwards;
 
 	if ( m_pDownload->GetVolumeComplete() == 0 || *pnOffset == 0 )
 	{
@@ -358,12 +407,30 @@ void CDownloadTransfer::ChunkifyRequest(QWORD* pnOffset, QWORD* pnLength, DWORD 
 	{
 		QWORD nCount = *pnLength / nChunk;
 		if ( *pnLength % nChunk ) nCount++;
-		nCount = GetRandomNum( 0ui64, nCount - 1 );
 
-		QWORD nStart = *pnOffset + nChunk * nCount;
+		QWORD nNonRandomEnd = this->m_pDownload->GetNonRandomEnd();
+		QWORD nStartFrom = this->m_pDownload->m_nStartFrom;
+		QWORD nIndex = 0;
+		QWORD nLength = *pnLength;
+		QWORD nOffset = *pnOffset;
+
+		if ( *pnOffset < nNonRandomEnd && nStartFrom < *pnOffset + *pnLength )
+		{
+			QWORD nStart = max( nStartFrom, *pnOffset );
+			*pnLength -= nStart - *pnOffset;
+			*pnOffset = nStart;
+		}
+		else
+			nIndex = GetRandomNum( 0ui64, nCount - 1 );
+
+		QWORD nStart = *pnOffset + nChunk * nIndex;
 		*pnLength = min( (QWORD)nChunk, *pnOffset + *pnLength - nStart );
 		*pnOffset = nStart;
+
+		if ( *pnOffset - nOffset > nOffset + nLength - *pnOffset - *pnLength )
+			return true;
 	}
+	return m_bWantBackwards;
 }
 
 //////////////////////////////////////////////////////////////////////
@@ -372,8 +439,7 @@ void CDownloadTransfer::ChunkifyRequest(QWORD* pnOffset, QWORD* pnLength, DWORD 
 // Selects an available block, either unaligned blocks or if none is available
 // a random aligned block
 
-blockPair CDownloadTransfer::SelectBlock(const Fragments::List& oPossible,
-	const BYTE* pAvailable, bool bEndGame) const
+blockPair CDownloadTransfer::SelectBlock(const Fragments::List& oPossible, const std::vector< bool >& pAvailable, bool bEndGame) const
 {
 	ASSUME_LOCK( Transfers.m_pSection );
 
@@ -406,10 +472,14 @@ blockPair CDownloadTransfer::SelectBlock(const Fragments::List& oPossible,
 	if ( !nBlockSize )
 		return std::make_pair( pItr->begin(), pItr->end() - pItr->begin() );
 
-	std::vector< QWORD > oBlocks;
+	QWORD nNonRandomEnd = this->m_pDownload->GetNonRandomEnd();
+	QWORD nStartFrom = this->m_pDownload->m_nStartFrom;
+
 	QWORD nRangeBlock = 0ull;
 	QWORD nRange[3] = { 0ull, 0ull, 0ull };
 	QWORD nBestRange[3] = { 0ull, 0ull, 0ull };
+
+	Fragments::Fragment oBiggest( 0, 0, 0 ) ;
 
 	for ( ; pItr != pEnd ; ++pItr )
 	{
@@ -417,9 +487,27 @@ blockPair CDownloadTransfer::SelectBlock(const Fragments::List& oPossible,
 		QWORD nBlockBegin = nPart[0] / nBlockSize;
 		QWORD nBlockEnd = ( pItr->end() - 1ull ) / nBlockSize;
 
+		if ( pItr->begin() < nNonRandomEnd && pItr->end() > nStartFrom )
+		{
+			
+			for ( QWORD nBlock = nBlockBegin;
+				  nBlock <= nBlockEnd && ( ( nBlock * nBlockSize ) < nNonRandomEnd );
+				  ++nBlock )
+			{
+				QWORD nPos = max( pItr->begin(), nBlockSize * nBlock );
+
+				if ( nPos >= nStartFrom && ( pAvailable.empty() || pAvailable[ nBlock ] ) )
+				{
+					QWORD nLength = min( pItr->end(), nBlockSize * ( nBlock + 1ull ) );
+					nLength -=  nPos;
+					return std::make_pair( nPos , nLength );
+				}
+			}
+		}
+
 		// The start of a block is complete, but part is missing
 		if ( nPart[0] % nBlockSize
-			&& ( !pAvailable || pAvailable[ nBlockBegin ] ) )
+			&& ( nBlockBegin >= pAvailable.size() || pAvailable[ (DWORD)nBlockBegin ] ) )
 		{
 			nPart[1] = min( pItr->end(), nBlockSize * ( nBlockBegin + 1ull ) );
 			nPart[1] -= nPart[0];
@@ -429,7 +517,7 @@ blockPair CDownloadTransfer::SelectBlock(const Fragments::List& oPossible,
 		// The end of a block is complete, but part is missing
 		if ( ( !nPart[1] || nBlockBegin != nBlockEnd )
 			&& pItr->end() % nBlockSize
-			&& ( !pAvailable || pAvailable[ nBlockEnd ] ) )
+			&& ( nBlockEnd >= pAvailable.size() || pAvailable[ (DWORD)nBlockEnd ] ) )
 		{
 			nPart[0] = nBlockEnd * nBlockSize;
 			nPart[1] = pItr->end() - nPart[0];
@@ -437,27 +525,61 @@ blockPair CDownloadTransfer::SelectBlock(const Fragments::List& oPossible,
 		}
 
 		// This fragment contains one or more aligned empty blocks
-		if ( !nRange[2] )
-		{
-			for ( ; nBlockBegin <= nBlockEnd
-				&& oBlocks.size() < oBlocks.max_size() ; ++nBlockBegin )
-			{
-				if ( !pAvailable || pAvailable[ nBlockBegin ] )
-					oBlocks.push_back( nBlockBegin );
-			}
-		}
+		if ( oBiggest.size() < (*pItr).size() )
+			oBiggest = (*pItr);
 	}
 
 	CheckRange( nRange, nBestRange );
 
 	if ( !nBestRange[2] )
 	{
-		if ( oBlocks.empty() )
-			return std::make_pair( 0ull, 0ull );
+		if ( oBiggest.size() )
+		{
+			QWORD nPartStart = oBiggest.begin();
+			QWORD nPartEnd = oBiggest.end();
 
-		nRange[0] = oBlocks[ GetRandomNum< size_t >( 0u, oBlocks.size() - 1u ) ];
-		nRange[0] *= nBlockSize;
-		return std::make_pair( nRange[0], nBlockSize );
+			QWORD nBlockBegin = nPartStart / nBlockSize;
+			QWORD nBlockEnd = ( nPartEnd - 1ull ) / nBlockSize;
+			QWORD nBlockCount = nBlockEnd - nBlockBegin + 1;
+			
+			for ( QWORD  nCount = 0 ; nCount < nBlockCount; nCount++ )
+			{
+				QWORD nBlock = GetRandomNum< size_t >( nBlockBegin, nBlockEnd );
+
+				if ( nBlock >= pAvailable.size() || pAvailable[ (DWORD)nBlock ] )
+				{
+					nPartStart = max( nPartStart, nBlock * nBlockSize );
+
+					return std::make_pair( nPartStart , min( (nPartEnd - nPartStart), nBlockSize ) );
+				}
+			}
+		}
+
+		Fragments::List::const_iterator pItr = oPossible.random_range();
+
+		for ( ; pItr != pEnd ; ++pItr )
+		{
+			QWORD nPartStart = pItr->begin();
+			QWORD nPartEnd = pItr->end();
+
+			QWORD nBlockBegin = nPartStart / nBlockSize;
+			QWORD nBlockEnd = ( nPartEnd - 1ull ) / nBlockSize;
+			QWORD nBlockCount = nBlockEnd - nBlockBegin + 1;
+			
+			for ( QWORD  nCount = 0 ; nCount < nBlockCount; nCount++ )
+			{
+				QWORD nBlock = GetRandomNum< size_t >( nBlockBegin, nBlockEnd );
+
+				if ( nBlock >= pAvailable.size() || pAvailable[ (DWORD)nBlock ] )
+				{
+					nPartStart = max( nPartStart, nBlock * nBlockSize );
+
+					return std::make_pair( nPartStart , min( (nPartEnd - nPartStart), nBlockSize ) );
+				}
+			}
+		}
+
+		return std::make_pair( 0ull, 0ull );
 	}
 
 	return std::make_pair( nBestRange[0], nBestRange[1] );
@@ -511,7 +633,7 @@ bool CDownloadTransfer::SelectFragment(const Fragments::List& oPossible,
 	return nLength > 0ull;
 }
 
-bool CDownloadTransfer::UnrequestRange(QWORD /*nOffset*/, QWORD /*nLength*/)
+bool CDownloadTransfer::UnrequestRange(QWORD /*nOffset*/, QWORD /*nLength*/, bool /* bSendCancel */)
 {
 	ASSUME_LOCK( Transfers.m_pSection );
 

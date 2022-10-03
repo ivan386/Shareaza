@@ -1,7 +1,7 @@
 //
 // stdafx.h
 //
-// Copyright (c) Shareaza Development Team, 2010.
+// Copyright (c) Shareaza Development Team, 2010-2014.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -29,11 +29,12 @@
 #define VC_EXTRALEAN
 #endif
 
-#pragma warning(disable:4820) // X bytes padding added after data member 'Y'
+#pragma warning(disable:4350) // behavior change
 #pragma warning(disable:4365) // conversion from '' to '', signed/unsigned mismatch
 #pragma warning(disable:4548) // expression before comma has no effect; expected expression with side-effect
 #pragma warning(disable:4668) // is not defined as a preprocessor macro, replacing with '0' for '#if/#elif'
 #pragma warning(disable:4710) // function not inlined
+#pragma warning(disable:4820) // X bytes padding added after data member 'Y'
 
 #include <atlconv.h>
 #include <tchar.h>

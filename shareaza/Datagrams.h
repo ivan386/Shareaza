@@ -1,7 +1,7 @@
 //
 // Datagrams.h
 //
-// Copyright (c) Shareaza Development Team, 2002-2011.
+// Copyright (c) Shareaza Development Team, 2002-2017.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -20,6 +20,9 @@
 //
 
 #pragma once
+
+#define DATAGRAM_HASH_SIZE		32
+#define DATAGRAM_HASH_MASK		31
 
 #pragma pack(push,1)
 
@@ -72,18 +75,22 @@ public:
 	DWORD				m_nOutPackets;
 
 	BOOL	Listen();
+	BOOL	ListenIPv6();
 	void	Disconnect();
 
 	// True if the socket is valid, false if its closed
-	inline BOOL IsValid() const
+	inline BOOL IsValid(bool bIPv6 = false) const
 	{
-		return ( m_hSocket != INVALID_SOCKET );
+		if ( bIPv6 )
+			return ( m_hSocketIPv6 != INVALID_SOCKET );
+		else
+			return ( m_hSocket[ 0 ] != INVALID_SOCKET );
 	}
 
 	// Avoid using this function directly, use !Network.IsFirewalled(CHECK_UDP) instead
-	inline BOOL IsStable() const
+	inline BOOL IsStable(bool bIPv6 = false) const
 	{
-		return IsValid() && m_bStable;
+		return IsValid(bIPv6) && ( bIPv6 ? m_bStableIPv6: m_bStable );
 	}
 
 	inline void SetStable(BOOL bStable = TRUE)
@@ -91,15 +98,30 @@ public:
 		m_bStable = bStable;
 	}
 
+	inline void SetStableIPv6(BOOL bStable = TRUE)
+	{
+		m_bStableIPv6 = bStable;
+	}
+
 	BOOL	Send(const IN_ADDR* pAddress, WORD nPort, CPacket* pPacket, BOOL bRelease = TRUE, LPVOID pToken = NULL, BOOL bAck = TRUE);
+	BOOL	Send(const IN6_ADDR* pAddress, WORD nPort, CPacket* pPacket, BOOL bRelease = TRUE, LPVOID pToken = NULL, BOOL bAck = TRUE);
+	
 	BOOL	Send(const SOCKADDR_IN* pHost, CPacket* pPacket, BOOL bRelease = TRUE, LPVOID pToken = NULL, BOOL bAck = TRUE);
+	BOOL	Send(const SOCKADDR_IN6* pHost, CPacket* pPacket, BOOL bRelease = TRUE, LPVOID pToken = NULL, BOOL bAck = TRUE);
+	
 	void	PurgeToken(LPVOID pToken);
 	void	OnRun();
 
 protected:
-	SOCKET			m_hSocket;
+	SOCKET			m_hSocketIPv6;		// IPv6 socket
+	SOCKET			m_hSocket[ 5 ];		// [ 0 ] - Main Shareaza port (0.0.0.0:6346)
+										// [ 1 ] - Broadcast Shareaza port (0.0.0.0:6346)
+										// [ 2 ] - eD2K multi-cast port: 224.0.0.1:5000
+										// [ 3 ] - G1 LimeWire multi-cast port: 234.21.81.1:6347
+										// [ 4 ] - BitTorrent multi-cast port (http://bittorrent.org/beps/bep_0014.html): 239.192.152.143:6771
 	WORD			m_nSequence;
 	BOOL			m_bStable;
+	BOOL			m_bStableIPv6;
 	DWORD			m_tLastWrite;
 
 	CBuffer*		m_pBufferBuffer;	// Output buffers
@@ -112,31 +134,35 @@ protected:
 	CDatagramIn*	m_pInputFree;
 	CDatagramIn*	m_pInputFirst;
 	CDatagramIn*	m_pInputLast;
-	CDatagramIn*	m_pInputHash[32];
+	CDatagramIn*	m_pInputHash[ DATAGRAM_HASH_SIZE ];
 
 	CDatagramOut*	m_pOutputBuffer;
 	DWORD			m_nOutputBuffer;
 	CDatagramOut*	m_pOutputFree;
 	CDatagramOut*	m_pOutputFirst;
 	CDatagramOut*	m_pOutputLast;
-	CDatagramOut*	m_pOutputHash[32];
+	CDatagramOut*	m_pOutputHash[ DATAGRAM_HASH_SIZE ];
 
 	UDPBandwidthMeter	m_mInput;
 	UDPBandwidthMeter	m_mOutput;
 
 	// Buffer for current incoming UDP packet. It's global since CDatagrams
-	// process one packet at once only. Maximal UDP size 64KB.
-	BYTE			m_pReadBuffer[ 65536 ];
+	// process one packet at once only. Maximal UDP size 64KB + 1. Zero terminated.
+	BYTE			m_pReadBuffer[ 65537 ];
 
 	void	Measure();
 	BOOL	TryWrite();
 	void	ManageOutput();
 	void	Remove(CDatagramOut* pDG);
 
-	BOOL	TryRead();
+	BOOL	TryRead(int nIndex);
+	BOOL	TryReadIPv6();
 	BOOL	OnDatagram(const SOCKADDR_IN* pHost, const BYTE* pBuffer, DWORD nLength);
+	BOOL	OnDatagram(const SOCKADDR_IN6* pHost, const BYTE* pBuffer, DWORD nLength);
 	BOOL	OnReceiveSGP(const SOCKADDR_IN* pHost, const SGP_HEADER* pHeader, DWORD nLength);
+	BOOL	OnReceiveSGP(const SOCKADDR_IN6* pHost, const SGP_HEADER* pHeader, DWORD nLength);
 	BOOL	OnAcknowledgeSGP(const SOCKADDR_IN* pHost, const SGP_HEADER* pHeader, DWORD nLength);
+	BOOL	OnAcknowledgeSGP(const SOCKADDR_IN6* pHost, const SGP_HEADER* pHeader, DWORD nLength);
 	void	ManagePartials();
 	void	Remove(CDatagramIn* pDG, BOOL bReclaimOnly = FALSE);
 };

@@ -152,6 +152,6 @@ void CAboutDlg::OnRButtonDown(UINT /*nFlags*/, CPoint point)
 	if ( rc.PtInRect( point ) && ( GetAsyncKeyState( VK_SHIFT ) & 0x8000 ) )
 	{
 		volatile DWORD* pNullPtr = (DWORD*)NULL;
-		*pNullPtr = 0xFFFFFFFF;
+		*pNullPtr = 0xFFFFFFFF; //-V522
 	}
 }

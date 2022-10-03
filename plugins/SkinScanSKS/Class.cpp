@@ -1,7 +1,7 @@
 //
 // Class.cpp : Implementation of CClass
 //
-// Copyright (c) Shareaza Development Team, 2007.
+// Copyright (c) Shareaza Development Team, 2007-2014.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -98,7 +98,7 @@ STDMETHODIMP CSkinScanSKS::Process (
 				return E_UNEXPECTED;
 			}
 
-			LPSTR pszXML = new CHAR[ pInfo.uncompressed_size + 1 ];
+			LPSTR pszXML = new (std::nothrow) CHAR[ pInfo.uncompressed_size + 1 ];
 			if ( ! pszXML )
 			{
 				unzCloseCurrentFile( pFile );
@@ -199,14 +199,14 @@ BOOL CSkinScanSKS::ScanFile(LPCSTR pszXML, ISXMLElement* pOutput)
 	// Add the plural <shareazaSkins> element
 	CComPtr< ISXMLElement > pPlural;
 	{
-		CComPtr< ISXMLElements > pElements;
-		if ( FAILED( pOutput->get_Elements( &pElements ) ) ||
-			pElements == NULL )
+		CComPtr< ISXMLElements > pOutputElements;
+		if ( FAILED( pOutput->get_Elements( &pOutputElements ) ) ||
+			pOutputElements == NULL )
 		{
 			pFile->Delete();
 			return FALSE;
 		}
-		pElements->Create( CComBSTR( _T("shareazaSkins") ), &pPlural );
+		pOutputElements->Create( CComBSTR( _T("shareazaSkins") ), &pPlural );
 	}
 
 	// Add xsi:noNamespaceSchemaLocation="http://www.shareaza.com/schemas/shareazaSkin.xsd"
@@ -225,9 +225,9 @@ BOOL CSkinScanSKS::ScanFile(LPCSTR pszXML, ISXMLElement* pOutput)
 	// output XML document
 	pManifest->Detach();
 	{
-		CComPtr< ISXMLElements > pElements;
-		pPlural->get_Elements( &pElements );
-		pElements->Attach( pManifest );
+		CComPtr< ISXMLElements > pPluralElements;
+		pPlural->get_Elements( &pPluralElements );
+		pPluralElements->Attach( pManifest );
 	}
 
 	pFile->Delete();

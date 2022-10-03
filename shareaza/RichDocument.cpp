@@ -1,7 +1,7 @@
 //
 // RichDocument.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2011.
+// Copyright (c) Shareaza Development Team, 2002-2015.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -88,7 +88,7 @@ POSITION CRichDocument::Find(CRichElement* pElement) const
 CRichElement* CRichDocument::Add(CRichElement* pElement, POSITION posBefore)
 {
 	CSingleLock pLock( &m_pSection, TRUE );
-	
+
 	if ( posBefore )
 		m_pElements.InsertBefore( posBefore, pElement );
 	else
@@ -118,7 +118,7 @@ CRichElement* CRichDocument::Add(HICON hIcon, LPCTSTR pszLink, DWORD nFlags, int
 void CRichDocument::Remove(CRichElement* pElement)
 {
 	CSingleLock pLock( &m_pSection, TRUE );
-	
+
 	if ( POSITION pos = m_pElements.Find( pElement ) )
 	{
 		m_pElements.RemoveAt( pos );
@@ -130,7 +130,7 @@ void CRichDocument::Remove(CRichElement* pElement)
 void CRichDocument::ShowGroup(int nGroup, BOOL bShow)
 {
 	CSingleLock pLock( &m_pSection, TRUE );
-	
+
 	for ( POSITION pos = GetIterator() ; pos ; )
 	{
 		CRichElement* pElement = GetNext( pos );
@@ -141,7 +141,7 @@ void CRichDocument::ShowGroup(int nGroup, BOOL bShow)
 void CRichDocument::ShowGroupRange(int nMin, int nMax, BOOL bShow)
 {
 	CSingleLock pLock( &m_pSection, TRUE );
-	
+
 	for ( POSITION pos = GetIterator() ; pos ; )
 	{
 		CRichElement* pElement = GetNext( pos );
@@ -158,7 +158,7 @@ void CRichDocument::SetModified()
 void CRichDocument::Clear()
 {
 	CSingleLock pLock( &m_pSection, TRUE );
-	
+
 	for ( POSITION pos = GetIterator() ; pos ; )
 	{
 		delete GetNext( pos );
@@ -226,14 +226,14 @@ void CRichDocument::CreateFonts(const LOGFONT* lpDefault, const LOGFONT* lpHeadi
 //////////////////////////////////////////////////////////////////////
 // CRichDocument XML Load
 
-BOOL CRichDocument::LoadXML(CXMLElement* pBase, CMap< CString, const CString&, CRichElement*, CRichElement* >* pMap, int nGroup)
+BOOL CRichDocument::LoadXML(CXMLElement* pBase, CElementMap* pMap, int nGroup)
 {
 	CSingleLock pLock( &m_pSection, TRUE );
-	
+
 	if ( pBase == NULL ) return FALSE;
-	
+
 	CString strTemp;
-	
+
 	if ( pBase->IsNamed( _T("document") ) )
 	{
 		strTemp = pBase->GetAttributeValue( _T("fontFace") );
@@ -250,7 +250,7 @@ BOOL CRichDocument::LoadXML(CXMLElement* pBase, CMap< CString, const CString&, C
 
 			CreateFonts( &lfDefault, &lfHeading );
 		}
-		
+
 		m_crBackground	= CoolInterface.m_crRichdocBack;
 		m_crText		= CoolInterface.m_crRichdocText;
 		m_crLink		= CoolInterface.m_crTextLink;
@@ -262,21 +262,21 @@ BOOL CRichDocument::LoadXML(CXMLElement* pBase, CMap< CString, const CString&, C
 		CSkin::LoadColour( pBase, _T("crLink"), &m_crLink );
 		CSkin::LoadColour( pBase, _T("crHover"), &m_crHover );
 		CSkin::LoadColour( pBase, _T("crHeading"), &m_crHeading );
-		
+
 		strTemp = pBase->GetAttributeValue( _T("leftMargin") );
-		if ( strTemp.GetLength() && _stscanf( strTemp, _T("%i"), &m_szMargin.cx ) != 1 )
-			theApp.Message( MSG_ERROR, IDS_SKIN_ERROR, _T("Bad [leftMargin] attribute in [document] element"), pBase->ToString() );
+		if ( strTemp.GetLength() && _stscanf( strTemp, _T("%li"), &m_szMargin.cx ) != 1 )
+			theApp.Message( MSG_ERROR, IDS_SKIN_ERROR, _T("Bad [leftMargin] attribute in [document] element"), (LPCTSTR)pBase->ToString() );
 
 		strTemp = pBase->GetAttributeValue( _T("topMargin") );
-		if ( strTemp.GetLength() && _stscanf( strTemp, _T("%i"), &m_szMargin.cy ) != 1 )
-			theApp.Message( MSG_ERROR, IDS_SKIN_ERROR, _T("Bad [topMargin] attribute in [document] element"), pBase->ToString() );
+		if ( strTemp.GetLength() && _stscanf( strTemp, _T("%li"), &m_szMargin.cy ) != 1 )
+			theApp.Message( MSG_ERROR, IDS_SKIN_ERROR, _T("Bad [topMargin] attribute in [document] element"), (LPCTSTR)pBase->ToString() );
 	}
-	
+
 	for ( POSITION pos = pBase->GetElementIterator() ; pos ; )
 	{
 		CXMLElement* pXML		= pBase->GetNextElement( pos );
 		CRichElement* pElement	= NULL;
-		
+
 		if ( pXML->IsNamed( _T("text") ) )
 		{
 			pElement = new CRichElement( retText );
@@ -292,9 +292,9 @@ BOOL CRichDocument::LoadXML(CXMLElement* pBase, CMap< CString, const CString&, C
 		else if ( pXML->IsNamed( _T("newline") ) )
 		{
 			pElement = new CRichElement( retNewline );
-			
+
 			strTemp = pXML->GetAttributeValue( _T("gap") );
-			
+
 			if ( strTemp.GetLength() )
 			{
 				pElement->m_sText = strTemp;
@@ -310,7 +310,7 @@ BOOL CRichDocument::LoadXML(CXMLElement* pBase, CMap< CString, const CString&, C
 		else if ( pXML->IsNamed( _T("gap") ) )
 		{
 			pElement = new CRichElement( retGap );
-			
+
 			strTemp = pXML->GetAttributeValue( _T("size") );
 			if ( strTemp ) pElement->m_sText = strTemp;
 		}
@@ -331,7 +331,7 @@ BOOL CRichDocument::LoadXML(CXMLElement* pBase, CMap< CString, const CString&, C
 			CString strAlign = pXML->GetAttributeValue( _T("align") );
 			pElement = new CRichElement( retAlign, strAlign );
 			Add( pElement );
-			
+
 			if ( pXML->GetElementCount() )
 			{
 				if ( ! LoadXML( pXML, pMap, nGroup ) )
@@ -342,7 +342,7 @@ BOOL CRichDocument::LoadXML(CXMLElement* pBase, CMap< CString, const CString&, C
 					Add( new CRichElement( retAlign, _T("left") ) );
 				}
 			}
-			
+
 			continue;
 		}
 		else if ( pXML->IsNamed( _T("group") ) )
@@ -354,7 +354,7 @@ BOOL CRichDocument::LoadXML(CXMLElement* pBase, CMap< CString, const CString&, C
 					return FALSE;
 			}
 			else
-				theApp.Message( MSG_ERROR, IDS_SKIN_ERROR, _T("Bad [id] attribute in [group] element"), pXML->ToString() );
+				theApp.Message( MSG_ERROR, IDS_SKIN_ERROR, _T("Bad [id] attribute in [group] element"), (LPCTSTR)pXML->ToString() );
 		}
 		else if ( pXML->IsNamed( _T("styles") ) )
 		{
@@ -362,36 +362,32 @@ BOOL CRichDocument::LoadXML(CXMLElement* pBase, CMap< CString, const CString&, C
 				return FALSE;
 		}
 		else
-			theApp.Message( MSG_ERROR, IDS_SKIN_ERROR, _T("Unknown element in [document] element"), pXML->ToString() );
-		
+			theApp.Message( MSG_ERROR, IDS_SKIN_ERROR, _T("Unknown element in [document] element"), (LPCTSTR)pXML->ToString() );
+
 		if ( pElement == NULL ) continue;
-		
+
 		strTemp = pXML->GetValue();
 		if ( strTemp.GetLength() ) pElement->m_sText = strTemp;
-		
+
 		pElement->m_nGroup = nGroup;
 		strTemp = pXML->GetAttributeValue( _T("group") );
 		if ( strTemp.GetLength() && _stscanf( strTemp, _T("%i"), &pElement->m_nGroup ) != 1 )
-			theApp.Message( MSG_ERROR, IDS_SKIN_ERROR, _T("Bad [group] attribute in [document] element"), pXML->ToString() );
-		
+			theApp.Message( MSG_ERROR, IDS_SKIN_ERROR, _T("Bad [group] attribute in [document] element"), (LPCTSTR)pXML->ToString() );
+
 		strTemp = pXML->GetAttributeValue( _T("format") );
-		ToLower( strTemp );
+		if ( strTemp.FindOneOf( _T( "bB" ) ) >= 0 )	pElement->m_nFlags |= retfBold;
+		if ( strTemp.FindOneOf( _T( "iI" ) ) >= 0 )	pElement->m_nFlags |= retfItalic;
+		if ( strTemp.FindOneOf( _T( "uU" ) ) >= 0 )	pElement->m_nFlags |= retfUnderline;
 
-		if ( strTemp.Find( 'b' ) >= 0 )	pElement->m_nFlags |= retfBold;
-		if ( strTemp.Find( 'i' ) >= 0 )	pElement->m_nFlags |= retfItalic;
-		if ( strTemp.Find( 'u' ) >= 0 )	pElement->m_nFlags |= retfUnderline;
-		
 		strTemp = pXML->GetAttributeValue( _T("align") );
-		ToLower( strTemp );
+		if ( strTemp.CompareNoCase( _T("middle") ) == 0 ) pElement->m_nFlags |= retfMiddle;
 
-		if ( strTemp == _T("middle") ) pElement->m_nFlags |= retfMiddle;
-		
 		if ( CSkin::LoadColour( pXML, _T("colour"), &pElement->m_cColour ) ||
 			 CSkin::LoadColour( pXML, _T("color"),  &pElement->m_cColour ) )
 		{
 			pElement->m_nFlags |= retfColour;
 		}
-		
+
 		if ( pElement->m_nType == retIcon )
 		{
 			strTemp = pXML->GetAttributeValue( _T("command") );
@@ -401,14 +397,14 @@ BOOL CRichDocument::LoadXML(CXMLElement* pBase, CMap< CString, const CString&, C
 				pElement->m_sText = strTemp;
 			}
 		}
-		
+
 		if ( pElement->m_nType == retIcon || pElement->m_nType == retBitmap || pElement->m_nType == retAnchor )
 		{
 			strTemp = pXML->GetAttributeValue( _T("res") );
 			if ( strTemp.GetLength() ) pElement->m_sText = strTemp;
 			strTemp = pXML->GetAttributeValue( _T("path") );
 			if ( strTemp.GetLength() ) pElement->m_sText = strTemp;
-			
+
 			strTemp = pXML->GetAttributeValue( _T("width") );
 			if ( strTemp.GetLength() )
 			{
@@ -418,9 +414,9 @@ BOOL CRichDocument::LoadXML(CXMLElement* pBase, CMap< CString, const CString&, C
 				if ( strTemp.GetLength() ) pElement->m_sText += '.' + strTemp;
 			}
 		}
-		
+
 		pElement->m_sLink = pXML->GetAttributeValue( _T("target") );
-		
+
 		if ( pMap )
 		{
 			strTemp = pXML->GetAttributeValue( _T("id") );
@@ -429,7 +425,7 @@ BOOL CRichDocument::LoadXML(CXMLElement* pBase, CMap< CString, const CString&, C
 
 		Add( pElement );
 	}
-	
+
 	return TRUE;
 }
 
@@ -440,7 +436,7 @@ BOOL CRichDocument::LoadXMLStyles(CXMLElement* pParent)
 		CXMLElement* pXML = pParent->GetNextElement( pos );
 		if ( ! pXML->IsNamed( _T("style") ) )
 		{
-			theApp.Message( MSG_ERROR, IDS_SKIN_ERROR, _T("Unknown element in [styles] element"), pXML->ToString() );
+			theApp.Message( MSG_ERROR, IDS_SKIN_ERROR, _T("Unknown element in [styles] element"), (LPCTSTR)pXML->ToString() );
 			continue;
 		}
 
@@ -475,7 +471,7 @@ BOOL CRichDocument::LoadXMLStyles(CXMLElement* pParent)
 					lf.lfHeight = - height;
 				}
 				else
-					theApp.Message( MSG_ERROR, IDS_SKIN_ERROR, _T("Bad [size] attribute in [font] element"), pFont->ToString() );
+					theApp.Message( MSG_ERROR, IDS_SKIN_ERROR, _T("Bad [size] attribute in [font] element"), (LPCTSTR)pFont->ToString() );
 			}
 			CString strWeight = pFont->GetAttributeValue( _T("weight") );
 			if ( ! strWeight.IsEmpty() )
@@ -486,14 +482,14 @@ BOOL CRichDocument::LoadXMLStyles(CXMLElement* pParent)
 					lf.lfWeight = weight;
 				}
 				else
-					theApp.Message( MSG_ERROR, IDS_SKIN_ERROR, _T("Bad [weight] attribute in [font] element"), pFont->ToString() );
+					theApp.Message( MSG_ERROR, IDS_SKIN_ERROR, _T("Bad [weight] attribute in [font] element"), (LPCTSTR)pFont->ToString() );
 			}
 		}
-		
+
 		CXMLElement* pColours = pXML->GetElementByName( _T("colours") );
 		if ( pColours == NULL ) pColours = pXML->GetElementByName( _T("colors") );
 		if ( pColours == NULL ) pColours = pXML;
-		
+
 		if ( bDefault )
 		{
 			CSkin::LoadColour( pColours, _T("text"), &m_crText );
@@ -512,6 +508,6 @@ BOOL CRichDocument::LoadXMLStyles(CXMLElement* pParent)
 			m_fntHeading.CreateFontIndirect( &lf );
 		}
 	}
-	
+
 	return TRUE;
 }

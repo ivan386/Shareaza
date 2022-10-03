@@ -599,7 +599,7 @@
 					<item id="ID_VIEW_SECURITY" text="_Безопасность" shortcut="F7"/>
 					<item id="ID_VIEW_HOSTS" text="_Кэш хостов" shortcut="F8"/>
 					<item id="ID_VIEW_DISCOVERY" text="_Ресурсы подключений" shortcut="F9"/>
-					<item id="ID_VIEW_TRAFFIC" text="_График" shortcut="F10"/>
+					<item id="ID_VIEW_TRAFFIC" text="_График" shortcut="Ctrl+F10"/>
 					<item id="ID_VIEW_SCHEDULER" text="Пла_нировщик" shortcut="Ctrl+Shift+F11"/>
 					<separator/>
 					<item id="ID_VIEW_PACKETS" text="Дамп _пакетов" shortcut="Ctrl+F1"/>
@@ -695,7 +695,7 @@
 				<item id="ID_VIEW_SECURITY" text="_Безопасность" shortcut="F7"/>
 				<item id="ID_VIEW_HOSTS" text="_Кэш хостов" shortcut="F8"/>
 				<item id="ID_VIEW_DISCOVERY" text="_Ресурсы подключений" shortcut="F9"/>
-				<item id="ID_VIEW_TRAFFIC" text="_График" shortcut="F10"/>
+				<item id="ID_VIEW_TRAFFIC" text="_График" shortcut="Ctrl+F10"/>
 				<item id="ID_VIEW_SCHEDULER" text="Пла_нировщик" shortcut="Ctrl+Shift+F11"/>
 				<separator/>
 				<item id="ID_VIEW_PACKETS" text="Дамп _пакетов" shortcut="Ctrl+F1"/>
@@ -921,8 +921,7 @@
 				<item id="ID_SEARCH_FOR_ALBUM" text="Музыку из этого же альбома"/>
 				<item id="ID_SEARCH_FOR_SERIES" text="Серии из этого же сериала"/>
 			</menu>
-			<menu text="_Сервис">
-				<item id="ID_LIBRARY_BITZI_WEB" text="Посмотреть _Bitzi этикетку"/>
+			<menu id="ID_WEBSERVICES_LIST" text="_Сервис">
 			</menu>
 		</menu>
 		<menu name="CSearchWnd">
@@ -942,8 +941,7 @@
 				<item id="ID_SEARCH_FOR_ALBUM" text="Музыку из этого же альбома"/>
 				<item id="ID_SEARCH_FOR_SERIES" text="Серии из этого же сериала"/>
 			</menu>
-			<menu text="_Сервис">
-				<item id="ID_LIBRARY_BITZI_WEB" text="Посмотреть _Bitzi этикетку"/>
+			<menu id="ID_WEBSERVICES_LIST" text="_Сервис">
 			</menu>
 			<separator/>
 			<item id="ID_SEARCH_FILTER" text="_Фильтровать результаты..."/>
@@ -968,8 +966,7 @@
 				<item id="ID_SEARCH_FOR_ALBUM" text="Музыку из этого же альбома"/>
 				<item id="ID_SEARCH_FOR_SERIES" text="Серии из этого же сериала"/>
 			</menu>
-			<menu text="_Сервис">
-				<item id="ID_LIBRARY_BITZI_WEB" text="Посмотреть _Bitzi этикетку"/>
+			<menu id="ID_WEBSERVICES_LIST" text="_Сервис">
 			</menu>
 		</menu>
 		<menu name="CBrowseHostWnd">
@@ -987,8 +984,7 @@
 				<item id="ID_SEARCH_FOR_ALBUM" text="Музыку из этого же альбома"/>
 				<item id="ID_SEARCH_FOR_SERIES" text="Серии из этого же сериала"/>
 			</menu>
-			<menu text="_Сервис">
-				<item id="ID_LIBRARY_BITZI_WEB" text="Посмотреть _Bitzi этикетку"/>
+			<menu id="ID_WEBSERVICES_LIST" text="_Сервис">
 			</menu>
 			<separator/>
 			<item id="ID_SEARCH_FILTER" text="_Фильтровать результаты..."/>
@@ -1012,8 +1008,7 @@
 				<item id="ID_SEARCH_FOR_ALBUM" text="Музыку из этого же альбома"/>
 				<item id="ID_SEARCH_FOR_SERIES" text="Серии из этого же сериала"/>
 			</menu>
-			<menu text="_Сервис">
-				<item id="ID_LIBRARY_BITZI_WEB" text="Посмотреть _Bitzi этикетку"/>
+			<menu id="ID_WEBSERVICES_LIST" text="_Сервис">
 			</menu>
 			<separator/>
 			<item id="ID_SEARCH_FILTER" text="_Фильтровать результаты..."/>
@@ -1248,9 +1243,7 @@
 				<item id="ID_SEARCH_FOR_ALBUM" text="Музыку из этого же альбома"/>
 				<item id="ID_SEARCH_FOR_SERIES" text="Серии из этого же сериала"/>
 			</menu>
-			<menu text="_Сервис">
-				<item id="ID_LIBRARY_BITZI_WEB" text="Посмотреть _Bitzi этикетку"/>
-				<item id="ID_LIBRARY_BITZI_DOWNLOAD" text="_Загрузить метаданные"/>
+			<menu id="ID_WEBSERVICES_LIST" text="_Сервис">
 				<item id="ID_WEBSERVICES_MUSICBRAINZ" text="_MusicBrainz"/>
 			</menu>
 			<menu text="О_перации">
@@ -1280,9 +1273,7 @@
 				<item id="ID_SEARCH_FOR_ALBUM" text="Музыку из этого же альбома"/>
 				<item id="ID_SEARCH_FOR_SERIES" text="Серии из этого же сериала"/>
 			</menu>
-			<menu text="_Сервис">
-				<item id="ID_LIBRARY_BITZI_WEB" text="Посмотреть _Bitzi этикетку"/>
-				<item id="ID_LIBRARY_BITZI_DOWNLOAD" text="_Загрузить метаданные"/>
+			<menu id="ID_WEBSERVICES_LIST" text="_Сервис">
 				<item id="ID_WEBSERVICES_MUSICBRAINZ" text="_MusicBrainz"/>
 				<separator/>
 				<item id="ID_LIBRARY_CREATETORRENT" text="_Создать .torrent файл"/>
@@ -1320,9 +1311,7 @@
 				<item id="ID_SEARCH_FOR_ALBUM" text="Музыку из этого же альбома"/>
 				<item id="ID_SEARCH_FOR_SERIES" text="Серии из этого же сериала"/>
 			</menu>
-			<menu text="_Сервис">
-				<item id="ID_LIBRARY_BITZI_WEB" text="Посмотреть _Bitzi этикетку"/>
-				<item id="ID_LIBRARY_BITZI_DOWNLOAD" text="_Загрузить метаданные"/>
+			<menu id="ID_WEBSERVICES_LIST" text="_Сервис">
 			</menu>
 			<menu text="О_перации">
 				<item id="ID_LIBRARY_RENAME" text="_Переименовать файл"/>
@@ -1355,10 +1344,7 @@
 				<item id="ID_SEARCH_FOR_ALBUM" text="Музыку из этого же альбома"/>
 				<item id="ID_SEARCH_FOR_SERIES" text="Серии из этого же сериала"/>
 			</menu>
-			<menu text="_Сервис">
-				<item id="ID_LIBRARY_BITZI_WEB" text="Посмотреть _Bitzi этикетку"/>
-				<item id="ID_LIBRARY_BITZI_DOWNLOAD" text="_Загрузить метаданные"/>
-				<separator/>
+			<menu id="ID_WEBSERVICES_LIST" text="_Сервис">
 				<item id="ID_LIBRARY_CREATETORRENT" text="_Создать .torrent файл"/>
 			</menu>
 			<menu text="О_перации">
@@ -1661,9 +1647,11 @@
 			</menu>
 		</menu>
 		<menu name="WebServices.List.Menu">
-			<item id="ID_LIBRARY_BITZI_WEB" text="Посмотреть _Bitzi этикетку"/>
-			<item id="ID_LIBRARY_BITZI_DOWNLOAD" text="_Загрузить метаданные"/>
 			<item id="ID_WEBSERVICES_MUSICBRAINZ" text="_MusicBrainz"/>
+		</menu>
+		<menu name="Path.Menu">
+			<item id="ID_PATH_EXPLORE" text="_Проводник"/>
+			<item id="ID_PATH_COPY" text="_Копировать"/>
 		</menu>
 	</menus>
 	<!-- Documents -->
@@ -2461,8 +2449,6 @@
 		<tip id="ID_LIBRARY_ALBUM_DELETE" message="Удалить помеченную папку альбома."/>
 		<tip id="ID_LIBRARY_ALBUM_OPEN" message="Открыть помеченную папку альбома."/>
 		<tip id="ID_LIBRARY_ALBUM_PROPERTIES" message="Просмотр и правка свойств помеченной папки альбома..."/>
-		<tip id="ID_LIBRARY_BITZI_DOWNLOAD" message="Загрузить мета данные для помеченного файла(ов) с Bitzi(TM)..."/>
-		<tip id="ID_LIBRARY_BITZI_WEB" message="Просмотреть Bitzi(TM) этикетку помеченного файла в Интернете."/>
 		<tip id="ID_LIBRARY_COLUMNS" message="Выбрать колонки мета данных для показа..."/>
 		<tip id="ID_LIBRARY_COPY" message="Копировать помеченные файлы в другую папку хранилища..."/>
 		<tip id="ID_LIBRARY_CREATETORRENT" message="Создать .torrent для этого файла,чтобы поместить на веб сайт."/>
@@ -2573,6 +2559,8 @@
 		<tip id="ID_NEXT_PANE" message="Переключиться в другое окно" tip="Следующее окно"/>
 		<tip id="ID_OPEN_DOWNLOADS_FOLDER" message="Открыть папку с завершёнными загрузками"/>
 		<tip id="ID_PREV_PANE" message="Перейти к предыдущему окну" tip="Предыдущее окно"/>
+		<tip id="ID_PATH_COPY" message="Скопировать этот путь в буфер обмена."/>
+		<tip id="ID_PATH_EXPLORE" message="Открыть этот путь."/>
 		<tip id="ID_SCHEDULER_ACTIVATE" message="Включить выбранную задачу."/>
 		<tip id="ID_SCHEDULER_ADD" message="Добавить новую задачу в Планировщике."/>
 		<tip id="ID_SCHEDULER_DEACTIVATE" message="Выключить выбранные задачи."/>
@@ -2875,6 +2863,7 @@
 		<string id="8336" value="Источники этого файла могут раздавать нестабильно"/>
 		<string id="8337" value="Недоверяемый"/>
 		<string id="8338" value="Свободно:"/>
+		<string id="12999" value="Компьютер %s забанен за запрещённый клиент &quot;%s&quot;."/>
 		<string id="13000" value="Уверены, что хотите удалить выбранные правила безопасности? Действие будет необратимое."/>
 		<string id="13001" value="Файлы, открытые для общего доступа"/>
 		<string id="16063" value="После 10 попыток переадресация порта при помощи UPnP, была неуспешна."/>
@@ -3074,8 +3063,6 @@
 		<string id="16384" value="Уверены, что хотите открыть файл «%s» ?\n\nНекоторые файлы могут причинить вред для вашего компьютера.  Удостоверьтесь, что это за файл прежде чем открывать его."/>
 		<string id="16385" value="Вы собираетесь изменить мета данные для %i файлов, уверены, что хотите продолжить?"/>
 		<string id="16386" value="Правка мета данных %i файлов."/>
-		<string id="16387" value="Файл «%s» ещё не имеет хеша.  Подождите пока хеширование будет закончено и попробуйте снова."/>
-		<string id="16388" value="Эта опция использует службу, предоставленную Bitzi.com для получения и обмена информацией о помеченных файлах.\n\nShareaza перешлет SHA1 хеш код помеченного файла(ов) для того, чтобы запросить базу данных Bitzi.  Если Вы заинтересованы в секретности, наверное, Вы захотите познакомиться с политикой конфиденциальности Bitzi.com.\n\nХотите ли продолжать?"/>
 		<string id="16389" value="Вы уверены, что хотите удалить %i помеченных файлов(а)?\n\nФайлы будут помещены в Ваш мусорный ящик, если он активирован."/>
 		<string id="16390" value="Вы ещё не указали, какой проигрыватель использовать для ставки медиа файлов в очередь воспроизведения (напр., Nullsoft WinAmp).  Хотите ли выбрать его сейчас?\n\nShareaza передаст имя файла вашей выбранной программе вместе с /ADD аргументом."/>
 		<string id="16391" value="Вы не подключены к сети."/>
@@ -3149,10 +3136,6 @@
 		<string id="16778" value="Ссылка:"/>
 		<string id="16779" value="Тип:"/>
 		<string id="16780" value="Не указано"/>
-		<string id="16781" value="Запрашивается..."/>
-		<string id="16782" value="Успех!"/>
-		<string id="16783" value="Окончено, нажмите «Закрыть»"/>
-		<string id="16784" value="&amp;Закрыть"/>
 		<string id="16785" value="(Без визуализации)"/>
 		<string id="16800" value="Вы ещё не указали скорости соединения.  Прежде чем продолжить, выберите Ваш тип интернетного соединения или его скорость."/>
 		<string id="16802" value="Вы не открыли доступ к никаким папкам.  Вы уверены?"/>
@@ -3347,7 +3330,7 @@
 		<string id="18510" value="Вы уверены, что хотите предположить, что эта загрузка полна, и повторно её проверить?  Будет рассмотрен весь файл, и Shareaza примет только те части, которые пройдут проверку. Другие же части будут загружены заново."/>
 		<string id="18511" value="Вы внесли изменения в размер файла.  Уверены, что хотите изменить размер для этой загрузки?"/>
 		<string id="18512" value="Вы уверены что хотите отменить загрузку с сохранением неполных файлов?"/>
-		<string id="18513" value="Вы ввели неправильное значение eDonkey хеша.  Проверьте и попробуйте снова."/>
+		<string id="18513" value="Вы ввели неправильное значение %s хеша.  Перепроверьте и попробуйте снова."/>
 		<string id="18514" value="Вы ввели значение %s хеша, не совпадающее с текущим значением у загрузки. Уверены, что хотите изменить%s хеш сейчас?"/>
 		<string id="18515" value="Над выбранной загрузкой уже выполняется операция, попытайтесь снова чуть позже."/>
 		<string id="19000" value="Удаленный доступ отключен."/>
@@ -3453,6 +3436,10 @@
 		<string id="20265" value="Готово"/>
 		<string id="20266" value="Ждите..."/>
 		<string id="20267" value="Нет задач для Планировщика"/>
+		<string id="20268" value="Загруженные файлы лежат здесь"/>
+		<string id="20269" value="Незаконченные файлы лежат здесь"/>
+		<string id="20270" value="Держать торренты в папке"/>
+		<string id="20271" value="Держать коллекции в папке"/>
 	</strings>
 	<!-- Localised Dialog Text, the "cookie" verifies that the dialog matches the skin -->
 	<!-- Don't edit dialogs manualy! Use DialogScan feature instead -->
@@ -3464,8 +3451,9 @@
 			<control caption="OK"/>
 			<control caption="Отмена"/>
 			<control caption="Применить"/>
+			<control/>
 		</dialog>
-		<dialog name="CGeneralSettingsPage" cookie="BuBuBuBuStCoBuBuBuBuBuBuBuBuBuSyStEdmsStmsBuStCoStCo" caption="Главное">
+		<dialog name="CGeneralSettingsPage" cookie="BuBuBuBuStCoBuBuBuBuBuBuBuBuBuBuSyStEdmsStmsBuStCoStCo" caption="Главное">
 			<control caption="_Основное:"/>
 			<control caption="Соединяться с сетями при старте"/>
 			<control caption="Запуск Shareaza вместе с Windows"/>
@@ -3475,6 +3463,7 @@
 			<control caption="_Загрузки:"/>
 			<control caption="Раскрывать дерево новых эагрузок"/>
 			<control caption="Упрощенная полоса прогресса"/>
+			<control caption="Открыть окно _Монитора"/>
 			<control caption="_Поиск:"/>
 			<control caption="Раскрывать дерево источн. поиска"/>
 			<control caption="При загрузке перейти к пересылкам"/>
@@ -3493,7 +3482,7 @@
 			<control caption="Когда щелкаю свернуть:"/>
 			<control caption="Обычное действие|Отправить в трей"/>
 		</dialog>
-		<dialog name="CLibrarySettingsPage" cookie="BuBuBuBuBuBuStEdmsStStEdmsStBuBuCoBuBuBuCoBuBuBuEdBuBuBu" caption="Хранилище">
+		<dialog name="CLibrarySettingsPage" cookie="BuBuBuBuBuBuStEdmsStStEdmsStBuBuCoBuBuBuCoBuBuBuCoBuBuBu" caption="Хранилище">
 			<control caption="_Опции:"/>
 			<control caption="Запоминать вид папок"/>
 			<control caption="Следить за хранилищем"/>
@@ -3517,7 +3506,7 @@
 			<control/>
 			<control caption="_Внести"/>
 			<control caption="_Удалить"/>
-			<control caption="Держать _коллекции в папке:"/>
+			<control caption="Держать коллекции в папке"/>
 			<control/>
 			<control/>
 			<control caption="Теневые файлы при стирании"/>
@@ -3630,7 +3619,7 @@
 			<control/>
 			<control/>
 		</dialog>
-		<dialog name="CDownloadsSettingsPage" cookie="BuEdBuBuStCoBuStEdmsStEdmsStEdmsBuStCoStCoBuBuEdBu" caption="Загрузки">
+		<dialog name="CDownloadsSettingsPage" cookie="BuCoBuBuStCoBuStEdmsStEdmsStEdmsBuStCoStCoBuBuCoBu" caption="Загрузки">
 			<control caption="Загруженные файлы лежат здесь"/>
 			<control/>
 			<control/>
@@ -3764,7 +3753,7 @@
 			<control caption="eDonkey _утилиты:"/>
 			<control caption="Загрузить список серверов из интернета:"/>
 		</dialog>
-		<dialog name="CBitTorrentSettingsPage" cookie="BuBuBuEdmsEdmsBuEdmsBuBuEdBuEdBuEdBuBuBuStStStStBu" caption="BitTorrent">
+		<dialog name="CBitTorrentSettingsPage" cookie="BuBuBuEdmsEdmsBuEdmsBuBuCoBuEdBuEdBuBuBuStStStStBu" caption="BitTorrent">
 			<control caption="Всегда соединяться с BitTorrent"/>
 			<control caption="Соединиться с BitTorrent сегодня"/>
 			<control caption="Использовать BitTorrent DHT"/>
@@ -3784,7 +3773,7 @@
 			<control/>
 			<control caption="_Сеть BitTorrent:"/>
 			<control caption="_Соединений для загрузки:"/>
-			<control caption="_Держать торренты в папке:"/>
+			<control caption="Держать торренты в папке"/>
 			<control caption="_Торрентов одновременно"/>
 			<control caption="Клиентских соединений"/>
 			<control caption="%"/>
@@ -3818,7 +3807,9 @@
 			<control caption="_Установки..."/>
 			<control caption="_Хочу ещё..."/>
 		</dialog>
-		<dialog name="CAdvancedSettingsPage" cookie="SyEdmsBuBuStStEdBuCo" caption="Дополнительно">
+		<dialog name="CAdvancedSettingsPage" cookie="EdStSyEdmsBuBuStStEdBuCo" caption="Дополнительно">
+			<control/>
+			<control/>
 			<control/>
 			<control/>
 			<control/>
@@ -3977,7 +3968,7 @@
 			<control/>
 			<control/>
 			<control caption="_Личные данные:"/>
-			<control caption="|Мужской|Женский"/>
+			<control caption="Мужской|Женский"/>
 			<control caption="Пол:"/>
 			<control/>
 			<control caption="Возраст:"/>
@@ -4079,7 +4070,7 @@
 			<control caption="Поиск"/>
 			<control caption="Отмена"/>
 		</dialog>
-		<dialog name="CFilterSearchDlg" cookie="BuEdBuStBuStEdStEdStEdmsStBuBuBuBuBuBuBuBuBuBuBuCoBuBuBuBuBu" caption="Фильтрование соответсвий">
+		<dialog name="CFilterSearchDlg" cookie="BuEdBuStBuStEdStEdStEdmsStBuBuBuBuBuBuBuBuBuBuBuBuBuCoBuBuBuBuBu" caption="Фильтрование соответсвий">
 			<control caption="Показывать только содержащие слова:"/>
 			<control/>
 			<control caption="Рег. Выраж."/>
@@ -4103,6 +4094,8 @@
 			<control caption="Файлы с DRM"/>
 			<control caption="Для взрослых"/>
 			<control caption="Подозрительные"/>
+			<control caption="Частичные ресурсы"/>
+			<control caption="Комметарии"/>
 			<control caption="Фильтры:"/>
 			<control/>
 			<control caption="По умолчанию"/>
@@ -4121,7 +4114,7 @@
 			<control caption="Адрес службы:"/>
 			<control/>
 			<control caption="Тип ресурса соединений:"/>
-			<control caption="Gnutella Bootstrap|GWebCache|Server.met ссылка|Блокировано"/>
+			<control caption="Gnutella загрузчик|G1 веб-кеш|G2 веб-кеш|G1/G2 веб-кеш|Server.met ссылка|DC++ хаб-лист ссылка|Блокировано"/>
 			<control caption="OK"/>
 			<control caption="Отмена"/>
 		</dialog>
@@ -4258,7 +4251,7 @@
 		<dialog name="CSecureRuleDlg" cookie="BuStCoStEdBuStEdEdEdEdStEdEdEdEdBuEdBuBuBuBuStCoStCoEdStEdStEdStBuBu" caption="Правило безопасности">
 			<control caption="_Правило:"/>
 			<control caption="Тип:"/>
-			<control caption="Адрес сети (IP)|Фильтр содержания"/>
+			<control caption="Адрес сети (IP)|Фильтр содержания|Адрес сети (IPv6)"/>
 			<control caption="Заметка:"/>
 			<control/>
 			<control caption="_Сетевой адрес:"/>
@@ -4311,7 +4304,7 @@
 			<control caption="Вы выбрали %lu файл(а/ов) для экспорта как Shareaza-поддерживаемые ссылки.  Выберите формат ссылок и нажмите «Сохранить»:"/>
 			<control/>
 			<control caption="Вставить:"/>
-			<control caption="Tiger Root|SHA1|MD5|ED2K (CMD4)|Полное имя файла|Имя файла (ссылка)|Имя файла|Расширение файла|Размер файла|Размер файла (в байтах)|Путь к папке|Локальный адрес|Локальный порт"/>
+			<control caption="Tiger Root|SHA1|MD5|ED2K (CMD4)|BitTorrent|Полное имя файла|Имя файла (URI)|Имя файла|Расширение файла|Размер файла|Размер файла (в байтах)|Путь к папке|Локальный адрес|Локальный порт|Ссылка|Ссылка (URI)"/>
 			<control caption="Шаблоны:"/>
 			<control caption="Magnet|eDonkey|Magnet HTML|eDonkey HTML"/>
 			<control caption="_Копировать"/>
@@ -4334,14 +4327,6 @@
 			<control caption="Запомнить мой _выбор"/>
 			<control caption="Открыть окно _Монитора"/>
 			<control caption="Вы щёлкнули по Shareaza-поддерживаемой ссылке, которая добавит следующую службу ресурсов соединений в Ваш список."/>
-		</dialog>
-		<dialog name="CBitziDownloadDlg" cookie="StStmsBuSySt" caption="Загрузка мета данных...">
-			<control/>
-			<control caption="Shareaza пытается загрузить мета данные с Bitzi(TM)..."/>
-			<control/>
-			<control caption="Отмена"/>
-			<control/>
-			<control caption="www.bitzi.com"/>
 		</dialog>
 		<dialog name="CFilePreviewDlg" cookie="StStStmsStBu" caption="Просмотр копии загрузки...">
 			<control/>

@@ -269,7 +269,7 @@ CSymEngine::CSymEngine(const CEngineParams& rParams)
 			DWORD dwOptions = FSymGetOptions();
 			FSymSetOptions(dwOptions | SYMOPT_DEFERRED_LOADS | SYMOPT_LOAD_LINES | SYMOPT_UNDNAME);
 
-			m_hSymProcess = g_bWinNT ? GetCurrentProcess() : (HANDLE)GetCurrentProcessId();
+			m_hSymProcess = GetCurrentProcess();
 			if (FSymInitialize(m_hSymProcess, NULL, TRUE))
 				SetEngineParameters(rParams);
 			else
@@ -1039,26 +1039,21 @@ void CSymEngine::GetCpusInfo(CCpusInfo& rCpusInfo)
 	rCpusInfo.m_pszCpuArch = szUnknown;
 	SYSTEM_INFO si;
 	GetSystemInfo(&si);
-	if (g_bWinNT)
+	switch (si.wProcessorArchitecture)
 	{
-		switch (si.wProcessorArchitecture)
-		{
-		case PROCESSOR_ARCHITECTURE_INTEL:
-			rCpusInfo.m_pszCpuArch = szIntel;
-			break;
-		case PROCESSOR_ARCHITECTURE_IA64:
-			rCpusInfo.m_pszCpuArch = szIA64;
-			break;
-		case PROCESSOR_ARCHITECTURE_AMD64:
-			rCpusInfo.m_pszCpuArch = szAMD64;
-			break;
-		default: // PROCESSOR_ARCHITECTURE_UNKNOWN
-			rCpusInfo.m_pszCpuArch = szUnknown;
-			break;
-		}
-	}
-	else
+	case PROCESSOR_ARCHITECTURE_INTEL:
 		rCpusInfo.m_pszCpuArch = szIntel;
+		break;
+	case PROCESSOR_ARCHITECTURE_IA64:
+		rCpusInfo.m_pszCpuArch = szIA64;
+		break;
+	case PROCESSOR_ARCHITECTURE_AMD64:
+		rCpusInfo.m_pszCpuArch = szAMD64;
+		break;
+	default: // PROCESSOR_ARCHITECTURE_UNKNOWN
+		rCpusInfo.m_pszCpuArch = szUnknown;
+		break;
+	}
 	rCpusInfo.m_dwNumCpus = si.dwNumberOfProcessors;
 }
 
@@ -1077,34 +1072,32 @@ BOOL CSymEngine::GetCpuInfo(DWORD dwCpuNum, CCpuInfo& rCpuInfo)
 	_tcscpy_s(rCpuInfo.m_szCpuDescription, countof(rCpuInfo.m_szCpuId), szUnknown);
 
 	BOOL bResult = TRUE;
-	if (g_bWinNT)
+	TCHAR szCentralProcessorPath[ MAX_PATH ];
+	_stprintf_s( szCentralProcessorPath, countof( szCentralProcessorPath ), _T( "HARDWARE\\DESCRIPTION\\System\\CentralProcessor\\%lu" ), dwCpuNum );
+	HKEY hKey;
+	if ( RegOpenKeyEx( HKEY_LOCAL_MACHINE, szCentralProcessorPath, 0l, KEY_READ, &hKey ) == ERROR_SUCCESS )
 	{
-		TCHAR szCentralProcessorPath[MAX_PATH];
-		_stprintf_s(szCentralProcessorPath, countof(szCentralProcessorPath), _T("HARDWARE\\DESCRIPTION\\System\\CentralProcessor\\%lu"), dwCpuNum);
-		HKEY hKey;
-		if (RegOpenKeyEx(HKEY_LOCAL_MACHINE, szCentralProcessorPath, 0l, KEY_READ, &hKey) == ERROR_SUCCESS)
-		{
-			DWORD dwValue, dwValueType, dwValueSize;
-			dwValueSize = sizeof(dwValue);
-			if (RegQueryValueEx(hKey, _T("~MHz"), NULL, &dwValueType, (PBYTE)&dwValue, &dwValueSize) == ERROR_SUCCESS && dwValueType == REG_DWORD)
-				_ultot_s(dwValue, rCpuInfo.m_szCpuSpeed, countof(rCpuInfo.m_szCpuSpeed), 10);
-			else
-				*rCpuInfo.m_szCpuSpeed = _T('\0');
-			dwValueSize = sizeof(rCpuInfo.m_szCpuDescription);
-			if (RegQueryValueEx(hKey, _T("ProcessorNameString"), NULL, &dwValueType, (PBYTE)rCpuInfo.m_szCpuDescription, &dwValueSize) == ERROR_SUCCESS && dwValueType == REG_SZ)
-				TrimSpaces(rCpuInfo.m_szCpuDescription);
-			else
-				*rCpuInfo.m_szCpuDescription = _T('\0');
-			dwValueSize = sizeof(rCpuInfo.m_szCpuId);
-			if (RegQueryValueEx(hKey, _T("Identifier"), NULL, &dwValueType, (PBYTE)rCpuInfo.m_szCpuId, &dwValueSize) == ERROR_SUCCESS && dwValueType == REG_SZ)
-				TrimSpaces(rCpuInfo.m_szCpuId);
-			else
-				*rCpuInfo.m_szCpuId = _T('\0');
-			RegCloseKey(hKey);
-		}
+		DWORD dwValue, dwValueType, dwValueSize;
+		dwValueSize = sizeof( dwValue );
+		if ( RegQueryValueEx( hKey, _T( "~MHz" ), NULL, &dwValueType, (PBYTE)&dwValue, &dwValueSize ) == ERROR_SUCCESS && dwValueType == REG_DWORD )
+			_ultot_s( dwValue, rCpuInfo.m_szCpuSpeed, countof( rCpuInfo.m_szCpuSpeed ), 10 );
 		else
-			bResult = FALSE;
+			*rCpuInfo.m_szCpuSpeed = _T( '\0' );
+		dwValueSize = sizeof( rCpuInfo.m_szCpuDescription );
+		if ( RegQueryValueEx( hKey, _T( "ProcessorNameString" ), NULL, &dwValueType, (PBYTE)rCpuInfo.m_szCpuDescription, &dwValueSize ) == ERROR_SUCCESS && dwValueType == REG_SZ )
+			TrimSpaces( rCpuInfo.m_szCpuDescription );
+		else
+			*rCpuInfo.m_szCpuDescription = _T( '\0' );
+		dwValueSize = sizeof( rCpuInfo.m_szCpuId );
+		if ( RegQueryValueEx( hKey, _T( "Identifier" ), NULL, &dwValueType, (PBYTE)rCpuInfo.m_szCpuId, &dwValueSize ) == ERROR_SUCCESS && dwValueType == REG_SZ )
+			TrimSpaces( rCpuInfo.m_szCpuId );
+		else
+			*rCpuInfo.m_szCpuId = _T( '\0' );
+		RegCloseKey( hKey );
 	}
+	else
+		bResult = FALSE;
+
 	return bResult;
 }
 
@@ -1159,14 +1152,29 @@ void CSymEngine::GetOsInfo(COsInfo& rOsInfo)
 	static const TCHAR szWindowsMe[] = _T("Windows Me");
 	static const TCHAR szWindows2000[] = _T("Windows 2000");
 	static const TCHAR szWindowsXP[] = _T("Windows XP");
+	static const TCHAR szWindowsXPProX64[] = _T("Windows XP Professional x64 Edition");
 	static const TCHAR szWindowsVista[] = _T("Windows Vista");
+	static const TCHAR szWindows7[] = _T("Windows 7");
+	static const TCHAR szWindows8[] = _T("Windows 8");
+	static const TCHAR szWindows81[] = _T("Windows 8.1");
+	static const TCHAR szWindows10[] = _T("Windows 10");
 	static const TCHAR szWindowsServer2003[] = _T("Windows Server 2003");
+	static const TCHAR szWindowsHomeServer[] = _T("Windows Home Server");
+	static const TCHAR szWindowsServer2003R2[] = _T("Windows Server 2003 R2");
+	static const TCHAR szWindowsServer2008[] = _T("Windows Server 2008");
+	static const TCHAR szWindowsServer2008R2[] = _T("Windows Server 2008 R2");
+	static const TCHAR szWindowsServer2012[] = _T("Windows Server 2012");
+	static const TCHAR szWindowsServer2012R2[] = _T("Windows Server 2012 R2");
+	static const TCHAR szWindowsServer2016[] = _T("Windows Server 2016");
 
-	OSVERSIONINFO osvi;
-	osvi.dwOSVersionInfoSize = sizeof(osvi);
-	GetVersionEx(&osvi);
+	OSVERSIONINFOEX osvi = { sizeof( OSVERSIONINFOEX ) };
+	GetVersionEx((OSVERSIONINFO*)&osvi);
 
+	SYSTEM_INFO sysi = {};
+	GetSystemInfo(&sysi);
+	
 	rOsInfo.m_pszWinVersion = szUnknown;
+	
 	switch (osvi.dwMajorVersion)
 	{
 	case 3:
@@ -1204,7 +1212,16 @@ void CSymEngine::GetOsInfo(COsInfo& rOsInfo)
 				rOsInfo.m_pszWinVersion = szWindowsXP;
 				break;
 			case 2:
-				rOsInfo.m_pszWinVersion = szWindowsServer2003;
+				if (osvi.wProductType == VER_NT_WORKSTATION && sysi.wProcessorArchitecture == PROCESSOR_ARCHITECTURE_AMD64)
+					rOsInfo.m_pszWinVersion = szWindowsXPProX64;
+#ifdef VER_SUITE_WH_SERVER
+				else if (osvi.wSuiteMask & VER_SUITE_WH_SERVER)
+					rOsInfo.m_pszWinVersion = szWindowsHomeServer;
+#endif
+				else if (GetSystemMetrics(SM_SERVERR2) == 0)
+					rOsInfo.m_pszWinVersion = szWindowsServer2003;
+				else
+					rOsInfo.m_pszWinVersion = szWindowsServer2003R2;
 				break;
 			}
 		}
@@ -1215,7 +1232,77 @@ void CSymEngine::GetOsInfo(COsInfo& rOsInfo)
 			switch (osvi.dwMinorVersion)
 			{
 			case 0:
-				rOsInfo.m_pszWinVersion = szWindowsVista;
+				switch (osvi.wProductType)
+				{
+				case VER_NT_WORKSTATION:
+					rOsInfo.m_pszWinVersion = szWindowsVista;
+					break;
+				//case VER_NT_DOMAIN_CONTROLLER:
+				//case VER_NT_SERVER:
+				default:
+					rOsInfo.m_pszWinVersion = szWindowsServer2008;
+					break;
+				}
+				break;
+			case 1:
+				switch (osvi.wProductType)
+				{
+				case VER_NT_WORKSTATION:
+					rOsInfo.m_pszWinVersion = szWindows7;
+					break;
+				//case VER_NT_DOMAIN_CONTROLLER:
+				//case VER_NT_SERVER:
+				default:
+					rOsInfo.m_pszWinVersion = szWindowsServer2008R2;
+					break;
+				}
+				break;
+			case 2:
+				switch (osvi.wProductType)
+				{
+				case VER_NT_WORKSTATION:
+					rOsInfo.m_pszWinVersion = szWindows8;
+					break;
+					//case VER_NT_DOMAIN_CONTROLLER:
+					//case VER_NT_SERVER:
+				default:
+					rOsInfo.m_pszWinVersion = szWindowsServer2012;
+					break;
+				}
+				break;
+			case 3:
+				switch (osvi.wProductType)
+				{
+				case VER_NT_WORKSTATION:
+					rOsInfo.m_pszWinVersion = szWindows81;
+					break;
+					//case VER_NT_DOMAIN_CONTROLLER:
+					//case VER_NT_SERVER:
+				default:
+					rOsInfo.m_pszWinVersion = szWindowsServer2012R2;
+					break;
+				}
+				break;
+			}
+		}
+		break;
+	case 10:
+		if (osvi.dwPlatformId == VER_PLATFORM_WIN32_NT)
+		{
+			switch (osvi.dwMinorVersion)
+			{
+			case 0:
+				switch (osvi.wProductType)
+				{
+				case VER_NT_WORKSTATION:
+					rOsInfo.m_pszWinVersion = szWindows10;
+					break;
+				//case VER_NT_DOMAIN_CONTROLLER:
+				//case VER_NT_SERVER:
+				default:
+					rOsInfo.m_pszWinVersion = szWindowsServer2016;
+					break;
+				}
 				break;
 			}
 		}
@@ -1272,13 +1359,13 @@ void CSymEngine::GetOsString(CUTF8EncStream& rEncStream)
  */
 void CSymEngine::GetMemInfo(CMemInfo& rMemInfo)
 {
-	MEMORYSTATUS ms;
-	GlobalMemoryStatus(&ms);
+	MEMORYSTATUSEX ms = { sizeof( MEMORYSTATUSEX ) };
+	GlobalMemoryStatusEx(&ms);
 	_ultot_s(ms.dwMemoryLoad, rMemInfo.m_szMemoryLoad, countof(rMemInfo.m_szMemoryLoad), 10);
-	_ultot_s((DWORD)ms.dwTotalPhys, rMemInfo.m_szTotalPhys, countof(rMemInfo.m_szTotalPhys), 10);
-	_ultot_s((DWORD)ms.dwAvailPhys, rMemInfo.m_szAvailPhys, countof(rMemInfo.m_szAvailPhys), 10);
-	_ultot_s((DWORD)ms.dwTotalPageFile, rMemInfo.m_szTotalPageFile, countof(rMemInfo.m_szTotalPageFile), 10);
-	_ultot_s((DWORD)ms.dwAvailPageFile, rMemInfo.m_szAvailPageFile, countof(rMemInfo.m_szAvailPageFile), 10);
+	_ui64tot_s(ms.ullTotalPhys, rMemInfo.m_szTotalPhys, countof(rMemInfo.m_szTotalPhys), 10);
+	_ui64tot_s(ms.ullAvailPhys, rMemInfo.m_szAvailPhys, countof(rMemInfo.m_szAvailPhys), 10);
+	_ui64tot_s(ms.ullTotalPageFile, rMemInfo.m_szTotalPageFile, countof(rMemInfo.m_szTotalPageFile), 10);
+	_ui64tot_s(ms.ullAvailPageFile, rMemInfo.m_szAvailPageFile, countof(rMemInfo.m_szAvailPageFile), 10);
 }
 
 /**
@@ -1287,19 +1374,19 @@ void CSymEngine::GetMemInfo(CMemInfo& rMemInfo)
  */
 void CSymEngine::GetMemString(PTSTR pszMemString, DWORD dwMemStringSize)
 {
-	MEMORYSTATUS ms;
-	GlobalMemoryStatus(&ms);
+	MEMORYSTATUSEX ms = { sizeof( MEMORYSTATUSEX ) };
+	GlobalMemoryStatusEx(&ms);
 	_stprintf_s(pszMemString, dwMemStringSize,
-	            _T("Current Memory Load:         %lu%%\r\n")
-	            _T("Total Physical Memory:       %lu MB\r\n")
-	            _T("Available Physical Memory:   %lu MB\r\n")
-	            _T("Total Page File Memory:      %lu MB\r\n")
-	            _T("Available Page File Memory:  %lu MB"),
+	            _T("Current Memory Load:         %u%%\r\n")
+	            _T("Total Physical Memory:       %I64u MB\r\n")
+	            _T("Available Physical Memory:   %I64u MB\r\n")
+	            _T("Total Page File Memory:      %I64u MB\r\n")
+	            _T("Available Page File Memory:  %I64u MB"),
 	            ms.dwMemoryLoad,
-	            ms.dwTotalPhys / (1024 * 1024),
-	            ms.dwAvailPhys / (1024 * 1024),
-	            ms.dwTotalPageFile / (1024 * 1024),
-	            ms.dwAvailPageFile / (1024 * 1024));
+	            ms.ullTotalPhys / (1024 * 1024),
+	            ms.ullAvailPhys / (1024 * 1024),
+	            ms.ullTotalPageFile / (1024 * 1024),
+	            ms.ullAvailPageFile / (1024 * 1024));
 }
 
 /**
@@ -3172,6 +3259,26 @@ BOOL CSymEngine::GetNextStackTraceEntry(CStackTraceEntry& rEntry)
 	}
 
 	return TRUE;
+}
+
+/**
+ * @param hModule - module to find
+ * @return true if stack trace has the module specified.
+ */
+BOOL CSymEngine::CheckStackTrace(HMODULE hModule)
+{
+	if (hModule == NULL)
+		return TRUE;
+	TCHAR szModule[MAX_PATH];
+	GetModuleFileName(hModule, szModule, countof(szModule));
+	CStackTraceEntry entry;
+	if (GetFirstStackTraceEntry(entry))
+		do
+		{
+			if (_tcscmp(szModule, entry.m_szModule) == 0)
+				return TRUE;
+		} while (GetNextStackTraceEntry(entry));
+	return FALSE;
 }
 
 /**

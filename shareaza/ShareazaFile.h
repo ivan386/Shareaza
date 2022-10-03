@@ -1,7 +1,7 @@
 //
 // ShareazaFile.h
 //
-// Copyright (c) Shareaza Development Team, 2002-2012.
+// Copyright (c) Shareaza Development Team, 2002-2014.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -38,6 +38,7 @@ public:
 	QWORD				m_nSize;	/* Size if any
 									 (there is no size if it equal to 0 or SIZE_UNKNOWN)
 									*/
+	QWORD               m_nBitrate;  // Non random download speed
 	Hashes::Sha1Hash	m_oSHA1;	// SHA1 (Base32)
 	Hashes::TigerHash	m_oTiger;	// TigerTree Root Hash (Base32)
 	Hashes::Ed2kHash	m_oED2K;	// ED2K (MD4, Base16)
@@ -57,12 +58,15 @@ public:
 
 	// Returns any available URNs
 	CString GetURN() const;
+	CString GetShortURN() const;
 
 	// Returns "sha1_SHA1", "ttr_TIGER" etc.
 	CString GetFilename() const;
 
 	// Returns "http://nAddress:nPort/uri-res/N2R?{SHA1|TIGER|ED2K|MD5|BTH}"
 	CString GetURL(const IN_ADDR& nAddress, WORD nPort) const;
+	CString GetURL(const IN6_ADDR& nAddress, WORD nPort) const;
+	CString GetURL(CString sAddress, WORD nPort) const;
 
 	// Split string of URLs delimited by commas to URL list
 	bool SplitStringToURLs(LPCTSTR pszURLs, CMapStringToFILETIME& oUrls) const;
@@ -103,6 +107,7 @@ protected:
 		STDMETHOD(get_URN)(BSTR sURN, BSTR FAR* psURN);
 		STDMETHOD(get_Hash)(URN_TYPE nType, ENCODING nBase, BSTR FAR* psURN);
 		STDMETHOD(get_URL)(BSTR FAR* psURL);
+		STDMETHOD(get_Magnet)(BSTR FAR* psMagnet);
 	END_INTERFACE_PART(ShareazaFile)
 
 	DECLARE_INTERFACE_MAP()

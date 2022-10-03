@@ -1,7 +1,7 @@
 //
 // Network.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2014.
+// Copyright (c) Shareaza Development Team, 2002-2017.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -43,7 +43,6 @@
 #include "QueryKeys.h"
 #include "RouteCache.h"
 #include "SearchManager.h"
-#include "Settings.h"
 #include "Statistics.h"
 #include "Transfers.h"
 #include "WndHitMonitor.h"
@@ -118,14 +117,17 @@ CNetwork::CNetwork()
 	, UPnPFinder			( NULL )
 	, Firewall				( new CFirewall() )
 	, m_pHost				()
+	, m_pHostIPv6			()
 	, m_bAutoConnect		( FALSE )
 	, m_bConnected			( false )
 	, m_tStartedConnecting	( 0 )
 	, m_nUPnPTier			( 0 )
 	, m_bUPnPPortsForwarded	( TRI_UNKNOWN )
 	, m_tUPnPMap			( 0 )
+	, m_bHomeNetworkNAT		( FALSE )
 {
 	m_pHost.sin_family = AF_INET;
+	m_pHostIPv6.sin6_family = AF_INET6;
 }
 
 CNetwork::~CNetwork()
@@ -218,6 +220,21 @@ BOOL CNetwork::IsSelfIP(const IN_ADDR& nAddress) const
 	return ( m_pHostAddresses.Find( nAddress.s_addr ) != NULL );
 }
 
+BOOL CNetwork::IsSelfIP(const IN6_ADDR& nAddress) const
+{
+	if ( IN6_IS_ADDR_UNSPECIFIED( &nAddress ) )
+		return FALSE;
+
+	if ( IN6_IS_ADDR_LOOPBACK( &nAddress ) )
+		return TRUE;
+
+	if ( IN6_ADDR_EQUAL( &nAddress, &m_pHostIPv6.sin6_addr ) )
+		return TRUE;
+
+	CQuickLock oHALock( m_pHASection );
+	return m_pHostAddressesIPv6.find( nAddress ) != m_pHostAddressesIPv6.end();
+}
+
 HINTERNET CNetwork::InternetOpen()
 {
 	__try
@@ -280,6 +297,16 @@ bool CNetwork::IsListening() const
 		&& ( Datagrams.IsValid() );
 }
 
+
+bool CNetwork::IsListeningIPv6() const
+{
+	return ( IsConnected() )
+		&& ( !IN6_IS_ADDR_UNSPECIFIED( &m_pHostIPv6.sin6_addr ) )
+		&& ( m_pHostIPv6.sin6_port != 0 )
+		&& ( Handshakes.IsValid( true ) )
+		&& ( Datagrams.IsValid( true ) );
+}
+
 bool CNetwork::IsWellConnected() const
 {
 	return IsConnected() && ( Neighbours.GetStableCount() != 0 );
@@ -294,16 +321,27 @@ bool CNetwork::IsStable() const
 #endif // LAN_MODE
 }
 
+bool CNetwork::IsStableIPv6() const
+{
+#ifdef LAN_MODE
+	return IsListeningIPv6();
+#else // LAN_MODE
+	return IsListeningIPv6() && IsWellConnected();
+#endif // LAN_MODE
+}
+
 BOOL CNetwork::IsFirewalled(int nCheck) const
 {
 #ifdef LAN_MODE
 	UNUSED_ALWAYS( nCheck );
 	return FALSE;
 #else // LAN_MODE
-	if ( Settings.Connection.FirewallState == CONNECTION_OPEN )	// CHECK_BOTH, CHECK_TCP, CHECK_UDP
+	if ( Settings.Connection.FirewallState == CONNECTION_OPEN )	// CHECK_BOTH, CHECK_TCP, CHECK_UDP, CHECK_TCP6, CHECK_UDP6
 		return FALSE;		// We know we are not firewalled on both TCP and UDP
 	else if ( nCheck == CHECK_IP )
 		return IsFirewalledAddress( &Network.m_pHost.sin_addr ) || IsReserved( &Network.m_pHost.sin_addr );
+	else if ( nCheck == CHECK_IP6 )
+		return IsFirewalledAddress( &Network.m_pHostIPv6.sin6_addr ) || IsReserved( &Network.m_pHostIPv6.sin6_addr );
 	else if ( Settings.Connection.FirewallState == CONNECTION_OPEN_TCPONLY && nCheck == CHECK_TCP )
 		return FALSE;		// We know we are not firewalled on TCP port
 	else if ( Settings.Connection.FirewallState == CONNECTION_OPEN_UDPONLY && nCheck == CHECK_UDP )
@@ -312,12 +350,18 @@ BOOL CNetwork::IsFirewalled(int nCheck) const
 	{
 		BOOL bTCPOpened = IsStable();
 		BOOL bUDPOpened = Datagrams.IsStable();
+		BOOL bTCP6Opened = IsStableIPv6();
+		BOOL bUDP6Opened = Datagrams.IsStable( true );
 		if( nCheck == CHECK_BOTH && bTCPOpened && bUDPOpened )
 			return FALSE;	// We know we are not firewalled on both TCP and UDP
 		else if ( nCheck == CHECK_TCP && bTCPOpened )
 			return FALSE;	// We know we are not firewalled on TCP port
 		else if ( nCheck == CHECK_UDP && bUDPOpened )
 			return FALSE;	// We know we are not firewalled on UDP port
+		else if ( nCheck == CHECK_TCP6 && bTCP6Opened)
+			return FALSE;	// We know we are not firewalled on TCP6 port
+		else if ( nCheck == CHECK_UDP6 && bUDP6Opened)
+			return FALSE;	// We know we are not firewalled on UDP6 port
 	}
 	return TRUE;			// We know we are firewalled
 #endif // LAN_MODE
@@ -329,6 +373,14 @@ DWORD CNetwork::GetStableTime() const
 }
 
 BOOL CNetwork::IsConnectedTo(const IN_ADDR* pAddress) const
+{
+	return IsSelfIP( *pAddress ) ||
+		Handshakes.IsConnectedTo( pAddress ) ||
+		Neighbours.Get( *pAddress ) ||
+		Transfers.IsConnectedTo( pAddress );
+}
+
+BOOL CNetwork::IsConnectedTo(const IN6_ADDR* pAddress) const
 {
 	return IsSelfIP( *pAddress ) ||
 		Handshakes.IsConnectedTo( pAddress ) ||
@@ -412,39 +464,64 @@ BOOL CNetwork::ConnectTo(LPCTSTR pszAddress, int nPort, PROTOCOLID nProtocol, BO
 		nPort = protocolPorts[ ( nProtocol == PROTOCOL_ANY ) ? PROTOCOL_NULL : nProtocol ];
 	}
 
-	// Try to quick resolve dotted IP address
-	SOCKADDR_IN saHost;
-	if ( ! Resolve( pszAddress, nPort, &saHost, FALSE ) )
-		// Bad address
-		return FALSE;
-
-	if ( saHost.sin_addr.s_addr != INADDR_ANY )
+	SOCKADDR_IN6 saHost;
+	if ( IPv6FromString( pszAddress, &saHost ) )
 	{
-		// It's dotted IP address
-		HostCache.ForProtocol( nProtocol )->Add( &saHost.sin_addr, ntohs( saHost.sin_port ) );
+		if ( saHost.sin6_port == 0 )
+			saHost.sin6_port = htons( nPort );
 
-		Neighbours.ConnectTo( saHost.sin_addr, ntohs( saHost.sin_port ), nProtocol, FALSE, bNoUltraPeer );
+		// It's IPv6 address
+		HostCache.ForProtocol( nProtocol )->AddIPv6( &saHost.sin6_addr, ntohs( saHost.sin6_port ), NULL );
+
+		Neighbours.ConnectTo( saHost.sin6_addr, ntohs( saHost.sin6_port ), nProtocol, FALSE, bNoUltraPeer );
 		return TRUE;
 	}
+	else
+	{
+		// Try to quick resolve dotted IP address
+		SOCKADDR_IN saHost;
+		if ( ! Resolve( pszAddress, nPort, &saHost, FALSE ) )
+			// Bad address
+			return FALSE;
 
-	return AsyncResolve( pszAddress, (WORD)nPort, nProtocol, bNoUltraPeer ? RESOLVE_CONNECT : RESOLVE_CONNECT_ULTRAPEER );
+		if ( saHost.sin_addr.s_addr != INADDR_ANY )
+		{
+			// It's dotted IP address
+			HostCache.ForProtocol( nProtocol )->Add( &saHost.sin_addr, ntohs( saHost.sin_port ), NULL );
+
+			Neighbours.ConnectTo( saHost.sin_addr, ntohs( saHost.sin_port ), nProtocol, FALSE, bNoUltraPeer );
+			return TRUE;
+		}
+	}
+
+	return AsyncResolve( pszAddress, (WORD)nPort, nProtocol, bNoUltraPeer ? (BYTE)RESOLVE_CONNECT : (BYTE)RESOLVE_CONNECT_ULTRAPEER );
 }
 
 //////////////////////////////////////////////////////////////////////
 // CNetwork local IP acquisition and sending
 
-BOOL CNetwork::AcquireLocalAddress(SOCKET hSocket)
+BOOL CNetwork::AcquireLocalAddress(SOCKET hSocket, bool bPort, const IN_ADDR* pFromAddress, const IN6_ADDR* pFromIPv6Address)
 {
 	// Ask the socket what it thinks our IP address on this end is
 	SOCKADDR_IN pAddress = {};
 	int nSockLen = sizeof( pAddress );
 	if ( getsockname( hSocket, (SOCKADDR*)&pAddress, &nSockLen ) != 0 )
-		return FALSE;
+	{
+		SOCKADDR_IN6 pAddress = {};
+		nSockLen = sizeof( pAddress );
+		if ( getsockname( hSocket, (SOCKADDR*)&pAddress, &nSockLen ) != 0 )
+			return FALSE;
 
-	return AcquireLocalAddress( pAddress.sin_addr );
+		if ( bPort && pAddress.sin6_port )
+			return AcquireLocalAddress( pAddress.sin6_addr, ntohs( pAddress.sin6_port ), pFromIPv6Address );
+		else
+			return AcquireLocalAddress( pAddress.sin6_addr, 0, pFromIPv6Address );
+	}
+	else
+		return AcquireLocalAddress( pAddress.sin_addr, 0, pFromAddress );
 }
 
-BOOL CNetwork::AcquireLocalAddress(LPCTSTR pszHeader, WORD nPort)
+BOOL CNetwork::AcquireLocalAddress(LPCTSTR pszHeader, WORD nPort, const IN_ADDR* pFromAddress, const IN6_ADDR* pFromIPv6Address)
 {
 	int nIPb1, nIPb2, nIPb3, nIPb4;
 	if ( _stscanf( pszHeader, _T("%i.%i.%i.%i"), &nIPb1, &nIPb2, &nIPb3, &nIPb4 ) != 4 ||
@@ -452,42 +529,102 @@ BOOL CNetwork::AcquireLocalAddress(LPCTSTR pszHeader, WORD nPort)
 		nIPb2 < 0 || nIPb2 > 255 ||
 		nIPb3 < 0 || nIPb3 > 255 ||
 		nIPb4 < 0 || nIPb4 > 255 )
-		return FALSE;
+	{
+		SOCKADDR_IN6 pHost;
+
+		if ( IPv6FromString( pszHeader, &pHost ) )
+			return AcquireLocalAddress( pHost.sin6_addr, nPort, pFromIPv6Address );
+		else
+			return FALSE;
+	}
 
 	IN_ADDR pAddress;
 	pAddress.S_un.S_un_b.s_b1 = (BYTE)nIPb1;
 	pAddress.S_un.S_un_b.s_b2 = (BYTE)nIPb2;
 	pAddress.S_un.S_un_b.s_b3 = (BYTE)nIPb3;
 	pAddress.S_un.S_un_b.s_b4 = (BYTE)nIPb4;
-	return AcquireLocalAddress( pAddress, nPort );
+	return AcquireLocalAddress( pAddress, nPort, pFromAddress );
 }
 
-BOOL CNetwork::AcquireLocalAddress(const IN_ADDR& pAddress, WORD nPort)
+BOOL CNetwork::AcquireLocalAddress(const IN_ADDR& pAddress, WORD nPort, const IN_ADDR* pFromAddress)
 {
 	if ( nPort )
-	{
 		m_pHost.sin_port = htons( nPort );
-	}
 
 	if ( pAddress.s_addr == INADDR_ANY ||
 		 pAddress.s_addr == INADDR_NONE )
 		return FALSE;
 
-	CQuickLock oHALock( m_pHASection );
-
-	// Add new address to address list
-	if ( ! m_pHostAddresses.Find( pAddress.s_addr ) )
-		m_pHostAddresses.AddTail( pAddress.s_addr );
-
-	if ( IsFirewalledAddress( &pAddress ) )
+	if ( IsReserved( &pAddress ) )
 		return FALSE;
 
-	// Allow real IP only
 	if ( m_pHost.sin_addr.s_addr != pAddress.s_addr )
 	{
-		m_pHost.sin_addr.s_addr = pAddress.s_addr;
+		if ( pFromAddress != NULL && ! IsValidAddressFor( pFromAddress, &pAddress ) )
+			return FALSE;
+
+		int nNet = GetNetworkLevel( &pAddress );
+
+		if ( nNet == 1 ) // local area network
+			m_bHomeNetworkNAT = TRUE;
+
+		if ( nNet >= 3 ) // loopback or reserved
+			return FALSE;
+
+
+		CQuickLock oHALock( m_pHASection );
+
+		// Add new address to address list
+		if ( ! m_pHostAddresses.Find( pAddress.s_addr ) )
+			m_pHostAddresses.AddTail( pAddress.s_addr );
+
+		if ( IsFirewalledAddress( &pAddress ) )
+			return FALSE;
+
+		// Allow real IP only
+
+		int nMyNet = GetNetworkLevel( &m_pHost.sin_addr );
+
+		if ( nMyNet >= nNet )
+		{
+			if ( ! m_pHostAddresses.Find( m_pHost.sin_addr.s_addr ) )
+				m_pHostAddresses.AddTail( m_pHost.sin_addr.s_addr );
+
+			m_pHost.sin_addr.s_addr = pAddress.s_addr;
+		}
 	}
 
+	return TRUE;
+}
+
+BOOL CNetwork::AcquireLocalAddress(const IN6_ADDR& pAddress, WORD nPort, const IN6_ADDR* pFromAddress)
+{
+
+	if ( nPort )
+		m_pHostIPv6.sin6_port = htons( nPort );
+
+	int nFromNet = GetNetworkLevel( pFromAddress );
+	int nNet = GetNetworkLevel( &pAddress );
+	int nMyNet = GetNetworkLevel( &m_pHostIPv6.sin6_addr );
+
+	if ( ! pFromAddress || ( nFromNet < 4 && nFromNet >= nNet ) )
+	{
+		if ( nNet >= 3 ) // loopback or reserved
+			return FALSE;
+
+		CQuickLock oHALock( m_pHASection );
+
+		if ( m_pHostAddressesIPv6.find( pAddress ) == m_pHostAddressesIPv6.end() )
+			m_pHostAddressesIPv6.insert( pAddress );
+
+		if ( nMyNet >= nNet )
+		{
+			if ( m_pHostAddressesIPv6.find( m_pHostIPv6.sin6_addr ) == m_pHostAddressesIPv6.end() )
+				m_pHostAddressesIPv6.insert( m_pHostIPv6.sin6_addr );
+
+			m_pHostIPv6.sin6_addr = pAddress;
+		}
+	}
 	return TRUE;
 }
 
@@ -524,7 +661,7 @@ BOOL CNetwork::Resolve(LPCTSTR pszHost, int nPort, SOCKADDR_IN* pHost, BOOL bNam
 
 		strHost = strHost.Left( nColon );
 	}
-	
+
 	if ( ! IsValidDomain( strHost ) )
 		return FALSE;
 
@@ -582,7 +719,7 @@ UINT CNetwork::GetResolveCount() const
 {
 	CQuickLock pLock( m_pLookupsSection );
 
-	return m_pLookups.GetCount();
+	return (UINT)m_pLookups.GetCount();
 }
 
 CNetwork::ResolveStruct* CNetwork::GetResolve(HANDLE hAsync)
@@ -613,28 +750,363 @@ void CNetwork::ClearResolve()
 	m_pLookups.RemoveAll();
 }
 
+BOOL CNetwork::IsValidAddressFor(const IN_ADDR* pForAddress, const IN_ADDR* pAddress) const
+{
+	ASSERT( pForAddress && pAddress );
+
+	if ( pForAddress == NULL || pAddress == NULL )
+		return FALSE;
+
+	if ( pForAddress->s_net == 127 && pAddress->s_net == 127 ) // Loopback
+		return TRUE;
+
+	if ( IsReserved( pAddress ) )
+		return FALSE;
+
+	if ( ! IsLocalAreaNetwork( pAddress ) ) // This internet address valid for all
+		return TRUE;
+
+	// Here pAddress is home or LAN
+
+	if ( pForAddress->s_net == 127 ) // For loopback valid all
+		return TRUE;
+	
+	if ( ! IsLocalAreaNetwork( pForAddress ) ) // pForAddress is internet address and pAddress in not
+		return FALSE;
+
+	if ( IsHomeNetwork( pForAddress ) ) // For home network host valid all
+		return TRUE;
+	
+	// Here pForAddress is local area network
+
+	if ( m_bHomeNetworkNAT &&
+		 IsHomeNetwork( pAddress ) )
+		return FALSE;
+		
+	// pForAddress and pAddress in local area network 
+	return TRUE;
+}
+
+BOOL CNetwork::IsValidAddressFor(const IN6_ADDR* pForAddress, const IN6_ADDR* pAddress) const
+{
+	if ( pForAddress == NULL || pAddress == NULL )
+		return FALSE;
+
+	if ( IN6_IS_ADDR_UNSPECIFIED( pForAddress ) && ! IN6_IS_ADDR_GLOBAL( pAddress ) )
+		return FALSE;
+
+	if ( GetNetworkLevel( pForAddress ) < GetNetworkLevel( pAddress ) )
+		return FALSE;
+
+	return TRUE;
+}
+
+int CNetwork::GetNetworkLevel( const IN_ADDR* pAddress ) const
+{
+	if ( pAddress == NULL )
+		return 5; // null
+
+	if ( pAddress->s_net == 127 ) 
+		return 3; // loopback
+
+	if ( IsReserved( pAddress ) )
+		return 4; // reserved
+
+	if ( IsHomeNetwork( pAddress ) )
+		return 2; // home network
+
+	if ( IsLocalAreaNetwork( pAddress ) )
+		return 1; // local area network
+
+	return 0; // internet
+}
+
+int CNetwork::GetNetworkLevel( const IN6_ADDR* pAddress ) const
+{
+	if ( pAddress == NULL )
+		return 5; // null
+
+	if ( IN6_IS_ADDR_LOOPBACK( pAddress ) ) 
+		return 3; // loopback
+
+	if ( IsReserved( pAddress ) )
+		return 4; // reserved
+
+	if ( IN6_IS_ADDR_LINKLOCAL( pAddress ) )
+		return 2; // home network
+
+	if ( IN6_IS_ADDR_SITELOCAL( pAddress ) )
+		return 1; // local area network
+
+	return 0; // internet
+}
+
+IN_ADDR CNetwork::GetMyAddressFor( const IN_ADDR* pAddress ) const
+{
+	IN_ADDR nMyHomeAddress = { 0 };
+	IN_ADDR nMyLanAddress = { 0 };
+	IN_ADDR nMyInternetAddress = { 0 };
+
+
+	int nNet = GetNetworkLevel( pAddress );
+
+	if ( nNet <= 1 && IsSelfIP( *pAddress ) )
+		nNet++;
+
+	if ( nNet == 3 ) // loopback
+	{
+		IN_ADDR nMyAddress = { 0 };
+		nMyAddress.S_un.S_addr = 0x0100007f; // 127.0.0.1 (loopback)
+		return nMyAddress;
+	}
+
+	switch ( GetNetworkLevel( &m_pHost.sin_addr ) )
+	{
+	case 2:
+		if ( nNet == 2 ) // For home network host
+			return m_pHost.sin_addr; // Our home address
+		else
+			nMyHomeAddress = m_pHost.sin_addr;
+	break;
+	case 1:
+		if ( nNet == 1 ) // For Local Area Network host
+			return m_pHost.sin_addr; // Our LAN address
+		else
+			nMyLanAddress = m_pHost.sin_addr;
+	break;
+	case 0:
+		if ( nNet == 0 || nNet >= 4 ) // For null, reserved or internet host
+			return m_pHost.sin_addr; // Our internet address
+		else
+			nMyInternetAddress = m_pHost.sin_addr;
+	break;
+	}
+
+	for ( POSITION pos = m_pHostAddresses.GetHeadPosition(); pos; )
+	{
+		
+		IN_ADDR nMyAddress = { 0 };
+		nMyAddress.s_addr = m_pHostAddresses.GetNext( pos );
+		
+		if ( m_pHost.sin_addr.s_addr == nMyAddress.s_addr )
+			continue;
+
+		switch ( GetNetworkLevel( &nMyAddress ) )
+		{
+		case 2:
+			if ( nNet == 2 ) // For home network host
+				return nMyAddress; // Our home address
+			else
+				nMyHomeAddress = nMyAddress;
+		break;
+		case 1:
+			if ( nNet == 1 ) // For Local Area Network host
+				return nMyAddress; // Our LAN address
+			else
+				nMyLanAddress = nMyAddress;
+		break;
+		case 0:
+			if ( nNet == 0 || nNet >= 4 ) // For null, reserved or internet host
+				return nMyAddress; // Our internet address
+			else
+				nMyInternetAddress = nMyAddress;
+		break;
+		}
+	}
+
+	if ( nNet == 2 && // For home host
+		 nMyLanAddress.S_un.S_addr ) // It can not be that we do not know our home address, but we know the LAN address.
+		return nMyLanAddress;
+	
+	if ( nNet == 1 &&  // For Local Area Network host
+		 nMyHomeAddress.S_un.S_addr ) // Perhaps we are connected to a local network without a home router.
+		return nMyHomeAddress;
+	
+	// By default we give our internet address or zero net.
+	return nMyInternetAddress;
+}
+
+IN6_ADDR CNetwork::GetMyAddressFor( const IN6_ADDR* pAddress ) const
+{
+	IN6_ADDR nMyHomeAddress = {};
+	IN6_ADDR nMyLanAddress = {};
+	IN6_ADDR nMyInternetAddress = {};
+
+
+	int nNet = GetNetworkLevel( pAddress );
+
+	if ( nNet <= 1 && IsSelfIP( *pAddress ) )
+		nNet++;
+
+	if ( nNet == 3 ) // loopback
+		return in6addr_loopback;
+
+	switch ( GetNetworkLevel( &m_pHostIPv6.sin6_addr ) )
+	{
+	case 2:
+		if ( nNet == 2 ) // For home network host
+			return m_pHostIPv6.sin6_addr; // Our home address
+		else
+			nMyHomeAddress = m_pHostIPv6.sin6_addr;
+	break;
+	case 1:
+		if ( nNet == 1 ) // For Local Area Network host
+			return m_pHostIPv6.sin6_addr; // Our LAN address
+		else
+			nMyLanAddress = m_pHostIPv6.sin6_addr;
+	break;
+	case 0:
+		if ( nNet == 0 || nNet >= 4 ) // For null, reserved or internet host
+			return m_pHostIPv6.sin6_addr; // Our internet address
+		else
+			nMyInternetAddress = m_pHostIPv6.sin6_addr;
+	break;
+	}
+
+	for (  ipv6_set::const_iterator pos = m_pHostAddressesIPv6.begin(); pos != m_pHostAddressesIPv6.end(); pos++ )
+	{
+		
+		IN6_ADDR nMyAddress = *pos;
+		
+		if ( IN6_ADDR_EQUAL( &m_pHostIPv6.sin6_addr, &nMyAddress ) )
+			continue;
+
+		switch ( GetNetworkLevel( &nMyAddress ) )
+		{
+		case 2:
+			if ( nNet == 2 ) // For home network host
+				return nMyAddress; // Our home address
+			else
+				nMyHomeAddress = nMyAddress;
+		break;
+		case 1:
+			if ( nNet == 1 ) // For Local Area Network host
+				return nMyAddress; // Our LAN address
+			else
+				nMyLanAddress = nMyAddress;
+		break;
+		case 0:
+			if ( nNet == 0 || nNet >= 4 ) // For null, reserved or internet host
+				return nMyAddress; // Our internet address
+			else
+				nMyInternetAddress = nMyAddress;
+		break;
+		}
+	}
+
+	if ( nNet == 2 && // For home host
+		 !IN6_IS_ADDR_UNSPECIFIED( &nMyLanAddress ) ) // It can not be that we do not know our home address, but we know the LAN address.
+		return nMyLanAddress;
+	
+	if ( nNet == 1 &&  // For Local Area Network host
+		 !IN6_IS_ADDR_UNSPECIFIED( &nMyHomeAddress ) ) // Perhaps we are connected to a local network without a home router.
+		return nMyHomeAddress;
+	
+	// By default we give our internet address or zero net.
+	return nMyInternetAddress;
+}
+
+BOOL CNetwork::IsHomeNetwork(const IN_ADDR* pAddress) const
+{
+	if ( ! IsLocalAreaNetwork( pAddress ) )
+		return FALSE;
+
+	if ( ( pAddress->S_un.S_addr & 0xFFFF ) == 0xFEA9 ) // 169.254.0.0/16
+		return TRUE;	
+
+	// Take an IP address table
+	char mib[ sizeof(MIB_IPADDRTABLE) + 32 * sizeof(MIB_IPADDRROW) ];
+	ULONG nSize = sizeof(mib);
+	PMIB_IPADDRTABLE ipAddr = (PMIB_IPADDRTABLE)mib;
+
+	if ( GetIpAddrTable( ipAddr, &nSize, TRUE ) == NO_ERROR )
+	{
+		DWORD nCount = ipAddr->dwNumEntries;
+		for ( DWORD nIf = 0 ; nIf < nCount ; nIf++ )
+		{
+			DWORD dwAddr = ipAddr->table[ nIf ].dwAddr;
+			DWORD dwMask = ipAddr->table[ nIf ].dwMask;
+			
+			if ( dwAddr == 0x0100007f || dwAddr == 0x0 ) // loopback or 0.0.0.0
+				continue; 
+			
+			IN_ADDR nMyAddress = { 0 };
+			nMyAddress.S_un.S_addr = dwAddr;
+			
+			if ( ! IsLocalAreaNetwork( &nMyAddress ) ) 
+				continue;
+			
+			if ( ( dwAddr & dwMask ) == ( pAddress->S_un.S_addr & dwMask ) ) // We check that the address in the same subnet
+			{
+				MIB_IFROW ifRow = {};
+				ifRow.dwIndex = ipAddr->table[ nIf ].dwIndex;
+				// Check interface
+				if ( GetIfEntry( &ifRow ) != NO_ERROR || ifRow.dwAdminStatus != MIB_IF_ADMIN_STATUS_UP )
+					continue;
+
+				return TRUE;
+			}
+		}
+	}
+	return FALSE;
+}
+
+BOOL CNetwork::IsLocalAreaNetwork(const IN_ADDR* pAddress) const
+{
+	if ( ( pAddress->S_un.S_addr & 0xFFFF ) == 0xA8C0 )	// 192.168.0.0/16
+		return TRUE;
+	if ( ( pAddress->S_un.S_addr & 0xFFFF ) == 0xFEA9 )	// 169.254.0.0/16
+		return TRUE;
+	if ( ( pAddress->S_un.S_addr & 0xF0FF ) == 0x10AC )	// 172.16.0.0/12
+		return TRUE;
+	if ( ( pAddress->S_un.S_addr & 0xFF ) == 0x0A )		// 10.0.0.0/8
+		return TRUE;
+	return FALSE;
+}
+
 // CNetwork firewalled address checking
 
-BOOL CNetwork::IsFirewalledAddress(const IN_ADDR* pAddress, BOOL bIncludeSelf) const
+BOOL CNetwork::IsFirewalledAddress(const IN_ADDR* pAddress, BOOL bIncludeSelf, BOOL bIgnoreLocalIP) const
 {
-	if ( ! pAddress ) return TRUE;
-	if ( bIncludeSelf && IsSelfIP( *pAddress ) ) return TRUE;
-	if ( ! pAddress->S_un.S_addr ) return TRUE;							// 0.0.0.0
+	if ( ! pAddress )
+		return TRUE;
+	if ( ! pAddress->S_un.S_addr )						// 0.0.0.0
+		return TRUE;
+	if ( bIncludeSelf && IsSelfIP( *pAddress ) )
+		return TRUE;
 #ifdef LAN_MODE
-	if ( ( pAddress->S_un.S_addr & 0xFFFF ) == 0xA8C0 ) return FALSE;	// 192.168.0.0/16
-	if ( ( pAddress->S_un.S_addr & 0xFFFF ) == 0xFEA9 ) return FALSE;	// 169.254.0.0/16
-	if ( ( pAddress->S_un.S_addr & 0xF0FF ) == 0x10AC ) return FALSE;	// 172.16.0.0/12
-	if ( ( pAddress->S_un.S_addr & 0xFF ) == 0x0A ) return FALSE;		// 10.0.0.0/8
+	if ( IsLocalAreaNetwork( pAddress ) )
+		return FALSE;
 	return TRUE;
 #else // LAN_MODE
-	if ( ! Settings.Connection.IgnoreLocalIP ) return FALSE;
-	if ( ( pAddress->S_un.S_addr & 0xFFFF ) == 0xA8C0 ) return TRUE;	// 192.168.0.0/16
-	if ( ( pAddress->S_un.S_addr & 0xFFFF ) == 0xFEA9 ) return TRUE;	// 169.254.0.0/16
-	if ( ( pAddress->S_un.S_addr & 0xF0FF ) == 0x10AC ) return TRUE;	// 172.16.0.0/12
-	if ( ( pAddress->S_un.S_addr & 0xFF ) == 0x0A ) return TRUE;		// 10.0.0.0/8
-	if ( ( pAddress->S_un.S_addr & 0xFF ) == 0x7F ) return TRUE;		// 127.0.0.0/8
+	if ( ! bIgnoreLocalIP )
+		return FALSE;
+	if ( IsLocalAreaNetwork( pAddress ) )
+		return TRUE;
+	if ( ( pAddress->S_un.S_addr & 0xFF ) == 0x7F )		// 127.0.0.0/8
+		return TRUE;
 	return FALSE;
 #endif // LAN_MODE
+}
+
+BOOL CNetwork::IsFirewalledAddress(const IN6_ADDR* pAddress, BOOL bIncludeSelf, BOOL bIgnoreLocalIP) const
+{
+	if ( ! pAddress )
+		return TRUE;
+	if ( IN6_IS_ADDR_UNSPECIFIED( pAddress ) )
+		return TRUE;
+	if ( bIncludeSelf && IsSelfIP( *pAddress ) )
+		return TRUE;
+	if ( ! bIgnoreLocalIP )
+		return FALSE;
+	if ( IN6_IS_ADDR_LINKLOCAL( pAddress ) )
+		return TRUE;
+	if ( IN6_IS_ADDR_SITELOCAL( pAddress ) )
+		return TRUE;
+	if ( IN6_IS_ADDR_LOOPBACK( pAddress ) )
+		return TRUE;
+
+	return FALSE;
 }
 
 // Get external incoming port (in host byte order)
@@ -692,6 +1164,14 @@ BOOL CNetwork::IsReserved(const IN_ADDR* pAddress) const
 	return FALSE;
 }
 
+BOOL CNetwork::IsReserved(const IN6_ADDR* pAddress) const
+{
+	if ( IN6_IS_ADDR_UNSPECIFIED( pAddress ) ) return TRUE;
+	if ( IN6_IS_ADDR_MULTICAST( pAddress ) ) return TRUE;
+	if ( IN6_IS_ADDR_LOOPBACK( pAddress ) ) return TRUE;
+	return FALSE;
+}
+
 WORD CNetwork::RandomPort() const
 {
 	return GetRandomNum( 10000ui16, 60000ui16 );
@@ -732,7 +1212,7 @@ bool CNetwork::PreRun()
 	// Get host name
 	gethostname( m_sHostName.GetBuffer( 255 ), 255 );
 	m_sHostName.ReleaseBuffer();
-					
+
 	// Get all IPs
 	if ( hostent* h = gethostbyname( m_sHostName ) )
 	{
@@ -826,7 +1306,7 @@ void CNetwork::OnRun()
 						Handshakes.Disconnect();
 
 						DeletePorts();
-			
+
 						// Change port to random
 						Settings.Connection.InPort = Network.RandomPort();
 
@@ -846,11 +1326,9 @@ void CNetwork::OnRun()
 
 					Neighbours.IsG2HubCapable( FALSE, TRUE );
 					Neighbours.IsG1UltrapeerCapable( FALSE, TRUE );
-
-					// It will check if it is needed inside the function
-					DiscoveryServices.Execute( TRUE, PROTOCOL_NULL, FALSE );
 				}
 
+				DiscoveryServices.Execute();
 				Datagrams.OnRun();
 				SearchManager.OnRun();
 				QueryHashMaster.Build();
@@ -946,7 +1424,7 @@ void CNetwork::OnWinsock(WPARAM wParam, LPARAM lParam)
 	}
 	else
 	{
-		theApp.Message( MSG_ERROR, IDS_NETWORK_RESOLVE_FAIL, pResolve->m_sAddress );
+		theApp.Message( MSG_ERROR, IDS_NETWORK_RESOLVE_FAIL, (LPCTSTR)pResolve->m_sAddress );
 
 		switch ( pResolve->m_nCommand )
 		{
@@ -1070,6 +1548,8 @@ BOOL CNetwork::SendPush(const Hashes::Guid& oGUID, DWORD nIndex)
 			pPacket->WriteByte( 0 );
 			pPacket->WriteLongLE( m_pHost.sin_addr.S_un.S_addr );
 			pPacket->WriteShortBE( htons( m_pHost.sin_port ) );
+			pPacket->Write( &m_pHostIPv6.sin6_addr, sizeof( IN6_ADDR ) );
+			pPacket->WriteShortBE( htons( m_pHostIPv6.sin6_port ) );
 
 			if ( pOrigin != NULL )
 			{
@@ -1230,7 +1710,7 @@ void CNetwork::RunJobs()
 		bool bKeep = true;
 		CSingleLock oNetworkLock( &m_pSection, FALSE );
 		if ( oNetworkLock.Lock( 250 ) )
-		{		
+		{
 			switch ( oJob.GetType() )
 			{
 			case CJob::Hit:
@@ -1420,6 +1900,19 @@ SOCKET CNetwork::AcceptSocket(SOCKET hSocket, SOCKADDR_IN* addr, LPCONDITIONPROC
 	}
 }
 
+SOCKET CNetwork::AcceptSocket(SOCKET hSocket, SOCKADDR_IN6* addr, LPCONDITIONPROC lpfnCondition, DWORD_PTR dwCallbackData)
+{
+	__try	// Fix against stupid firewalls like (iS3 Anti-Spyware or Norman Virus Control)
+	{
+		int len = sizeof( SOCKADDR_IN6 );
+		return WSAAccept( hSocket, (SOCKADDR*)addr, &len, lpfnCondition, dwCallbackData );
+	}
+	__except( EXCEPTION_EXECUTE_HANDLER )
+	{
+		return INVALID_SOCKET;
+	}
+}
+
 void CNetwork::CloseSocket(SOCKET& hSocket, const bool bForce)
 {
 	if ( hSocket != INVALID_SOCKET )
@@ -1468,6 +1961,18 @@ int CNetwork::SendTo(SOCKET s, const char* buf, int len, const SOCKADDR_IN* pTo)
 	}
 }
 
+int CNetwork::SendTo(SOCKET s, const char* buf, int len, const SOCKADDR_IN6* pTo)
+{
+	__try	// Fix against stupid firewalls like (iS3 Anti-Spyware or Norman Virus Control)
+	{
+		return sendto( s, buf, len, 0, (const SOCKADDR*)pTo, sizeof( SOCKADDR_IN6 ) );
+	}
+	__except( EXCEPTION_EXECUTE_HANDLER )
+	{
+		return -1;
+	}
+}
+
 int CNetwork::Recv(SOCKET s, char* buf, int len)
 {
 	__try	// Fix against stupid firewalls like (iS3 Anti-Spyware or Norman Virus Control)
@@ -1485,6 +1990,19 @@ int CNetwork::RecvFrom(SOCKET s, char* buf, int len, SOCKADDR_IN* pFrom)
 	__try	// Fix against stupid firewalls like (iS3 Anti-Spyware or Norman Virus Control)
 	{
 		int nFromLen = sizeof( SOCKADDR_IN );
+		return recvfrom( s, buf, len, 0, (SOCKADDR*)pFrom, &nFromLen );
+	}
+	__except( EXCEPTION_EXECUTE_HANDLER )
+	{
+		return -1;
+	}
+}
+
+int CNetwork::RecvFrom(SOCKET s, char* buf, int len, SOCKADDR_IN6* pFrom)
+{
+	__try	// Fix against stupid firewalls like (iS3 Anti-Spyware or Norman Virus Control)
+	{
+		int nFromLen = sizeof( SOCKADDR_IN6 );
 		return recvfrom( s, buf, len, 0, (SOCKADDR*)pFrom, &nFromLen );
 	}
 	__except( EXCEPTION_EXECUTE_HANDLER )

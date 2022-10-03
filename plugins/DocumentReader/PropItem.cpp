@@ -3,7 +3,7 @@
 //
 //	Created by:		Rolandas Rudomanskis
 //
-// Copyright (c) Shareaza Development Team, 2002-2008.
+// Copyright (c) Shareaza Development Team, 2002-2014.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -179,7 +179,7 @@ CDocProperty* CDocProperty::AppendLink(CDocProperty* pLinkItem)
 //
 CDocProperty* CDocProperty::CreateObject(BSTR bstrName, PROPID propid, VARIANT* pvData, BOOL fNewItem, CDocProperty* pPreviousItem)
 {
-	CDocProperty* pitem = new CDocProperty();
+	CDocProperty* pitem = new (std::nothrow) CDocProperty();
 	if (pitem)
 	{
 		if (FAILED(pitem->InitProperty(bstrName, propid, pvData, fNewItem, pPreviousItem)))

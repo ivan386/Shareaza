@@ -169,7 +169,7 @@ int ValidateSkin(LPTSTR pszFile, HWND hwndDlg) {
                 	filename_withoutpath = p+1;
             		p++;
         		}
-				if ( szXML ) free(szXML);
+				free(szXML);
 				szXML = (TCHAR*)GetUnicodeString(filename_withoutpath);
 			}
 		}
@@ -299,7 +299,7 @@ int ExtractSkin(LPTSTR pszFile, HWND hwndDlg)
     				return 0;
     			}
     			else if ( err > 0 ) {
-    				if ( WriteFile( hFile, (LPCVOID)buf, err, &nBytesWritten, NULL ) != TRUE ||
+    				if ( ! WriteFile( hFile, (LPCVOID)buf, err, &nBytesWritten, NULL ) ||
 						err != (int)nBytesWritten ) {
     					unzCloseCurrentFile(ufile);
     					unzClose(ufile);

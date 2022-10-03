@@ -1,7 +1,7 @@
 //
 // CtrlCoolBar.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2012.
+// Copyright (c) Shareaza Development Team, 2002-2014.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -1014,7 +1014,7 @@ CCoolBarItem::CCoolBarItem(CCoolBarCtrl* pBar, CCoolBarItem* pCopy)
 {
 	m_pBar		= pBar;
 	m_nID		= pCopy->m_nID;
-	m_nImage	= pCopy->m_nImage;
+	//m_nImage	= pCopy->m_nImage;
 	m_sTip		= pCopy->m_sTip;
 	m_bVisible	= pCopy->m_bVisible;
 	m_bEnabled	= pCopy->m_bEnabled;

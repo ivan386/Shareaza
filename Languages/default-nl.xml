@@ -921,8 +921,7 @@
 				<item id="ID_SEARCH_FOR_ALBUM" text="Muziek van hetzelfde al_bum"/>
 				<item id="ID_SEARCH_FOR_SERIES" text="Afleveringen uit dezelfde _serie"/>
 			</menu>
-			<menu text="_Internetdiensten">
-				<item id="ID_LIBRARY_BITZI_WEB" text="_Bitzi Ticket bekijken"/>
+			<menu id="ID_WEBSERVICES_LIST" text="_Internetdiensten">
 			</menu>
 		</menu>
 		<menu name="CSearchWnd">
@@ -942,8 +941,7 @@
 				<item id="ID_SEARCH_FOR_ALBUM" text="Muziek van hetzelfde al_bum"/>
 				<item id="ID_SEARCH_FOR_SERIES" text="Afleveringen uit dezelfde _serie"/>
 			</menu>
-			<menu text="_Internetdiensten">
-				<item id="ID_LIBRARY_BITZI_WEB" text="_Bitzi Ticket bekijken"/>
+			<menu id="ID_WEBSERVICES_LIST" text="_Internetdiensten">
 			</menu>
 			<separator/>
 			<item id="ID_SEARCH_FILTER" text="Resultaten _filteren..."/>
@@ -968,8 +966,7 @@
 				<item id="ID_SEARCH_FOR_ALBUM" text="Muziek van hetzelfde al_bum"/>
 				<item id="ID_SEARCH_FOR_SERIES" text="Afleveringen uit dezelfde _serie"/>
 			</menu>
-			<menu text="_Internetdiensten">
-				<item id="ID_LIBRARY_BITZI_WEB" text="_Bitzi Ticket bekijken"/>
+			<menu id="ID_WEBSERVICES_LIST" text="_Internetdiensten">
 			</menu>
 		</menu>
 		<menu name="CBrowseHostWnd">
@@ -987,8 +984,7 @@
 				<item id="ID_SEARCH_FOR_ALBUM" text="Muziek van hetzelfde al_bum"/>
 				<item id="ID_SEARCH_FOR_SERIES" text="Afleveringen uit dezelfde _serie"/>
 			</menu>
-			<menu text="_Internetdiensten">
-				<item id="ID_LIBRARY_BITZI_WEB" text="_Bitzi Ticket bekijken"/>
+			<menu id="ID_WEBSERVICES_LIST" text="_Internetdiensten">
 			</menu>
 			<separator/>
 			<item id="ID_SEARCH_FILTER" text="Resultaten _filteren..."/>
@@ -1012,8 +1008,7 @@
 				<item id="ID_SEARCH_FOR_ALBUM" text="Muziek van hetzelfde al_bum"/>
 				<item id="ID_SEARCH_FOR_SERIES" text="Afleveringen uit dezelfde _serie"/>
 			</menu>
-			<menu text="_Internetdiensten">
-				<item id="ID_LIBRARY_BITZI_WEB" text="_Bitzi Ticket bekijken"/>
+			<menu id="ID_WEBSERVICES_LIST" text="_Internetdiensten">
 			</menu>
 			<separator/>
 			<item id="ID_SEARCH_FILTER" text="Resultaten _filteren..."/>
@@ -1248,9 +1243,7 @@
 				<item id="ID_SEARCH_FOR_ALBUM" text="Muziek van hetzelfde al_bum"/>
 				<item id="ID_SEARCH_FOR_SERIES" text="Afleveringen uit dezelfde _serie"/>
 			</menu>
-			<menu text="_Internetdiensten">
-				<item id="ID_LIBRARY_BITZI_WEB" text="_Bitzi Ticket bekijken"/>
-				<item id="ID_LIBRARY_BITZI_DOWNLOAD" text="Metadata _downloaden"/>
+			<menu id="ID_WEBSERVICES_LIST" text="_Internetdiensten">
 				<item id="ID_WEBSERVICES_MUSICBRAINZ" text="_MusicBrainz"/>
 			</menu>
 			<menu text="O_rganiseren">
@@ -1280,9 +1273,7 @@
 				<item id="ID_SEARCH_FOR_ALBUM" text="Muziek van hetzelfde al_bum"/>
 				<item id="ID_SEARCH_FOR_SERIES" text="Afleveringen uit dezelfde _serie"/>
 			</menu>
-			<menu text="_Internetdiensten">
-				<item id="ID_LIBRARY_BITZI_WEB" text="_Bitzi Ticket bekijken"/>
-				<item id="ID_LIBRARY_BITZI_DOWNLOAD" text="Metadata _downloaden"/>
+			<menu id="ID_WEBSERVICES_LIST" text="_Internetdiensten">
 				<item id="ID_WEBSERVICES_MUSICBRAINZ" text="_MusicBrainz"/>
 				<separator/>
 				<item id="ID_LIBRARY_CREATETORRENT" text="_Torrent bestand maken"/>
@@ -1320,9 +1311,7 @@
 				<item id="ID_SEARCH_FOR_ALBUM" text="Muziek van hetzelfde al_bum"/>
 				<item id="ID_SEARCH_FOR_SERIES" text="Afleveringen uit dezelfde _serie"/>
 			</menu>
-			<menu text="_Internetdiensten">
-				<item id="ID_LIBRARY_BITZI_WEB" text="_Bitzi Ticket bekijken"/>
-				<item id="ID_LIBRARY_BITZI_DOWNLOAD" text="Metadata _downloaden"/>
+			<menu id="ID_WEBSERVICES_LIST" text="_Internetdiensten">
 			</menu>
 			<menu text="O_rganiseren">
 				<item id="ID_LIBRARY_RENAME" text="Bestand _hernoemen"/>
@@ -1355,10 +1344,7 @@
 				<item id="ID_SEARCH_FOR_ALBUM" text="Muziek van hetzelfde al_bum"/>
 				<item id="ID_SEARCH_FOR_SERIES" text="Afleveringen uit dezelfde _serie"/>
 			</menu>
-			<menu text="_Internetdiensten">
-				<item id="ID_LIBRARY_BITZI_WEB" text="_Bitzi Ticket bekijken"/>
-				<item id="ID_LIBRARY_BITZI_DOWNLOAD" text="Metadata _downloaden"/>
-				<separator/>
+			<menu id="ID_WEBSERVICES_LIST" text="_Internetdiensten">
 				<item id="ID_LIBRARY_CREATETORRENT" text="_Torrent bestand maken"/>
 			</menu>
 			<menu text="O_rganiseren">
@@ -1661,9 +1647,11 @@
 			</menu>
 		</menu>
 		<menu name="WebServices.List.Menu">
-			<item id="ID_LIBRARY_BITZI_WEB" text="_Bitzi Ticket bekijken"/>
-			<item id="ID_LIBRARY_BITZI_DOWNLOAD" text="Metadata _downloaden"/>
 			<item id="ID_WEBSERVICES_MUSICBRAINZ" text="_MusicBrainz"/>
+		</menu>
+		<menu name="Path.Menu">
+			<item id="ID_PATH_EXPLORE" text="Ve_rkennen"/>
+			<item id="ID_PATH_COPY" text="_Kopieer"/>
 		</menu>
 	</menus>
 	<!-- Documents -->
@@ -2460,8 +2448,6 @@
 		<tip id="ID_LIBRARY_ALBUM_DELETE" message="Verwijder het geselecteerde album."/>
 		<tip id="ID_LIBRARY_ALBUM_OPEN" message="Open het geselecteerde album."/>
 		<tip id="ID_LIBRARY_ALBUM_PROPERTIES" message="Toon en wijzig de eigenschappen van het geselecteerde album..."/>
-		<tip id="ID_LIBRARY_BITZI_DOWNLOAD" message="Download metadata voor de geselecteerde bestand(en) vanaf Bitzi..."/>
-		<tip id="ID_LIBRARY_BITZI_WEB" message="Toon het Bitzi ticket voor het geselecteerde bestand op het internet."/>
 		<tip id="ID_LIBRARY_COLUMNS" message="Selecteer de te tonen metadata kolommen..."/>
 		<tip id="ID_LIBRARY_COPY" message="Kopieer de geselecteerde bestanden naar een andere map van je bibliotheek..."/>
 		<tip id="ID_LIBRARY_CREATETORRENT" message="Maak een torrent voor dit bestand om het te uploaden naar een website."/>
@@ -2572,6 +2558,8 @@
 		<tip id="ID_NEXT_PANE" message="Ga naar het volgende venster" tip="Volgende venster"/>
 		<tip id="ID_OPEN_DOWNLOADS_FOLDER" message="Open mijn map met complete downloads"/>
 		<tip id="ID_PREV_PANE" message="Ga terug naar het vorige venster" tip="Vorige venster"/>
+		<tip id="ID_PATH_COPY" message="Copy this path to clipboard."/>
+		<tip id="ID_PATH_EXPLORE" message="Explore this path."/>
 		<tip id="ID_SCHEDULER_ACTIVATE" message="De geselecteerde taken activeren."/>
 		<tip id="ID_SCHEDULER_ADD" message="Een nieuwe taak toevoegen aan de planningslijst."/>
 		<tip id="ID_SCHEDULER_DEACTIVATE" message="De geselecteerde taken deactiveren."/>
@@ -2874,6 +2862,7 @@
 		<string id="8336" value="Bronnen voor dit bestand kunnen instabiel zijn"/>
 		<string id="8337" value="Niet betrouwbaar"/>
 		<string id="8338" value="Vrij:"/>
+		<string id="12999" value="Client %s has a prohibited user agent &quot;%s&quot;, banning."/>
 		<string id="13000" value="Weet je zeker dat je deze veiligheidsregels wilt verwijderen? Dit kan niet ongedaan worden gemaakt."/>
 		<string id="13001" value="Bestanden gedeeld over het internet"/>
 		<string id="16063" value="Je router automatisch instellen mislukte na 10 pogingen."/>
@@ -3073,8 +3062,6 @@
 		<string id="16384" value="Weet je zeker dat je het bestand &quot;%s&quot; wilt openen?\n\nSommige bestanden kunnen kunnen je computer beschadigen. Ga eerst na wat voor soort bestand het is voordat je het opent."/>
 		<string id="16385" value="Je staat op het punt om de metadata van %i bestanden te wijzigen, weet je zeker dat je door wilt gaan?"/>
 		<string id="16386" value="Metadata van %i bestanden worden gewijzigd."/>
-		<string id="16387" value="Het bestand &quot;%s&quot; is nog niet gehasht. Wacht alsjeblieft even totdat het bestand gehasht is en probeer het dan nog een keer."/>
-		<string id="16388" value="Deze optie gebruikt diensten die zijn verstrekt door Bitzi.com voor het herkennen en delen van informatie over de geselecteerde bestanden.\n\nShareaza geeft de SHA1 hash-code door voor de geselecteerde bestand(en) om de Bitzi gegevensbank op te vragen. Als je je zorgen maakt over privacy, kun je de privacypolis van Bitzi.com raadplegen.\n\nWil je verdergaan?"/>
 		<string id="16389" value="Weet je zeker dat je de %i geselecteerde bestand(en) voorgoed wilt verwijderen ?\n\nDe bestanden zullen worden verplaatst naar je &quot;prullenbak&quot; als dit mogelijk is."/>
 		<string id="16390" value="Je hebt nog geen mediaspeler geselecteerd voor het in de wachtrij plaatsen van bestanden, zoals Nullsoft Winamp. Wil je die nu kiezen?\n\nShareaza zal de naam van het bestand doorgeven aan het geselecteerde programma met de parameter &quot;/ADD&quot;."/>
 		<string id="16391" value="Je bent niet verbonden met het netwerk."/>
@@ -3148,10 +3135,6 @@
 		<string id="16778" value="URL:"/>
 		<string id="16779" value="Type:"/>
 		<string id="16780" value="Niet gespecificeerd"/>
-		<string id="16781" value="Aanvragen..."/>
-		<string id="16782" value="Gelukt!"/>
-		<string id="16783" value="Klaar, klik op sluiten"/>
-		<string id="16784" value="&amp;Sluiten"/>
 		<string id="16785" value="(Geen visualisatie)"/>
 		<string id="16800" value="Je hebt geen verbindingssnelheid aangegeven. Kies voordat je verdergaat ofwel je soort internetverbinding, of vul een verbindingssnelheid in."/>
 		<string id="16802" value="Je hebt geen mappen aangegeven om te delen. Weet je het zeker?"/>
@@ -3169,7 +3152,7 @@
 		<string id="16816" value="Het eDonkey netwerk gebruikt grote wachtrijen met grote wachttijden. Door de maximum rijpositie te beperken zal je mogelijk problemen ondervinden om downloads te laten beginnen.\nWeet je zeker dat je de maximale rijpositie wilt beperken?"/>
 		<string id="16817" value="Windows ondersteunt geen bestandslocatie met meer dan 256 karakters.\nSelecteer een map met een kortere bestandslocatie."/>
 		<string id="16818" value="De incomplete map mag niet in de bibliotheek omdat dit de prestaties nadelig beïnvloed. Incomplete bestanden deel je rechtstreeks in het downloadvenster."/>
-		<string id="16819" value="Een submap van de geselecteerde map &quot;%s&quot; is al een onderdeel van de bibliotheek.\nToevoegen van deze map resulteert in het opnieuw hashen van sommige bestanden.\n\nWil je doorgaan ?"/>
+		<string id="16819" value="The incomplete files folder should not be in the library, as it would reduce performance. Incomplete files may be shared directly from the transfers window."/>
 		<string id="16864" value="Bezig met het opvragen van gastheer discovery services..."/>
 		<string id="16865" value="Bezig met het opvragen van discovery service &quot;%s&quot;..."/>
 		<string id="16866" value="GWebCache transactie gelukt (&quot;%s&quot;)."/>
@@ -3347,7 +3330,7 @@
 		<string id="18511" value="Je hebt de bestandsgrootte gewijzigd. Weet je zeker dat je dit wilt doen voor deze download? "/>
 		<string id="18512" value="Weet je zeker dat je de download wilt annuleren, maar de incomplete bestand(en) wilt bewaren?"/>
 		<string id="18513" value="Je hebt een %s hashwaarde ingevoerd, maar die is ongeldig. Controleer het en probeer het nog een keer."/>
-		<string id="18514" value="Je hebt een SHA1 hashwaarde ingegeven die anders is als die nu met deze download is geassocieerd. Weet je zeker dat je de SHA1 hash wilt veranderen?"/>
+		<string id="18514" value="You have provided an %s hash value which is different to the one currently associated with this download. Are you sure you want to change the %s hash now?"/>
 		<string id="18515" value="Er is een taak bezig met het geselecteerde bestand, probeer het later opnieuw."/>
 		<string id="19000" value="Toegang met afstandsbediening is uitgeschakeld."/>
 		<string id="19001" value="Je moet een gebruikersnaam en wachtwoord kiezen."/>
@@ -3452,6 +3435,10 @@
 		<string id="20265" value="Gedaan"/>
 		<string id="20266" value="Wachten..."/>
 		<string id="20267" value="Er zijn nu geen taken gepland"/>
+		<string id="20268" value="Voltooide bestanden hier opslaan"/>
+		<string id="20269" value="Tijdelijke incomplete bestanden hier opslaan"/>
+		<string id="20270" value="Bewaar torrents hier"/>
+		<string id="20271" value="Verzamelingen hier opslaan"/>
 	</strings>
 	<!-- Localised Dialog Text, the "cookie" verifies that the dialog matches the skin -->
 	<!-- Don't edit dialogs manualy! Use DialogScan feature instead -->
@@ -3473,7 +3460,7 @@
 			<control caption="Bits/seconde|Bytes/seconde|b/s|B/s|Kb/s|KB/s|Mb/s|MB/s"/>
 			<control caption="_Downloads:"/>
 			<control caption="Vouw nieuwe downloads standaard uit"/>
-			<control caption="Toon een simpele voortgangsbalk"/>
+			<control caption="Open een _monitor venster"/>
 			<control caption="_Zoeken:"/>
 			<control caption="Multibron bestanden altijd uitbreiden"/>
 			<control caption="Ga bij download naar venster Verkeer"/>
@@ -3492,7 +3479,7 @@
 			<control caption="Als ik minimaliseer:"/>
 			<control caption="Normaal|Minimaliseer"/>
 		</dialog>
-		<dialog name="CLibrarySettingsPage" cookie="BuBuBuBuBuBuStEdmsStStEdmsStBuBuCoBuBuBuCoBuBuBuEdBuBuBu" caption="Bibliotheek">
+		<dialog name="CLibrarySettingsPage" cookie="BuBuBuBuBuBuStEdmsStStEdmsStBuBuCoBuBuBuCoBuBuBuCoBuBuBu" caption="Bibliotheek">
 			<control caption="_Opties:"/>
 			<control caption="Herinner de mappenweergave"/>
 			<control caption="Bewaak bibliotheekmappen"/>
@@ -3516,7 +3503,7 @@
 			<control/>
 			<control caption="_Toevoegen"/>
 			<control caption="Ver_wijderen"/>
-			<control caption="_Verzamelingen hier opslaan:"/>
+			<control caption="Verzamelingen hier opslaan"/>
 			<control/>
 			<control/>
 			<control caption="Maak spookbestand bij verwijderen"/>
@@ -3629,7 +3616,7 @@
 			<control/>
 			<control/>
 		</dialog>
-		<dialog name="CDownloadsSettingsPage" cookie="BuEdBuBuStCoBuStEdmsStEdmsStEdmsBuStCoStCoBuBuEdBu" caption="Downloads">
+		<dialog name="CDownloadsSettingsPage" cookie="BuCoBuBuStCoBuStEdmsStEdmsStEdmsBuStCoStCoBuBuCoBu" caption="Downloads">
 			<control caption="Voltooide bestanden hier opslaan"/>
 			<control/>
 			<control/>
@@ -3763,7 +3750,7 @@
 			<control caption="eDonkey _tools:"/>
 			<control caption="eDonkey serverlijst downloaden van het internet:"/>
 		</dialog>
-		<dialog name="CBitTorrentSettingsPage" cookie="BuBuBuEdmsEdmsBuEdmsBuBuEdBuEdBuEdBuBuBuStStStStBu" caption="BitTorrent">
+		<dialog name="CBitTorrentSettingsPage" cookie="BuBuBuEdmsEdmsBuEdmsBuBuCoBuEdBuEdBuBuBuStStStStBu" caption="BitTorrent">
 			<control caption="Altijd verbinden met BitTorrent"/>
 			<control caption="Vandaag verbinden met BitTorrent"/>
 			<control caption="Inschakelen BitTorrent DHT"/>
@@ -3783,7 +3770,7 @@
 			<control/>
 			<control caption="_BitTorrent Netwerk:"/>
 			<control caption="_Download verbindingen:"/>
-			<control caption="Bewaar torrents _hier:"/>
+			<control caption="Bewaar torrents hier"/>
 			<control caption="Torrents tegelijkertijd"/>
 			<control caption="cliënt verbindingen"/>
 			<control caption="%"/>
@@ -3817,7 +3804,9 @@
 			<control caption="_Instellen..."/>
 			<control caption="Meer"/>
 		</dialog>
-		<dialog name="CAdvancedSettingsPage" cookie="SyEdmsBuBuStStEdBuCo" caption="Geavanceerd">
+		<dialog name="CAdvancedSettingsPage" cookie="EdStSyEdmsBuBuStStEdBuCo" caption="Geavanceerd">
+			<control/>
+			<control/>
 			<control/>
 			<control/>
 			<control/>
@@ -3976,7 +3965,7 @@
 			<control/>
 			<control/>
 			<control caption="_Persoonlijke informatie:"/>
-			<control caption="|Man|Vrouw"/>
+			<control caption="Male|Female"/>
 			<control caption="Geslacht:"/>
 			<control/>
 			<control caption="Leeftijd:"/>
@@ -4120,7 +4109,7 @@
 			<control caption="Service _adres:"/>
 			<control/>
 			<control caption="Discovery service type:"/>
-			<control caption="Gnutella Bootstrap|GWebCache|Server.met URL|Blocked"/>
+			<control caption="Gnutella Bootstrap|G1 GWebCache|G2 GWebCache|G1/G2 GWebCache|Server.met URL|DC++ Hub List URL|Blocked"/>
 			<control caption="OK"/>
 			<control caption="Annuleren"/>
 		</dialog>
@@ -4310,7 +4299,7 @@
 			<control caption="Je hebt %lu bestanden geselecteerd om te exporteren als Shareaza-gestuurde URI referenties. Selecteer het formaat voor de URIs, en klik op Opslaan:"/>
 			<control/>
 			<control caption="Importeer:"/>
-			<control caption="Tiger Root|SHA1|MD5|ED2K (CMD4)|Bestandsnaam|Bestandsnaam (URI)|Basis bestandsnaam|Bestandsextensie|Bestandsgrootte|Bestandsgrootte (bytes)|Pad naar map|Lokale gastheer (localhost)|Lokale poort"/>
+			<control caption="Tiger Root|SHA1|MD5|ED2K (CMD4)|BitTorrent|Filename|Filename (URI)|Base Filename|File Extension|File Size|File Size (bytes)|Folder Path|Local Host|Local Port|Link|Link (URI)"/>
 			<control caption="Selecteer voorinstelling:"/>
 			<control caption="Magnet|eDonkey|Magnet HTML|eDonkey HTML"/>
 			<control caption="_Kopieer"/>
@@ -4333,14 +4322,6 @@
 			<control caption="_Onthoudt mijn keuze"/>
 			<control caption="Open een _monitor venster"/>
 			<control caption="Je hebt geklikt op een Shareaza-gestuurde URI die de volgende discovery service zal toevoegen aan je Discovery Services cache."/>
-		</dialog>
-		<dialog name="CBitziDownloadDlg" cookie="StStmsBuSySt" caption="Bezig met het downloaden van metadata...">
-			<control/>
-			<control caption="Shareaza probeert metadata te downloaden van Bitzi(TM)..."/>
-			<control/>
-			<control caption="Annuleren"/>
-			<control/>
-			<control caption="www.bitzi.com"/>
 		</dialog>
 		<dialog name="CFilePreviewDlg" cookie="StStStmsStBu" caption="Slimme Download Voorvertoning...">
 			<control/>
@@ -4488,7 +4469,7 @@
 			<control/>
 			<control/>
 			<control/>
-			<control caption="Door:"/>
+			<control caption=" As needed| When ratio over 100%| Only when requested| Never"/>
 			<control/>
 			<control caption="_Commentaar:"/>
 			<control caption="Naam:"/>

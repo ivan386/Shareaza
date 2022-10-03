@@ -1,7 +1,7 @@
 //
 // HostCache.h
 //
-// Copyright (c) Shareaza Development Team, 2002-2012.
+// Copyright (c) Shareaza Development Team, 2002-2017.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -23,10 +23,11 @@
 
 class CNeighbour;
 class CG1Packet;
-class CVendor;
 class CHostCacheHost;
 class CHostCacheList;
 class CHostCache;
+
+#include "VendorCache.h"
 
 // History:
 // 14 - Added m_sCountry
@@ -35,8 +36,10 @@ class CHostCache;
 // 17 - Added m_tConnect (ryo-oh-ki)
 // 18 - Added m_sUser and m_sPass (ryo-oh-ki)
 // 19 - Added m_sAddress (ryo-oh-ki)
+// 20 - Added m_pAddressIPv6 (ivan386)
+// 21 - Added m_nKeyHostIPv6 (ivan386)
 
-#define HOSTCACHE_SER_VERSION 19
+#define HOSTCACHE_SER_VERSION 21
 
 
 class CHostCacheHost
@@ -48,9 +51,10 @@ public:
 	PROTOCOLID	m_nProtocol;		// Host protocol (PROTOCOL_*)
 	CString		m_sAddress;			// Host full address (unresolved)
 	IN_ADDR		m_pAddress;			// Host IP address
+	IN6_ADDR	m_pAddressIPv6;		// Host IPv6 address
 	WORD		m_nPort;			// Host TCP port number
 	WORD		m_nUDPPort;			// Host UDP port number
-	CVendor*	m_pVendor;			// Vendor handler from VendorCache
+	CVendorPtr	m_pVendor;			// Vendor handler from VendorCache
 	BOOL		m_bPriority;		// Host cannot be removed on failure
 	DWORD		m_nUserCount;		// G2 leaf count / ED2K user count
 	DWORD		m_nUserLimit;		// G2 leaf limit / ED2K user limit
@@ -79,6 +83,7 @@ public:
 	DWORD		m_tKeyTime;			// G2 time when query key was received
 	DWORD		m_nKeyValue;		// G2 query key
 	DWORD		m_nKeyHost;			// G2 query key host
+	IN6_ADDR	m_nKeyHostIPv6;		// G2 query key host ipv6
 
 	// Attributes: DHT
 	BOOL			m_bDHT;			// Host is DHT capable (UNUSED)
@@ -97,9 +102,38 @@ public:
 	bool		CanQuote(DWORD tNow) const;			// Is this a recently seen host?
 	bool		CanQuery(DWORD tNow) const;			// Can we UDP query this host? (G2/ed2k)
 	void		SetKey(DWORD nKey, const IN_ADDR* pHost = NULL);
+	void		SetKeyIPv6(DWORD nKey, const IN6_ADDR* pHost = NULL);
 
 	DWORD		Seen() const;						// Get host last seen time
 	CString		Address() const;					// Get host address as string
+	
+	inline bool IsIPv6Host() const throw()
+	{
+		if ( m_pAddress.s_addr == 0 )
+		{
+			int i = 0;
+
+			for (; i < 8 && m_pAddressIPv6.u.Word[i] == 0 ; i++ );
+
+			if ( i < 8 )
+				return true;
+		}
+		return false;
+	}
+
+	inline bool IsIPv6KeyHost() const throw()
+	{
+		if ( m_nKeyHost == 0 )
+		{
+			int i = 0;
+
+			for (; i < 8 && m_nKeyHostIPv6.u.Word[i] == 0 ; i++ );
+
+			if ( i < 8 )
+				return true;
+		}
+		return false;
+	}
 
 protected:
 	DWORD			m_tSeen;		// Host last seen time
@@ -126,9 +160,21 @@ struct std::less< IN_ADDR > : public std::binary_function< IN_ADDR, IN_ADDR, boo
 	}
 };
 
+template<>
+struct std::less< IN6_ADDR > : public std::binary_function< IN6_ADDR, IN6_ADDR, bool>
+{
+	inline bool operator()(const IN6_ADDR& _Left, const IN6_ADDR& _Right) const throw()
+	{
+		return ( memcmp( &_Left, &_Right, sizeof( IN6_ADDR ) ) > 0 );
+	}
+};
+
 typedef std::multimap< IN_ADDR, CHostCacheHostPtr > CHostCacheMap;
 typedef std::pair< IN_ADDR, CHostCacheHostPtr > CHostCacheMapPair;
+typedef std::multimap< IN6_ADDR, CHostCacheHostPtr > CHostCacheMapIPv6;
+typedef std::pair< IN6_ADDR, CHostCacheHostPtr > CHostCacheMapPairIPv6;
 typedef CHostCacheMap::iterator CHostCacheMapItr;
+typedef CHostCacheMapIPv6::iterator CHostCacheMapItrIPv6;
 
 template<>
 struct std::less< CHostCacheHostPtr > : public std::binary_function< CHostCacheHostPtr, CHostCacheHostPtr, bool>
@@ -161,9 +207,25 @@ struct is_host : public std::binary_function< CHostCacheMapPair, CHostCacheHostP
 	}
 };
 
+struct is_host_ipv6 : public std::binary_function< CHostCacheMapPairIPv6, CHostCacheHostPtr, bool>
+{
+	inline bool operator()(const CHostCacheMapPairIPv6& _Pair, const CHostCacheHostPtr& _bLocally) const throw()
+	{
+		return ( _Pair.second == _bLocally );
+	}
+};
+
 struct is_address : public std::binary_function< CHostCacheMapPair, LPCTSTR, bool>
 {
 	inline bool operator()(const CHostCacheMapPair& _Pair, const LPCTSTR& _bLocally) const throw()
+	{
+		return ( _Pair.second->m_sAddress.CompareNoCase( _bLocally ) == 0 );
+	}
+};
+
+struct is_address_ipv6 : public std::binary_function< CHostCacheMapPairIPv6, LPCTSTR, bool>
+{
+	inline bool operator()(const CHostCacheMapPairIPv6& _Pair, const LPCTSTR& _bLocally) const throw()
 	{
 		return ( _Pair.second->m_sAddress.CompareNoCase( _bLocally ) == 0 );
 	}
@@ -179,17 +241,21 @@ public:
 	DWORD				m_nCookie;
 	mutable CMutex		m_pSection;
 
-	CHostCacheHostPtr	Add(const IN_ADDR* pAddress, WORD nPort, DWORD tSeen = 0, LPCTSTR pszVendor = NULL, DWORD nUptime = 0, DWORD nCurrentLeaves = 0, DWORD nLeafLimit = 0, LPCTSTR szAddress = NULL);
+	CHostCacheHostPtr	Add(const IN_ADDR* pAddress, WORD nPort, const IN_ADDR* pFromAddress = NULL, DWORD tSeen = 0, LPCTSTR pszVendor = NULL, DWORD nUptime = 0, DWORD nCurrentLeaves = 0, DWORD nLeafLimit = 0, LPCTSTR szAddress = NULL);
+	CHostCacheHostPtr	AddIPv6(const IN6_ADDR* pAddress, WORD nPort, const IN6_ADDR* pFromAddress = NULL, DWORD tSeen = 0, LPCTSTR pszVendor = NULL, DWORD nUptime = 0, DWORD nCurrentLeaves = 0, DWORD nLeafLimit = 0, LPCTSTR szAddress = NULL);
 	// Add host in form of "{IP|FQDN}[:Port][ SeenTime]"
-	CHostCacheHostPtr 	Add(LPCTSTR pszHost, WORD nPort = 0, DWORD tSeen = 0, LPCTSTR pszVendor = NULL, DWORD nUptime = 0, DWORD nCurrentLeaves = 0, DWORD nLeafLimit = 0);
+	CHostCacheHostPtr 	Add(LPCTSTR pszHost, WORD nPort = 0, const IN_ADDR* pFromAddress = NULL, DWORD tSeen = 0, LPCTSTR pszVendor = NULL, DWORD nUptime = 0, DWORD nCurrentLeaves = 0, DWORD nLeafLimit = 0);
 	void				Update(CHostCacheHostPtr pHost, WORD nPort = 0, DWORD tSeen = 0, LPCTSTR pszVendor = NULL, DWORD nUptime = 0, DWORD nCurrentLeaves = 0, DWORD nLeafLimit = 0);
-	CHostCacheMapItr	Remove(CHostCacheHostPtr pHost);
-	CHostCacheMapItr	Remove(const IN_ADDR* pAddress);
+	CHostCacheIterator	Remove(CHostCacheHostPtr pHost);
+	void				Remove(const IN_ADDR* pAddress);
+	void				Remove(const IN6_ADDR* pAddress);
 	void				SanityCheck();
 	void				OnResolve(LPCTSTR szAddress, const IN_ADDR* pAddress, WORD nPort);
 	void				OnFailure(const IN_ADDR* pAddress, WORD nPort, bool bRemove = true);
+	void				OnFailure(const IN6_ADDR* pAddress, WORD nPort, bool bRemove = true);
 	void				OnFailure(LPCTSTR szAddress, bool bRemove = true);
 	CHostCacheHostPtr 	OnSuccess(const IN_ADDR* pAddress, WORD nPort, bool bUpdate = true);
+	CHostCacheHostPtr 	OnSuccess(const IN6_ADDR* pAddress, WORD nPort, bool bUpdate = true);
 	void				PruneOldHosts(DWORD tNow);
 	void				Clear();
 	void				Serialize(CArchive& ar, int nVersion);
@@ -221,7 +287,7 @@ public:
 
 	inline DWORD GetCount() const throw()
 	{
-		return (DWORD)m_Hosts.size();
+		return (DWORD)m_HostsTime.size();
 	}
 
 	inline CHostCacheHostPtr Find(const IN_ADDR* pAddress) const throw()
@@ -234,6 +300,13 @@ public:
 		return ( i != m_Hosts.end() ) ? (*i).second : NULL;
 	}
 
+	inline CHostCacheHostPtr Find(const IN6_ADDR* pAddress) const throw()
+	{
+		CQuickLock oLock( m_pSection );
+		CHostCacheMapIPv6::const_iterator i = m_HostsIPv6.find( *pAddress );
+		return ( i != m_HostsIPv6.end() ) ? (*i).second : NULL;
+	}
+
 	inline CHostCacheHostPtr Find(LPCTSTR szAddress) const throw()
 	{
 		if ( ! szAddress || ! *szAddress )
@@ -242,6 +315,16 @@ public:
 		CHostCacheMap::const_iterator i =
 			std::find_if( m_Hosts.begin(), m_Hosts.end(),
 			std::bind2nd( is_address(), szAddress ) );
+
+		if ( i == m_Hosts.end() )
+		{
+			CHostCacheMapIPv6::const_iterator i =
+			std::find_if( m_HostsIPv6.begin(), m_HostsIPv6.end(),
+			std::bind2nd( is_address_ipv6(), szAddress ) );
+			
+			return ( i != m_HostsIPv6.end() ) ? (*i).second : NULL;
+		}
+
 		return ( i != m_Hosts.end() ) ? (*i).second : NULL;
 	}
 
@@ -261,6 +344,7 @@ public:
 
 protected:
 	CHostCacheMap				m_Hosts;		// Hosts map (sorted by IP)
+	CHostCacheMapIPv6			m_HostsIPv6;	// Hosts map (sorted by IPv6)
 	CHostCacheIndex				m_HostsTime;	// Host index (sorted from newer to older)
 
 	void				PruneHosts();
@@ -295,19 +379,19 @@ public:
 
 	bool				CheckMinimumServers(PROTOCOLID nProtocol);
 	CHostCacheHostPtr	Find(const IN_ADDR* pAddress) const;
+	CHostCacheHostPtr	Find(const IN6_ADDR* pAddress) const;
 	CHostCacheHostPtr	Find(LPCTSTR szAddress) const;
 	BOOL				Check(const CHostCacheHostPtr pHost) const;
 	void				Remove(CHostCacheHostPtr pHost);
 	void				SanityCheck();
 	void				OnResolve(PROTOCOLID nProtocol, LPCTSTR szAddress, const IN_ADDR* pAddress = NULL, WORD nPort = 0);
 	void				OnFailure(const IN_ADDR* pAddress, WORD nPort, PROTOCOLID nProtocol = PROTOCOL_NULL, bool bRemove = true);
+	void				OnFailure(const IN6_ADDR* pAddress, WORD nPort, PROTOCOLID nProtocol = PROTOCOL_NULL, bool bRemove = true);
 	void				OnSuccess(const IN_ADDR* pAddress, WORD nPort, PROTOCOLID nProtocol = PROTOCOL_NULL, bool bUpdate = true);
+	void				OnSuccess(const IN6_ADDR* pAddress, WORD nPort, PROTOCOLID nProtocol = PROTOCOL_NULL, bool bUpdate = true);
 	void				PruneOldHosts();
 
-	inline bool EnoughServers(PROTOCOLID nProtocol) const
-	{
-		return ( ForProtocol( nProtocol )->CountHosts( TRUE ) > 0 );
-	}
+	bool EnoughServers(PROTOCOLID nProtocol, DWORD* nCount = NULL) const;
 
 	inline CHostCacheList* ForProtocol(PROTOCOLID nProtocol)
 	{

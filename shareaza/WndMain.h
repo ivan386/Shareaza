@@ -1,7 +1,7 @@
 //
 // WndMain.h
 //
-// Copyright (c) Shareaza Development Team, 2002-2012.
+// Copyright (c) Shareaza Development Team, 2002-2015.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -90,7 +90,7 @@ protected:
 	BOOL				m_bTrayIcon;			// Is tray icon available?
 	BOOL				m_bTrayUpdate;			// Is tray data need to be updated?
 	NOTIFYICONDATA		m_pTray;				// Tray icon data
-	CComPtr< ITaskbarList3 > m_pTaskbar;		// Windows task bar
+//	CComPtr< ITaskbarList3 > m_pTaskbar;		// Windows task bar
 	BOOL				m_bTimer;
 	CString				m_sMsgStatus;
 	DWORD				m_nAlpha;				// Main window transparency (0...255)
@@ -300,8 +300,15 @@ protected:
 	afx_msg LRESULT OnMenuChar(UINT nChar, UINT nFlags, CMenu* pMenu);
 	afx_msg LRESULT OnSanityCheck(WPARAM wParam, LPARAM lParam);
 	afx_msg LRESULT OnNowUploading(WPARAM wParam, LPARAM lParam);
+#if _MSC_VER >= 1800 // Microsoft Visual Studio 2013
+	afx_msg UINT OnPowerBroadcast(UINT nPowerEvent, LPARAM nEventData);
+#else
 	afx_msg UINT OnPowerBroadcast(UINT nPowerEvent, UINT nEventData);
+#endif
 	afx_msg BOOL OnCopyData(CWnd* pWnd,COPYDATASTRUCT* pCopyDataStruct);
+	afx_msg void OnUpdatePathExplore(CCmdUI* pCmdUI);
+	afx_msg void OnUpdatePathCopy(CCmdUI* pCmdUI);
+	afx_msg BOOL OnQueryEndSession();
 
 	DECLARE_MESSAGE_MAP()
 	DECLARE_DROP()

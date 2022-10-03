@@ -1,7 +1,7 @@
 //
 // HashDatabase.h
 //
-// Copyright (c) Shareaza Development Team, 2002-2011.
+// Copyright (c) Shareaza Development Team, 2002-2017.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -69,7 +69,7 @@ protected:
 	DWORD			m_nIndex;
 	DWORD			m_nBuffer;
 
-	HASHDB_INDEX*	Lookup(DWORD nIndex, DWORD nType);
+	HASHDB_INDEX*	Lookup(DWORD nIndex, DWORD nType) const;
 	HASHDB_INDEX*	PrepareToStore(DWORD nIndex, DWORD nType, DWORD nLength);
 	BOOL			Erase(DWORD nIndex, DWORD nType);
 	BOOL			Commit();

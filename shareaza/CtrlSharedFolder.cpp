@@ -1,7 +1,7 @@
 //
 // CtrlSharedFolder.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2010.
+// Copyright (c) Shareaza Development Team, 2002-2017.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -139,7 +139,7 @@ void CLibraryFolderCtrl::Update(CLibraryFolder* pFolder, HTREEITEM hFolder, HTRE
 		{
 			CString strDrive;
 			if ( pFolder->m_sPath.Find( _T(":\\") ) == 1 || pFolder->m_sPath.GetLength() == 2 )
-				strDrive.Format( _T(" (%c:)"), pFolder->m_sPath[0] );
+				strDrive.Format( _T(" (%c:)"), pFolder->m_sPath.GetAt( 0 ) );
 			else
 				strDrive = _T(" (Net)");
 
@@ -378,7 +378,7 @@ void CLibraryFolderCtrl::OnLButtonDblClk(UINT /*nFlags*/, CPoint point)
 	}
 	else
 	{
-		NMHDR pNM = { GetSafeHwnd(), GetDlgCtrlID(), NM_DBLCLK };
+		NMHDR pNM = { GetSafeHwnd(), (UINT_PTR)GetDlgCtrlID(), NM_DBLCLK };
 		GetParent()->SendMessage( WM_NOTIFY, GetDlgCtrlID(), (LPARAM)&pNM );
 	}
 }

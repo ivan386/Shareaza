@@ -1,7 +1,7 @@
 //
 // Plugins.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2013.
+// Copyright (c) Shareaza Development Team, 2002-2015.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -83,12 +83,12 @@ BOOL CPlugins::Register(const CString& sGeneralPath)
 				if ( hr == S_OK )
 				{
 					nSucceeded++;
-					theApp.Message( MSG_NOTICE, _T("Registered plugin: %s"), sName );
+					theApp.Message( MSG_NOTICE, _T("Registered plugin: %s"), (LPCTSTR)sName );
 				}
 				else if ( FAILED( hr ) )
 				{
 					nFailed++;
-					theApp.Message( MSG_ERROR, _T("Failed to register plugin: %s : 0x%08x"), sName, hr );
+					theApp.Message( MSG_ERROR, _T("Failed to register plugin: %s : 0x%08x"), (LPCTSTR)sName, hr );
 				}
 
 				FreeLibrary( hDll );
@@ -128,12 +128,12 @@ BOOL CPlugins::Register(const CString& sGeneralPath)
 					if ( dwError == ERROR_SUCCESS )
 					{
 						nSucceeded++;
-						theApp.Message( MSG_NOTICE, _T("Registered plugin: %s"), sName );
+						theApp.Message( MSG_NOTICE, _T("Registered plugin: %s"), (LPCTSTR)sName );
 					}
 					else
 					{
 						nFailed++;
-						theApp.Message( MSG_ERROR, _T("Failed to register plugin: %s : 0x%08x"), sName, dwError );
+						theApp.Message( MSG_ERROR, _T("Failed to register plugin: %s : 0x%08x"), (LPCTSTR)sName, dwError );
 					}
 				}
 			}
@@ -243,11 +243,8 @@ void CPlugins::UnloadPlugin(REFCLSID pCLSID)
 
 BOOL CPlugins::LookupCLSID(LPCTSTR pszGroup, LPCTSTR pszKey, REFCLSID pCLSID) const
 {
-	CString strCLSID = theApp.GetProfileString(
-		CString( _T("Plugins\\") ) + pszGroup, pszKey, _T("") );
-	return ! strCLSID.IsEmpty() &&
-		Hashes::fromGuid( strCLSID, (CLSID*)&pCLSID ) &&
-		LookupEnable( pCLSID, pszKey );
+	const CString strCLSID = theApp.GetProfileString( CString( _T("Plugins\\") ) + pszGroup, pszKey, _T("") );
+	return ! strCLSID.IsEmpty() && Hashes::fromGuid( strCLSID, (CLSID*)&pCLSID ) && LookupEnable( pCLSID, pszKey );
 }
 
 BOOL CPlugins::LookupEnable(REFCLSID pCLSID, LPCTSTR pszExt) const
@@ -285,9 +282,7 @@ BOOL CPlugins::LookupEnable(REFCLSID pCLSID, LPCTSTR pszExt) const
 
 	if ( pszExt ) // Checking only a certain extension
 	{
-		CString strToFind;
-		strToFind.Format( _T("|%s|"), pszExt );
-		return strExtensions.Find( strToFind ) != -1;
+		return ( _tcsistr( strExtensions, CString( _T("|") ) + pszExt + _T("|") ) != NULL );
 	}
 
 	// For Settings page
@@ -332,7 +327,7 @@ IUnknown* CPlugins::GetPlugin(LPCTSTR pszGroup, LPCTSTR pszType)
 
 				if ( SUCCEEDED( hr = pGITPlugin->m_pGIT.CopyTo( &pPlugin ) ) )
 					return pPlugin.Detach();
-			
+
 				TRACE( "Invalid plugin \"%s\"-\"%s\" %s\n", (LPCSTR)CT2A( pszGroup ), (LPCSTR)CT2A( pszType ), (LPCSTR)CT2A( Hashes::toGuid( pCLSID ) ) );
 			}
 
@@ -414,7 +409,8 @@ void CPlugins::OnRun()
 		if ( pGITPlugin )
 		{
 			// Create plugin
-			if ( SUCCEEDED( hr = pGITPlugin->m_pIUnknown.CoCreateInstance( m_inCLSID ) ) &&
+			if ( ( SUCCEEDED( hr = pGITPlugin->m_pIUnknown.CoCreateInstance( m_inCLSID, NULL, CLSCTX_LOCAL_SERVER ) ) ||
+				   SUCCEEDED( hr = pGITPlugin->m_pIUnknown.CoCreateInstance( m_inCLSID ) ) ) &&
 				 // Add plugin interface to GIT
 				 SUCCEEDED( hr = pGITPlugin->m_pGIT.Attach( pGITPlugin->m_pIUnknown ) ) )
 			{
@@ -630,7 +626,7 @@ BOOL CPlugins::OnChatMessage(LPCTSTR pszChatID, BOOL bOutgoing, LPCTSTR pszFrom,
 	{
 		CPlugin* pPlugin = GetNext( pos );
 
-		if ( pPlugin->m_pChat ) 
+		if ( pPlugin->m_pChat )
 		{
 			pPlugin->m_pChat->OnChatMessage(
 				CComBSTR( pszChatID ),
@@ -652,7 +648,7 @@ BOOL CPlugins::OnNewFile(CLibraryFile* pFile)
 	{
 		CPlugin* pPlugin = GetNext( pos );
 
-		if ( pPlugin->m_pLibrary ) 
+		if ( pPlugin->m_pLibrary )
 		{
 			if ( pPlugin->m_pLibrary->OnNewFile( pIFile ) == S_OK )
 			{
@@ -696,11 +692,15 @@ BOOL CPlugin::Start()
 		// Something very bad
 		return FALSE;
 
-	hr = m_pPlugin.CoCreateInstance( m_pCLSID );
+	hr = m_pPlugin.CoCreateInstance( m_pCLSID, NULL, CLSCTX_LOCAL_SERVER );
 	if ( FAILED( hr ) )
 	{
-		m_pPlugin.Release();
-		return FALSE;
+		hr = m_pPlugin.CoCreateInstance( m_pCLSID );
+		if ( FAILED( hr ) )
+		{
+			m_pPlugin.Release();
+			return FALSE;
+		}
 	}
 
 	hr = m_pPlugin->SetApplication( pApplication );

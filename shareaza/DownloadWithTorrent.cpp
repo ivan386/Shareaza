@@ -1,7 +1,7 @@
 //
 // DownloadWithTorrent.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2014.
+// Copyright (c) Shareaza Development Team, 2002-2017.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -58,14 +58,15 @@ CDownloadWithTorrent::CDownloadWithTorrent() :
 ,	m_bTorrentEndgame		( false )
 ,	m_bTorrentTrackerError	( FALSE )
 
-,	m_pTorrentBlock			( NULL )
 ,	m_nTorrentBlock			( 0 )
 ,	m_nTorrentSize			( 0 )
 ,	m_nTorrentSuccess		( 0 )
 ,	m_bSeeding				( FALSE )
+,	m_bZerosBlocksChecked	( false )
 
 ,	m_tTorrentChoke			( 0 )
 ,	m_tTorrentSources		( 0 )
+,	m_tTorrentSourcesDHT	( 0 )
 {
 	// Generate random Key value
 	for ( int nChar = 1 ; nChar < 6 ; nChar++ )
@@ -82,9 +83,6 @@ CDownloadWithTorrent::~CDownloadWithTorrent()
 	m_pPeerID.clear();
 
 	CloseTorrentUploads();
-
-	delete [] m_pTorrentBlock;
-	m_pTorrentBlock = NULL;
 }
 
 bool CDownloadWithTorrent::IsSeeding() const
@@ -130,13 +128,16 @@ void CDownloadWithTorrent::Serialize(CArchive& ar, int nVersion)
 	if ( nVersion < 23 )
 		return;
 
-	if ( !IsTorrent() )
+	if ( ! IsTorrent() )
 		return;
 
 	if ( ar.IsStoring() )
 	{
 		ar << m_nTorrentSuccess;
-		ar.Write( m_pTorrentBlock, sizeof(BYTE) * m_nTorrentBlock );
+		if ( m_pTorrentBlock )
+		{
+			ar.Write( m_pTorrentBlock, sizeof(BYTE) * m_nTorrentBlock );
+		}
 		ar << BOOL( m_bSeeding && Settings.BitTorrent.AutoSeed );
 	}
 	else
@@ -147,8 +148,13 @@ void CDownloadWithTorrent::Serialize(CArchive& ar, int nVersion)
 		m_nTorrentBlock	= m_pTorrent.m_nBlockCount;
 
 		ar >> m_nTorrentSuccess;
-		m_pTorrentBlock = new BYTE[ m_nTorrentBlock ];
-		ReadArchive( ar, m_pTorrentBlock, sizeof(BYTE) * m_nTorrentBlock );
+		m_pTorrentBlock.Free();
+		if ( m_nTorrentBlock )
+		{
+			m_pTorrentBlock.Attach( new BYTE[ m_nTorrentBlock ] );
+			memset( m_pTorrentBlock, TRI_UNKNOWN, m_nTorrentBlock );
+			ReadArchive( ar, m_pTorrentBlock, sizeof(BYTE) * m_nTorrentBlock );
+		}
 		if ( nVersion >= 34 )
 		{
 			ar >> m_bSeeding;
@@ -160,8 +166,6 @@ void CDownloadWithTorrent::Serialize(CArchive& ar, int nVersion)
 		}
 		GenerateTorrentDownloadID();
 
-		m_oBTH = m_pTorrent.m_oBTH;
-		m_bBTHTrusted = true;
 		if ( ! m_oTiger && m_pTorrent.m_oTiger )
 		{
 			m_oTiger = m_pTorrent.m_oTiger;
@@ -181,6 +185,11 @@ void CDownloadWithTorrent::Serialize(CArchive& ar, int nVersion)
 		{
 			m_oMD5 = m_pTorrent.m_oMD5;
 			m_bMD5Trusted = true;
+		}
+		if ( ! m_oBTH && m_pTorrent.m_oBTH )
+		{
+			m_oBTH = m_pTorrent.m_oBTH;
+			m_bBTHTrusted = true;
 		}
 
 		if ( nVersion < 40 )
@@ -273,6 +282,26 @@ void CDownloadWithTorrent::Serialize(CArchive& ar, int nVersion)
 	}
 }
 
+//////////////////////////////////////////////////////////////////////
+// CDownloadWithTorrent submit data
+
+BOOL CDownloadWithTorrent::SubmitData(QWORD nOffset, LPBYTE pData, QWORD nLength)
+{
+	if ( IsTorrentSet() )
+	{
+		CSingleLock oLock( &Transfers.m_pSection );
+		if ( oLock.Lock( 250 ) )
+		{
+			for ( CDownloadTransfer* pTransfer = GetFirstTransfer() ; pTransfer ; pTransfer = pTransfer->m_pDlNext )
+			{
+				if ( pTransfer->m_nProtocol == PROTOCOL_BT )
+					pTransfer->UnrequestRange( nOffset, nLength );
+			}
+		}
+	}
+
+	return CDownloadWithFile::SubmitData( nOffset, pData, nLength );
+}
 
 //////////////////////////////////////////////////////////////////////
 // CDownloadWithTorrent set torrent
@@ -293,17 +322,33 @@ BOOL CDownloadWithTorrent::SetTorrent(const CBTInfo* pTorrent)
 		m_pTorrent = *pTorrent;
 	}
 
-	m_oBTH = m_pTorrent.m_oBTH;
-	m_bBTHTrusted = true;
+	if ( m_nSize != SIZE_UNKNOWN && // Single file download
+		 m_pTorrent.IsAvailableInfo() && ( m_pTorrent.m_nSize == SIZE_UNKNOWN || m_pTorrent.m_nSize != m_nSize ) )
+		return FALSE;
+
+	if ( m_bBTHTrusted && validAndUnequal( m_oBTH, m_pTorrent.m_oBTH ) )
+		return FALSE;
+
+	if ( m_bTigerTrusted && validAndUnequal( m_oTiger, m_pTorrent.m_oTiger ) )
+		return FALSE;
+
+	if ( m_bSHA1Trusted && validAndUnequal( m_oSHA1, m_pTorrent.m_oSHA1 ) )
+		return FALSE;
+
+	if ( m_bED2KTrusted && validAndUnequal( m_oED2K, m_pTorrent.m_oED2K ) )
+		return FALSE;
+
+	if ( m_bMD5Trusted && validAndUnequal( m_oMD5, m_pTorrent.m_oMD5 ) )
+		return FALSE;
 
 	if ( m_pTorrent.m_nSize != SIZE_UNKNOWN )
 	{
 		m_nSize = m_pTorrent.m_nSize;
 	}
 
-	if ( m_pTorrent.m_sName.GetLength() )
+	if ( m_pTorrent.m_nBitrate )
 	{
-		Rename( m_pTorrent.m_sName );
+		m_nBitrate = m_pTorrent.m_nBitrate;
 	}
 
 	if ( m_pTorrent.m_oTiger )
@@ -330,12 +375,34 @@ BOOL CDownloadWithTorrent::SetTorrent(const CBTInfo* pTorrent)
 		m_bMD5Trusted = true;
 	}
 
-	m_nTorrentSize	= m_pTorrent.m_nBlockSize;
-	m_nTorrentBlock	= m_pTorrent.m_nBlockCount;
+	if ( m_pTorrent.m_oBTH )
+	{
+		m_oBTH = m_pTorrent.m_oBTH;
+		m_bBTHTrusted = true;
+	}
 
-	delete [] m_pTorrentBlock;
-	m_pTorrentBlock	= new BYTE[ m_nTorrentBlock ];
-	memset( m_pTorrentBlock, TRI_UNKNOWN, m_nTorrentBlock );
+	if ( m_pTorrent.m_sName.GetLength() )
+	{
+		Rename( m_pTorrent.m_sName );
+	}
+
+	if ( m_pTorrent.m_nBlockSize )
+	{
+		m_nTorrentSize = m_pTorrent.m_nBlockSize;
+	}
+
+	if ( m_pTorrent.m_nBlockCount )
+	{
+		m_nTorrentBlock = m_pTorrent.m_nBlockCount;
+
+		if ( m_nTorrentBlock )
+		{
+			m_pTorrentBlock.Free();
+			m_pTorrentBlock.Attach( new BYTE[ m_nTorrentBlock ] );
+			memset( m_pTorrentBlock, TRI_UNKNOWN, m_nTorrentBlock );
+		}
+	}
+
 	m_nTorrentSuccess = 0;
 
 	if ( CreateDirectory( Settings.Downloads.TorrentPath ) )
@@ -359,26 +426,72 @@ BOOL CDownloadWithTorrent::SetTorrent(const CBTInfo* pTorrent)
 	// Re-link
 	DownloadGroups.Link( static_cast< CDownload* >( this ) );
 
+	m_bZerosBlocksChecked = false;
+
 	SetModified();
 
 	return TRUE;
 }
 
+void CDownloadWithTorrent::FindZerosRangesTorrent()
+{
+	if ( IsTorrentSet() )
+	{
+		m_bZerosBlocksChecked = true;
+
+		QWORD nOffset = 0;
+		QWORD nLength = 0;
+
+		for ( uint32 i = 0; i < m_nTorrentBlock; i++ )
+		{
+			if ( !m_pTorrentBlock[i] && m_pTorrent.IsZeroBlock( i ) )
+			{
+				if ( nLength == 0 )
+					nOffset = m_nTorrentSize * i;
+
+				nLength += m_nTorrentSize;
+			}
+			else
+			{
+				if ( nLength > 0 )
+					SubmitData( nOffset, NULL, min( nLength, ( m_nSize - nOffset ) ) );
+
+				nLength = 0;
+			}
+		}
+
+		if ( nLength > 0 )
+			SubmitData( nOffset, NULL, min( nLength, ( m_nSize - nOffset ) ) );
+
+		SetModified();
+	}
+}
+
+
 //////////////////////////////////////////////////////////////////////
 // CDownloadWithTorrent run
 
-bool CDownloadWithTorrent::RunTorrent(DWORD tNow)
+void CDownloadWithTorrent::RunTorrent(DWORD tNow)
 {
-	if ( !Network.IsConnected() || !Settings.BitTorrent.EnableToday )
-		return true;
+	if ( ! IsTorrent() || ! Network.IsConnected() || ! Settings.BitTorrent.EnableToday )
+		return;
 
 	// Choke torrents every 10 seconds
 	if ( tNow > m_tTorrentChoke && tNow - m_tTorrentChoke >= 10000ul )
 		ChokeTorrent( tNow );
 
+	if ( !m_bZerosBlocksChecked )
+		FindZerosRangesTorrent();
+
 	// Generate a peerid if there isn't one
 	if ( !m_pPeerID )
 		GenerateTorrentDownloadID();
+
+	if ( tNow - m_tTorrentSourcesDHT > Settings.BitTorrent.DefaultTrackerPeriod )
+	{
+		DHT.Search( m_oBTH, m_bSeeding == TRUE );
+		m_tTorrentSourcesDHT = tNow;
+	}
 
 	// Store some values for later
 	DWORD nSourcesCount = 0ul;
@@ -405,8 +518,7 @@ bool CDownloadWithTorrent::RunTorrent(DWORD tNow)
 			SendStarted( nSourcesWanted );
 		}
 
-		// Report that the torrent checks have run successfully
-		return true;
+		return;
 	}
 
 	// Store if this is a regular update or not
@@ -454,8 +566,7 @@ bool CDownloadWithTorrent::RunTorrent(DWORD tNow)
 		}
 	}
 
-	// Report that the torrent checks have run successfully
-	return true;
+	return;
 }
 
 //////////////////////////////////////////////////////////////////////
@@ -510,8 +621,6 @@ void CDownloadWithTorrent::SendStarted(DWORD nNumWant)
 	m_tTorrentTracker += Settings.BitTorrent.DefaultTrackerPeriod;
 	m_nTorrentDownloaded = m_nTorrentUploaded = 0ull;
 
-	DHT.Search( m_oBTH );
-
 	// Return if there is no tracker
 	if ( ! m_pTorrent.HasTracker() )
 		return;
@@ -528,8 +637,6 @@ void CDownloadWithTorrent::SendUpdate(DWORD nNumWant)
 	// Record that an update has been sent
 	m_tTorrentTracker = m_tTorrentSources = GetTickCount();
 	m_tTorrentTracker += Settings.BitTorrent.DefaultTrackerPeriod;
-
-	DHT.Search( m_oBTH );
 
 	// Return if there is no tracker
 	if ( ! m_pTorrent.HasTracker() )
@@ -596,16 +703,19 @@ void CDownloadWithTorrent::OnTrackerEvent(bool bSuccess, LPCTSTR pszReason, LPCT
 		m_pTorrent.SetTrackerSucceeded( tNow );
 
 		// Get new sources
-		for ( POSITION pos = pEvent->GetSources(); pos && GetEffectiveSourceCount() < Settings.Downloads.SourcesWanted; )
+		for ( POSITION pos = pEvent->GetSources(); pos; )
 		{
 			const CBTTrackerSource& pSource = pEvent->GetNextSource( pos );
-			AddSourceBT( pSource.m_pPeerID, &pSource.m_pAddress.sin_addr, ntohs( pSource.m_pAddress.sin_port ) );
+			if ( pSource.IsIPV6Source() )
+				AddSourceBT( pSource.m_pPeerID, &pSource.m_pAddressIPv6.sin6_addr, ntohs( pSource.m_pAddressIPv6.sin6_port ) );
+			else
+				AddSourceBT( pSource.m_pPeerID, &pSource.m_pAddress.sin_addr, ntohs( pSource.m_pAddress.sin_port ) );
 		}
 
 		// Lock on this tracker if we were searching for one
 		if ( m_pTorrent.GetTrackerMode() == CBTInfo::tMultiFinding )
 		{
-			theApp.Message( MSG_DEBUG , _T("[BT] Locked onto tracker %s"), m_pTorrent.GetTrackerAddress() );
+			theApp.Message( MSG_DEBUG , _T("[BT] Locked onto tracker %s"), (LPCTSTR)m_pTorrent.GetTrackerAddress() );
 			m_pTorrent.SetTrackerMode( CBTInfo::tMultiFound );
 		}
 	}
@@ -671,8 +781,13 @@ CDownloadTransferBT* CDownloadWithTorrent::CreateTorrentTransfer(CBTClient* pCli
 
 	if ( pSource == NULL )
 	{
-		pSource = new CDownloadSource( static_cast< CDownload* >( this ),
-			pClient->m_oGUID, &pClient->m_pHost.sin_addr, htons( pClient->m_pHost.sin_port ) );
+		if ( pClient->IsIPv6Host() )
+			pSource = new CDownloadSource( static_cast< CDownload* >( this ),
+				pClient->m_oGUID, &pClient->m_pHostIPv6.sin6_addr, htons( pClient->m_pHostIPv6.sin6_port ) );
+		else
+			pSource = new CDownloadSource( static_cast< CDownload* >( this ),
+				pClient->m_oGUID, &pClient->m_pHost.sin_addr, htons( pClient->m_pHost.sin_port ) );
+		
 		pSource->m_bPushOnly = !(pClient->m_bInitiated);
 
 		if ( ! AddSourceInternal( pSource ) ) return NULL;
@@ -701,7 +816,8 @@ void CDownloadWithTorrent::OnFinishedTorrentBlock(DWORD nBlock)
 
 CBTPacket* CDownloadWithTorrent::CreateBitfieldPacket()
 {
-	ASSERT( IsTorrent() );
+	if ( ! m_pTorrentBlock )
+		return NULL;
 
 	CBTPacket* pPacket = CBTPacket::New( BT_PACKET_BITFIELD );
 	int nCount = 0;
@@ -773,7 +889,7 @@ void CDownloadWithTorrent::ChokeTorrent(DWORD tNow)
 			(DWORD)m_pTorrentUploads.GetCount() != GetBTSourceCount() &&
 			CanStartTransfers( tNow ) )
 		{
-			theApp.Message( MSG_DEBUG, _T("Attempting to push-start a BitTorrent upload for %s"), m_pTorrent.m_sName );
+			theApp.Message( MSG_DEBUG, _T("Attempting to push-start a BitTorrent upload for %s"), (LPCTSTR)m_pTorrent.m_sName );
 			StartNewTransfer( tNow );
 		}
 	}
@@ -952,6 +1068,20 @@ BOOL CDownloadWithTorrent::UploadExists(in_addr* pIP) const
 		if ( ( pTransfer->m_nProtocol == PROTOCOL_BT ) &&
 			 ( pTransfer->m_nState != upsNull ) &&
 			 ( pTransfer->m_pHost.sin_addr.S_un.S_addr == pIP->S_un.S_addr ) )
+			return TRUE;
+	}
+	return FALSE;
+}
+
+BOOL CDownloadWithTorrent::UploadExists(in6_addr* pIPv6) const
+{
+	for ( POSITION pos = m_pTorrentUploads.GetHeadPosition() ; pos ; )
+	{
+		CUploadTransferBT* pTransfer = m_pTorrentUploads.GetNext( pos );
+
+		if ( ( pTransfer->m_nProtocol == PROTOCOL_BT ) &&
+			 ( pTransfer->m_nState != upsNull ) &&
+			 IN6_ADDR_EQUAL( &pTransfer->m_pHostIPv6.sin6_addr, pIPv6 ) )
 			return TRUE;
 	}
 	return FALSE;

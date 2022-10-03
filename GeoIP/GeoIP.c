@@ -497,7 +497,7 @@ void _setup_segments(GeoIP * gi) {
 	unsigned char delim[3];
 	unsigned char buf[LARGE_SEGMENT_RECORD_LENGTH];
 	ssize_t silence;
-        int fno = fileno(gi->GeoIPDatabase);
+        int fno = _fileno(gi->GeoIPDatabase);
 
 	gi->databaseSegments = NULL;
 
@@ -571,7 +571,7 @@ void _setup_segments(GeoIP * gi) {
                                 if ( gi->databaseType == GEOIP_CITYCONFIDENCE_EDITION 
                                    ||  gi->databaseType == GEOIP_CITYCONFIDENCEDIST_EDITION 
                                   ) {
-                                  silence = pread(fileno(gi->GeoIPDatabase), buf, gi->record_length,  gi->databaseSegments[0] * 2 * gi->record_length);
+                                  silence = pread(_fileno(gi->GeoIPDatabase), buf, gi->record_length,  gi->databaseSegments[0] * 2 * gi->record_length);
                                   gi->dyn_seg_size = 0;
  	                          for (j = 0; j < gi->record_length; j++) {
 					gi->dyn_seg_size += (buf[j] << (j * 8));
@@ -672,7 +672,7 @@ int _check_mtime(GeoIP *gi) {
 					gi->cache = 0;
 					return -1;
 #else
-				    gi->cache = mmap(NULL, buf.st_size, PROT_READ, MAP_PRIVATE, fileno(gi->GeoIPDatabase), 0);
+				    gi->cache = mmap(NULL, buf.st_size, PROT_READ, MAP_PRIVATE, _fileno(gi->GeoIPDatabase), 0);
 				    if ( gi->cache == MAP_FAILED ) {
 
 					    fprintf(stderr,"Error remapping file %s when reloading\n",gi->file_path);
@@ -682,7 +682,7 @@ int _check_mtime(GeoIP *gi) {
 				    }
 #endif
 				} else if ( gi->flags & GEOIP_MEMORY_CACHE ) {
-				    if (pread(fileno(gi->GeoIPDatabase), gi->cache,  buf.st_size, 0) != (ssize_t) buf.st_size) {
+				    if (pread(_fileno(gi->GeoIPDatabase), gi->cache,  buf.st_size, 0) != (ssize_t) buf.st_size) {
 					    fprintf(stderr,"Error reading file %s when reloading\n",gi->file_path);
 					    return -1;
 					}
@@ -700,7 +700,7 @@ int _check_mtime(GeoIP *gi) {
 				if (gi->flags & GEOIP_INDEX_CACHE) {                        
 					gi->index_cache = (unsigned char *) realloc(gi->index_cache, sizeof(unsigned char) * ((gi->databaseSegments[0] * (long)gi->record_length * 2)));
 					if (gi->index_cache != NULL) {
-						if (pread(fileno(gi->GeoIPDatabase), gi->index_cache,
+						if (pread(_fileno(gi->GeoIPDatabase), gi->index_cache,
                                                   gi->databaseSegments[0] * (long)gi->record_length * 2, 0 ) != (ssize_t) (gi->databaseSegments[0]*(long)gi->record_length * 2)) {
 							fprintf(stderr,"Error reading file %s where reloading\n",gi->file_path);
 							return -1;
@@ -725,7 +725,7 @@ unsigned int _GeoIP_seek_record_v6 (GeoIP *gi, geoipv6_t ipnum) {
        const unsigned char * p;
        int j;
        ssize_t silence;
-       int fno = fileno(gi->GeoIPDatabase);
+       int fno = _fileno(gi->GeoIPDatabase);
        _check_mtime(gi);
        if ( GeoIP_teredo(gi) )
          __GEOIP_PREPARE_TEREDO(&ipnum);
@@ -810,7 +810,7 @@ unsigned int _GeoIP_seek_record (GeoIP *gi, unsigned long ipnum) {
 
 	const unsigned char * p;
 	int j;
-        int fno = fileno(gi->GeoIPDatabase);
+        int fno = _fileno(gi->GeoIPDatabase);
 	_check_mtime(gi);
 	for (depth = 31; depth >= 0; depth--) {
 		if (gi->cache == NULL && gi->index_cache == NULL) {
@@ -952,7 +952,7 @@ GeoIP* GeoIP_open (const char * filename, int flags) {
 		return NULL;
 	} else {
 		if (flags & (GEOIP_MEMORY_CACHE | GEOIP_MMAP_CACHE) ) {
-			if (fstat(fileno(gi->GeoIPDatabase), &buf) == -1) {
+			if (fstat(_fileno(gi->GeoIPDatabase), &buf) == -1) {
 				fprintf(stderr,"Error stating file %s\n",filename);
 				free(gi->file_path);
 				free(gi);
@@ -964,7 +964,7 @@ GeoIP* GeoIP_open (const char * filename, int flags) {
 			/* MMAP added my Peter Shipley */
 			if ( flags & GEOIP_MMAP_CACHE ) {
 #if !defined(_WIN32)
-			    gi->cache = mmap(NULL, buf.st_size, PROT_READ, MAP_PRIVATE, fileno(gi->GeoIPDatabase), 0);
+			    gi->cache = mmap(NULL, buf.st_size, PROT_READ, MAP_PRIVATE, _fileno(gi->GeoIPDatabase), 0);
 			    if ( gi->cache == MAP_FAILED ) {
 				fprintf(stderr,"Error mmaping file %s\n",filename);
 				free(gi->file_path);
@@ -976,7 +976,7 @@ GeoIP* GeoIP_open (const char * filename, int flags) {
 			    gi->cache = (unsigned char *) malloc(sizeof(unsigned char) * buf.st_size);
 
 			    if (gi->cache != NULL) {
-				if (pread(fileno(gi->GeoIPDatabase),gi->cache, buf.st_size, 0) != (ssize_t) buf.st_size) {
+				if (pread(_fileno(gi->GeoIPDatabase),gi->cache, buf.st_size, 0) != (ssize_t) buf.st_size) {
 					fprintf(stderr,"Error reading file %s\n",filename);
 					free(gi->cache);
 					free(gi->file_path);
@@ -987,7 +987,7 @@ GeoIP* GeoIP_open (const char * filename, int flags) {
 			}
 		} else {
 			if (flags & GEOIP_CHECK_CACHE) {
-				if (fstat(fileno(gi->GeoIPDatabase), &buf) == -1) {
+				if (fstat(_fileno(gi->GeoIPDatabase), &buf) == -1) {
 					fprintf(stderr,"Error stating file %s\n",filename);
 					free(gi->file_path);
 					free(gi);
@@ -1004,7 +1004,7 @@ GeoIP* GeoIP_open (const char * filename, int flags) {
 		if (flags & GEOIP_INDEX_CACHE) {                        
 			gi->index_cache = (unsigned char *) malloc(sizeof(unsigned char) * ((gi->databaseSegments[0] * (long)gi->record_length * 2)));
 			if (gi->index_cache != NULL) {
-				if (pread(fileno(gi->GeoIPDatabase),gi->index_cache, gi->databaseSegments[0] * (long)gi->record_length * 2, 0) != (size_t) (gi->databaseSegments[0]*(long)gi->record_length * 2)) {
+				if (pread(_fileno(gi->GeoIPDatabase),gi->index_cache, gi->databaseSegments[0] * (long)gi->record_length * 2, 0) != (size_t) (gi->databaseSegments[0]*(long)gi->record_length * 2)) {
 					fprintf(stderr,"Error reading file %s\n",filename);
 					free(gi->databaseSegments);
 					free(gi->index_cache);
@@ -1356,7 +1356,7 @@ char *GeoIP_database_info (GeoIP* gi) {
 	char *retval;
 	int hasStructureInfo = 0;
 	ssize_t silence;
-        int fno = fileno(gi->GeoIPDatabase);
+        int fno = _fileno(gi->GeoIPDatabase);
 
 	if(gi == NULL)
 		return NULL;
@@ -1622,7 +1622,7 @@ char *_get_name (GeoIP* gi, unsigned long ipnum) {
 	record_pointer = seek_org + (2 * gi->record_length - 1) * gi->databaseSegments[0];
 
 	if (gi->cache == NULL) {
-                silence = pread(fileno(gi->GeoIPDatabase), buf, MAX_ORG_RECORD_LENGTH, record_pointer);
+                silence = pread(_fileno(gi->GeoIPDatabase), buf, MAX_ORG_RECORD_LENGTH, record_pointer);
                 if ( gi->charset == GEOIP_CHARSET_UTF8 ) {
 	          org_buf = _GeoIP_iso_8859_1__utf8( (const char * ) buf );
 	        } else {
@@ -1672,7 +1672,7 @@ char *_get_name_v6 (GeoIP* gi, geoipv6_t ipnum) {
   record_pointer = seek_org + (2 * gi->record_length - 1) * gi->databaseSegments[0];
 
   if (gi->cache == NULL) {
-     silence = pread(fileno(gi->GeoIPDatabase), buf, MAX_ORG_RECORD_LENGTH, record_pointer);
+     silence = pread(_fileno(gi->GeoIPDatabase), buf, MAX_ORG_RECORD_LENGTH, record_pointer);
     if ( gi->charset == GEOIP_CHARSET_UTF8 ) {
       org_buf = _GeoIP_iso_8859_1__utf8( (const char * ) buf );
     } else {

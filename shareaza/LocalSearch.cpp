@@ -1,7 +1,7 @@
 //
 // LocalSearch.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2012.
+// Copyright (c) Shareaza Development Team, 2002-2015.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -53,7 +53,7 @@
 #include "UploadQueues.h"
 #include "Uploads.h"
 #include "XML.h"
-#include "ZLib.h"
+#include "ZLibWarp.h"
 
 #ifdef _DEBUG
 #undef THIS_FILE
@@ -67,6 +67,7 @@ static char THIS_FILE[]=__FILE__;
 CLocalSearch::CLocalSearch(CQuerySearch* pSearch, const CNeighbour* pNeighbour) :
 	m_pSearch		( pSearch ),
 	m_pEndpoint		( pNeighbour->m_pHost ),
+	m_pEndpointIPv6	( pNeighbour->m_pHostIPv6 ),
 	m_pBuffer		( NULL ),
 	m_bUDP			( FALSE ),
 	m_nProtocol		( pNeighbour->m_nProtocol )
@@ -76,6 +77,7 @@ CLocalSearch::CLocalSearch(CQuerySearch* pSearch, const CNeighbour* pNeighbour) 
 CLocalSearch::CLocalSearch(CQuerySearch* pSearch, PROTOCOLID nProtocol) :
 	m_pSearch		( pSearch ),
 	m_pEndpoint		( pSearch->m_pEndpoint ),
+	m_pEndpointIPv6	( pSearch->m_pEndpointIPv6 ),
 	m_pBuffer		( NULL ),
 	m_bUDP			( TRUE ),
 	m_nProtocol		( nProtocol )
@@ -85,6 +87,7 @@ CLocalSearch::CLocalSearch(CQuerySearch* pSearch, PROTOCOLID nProtocol) :
 CLocalSearch::CLocalSearch(CBuffer* pBuffer, PROTOCOLID nProtocol) :
 	m_pSearch		( NULL ),
 	m_pEndpoint		(),
+	m_pEndpointIPv6	(),
 	m_pBuffer		( pBuffer ),
 	m_bUDP			( FALSE ),
 	m_nProtocol		( nProtocol )
@@ -172,7 +175,7 @@ bool CLocalSearch::Execute(INT_PTR nMaximum, bool bPartial, bool bShared)
 bool CLocalSearch::ExecutePartialFiles(INT_PTR nMaximum, INT_PTR& nHits)
 {
 	CSingleLock pLock( &Transfers.m_pSection );
-	if ( ! pLock.Lock( 250 ) )
+	if ( ! pLock.Lock( 100 ) )
 		return false;
 
 	if ( ! m_pSearch || ! m_pSearch->m_bWantPFS || m_nProtocol != PROTOCOL_G2 )
@@ -208,8 +211,18 @@ bool CLocalSearch::ExecuteSharedFiles(INT_PTR nMaximum, INT_PTR& nHits)
 	if ( ! oLock.Lock( 250 ) )
 		return false;
 
+	// Is it a browser request?
+	if ( ! m_pSearch && m_nProtocol == PROTOCOL_G2 && Settings.Gnutella2.EnableToday )
+	{
+		// Send virtual tree		
+		DispatchPacket( AlbumToPacket( Library.GetAlbumRoot() ) );
+
+		// Send physical tree
+		DispatchPacket( FoldersToPacket() );
+	}
+
 	auto_ptr< CFileList > pFiles( Library.Search(
-		m_pSearch, nMaximum, FALSE,
+		m_pSearch, (int)nMaximum, FALSE,
 		// Ghost files only for G2
 		m_nProtocol != PROTOCOL_G2 ) );
 
@@ -231,16 +244,6 @@ bool CLocalSearch::ExecuteSharedFiles(INT_PTR nMaximum, INT_PTR& nHits)
 		SendHits( oFilesInPacket );
 
 		nHits += oFilesInPacket.GetCount();
-	}
-
-	// Is it a browser request?
-	if ( ! m_pSearch && m_nProtocol == PROTOCOL_G2 )
-	{
-		// Send virtual tree		
-		DispatchPacket( AlbumToPacket( Library.GetAlbumRoot() ) );
-
-		// Send physical tree
-		DispatchPacket( FoldersToPacket() );
 	}
 
 	return true;
@@ -953,9 +956,11 @@ CG2Packet* CLocalSearch::CreatePacketG2()
 	pPacket->WritePacket( G2_PACKET_NODE_GUID, Hashes::Guid::byteCount );
 	pPacket->Write( Hashes::Guid( MyProfile.oGUID ) );
 
-	pPacket->WritePacket( G2_PACKET_NODE_ADDRESS, 6 );
+	pPacket->WritePacket( G2_PACKET_NODE_ADDRESS, 24 );
 	pPacket->WriteLongLE( Network.m_pHost.sin_addr.s_addr );
 	pPacket->WriteShortBE( htons( Network.m_pHost.sin_port ) );
+	pPacket->Write( &Network.m_pHostIPv6.sin6_addr, 16 );
+	pPacket->WriteShortBE( htons( Network.m_pHostIPv6.sin6_port ) );
 
 	pPacket->WritePacket( G2_PACKET_VENDOR, 4 );
 	pPacket->WriteString( VENDOR_CODE, FALSE );

@@ -1,7 +1,7 @@
 //
 // LibraryBuilderInternals.h
 //
-// Copyright (c) Shareaza Development Team, 2002-2010.
+// Copyright (c) Shareaza Development Team, 2002-2014.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -34,6 +34,9 @@ public:
 	int			LookupID3v1Genre(const CString& strGenre) const;
 	bool		ExtractMetadata(DWORD nIndex, const CString& strPath, HANDLE hFile);
 
+	// Windows properties
+	bool		ExtractProperties(DWORD nIndex, const CString& strPath);
+
 // Implementation
 private:
 	// ID3v1 and ID3v2 and MP3
@@ -58,24 +61,35 @@ private:
 	bool		ReadMSI(DWORD nIndex, LPCTSTR pszPath);
 	CString		GetSummaryField(MSIHANDLE hSummaryInfo, UINT nProperty);
 
-	// Image Files
-	bool		ReadJPEG(DWORD nIndex, HANDLE hFile);
-	bool		ReadGIF(DWORD nIndex, HANDLE hFile);
-	bool		ReadPNG(DWORD nIndex, HANDLE hFile);
-	bool		ReadBMP(DWORD nIndex, HANDLE hFile);
-
 	// General Media
+	bool		ReadFLV(DWORD nIndex, HANDLE hFile);
+	bool		ReadFLVVariable(HANDLE hFile, DWORD& nRemaning, VARIANT& varData, CXMLElement* pXML = NULL);
+	bool		ReadFLVDouble(HANDLE hFile, DWORD& nRemaning, double& dValue);
+	bool		ReadFLVBool(HANDLE hFile, DWORD& nRemaning, bool& bValue);
+	bool		ReadFLVString(HANDLE hFile, DWORD& nRemaning, BOOL bLong, CStringA& strValue);
+	bool		ReadFLVEMCA(HANDLE hFile, DWORD& nRemaning, CXMLElement* pXML = NULL);
+
 	bool		ReadASF(DWORD nIndex, HANDLE hFile);
+
 	bool		ReadAVI(DWORD nIndex, HANDLE hFile);
+
 	bool		ReadMPEG(DWORD nIndex, HANDLE hFile);
+
 	bool		ReadOGG(DWORD nIndex, HANDLE hFile);
 	BYTE*		ReadOGGPage(HANDLE hFile, DWORD& nBuffer, BYTE nFlags, DWORD nSequence, DWORD nMinSize = 0);
 	bool		ReadOGGString(BYTE*& pOGG, DWORD& nOGG, CString& str);
+
 	bool		ReadAPE(DWORD nIndex, HANDLE hFile, bool bPreferFooter);
+
 	bool		ReadPDF(DWORD nIndex, HANDLE hFile, LPCTSTR pszPath);
 	CString		ReadPDFLine(HANDLE hFile, bool bReverse, bool bComplex = false, bool bSplitter = true);
-	bool		ReadCollection(DWORD nIndex, LPCTSTR pszPath);
-	bool		ReadCHM(DWORD nIndex, HANDLE hFile, LPCTSTR pszPath);
 	CString		DecodePDFText(CString strInput);
+
+	bool		ReadCollection(DWORD nIndex, LPCTSTR pszPath);
+
+	bool		ReadCHM(DWORD nIndex, HANDLE hFile, LPCTSTR pszPath);
+
 	bool		ReadTorrent(DWORD nIndex, HANDLE hFile, LPCTSTR pszPath);
+
+	bool		ReadDJVU(DWORD nIndex, HANDLE hFile);
 };

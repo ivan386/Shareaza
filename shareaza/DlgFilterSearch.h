@@ -41,6 +41,8 @@ public:
 	CSpinButtonCtrl	m_wndSources;
 	CString	m_sFilter;
 	BOOL	m_bHideBusy;
+	BOOL	m_bHideComments;
+	BOOL	m_bHidePartial;
 	BOOL	m_bHideLocal;
 	BOOL	m_bHidePush;
 	BOOL	m_bHideReject;

@@ -1,7 +1,7 @@
 //
 // TransferFile.h
 //
-// Copyright (c) Shareaza Development Team, 2002-2009.
+// Copyright (c) Shareaza Development Team, 2002-2015.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -28,9 +28,9 @@ class CTransferFiles
 {
 public:
 	CTransferFiles();
-	virtual ~CTransferFiles();
+	~CTransferFiles();
 
-	typedef CMap< CString, const CString&, CTransferFile*, CTransferFile* > CTransferFileMap;
+	typedef CAtlMap< CString, CTransferFile*, CStringElementTraitsI< CString > > CTransferFileMap;
 	typedef CList< CTransferFile* > CTransferFileList;
 
 	CTransferFile*		Open(LPCTSTR pszFile, BOOL bWrite);
@@ -41,7 +41,6 @@ protected:
 	CTransferFileMap	m_pMap;
 	CTransferFileList	m_pDeferred;
 
-	void				Close();
 	void				QueueDeferred(CTransferFile* pFile);
 	void				Remove(CTransferFile* pFile);
 
@@ -59,13 +58,14 @@ public:
 	ULONG		Release();
 	HANDLE		GetHandle(BOOL bWrite = FALSE);
 	QWORD		GetSize() const;
+	void		ExtendSize(QWORD nSize);
 	BOOL		Read(QWORD nOffset, LPVOID pBuffer, QWORD nBuffer, QWORD* pnRead);
 	BOOL		Write(QWORD nOffset, LPCVOID pBuffer, QWORD nBuffer, QWORD* pnWritten);
 	BOOL		EnsureWrite();
 
 	inline BOOL	IsOpen() const throw()
 	{
-		return ( m_hFile != INVALID_HANDLE_VALUE );
+		return ( m_hFile != INVALID_HANDLE_VALUE ) || IsFolder();
 	}
 
 	inline BOOL	IsExists() const throw()
@@ -76,6 +76,11 @@ public:
 	inline BOOL	IsWritable() const throw()
 	{
 		return m_bWrite;
+	}
+
+	inline BOOL	IsFolder() const throw()
+	{
+		return ( m_sPath.GetAt( m_sPath.GetLength() - 1 ) == _T( '\\' ) );
 	}
 
 protected:

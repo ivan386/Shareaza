@@ -1,7 +1,7 @@
 //
 // stdafx.h
 //
-// Copyright (c) Shareaza Development Team, 2002-2009.
+// Copyright (c) Shareaza Development Team, 2002-2015.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -26,14 +26,13 @@
 #pragma warning(disable:4820)
 #pragma warning(disable:4548)
 
-#define WINVER 0x0400
-#define _WIN32_WINNT 0x0400
-#define _WIN32_WINDOWS 0x0400
-#define _WIN32_IE 0x0400
+#define _WIN32_WINNT 0x0501
+#include <SDKDDKVer.h>
 
 #define STRICT
 #define WIN32_LEAN_AND_MEAN
 #define BOOST_USE_WINDOWS_H
+#define _HAS_EXCEPTIONS 0
 
 #include <windows.h>
 #include <algorithm>

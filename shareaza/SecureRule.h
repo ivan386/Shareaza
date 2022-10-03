@@ -35,7 +35,7 @@ public:
 	CSecureRule& operator=(const CSecureRule& pRule);
 	~CSecureRule();
 
-	typedef enum { srAddress, srContentAny, srContentAll, srContentRegExp } RuleType;
+	typedef enum { srAddress, srContentAny, srContentAll, srContentRegExp, srAddressIPv6 } RuleType;
 	enum { srNull, srAccept, srDeny };
 	enum { srIndefinite = 0, srSession = 1 };
 
@@ -48,6 +48,8 @@ public:
 	DWORD		m_nEver;
 	BYTE		m_nIP[4];
 	BYTE		m_nMask[4];
+	IN6_ADDR	m_nIPv6;
+	BYTE		m_nIPv6PrefixLen;
 	TCHAR*		m_pContent;
 	DWORD		m_nContentLength;
 
@@ -55,10 +57,12 @@ public:
 	void			Reset();
 	void			MaskFix();
 	BOOL			IsExpired(DWORD nNow, BOOL bSession = FALSE) const;
+	BOOL			Match(const IN6_ADDR* pAddress) const;
 	BOOL			Match(const IN_ADDR* pAddress) const;
 	BOOL			Match(LPCTSTR pszContent) const;
 	BOOL			Match(const CShareazaFile* pFile) const;
 	BOOL			Match(const CQuerySearch* pQuery, const CString& strContent) const;
+	void			SetIPv6(const CString& strIPv6);
 	void			SetContentWords(const CString& strContent);
 	CString			GetContentWords() const;
 	void			Serialize(CArchive& ar, int nVersion);

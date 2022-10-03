@@ -72,6 +72,17 @@ public:
 		InterlockedExchange( (LONG*)&m_nPriority, nPriority );
 	}
 
+	inline int GetPriority()
+	{
+		return m_nPriority;
+	}
+
+	inline static DWORD Compress(const IN6_ADDR nAddress)
+	{
+		const DWORD* n = (DWORD*) &nAddress;
+		return n[0] ^ n[1] ^ n[2] ^ n[3];
+	}
+
 	void	Serialize(CArchive& ar);
 	void	Start();
 	void	Stop();
@@ -100,11 +111,12 @@ protected:
 	DWORD			m_tLastG1;					// Time a G1 multicast search was sent
 	DWORD			m_tLastG2;					// Time a G2 hub was last searched
 	CQuerySearchPtr m_pSearch;					// Search handler	
-	CDwordDwordMap	m_pNodes;					// Pair of IP and query time (s)
+	CDwordDwordMap	m_pNodes;					// Pair of IPv4 or Compress( IPv6 ) and query time (s)
 	CDwordDwordMap	m_pG1Nodes;					// Pair of IP and last sent packet TTL
 	DWORD			m_tExecute;					// Search execute time (ticks)
 
 	BOOL	ExecuteNeighbours(const DWORD tTicks, const DWORD tSecs);
+	BOOL	ExecuteSources(const DWORD tTicks, const DWORD tSecs);
 	BOOL	ExecuteG1Mesh(const DWORD tTicks, const DWORD tSecs);
 	BOOL	ExecuteG2Mesh(const DWORD tTicks, const DWORD tSecs);
 	BOOL	ExecuteDonkeyMesh(const DWORD tTicks, const DWORD tSecs);

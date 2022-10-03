@@ -40,6 +40,7 @@ protected:
 	CString m_sName;
 	CString m_sDiskName;
 	CString m_sFileSize;
+	CString m_sBitrate;
 	CString m_sSHA1;
 	CString m_sTiger;
 	CString m_sED2K;

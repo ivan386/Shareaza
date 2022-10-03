@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0" encoding="UTF-8"?>
 
 <vendorCache xmlns="http://www.shareaza.com/schemas/VendorCache.xsd">
-	
+
 	<vendor code="RAZA">
 		<title>Shareaza</title>
 		<link>http://shareaza.sourceforge.net/</link>
@@ -26,14 +26,6 @@
 		<capability name="extended"/>
 	</vendor>
 
-	<vendor code="PEER">
-		<title>PeerProject</title>
-		<link>http://PeerProject.org/</link>
-		<capability name="htmlHostBrowse"/>
-		<capability name="chatFlag"/>
-		<capability name="extended"/>
-	</vendor>
-
 	<vendor code="ACQL">
 		<title>Acqlite</title>
 		<link>http://acqlite.sourceforge.net/</link>
@@ -42,52 +34,60 @@
 	<vendor code="ACQX">
 		<title>Acquisition</title>
 		<link>http://www.acquisitionx.com/</link>
-	</vendor> 
-	
+	</vendor>
+
 	<vendor code="AGIO">
 		<title>Adagio</title>
 		<link>http://sourceforge.net/projects/agio/</link>
 	</vendor>
-	
+
 	<vendor code="AGNT">
 		<title>Agentella</title>
 		<link>http://www.agentella.com/</link>
 	</vendor>
-	
+
 	<vendor code="ARES">
 		<title>Ares</title>
 		<link>http://www.aresgalaxy.org/</link>
 	</vendor>
-	
+
 	<vendor code="ATOM">
 		<title>AtomWire</title>
 		<link>http://www.atomwire.com/</link>
 	</vendor>
-	
+
 	<vendor code="BEAR">
 		<title>BearShare</title>
 		<link>http://www.bearshare.com/</link>
 		<capability name="htmlHostBrowse"/>
 		<capability name="chatFlag"/>
 	</vendor>
-	
+
 	<vendor code="CULT">
 		<title>Cultiv8r</title>
 		<link>http://www.cultiv8r.com/</link>
 	</vendor>
-	
+
 	<vendor code="DC++">
 		<title>DC++</title>
 		<link>http://dcplusplus.sourceforge.net/</link>
 		<capability name="htmlHostBrowse"/>
 		<capability name="chatFlag"/>
 	</vendor>
-	
+
 	<vendor code="ED2K">
 		<title>eDonkey2000</title>
 		<link>http://www.edonkey2000.com/</link>
 		<capability name="edonkey2000"/>
 		<capability name="chatFlag"/>
+	</vendor>
+
+	<vendor code="ENVY">
+		<title>Envy</title>
+		<link>http://getenvy.com</link>
+		<capability name="htmlHostBrowse"/>
+		<capability name="chatFlag"/>
+		<capability name="extended"/>
 	</vendor>
 
 	<vendor code="FOXY">
@@ -109,37 +109,37 @@
 		<title>giFT-Gnutella</title>
 		<link>http://gift.sourceforge.net/</link>
 	</vendor>
-	
+
 	<vendor code="GNEW">
 		<title>GNewtellium</title>
 		<link>http://gnewtellium.sourceforge.net/</link>
 	</vendor>
-	
+
 	<vendor code="GNOT">
 		<title>Gnotella</title>
 		<link>http://www.gnotella.com/</link>
 	</vendor>
-	
+
 	<vendor code="GNTD">
 		<title>Gtk-Gnutella</title>
 		<link>http://gtk-gnutella.sourceforge.net/</link>
 	</vendor>
-	
+
 	<vendor code="GNTG">
 		<title>Gnutelligentsia</title>
 		<link>http://gnutelligentsia.sourceforge.net/</link>
 	</vendor>
-	
+
 	<vendor code="GNUC">
 		<title>Gnucleus</title>
 		<link>http://www.gnucleus.com/Gnucleus/</link>
 	</vendor>
-	
+
 	<vendor code="GNUT">
 		<title>Gnut</title>
 		<link>http://www.gnutelliums.com/linux_unix/gnut</link>
 	</vendor>
-	
+
 	<vendor code="GNZL">
 		<title>Gnoozle</title>
 		<capability name="htmlHostBrowse"/>
@@ -151,40 +151,40 @@
 		<link>http://gtk-gnutella.sourceforge.net/</link>
 		<capability name="htmlHostBrowse"/>
 	</vendor>
-	
+
 	<vendor code="HSLG">
 		<title>Hagelslag</title>
 		<link>http://freshmeat.net/projects/hagelslag/</link>
 	</vendor>
-	
+
 	<vendor code="HYDR">
 		<title>Hydranode</title>
 		<link>http://www.hydranode.com/</link>
 		<capability name="htmlHostBrowse"/>
 		<capability name="chatFlag"/>
 	</vendor>
-	
+
 	<vendor code="JOET">
 		<title>Joetella</title>
 	</vendor>
-	
+
 	<vendor code="LIME">
 		<title>LimeWire</title>
 		<link>http://www.limewire.com/</link>
 		<capability name="htmlHostBrowse"/>
 		<capability name="chatFlag"/>
 	</vendor>
-	
+
 	<vendor code="MACT">
 		<title>Mactella</title>
 		<link>http://www.cxc.com/</link>
 	</vendor>
-	
+
 	<vendor code="MESH">
 		<title>iMesh</title>
 		<link>http://www.imesh.com/</link>
 	</vendor>
-	
+
 	<vendor code="MLDK">
 		<title>MLdonkey</title>
 		<link>http://www.mldonkey.net/</link>
@@ -200,7 +200,7 @@
 		<title>MyNapster</title>
 		<link>http://www.mynapster.com/</link>
 	</vendor>
-	
+
 	<vendor code="MOOD">
 		<title>MoodAmp</title>
 		<link>http://www.moodamp.com/</link>
@@ -220,32 +220,46 @@
 		<title>mxie</title>
 		<link>http://www.mxie.com/</link>
 	</vendor>
-	
+
 	<vendor code="NAPS">
 		<title>NapShare</title>
 		<link>http://napshare.sourceforge.net/</link>
 	</vendor>
-	
+
 	<vendor code="OCFG">
 		<title>OpenCola</title>
 		<link>http://www.opencola.org/</link>
 	</vendor>
-	
+
 	<vendor code="OPRA">
 		<title>Opera</title>
 		<link>http://www.opera.com/</link>
 	</vendor>
-	
+
+	<vendor code="PEER">
+		<title>PeerProject</title>
+		<link>http://PeerProject.org/</link>
+		<capability name="htmlHostBrowse"/>
+		<capability name="chatFlag"/>
+		<capability name="extended"/>
+	</vendor>
+
 	<vendor code="PHEX">
 		<title>Phex</title>
 		<link>http://phex.kouk.de/mambo/</link>
 	</vendor>
-	
+
 	<vendor code="QTEL">
 		<title>Qtella</title>
 		<link>http://qtella.sourceforge.net/</link>
 	</vendor>
-	
+
+	<vendor code="SHLN">
+		<title>Sharelin</title>
+		<link>http://sharelin.sourceforge.net</link>
+		<capability name="htmlHostBrowse"/>
+	</vendor>
+
 	<vendor code="SNOW">
 		<title>FrostWire</title>
 		<link>http://www.frostwire.com/</link>
@@ -262,7 +276,7 @@
 		<title>Swapper.NET</title>
 		<link>http://www.revolutionarystuff.com/swapper/</link>
 	</vendor>
-	
+
 	<vendor code="SWFT">
 		<title>SwiftPeer</title>
 		<link>http://www.swiftsoftwaregroup.com/</link>
@@ -272,24 +286,31 @@
 		<title>TrustyFiles</title>
 		<link>http://www.trustyfiles.com/</link>
 	</vendor>
-	
+
 	<vendor code="TOAD">
 		<title>ToadNode</title>
 		<link>http://www.toadnode.com/</link>
 	</vendor>
-	
+
+	<vendor code="WSHR">
+		<title>WireShare</title>
+		<link>http://sourceforge.net/p/wireshare/</link>
+		<capability name="htmlHostBrowse"/>
+		<capability name="chatFlag"/>
+	</vendor>
+
 	<vendor code="XOLO">
 		<title>Xolox</title>
 		<link>http://www.xolox.nl/</link>
 	</vendor>
-	
+
 	<vendor code="XTLA">
 		<title>XTella</title>
 	</vendor>
-	
+
 	<vendor code="ZIGA">
 		<title>Ziga</title>
 		<link>http://sourceforge.net/projects/ziga/</link>
 	</vendor>
-	
+
 </vendorCache>

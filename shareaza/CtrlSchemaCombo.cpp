@@ -1,7 +1,7 @@
 //
 // CtrlSchemaCombo.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2014.
+// Copyright (c) Shareaza Development Team, 2002-2015.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -36,10 +36,8 @@ static char THIS_FILE[] = __FILE__;
 #endif
 
 BEGIN_MESSAGE_MAP(CSchemaCombo, CComboBox)
-	//{{AFX_MSG_MAP(CSchemaCombo)
-	ON_MESSAGE(WM_CTLCOLORLISTBOX, OnCtlColorListBox)
-	ON_CONTROL_REFLECT(CBN_DROPDOWN, OnDropDown)
-	//}}AFX_MSG_MAP
+	ON_MESSAGE(WM_CTLCOLORLISTBOX, &CSchemaCombo::OnCtlColorListBox)
+	ON_CONTROL_REFLECT(CBN_DROPDOWN, &CSchemaCombo::OnDropDown)
 END_MESSAGE_MAP()
 
 
@@ -47,9 +45,10 @@ END_MESSAGE_MAP()
 // CSchemaCombo construction
 
 CSchemaCombo::CSchemaCombo()
+	: m_nType		( CSchema::stFile )
+	, m_hListBox	( 0 )
+	, m_pWndProc	( NULL )
 {
-	m_hListBox			= 0;
-	m_pWndProc			= NULL;
 }
 
 /////////////////////////////////////////////////////////////////////////////
@@ -66,7 +65,7 @@ void CSchemaCombo::SetEmptyString(UINT nID)
 	LoadString( m_sNoSchemaText, nID );
 }
 
-void CSchemaCombo::Load(LPCTSTR pszSelectURI, int nType, int nAvailability, BOOL bReset)
+void CSchemaCombo::Load(LPCTSTR pszSelectURI, CSchema::Type nType, CSchema::Availability nAvailability, BOOL bReset)
 {
 	if ( ( GetStyle() & CBS_OWNERDRAWVARIABLE ) == 0 )
 	{
@@ -103,7 +102,7 @@ void CSchemaCombo::Load(LPCTSTR pszSelectURI, int nType, int nAvailability, BOOL
 			}
 		}
 
-		if ( ( bSelected || pSchema->m_nType == nType || nType == -1 ) &&
+		if ( ( bSelected || pSchema->m_nType == nType || nType == CSchema::stAny ) &&
 			 ( bSelected || pSchema->m_nAvailability <= nAvailability ) )
 		{
 			int nIndex = AddString( pSchema->m_sTitle );

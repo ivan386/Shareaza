@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Shareaza\n"
-"Report-Msgid-Bugs-To: ryo-oh-ki <ryo-oh-ki@narod.ru>\n"
-"POT-Creation-Date: 2014-01-27 13:47+0000\n"
+"Report-Msgid-Bugs-To: shareaza <shareaza@cherubicsoft.com>\n"
+"POT-Creation-Date: 2015-02-24 08:37+0000\n"
 "PO-Revision-Date: \n"
 "Last-Translator: ryo-oh-ki <ryo-oh-ki@narod.ru>\n"
 "Language-Team: Shareaza Development Team\n"
@@ -1184,19 +1184,6 @@ msgstr "Ugyanabból a _sorozatból"
 msgid "_Web Services"
 msgstr "_Webszolgáltatások"
 
-#: csearchwnd.basic;30;item;id_library_bitzi_web
-#: csearchwnd;32;item;id_library_bitzi_web
-#: cbrowsehostwnd.basic;34;item;id_library_bitzi_web
-#: cbrowsehostwnd;36;item;id_library_bitzi_web
-#: chitmonitorwnd;38;item;id_library_bitzi_web
-#: clibraryfileview.physical.basic;41;item;id_library_bitzi_web
-#: clibraryfileview.physical;44;item;id_library_bitzi_web
-#: clibraryfileview.virtual.basic;47;item;id_library_bitzi_web
-#: clibraryfileview.virtual;50;item;id_library_bitzi_web
-#: webservices.list.menu;item;id_library_bitzi_web
-msgid "View _Bitzi Ticket"
-msgstr "_Bitzi Ticket"
-
 #: csearchwnd;item;id_search_downloadnow
 #: cbrowsehostwnd.basic;item;id_search_downloadnow
 #: cbrowsehostwnd;item;id_search_downloadnow
@@ -1482,6 +1469,7 @@ msgstr "_Előzmények megjelenítése"
 
 #: clibrarytree.physical.basic;item;id_library_explore
 #: clibrarytree.physical;item;id_library_explore
+#: path.menu;item;id_path_explore
 msgid "_Explore"
 msgstr "_Intézőben megnyit"
 
@@ -1567,14 +1555,6 @@ msgstr "Ú_j mappa..."
 #: clibrarytileview;item;id_library_album_open
 msgid "_Open"
 msgstr "_Megnyitás"
-
-#: clibraryfileview.physical.basic;41;item;id_library_bitzi_download
-#: clibraryfileview.physical;44;item;id_library_bitzi_download
-#: clibraryfileview.virtual.basic;47;item;id_library_bitzi_download
-#: clibraryfileview.virtual;50;item;id_library_bitzi_download
-#: webservices.list.menu;item;id_library_bitzi_download
-msgid "_Download Metadata"
-msgstr "_Metaadat letöltése"
 
 #: clibraryfileview.physical.basic;41;item;id_webservices_musicbrainz
 #: clibraryfileview.physical;44;item;id_webservices_musicbrainz
@@ -1809,7 +1789,8 @@ msgstr "Hiba_keresés"
 msgid "Timestam_p"
 msgstr "_Időbélyeg"
 
-#: csystemwnd;item;id_system_copy curlexportdlg;control;7
+#: csystemwnd;item;id_system_copy path.menu;item;id_path_copy
+#: curlexportdlg;control;7
 msgid "_Copy"
 msgstr "_Másolás"
 
@@ -3623,14 +3604,6 @@ msgstr "Album megnyitása."
 msgid "View and edit the properties of the selected album folder..."
 msgstr "A kiválasztott mappa tulajdonságainak szerkesztése..."
 
-#: message;id_library_bitzi_download
-msgid "Download metadata for the selected file(s) from Bitzi(TM)..."
-msgstr "Metaadat letöltésea Bitzi(TM)-ről..."
-
-#: message;id_library_bitzi_web
-msgid "View the Bitzi(TM) ticket for the selected file on the web."
-msgstr "Bitzi(TM) ticket megnézése."
-
 #: message;id_library_columns message;id_search_columns
 msgid "Select metadata columns to be displayed..."
 msgstr "Milyen oszlopokat kívánsz megjeleníteni..."
@@ -4123,6 +4096,14 @@ msgstr "Visszamegy az előző fájlra."
 #, fuzzy
 msgid "Previous Pane"
 msgstr "Előző"
+
+#: message;id_path_copy
+msgid "Copy this path to clipboard."
+msgstr ""
+
+#: message;id_path_explore
+msgid "Explore this path."
+msgstr ""
 
 #: message;id_scheduler_activate
 #, fuzzy
@@ -5216,6 +5197,10 @@ msgstr "Megbízhatatlan"
 msgid "Free:"
 msgstr "Készült:"
 
+#: string;12999
+msgid "Client %s has a prohibited user agent \"%s\", banning."
+msgstr ""
+
 #: string;13000
 msgid "Are you sure you want to delete the selected security rules? This cannot be undone."
 msgstr "Biztosan törölni akarja a kiválasztott biztonsági szabályokat? Később már nem lehet visszavonni."
@@ -6015,14 +6000,6 @@ msgstr "%i fájl metaadat részét akarja módosítani. Biztos ezt akarja?"
 msgid "Editing metadata of %i files."
 msgstr "Fájl metaadatának a szerkesztése: %i"
 
-#: string;16387
-msgid "The file \"%s\" has not yet been hashed. Please wait for the file to be hashed, and then try again."
-msgstr "A(z) \"%s\" még nem volt hashelve. Várja meg a hashelést és próbálja újra."
-
-#: string;16388
-msgid "This option uses services provided by Bitzi.com for recognising and sharing information about selected files.\\n\\nShareaza will transmit the SHA1 hash code for the selected file(s) in order to query the Bitzi database. If you are concerned about privacy, you may wish to consult the Bitzi.com privacy policy.\\n\\nWould you like to proceed?"
-msgstr "Ez az opció a Bitzi.com fájlinformációs szolgáltatásait használja.\\n\\nA Shareaza a fájl SHA1 hash kódját elküldi a Bitzi adatbázisába. Ha nem bízik meg a Bitziben, akkor olvassa el a Bitzi.com adatvédelmi nyilatkozatát.\\n\\nTovább akar menni?"
-
 #: string;16389
 msgid "Are you sure you want to permanently delete the %i selected file(s) ?\\n\\nThe files will be moved to your \"recycle bin\" if it is enabled."
 msgstr "Biztos, hogy törölni akarja a %i fájlt?\\n\\nA fájl(ok) a \"Lomtárba\" kerülnek, ha be van kapcsolva."
@@ -6312,22 +6289,6 @@ msgstr "Típus:"
 #: string;16780
 msgid "Unspecified"
 msgstr "Nincs meghatározva"
-
-#: string;16781
-msgid "Requesting..."
-msgstr "Kérés..."
-
-#: string;16782
-msgid "Success!"
-msgstr "Siker!"
-
-#: string;16783
-msgid "Finished, click Close"
-msgstr "Kész, zárd be"
-
-#: string;16784
-msgid "&Close"
-msgstr "Bezárás"
 
 #: string;16785
 msgid "(No Visualisation)"
@@ -7387,12 +7348,11 @@ msgstr "OK"
 #: cgraphlistdlg;control;17 cgraphitemdlg;control;2
 #: cschemacolumnsdlg;control;4 csecureruledlg;control;34
 #: csharemanagerdlg;control;6 curlcopydlg;control;6 curlexportdlg;control;10
-#: curlactiondlg;control;11 cbitzidownloaddlg;control;4
-#: cfilepreviewdlg;control;6 cexistingfiledlg;control;2
-#: cclosemodedlg;control;6 cdonkeyserversdlg;control;5
-#: cdeletefiledlg;control;5 ctorrentseeddlg;control;4
-#: cdownloadgroupdlg;control;2 cmediavisdlg;control;6
-#: cdecodemetadatadlg;control;9 circinputdlg;control;3
+#: curlactiondlg;control;11 cfilepreviewdlg;control;6
+#: cexistingfiledlg;control;2 cclosemodedlg;control;6
+#: cdonkeyserversdlg;control;5 cdeletefiledlg;control;5
+#: ctorrentseeddlg;control;4 cdownloadgroupdlg;control;2
+#: cmediavisdlg;control;6 cdecodemetadatadlg;control;9 circinputdlg;control;3
 msgid "Cancel"
 msgstr "Mégse"
 
@@ -7507,6 +7467,22 @@ msgstr ""
 msgid "No Tasks Currently Scheduled"
 msgstr ""
 
+#: string;20268 cdownloadssettingspage;control;1
+msgid "Save Completed Files Here"
+msgstr "Kész letöltések mappája"
+
+#: string;20269 cdownloadssettingspage;control;23
+msgid "Store Temporary Incomplete Files Here"
+msgstr "Félkész letöltések mappája"
+
+#: string;20270 cbittorrentsettingspage;control;20
+msgid "Store Torrents Here"
+msgstr "Torrentfájlok mappája"
+
+#: string;20271 clibrarysettingspage;control;24
+msgid "Store Collections Here"
+msgstr "Gyűjtemények tárolása"
+
 #: csettingsheet;control;4 cprofilemanagerdlg;control;4
 msgid "Apply"
 msgstr "Alkalmaz"
@@ -7543,9 +7519,9 @@ msgstr "_Letöltések"
 msgid "Expand new downloads by default"
 msgstr "Új letöltések kibontása"
 
-#: cgeneralsettingspage;control;9
-msgid "Display simple progress bar"
-msgstr "Egyszerű folyamatábra megjelenítése"
+#: cgeneralsettingspage;control;9 curlactiondlg;control;13
+msgid "Open a download _monitor window"
+msgstr "Letöltés_monitor megnyitása"
 
 #: cgeneralsettingspage;control;10
 msgid "_Search:"
@@ -7657,10 +7633,6 @@ msgstr "_Hozzáad"
 #: clibrarysettingspage;control;20
 msgid "_Never Share:"
 msgstr "_Soha ne ossza meg"
-
-#: clibrarysettingspage;control;24
-msgid "Store _Collections Here:"
-msgstr "_Gyűjtemények tárolása"
 
 #: clibrarysettingspage;control;27
 msgid "Create ghost files when deleting"
@@ -7898,11 +7870,6 @@ msgstr "_Időtúllépések"
 msgid "Handshake:"
 msgstr "Viszontválasz:"
 
-#: cdownloadssettingspage;control;1
-#, fuzzy
-msgid "Save Completed Files Here"
-msgstr "_Kész letöltések mappája"
-
 #: cdownloadssettingspage;control;4
 msgid "Scan every completed file with AntiVirus"
 msgstr ""
@@ -7945,11 +7912,6 @@ msgstr "Maximum sorbanállás:"
 #: cdownloadssettingspage;control;22
 msgid "Only download and upload to networks which are connected."
 msgstr "Csak a kapcsolatban lévő hálózatokon van forgalom"
-
-#: cdownloadssettingspage;control;23
-#, fuzzy
-msgid "Store Temporary Incomplete Files Here"
-msgstr "_Félkész letöltések mappája"
 
 #: cuploadssettingspage;control;2
 msgid "Share NEW partial downloads"
@@ -8271,10 +8233,6 @@ msgstr ""
 msgid "_Download Connections:"
 msgstr "_Letöltési kapcsolatok"
 
-#: cbittorrentsettingspage;control;20
-msgid "_Store Torrents Here:"
-msgstr "_Torrentfájlok mappája"
-
 #: cbittorrentsettingspage;control;21
 msgid "Torrents at once"
 msgstr "torrent letöltése egyszerre"
@@ -8326,7 +8284,7 @@ msgid "Author:"
 msgstr "Készítő:"
 
 #: cskinssettingspage;control;7 cpluginssettingspage;control;5
-#: cadvancedsettingspage;control;7 ccollectionexportdlg;control;8
+#: cadvancedsettingspage;control;9 ccollectionexportdlg;control;8
 msgid "Description:"
 msgstr "Leírás:"
 
@@ -8350,15 +8308,15 @@ msgstr "Plugin adatok"
 msgid "_Setup..."
 msgstr "_Beállít..."
 
-#: cadvancedsettingspage;control;4
+#: cadvancedsettingspage;control;6
 msgid "Set Default"
 msgstr "Alapérték"
 
-#: cadvancedsettingspage;control;5
+#: cadvancedsettingspage;control;7
 msgid "Setting Properties:"
 msgstr "Tulajdonság"
 
-#: cadvancedsettingspage;control;6
+#: cadvancedsettingspage;control;8
 msgid "Value:"
 msgstr "Érték:"
 
@@ -9005,8 +8963,8 @@ msgid "Discovery Service Type:"
 msgstr "Típusa:"
 
 #: cdiscoveryservicedlg;control;4
-msgid "Gnutella Bootstrap|G1 GWebCache|G2 GWebCache|G1/G2 GWebCache|Server.met URL|Blocked"
-msgstr "Gnutella Bootstrap|GWebCache|Server.met URL|Blokkolva"
+msgid "Gnutella Bootstrap|G1 GWebCache|G2 GWebCache|G1/G2 GWebCache|Server.met URL|DC++ Hub List URL|Blocked"
+msgstr "Gnutella Bootstrap|G1 GWebCache|G2 GWebCache|G1/G2 GWebCache|Server.met URL|DC++ Hub List URL|Blokkolva"
 
 #: dialog;cdownloadmonitordlg
 msgid "Download : Shareaza"
@@ -9344,25 +9302,9 @@ msgstr "_Keresés"
 msgid "_Remember my selection next time"
 msgstr "_Beállítás megjegyzése"
 
-#: curlactiondlg;control;13
-msgid "Open a download _monitor window"
-msgstr "Letöltés_monitor megnyitása"
-
 #: curlactiondlg;control;14
 msgid "You have clicked on a Shareaza-powered URI which will add the following Discovery Service to your Discovery Services cache."
 msgstr "Egy Shareaza által is támogatott URI-re kattintott, amely a következő Szerverkereső szolgáltatást adja hozzá a gyűjteményhez."
-
-#: dialog;cbitzidownloaddlg
-msgid "Downloading Metadata..."
-msgstr "Metaadat letöltése..."
-
-#: cbitzidownloaddlg;control;2
-msgid "Shareaza is attempting to download metadata from Bitzi(TM)..."
-msgstr "Metaadat letöltése: Bitzi(TM)..."
-
-#: cbitzidownloaddlg;control;6
-msgid "www.bitzi.com"
-msgstr "www.bitzi.com"
 
 #: dialog;cfilepreviewdlg
 msgid "Smart Download Preview..."
@@ -10026,6 +9968,54 @@ msgstr "TigerTree"
 #, fuzzy
 msgid "NextRun"
 msgstr "Következő"
+
+#~ msgid "Store _Collections Here:"
+#~ msgstr "_Gyűjtemények tárolása"
+
+#~ msgid "_Store Torrents Here:"
+#~ msgstr "_Torrentfájlok mappája"
+
+#~ msgid "Display simple progress bar"
+#~ msgstr "Egyszerű folyamatábra megjelenítése"
+
+#~ msgid "Requesting..."
+#~ msgstr "Kérés..."
+
+#~ msgid "Success!"
+#~ msgstr "Siker!"
+
+#~ msgid "Finished, click Close"
+#~ msgstr "Kész, zárd be"
+
+#~ msgid "&Close"
+#~ msgstr "Bezárás"
+
+#~ msgid "The file \"%s\" has not yet been hashed. Please wait for the file to be hashed, and then try again."
+#~ msgstr "A(z) \"%s\" még nem volt hashelve. Várja meg a hashelést és próbálja újra."
+
+#~ msgid "View _Bitzi Ticket"
+#~ msgstr "_Bitzi Ticket"
+
+#~ msgid "_Download Metadata"
+#~ msgstr "_Metaadat letöltése"
+
+#~ msgid "Download metadata for the selected file(s) from Bitzi(TM)..."
+#~ msgstr "Metaadat letöltésea Bitzi(TM)-ről..."
+
+#~ msgid "View the Bitzi(TM) ticket for the selected file on the web."
+#~ msgstr "Bitzi(TM) ticket megnézése."
+
+#~ msgid "This option uses services provided by Bitzi.com for recognising and sharing information about selected files.\\n\\nShareaza will transmit the SHA1 hash code for the selected file(s) in order to query the Bitzi database. If you are concerned about privacy, you may wish to consult the Bitzi.com privacy policy.\\n\\nWould you like to proceed?"
+#~ msgstr "Ez az opció a Bitzi.com fájlinformációs szolgáltatásait használja.\\n\\nA Shareaza a fájl SHA1 hash kódját elküldi a Bitzi adatbázisába. Ha nem bízik meg a Bitziben, akkor olvassa el a Bitzi.com adatvédelmi nyilatkozatát.\\n\\nTovább akar menni?"
+
+#~ msgid "Downloading Metadata..."
+#~ msgstr "Metaadat letöltése..."
+
+#~ msgid "Shareaza is attempting to download metadata from Bitzi(TM)..."
+#~ msgstr "Metaadat letöltése: Bitzi(TM)..."
+
+#~ msgid "www.bitzi.com"
+#~ msgstr "www.bitzi.com"
 
 #~ msgid "Get Data"
 #~ msgstr "Adatok letöltése"

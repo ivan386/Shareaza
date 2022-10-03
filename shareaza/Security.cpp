@@ -1,7 +1,7 @@
 //
 // Security.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2013.
+// Copyright (c) Shareaza Development Team, 2002-2014.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -104,11 +104,12 @@ void CSecurity::Add(CSecureRule* pRule)
 	{
 		CQuickLock oLock( m_pSection );
 
+		pRule->MaskFix();
+
 		// If an address rule is added, the mask fix is performed and the miss cache is cleared either in whole or just the relevant address
 		// erase does support ranges but this should cover auto bans and get reasonable performance without tripping on incorrect masks
 		if ( pRule->m_nType == CSecureRule::srAddress )
 		{
-			pRule->MaskFix();
 			if ( *(DWORD*)pRule->m_nMask == 0xffffffff )
 			{
 				m_Cache.erase( *(DWORD*)pRule->m_nIP );
@@ -118,8 +119,17 @@ void CSecurity::Add(CSecureRule* pRule)
 				m_Cache.clear();
 			}
 		}
-
-		pRule->MaskFix();
+		else if ( pRule->m_nType == CSecureRule::srAddressIPv6 )
+		{
+			if ( pRule->m_nIPv6PrefixLen == 128 )
+			{
+				m_CacheIPv6.erase( pRule->m_nIPv6 );
+			}
+			else
+			{
+				m_CacheIPv6.clear();
+			}
+		}
 
 		// special treatment for single IP security rules
 		if ( pRule->m_nType == CSecureRule::srAddress &&
@@ -129,6 +139,22 @@ void CSecurity::Add(CSecureRule* pRule)
 			if ( i == m_pIPRules.end() )
 			{
 				m_pIPRules[ *(DWORD*)pRule->m_nIP ] = pRule;
+			}
+			else if ( (*i).second != pRule )
+			{
+				// replace old rule with new one.
+				CSecureRule* pOldRule = (*i).second;
+				(*i).second = pRule;
+				delete pOldRule;
+			}
+		}
+		else if ( pRule->m_nType == CSecureRule::srAddressIPv6 &&
+			pRule->m_nIPv6PrefixLen == 128 )
+		{
+			CAddressIPv6RuleMap::iterator i = m_pIPv6Rules.find( pRule->m_nIPv6 );
+			if ( i == m_pIPv6Rules.end() )
+			{
+				m_pIPv6Rules[ pRule->m_nIPv6 ] = pRule;
 			}
 			else if ( (*i).second != pRule )
 			{
@@ -166,7 +192,7 @@ void CSecurity::Remove(CSecureRule* pRule)
 	{
 		m_pRules.RemoveAt( pos );
 	}
-	
+
 	// this also accounts for double entries.
 	if ( pRule->m_nType == CSecureRule::srAddress )
 	{
@@ -338,7 +364,7 @@ void CSecurity::Ban(const CShareazaFile* pFile, int nBanLength, BOOL bMessage, L
 	Add( pRule );
 
 	if ( bMessage && pFile )
-		theApp.Message( MSG_NOTICE, IDS_NETWORK_SECURITY_BLOCKED, (LPCTSTR)pFile->m_sName );
+		theApp.Message( MSG_NOTICE, IDS_SECURITY_BLOCKED, (LPCTSTR)pFile->m_sName );
 }
 
 void CSecurity::Ban(const IN_ADDR* pAddress, int nBanLength, BOOL bMessage, LPCTSTR szComment)
@@ -410,8 +436,82 @@ void CSecurity::Ban(const IN_ADDR* pAddress, int nBanLength, BOOL bMessage, LPCT
 
 	if ( bMessage )
 	{
-		theApp.Message( MSG_NOTICE, IDS_NETWORK_SECURITY_BLOCKED,
+		theApp.Message( MSG_NOTICE, IDS_SECURITY_BLOCKED,
 			(LPCTSTR)CString( inet_ntoa( *pAddress ) ) );
+	}
+}
+
+void CSecurity::Ban(const IN6_ADDR* pAddress, int nBanLength, BOOL bMessage, LPCTSTR szComment)
+{
+	CQuickLock oLock( m_pSection );
+
+	DWORD tNow = static_cast< DWORD >( time( NULL ) );
+	
+	CAddressIPv6RuleMap::const_iterator i = m_pIPv6Rules.find( *pAddress );
+	if ( i != m_pIPv6Rules.end() )
+	{
+		CSecureRule* pIPRule = (*i).second; 
+
+		if ( pIPRule->m_nAction == CSecureRule::srDeny )
+		{
+			if ( ( nBanLength == banWeek ) && ( pIPRule->m_nExpire < tNow + 604000 ) )
+			{
+				pIPRule->m_nExpire = tNow + 604800;
+			}
+			else if ( ( nBanLength == banForever ) && ( pIPRule->m_nExpire != CSecureRule::srIndefinite ) )
+			{
+				pIPRule->m_nExpire = CSecureRule::srIndefinite;
+			}
+			return;
+		}
+	}
+
+	CSecureRule* pIPRule = new CSecureRule();
+	pIPRule->m_nAction	= CSecureRule::srDeny;
+	pIPRule->m_nType	= CSecureRule::srAddressIPv6;
+
+	switch ( nBanLength )
+	{
+	case banSession:
+		pIPRule->m_nExpire	= CSecureRule::srSession;
+		pIPRule->m_sComment	= _T("Session Ban");
+		break;
+	case ban5Mins:
+		pIPRule->m_nExpire	= tNow + 300;
+		pIPRule->m_sComment	= _T("Temp Ignore");
+		break;
+	case ban30Mins:
+		pIPRule->m_nExpire	= tNow + 1800;
+		pIPRule->m_sComment	= _T("Temp Ignore");
+		break;
+	case ban2Hours:
+		pIPRule->m_nExpire	= tNow + 7200;
+		pIPRule->m_sComment	= _T("Temp Ignore");
+		break;
+	case banWeek:
+		pIPRule->m_nExpire	= tNow + 604800;
+		pIPRule->m_sComment	= _T("Client Block");
+		break;
+	case banForever:
+		pIPRule->m_nExpire	= CSecureRule::srIndefinite;
+		pIPRule->m_sComment	= _T("Ban");
+		break;
+	default:
+		pIPRule->m_nExpire	= CSecureRule::srSession;
+		pIPRule->m_sComment	= _T("Session Ban");
+	}
+
+	if ( szComment )
+		pIPRule->m_sComment = szComment;
+
+	pIPRule->m_nIPv6 = *pAddress;
+
+	Add( pIPRule );
+
+	if ( bMessage )
+	{
+		theApp.Message( MSG_NOTICE, IDS_SECURITY_BLOCKED,
+			(LPCTSTR) IPv6ToString( pAddress ) );
 	}
 }
 
@@ -520,11 +620,81 @@ BOOL CSecurity::IsDenied(const IN_ADDR* pAddress)
 		}
 	}
 
-	// If the IP is clean, add it to the miss cache	
+	// If the IP is clean, add it to the miss cache
 	m_Cache.insert( *(DWORD*) pAddress );
 
 	// In this case, return our default policy
 	return m_bDenyPolicy;
+}
+
+BOOL CSecurity::IsDenied(const IN6_ADDR* pAddress)
+{
+	CQuickLock oLock( m_pSection );
+
+	DWORD nNow = static_cast< DWORD >( time( NULL ) );
+
+	// First check the fast IP lookup map.
+	CAddressIPv6RuleMap::const_iterator i = m_pIPv6Rules.find( *pAddress );
+	if ( i != m_pIPv6Rules.end() )
+	{
+		CSecureRule* pIPRule = (*i).second;
+		if ( pIPRule->IsExpired( nNow ) )
+		{
+			m_pIPv6Rules.erase( i );
+		}
+		else
+		{
+			pIPRule->m_nToday ++;
+			pIPRule->m_nEver ++;
+
+			if ( pIPRule->m_nExpire > CSecureRule::srSession && pIPRule->m_nExpire < nNow + 300 )
+				// Add 5 min penalty for early access
+				pIPRule->m_nExpire = nNow + 300;
+
+			if ( pIPRule->m_nAction == CSecureRule::srAccept )
+				return FALSE;
+			else if ( pIPRule->m_nAction == CSecureRule::srDeny )
+				return TRUE;
+		}
+	}
+
+	
+	// Second, check the miss cache if the IP has already been checked and found to be OK.
+	// if the address is in cache, it is a miss and no lookup is needed
+	if ( m_CacheIPv6.count( *pAddress ) )
+		return m_bDenyPolicy;
+
+	// Third, check whether the IP is still stored in one of the old rules or the IP range blocking rules.
+	for ( POSITION pos = GetIterator() ; pos ; )
+	{
+		POSITION posLast = pos;
+		CSecureRule* pRule = GetNext( pos );
+
+		if ( pRule->IsExpired( nNow ) )
+		{
+			m_pRules.RemoveAt( posLast );
+			delete pRule;
+		}
+		else if ( pRule->Match( pAddress ) )
+		{
+			pRule->m_nToday ++;
+			pRule->m_nEver ++;
+
+			if ( pRule->m_nExpire > CSecureRule::srSession && pRule->m_nExpire < nNow + 300 )
+				// Add 5 min penalty for early access
+				pRule->m_nExpire = nNow + 300;
+
+			if ( pRule->m_nAction == CSecureRule::srAccept )
+				return FALSE;
+			else if ( pRule->m_nAction == CSecureRule::srDeny )
+				return TRUE;
+		}
+	}
+
+	// If the IP is clean, add it to the miss cache
+	m_CacheIPv6.insert( *pAddress );
+
+	return FALSE;
 }
 
 BOOL CSecurity::IsDenied(LPCTSTR pszContent)
@@ -600,6 +770,12 @@ BOOL CSecurity::IsDenied(const CShareazaFile* pFile)
 	}
 
 	return m_bDenyPolicy;
+}
+
+BOOL CSecurity::IsIgnoredCountry(const CString& strCountry)
+{
+	if (strCountry.IsEmpty()) return FALSE;
+	return Settings.Connection.IgnoredCountry.find( strCountry ) != Settings.Connection.IgnoredCountry.end();
 }
 
 BOOL CSecurity::IsDenied(const CQuerySearch* pQuery, const CString& strContent)
@@ -705,7 +881,7 @@ BOOL CSecurity::Load()
 				ar.Abort();
 				pFile.Abort();
 				pException->Delete();
-				theApp.Message( MSG_ERROR, _T("Failed to load security rules: %s"), strFile );
+				theApp.Message( MSG_ERROR, _T("Failed to load security rules: %s"), (LPCTSTR)strFile );
 				return FALSE;
 			}
 			pFile.Close();
@@ -714,13 +890,13 @@ BOOL CSecurity::Load()
 		{
 			pFile.Abort();
 			pException->Delete();
-			theApp.Message( MSG_ERROR, _T("Failed to load security rules: %s"), strFile );
+			theApp.Message( MSG_ERROR, _T("Failed to load security rules: %s"), (LPCTSTR)strFile );
 			return FALSE;
 		}
 	}
 	else
 	{
-		theApp.Message( MSG_ERROR, _T("Failed to load security rules: %s"), strFile );
+		theApp.Message( MSG_ERROR, _T("Failed to load security rules: %s"), (LPCTSTR)strFile );
 		return FALSE;
 	}
 
@@ -736,7 +912,7 @@ BOOL CSecurity::Save()
 	if ( ! pFile.Open( strTemp, CFile::modeWrite | CFile::modeCreate | CFile::shareExclusive | CFile::osSequentialScan ) )
 	{
 		DeleteFile( strTemp );
-		theApp.Message( MSG_ERROR, _T("Failed to save security rules: %s"), strTemp );
+		theApp.Message( MSG_ERROR, _T("Failed to save security rules: %s"), (LPCTSTR)strTemp );
 		return FALSE;
 	}
 
@@ -757,7 +933,7 @@ BOOL CSecurity::Save()
 			pFile.Abort();
 			pException->Delete();
 			DeleteFile( strTemp );
-			theApp.Message( MSG_ERROR, _T("Failed to save security rules: %s"), strTemp );
+			theApp.Message( MSG_ERROR, _T("Failed to save security rules: %s"), (LPCTSTR)strTemp );
 			return FALSE;
 		}
 		pFile.Close();
@@ -767,14 +943,14 @@ BOOL CSecurity::Save()
 		pFile.Abort();
 		pException->Delete();
 		DeleteFile( strTemp );
-		theApp.Message( MSG_ERROR, _T("Failed to save security rules: %s"), strTemp );
+		theApp.Message( MSG_ERROR, _T("Failed to save security rules: %s"), (LPCTSTR)strTemp );
 		return FALSE;
 	}
 
 	if ( ! MoveFileEx( strTemp, strFile, MOVEFILE_COPY_ALLOWED | MOVEFILE_REPLACE_EXISTING ) )
 	{
 		DeleteFile( strTemp );
-		theApp.Message( MSG_ERROR, _T("Failed to save security rules: %s"), strFile );
+		theApp.Message( MSG_ERROR, _T("Failed to save security rules: %s"), (LPCTSTR)strFile );
 		return FALSE;
 	}
 
@@ -804,6 +980,11 @@ void CSecurity::Serialize(CArchive& ar)
 		{
 			(*i).second->Serialize( ar, nVersion );
 		}
+
+		for ( CAddressIPv6RuleMap::const_iterator i = m_pIPv6Rules.begin(); i != m_pIPv6Rules.end(); ++i )
+		{
+			(*i).second->Serialize( ar, nVersion );
+		}
 	}
 	else
 	{
@@ -830,6 +1011,11 @@ void CSecurity::Serialize(CArchive& ar)
 					*(DWORD*)pRule->m_nMask == 0xffffffff )
 				{
 					m_pIPRules[ *(DWORD*)pRule->m_nIP ] = pRule;
+				}
+				else if( pRule->m_nType == CSecureRule::srAddressIPv6 &&
+					pRule->m_nIPv6PrefixLen == 128 )
+				{
+					m_pIPv6Rules[ pRule->m_nIPv6 ] = pRule;
 				}
 				else
 				{
@@ -933,7 +1119,6 @@ BOOL CSecurity::FromXML(CXMLElement* pXML)
 
 BOOL CSecurity::Import(LPCTSTR pszFile)
 {
-	CString strText;
 	CBuffer pBuffer;
 	CFile pFile;
 
@@ -967,7 +1152,7 @@ BOOL CSecurity::Import(LPCTSTR pszFile)
 			if ( pRule->FromGnucleusString( strLine ) )
 			{
 				CQuickLock oLock( m_pSection );
-				
+
 				pRule->MaskFix();
 
 				// special treatment for single IP security rules
@@ -1003,7 +1188,7 @@ BOOL CSecurity::IsClientBad(const CString& sUserAgent) const
 
 	// Bad/unapproved versions of Shareaza
 	// Really obsolete versions of Shareaza should be blocked. (they may have bad settings)
-	if ( LPCTSTR szVersion = _tcsistr( sUserAgent, _T("shareaza") ) )	
+	if ( LPCTSTR szVersion = _tcsistr( sUserAgent, _T("shareaza") ) )
 	{
 		szVersion += 8;
 		if ( _tcsistr( szVersion, _T(" 0.") ) )			return TRUE;
@@ -1021,7 +1206,7 @@ BOOL CSecurity::IsClientBad(const CString& sUserAgent) const
 	}
 
 	// LimeWire
-	if ( LPCTSTR szVersion = _tcsistr( sUserAgent, _T("LimeWire") ) )	
+	if ( LPCTSTR szVersion = _tcsistr( sUserAgent, _T("LimeWire") ) )
 	{
 		szVersion += 8;
 		return FALSE;
@@ -1057,19 +1242,19 @@ BOOL CSecurity::IsClientBad(const CString& sUserAgent) const
 
 	// Fildelarprogram
 	if ( _tcsistr( sUserAgent, _T("Fildelarprogram") ) )			return TRUE;
-	
+
 	// Trilix
 	if ( _tcsistr( sUserAgent, _T("Trilix") ) )						return TRUE;
-	
+
 	// Gnutella Turbo (Look into this client some more)
 	if ( _tcsistr( sUserAgent, _T("Gnutella Turbo") ) )				return TRUE;
-	
+
 	// Mastermax File Sharing
 	if ( _tcsistr( sUserAgent, _T("Mastermax File Sharing") ) )		return TRUE;
-	
+
 	// Fastload.TV
 	if ( _tcsistr( sUserAgent, _T("Fastload.TV") ) )				return TRUE;
-	
+
 	// GPL breakers- Clients violating the GPL
 	// See http://www.gnu.org/copyleft/gpl.html
 	// Some other breakers outside the list
@@ -1085,7 +1270,7 @@ BOOL CSecurity::IsClientBad(const CString& sUserAgent) const
 	if ( _tcsistr( sUserAgent, _T("mxie") ) )						return TRUE; // Leechers, do not allow to connect
 
 	if ( _tcsistr( sUserAgent, _T("WinMX") ) )						return TRUE;
-	
+
 	if ( _tcsistr( sUserAgent, _T("eTomi") ) )						return TRUE; // outdated rip-off
 
 	// Unknown- Assume OK
@@ -1139,7 +1324,7 @@ CLiveList* CSecurity::GetList() const
 {
 	CQuickLock oLock( m_pSection );
 
-	CLiveList* pLiveList = new CLiveList( 6, GetCount() + GetCount() / 4u );
+	CLiveList* pLiveList = new CLiveList( 6, (UINT)GetCount() + (UINT)GetCount() / 4u );
 
 	if ( CLiveItem* pDefault = pLiveList->Add( (LPVOID)0 ) )
 	{
@@ -1158,6 +1343,11 @@ CLiveList* CSecurity::GetList() const
 	}
 
 	for ( CAddressRuleMap::const_iterator i = m_pIPRules.begin(); i != m_pIPRules.end(); ++i, ++nCount )
+	{
+		(*i).second->ToList( pLiveList, nCount, tNow );
+	}
+
+	for ( CAddressIPv6RuleMap::const_iterator i = m_pIPv6Rules.begin(); i != m_pIPv6Rules.end(); ++i, ++nCount )
 	{
 		(*i).second->ToList( pLiveList, nCount, tNow );
 	}

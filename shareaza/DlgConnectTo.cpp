@@ -1,7 +1,7 @@
 //
 // DlgConnectTo.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2010.
+// Copyright (c) Shareaza Development Team, 2002-2014.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -223,7 +223,7 @@ void CConnectToDlg::OnDrawItem(int /*nIDCtl*/, LPDRAWITEMSTRUCT lpDrawItemStruct
 		? COLOR_HIGHLIGHT : COLOR_WINDOW ) );
 	dc.SetBkMode( TRANSPARENT );
 
-	m_gdiProtocols.Draw( &dc, lpDrawItemStruct->itemData, pt,
+	m_gdiProtocols.Draw( &dc, (int)lpDrawItemStruct->itemData, pt,
 		( lpDrawItemStruct->itemState & ODS_SELECTED ) ? ILD_SELECTED : ILD_NORMAL );
 
 	m_wndProtocol.GetLBText( lpDrawItemStruct->itemID, str );
@@ -254,8 +254,23 @@ BOOL CConnectToDlg::UpdateItems()
 	int n = m_sHost.Find( _T(':') );
 	if ( n != -1 )
 	{
-		m_nPort = _tstoi( m_sHost.Mid( n + 1 ) );
-		m_sHost = m_sHost.Left( n );
+		int n1 = m_sHost.Find( _T(':'), n + 1 );
+		if ( n1 < n )
+		{
+			// address with port
+			m_nPort = _tstoi( m_sHost.Mid( n + 1 ) );
+			m_sHost = m_sHost.Left( n );
+		}
+		else
+		{
+			// IPv6
+			int n = m_sHost.Find( _T("]:") );
+			if (  n != -1 )
+			{			
+				m_nPort = _tstoi( m_sHost.Mid( n + 2 ) );
+				m_sHost = m_sHost.Left( n + 1 );
+			}
+		}
 	}
 	if ( m_sHost.IsEmpty() || m_nPort <= 0 || m_nPort >= 65536 )
 	{

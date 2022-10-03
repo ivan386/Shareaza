@@ -1,7 +1,7 @@
 //
 // TransferFile.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2012.
+// Copyright (c) Shareaza Development Team, 2002-2015.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -44,7 +44,8 @@ CTransferFiles::CTransferFiles()
 
 CTransferFiles::~CTransferFiles()
 {
-	Close();
+	ASSERT( m_pMap.IsEmpty() );
+	ASSERT( m_pDeferred.IsEmpty() );
 }
 
 //////////////////////////////////////////////////////////////////////
@@ -59,7 +60,7 @@ CTransferFile* CTransferFiles::Open(LPCTSTR pszFile, BOOL bWrite)
 	{
 		if ( bWrite && ! pFile->EnsureWrite() )
 			return NULL;
-	
+
 		pFile->AddRef();
 	}
 	else
@@ -79,28 +80,6 @@ CTransferFile* CTransferFiles::Open(LPCTSTR pszFile, BOOL bWrite)
 	}
 
 	return pFile;
-}
-
-//////////////////////////////////////////////////////////////////////
-// CTransferFiles close all files
-
-void CTransferFiles::Close()
-{
-	CSingleLock pLock( &m_pSection, TRUE );
-
-	for ( POSITION pos = m_pMap.GetStartPosition() ; pos ; )
-	{
-		CTransferFile* pFile;
-		CString strPath;
-		m_pMap.GetNextAssoc( pos, strPath, pFile );
-
-		TRACE( "Transfer Files : Closed \"%s\"\n", (LPCSTR)CT2A( strPath ) );
-
-		pFile->Release();
-	}
-
-	m_pMap.RemoveAll();
-	m_pDeferred.RemoveAll();
 }
 
 //////////////////////////////////////////////////////////////////////
@@ -213,22 +192,39 @@ BOOL CTransferFile::Open(BOOL bWrite)
 	if ( m_hFile != INVALID_HANDLE_VALUE ) return FALSE;
 
 	m_bExists = ( GetFileAttributes( CString( _T("\\\\?\\") ) + m_sPath ) != INVALID_FILE_ATTRIBUTES );
-	m_hFile = CreateFile( CString( _T("\\\\?\\") ) + m_sPath,
-		GENERIC_READ | ( bWrite ? GENERIC_WRITE : 0 ),
-		FILE_SHARE_READ | FILE_SHARE_WRITE | FILE_SHARE_DELETE,
-		NULL, ( bWrite ? OPEN_ALWAYS : OPEN_EXISTING ), FILE_ATTRIBUTE_NORMAL, NULL );
-
-	if ( m_hFile != INVALID_HANDLE_VALUE )
+	if ( IsFolder() )
 	{
 		m_bWrite = bWrite;
 		return TRUE;
 	}
-	else
-		return FALSE;
+	m_hFile = CreateFile( CString( _T("\\\\?\\") ) + m_sPath,
+		GENERIC_READ | ( bWrite ? GENERIC_WRITE : 0 ),
+		FILE_SHARE_READ | FILE_SHARE_WRITE | FILE_SHARE_DELETE,
+		NULL, ( bWrite ? OPEN_ALWAYS : OPEN_EXISTING ), FILE_FLAG_RANDOM_ACCESS, NULL );
+	if ( m_hFile != INVALID_HANDLE_VALUE )
+	{
+
+		if ( bWrite )
+		{
+			DWORD dwOut = 0;
+			if ( ! DeviceIoControl( m_hFile, FSCTL_SET_SPARSE, NULL, 0, NULL, 0, &dwOut, NULL ) )
+			{
+				DWORD nError = GetLastError();
+				theApp.Message( MSG_ERROR, _T("Unable to set sparse file: \"%s\", Win32 error %x."), (LPCTSTR)m_sPath, nError );
+			}
+		}
+		m_bWrite = bWrite;
+		return TRUE;
+	}
+
+	return FALSE;
 }
 
 QWORD CTransferFile::GetSize() const
 {
+	if ( IsFolder() )
+		return 0;
+
 	LARGE_INTEGER nSize;
 	if ( m_hFile != INVALID_HANDLE_VALUE && GetFileSizeEx( m_hFile, &nSize ) )
 		return nSize.QuadPart;
@@ -236,21 +232,35 @@ QWORD CTransferFile::GetSize() const
 		return SIZE_UNKNOWN;
 }
 
+void CTransferFile::ExtendSize(QWORD nSize)
+{
+	if ( m_hFile != INVALID_HANDLE_VALUE && nSize > GetSize() )
+	{
+		DWORD nOffsetLow	= (DWORD)( nSize & 0x00000000FFFFFFFF );
+		DWORD nOffsetHigh	= (DWORD)( ( nSize & 0xFFFFFFFF00000000 ) >> 32 );
+		SetFilePointer( m_hFile, nOffsetLow, (PLONG)&nOffsetHigh, FILE_BEGIN );
+		SetEndOfFile( m_hFile );
+	}
+}
+
 //////////////////////////////////////////////////////////////////////
 // CTransferFile write access management
 
 BOOL CTransferFile::EnsureWrite()
 {
-	if ( m_hFile == INVALID_HANDLE_VALUE ) return FALSE;
+	if ( m_hFile == INVALID_HANDLE_VALUE && ! IsFolder() ) return FALSE;
 	if ( m_bWrite ) return TRUE;
 
-	CloseHandle( m_hFile );
-	m_hFile = INVALID_HANDLE_VALUE;
+	if ( m_hFile != INVALID_HANDLE_VALUE )
+	{
+		CloseHandle( m_hFile );
+		m_hFile = INVALID_HANDLE_VALUE;
+	}
 
 	if ( Open( TRUE ) )
 		return TRUE;
 
-	DWORD dwError = GetLastError();
+	const DWORD dwError = GetLastError();
 	Open( FALSE );
 	SetLastError( dwError );
 
@@ -259,13 +269,16 @@ BOOL CTransferFile::EnsureWrite()
 
 BOOL CTransferFile::CloseWrite()
 {
-	if ( m_hFile == INVALID_HANDLE_VALUE ) return FALSE;
+	if ( m_hFile == INVALID_HANDLE_VALUE && ! IsFolder() ) return FALSE;
 	if ( ! m_bWrite ) return TRUE;
 
 	DeferredWrite();
 
-	CloseHandle( m_hFile );
-	m_hFile = INVALID_HANDLE_VALUE;
+	if ( m_hFile != INVALID_HANDLE_VALUE )
+	{
+		CloseHandle( m_hFile );
+		m_hFile = INVALID_HANDLE_VALUE;
+	}
 
 	return Open( FALSE );
 }
@@ -278,7 +291,7 @@ BOOL CTransferFile::Read(QWORD nOffset, LPVOID pBuffer, QWORD nBuffer, QWORD* pn
 	CSingleLock pLock( &TransferFiles.m_pSection, TRUE );
 
 	*pnRead = 0;
-	if ( m_hFile == INVALID_HANDLE_VALUE ) return FALSE;
+	if ( m_hFile == INVALID_HANDLE_VALUE ) return IsFolder();
 	if ( m_nDeferred > 0 ) DeferredWrite();
 
 	DWORD nOffsetLow	= (DWORD)( nOffset & 0x00000000FFFFFFFF );
@@ -287,7 +300,7 @@ BOOL CTransferFile::Read(QWORD nOffset, LPVOID pBuffer, QWORD nBuffer, QWORD* pn
 
 	if ( ! ReadFile( m_hFile, pBuffer, (DWORD)nBuffer, (DWORD*)pnRead, NULL ) )
 	{
-		theApp.Message( MSG_ERROR, _T("Can't read from file \"%s\". %s"), m_sPath, GetErrorString() );
+		theApp.Message( MSG_ERROR, _T("Can't read from file \"%s\". %s"), (LPCTSTR)m_sPath, (LPCTSTR)GetErrorString() );
 		return FALSE;
 	}
 
@@ -304,7 +317,7 @@ BOOL CTransferFile::Write(QWORD nOffset, LPCVOID pBuffer, QWORD nBuffer, QWORD* 
 	CSingleLock pLock( &TransferFiles.m_pSection, TRUE );
 
 	*pnWritten = 0;
-	if ( m_hFile == INVALID_HANDLE_VALUE ) return FALSE;
+	if ( m_hFile == INVALID_HANDLE_VALUE ) return IsFolder();
 	if ( ! m_bWrite ) return FALSE;
 
 	if ( nOffset > DEFERRED_THRESHOLD )
@@ -337,7 +350,7 @@ BOOL CTransferFile::Write(QWORD nOffset, LPCVOID pBuffer, QWORD nBuffer, QWORD* 
 
 	if ( ! WriteFile( m_hFile, pBuffer, (DWORD)nBuffer, (LPDWORD)pnWritten, NULL ) )
 	{
-		theApp.Message( MSG_ERROR, _T("Can't write to file \"%s\". %s"), m_sPath, GetErrorString() );
+		theApp.Message( MSG_ERROR, _T("Can't write to file \"%s\". %s"), (LPCTSTR)m_sPath, (LPCTSTR)GetErrorString() );
 		return FALSE;
 	}
 

@@ -1,7 +1,7 @@
 //
 // WndHostCache.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2012.
+// Copyright (c) Shareaza Development Team, 2002-2015.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -183,7 +183,12 @@ void CHostCacheWnd::Update(BOOL bForce)
 		pItem->SetMaskOverlay( pHost->m_bPriority );
 
 		if ( pHost->m_sAddress.IsEmpty() )
-			pItem->Set( 0, CString( inet_ntoa( pHost->m_pAddress ) ) );
+		{
+			if ( pHost->m_pAddress.s_addr == INADDR_ANY )
+				pItem->Set( 0, IPv6ToString( &pHost->m_pAddressIPv6 ) ) ;
+			else
+				pItem->Set( 0, CString( inet_ntoa( pHost->m_pAddress ) ) );
+		}
 		else if ( pHost->m_pAddress.s_addr == INADDR_ANY )
 			pItem->Set( 0, pHost->m_sAddress );
 		else
@@ -383,7 +388,11 @@ void CHostCacheWnd::OnUpdateHostCacheDisconnect(CCmdUI* pCmdUI)
 		// Lock Network objects until we are finished with them
 		// Note - This needs to be locked before the HostCache object to avoid
 		// deadlocks with the network thread
-		CQuickLock oNetworkLock( Network.m_pSection );
+		CSingleLock oLock( &Network.m_pSection, FALSE );
+		if ( !oLock.Lock( 100 ) ){
+			pCmdUI->Enable( FALSE );
+			return;
+		}
 
 		// Lock HostCache objects until we are finished with them
 		CQuickLock oHostCacheLock( HostCache.ForProtocol(
@@ -527,7 +536,7 @@ void CHostCacheWnd::OnNeighboursCopy()
 			(LPCTSTR)pHost->Address(), pHost->m_nUDPPort );
 	}
 
-	CURLCopyDlg::SetClipboardText( strURL );
+	theApp.SetClipboardText( strURL );
 }
 
 void CHostCacheWnd::OnUpdateHostCacheRemove(CCmdUI* pCmdUI)
@@ -548,8 +557,6 @@ void CHostCacheWnd::OnHostCacheRemove()
 			HostCache.Remove( pHost );
 		}
 	}
-
-	HostCache.CheckMinimumServers( m_nMode ? m_nMode : PROTOCOL_G2 );
 
 	m_wndList.ClearSelection();
 
@@ -673,20 +680,18 @@ BOOL CHostCacheWnd::PreTranslateMessage(MSG* pMsg)
 	}
 	else if ( pMsg->message == WM_KEYDOWN )
 	{
-		if ( GetAsyncKeyState( VK_CONTROL ) & 0x8000 )
+		if ( pMsg->wParam == 'A' && GetAsyncKeyState( VK_CONTROL ) & 0x8000 )
 		{
-			if ( pMsg->wParam == 'A' )
+			for ( int nItem = m_wndList.GetItemCount() - 1 ; nItem >= 0 ; nItem-- )
 			{
-				for ( int nItem = m_wndList.GetItemCount() - 1 ; nItem >= 0 ; nItem-- )
-				{
-					m_wndList.SetItemState( nItem, LVIS_SELECTED, LVIS_SELECTED );
-				}
-				return TRUE;
+				m_wndList.SetItemState( nItem, LVIS_SELECTED, LVIS_SELECTED );
 			}
+			return TRUE;
 		}
 		else if ( pMsg->wParam == VK_DELETE )
 		{
 			OnHostCacheRemove();
+			return TRUE;
 		}
 	}
 	else if ( pMsg->message == WM_MOUSEWHEEL )

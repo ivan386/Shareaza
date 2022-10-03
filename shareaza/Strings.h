@@ -1,7 +1,7 @@
 //
 // Strings.h 
 //
-// Copyright (c) Shareaza Development Team, 2010-2012.
+// Copyright (c) Shareaza Development Team, 2010-2015.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -26,10 +26,10 @@
 
 // Produces two arguments divided by comma, where first argument is a string itself
 // and second argument is a string length without null terminator
-#define _P(x)	(x),((sizeof(x))/sizeof((x)[0])-1)
+#define _P(x)	(x),(_countof(x)-1)
 #define _PT(x)	_P(_T(x))
 
-#define IsSpace(ch)	((ch) == _T(' ') || (ch) == _T('\t') || (ch) == _T('\r') || (ch) == _T('\n'))
+#define IsSpaceW(ch)	((ch) == _T(' ') || (ch) == _T('\t') || (ch) == _T('\r') || (ch) == _T('\n'))
 
 bool IsCharacter(WCHAR nChar);
 bool IsHiragana(WCHAR nChar);
@@ -97,20 +97,38 @@ LPCTSTR _tcsnistr(LPCTSTR pszString, LPCTSTR pszSubString, size_t nlen);
 // Convert string to integer (64-bit, decimal only, with sign, no spaces allowed). Returns false on error.
 bool atoin(__in_bcount(nLen) const char* pszString, __in size_t nLen, __int64& nNum);
 
+#ifdef __AFXCOLL_H__
 // Split string using delimiter to string array
 void Split(const CString& strSource, TCHAR cDelimiter, CStringArray& pAddIt, BOOL bAddFirstEmpty = FALSE);
+#endif // __AFXCOLL_H__
 
 // StartsWith("hello world", "hello") is true
 BOOL StartsWith(const CString& sInput, LPCTSTR pszText, size_t nLen);
 
+#ifdef __AFX_H__
 // Load all text from file (Unicode-compatible)
 CString LoadFile(LPCTSTR pszPath);
+#endif // __AFX_H__
 
 // Replaces a substring with another (case-insensitive)
 BOOL ReplaceNoCase(CString& sInStr, LPCTSTR pszOldStr, LPCTSTR pszNewStr);
 
+#ifdef _WINSOCKAPI_
+BOOL IPv6FromString(CString sIPv6, SOCKADDR_IN6* pAddress);
+BOOL IPv6FromString(CString sIPv6, IN6_ADDR* pAddress);
+
+CString IPv4Or6ToString(IN_ADDR* pIPv4, IN6_ADDR* pIPv6);
+
+CString IPv6ToString(const IN6_ADDR* pAddress, bool bForUrl = true);
+
+CString HostToString(const SOCKADDR* pHost);
+
 // Returns "a.a.a.a:port"
 CString HostToString(const SOCKADDR_IN* pHost);
+
+// Returns "[FFFF:FFFF:FFFF:FFFF:FFFF:FFFF:FFFF:FFFF]:port"
+CString HostToString(const SOCKADDR_IN6* pHost);
+#endif // _WINSOCKAPI_
 
 // Function is used to split a phrase in Asian languages to separate keywords
 // to ease keyword matching, allowing user to type as in the natural language.

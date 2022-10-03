@@ -1,7 +1,7 @@
 //
 // ShareazaFile.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2012.
+// Copyright (c) Shareaza Development Team, 2002-2014.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -23,6 +23,7 @@
 #include "Shareaza.h"
 #include "Network.h"
 #include "ShareazaFile.h"
+#include "DlgURLCopy.h"
 
 #ifdef _DEBUG
 #undef THIS_FILE
@@ -59,7 +60,8 @@ BEGIN_INTERFACE_MAP(CShareazaFile, CComObject)
 END_INTERFACE_MAP()
 
 CShareazaFile::CShareazaFile() :
-	m_nSize( SIZE_UNKNOWN )
+	m_nSize( SIZE_UNKNOWN ),
+	m_nBitrate( 0 )
 {
 	EnableDispatch( IID_IShareazaFile );
 }
@@ -67,6 +69,7 @@ CShareazaFile::CShareazaFile() :
 CShareazaFile::CShareazaFile(const CShareazaFile& pFile) :
 	m_sName( pFile.m_sName ),
 	m_nSize( pFile.m_nSize ),
+	m_nBitrate( pFile.m_nBitrate ),
 	m_oSHA1( pFile.m_oSHA1 ),
 	m_oTiger( pFile.m_oTiger ),
 	m_oED2K( pFile.m_oED2K ),
@@ -82,6 +85,7 @@ CShareazaFile& CShareazaFile::operator=(const CShareazaFile& pFile)
 {
 	m_sName = pFile.m_sName;
 	m_nSize = pFile.m_nSize;
+	m_nBitrate = pFile.m_nBitrate;
 	m_oSHA1 = pFile.m_oSHA1;
 	m_oTiger = pFile.m_oTiger;
 	m_oED2K = pFile.m_oED2K;
@@ -154,35 +158,45 @@ bool CShareazaFile::operator!=(const CShareazaFile& pFile) const
 
 CString CShareazaFile::GetURL(const IN_ADDR& nAddress, WORD nPort) const
 {
+	return GetURL( CString( inet_ntoa( nAddress ) ), nPort );
+}
+
+CString CShareazaFile::GetURL(const IN6_ADDR& nAddress, WORD nPort) const
+{
+	return GetURL( IPv6ToString( &nAddress, true), nPort );
+}
+
+CString CShareazaFile::GetURL(CString sAddress, WORD nPort) const
+{
 	CString strURL;
 	if ( m_oSHA1 )
 	{
-		strURL.Format( _T("http://%s:%i/uri-res/N2R?%s"),
-			(LPCTSTR)CString( inet_ntoa( nAddress ) ),
+		strURL.Format( _T("http://%s:%u/uri-res/N2R?%s"),
+			(LPCTSTR)sAddress,
 			nPort, (LPCTSTR)m_oSHA1.toUrn() );
 	}
 	else if ( m_oTiger )
 	{
-		strURL.Format( _T("http://%s:%i/uri-res/N2R?%s"),
-			(LPCTSTR)CString( inet_ntoa( nAddress ) ),
+		strURL.Format( _T("http://%s:%u/uri-res/N2R?%s"),
+			(LPCTSTR)sAddress,
 			nPort, (LPCTSTR)m_oTiger.toUrn() );
 	}
 	else if ( m_oED2K )
 	{
-		strURL.Format( _T("http://%s:%i/uri-res/N2R?%s"),
-			(LPCTSTR)CString( inet_ntoa( nAddress ) ),
+		strURL.Format( _T("http://%s:%u/uri-res/N2R?%s"),
+			(LPCTSTR)sAddress,
 			nPort, (LPCTSTR)m_oED2K.toUrn() );
 	}
 	else if ( m_oMD5 )
 	{
-		strURL.Format( _T("http://%s:%i/uri-res/N2R?%s"),
-			(LPCTSTR)CString( inet_ntoa( nAddress ) ),
+		strURL.Format( _T("http://%s:%u/uri-res/N2R?%s"),
+			(LPCTSTR)sAddress,
 			nPort, (LPCTSTR)m_oMD5.toUrn() );
 	}
 	else if ( m_oBTH )
 	{
-		strURL.Format( _T("http://%s:%i/uri-res/N2R?%s"),
-			(LPCTSTR)CString( inet_ntoa( nAddress ) ),
+		strURL.Format( _T("http://%s:%u/uri-res/N2R?%s"),
+			(LPCTSTR)sAddress,
 			nPort, (LPCTSTR)m_oBTH.toUrn() );
 	}
 	return strURL;
@@ -199,7 +213,7 @@ CString CShareazaFile::GetBitprint() const
 CString CShareazaFile::GetURN() const
 {
 	if ( m_oSHA1 && m_oTiger )
-		return _T("urn:bitprint:") + m_oSHA1.toString() + _T('.') + m_oTiger.toString();
+		return Hashes::TigerHash::urns[ 2 ].signature + m_oSHA1.toString() + _T('.') + m_oTiger.toString();
 	else if ( m_oSHA1 )
 		return m_oSHA1.toUrn();
 	else if ( m_oTiger )
@@ -210,6 +224,24 @@ CString CShareazaFile::GetURN() const
 		return m_oMD5.toUrn();
 	else if ( m_oBTH )
 		return m_oBTH.toUrn();
+	else
+		return CString();
+}
+
+CString CShareazaFile::GetShortURN() const
+{
+	if ( m_oSHA1 && m_oTiger )
+		return Hashes::TigerHash::urns[ 3 ].signature + m_oSHA1.toString() + _T( '.' ) + m_oTiger.toString();
+	else if ( m_oSHA1 )
+		return m_oSHA1.toShortUrn();
+	else if ( m_oTiger )
+		return m_oTiger.toShortUrn();
+	else if ( m_oED2K )
+		return m_oED2K.toShortUrn();
+	else if ( m_oMD5 )
+		return m_oMD5.toShortUrn();
+	else if ( m_oBTH )
+		return m_oBTH.toShortUrn();
 	else
 		return CString();
 }
@@ -493,5 +525,12 @@ STDMETHODIMP CShareazaFile::XShareazaFile::get_URL(BSTR FAR* psURL)
 {
 	METHOD_PROLOGUE( CShareazaFile, ShareazaFile )
 	*psURL = CComBSTR( pThis->m_sURL ).Detach();
+	return S_OK;
+}
+
+STDMETHODIMP CShareazaFile::XShareazaFile::get_Magnet(BSTR FAR* psMagnet)
+{
+	METHOD_PROLOGUE( CShareazaFile, ShareazaFile )
+	*psMagnet = CComBSTR( CURLCopyDlg::CreateMagnet( *pThis ) ).Detach();
 	return S_OK;
 }

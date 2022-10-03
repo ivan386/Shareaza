@@ -1,7 +1,7 @@
 //
 // DownloadWithFile.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2013.
+// Copyright (c) Shareaza Development Team, 2002-2015.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -45,7 +45,7 @@ CDownloadWithFile::CDownloadWithFile()
 	, m_pFile		( new CFragmentedFile )
 	, m_nFileError	( ERROR_SUCCESS )
 {
-	m_pFile->SetDownload( static_cast< CDownload*>( this ) );
+	if ( m_pFile.get() ) m_pFile->SetDownload( static_cast< CDownload*>( this ) );
 }
 
 CDownloadWithFile::~CDownloadWithFile()
@@ -74,7 +74,7 @@ Fragments::List CDownloadWithFile::GetEmptyFragmentList() const
 
 CFragmentedFile* CDownloadWithFile::GetFile()
 {
-	m_pFile->AddRef();
+	if ( m_pFile.get() ) m_pFile->AddRef();
 	return m_pFile.get();
 }
 
@@ -154,13 +154,13 @@ void CDownloadWithFile::ClearFileError()
 //////////////////////////////////////////////////////////////////////
 // CDownloadWithFile open the file
 
-BOOL CDownloadWithFile::Open()
+BOOL CDownloadWithFile::Open(const CShareazaFile* pFile)
 {
 	if ( m_pFile.get() )
 	{
 		ClearFileError();
 
-		if ( m_pFile->Open( this, ! IsCompleted() ) )
+		if ( m_pFile->Open( pFile, ! IsCompleted() ) )
 			return TRUE;
 
 		SetFileError( m_pFile->GetFileError(), m_pFile->GetFileErrorString() );
@@ -206,9 +206,15 @@ void CDownloadWithFile::ClearFile()
 //////////////////////////////////////////////////////////////////////
 // CDownloadWithFile attach the file
 
-void CDownloadWithFile::AttachFile(auto_ptr< CFragmentedFile >& pFile)
+void CDownloadWithFile::AttachFile(CFragmentedFile* pFile)
 {
-	m_pFile = pFile;
+	if ( pFile && m_pFile.get() == pFile )
+		pFile->Release();
+	else
+		m_pFile.reset( pFile );
+
+	if ( m_pFile.get() )
+		m_pFile->SetDownload( static_cast< CDownload*>( this ) );
 }
 
 //////////////////////////////////////////////////////////////////////
@@ -306,15 +312,16 @@ DWORD CDownloadWithFile::MoveFile(LPCTSTR pszDestination, LPPROGRESS_ROUTINE lpP
 		ret = ERROR_FILE_NOT_FOUND;
 
 	if ( ret == ERROR_SUCCESS )
-		theApp.Message( MSG_NOTICE, IDS_DOWNLOAD_MOVED, GetDisplayName(), pszDestination );
+		theApp.Message( MSG_NOTICE, IDS_DOWNLOAD_MOVED, (LPCTSTR)GetDisplayName(), pszDestination );
 	else
 	{
 		CString strMessage;
-		strMessage.Format( LoadString( IDS_DOWNLOAD_CANT_MOVE ), GetDisplayName(), pszDestination );
-		theApp.Message( MSG_ERROR | MSG_TRAY, _T("%s"), strMessage + _T(" ") + GetErrorString( ret ) );
+		strMessage.Format( LoadString( IDS_DOWNLOAD_CANT_MOVE ), (LPCTSTR)GetDisplayName(), pszDestination );
+		theApp.Message( MSG_ERROR | MSG_TRAY, _T("%s"), (LPCTSTR)( strMessage + _T(" ") + GetErrorString( ret ) ) );
 	}
-
-	ClearSources();
+	
+	if ( Settings.Downloads.ClearSourcesAfter )
+		ClearSources();
 
 	return ret;
 }
@@ -449,7 +456,7 @@ bool CDownloadWithFile::GetAvailableRanges(CString& strRanges) const
 	for ( ; pItr != pEnd && strRanges.GetLength() < HTTP_HEADER_MAX_LINE - 256
 		; ++pItr )
 	{
-		strRange.Format( _T("%I64i-%I64i,"), pItr->begin(), pItr->end() - 1 );
+		strRange.Format( _T("%I64u-%I64u,"), pItr->begin(), pItr->end() - 1 );
 		strRanges += strRange;
 	}
 
@@ -517,21 +524,7 @@ BOOL CDownloadWithFile::SubmitData(QWORD nOffset, LPBYTE pData, QWORD nLength)
 	SetModified();
 	m_tReceived = GetTickCount();
 
-	if ( static_cast< CDownload* >( this )->IsTorrent() )	// HACK: Only do this for BitTorrent
-															// TODO: Fix bad inheritance
-	{
-		CSingleLock oLock( &Transfers.m_pSection );
-		if ( oLock.Lock( 250 ) )
-		{
-			for ( CDownloadTransfer* pTransfer = GetFirstTransfer() ; pTransfer ; pTransfer = pTransfer->m_pDlNext )
-			{
-				if ( pTransfer->m_nProtocol == PROTOCOL_BT )
-					pTransfer->UnrequestRange( nOffset, nLength );
-			}
-		}
-	}
-
-	return ( m_pFile.get() && m_pFile->Write( nOffset, pData, nLength ) );
+	return WriteFile( nOffset, pData, nLength, NULL );
 }
 
 //////////////////////////////////////////////////////////////////////
@@ -669,12 +662,12 @@ void CDownloadWithFile::Serialize(CArchive& ar, int nVersion)
 				for ( POSITION pos = oInfo.m_pFiles.GetHeadPosition() ; pos ; ++nIndex )
 				{
 					CBTInfo::CBTFile* pBTFile = oInfo.m_pFiles.GetNext( pos );
-					if ( m_pFile->GetName( nIndex ).IsEmpty() )
+					if ( m_pFile.get() && m_pFile->GetName( nIndex ).IsEmpty() )
 						m_pFile->SetName( nIndex, pBTFile->m_sPath );
 				}
 			}
 			else
-				if ( m_pFile->GetName( nIndex ).IsEmpty() )
+				if ( m_pFile.get() && m_pFile->GetName( nIndex ).IsEmpty() )
 					m_pFile->SetName( nIndex, m_sName );
 		}
 

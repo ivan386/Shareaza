@@ -1,7 +1,7 @@
 //
 // DownloadWithTiger.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2013.
+// Copyright (c) Shareaza Development Team, 2002-2017.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -87,22 +87,22 @@ DWORD CDownloadWithTiger::GetVerifyLength(PROTOCOLID nProtocol, int nHash) const
 
 	if ( nHash == HASH_NULL )
 	{
-		if ( nProtocol == PROTOCOL_BT && m_pTorrentBlock )
+		if ( nProtocol == PROTOCOL_BT && IsTorrentSet() )
 			return m_nTorrentSize;
-		else if ( nProtocol == PROTOCOL_ED2K && m_pHashsetBlock )
+		else if ( nProtocol == PROTOCOL_ED2K && IsHashsetSet() )
 			return ED2K_PART_SIZE;
-		else if ( m_pTigerBlock )
+		else if ( IsTigerSet() )
 			return m_nTigerSize;
 	}
-	else if ( nHash == HASH_TIGERTREE && m_pTigerBlock != NULL )
+	else if ( nHash == HASH_TIGERTREE && IsTigerSet() )
 	{
 		return m_nTigerSize;
 	}
-	else if ( nHash == HASH_ED2K && m_pHashsetBlock != NULL )
+	else if ( nHash == HASH_ED2K && IsHashsetSet() )
 	{
 		return ED2K_PART_SIZE;
 	}
-	else if ( nHash == HASH_TORRENT && m_pTorrentBlock != NULL )
+	else if ( nHash == HASH_TORRENT && IsTorrentSet() )
 	{
 		return m_nTorrentSize;
 	}
@@ -118,16 +118,16 @@ BOOL CDownloadWithTiger::GetNextVerifyRange(QWORD& nOffset, QWORD& nLength, BOOL
 	if ( nOffset >= m_nSize )
 		return FALSE;
 
-	if ( !m_pTigerBlock && !m_pHashsetBlock && !m_pTorrentBlock )
+	if ( ! ( IsTigerSet() || IsHashsetSet() || IsTorrentSet() ) )
 		return FALSE;
 
 	if ( nHash == HASH_NULL )
 	{
-		if ( m_pTorrentBlock )
+		if ( IsTorrentSet() )
 			nHash = HASH_TORRENT;
-		else if ( m_pTigerBlock )
+		else if ( IsTigerSet() )
 			nHash = HASH_TIGERTREE;
-		else if ( m_pHashsetBlock )
+		else if ( IsHashsetSet() )
 			nHash = HASH_ED2K;
 	}
 
@@ -137,7 +137,7 @@ BOOL CDownloadWithTiger::GetNextVerifyRange(QWORD& nOffset, QWORD& nLength, BOOL
 	switch ( nHash )
 	{
 	case HASH_TIGERTREE:
-		if ( !m_pTigerBlock )
+		if ( !IsTigerSet() )
 			return FALSE;
 
 		pBlockPtr	= m_pTigerBlock;
@@ -146,7 +146,7 @@ BOOL CDownloadWithTiger::GetNextVerifyRange(QWORD& nOffset, QWORD& nLength, BOOL
 		break;
 
 	case HASH_ED2K:
-		if ( !m_pHashsetBlock )
+		if ( !IsHashsetSet() )
 			return FALSE;
 
 		pBlockPtr	= m_pHashsetBlock;
@@ -155,7 +155,7 @@ BOOL CDownloadWithTiger::GetNextVerifyRange(QWORD& nOffset, QWORD& nLength, BOOL
 		break;
 
 	case HASH_TORRENT:
-		if ( !m_pTorrentBlock )
+		if ( !IsTorrentSet() )
 			return FALSE;
 
 		pBlockPtr	= m_pTorrentBlock;
@@ -217,7 +217,7 @@ bool CDownloadWithTiger::IsFullyVerified() const
 	bool bAvailable = false;
 	Fragments::List oList = GetFullFragmentList();
 
-	if ( m_pTorrentBlock )
+	if ( IsTorrentSet() )
 	{
 		for ( DWORD i = 0 ; i < m_nTorrentBlock; i++ )
 		{
@@ -235,7 +235,7 @@ bool CDownloadWithTiger::IsFullyVerified() const
 		bAvailable = true;
 	}
 
-	if ( m_pTigerBlock && Settings.Downloads.VerifyTiger )
+	if ( IsTigerSet() && Settings.Downloads.VerifyTiger )
 	{
 		for ( DWORD i = 0 ; i < m_nTigerBlock; i++ )
 		{
@@ -253,7 +253,7 @@ bool CDownloadWithTiger::IsFullyVerified() const
 		bAvailable = true;
 	}
 
-	if ( m_pHashsetBlock && Settings.Downloads.VerifyED2K )
+	if ( IsHashsetSet() && Settings.Downloads.VerifyED2K )
 	{
 		for ( DWORD i = 0 ; i < m_nHashsetBlock; i++ )
 		{
@@ -330,14 +330,12 @@ BOOL CDownloadWithTiger::SetTigerTree(BYTE* pTiger, DWORD nTiger, BOOL bLevel1)
 
 	SetModified();
 
-	theApp.Message( MSG_INFO, IDS_DOWNLOAD_TIGER_READY,
-		GetDisplayName(), m_pTigerTree.GetHeight(),
-		Settings.SmartVolume( m_nTigerSize ) );
+	theApp.Message( MSG_INFO, IDS_DOWNLOAD_TIGER_READY, (LPCTSTR)GetDisplayName(), m_pTigerTree.GetHeight(), (LPCTSTR)Settings.SmartVolume( m_nTigerSize ) );
 
 	return TRUE;
 }
 
-CTigerTree* CDownloadWithTiger::GetTigerTree()
+const CTigerTree* CDownloadWithTiger::GetTigerTree() const
 {
 	CQuickLock oLock( m_pTigerSection );
 
@@ -397,15 +395,14 @@ BOOL CDownloadWithTiger::SetHashset(BYTE* pSource, DWORD nSource)
 
 	SetModified();
 
-	theApp.Message( MSG_INFO, IDS_DOWNLOAD_HASHSET_READY,
-		GetDisplayName(), Settings.SmartVolume( ED2K_PART_SIZE ) );
+	theApp.Message( MSG_INFO, IDS_DOWNLOAD_HASHSET_READY, (LPCTSTR)GetDisplayName(), (LPCTSTR)Settings.SmartVolume( ED2K_PART_SIZE ) );
 
 	Neighbours.SendDonkeyDownload( this );
 
 	return TRUE;
 }
 
-CED2K* CDownloadWithTiger::GetHashset()
+const CED2K* CDownloadWithTiger::GetHashset() const
 {
 	CQuickLock oLock( m_pTigerSection );
 
@@ -462,16 +459,17 @@ bool CDownloadWithTiger::RunMergeFile(LPCTSTR szFilename, BOOL bMergeValidation,
 	QWORD qwSourceOffset = 0;
 	if ( IsTorrent() && ! IsSingleFileTorrent() )
 	{
-		CString sSourceName( PathFindFileName( szFilename ) );
+		const CString sSourceName = PathFindFileName( szFilename );
 		BOOL bFound = FALSE;
 
-		// Try to calculate offset of file by names comparing
+		// Try to calculate offset of file by best fit
 		QWORD qwOffset = 0;
 		for ( POSITION pos = m_pTorrent.m_pFiles.GetHeadPosition() ; pos ; )
 		{
-			CBTInfo::CBTFile* pFile = m_pTorrent.m_pFiles.GetNext( pos );
-			CString sTargetName = PathFindFileName( pFile->m_sPath );
-			if ( sTargetName.CompareNoCase( sSourceName ) == 0 )
+			const CBTInfo::CBTFile* pFile = m_pTorrent.m_pFiles.GetNext( pos );
+
+			const CString& sFileName = pFile->GetBestPath();
+			if ( pFile->m_nSize == qwSourceLength && ! sFileName.IsEmpty() && sFileName.CompareNoCase( szFilename ) == 0 )
 			{
 				// Found
 				bFound = TRUE;
@@ -480,13 +478,33 @@ bool CDownloadWithTiger::RunMergeFile(LPCTSTR szFilename, BOOL bMergeValidation,
 			}
 			qwOffset += pFile->m_nSize;
 		}
+		// Try to calculate offset of file by name and size comparing
 		if ( ! bFound )
 		{
-			// Try to calculate offset of file by sizes comparing
 			qwOffset = 0;
 			for ( POSITION pos = m_pTorrent.m_pFiles.GetHeadPosition() ; pos ; )
 			{
-				CBTInfo::CBTFile* pFile = m_pTorrent.m_pFiles.GetNext( pos );
+				const CBTInfo::CBTFile* pFile = m_pTorrent.m_pFiles.GetNext( pos );
+
+				const CString sFileName = PathFindFileName( pFile->m_sPath );
+				if ( pFile->m_nSize == qwSourceLength && sFileName.CompareNoCase( sSourceName ) == 0 )
+				{
+					// Found
+					bFound = TRUE;
+					qwSourceOffset = qwOffset;
+					break;
+				}
+				qwOffset += pFile->m_nSize;
+			}
+		}
+		// Try to calculate offset of file by size only comparing
+		if ( ! bFound )
+		{
+			qwOffset = 0;
+			for ( POSITION pos = m_pTorrent.m_pFiles.GetHeadPosition() ; pos ; )
+			{
+				const CBTInfo::CBTFile* pFile = m_pTorrent.m_pFiles.GetNext( pos );
+
 				if ( pFile->m_nSize == qwSourceLength )
 				{
 					// Found
@@ -570,8 +588,13 @@ void CDownloadWithTiger::RunValidation()
 	if ( ! oLock.Lock( 50 ) )
 		return;
 
-	if ( m_pTigerBlock == NULL && m_pHashsetBlock == NULL && m_pTorrentBlock == NULL )
+	if ( ! ( IsTigerSet() || IsHashsetSet() || IsTorrentSet() ) )
+	{
+		if ( IsComplete() && m_oTiger && m_bTigerTrusted )
+			SetTigerTree( (BYTE*) &*m_oTiger.begin(), m_oTiger.byteCount );
+		else
 		return;
+	}
 
 	if ( ! IsFileOpen() )
 		return;
@@ -613,6 +636,8 @@ BOOL CDownloadWithTiger::FindNewValidationBlock(int nHash)
 		break;
 
 	case HASH_TORRENT:
+		if ( ! Settings.Downloads.VerifyTorrent )
+			return FALSE;
 		pBlockPtr	= m_pTorrentBlock;
 		nBlockCount	= m_nTorrentBlock;
 		nBlockSize	= m_nTorrentSize;
@@ -763,11 +788,80 @@ void CDownloadWithTiger::ContinueValidation()
 		FinishValidation();
 }
 
+void CDownloadWithTiger::FindZerosRangesHashset()
+{
+
+	if ( IsHashsetSet() )
+	{
+		QWORD nOffset = 0;
+		QWORD nLength = 0;
+
+		for ( uint32 i = 0; i < m_nHashsetBlock; i++ )
+		{
+			if ( !m_pHashsetBlock[i] && m_pHashset.IsZeroBlock( i ) )
+			{
+				if ( nLength == 0 )
+					nOffset = ED2K_PART_SIZE * i;
+				
+				nLength +=  ED2K_PART_SIZE;
+			}
+			else
+			{
+				if ( nLength > 0 )
+					SubmitData( nOffset, NULL, min( nLength, ( m_nSize - nOffset ) ) );
+
+				nLength = 0;
+			}
+		}
+
+		if ( nLength > 0 )
+			SubmitData( nOffset, NULL, min( nLength, ( m_nSize - nOffset ) ) );
+
+		SetModified();
+	}
+}
+
+void CDownloadWithTiger::FindZerosRangesTreeTiger()
+{
+
+	if ( IsTigerSet() )
+	{
+		uint32 nBlockLength = m_pTigerTree.GetBlockLength();
+		uint32 nBlockCount = m_pTigerTree.GetBlockCount();
+
+		QWORD nOffset = 0;
+		QWORD nLength = 0;
+
+		for ( uint32 i = 0; i < nBlockCount; i++ )
+		{
+			if ( !m_pTigerBlock[i] && m_pTigerTree.IsZeroBlock( i ) )
+			{
+				if ( nLength == 0 )
+					nOffset = nBlockLength * i;
+
+				nLength += nBlockLength;
+			}
+			else
+			{
+				if ( nLength > 0 )
+					SubmitData( nOffset, NULL, min( nLength, ( m_nSize - nOffset ) ) );
+
+				nLength = 0;
+			}
+		}
+
+		if ( nLength > 0 )
+			SubmitData( nOffset, NULL, min( nLength, ( m_nSize - nOffset ) ) );
+
+		SetModified();
+	}
+}
+
 void CDownloadWithTiger::FinishValidation()
 {
 	Fragments::List oCorrupted( m_nSize );
 
-	if ( m_nVerifyHash == HASH_TIGERTREE )
+	if ( m_nVerifyHash == HASH_TIGERTREE && IsTigerSet() )
 	{
 		if ( m_pTigerTree.FinishBlockTest( m_nVerifyBlock ) )
 		{
@@ -783,7 +877,7 @@ void CDownloadWithTiger::FinishValidation()
 				min( nOffset + m_nTigerSize, m_nSize ) ) );
 		}
 	}
-	else if ( m_nVerifyHash == HASH_ED2K )
+	else if ( m_nVerifyHash == HASH_ED2K && IsHashsetSet() )
 	{
 		if ( m_pHashset.FinishBlockTest( m_nVerifyBlock ) )
 		{
@@ -799,7 +893,7 @@ void CDownloadWithTiger::FinishValidation()
 				min( nOffset + ED2K_PART_SIZE, m_nSize ) ) );
 		}
 	}
-	else if ( m_nVerifyHash == HASH_TORRENT )
+	else if ( m_nVerifyHash == HASH_TORRENT && IsTorrentSet() )
 	{
 		if ( m_pTorrent.FinishBlockTest( m_nVerifyBlock ) )
 		{
@@ -820,11 +914,11 @@ void CDownloadWithTiger::FinishValidation()
 
 	if ( !oCorrupted.empty() && IsFileOpen() )
 	{
-		if ( m_pTigerBlock != NULL )
+		if ( IsTigerSet() )
 			SubtractHelper( oCorrupted, m_pTigerBlock, m_nTigerBlock, m_nTigerSize );
-		if ( m_pHashsetBlock != NULL )
+		if ( IsHashsetSet() )
 			SubtractHelper( oCorrupted, m_pHashsetBlock, m_nHashsetBlock, ED2K_PART_SIZE );
-		if ( m_pTorrentBlock != NULL )
+		if ( IsTorrentSet() )
 			SubtractHelper( oCorrupted, m_pTorrentBlock, m_nTorrentBlock, m_nTorrentSize );
 
 		Fragments::List::const_iterator pItr = oCorrupted.begin();
@@ -868,18 +962,18 @@ Fragments::List CDownloadWithTiger::GetHashableFragmentList() const
 	// Select hash with smallest parts
 	int nHash = HASH_NULL;
 	DWORD nSmallest = 0xffffffff;
-	if ( m_pTorrentBlock )
+	if ( IsTorrentSet() )
 	{
 		nHash = HASH_TORRENT;
 		nSmallest = m_nTorrentSize;
 	}
-	if ( m_pTigerBlock && Settings.Downloads.VerifyTiger &&
+	if ( IsTigerSet() && Settings.Downloads.VerifyTiger &&
 		 nSmallest > m_nTigerSize )
 	{
 		nHash = HASH_TIGERTREE;
 		nSmallest = m_nTigerSize;
 	}
-	if ( m_pHashsetBlock && Settings.Downloads.VerifyED2K &&
+	if ( IsHashsetSet() && Settings.Downloads.VerifyED2K &&
 		 nSmallest > ED2K_PART_SIZE )
 	{
 		nHash = HASH_ED2K;
@@ -905,9 +999,11 @@ Fragments::List CDownloadWithTiger::GetHashableFragmentList() const
 
 Fragments::List CDownloadWithTiger::GetWantedFragmentList() const
 {
-	CQuickLock oLock( m_pTigerSection );
+	CSingleLock oLock( &m_pTigerSection );
+	if ( ! oLock.Lock( 100 ) )
+		return Fragments::List( 0 );
 
-	QWORD nNow = GetVolumeComplete();
+	const QWORD nNow = GetVolumeComplete();
 	if ( nNow != m_nWFLCookie || nNow == 0 )
 	{
 		m_nWFLCookie = nNow;
@@ -986,7 +1082,8 @@ BOOL CDownloadWithTiger::GetFragment(CDownloadTransfer* pTransfer)
 
 	Fragments::Fragment oLargest( SIZE_UNKNOWN, SIZE_UNKNOWN );
 
-	Fragments::List oPossible = GetPossibleFragments( pTransfer->GetSource()->m_oAvailable, oLargest );
+	Fragments::List oAvailable = pTransfer->GetSource()->m_oAvailable;
+	Fragments::List oPossible = GetPossibleFragments( oAvailable, oLargest );
 
 	if ( oLargest.begin() == SIZE_UNKNOWN )
 	{
@@ -996,18 +1093,184 @@ BOOL CDownloadWithTiger::GetFragment(CDownloadTransfer* pTransfer)
 
 	if ( ! oPossible.empty() )
 	{
-		Fragments::List::const_iterator pRandom = oPossible.begin()->begin() == 0
-			? oPossible.begin()
-			: oPossible.random_range();
+		CDownload* pDownload = static_cast< CDownload* >( this );
 
-		pTransfer->m_nOffset = pRandom->begin();
-		pTransfer->m_nLength = pRandom->size();
+		Fragments::List::const_iterator pRange = oPossible.begin();
+		Fragments::List::const_reverse_iterator pLastRange = oPossible.rbegin();
+
+		QWORD nChunkSize = (QWORD) Settings.Downloads.ChunkSize;
+
+		if ( pDownload->m_nBitrate > 8 && pDownload->m_nBitrate < (QWORD) -1 )
+			nChunkSize = max( pDownload->m_nBitrate / 8, nChunkSize );
+
+		if ( pDownload->GetSize() > nChunkSize )
+		{
+			// Download firts and last chunk
+
+			QWORD nEndSize = pDownload->GetSize() - pLastRange->end();
+			if ( pRange->begin() > nEndSize	&& nEndSize < nChunkSize )
+			{
+				pTransfer->m_bWantBackwards	= TRUE;
+				pTransfer->m_nLength = min( pLastRange->size(), nChunkSize - nEndSize );
+				pTransfer->m_nOffset = max( pLastRange->begin(), pDownload->GetSize() - nChunkSize );
+
+				return TRUE;
+			}
+			else if ( pRange->begin() < nChunkSize )
+			{
+				pTransfer->m_bWantBackwards	= FALSE;
+				pTransfer->m_nOffset = pRange->begin();
+				pTransfer->m_nLength = min( nChunkSize, pRange->end() ) - pTransfer->m_nOffset;
+
+				return TRUE;
+			}
+		}
+
+		if ( nChunkSize
+			&& pDownload->GetSize() > nChunkSize * 2 )
+		{
+			QWORD nNewSpeed	= pTransfer->GetAverageSpeed();
+
+			if ( nNewSpeed )
+			{
+				// Try download incomlete first and last chink
+
+				Fragments::List oWantedAndAvailable( oAvailable );
+				
+				if ( oAvailable.empty() )
+				{
+					oWantedAndAvailable = GetWantedFragmentList();
+				}
+				else
+				{
+					Fragments::List tmp = inverse( GetWantedFragmentList() );
+					oWantedAndAvailable.erase( tmp.begin(), tmp.end() );
+				}
+
+				BOOL bTransferFound = FALSE;
+
+				if ( ( ! oWantedAndAvailable.empty() ) 
+					 && oWantedAndAvailable.begin()->begin() < nChunkSize  )
+				{
+
+					QWORD nOffset = oWantedAndAvailable.begin()->begin();
+					QWORD nLength = 0;
+					
+					for ( CDownloadTransfer* pOther = GetFirstTransfer() ; pOther ; pOther = pOther->m_pDlNext )
+					{
+						if ( pTransfer != pOther && pOther->m_nPosition <= nChunkSize )
+						{
+							if ( pOther->m_bWantBackwards )
+							{
+								bTransferFound = TRUE;
+								break;
+							}
+							else if( pOther->m_nPosition == nOffset )
+							{
+								QWORD nOldSpeed	= pOther->GetAverageSpeed();
+								if ( nNewSpeed > nOldSpeed )
+								{
+									nLength = min( oWantedAndAvailable.begin()->end(),  nChunkSize ) - nOffset;
+									if ( nOldSpeed > 0 )
+										nLength = ( nLength * nNewSpeed ) / ( nNewSpeed + nOldSpeed );
+									if ( nLength > 8 * 1024 )
+										nLength /= 2;
+								}
+								else
+									break;
+							}
+						}
+					}
+					if ( ! bTransferFound && nLength > 0 ){
+						pTransfer->m_nOffset = nOffset;
+						pTransfer->m_nLength = nLength;
+						pTransfer->m_bWantBackwards	= TRUE;
+						return TRUE;
+					}
+				}
+				
+				bTransferFound = FALSE;
+				
+				QWORD nLastChunk = pDownload->GetSize() - nChunkSize;
+				
+				if ( ( ! oWantedAndAvailable.empty() )
+					&&  oWantedAndAvailable.rbegin()->end() > nLastChunk )
+				{
+					QWORD nOffset = max( oWantedAndAvailable.rbegin()->begin() , nLastChunk );
+					QWORD nPosition = oWantedAndAvailable.rbegin()->end();
+					QWORD nLength = 0;
+					
+					for ( CDownloadTransfer* pOther = GetFirstTransfer() ; pOther ; pOther = pOther->m_pDlNext )
+					{
+						if ( pTransfer != pOther && pOther->m_nPosition >= nLastChunk  )
+						{
+							if ( ! pOther->m_bWantBackwards )
+							{
+								bTransferFound = TRUE;
+								break;
+							}
+							else if( pOther->m_nPosition == nPosition )
+							{
+								QWORD nOldSpeed	= pOther->GetAverageSpeed();
+								if ( nNewSpeed > nOldSpeed )
+								{
+									nLength = nPosition - nOffset;
+									if ( nOldSpeed > 0 )
+										nLength = ( nLength * nNewSpeed ) / ( nNewSpeed + nOldSpeed );
+									if ( nLength > 8 * 1024 )
+										nLength /= 2;
+								}
+								else
+									break;
+							}
+						}
+					}
+					if ( ! bTransferFound && nLength > 0 ){
+						pTransfer->m_nOffset = nOffset;
+						pTransfer->m_nLength = nLength;
+						pTransfer->m_bWantBackwards	= FALSE;
+						return TRUE;
+					}
+				}
+			}
+
+			QWORD nNonRandomEnd = pDownload->GetNonRandomEnd();
+
+			if ( nNonRandomEnd )
+			{
+				Fragments::List::const_iterator pItr = oPossible.begin();
+				const Fragments::List::const_iterator pEnd = oPossible.end();
+			
+				for ( ; pItr != pEnd ; ++pItr )
+				{
+					if ( pItr->begin() >= nNonRandomEnd )
+						break;
+
+					if ( pItr->end() > pDownload->m_nStartFrom )
+					{
+						pTransfer->m_nOffset = max( pItr->begin() , pDownload->m_nStartFrom );
+						pTransfer->m_nLength = min( pItr->end() , nNonRandomEnd ) - pTransfer->m_nOffset;
+						pTransfer->m_bWantBackwards	= FALSE;
+						return TRUE;
+					}
+				}
+			}
+		}
+
+		// Get random range to download
+			
+		pRange = oPossible.random_range();
+		pTransfer->m_nOffset = pRange->begin();
+		pTransfer->m_nLength = pRange->size();
+		pTransfer->m_bWantBackwards	= FALSE;
 
 		return TRUE;
 	}
 	else
 	{
 		CDownloadTransfer* pExisting = NULL;
+		CDownloadTransfer* pExistingBackwards = NULL;
+		CDownloadTransfer* pExistingTowards = NULL;
 
 		for ( CDownloadTransfer* pOther = GetFirstTransfer() ; pOther ; pOther = pOther->m_pDlNext )
 		{
@@ -1022,7 +1285,14 @@ BOOL CDownloadWithTiger::GetFragment(CDownloadTransfer* pTransfer)
 			}
 
 			pExisting = pOther;
-			break;
+
+			if ( pOther->m_bRecvBackwards )
+				pExistingBackwards = pOther;
+			else
+				pExistingTowards = pOther;
+			
+			if ( pExistingBackwards && pExistingTowards )
+				break;
 		}
 
 		if ( pExisting == NULL )
@@ -1032,8 +1302,14 @@ BOOL CDownloadWithTiger::GetFragment(CDownloadTransfer* pTransfer)
 			return TRUE;
 		}
 
-		QWORD nOldSpeed	= pExisting->GetAverageSpeed();
-		QWORD nNewSpeed	= pTransfer->GetAverageSpeed();
+		QWORD nOldSpeed	= pExistingBackwards && pExistingTowards ? 
+			pExistingBackwards->GetAverageSpeed() 
+			:  pExisting->GetAverageSpeed();
+		
+		QWORD nNewSpeed	= pExistingBackwards && pExistingTowards ? 
+			pExistingTowards->GetAverageSpeed() 
+			: pTransfer->GetAverageSpeed();
+
 		QWORD nLength	= oLargest.size() / 2;
 
 		if ( nOldSpeed == 0 )
@@ -1044,7 +1320,13 @@ BOOL CDownloadWithTiger::GetFragment(CDownloadTransfer* pTransfer)
 		if ( nLength == 0 )
 			nLength = 1;
 
-		if ( pExisting->m_bRecvBackwards )
+		if ( pExistingBackwards && pExistingTowards )
+		{ 
+			pTransfer->m_nOffset		= oLargest.begin();
+			pTransfer->m_nLength		= nLength;
+			pTransfer->m_bWantBackwards	= TRUE;
+		}
+		else if ( pExistingBackwards )
 		{
 			pTransfer->m_nOffset		= oLargest.begin();
 			pTransfer->m_nLength		= nLength;
@@ -1081,9 +1363,9 @@ void CDownloadWithTiger::ResetVerification()
 		m_pTorrent.FinishBlockTest( m_nVerifyBlock );
 	}
 
-	if ( m_pTigerBlock != NULL ) ZeroMemory( m_pTigerBlock, m_nTigerBlock );
-	if ( m_pHashsetBlock != NULL ) ZeroMemory( m_pHashsetBlock, m_nHashsetBlock );
-	if ( m_pTorrentBlock != NULL ) ZeroMemory( m_pTorrentBlock, m_nTorrentBlock );
+	if ( m_pTigerBlock   ) ZeroMemory( m_pTigerBlock,   m_nTigerBlock );
+	if ( m_pHashsetBlock ) ZeroMemory( m_pHashsetBlock, m_nHashsetBlock );
+	if ( m_pTorrentBlock ) ZeroMemory( m_pTorrentBlock, m_nTorrentBlock );
 
 	m_nTigerSuccess		= 0;
 	m_nHashsetSuccess	= 0;
@@ -1102,8 +1384,8 @@ void CDownloadWithTiger::ClearVerification()
 
 	ResetVerification();
 
-	if ( m_pTigerBlock != NULL ) delete [] m_pTigerBlock;
-	if ( m_pHashsetBlock != NULL ) delete [] m_pHashsetBlock;
+	if ( m_pTigerBlock   ) delete [] m_pTigerBlock;
+	if ( m_pHashsetBlock ) delete [] m_pHashsetBlock;
 
 	m_pTigerBlock		= NULL;
 	m_nTigerBlock		= 0;

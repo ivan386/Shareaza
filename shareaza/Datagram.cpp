@@ -77,6 +77,31 @@ void CDatagramIn::Create(const SOCKADDR_IN* pHost, BYTE nFlags, WORD nSequence, 
 	ZeroMemory( m_pLocked, sizeof(BOOL) * m_nBuffer );
 }
 
+void CDatagramIn::Create(const SOCKADDR_IN6* pHost, BYTE nFlags, WORD nSequence, BYTE nCount)
+{
+	CopyMemory( &m_pHostIPv6, pHost, sizeof(SOCKADDR_IN6) );
+
+	m_bCompressed	= ( nFlags & SGP_DEFLATE ) ? TRUE : FALSE;
+	m_nSequence		= nSequence;
+	m_nCount		= nCount;
+	m_nLeft			= nCount;
+
+	m_tStarted	= GetTickCount();
+
+	if ( m_nBuffer < m_nCount )
+	{
+		if ( m_pLocked ) delete [] m_pLocked;
+		if ( m_pBuffer ) delete [] m_pBuffer;
+
+		m_nBuffer	= m_nCount;
+		m_pBuffer	= new CBuffer*[ m_nBuffer ];
+		m_pLocked	= new BOOL[ m_nBuffer ];
+	}
+
+	ZeroMemory( m_pBuffer, sizeof(CBuffer*) * m_nBuffer );
+	ZeroMemory( m_pLocked, sizeof(BOOL) * m_nBuffer );
+}
+
 //////////////////////////////////////////////////////////////////////
 // CDatagramIn add a datagram part
 

@@ -34,7 +34,7 @@ public:
 	~CSearchManager();
 
 	void			OnRun();
-	BOOL			OnQueryAck(CG2Packet* pPacket, const SOCKADDR_IN* pAddress, Hashes::Guid& oGUID);
+	BOOL			OnQueryAck(CG2Packet* pPacket, const SOCKADDR* pAddress, Hashes::Guid& oGUID);
 	BOOL			OnQueryHits(const CQueryHit* pHits);
 	WORD			OnQueryStatusRequest(const Hashes::Guid& oGUID);
 

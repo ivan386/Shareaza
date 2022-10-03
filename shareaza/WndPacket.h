@@ -45,6 +45,8 @@ public:
 	virtual ~CPacketWnd();
 
 	void SmartDump(const CPacket* pPacket, const SOCKADDR_IN* pAddress, BOOL bUDP, BOOL bOutgoing, DWORD_PTR nNeighbourUnique = 0);
+	void SmartDump(const CPacket* pPacket, const SOCKADDR_IN6* pAddress, BOOL bUDP, BOOL bOutgoing, DWORD_PTR nNeighbourUnique = 0);
+	
 	virtual void OnSkinChange();
 
 	CChildWnd*			m_pOwner;

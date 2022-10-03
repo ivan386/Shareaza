@@ -1,7 +1,7 @@
 //
 // ImageServices.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2012.
+// Copyright (c) Shareaza Development Team, 2002-2017.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -24,6 +24,12 @@
 #include "Plugins.h"
 #include "ImageServices.h"
 #include "ImageFile.h"
+#include "ThumbCache.h"
+#include "Library.h"
+#include "LibraryMaps.h"
+#include "BTInfo.h"
+
+#include <atlimage.h>
 
 #ifdef _DEBUG
 #define new DEBUG_NEW
@@ -44,8 +50,25 @@ END_INTERFACE_MAP()
 
 BOOL CImageServices::LoadFromMemory(CImageFile* pFile, LPCTSTR pszType, LPCVOID pData, DWORD nLength, BOOL bScanOnly, BOOL bPartialOk)
 {
-	CComQIPtr< IImageServicePlugin > pService(
-		Plugins.GetPlugin( _T("ImageService"), pszType ) );
+	// Try to load common types first (JPEG/GIF/BMP/PNG)
+	{
+		CComPtr< IStream > pStream = SHCreateMemStream( (const BYTE*)pData, nLength );
+		if ( pStream )
+		{
+			CImage image;
+			HRESULT hr = image.Load( pStream );
+			if ( SUCCEEDED( hr ) && image.IsDIBSection() )
+			{
+				BOOL bAlpha = ( image.GetBPP() == 32 ) && ( _tcsicmp( pszType, _T(".png") ) == 0 );
+				if ( pFile->LoadFromBitmap( image, bAlpha, bScanOnly ) )
+				{
+					return TRUE;
+				}
+			}
+		}
+	}
+
+	CComQIPtr< IImageServicePlugin > pService( Plugins.GetPlugin( _T("ImageService"), pszType ) );
 	if ( ! pService )
 		return FALSE;
 
@@ -76,7 +99,7 @@ BOOL CImageServices::LoadFromMemory(CImageFile* pFile, LPCTSTR pszType, LPCVOID 
 				HRESULT hr = pService->LoadFromMemory( bstrType, pInput, &pParams, &pArray );
 				if ( SUCCEEDED( hr ) )
 				{
-					bSuccess = PostLoad( pFile, &pParams, pArray );
+					bSuccess = pFile->LoadFromService( &pParams, pArray );
 				}
 				else if ( SERVERLOST( hr ) )
 				{
@@ -101,14 +124,53 @@ BOOL CImageServices::LoadFromMemory(CImageFile* pFile, LPCTSTR pszType, LPCVOID 
 BOOL CImageServices::LoadFromFile(CImageFile* pFile, LPCTSTR szFilename, BOOL bScanOnly, BOOL bPartialOk)
 {
 	// Get file extension
-	CString strType( PathFindExtension( szFilename ) ); // ".ext"
-	strType.MakeLower();
+	LPCTSTR szType = PathFindExtension( szFilename ); // ".ext"
 
-	CComQIPtr< IImageServicePlugin > pService(
-		Plugins.GetPlugin( _T("ImageService"), strType ) );
+	if ( _tcsicmp( szType, _T(".torrent") ) == 0 )
+	{
+		CBTInfo pTorrent;
+		if ( pTorrent.LoadTorrentFile( szFilename ) && !pTorrent.m_pFiles.IsEmpty() )
+		{
+			CSingleLock oLock( &Library.m_pSection );
+
+			if ( oLock.Lock( 1000 ) )
+			{
+				CFileList* pFound = LibraryMaps.LookupFilesByHash( pTorrent.m_pFiles.GetHead() );
+				
+				oLock.Unlock();
+
+				if ( pFound && !pFound->IsEmpty() )
+				{
+					CString sPath = pFound->GetHead()->GetPath();
+					
+					delete pFound;
+
+					return CThumbCache::Cache( sPath, pFile );
+				}
+
+				delete pFound;
+			}
+		}
+	}
+
+	// Try to load common types first (JPEG/GIF/BMP/PNG)
+	{
+		CImage image;
+		HRESULT hr = image.Load( szFilename );
+		if ( SUCCEEDED( hr ) && image.IsDIBSection() )
+		{
+			BOOL bAlpha = ( image.GetBPP() == 32 ) && ( _tcsicmp( szType, _T(".png") ) == 0 );
+			if ( pFile->LoadFromBitmap( image, bAlpha, bScanOnly ) )
+			{
+				return TRUE;
+			}
+		}
+	}
+
+	CComQIPtr< IImageServicePlugin > pService( Plugins.GetPlugin( _T("ImageService"), szType ) );
 	if ( pService )
 	{
-		if ( LoadFromFileHelper( pService, pFile, szFilename, bScanOnly, bPartialOk ) ) 
+		if ( LoadFromFileHelper( pService, pFile, szFilename, bScanOnly, bPartialOk ) )
 			return TRUE;
 	}
 
@@ -117,7 +179,7 @@ BOOL CImageServices::LoadFromFile(CImageFile* pFile, LPCTSTR szFilename, BOOL bS
 	{
 		for ( service_list::const_iterator i = oList.begin(); i != oList.end(); ++i )
 		{
-			if ( LoadFromFileHelper( (*i).second.m_T, pFile, szFilename, bScanOnly, bPartialOk ) ) 
+			if ( LoadFromFileHelper( (*i).second.m_T, pFile, szFilename, bScanOnly, bPartialOk ) )
 				return TRUE;
 		}
 	}
@@ -128,8 +190,7 @@ BOOL CImageServices::LoadFromFile(CImageFile* pFile, LPCTSTR szFilename, BOOL bS
 BOOL CImageServices::LoadFromFileHelper(IImageServicePlugin* pService, CImageFile* pFile, LPCTSTR szFilename, BOOL bScanOnly, BOOL bPartialOk)
 {
 	// Get file extension
-	CString strType( PathFindExtension( szFilename ) ); // ".ext"
-	strType.MakeLower();
+	LPCTSTR szType = PathFindExtension( szFilename ); // ".ext"
 
 	HINSTANCE hRes = AfxGetResourceHandle();	// Save resource handle for old plugins
 	BOOL bSuccess = FALSE;
@@ -143,15 +204,15 @@ BOOL CImageServices::LoadFromFileHelper(IImageServicePlugin* pService, CImageFil
 	HRESULT hr = pService->LoadFromFile( CComBSTR( szFilename ), &pParams, &pArray );
 	if ( SUCCEEDED( hr ) )
 	{
-		bSuccess = PostLoad( pFile, &pParams, pArray );
+		bSuccess = pFile->LoadFromService( &pParams, pArray );
 	}
 	else if ( SERVERLOST( hr ) )
 	{
 		// Plugin died
-		Plugins.ReloadPlugin( _T("ImageService"), strType );
+		Plugins.ReloadPlugin( _T("ImageService"), szType );
 	}
 	if ( pArray )
-	{ 
+	{
 		VERIFY( SUCCEEDED( SafeArrayDestroy( pArray ) ) );
 	}
 
@@ -174,7 +235,7 @@ BOOL CImageServices::LoadFromFileHelper(IImageServicePlugin* pService, CImageFil
 						0, 0, 0 );
 					if ( pBuffer )
 					{
-						bSuccess = LoadFromMemory( pFile, strType, pBuffer,
+						bSuccess = LoadFromMemory( pFile, szType, pBuffer,
 							GetFileSize( hFile, NULL ), bScanOnly, bPartialOk );
 
 						VERIFY( UnmapViewOfFile( pBuffer ) );
@@ -192,47 +253,6 @@ BOOL CImageServices::LoadFromFileHelper(IImageServicePlugin* pService, CImageFil
 }
 
 /////////////////////////////////////////////////////////////////////////////
-// CImageServices post load
-
-BOOL CImageServices::PostLoad(CImageFile* pFile, const IMAGESERVICEDATA* pParams, SAFEARRAY* pArray)
-{
-	pFile->m_bScanned		= TRUE;
-	pFile->m_nWidth			= pParams->nWidth;
-	pFile->m_nHeight		= pParams->nHeight;
-	pFile->m_nComponents	= pParams->nComponents;
-	if ( pArray == NULL )
-	{
-		// Scanned only
-		return TRUE;
-	}
-
-	LONG nArray = 0;
-	if ( SUCCEEDED( SafeArrayGetUBound( pArray, 1, &nArray ) ) )
-	{
-		nArray++;
-		LONG nFullSize = ( ( pParams->nWidth * pParams->nComponents + 3 ) & ~3 ) *
-			pParams->nHeight;
-		if ( nArray == nFullSize )
-		{
-			pFile->m_pImage = new BYTE[ nArray ];
-			if ( pFile->m_pImage )
-			{
-				LPBYTE pData;
-				if ( SUCCEEDED( SafeArrayAccessData( pArray, (VOID**)&pData ) ) )
-				{
-					CopyMemory( pFile->m_pImage, pData, nArray );
-					pFile->m_bLoaded = TRUE;
-
-					VERIFY( SUCCEEDED( SafeArrayUnaccessData( pArray ) ) );
-				}
-			}
-		}
-	}
-
-	return pFile->m_bLoaded;
-}
-
-/////////////////////////////////////////////////////////////////////////////
 // CImageServices save operations
 
 BOOL CImageServices::SaveToMemory(CImageFile* pFile, LPCTSTR pszType, int nQuality, LPBYTE* ppBuffer, DWORD* pnLength)
@@ -240,8 +260,7 @@ BOOL CImageServices::SaveToMemory(CImageFile* pFile, LPCTSTR pszType, int nQuali
 	*ppBuffer = NULL;
 	*pnLength = 0;
 
-	CComQIPtr< IImageServicePlugin > pService(
-		Plugins.GetPlugin( _T("ImageService"), pszType ) );
+	CComQIPtr< IImageServicePlugin > pService( Plugins.GetPlugin( _T("ImageService"), pszType ) );
 	if ( ! pService )
 		return FALSE;
 
@@ -288,11 +307,9 @@ BOOL CImageServices::SaveToFile(CImageFile* pFile, LPCTSTR szFilename, int nQual
 		*pnLength = 0;
 
 	// Get file extension
-	CString strType( PathFindExtension( szFilename ) ); // ".ext"
-	strType.MakeLower();
+	LPCTSTR szType = PathFindExtension( szFilename ); // ".ext"
 
-	CComQIPtr< IImageServicePlugin > pService(
-		Plugins.GetPlugin( _T("ImageService"), strType ) );
+	CComQIPtr< IImageServicePlugin > pService( Plugins.GetPlugin( _T("ImageService"), szType ) );
 	if ( ! pService )
 		return FALSE;
 
@@ -386,8 +403,7 @@ BOOL CImageServices::LookupUniversalPlugins(service_list& oList)
 			if ( ! Hashes::fromGuid( szCLSID, &pCLSID ) )
 				continue;
 
-			CComQIPtr< IImageServicePlugin > pService(
-				Plugins.GetPlugin( _T("ImageService"), szType ) );
+			CComQIPtr< IImageServicePlugin > pService( Plugins.GetPlugin( _T("ImageService"), szType ) );
 			if ( pService )
 			{
 				oList.push_back( service_list::value_type( pCLSID, pService ) );
@@ -407,25 +423,23 @@ IMPLEMENT_UNKNOWN(CImageServices, ImageService)
 STDMETHODIMP CImageServices::XImageService::LoadFromFile( __in BSTR sFile, __inout IMAGESERVICEDATA* pParams, __out SAFEARRAY** ppImage )
 {
 	METHOD_PROLOGUE(CImageServices, ImageService)
-	
-	// Get file extension
-	CString strType( PathFindExtension( sFile ) ); // ".ext"
-	strType.MakeLower();
 
-	CComQIPtr< IImageServicePlugin > pService(
-		Plugins.GetPlugin( _T("ImageService"), strType ) );
+	// Get file extension
+	LPCTSTR szType = PathFindExtension( sFile ); // ".ext"
+
+	CComQIPtr< IImageServicePlugin > pService( Plugins.GetPlugin( _T("ImageService"), szType ) );
 	if ( pService )
 	{
-		if ( SUCCEEDED( pService->LoadFromFile( sFile, pParams, ppImage ) ) ) 
+		if ( SUCCEEDED( pService->LoadFromFile( sFile, pParams, ppImage ) ) )
 			return S_OK;
 	}
 
 	service_list oList;
-	if ( ImageServices.LookupUniversalPlugins( oList ) )
+	if ( pThis->LookupUniversalPlugins( oList ) )
 	{
 		for ( service_list::const_iterator i = oList.begin(); i != oList.end(); ++i )
 		{
-			if ( SUCCEEDED( (*i).second.m_T->LoadFromFile( sFile, pParams, ppImage ) ) ) 
+			if ( SUCCEEDED( (*i).second.m_T->LoadFromFile( sFile, pParams, ppImage ) ) )
 				return S_OK;
 		}
 	}
@@ -436,9 +450,8 @@ STDMETHODIMP CImageServices::XImageService::LoadFromFile( __in BSTR sFile, __ino
 STDMETHODIMP CImageServices::XImageService::LoadFromMemory( __in BSTR sType, __in SAFEARRAY* pMemory, __inout IMAGESERVICEDATA* pParams, __out SAFEARRAY** ppImage )
 {
 	METHOD_PROLOGUE(CImageServices, ImageService)
-	
-	CComQIPtr< IImageServicePlugin > pService(
-		Plugins.GetPlugin( _T("ImageService"), sType ) );
+
+	CComQIPtr< IImageServicePlugin > pService( Plugins.GetPlugin( _T("ImageService"), sType ) );
 	if ( pService )
 	{
 		return pService->LoadFromMemory( sType, pMemory, pParams, ppImage );
@@ -450,13 +463,11 @@ STDMETHODIMP CImageServices::XImageService::LoadFromMemory( __in BSTR sType, __i
 STDMETHODIMP CImageServices::XImageService::SaveToFile( __in BSTR sFile, __inout IMAGESERVICEDATA* pParams, __in SAFEARRAY* pImage)
 {
 	METHOD_PROLOGUE(CImageServices, ImageService)
-	
-	// Get file extension
-	CString strType( PathFindExtension( sFile ) ); // ".ext"
-	strType.MakeLower();
 
-	CComQIPtr< IImageServicePlugin > pService(
-		Plugins.GetPlugin( _T("ImageService"), strType ) );
+	// Get file extension
+	LPCTSTR szType = PathFindExtension( sFile ); // ".ext"
+
+	CComQIPtr< IImageServicePlugin > pService( Plugins.GetPlugin( _T("ImageService"), szType ) );
 	if ( pService )
 	{
 		return pService->SaveToFile( sFile, pParams, pImage );
@@ -468,9 +479,8 @@ STDMETHODIMP CImageServices::XImageService::SaveToFile( __in BSTR sFile, __inout
 STDMETHODIMP CImageServices::XImageService::SaveToMemory( __in BSTR sType, __out SAFEARRAY** ppMemory, __inout IMAGESERVICEDATA* pParams, __in SAFEARRAY* pImage)
 {
 	METHOD_PROLOGUE(CImageServices, ImageService)
-	
-	CComQIPtr< IImageServicePlugin > pService(
-		Plugins.GetPlugin( _T("ImageService"), sType ) );
+
+	CComQIPtr< IImageServicePlugin > pService( Plugins.GetPlugin( _T("ImageService"), sType ) );
 	if ( pService )
 	{
 		return pService->SaveToMemory( sType, ppMemory, pParams, pImage );

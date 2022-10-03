@@ -46,6 +46,8 @@ CSecureRule::CSecureRule(BOOL bCreate)
 	m_nToday	= 0;
 	m_nEver		= 0;
 
+	memset( &m_nIPv6, 0, sizeof( IN6_ADDR ) );
+	m_nIPv6PrefixLen = 128;
 	m_nIP[0]	= m_nIP[1] = m_nIP[2] = m_nIP[3] = 0;
 	m_nMask[0]	= m_nMask[1] = m_nMask[2] = m_nMask[3] = 255;
 	m_pContent	= NULL;
@@ -77,6 +79,8 @@ CSecureRule& CSecureRule::operator=(const CSecureRule& pRule)
 	m_nMask[1]	= pRule.m_nMask[1];
 	m_nMask[2]	= pRule.m_nMask[2];
 	m_nMask[3]	= pRule.m_nMask[3];
+	m_nIPv6		= pRule.m_nIPv6;
+	m_nIPv6PrefixLen = pRule.m_nIPv6PrefixLen;
 
 	delete [] m_pContent;
 	m_pContent	= pRule.m_nContentLength ? new TCHAR[ pRule.m_nContentLength ] : NULL;
@@ -116,6 +120,29 @@ BOOL CSecureRule::IsExpired(DWORD nNow, BOOL bSession) const
 
 //////////////////////////////////////////////////////////////////////
 // CSecureRule match
+
+BOOL CSecureRule::Match(const IN6_ADDR* pAddress) const
+{
+	if ( ( m_nType == srAddressIPv6 ) && pAddress )
+	{
+		BYTE nIndex = 16;
+		BYTE nMask = 0;
+		if ( m_nIPv6PrefixLen < 128 )
+		{
+			nIndex = m_nIPv6PrefixLen / 8;
+			nMask = 255 << ( 8 - ( m_nIPv6PrefixLen % 8 ) );
+		}
+
+		if ( !nIndex || memcmp( pAddress, &m_nIPv6, nIndex) == 0 )
+		{
+			if ( nMask )
+				return ( pAddress->u.Byte[ nIndex ] & nMask ) == m_nIPv6.u.Byte[ nIndex ];
+
+			return TRUE;
+		}
+	}
+	return FALSE;
+}
 
 BOOL CSecureRule::Match(const IN_ADDR* pAddress) const
 {
@@ -192,6 +219,18 @@ BOOL CSecureRule::Match(const CQuerySearch* pQuery, const CString& strContent) c
 		return FALSE;
 
 	return RegExp::Match( strFilter, strContent );
+}
+
+void CSecureRule::SetIPv6(const CString& strIPv6)
+{
+	int nSl = strIPv6.Find( _T("/") );
+	if ( nSl > 0 )
+	{
+		_stscanf( strIPv6.Mid( nSl + 1 ), _T("%d"), &m_nIPv6PrefixLen );
+		IPv6FromString( strIPv6.Left( nSl ), &m_nIPv6 );
+	}
+	else
+		IPv6FromString( strIPv6 , &m_nIPv6 );
 }
 
 //////////////////////////////////////////////////////////////////////
@@ -305,6 +344,10 @@ void CSecureRule::Serialize(CArchive& ar, int nVersion)
 			ar.Write( m_nIP, 4 );
 			ar.Write( m_nMask, 4 );
 			break;
+		case srAddressIPv6:
+			ar.Write( &m_nIPv6, sizeof( IN6_ADDR ) );
+			ar << m_nIPv6PrefixLen;
+			break;
 		case srContentAny:
 		case srContentAll:
 		case srContentRegExp:
@@ -343,6 +386,9 @@ void CSecureRule::Serialize(CArchive& ar, int nVersion)
 		case 3:
 			m_nType = srContentRegExp;
 			break;
+		case 4:
+			m_nType = srAddressIPv6;
+			break;
 		}
 
 		if ( m_nType == srAddress )
@@ -350,6 +396,11 @@ void CSecureRule::Serialize(CArchive& ar, int nVersion)
 			ReadArchive( ar, m_nIP, 4 );
 			ReadArchive( ar, m_nMask, 4 );
 			MaskFix();				// Make sure old rules are updated to new format
+		}
+		else if ( m_nType == srAddressIPv6 )
+		{
+			ReadArchive( ar, &m_nIPv6, sizeof( IN6_ADDR ) );
+			ar >> m_nIPv6PrefixLen;
 		}
 		else
 		{
@@ -417,6 +468,14 @@ CXMLElement* CSecureRule::ToXML()
 			pXML->AddAttribute( _T("mask"), strValue );
 		}
 		break;
+	case srAddressIPv6:
+		pXML->AddAttribute( _T("type"), _T("ipv6address") );
+		if ( m_nIPv6PrefixLen >= 128 )
+			strValue = IPv6ToString( &m_nIPv6 );
+		else
+			strValue.Format( _T("%s/%i"), IPv6ToString( &m_nIPv6 ), m_nIPv6PrefixLen );
+		pXML->AddAttribute( _T("address"), strValue );
+		break;
 	case srContentAny:
 	case srContentAll:
 	case srContentRegExp:
@@ -425,6 +484,7 @@ CXMLElement* CSecureRule::ToXML()
 		switch ( m_nType )
 		{
 			case srAddress:
+			case srAddressIPv6:
 				break;
 			case srContentAny:
 				str = L"any";
@@ -484,18 +544,23 @@ BOOL CSecureRule::FromXML(CXMLElement* pXML)
 		m_nType = srAddress;
 
 		CString strAddress = pXML->GetAttributeValue( _T("address") );
-		if ( _stscanf( strAddress, _T("%lu.%lu.%lu.%lu"), &x[0], &x[1], &x[2], &x[3] ) == 4 )
+		if ( _stscanf( strAddress, _T("%d.%d.%d.%d"), &x[0], &x[1], &x[2], &x[3] ) == 4 )
 		{
 			m_nIP[0] = (BYTE)x[0]; m_nIP[1] = (BYTE)x[1];
 			m_nIP[2] = (BYTE)x[2]; m_nIP[3] = (BYTE)x[3];
 		}
 
 		CString strMask = pXML->GetAttributeValue( _T("mask") );
-		if ( _stscanf( strMask, _T("%lu.%lu.%lu.%lu"), &x[0], &x[1], &x[2], &x[3] ) == 4 )
+		if ( _stscanf( strMask, _T("%d.%d.%d.%d"), &x[0], &x[1], &x[2], &x[3] ) == 4 )
 		{
 			m_nMask[0] = (BYTE)x[0]; m_nMask[1] = (BYTE)x[1];
 			m_nMask[2] = (BYTE)x[2]; m_nMask[3] = (BYTE)x[3];
 		}
+	}
+	else if ( strType.CompareNoCase( _T("ipv6address") ) == 0 )
+	{
+		m_nType = srAddressIPv6;
+		SetIPv6( pXML->GetAttributeValue( _T("address") ) );
 	}
 	else if ( strType.CompareNoCase( _T("content") ) == 0 )
 	{
@@ -596,7 +661,7 @@ BOOL CSecureRule::FromGnucleusString(CString& str)
 	CString strAddress = str.Left( nPos );
 	str = str.Mid( nPos + 1 );
 
-	if ( _stscanf( strAddress, _T("%lu.%lu.%lu.%lu"), &x[0], &x[1], &x[2], &x[3] ) != 4 )
+	if ( _stscanf( strAddress, _T("%d.%d.%d.%d"), &x[0], &x[1], &x[2], &x[3] ) != 4 )
 		return FALSE;
 
 	m_nIP[0] = (BYTE)x[0]; m_nIP[1] = (BYTE)x[1];
@@ -608,7 +673,7 @@ BOOL CSecureRule::FromGnucleusString(CString& str)
 	{
 		strAddress = strAddress.Mid( nPos + 1 );
 
-		if ( _stscanf( strAddress, _T("%lu.%lu.%lu.%lu"), &x[0], &x[1], &x[2], &x[3] ) != 4 )
+		if ( _stscanf( strAddress, _T("%d.%d.%d.%d"), &x[0], &x[1], &x[2], &x[3] ) != 4 )
 			return FALSE;
 
 		for ( int nByte = 0 ; nByte < 4 ; nByte++ )
@@ -636,69 +701,97 @@ BOOL CSecureRule::FromGnucleusString(CString& str)
 // CSecureRule Netmask Fix
 void  CSecureRule::MaskFix()
 {
-	DWORD nNetwork = 0 , nOldMask  = 0 , nNewMask = 0;
+	if ( m_nType == srAddress )
+	{ //IPv4
+		DWORD nNetwork = 0 , nOldMask  = 0 , nNewMask = 0;
 
-	for ( int nByte = 0 ; nByte < 4 ; nByte++ )		// convert the byte arrays to dwords
-	{
-		BYTE nMaskByte = 0;
-		BYTE nNetByte = 0;
-		nNetByte = m_nIP[ nByte ];
-		nMaskByte = m_nMask[ nByte ];
-		for ( int nBits = 0 ; nBits < 8 ; nBits++ )
+		for ( int nByte = 0 ; nByte < 4 ; nByte++ )		// convert the byte arrays to dwords
 		{
-			nNetwork <<= 1;
-			if ( nNetByte & 0x80 )
+			BYTE nMaskByte = 0;
+			BYTE nNetByte = 0;
+			nNetByte = m_nIP[ nByte ];
+			nMaskByte = m_nMask[ nByte ];
+			for ( int nBits = 0 ; nBits < 8 ; nBits++ )
 			{
-				nNetwork |= 1;
-			}
-			nNetByte <<= 1;
+				nNetwork <<= 1;
+				if ( nNetByte & 0x80 )
+				{
+					nNetwork |= 1;
+				}
+				nNetByte <<= 1;
 
-			nOldMask <<= 1;
-			if ( nMaskByte & 0x80 )
-			{
-				nOldMask |= 1;
+				nOldMask <<= 1;
+				if ( nMaskByte & 0x80 )
+				{
+					nOldMask |= 1;
+				}
+				nMaskByte <<= 1;
 			}
-			nMaskByte <<= 1;
+		}
+
+		DWORD nTempMask = nOldMask;
+
+		for ( int nBits = 0 ; nBits < 32 ; nBits++ )	// get upper contiguous bits from subnet mask
+		{
+			if ( nTempMask & 0x80000000 )					// check the high bit
+			{
+				nNewMask >>= 1;							// shift mask down
+				nNewMask |= 0x80000000;					// put the bit on
+			}
+			else
+			{
+				break;									// found a 0 so ignore the rest
+			}
+			nTempMask <<= 1;
+		}
+
+		if ( nNewMask != nOldMask )						// set rule to expire if mask is invalid
+		{
+			m_nExpire = srSession;
+			return;
+		}
+
+		nNetwork &= nNewMask;		// do the & now so we don't have to each time there's a match
+
+		for ( int nByte = 0 ; nByte < 4 ; nByte++ )		// convert the dwords back to byte arrays
+		{
+			BYTE nNetByte = 0;
+			for ( int nBits = 0 ; nBits < 8 ; nBits++ )
+			{
+				nNetByte <<= 1;
+				if ( nNetwork & 0x80000000 )
+				{
+					nNetByte |= 1;
+				}
+				nNetwork <<= 1;
+			}
+			m_nIP[ nByte ] = nNetByte;
 		}
 	}
-
-	DWORD nTempMask = nOldMask;
-
-	for ( int nBits = 0 ; nBits < 32 ; nBits++ )	// get upper contiguous bits from subnet mask
-	{
-		if ( nTempMask & 0x80000000 )					// check the high bit
+	else if ( m_nType == srAddressIPv6 )
+	{ // IPv6
+		
+		BYTE nIndex = 16;
+		BYTE nMask = 0;
+		if ( m_nIPv6PrefixLen < 128 )
 		{
-			nNewMask >>= 1;							// shift mask down
-			nNewMask |= 0x80000000;					// put the bit on
+			nIndex = m_nIPv6PrefixLen / 8;
+			nMask = 255 << ( 8 - ( m_nIPv6PrefixLen % 8 ) );
 		}
 		else
+			m_nIPv6PrefixLen = 128;
+		
+		if ( nIndex < 16 )
 		{
-			break;									// found a 0 so ignore the rest
-		}
-		nTempMask <<= 1;
-	}
-
-	if ( nNewMask != nOldMask )						// set rule to expire if mask is invalid
-	{
-		m_nExpire = srSession;
-		return;
-	}
-
-	nNetwork &= nNewMask;		// do the & now so we don't have to each time there's a match
-
-	for ( int nByte = 0 ; nByte < 4 ; nByte++ )		// convert the dwords back to byte arrays
-	{
-		BYTE nNetByte = 0;
-		for ( int nBits = 0 ; nBits < 8 ; nBits++ )
-		{
-			nNetByte <<= 1;
-			if ( nNetwork & 0x80000000 )
+			if ( nMask )
 			{
-				nNetByte |= 1;
+				m_nIPv6.u.Byte[nIndex] = m_nIPv6.u.Byte[nIndex] & nMask;
+				nIndex++;
 			}
-			nNetwork <<= 1;
+
+			for (int i = nIndex; i < 16; i++)
+				m_nIPv6.u.Byte[i] = 0;
 		}
-		m_nIP[ nByte ] = nNetByte;
 	}
 }
 
@@ -721,6 +814,13 @@ void CSecureRule::ToList(CLiveList* pLiveList, int nCount, DWORD tNow) const
 				m_nIP[0], m_nIP[1], m_nIP[2], m_nIP[3],
 				m_nMask[0], m_nMask[1], m_nMask[2], m_nMask[3] );
 		}
+	}
+	else if( m_nType == CSecureRule::srAddressIPv6 )
+	{
+		if ( m_nIPv6PrefixLen >= 128 )
+			pItem->Set( 0, IPv6ToString( &m_nIPv6 ) );
+		else
+			pItem->Format( 0, _T("%s/%i"), IPv6ToString( &m_nIPv6 ), m_nIPv6PrefixLen );
 	}
 	else
 	{

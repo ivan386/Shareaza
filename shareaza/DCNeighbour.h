@@ -35,8 +35,9 @@ public:
 	virtual ~CDCNeighbour();
 
 	virtual BOOL	ConnectTo(const IN_ADDR* pAddress, WORD nPort, BOOL bAutomatic);
+	virtual BOOL	ConnectTo(const IN6_ADDR* pAddress, WORD nPort, BOOL bAutomatic);
 	virtual BOOL	Send(CPacket* pPacket, BOOL bRelease = TRUE, BOOL bBuffered = FALSE);
-	virtual DWORD	GetUserCount() const { return m_oUsers.GetCount(); }
+	virtual DWORD	GetUserCount() const { return (DWORD)m_oUsers.GetCount(); }
 
 	// Process packets from input buffer
 	virtual BOOL	ProcessPackets(CBuffer* pInput);
@@ -52,6 +53,7 @@ public:
 
 	CString			m_sNick;		// User nick on this hub
 	BOOL			m_bNickValid;	// User nick was accepted
+	in_addr			m_nMyAddress;	// IP on this hub
 	BOOL			m_bExtended;	// Using extended protocol
 	CStringList		m_oFeatures;	// Remote client supported features
 

@@ -263,7 +263,7 @@ void CHomeSearchCtrl::Search(bool bAutostart)
 
 	CQuerySearchPtr pSearch = new CQuerySearch();
 	pSearch->m_bAutostart	= bAutostart;
-	pSearch->m_sSearch		= strText;
+	pSearch->SetSearch( strText );
 	pSearch->m_pSchema		= pSchema;
 	BOOL bValid = pSearch->CheckValid( false );
 	if ( ! bValid && bAutostart )

@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Shareaza\n"
-"Report-Msgid-Bugs-To: ryo-oh-ki <ryo-oh-ki@narod.ru>\n"
-"POT-Creation-Date: 2014-01-27 13:47+0000\n"
+"Report-Msgid-Bugs-To: shareaza <shareaza@cherubicsoft.com>\n"
+"POT-Creation-Date: 2015-02-24 08:37+0000\n"
 "PO-Revision-Date: \n"
 "Last-Translator: ryo-oh-ki <ryo-oh-ki@narod.ru>\n"
 "Language-Team: Shareaza Development Team\n"
@@ -1184,19 +1184,6 @@ msgstr "Epizode Iste Serije"
 msgid "_Web Services"
 msgstr "_Web Usluge"
 
-#: csearchwnd.basic;30;item;id_library_bitzi_web
-#: csearchwnd;32;item;id_library_bitzi_web
-#: cbrowsehostwnd.basic;34;item;id_library_bitzi_web
-#: cbrowsehostwnd;36;item;id_library_bitzi_web
-#: chitmonitorwnd;38;item;id_library_bitzi_web
-#: clibraryfileview.physical.basic;41;item;id_library_bitzi_web
-#: clibraryfileview.physical;44;item;id_library_bitzi_web
-#: clibraryfileview.virtual.basic;47;item;id_library_bitzi_web
-#: clibraryfileview.virtual;50;item;id_library_bitzi_web
-#: webservices.list.menu;item;id_library_bitzi_web
-msgid "View _Bitzi Ticket"
-msgstr "View _Bitzi Ticket"
-
 #: csearchwnd;item;id_search_downloadnow
 #: cbrowsehostwnd.basic;item;id_search_downloadnow
 #: cbrowsehostwnd;item;id_search_downloadnow
@@ -1482,6 +1469,7 @@ msgstr "Pokaži Prijašnje"
 
 #: clibrarytree.physical.basic;item;id_library_explore
 #: clibrarytree.physical;item;id_library_explore
+#: path.menu;item;id_path_explore
 msgid "_Explore"
 msgstr "Istraži"
 
@@ -1567,14 +1555,6 @@ msgstr "_Nova Mapa..."
 #: clibrarytileview;item;id_library_album_open
 msgid "_Open"
 msgstr "_Otvori"
-
-#: clibraryfileview.physical.basic;41;item;id_library_bitzi_download
-#: clibraryfileview.physical;44;item;id_library_bitzi_download
-#: clibraryfileview.virtual.basic;47;item;id_library_bitzi_download
-#: clibraryfileview.virtual;50;item;id_library_bitzi_download
-#: webservices.list.menu;item;id_library_bitzi_download
-msgid "_Download Metadata"
-msgstr "Skini Meta_datu"
 
 #: clibraryfileview.physical.basic;41;item;id_webservices_musicbrainz
 #: clibraryfileview.physical;44;item;id_webservices_musicbrainz
@@ -1809,7 +1789,8 @@ msgstr ""
 msgid "Timestam_p"
 msgstr "Timestam_p"
 
-#: csystemwnd;item;id_system_copy curlexportdlg;control;7
+#: csystemwnd;item;id_system_copy path.menu;item;id_path_copy
+#: curlexportdlg;control;7
 msgid "_Copy"
 msgstr "Kopiraj"
 
@@ -3647,14 +3628,6 @@ msgstr "Otvori odabranu mapu albuma."
 msgid "View and edit the properties of the selected album folder..."
 msgstr "View and edit the properties of the selected album folder..."
 
-#: message;id_library_bitzi_download
-msgid "Download metadata for the selected file(s) from Bitzi(TM)..."
-msgstr "Download metadata for the selected file(s) from Bitzi(TM)..."
-
-#: message;id_library_bitzi_web
-msgid "View the Bitzi(TM) ticket for the selected file on the web."
-msgstr "View the Bitzi(TM) ticket for the selected file on the web."
-
 #: message;id_library_columns message;id_search_columns
 msgid "Select metadata columns to be displayed..."
 msgstr "Select metadata columns to be displayed..."
@@ -4147,6 +4120,14 @@ msgstr "Skip back to the previous file in the current playlist."
 #, fuzzy
 msgid "Previous Pane"
 msgstr "Prethodna datoteka"
+
+#: message;id_path_copy
+msgid "Copy this path to clipboard."
+msgstr ""
+
+#: message;id_path_explore
+msgid "Explore this path."
+msgstr ""
 
 #: message;id_scheduler_activate
 #, fuzzy
@@ -5239,6 +5220,10 @@ msgstr ""
 msgid "Free:"
 msgstr "Created:"
 
+#: string;12999
+msgid "Client %s has a prohibited user agent \"%s\", banning."
+msgstr ""
+
 #: string;13000
 msgid "Are you sure you want to delete the selected security rules? This cannot be undone."
 msgstr ""
@@ -6038,14 +6023,6 @@ msgstr "Jeste li sigurni da želite mjenjati metadate od %i datoteka?"
 msgid "Editing metadata of %i files."
 msgstr "Mjenjam metadate od %i datoteka."
 
-#: string;16387
-msgid "The file \"%s\" has not yet been hashed. Please wait for the file to be hashed, and then try again."
-msgstr "The file \"%s\" has not yet been hashed.Please wait for the file to be hashed, and then try again."
-
-#: string;16388
-msgid "This option uses services provided by Bitzi.com for recognising and sharing information about selected files.\\n\\nShareaza will transmit the SHA1 hash code for the selected file(s) in order to query the Bitzi database. If you are concerned about privacy, you may wish to consult the Bitzi.com privacy policy.\\n\\nWould you like to proceed?"
-msgstr "This option uses services provided by Bitzi.com for recognising and sharing information about selected files.\\n\\nShareaza will transmit the SHA1 hash code for the selected file(s) in order to query the Bitzi database.If you are concerned about privacy, you may wish to consult the Bitzi.com privacy policy.\\n\\nWould you like to proceed?"
-
 #: string;16389
 msgid "Are you sure you want to permanently delete the %i selected file(s) ?\\n\\nThe files will be moved to your \"recycle bin\" if it is enabled."
 msgstr "Jeste li sigurni da želite zauvjek izbrisati %i označenih datoteka?\\n\\nDatoteke će biti premještene u \"Smeće\" Ako je omogučeno."
@@ -6335,22 +6312,6 @@ msgstr "Vrsta:"
 #: string;16780
 msgid "Unspecified"
 msgstr "Neodređeno"
-
-#: string;16781
-msgid "Requesting..."
-msgstr "Čekam Odobrenje..."
-
-#: string;16782
-msgid "Success!"
-msgstr "Uspjeh!!"
-
-#: string;16783
-msgid "Finished, click Close"
-msgstr "Gotovo, klikni na zatvori"
-
-#: string;16784
-msgid "&Close"
-msgstr "&Zatvori"
 
 #: string;16785
 msgid "(No Visualisation)"
@@ -7409,12 +7370,11 @@ msgstr "OK"
 #: cgraphlistdlg;control;17 cgraphitemdlg;control;2
 #: cschemacolumnsdlg;control;4 csecureruledlg;control;34
 #: csharemanagerdlg;control;6 curlcopydlg;control;6 curlexportdlg;control;10
-#: curlactiondlg;control;11 cbitzidownloaddlg;control;4
-#: cfilepreviewdlg;control;6 cexistingfiledlg;control;2
-#: cclosemodedlg;control;6 cdonkeyserversdlg;control;5
-#: cdeletefiledlg;control;5 ctorrentseeddlg;control;4
-#: cdownloadgroupdlg;control;2 cmediavisdlg;control;6
-#: cdecodemetadatadlg;control;9 circinputdlg;control;3
+#: curlactiondlg;control;11 cfilepreviewdlg;control;6
+#: cexistingfiledlg;control;2 cclosemodedlg;control;6
+#: cdonkeyserversdlg;control;5 cdeletefiledlg;control;5
+#: ctorrentseeddlg;control;4 cdownloadgroupdlg;control;2
+#: cmediavisdlg;control;6 cdecodemetadatadlg;control;9 circinputdlg;control;3
 msgid "Cancel"
 msgstr "Odustani"
 
@@ -7529,6 +7489,22 @@ msgstr ""
 msgid "No Tasks Currently Scheduled"
 msgstr ""
 
+#: string;20268 cdownloadssettingspage;control;1
+msgid "Save Completed Files Here"
+msgstr "Skinute Datoteke Spremi Ovdje"
+
+#: string;20269 cdownloadssettingspage;control;23
+msgid "Store Temporary Incomplete Files Here"
+msgstr "Nezavršene Datoteke Spremi Ovdje"
+
+#: string;20270 cbittorrentsettingspage;control;20
+msgid "Store Torrents Here"
+msgstr "Ovdje Spremi Torrente"
+
+#: string;20271 clibrarysettingspage;control;24
+msgid "Store Collections Here"
+msgstr "Ovdje Spremaj Kolekcije"
+
 #: csettingsheet;control;4 cprofilemanagerdlg;control;4
 msgid "Apply"
 msgstr "Potvrdi"
@@ -7565,9 +7541,9 @@ msgstr "Ski_danje:"
 msgid "Expand new downloads by default"
 msgstr "Uvjek raširi nova skidanja"
 
-#: cgeneralsettingspage;control;9
-msgid "Display simple progress bar"
-msgstr "Pokaži jednostavni pokazivač napretka"
+#: cgeneralsettingspage;control;9 curlactiondlg;control;13
+msgid "Open a download _monitor window"
+msgstr "Otvori prozor skidanja"
 
 #: cgeneralsettingspage;control;10
 msgid "_Search:"
@@ -7679,10 +7655,6 @@ msgstr "Dod_aj"
 #: clibrarysettingspage;control;20
 msgid "_Never Share:"
 msgstr "_Nikada ne djeli:"
-
-#: clibrarysettingspage;control;24
-msgid "Store _Collections Here:"
-msgstr "Ovdje Spremaj Kolek_cije:"
 
 #: clibrarysettingspage;control;27
 msgid "Create ghost files when deleting"
@@ -7920,11 +7892,6 @@ msgstr "Veza:"
 msgid "Handshake:"
 msgstr ""
 
-#: cdownloadssettingspage;control;1
-#, fuzzy
-msgid "Save Completed Files Here"
-msgstr "Skinute Datoteke Spremi Ovdje:"
-
 #: cdownloadssettingspage;control;4
 msgid "Scan every completed file with AntiVirus"
 msgstr ""
@@ -7967,11 +7934,6 @@ msgstr "Maximalna Dužina Čekanja:"
 #: cdownloadssettingspage;control;22
 msgid "Only download and upload to networks which are connected."
 msgstr "Skidaj i djeli samo sa spojenih mreža"
-
-#: cdownloadssettingspage;control;23
-#, fuzzy
-msgid "Store Temporary Incomplete Files Here"
-msgstr "Nezavršene Datoteke Sprem_i Ovdje:"
 
 #: cuploadssettingspage;control;2
 msgid "Share NEW partial downloads"
@@ -8293,10 +8255,6 @@ msgstr ""
 msgid "_Download Connections:"
 msgstr "Postavke ski_danja:"
 
-#: cbittorrentsettingspage;control;20
-msgid "_Store Torrents Here:"
-msgstr "Ovdje _Spremi Torrente::"
-
 #: cbittorrentsettingspage;control;21
 msgid "Torrents at once"
 msgstr "Istovremenih Torrenta"
@@ -8348,7 +8306,7 @@ msgid "Author:"
 msgstr "Autor:"
 
 #: cskinssettingspage;control;7 cpluginssettingspage;control;5
-#: cadvancedsettingspage;control;7 ccollectionexportdlg;control;8
+#: cadvancedsettingspage;control;9 ccollectionexportdlg;control;8
 msgid "Description:"
 msgstr "Opis:"
 
@@ -8372,15 +8330,15 @@ msgstr "Informacije o Pluginu:"
 msgid "_Setup..."
 msgstr "_Naštimaj..."
 
-#: cadvancedsettingspage;control;4
+#: cadvancedsettingspage;control;6
 msgid "Set Default"
 msgstr "Set Default"
 
-#: cadvancedsettingspage;control;5
+#: cadvancedsettingspage;control;7
 msgid "Setting Properties:"
 msgstr "Postavke:"
 
-#: cadvancedsettingspage;control;6
+#: cadvancedsettingspage;control;8
 msgid "Value:"
 msgstr "Vrijednost:"
 
@@ -9027,8 +8985,8 @@ msgid "Discovery Service Type:"
 msgstr "Discovery Service Type:"
 
 #: cdiscoveryservicedlg;control;4
-msgid "Gnutella Bootstrap|G1 GWebCache|G2 GWebCache|G1/G2 GWebCache|Server.met URL|Blocked"
-msgstr "Gnutella Bootstrap|GWebCache|Server.met URL"
+msgid "Gnutella Bootstrap|G1 GWebCache|G2 GWebCache|G1/G2 GWebCache|Server.met URL|DC++ Hub List URL|Blocked"
+msgstr "Gnutella Bootstrap|G1 GWebCache|G2 GWebCache|G1/G2 GWebCache|Server.met URL|DC++ Hub List URL|Blocked"
 
 #: dialog;cdownloadmonitordlg
 msgid "Download : Shareaza"
@@ -9366,25 +9324,9 @@ msgstr "Traži Datoteku"
 msgid "_Remember my selection next time"
 msgstr "Zapamti moj odabi_r za drugi put"
 
-#: curlactiondlg;control;13
-msgid "Open a download _monitor window"
-msgstr "Otvori prozor skidanja"
-
 #: curlactiondlg;control;14
 msgid "You have clicked on a Shareaza-powered URI which will add the following Discovery Service to your Discovery Services cache."
 msgstr "You have clicked on a Shareaza-powered URI which will add the following Discovery Service to your Discovery Services cache."
-
-#: dialog;cbitzidownloaddlg
-msgid "Downloading Metadata..."
-msgstr "Skidam Metadate..."
-
-#: cbitzidownloaddlg;control;2
-msgid "Shareaza is attempting to download metadata from Bitzi(TM)..."
-msgstr "Shareaza pokušava skinuti metadata od Bitzi(TM)..."
-
-#: cbitzidownloaddlg;control;6
-msgid "www.bitzi.com"
-msgstr "www.bitzi.com"
 
 #: dialog;cfilepreviewdlg
 msgid "Smart Download Preview..."
@@ -10048,6 +9990,54 @@ msgstr "TigerTree"
 #, fuzzy
 msgid "NextRun"
 msgstr "Slijedeći"
+
+#~ msgid "Store _Collections Here:"
+#~ msgstr "Ovdje Spremaj Kolek_cije:"
+
+#~ msgid "_Store Torrents Here:"
+#~ msgstr "Ovdje _Spremi Torrente::"
+
+#~ msgid "Display simple progress bar"
+#~ msgstr "Pokaži jednostavni pokazivač napretka"
+
+#~ msgid "Requesting..."
+#~ msgstr "Čekam Odobrenje..."
+
+#~ msgid "Success!"
+#~ msgstr "Uspjeh!!"
+
+#~ msgid "Finished, click Close"
+#~ msgstr "Gotovo, klikni na zatvori"
+
+#~ msgid "&Close"
+#~ msgstr "&Zatvori"
+
+#~ msgid "The file \"%s\" has not yet been hashed. Please wait for the file to be hashed, and then try again."
+#~ msgstr "The file \"%s\" has not yet been hashed.Please wait for the file to be hashed, and then try again."
+
+#~ msgid "View _Bitzi Ticket"
+#~ msgstr "View _Bitzi Ticket"
+
+#~ msgid "_Download Metadata"
+#~ msgstr "Skini Meta_datu"
+
+#~ msgid "Download metadata for the selected file(s) from Bitzi(TM)..."
+#~ msgstr "Download metadata for the selected file(s) from Bitzi(TM)..."
+
+#~ msgid "View the Bitzi(TM) ticket for the selected file on the web."
+#~ msgstr "View the Bitzi(TM) ticket for the selected file on the web."
+
+#~ msgid "This option uses services provided by Bitzi.com for recognising and sharing information about selected files.\\n\\nShareaza will transmit the SHA1 hash code for the selected file(s) in order to query the Bitzi database. If you are concerned about privacy, you may wish to consult the Bitzi.com privacy policy.\\n\\nWould you like to proceed?"
+#~ msgstr "This option uses services provided by Bitzi.com for recognising and sharing information about selected files.\\n\\nShareaza will transmit the SHA1 hash code for the selected file(s) in order to query the Bitzi database.If you are concerned about privacy, you may wish to consult the Bitzi.com privacy policy.\\n\\nWould you like to proceed?"
+
+#~ msgid "Downloading Metadata..."
+#~ msgstr "Skidam Metadate..."
+
+#~ msgid "Shareaza is attempting to download metadata from Bitzi(TM)..."
+#~ msgstr "Shareaza pokušava skinuti metadata od Bitzi(TM)..."
+
+#~ msgid "www.bitzi.com"
+#~ msgstr "www.bitzi.com"
 
 #, fuzzy
 #~ msgid "This option uses services provided by ShareMonkey.com for recognising information about selected files.\\n\\nShareaza will transmit file details and your location in order to query the ShareMonkey database.  If you are concerned about privacy, you may wish to consult the ShareMonkey.com privacy policy.\\n\\nWould you like to proceed?"

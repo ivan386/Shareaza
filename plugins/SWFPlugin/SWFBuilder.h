@@ -27,31 +27,18 @@
 #include "resource.h"
 #include "SWFPlugin.h"
 
-class ATL_NO_VTABLE CSWFBuilder : 
+class ATL_NO_VTABLE CSWFBuilder :
 	public CComObjectRootEx<CComMultiThreadModel>,
 	public CComCoClass<CSWFBuilder, &CLSID_SWFBuilder>,
 	public ILibraryBuilderPlugin
 {
 public:
-	CSWFBuilder() throw()
-	{
-		m_pUnkMarshaler = NULL;
-	}
 
 DECLARE_REGISTRY_RESOURCEID(IDR_SWFBUILDER)
 
 BEGIN_COM_MAP(CSWFBuilder)
 	COM_INTERFACE_ENTRY(ILibraryBuilderPlugin)
-	COM_INTERFACE_ENTRY_AGGREGATE(IID_IMarshal, m_pUnkMarshaler.p)
 END_COM_MAP()
-
-DECLARE_PROTECT_FINAL_CONSTRUCT()
-DECLARE_GET_CONTROLLING_UNKNOWN()
-
-	HRESULT FinalConstruct () throw();
-	void FinalRelease () throw();
-
-	CComPtr<IUnknown> m_pUnkMarshaler;
 
 // ILibraryBuilderPlugin
 public:

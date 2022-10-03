@@ -1,7 +1,7 @@
 //
 // CtrlDownloadTip.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2012.
+// Copyright (c) Shareaza Development Team, 2002-2014.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -24,6 +24,7 @@
 #include "Settings.h"
 #include "CoolInterface.h"
 #include "ShellIcons.h"
+#include "Network.h"
 #include "Transfers.h"
 #include "Downloads.h"
 #include "Download.h"
@@ -370,7 +371,7 @@ void CDownloadTipCtrl::OnPaint(CDC* pDC, CDownload* pDownload)
 
 		strSpeed = Settings.SmartSpeed( pDownload->GetAverageSpeed() );
 
-		strSources.Format( _T("%i %s %i"), nTransferCount, strOf, nSourceCount );
+		strSources.Format( _T("%i %s %i"), nTransferCount, (LPCTSTR)strOf, nSourceCount );
 		if ( Settings.General.LanguageRTL ) strSources = _T("\x202B") + strSources;
 	}
 	else if ( nSourceCount )
@@ -397,16 +398,16 @@ void CDownloadTipCtrl::OnPaint(CDC* pDC, CDownload* pDownload)
 		{
 			strVolume.Format( _T("(%.2f%%) %s %s %s"),
 				pDownload->GetProgress(),
-				Settings.SmartVolume( pDownload->m_nSize ),
-				strOf,
-				Settings.SmartVolume( pDownload->GetVolumeComplete() ) );
+				(LPCTSTR)Settings.SmartVolume( pDownload->m_nSize ),
+				(LPCTSTR)strOf,
+				(LPCTSTR)Settings.SmartVolume( pDownload->GetVolumeComplete() ) );
 		}
 		else
 		{
 			strVolume.Format( _T("%s %s %s (%.2f%%)"),
-				Settings.SmartVolume( pDownload->GetVolumeComplete() ),
-				strOf,
-				Settings.SmartVolume( pDownload->m_nSize ),
+				(LPCTSTR)Settings.SmartVolume( pDownload->GetVolumeComplete() ),
+				(LPCTSTR)strOf,
+				(LPCTSTR)Settings.SmartVolume( pDownload->m_nSize ),
 				pDownload->GetProgress() );
 		}
 	}
@@ -421,16 +422,16 @@ void CDownloadTipCtrl::OnPaint(CDC* pDC, CDownload* pDownload)
 		{
 			strTorrentUpload.Format( _T("(%.2f%%) %s %s %s"),
 				pDownload->GetRatio(),
-				Settings.SmartVolume( pDownload->m_pTorrent.m_nTotalDownload ),
-				strOf,
-				Settings.SmartVolume( pDownload->m_pTorrent.m_nTotalUpload ) );
+				(LPCTSTR)Settings.SmartVolume( pDownload->m_pTorrent.m_nTotalDownload ),
+				(LPCTSTR)strOf,
+				(LPCTSTR)Settings.SmartVolume( pDownload->m_pTorrent.m_nTotalUpload ) );
 		}
 		else
 		{
 			strTorrentUpload.Format( _T("%s %s %s (%.2f%%)"),
-				Settings.SmartVolume( pDownload->m_pTorrent.m_nTotalUpload ),
-				strOf,
-				Settings.SmartVolume( pDownload->m_pTorrent.m_nTotalDownload ),
+				(LPCTSTR)Settings.SmartVolume( pDownload->m_pTorrent.m_nTotalUpload ),
+				(LPCTSTR)strOf,
+				(LPCTSTR)Settings.SmartVolume( pDownload->m_pTorrent.m_nTotalDownload ),
 				pDownload->GetRatio() );
 		}
 	}
@@ -470,9 +471,7 @@ void CDownloadTipCtrl::OnPaint(CDC* pDC, CDownload* pDownload)
 		DrawText( pDC, &pt, strFormat, 3 );
 		DrawText( pDC, &pt, strETA, m_nStatWidth );
 		pt.y += TIP_TEXTHEIGHT;
-	}
-	if ( ! pDownload->IsSeeding() )
-	{	// Volume downloaded. Not for seeding torrents
+		// Volume downloaded. Not for seeding torrents
 		LoadString( strFormat, IDS_DLM_VOLUME_DOWNLOADED );
 		DrawText( pDC, &pt, strFormat, 3 );
 		DrawText( pDC, &pt, strVolume, m_nStatWidth );
@@ -550,7 +549,7 @@ void CDownloadTipCtrl::PrepareDownloadInfo(CDownload* pDownload)
 	m_sTiger = pDownload->m_oTiger.toShortUrn();
 	if ( m_sTiger.GetLength() )
 	{
-		if ( ! pDownload->m_pTigerBlock )
+		if ( ! pDownload->IsTigerSet() )
 		{
 			if ( pDownload->m_bTigerTrusted )
 			{
@@ -565,12 +564,18 @@ void CDownloadTipCtrl::PrepareDownloadInfo(CDownload* pDownload)
 		{
 			m_sTiger += _T(" (") + strUntrusted + _T(")");
 		}
+		else
+		{
+			CString sTemp;
+			sTemp.Format( _T(" (%I32u)"), pDownload->GetTigerTree()->GetBlockCount() );
+			m_sTiger += sTemp;
+		}
 	}
 
 	m_sED2K = pDownload->m_oED2K.toShortUrn();
 	if ( m_sED2K.GetLength() )
 	{
-		if ( ! pDownload->m_pHashsetBlock )
+		if ( ! pDownload->IsHashsetSet() )
 		{
 			if ( pDownload->m_bED2KTrusted )
 			{
@@ -585,12 +590,18 @@ void CDownloadTipCtrl::PrepareDownloadInfo(CDownload* pDownload)
 		{
 			m_sED2K += _T(" (") + strUntrusted + _T(")");
 		}
+		else
+		{
+			CString sTemp;
+			sTemp.Format( _T(" (%I32u)"), pDownload->GetHashset()->GetBlockCount() );
+			m_sED2K += sTemp;
+		}
 	}
 
 	m_sBTH = pDownload->m_oBTH.toShortUrn();
 	if ( m_sBTH.GetLength() )
 	{
-		if ( ! pDownload->m_pTorrentBlock )
+		if ( ! pDownload->IsTorrentSet() )
 		{
 			if ( pDownload->m_bBTHTrusted )
 			{
@@ -604,6 +615,12 @@ void CDownloadTipCtrl::PrepareDownloadInfo(CDownload* pDownload)
 		else if ( ! pDownload->m_bBTHTrusted )
 		{
 			m_sBTH += _T(" (") + strUntrusted + _T(")");
+		}
+		else
+		{
+			CString sTemp;
+			sTemp.Format( _T(" (%I32u)"), pDownload->m_pTorrent.m_nBlockCount );
+			m_sBTH += sTemp;
 		}
 	}
 
@@ -650,23 +667,24 @@ void CDownloadTipCtrl::OnCalcSize(CDC* pDC, CDownloadSource* pSource)
 	{
 		m_sName.Format( _T("%lu@%s:%u"),
 			pSource->m_pAddress.S_un.S_addr,
-			CString( inet_ntoa( pSource->m_pServerAddress ) ),
+			(LPCTSTR)CString( inet_ntoa( pSource->m_pServerAddress ) ),
 			pSource->m_nServerPort );
 	}
 
 	// Or an active transfer
-	else if ( ! pSource->IsIdle() )
-	{
-		m_sName.Format( _T("%s:%u"),
-			pSource->GetAddress(),
-			ntohs( pSource->GetPort() ) );
-	}
+//	else if ( ! pSource->IsIdle() )
+//	{
+//			(LPCTSTR)pSource->GetAddress(),
+//			 ntohs( pSource->GetPort() ) );
+//	}
 
 	// Or just queued
 	else
 	{
 		m_sName.Format( _T("%s:%u"),
-			CString( inet_ntoa( pSource->m_pAddress ) ),
+			pSource->IsIPv6Source() ? 
+			IPv6ToString( &pSource->m_pAddressIPv6 ) 
+			: (LPCTSTR)CString( inet_ntoa( pSource->m_pAddress ) ),
 			pSource->m_nPort );
 	}
 
@@ -705,7 +723,7 @@ void CDownloadTipCtrl::OnCalcSize(CDC* pDC, CDownloadSource* pSource)
 	m_nHeaders = 0;
 	if ( ! pSource->IsIdle() && Settings.General.GUIMode != GUI_BASIC )
 	{
-		m_nHeaders = pTransfer->m_pHeaderName.GetSize();
+		m_nHeaders = (int)pTransfer->m_pHeaderName.GetSize();
 		for ( int nHeader = 0 ; nHeader < m_nHeaders ; nHeader++ )
 		{
 			CString strName		= pTransfer->m_pHeaderName.GetAt( nHeader ) + _T(':');
@@ -755,9 +773,9 @@ void CDownloadTipCtrl::OnPaint(CDC* pDC, CDownloadSource* pSource)
 		if ( DWORD nLimit = pSource->GetLimit() )
 		{
 			strSpeed.Format( _T("%s %s %s"),
-				Settings.SmartSpeed( pSource->GetMeasuredSpeed() ),
-				strOf,
-				Settings.SmartSpeed( nLimit ) );
+				(LPCTSTR)Settings.SmartSpeed( pSource->GetMeasuredSpeed() ),
+				(LPCTSTR)strOf,
+				(LPCTSTR)Settings.SmartSpeed( nLimit ) );
 		}
 		else
 		{

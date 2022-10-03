@@ -1,7 +1,7 @@
 //
 // ShakeNeighbour.h
 //
-// Copyright (c) Shareaza Development Team, 2002-2010.
+// Copyright (c) Shareaza Development Team, 2002-2014.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -107,7 +107,8 @@ protected:
 
 	// Possibly not in use (do)
 	TRISTATE m_bUltraPeerLoaded;
-	BOOL	m_bDelayClose;			// This is DelayClose
+	UINT	m_bDelayClose;			// This is DelayClose reason
+	QWORD	m_nHereIsTheBug;		// bypass
 	CString	m_sTryUltrapeers;		// Storage of X-Try-Ultrapeers Header
 	CString	m_sTryHubs;				// Storage of X-Try-Hubs Header
 	CString	m_sTryDNAHubs;			// Storage of X-Try-DNA-Hubs Header
@@ -116,6 +117,7 @@ public:
 
 	// Connect, disconnect, and copy
 	virtual BOOL ConnectTo(const IN_ADDR* pAddress, WORD nPort, BOOL bAutomatic = FALSE, BOOL bNoUltraPeer = FALSE); // Connect to an ip address and port number
+	virtual BOOL ConnectTo(const IN6_ADDR* pAddress, WORD nPort, BOOL bAutomatic = FALSE, BOOL bNoUltraPeer = FALSE); // Connect to an ipv6 address and port number
 	virtual void AttachTo(CConnection* pConnection); // Copy the values from the given CConnection object into the CConnection core of this one
 	virtual void Close(UINT nError = IDS_CONNECTION_CLOSED); // Close the socket and log the reason the connection didn't work
 

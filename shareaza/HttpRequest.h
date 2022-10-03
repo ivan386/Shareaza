@@ -1,7 +1,7 @@
 //
 // HttpRequest.h
 //
-// Copyright (c) Shareaza Development Team, 2002-2012.
+// Copyright (c) Shareaza Development Team, 2002-2015.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -65,8 +65,7 @@ protected:
 	CString		m_sStatusString;
 //	CBuffer*	m_pPost;
 	CBuffer*	m_pResponse;
-	typedef CMap< CString, const CString&, CString, CString& > Map;
-	Map			m_pResponseHeaders;
+	CStringIMap	m_pResponseHeaders;
 	HWND		m_hNotifyWnd;
 	UINT		m_nNotifyMsg;
 	WPARAM		m_nNotifyParam;

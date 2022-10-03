@@ -1,7 +1,7 @@
 //
 // BTPacket.h
 //
-// Copyright (c) Shareaza Development Team, 2002-2013.
+// Copyright (c) Shareaza Development Team, 2002-2017.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -29,6 +29,9 @@ class CBENode;
 
 #define BT_PROTOCOL_HEADER			"\023BitTorrent protocol"
 #define BT_PROTOCOL_HEADER_LEN		20
+
+#define DEFAULT_BT_MCAST_ADDRESS	"239.192.152.143"
+#define DEFAULT_BT_MCAST_PORT		6771
 
 // Protocol flags					   7 6 5 4 3 2 1 0
 #define BT_FLAG_EXTENSION			0x0000100000000000ui64
@@ -79,11 +82,14 @@ class CBENode;
 
 const LPCSTR BT_DICT_ADDED			= "added";
 const LPCSTR BT_DICT_ADDED_F		= "added.f";
+const LPCSTR BT_DICT_ADDED6			= "added6";
+const LPCSTR BT_DICT_ADDED6_F		= "added6.f";
 const LPCSTR BT_DICT_ANNOUNCE_PEER	= "announce_peer";
 const LPCSTR BT_DICT_COMPLETE		= "complete";
 const LPCSTR BT_DICT_DATA			= "a";
 const LPCSTR BT_DICT_DOWNLOADED		= "downloaded";
 const LPCSTR BT_DICT_DROPPED		= "dropped";
+const LPCSTR BT_DICT_DROPPED6		= "dropped6";
 const LPCSTR BT_DICT_ERROR			= "e";
 const LPCSTR BT_DICT_ERROR_LONG		= "error";
 const LPCSTR BT_DICT_EXT_MSG		= "m";					// Dictionary of supported extension messages
@@ -101,6 +107,7 @@ const LPCSTR BT_DICT_NAME			= "name";
 const LPCSTR BT_DICT_NICKNAME		= "nickname";
 const LPCSTR BT_DICT_NODES			= "nodes";
 const LPCSTR BT_DICT_PEERS			= "peers";
+const LPCSTR BT_DICT_PEERS6			= "peers6";
 const LPCSTR BT_DICT_PEER_ID		= "peer id";
 const LPCSTR BT_DICT_PEER_IP		= "ip";
 const LPCSTR BT_DICT_PEER_PORT		= "port";
@@ -110,6 +117,7 @@ const LPCSTR BT_DICT_PING			= "ping";
 const LPCSTR BT_DICT_PORT			= "p";					// Local TCP listen port
 const LPCSTR BT_DICT_QUERY			= "q";
 const LPCSTR BT_DICT_RESPONSE		= "r";
+const LPCSTR BT_DICT_REQQ			= "reqq";
 const LPCSTR BT_DICT_SRC_EXCHANGE	= "source-exchange";
 const LPCSTR BT_DICT_TOKEN			= "token";
 const LPCSTR BT_DICT_TOTAL_SIZE		= "total_size";
@@ -122,7 +130,9 @@ const LPCSTR BT_DICT_UT_PEX			= "ut_pex";
 const LPCSTR BT_DICT_VALUES			= "values";
 const LPCSTR BT_DICT_VENDOR			= "v";					// Client name and version (as a utf-8 string)
 const LPCSTR BT_DICT_YOURIP			= "yourip";				// External IP (IPv4 or IPv6)
-
+const LPCSTR BT_DICT_YOURIPPORT		= "ip";				    // External IP Port (IPv4 or IPv6) http://www.rasterbar.com/products/libtorrent/dht_sec.html
+const LPCSTR BT_DICT_IPV6			= "ipv6";
+const LPCSTR BT_DICT_IPV4			= "ipv4";
 //
 // Packet
 //
@@ -142,6 +152,7 @@ public:
 	virtual	void		ToBuffer(CBuffer* pBuffer, bool bTCP = true);
 	static	CBTPacket*	ReadBuffer(CBuffer* pBuffer);
 	virtual void		SmartDump(const SOCKADDR_IN* pAddress, BOOL bUDP, BOOL bOutgoing, DWORD_PTR nNeighbourUnique = 0);
+	virtual void		SmartDump(const SOCKADDR_IN6* pAddress, BOOL bUDP, BOOL bOutgoing, DWORD_PTR nNeighbourUnique = 0);
 	virtual CString		GetType() const;
 	virtual CString		ToHex()   const;
 	virtual CString		ToASCII() const;
@@ -181,6 +192,7 @@ public:
 
 	// Packet handler
 	virtual BOOL OnPacket(const SOCKADDR_IN* pHost);
+	virtual BOOL OnPacket(const SOCKADDR_IN6* pHost);
 
 //	BOOL OnPing(const SOCKADDR_IN* pHost);
 //	BOOL OnError(const SOCKADDR_IN* pHost);
@@ -231,16 +243,18 @@ public:
 	void Disconnect();
 
 	// Search for hash (and announce it if needed)
-	void Search(const Hashes::BtHash& oBTH, bool bAnnounce = true);
+	void Search(const Hashes::BtHash& oBTH, bool bSeed = false, bool bAnnounce = true );
 
 	// Ping this host
 	bool Ping(const IN_ADDR* pAddress, WORD nPort);
+	bool Ping(const IN6_ADDR* pAddress, WORD nPort);
 
 	// Run this periodically
 	void OnRun();
 
 	// Packet processor
 	void OnPacket(const SOCKADDR_IN* pHost, CBTPacket* pPacket);
+	void OnPacket(const SOCKADDR_IN6* pHost, CBTPacket* pPacket);
 
 protected:
 	bool	m_bConnected;

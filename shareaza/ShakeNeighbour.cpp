@@ -64,7 +64,7 @@ CShakeNeighbour::CShakeNeighbour() : CNeighbour( PROTOCOL_NULL ), // Call the CN
 	m_bCanDeflate( Neighbours.IsG2Leaf() ?
 		( Settings.Gnutella.DeflateHub2Hub || Settings.Gnutella.DeflateLeaf2Hub ) :
 		( Settings.Gnutella.DeflateHub2Hub || Settings.Gnutella.DeflateHub2Leaf ) ),
-	m_bDelayClose(FALSE)
+	m_bDelayClose( 0 )
 {
 }
 
@@ -99,6 +99,39 @@ BOOL CShakeNeighbour::ConnectTo(const IN_ADDR* pAddress, WORD nPort, BOOL bAutom
 	{
 		// Report the connection failure
 		theApp.Message( MSG_ERROR, IDS_CONNECTION_CONNECT_FAIL, (LPCTSTR)CString( inet_ntoa( m_pHost.sin_addr ) ) );
+		return FALSE;
+	}
+
+	// Initialize more member variables
+	m_nState		= nrsConnecting;                        // We've connected the socket, and are waiting for the connection to be made
+	m_bAutomatic	= bAutomatic;                           // Copy the given automatic setting into the member variable (do)
+	m_bUltraPeerSet	= bNoUltraPeer ? TRI_FALSE : TRI_UNKNOWN; // Set m_bUltraPeerSet to false or unknown (do)
+
+	// Add this CShakeNeighbour object to the list of them
+	Neighbours.Add( this );
+
+	// The connection was made without error
+	return TRUE;
+}
+
+BOOL CShakeNeighbour::ConnectTo(const IN6_ADDR* pAddress, WORD nPort, BOOL bAutomatic, BOOL bNoUltraPeer)
+{
+	// Connect the socket in this object to the given ip address and port number
+	if ( CConnection::ConnectTo( pAddress, nPort ) )
+	{
+		// Have Windows signal our event when the state of the socket changes
+		WSAEventSelect(                                   // Associate an event object with a specified set of network events
+			m_hSocket,                                    // The socket
+			Network.GetWakeupEvent(),                     // Signal this event when the following network events happen
+			FD_CONNECT | FD_READ | FD_WRITE | FD_CLOSE ); // Connection completed, ready to read or write, or socket closed
+
+		// Report that we are attempting this connection
+		theApp.Message( MSG_INFO, IDS_CONNECTION_ATTEMPTING, (LPCTSTR)m_sAddress, htons( m_pHostIPv6.sin6_port ) );
+	} // ConnectTo reported that the socket could not be made
+	else
+	{
+		// Report the connection failure
+		theApp.Message( MSG_ERROR, IDS_CONNECTION_CONNECT_FAIL, (LPCTSTR)IPv6ToString( &m_pHostIPv6.sin6_addr ) );
 		return FALSE;
 	}
 
@@ -177,7 +210,12 @@ void CShakeNeighbour::Close(UINT nError)
 	}
 
 	if ( bFail && m_bInitiated )
-		HostCache.OnFailure( &m_pHost.sin_addr, htons( m_pHost.sin_port ), m_nProtocol, bRemove );
+	{
+		if ( IsIPv6Host() )
+			HostCache.OnFailure( &m_pHostIPv6.sin6_addr, htons( m_pHostIPv6.sin6_port ), m_nProtocol, bRemove );
+		else
+			HostCache.OnFailure( &m_pHost.sin_addr, htons( m_pHost.sin_port ), m_nProtocol, bRemove );
+	}
 
 	// Have CNeighbour remove this object from the list, and put away the socket
 	CNeighbour::Close( nError );
@@ -349,10 +387,17 @@ void CShakeNeighbour::SendPublicHeaders()
 	// Tell the remote computer our IP address with a header like "Listen-IP: 67.176.34.172:6346"
 	m_bSentAddress |= SendMyAddress(); // Returns true if the header is sent, set m_bSentAddress true once its sent
 
-	// Tell the remote computer what IP address it has from here with a header like "Remote-IP: 81.103.192.245"
-	Write( _P("Remote-IP: ") );
-	Write( CString( inet_ntoa( m_pHost.sin_addr ) ) );
-	Write( _P("\r\n") );
+	if ( IsIPv6Host() )
+	{
+		strHeader.Format( _T("Remote-IP: %s\r\n"), (LPCTSTR)HostToString( &m_pHostIPv6 ) );
+		Write( strHeader );
+	}
+	else
+	{
+		// Tell the remote computer what IP address it has from here with a header like "Remote-IP: 81.103.192.245"
+		strHeader.Format( _T("Remote-IP: %s:%i\r\n"), (LPCTSTR)CString( inet_ntoa( m_pHost.sin_addr ) ), htons( m_pHost.sin_port ) );
+		Write( strHeader );
+	}
 
 	// Shareaza Settings allow us to exchange compressed data with this computer
 	if ( m_bCanDeflate )
@@ -530,7 +575,7 @@ void CShakeNeighbour::SendHostHeaders(LPCSTR pszMessage, size_t nLength)
 		{
 			CHostCacheHostPtr pHost = (*i);
 
-			if ( pHost->CanQuote( nTime ) )		// if host is still recent enough
+			if ( pHost->CanQuote( nTime ) && Network.IsValidAddressFor( &m_pHost.sin_addr , &pHost->m_pAddress ) )		// if host is still recent enough
 			{
 				if ( strHosts.GetLength() ) strHosts += _T(",");	// Separate each computer's info with a comma
 				strHosts += pHost->ToString();						// Add this computer's info to the string
@@ -562,7 +607,7 @@ void CShakeNeighbour::SendHostHeaders(LPCSTR pszMessage, size_t nLength)
 			CHostCacheHostPtr pHost = (*i);
 
 			// This host is still recent enough to tell another computer about
-			if ( pHost->CanQuote( nTime ) )
+			if ( pHost->CanQuote( nTime ) && Network.IsValidAddressFor( &m_pHost.sin_addr , &pHost->m_pAddress ) )
 			{
 				if ( strHosts.GetLength() ) strHosts += _T(",");
 				strHosts += pHost->ToString( m_bClientExtended != FALSE );
@@ -616,7 +661,7 @@ BOOL CShakeNeighbour::ReadResponse()
 			m_nState = nrsRejected; // Set the neighbour state in this CShakeNeighbour object to rejected
 			if ( strLine == _T("503") )
 			{
-				m_bDelayClose = TRUE;
+				m_bDelayClose = IDS_HANDSHAKE_REJECTED;
 			}
 		} // It does say "200 OK", and the remote computer contacted us
 		else if ( ! m_bInitiated )
@@ -689,8 +734,7 @@ BOOL CShakeNeighbour::OnHeaderLine(CString& strHeader, CString& strValue)
 		{
 			m_nState = nrsRejected;
 			m_bBadClient = TRUE;
-			m_bDelayClose = TRUE;
-			Security.Ban( &m_pHost.sin_addr, ban2Hours );
+			m_bDelayClose = IDS_SECURITY_BANNED_USERAGENT;
 		}
 
 		// If the remote computer is running a client the user has blocked
@@ -698,13 +742,14 @@ BOOL CShakeNeighbour::OnHeaderLine(CString& strHeader, CString& strValue)
 		{
 			m_nState = nrsRejected;
 			m_bBadClient = TRUE;
-			m_bDelayClose = TRUE;
+			m_bDelayClose = IDS_HANDSHAKE_REJECTED;
 		}
 	} // The remote computer is telling us our IP address
-	else if ( strHeader.CompareNoCase( _T("Remote-IP") ) == 0 )
+	else if ( strHeader.CompareNoCase( _T("Remote-IP") ) == 0 
+			  || strHeader.CompareNoCase( _T("Host") ) == 0 )
 	{
 		// Give the value, which is text like "1.2.3.4", to the Network object
-		Network.AcquireLocalAddress( strValue );
+		Network.AcquireLocalAddress( strValue, 0, &m_pHost.sin_addr, &m_pHostIPv6.sin6_addr );
 	} // The remote computer is telling us its IP address
 	else if (	strHeader.CompareNoCase( _T("X-My-Address") ) == 0 ||
 				strHeader.CompareNoCase( _T("Listen-IP") ) == 0 ||
@@ -712,7 +757,12 @@ BOOL CShakeNeighbour::OnHeaderLine(CString& strHeader, CString& strValue)
 				strHeader.CompareNoCase( _T("Node") ) == 0 )
 	{
 		// Find the index of the first colon in the text
-		int nColon = strValue.Find( ':' );
+		int nColon = strValue.Find( _T("]:") );
+		if ( nColon > 0 )
+			nColon++;
+		else
+			nColon = strValue.Find( ':' );
+
 		if ( nColon > 0 ) // There is a colon and it's not at the start of the text
 		{
 			// Save the default Gnutella port, 6346, in nPort to use it if we can't read the port number from the header value text
@@ -721,7 +771,7 @@ BOOL CShakeNeighbour::OnHeaderLine(CString& strHeader, CString& strValue)
 			// Mid clips the strValue text from beyond the colon to the end
 			// _stscanf is like scanf, and %1u means read the text as a long unsigned number
 			// The If block makes sure that _stscanf successfully reads 1 item, and the number it read isn't 0
-			if (_stscanf( strValue.Mid( nColon + 1 ), _T("%lu"), &nPort ) == 1 && nPort != 0 )
+			if (_stscanf( strValue.Mid( nColon + 1 ), _T("%d"), &nPort ) == 1 && nPort != 0 )
 			{
 				// Save the remote computer port number in the connection object's m_pHost member variable
 				m_pHost.sin_port = htons( u_short( nPort ) ); // Call htons to go from PC little-endian to Internet big-endian byte order
@@ -778,7 +828,7 @@ BOOL CShakeNeighbour::OnHeaderLine(CString& strHeader, CString& strValue)
 		m_bG2Accept |= ( strValue.Find( _T("application/x-shareaza") ) >= 0 );
 		if ( !m_bG1Accept && !m_bG2Accept )
 		{
-			theApp.Message( MSG_DEBUG, L"Unknown app accept header: %s", strHeader );
+			theApp.Message( MSG_DEBUG, L"Unknown app accept header: %s", (LPCTSTR)strHeader );
 		}
 	} // The remote computer is telling us it is sending a kind of packets
 	else if ( strHeader.CompareNoCase( _T("Content-Type") ) == 0 ) // And we're connected to Gnutella2
@@ -789,7 +839,7 @@ BOOL CShakeNeighbour::OnHeaderLine(CString& strHeader, CString& strValue)
 		m_bG2Send |= ( strValue.Find( _T("application/x-shareaza") ) >= 0 );
 		if ( !m_bG1Send && !m_bG2Send )
 		{
-			theApp.Message( MSG_DEBUG, L"Unknown app content-type header: %s", strHeader );
+			theApp.Message( MSG_DEBUG, L"Unknown app content-type header: %s", (LPCTSTR)strHeader );
 		}
 	} // The remote computer is telling us it can accept compressed data, and the settings allow us to do compression
 	else if ( strHeader.CompareNoCase( _T("Accept-Encoding") ) == 0 && m_bCanDeflate ) // Settings allow us to do compression
@@ -973,7 +1023,7 @@ BOOL CShakeNeighbour::OnHeadersComplete()
 
 	if ( m_bDelayClose )
 	{
-		DelayClose( IDS_HANDSHAKE_REJECTED );
+		DelayClose( m_bDelayClose );
 	}
 	else if ( ( ( ! m_bInitiated && m_bG2Accept ) || ( m_bInitiated && m_bG2Send ) ) &&
 			Settings.Gnutella2.EnableToday && m_nProtocol != PROTOCOL_G1 )
@@ -1007,7 +1057,7 @@ BOOL CShakeNeighbour::OnHeadersCompleteG2()
 
 	if ( m_bUltraPeerSet == TRI_TRUE )
 	{
-		HostCache.Gnutella2.Add( &m_pHost.sin_addr, htons( m_pHost.sin_port ) );
+		HostCache.Gnutella2.Add( &m_pHost.sin_addr, htons( m_pHost.sin_port ), &m_pHost.sin_addr );
 	}
 
 	// The remote computer replied to our headers with something other than "200 OK"
@@ -1134,6 +1184,7 @@ BOOL CShakeNeighbour::OnHeadersCompleteG2()
 			if ( m_bUltraPeerSet == TRI_FALSE )
 			{
 				HostCache.Gnutella2.Remove( &m_pHost.sin_addr );
+				HostCache.Gnutella2.Remove( &m_pHostIPv6.sin6_addr );
 			}
 			// Tell the remote computer we can't connect because we are a shielded leaf right now
 			SendHostHeaders( _P("GNUTELLA/0.6 503 Shielded leaf node") );
@@ -1220,7 +1271,7 @@ BOOL CShakeNeighbour::OnHeadersCompleteG1()
 
 	if ( m_bUltraPeerSet == TRI_TRUE )
 	{
-		HostCache.Gnutella1.Add( &m_pHost.sin_addr, htons( m_pHost.sin_port ) );
+		HostCache.Gnutella1.Add( &m_pHost.sin_addr, htons( m_pHost.sin_port ), &m_pHost.sin_addr );
 	}
 
 	// Check if Gnutella1 is enabled before connecting to a gnutella client
@@ -1352,6 +1403,7 @@ BOOL CShakeNeighbour::OnHeadersCompleteG1()
 			if ( m_bUltraPeerSet == TRI_FALSE )
 			{
 				HostCache.Gnutella1.Remove( &m_pHost.sin_addr );
+				HostCache.Gnutella1.Remove( &m_pHostIPv6.sin6_addr );
 			}
 			// Tell the remote computer we can't connect because we are a shielded leaf right now
 			SendHostHeaders( _P("GNUTELLA/0.6 503 Shielded leaf node") );
@@ -1478,7 +1530,10 @@ void CShakeNeighbour::OnHandshakeComplete()
 	// Remove leaf from host cache
 	if ( m_nNodeType == ntLeaf )
 	{
-		HostCache.OnFailure( &m_pHost.sin_addr, htons( m_pHost.sin_port ), m_nProtocol, true );
+		if ( IsIPv6Host() )
+			HostCache.OnFailure( &m_pHostIPv6.sin6_addr, htons( m_pHostIPv6.sin6_port ), m_nProtocol, true );
+		else
+			HostCache.OnFailure( &m_pHost.sin_addr, htons( m_pHost.sin_port ), m_nProtocol, true );
 	}
 
 	// If the remote computer is G2, or can send and understand Gnutella2 packets and isn't G1
@@ -1487,7 +1542,10 @@ void CShakeNeighbour::OnHandshakeComplete()
 		// Add good hub to host cache
 		if ( m_nNodeType == ntHub || m_nNodeType == ntNode )
 		{
-			HostCache.OnSuccess( &m_pHost.sin_addr, htons( m_pHost.sin_port ), m_nProtocol, true );
+			if ( IsIPv6Host() )
+				HostCache.OnSuccess( &m_pHostIPv6.sin6_addr, htons( m_pHostIPv6.sin6_port ), m_nProtocol, true );
+			else
+				HostCache.OnSuccess( &m_pHost.sin_addr, htons( m_pHost.sin_port ), m_nProtocol, true );
 		}
 
 		// check if this connection is still needed at this point
@@ -1517,7 +1575,10 @@ void CShakeNeighbour::OnHandshakeComplete()
 		// Add good hub to host cache
 		if ( m_nNodeType == ntHub || m_nNodeType == ntNode )
 		{
-			HostCache.OnSuccess( &m_pHost.sin_addr, htons( m_pHost.sin_port ), m_nProtocol, true );
+			if ( IsIPv6Host() )
+				HostCache.OnSuccess( &m_pHostIPv6.sin6_addr, htons( m_pHostIPv6.sin6_port ), m_nProtocol, true );
+			else
+				HostCache.OnSuccess( &m_pHost.sin_addr, htons( m_pHost.sin_port ), m_nProtocol, true );
 		}
 
 		// check if this connection is still needed at this point

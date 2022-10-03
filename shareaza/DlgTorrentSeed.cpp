@@ -1,7 +1,7 @@
 //
 // DlgTorrentSeed.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2013.
+// Copyright (c) Shareaza Development Team, 2002-2017.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -160,7 +160,7 @@ void CTorrentSeedDlg::OnDownload()
 		{
 			if ( CDownload* pDownload = Downloads.Add( oURL ) )
 			{
-				pDownload->PrepareFile();
+				pDownload->OpenDownload();
 
 				// Automatically merge download with local files on start-up
 				if ( Settings.BitTorrent.AutoMerge )
@@ -168,9 +168,13 @@ void CTorrentSeedDlg::OnDownload()
 					CList< CString > oFiles;
 					for ( POSITION pos = pDownload->m_pTorrent.m_pFiles.GetHeadPosition() ; pos ; )
 					{
-						const CBTInfo::CBTFile* pBTFile = pDownload->m_pTorrent.m_pFiles.GetNext( pos );
-						if ( CLibraryFile* pFile = LibraryMaps.LookupFileByName( pBTFile->m_sPath, pBTFile->m_nSize, FALSE, TRUE ) )
-							oFiles.AddTail( pFile->GetPath() );
+						CBTInfo::CBTFile* pBTFile = pDownload->m_pTorrent.m_pFiles.GetNext( pos );
+
+						pBTFile->FindFile();
+
+						const CString& strFile = pBTFile->GetBestPath();
+						if ( ! strFile.IsEmpty() )
+							oFiles.AddTail( strFile );
 					}
 
 					if ( oFiles.GetCount() )
@@ -184,7 +188,7 @@ void CTorrentSeedDlg::OnDownload()
 					pMainWnd->m_pWindows.Open( RUNTIME_CLASS(CDownloadsWnd) );
 
 				if ( Settings.Downloads.ShowMonitorURLs )
-					pDownload->ShowMonitor( &pTransfersLock );
+					pDownload->ShowMonitor();
 			}
 		}
 	}

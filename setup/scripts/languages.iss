@@ -317,8 +317,3 @@ Source: "setup\filter\default.dat"; DestDir: "{app}\Data"; DestName: "AdultFilte
 Source: "setup\filter\catalan.dat"; DestDir: "{app}\Data"; DestName: "AdultFilter.dat"; Flags: ignoreversion overwritereadonly uninsremovereadonly sortfilesbyextension; Languages: ca
 ; Albanian
 Source: "setup\filter\albanian.dat"; DestDir: "{app}\Data"; DestName: "AdultFilter.dat"; Flags: ignoreversion overwritereadonly uninsremovereadonly sortfilesbyextension; Languages: sq
-
-[CustomMessages]
-; Don't copy these last 2 messages, they are just links.
-page_viruswarning_link=http://shareaza.sourceforge.net/securityhelp
-page_viruswarning_destination=http://shareaza.sourceforge.net/securityhelp/

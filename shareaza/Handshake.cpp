@@ -64,10 +64,23 @@ CHandshake::CHandshake()
 // Make a new CHanshake object given a socket, and a MFC SOCKADDR_IN structure which contains an IP address and port number
 // Uses AcceptFrom to make a new object with this socket and ip address
 CHandshake::CHandshake(SOCKET hSocket, SOCKADDR_IN* pHost)
+	: m_bPushing( FALSE )
+	, m_nIndex	( 0 )
 {
-	// We did not connect to the remote computer as part of a push
-	m_bPushing = FALSE;
+	// Call CConnection::AcceptFrom to setup this object with the socket and
+	AcceptFrom( hSocket, pHost );
 
+	// Set pointers so the input and output bandwidth limits are read from the DWORD in settings
+	m_mInput.pLimit = m_mOutput.pLimit = &Settings.Bandwidth.Request;
+
+	// Record that the program accepted this connection
+	theApp.Message( MSG_INFO, IDS_CONNECTION_ACCEPTED, (LPCTSTR)m_sAddress, htons( m_pHost.sin_port ) );
+}
+
+CHandshake::CHandshake(SOCKET hSocket, SOCKADDR_IN6* pHost)
+	: m_bPushing( FALSE )
+	, m_nIndex	( 0 )
+{
 	// Call CConnection::AcceptFrom to setup this object with the socket and
 	AcceptFrom( hSocket, pHost );
 
@@ -109,6 +122,32 @@ BOOL CHandshake::Push(IN_ADDR* pAddress, WORD nPort, DWORD nIndex)
 {
 	// Report we are about to push open a connection to the given IP address and port number now
 	theApp.Message( MSG_INFO, IDS_UPLOAD_CONNECT, (LPCTSTR)CString( inet_ntoa( *pAddress ) ), _T("") );
+
+	// Connect the socket in this CHandshake object to the IP address and port number the method got passed
+	if ( ! ConnectTo( pAddress, nPort ) ) return FALSE; // If the connection was not made, leave now
+
+	// Tell Windows to give us a m_pWakeup event if this socket connects, gets data, is ready for writing, or closes
+	WSAEventSelect(				// Specify our event object Handshakes.m_pWakeup to the FD_CONNECT FD_READ FD_WRITE and FD_CLOSE events
+		m_hSocket,				// The socket in this CHandshake object
+		Handshakes.GetWakeupEvent(),	// The MFC CEvent object we've made for the wakeup event
+		FD_CONNECT	|			// The connection has been made
+		FD_READ		|			// There is data from the remote computer on our end of the socket waiting for us to read it
+		FD_WRITE	|			// The remote computer is ready for some data from us (do)
+		FD_CLOSE );				// The socket has been closed
+
+	// Record the push in the member variables
+	m_bPushing		= TRUE;				// We connected to this computer as part of a push
+	m_tConnected	= GetTickCount();	// Record that we connected right now
+	m_nIndex		= nIndex;			// Copy the given index number into this object (do)
+
+	// Report success
+	return TRUE;
+}
+
+BOOL CHandshake::Push(IN6_ADDR* pAddress, WORD nPort, DWORD nIndex)
+{
+	// Report we are about to push open a connection to the given IP address and port number now
+	theApp.Message( MSG_INFO, IDS_UPLOAD_CONNECT, (LPCTSTR)IPv6ToString( pAddress ), _T("") );
 
 	// Connect the socket in this CHandshake object to the IP address and port number the method got passed
 	if ( ! ConnectTo( pAddress, nPort ) ) return FALSE; // If the connection was not made, leave now
@@ -313,7 +352,6 @@ BOOL CHandshake::OnAcceptPush()
 	}
 
 	// Read the 16 hexadecimal digits of the GUID, copying it into pGUID
-	CString strGUID;
 	Hashes::Guid oGUID;
 	for ( int nByte = 0 ; nByte < 16 ; nByte++ )
 	{
@@ -397,6 +435,8 @@ BOOL CHandshake::OnAcceptGive()
 		oGUID[ nByte ] = (BYTE)nPos;
 	}
 	oGUID.validate();
+
+	theApp.Message( MSG_DEBUG, _T( "Got push answer from %s : %s..." ), (LPCTSTR)CString( inet_ntoa( m_pHost.sin_addr ) ), (LPCTSTR)oGUID.toString< Hashes::base16Encoding >().MakeUpper() );
 
 	// If a child window recognizes this guid, return true
 	if ( Network.OnPush( oGUID, this ) )

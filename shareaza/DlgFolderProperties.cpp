@@ -1,7 +1,7 @@
 //
 // DlgFolderProperties.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2010.
+// Copyright (c) Shareaza Development Team, 2002-2015.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -123,8 +123,8 @@ BOOL CFolderPropertiesDlg::OnInitDialog()
 	if ( CSchemaPtr pSchema = SchemaCache.Get( strSchemaURI ) )
 	{
 		CString strChildURI = pSchema->GetContainedURI( CSchema::stFile );
-		CSchemaChild* pContained = pSchema->GetContained( strChildURI );
-		if ( pContained == NULL || pContained->m_pMap.GetCount() == 0 )
+		CSchemaChildPtr pContained = pSchema->GetContained( strChildURI );
+		if ( pContained == NULL || pContained->GetCount() == 0 )
 			m_wndApply.ShowWindow( SW_HIDE );
 	}
 
@@ -280,8 +280,8 @@ void CFolderPropertiesDlg::OnSelChangeSchemas()
 	if ( CSchemaPtr pSchema = SchemaCache.Get( strSchemaURI ) )
 	{
 		CString strChildURI = pSchema->GetContainedURI( CSchema::stFile );
-		CSchemaChild* pContained = pSchema->GetContained( strChildURI );
-		if ( pContained == NULL || pContained->m_pMap.GetCount() == 0 )
+		CSchemaChildPtr pContained = pSchema->GetContained( strChildURI );
+		if ( pContained == NULL || pContained->GetCount() == 0 )
 			m_wndApply.ShowWindow( SW_HIDE );
 		else
 			m_wndApply.ShowWindow( SW_SHOW );

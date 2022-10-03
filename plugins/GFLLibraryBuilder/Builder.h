@@ -27,31 +27,18 @@
 #include "resource.h"
 #include "GFLLibraryBuilder.h"
 
-class ATL_NO_VTABLE CBuilder : 
+class ATL_NO_VTABLE CBuilder :
 	public CComObjectRootEx<CComMultiThreadModel>,
 	public CComCoClass<CBuilder, &CLSID_Builder>,
 	public ILibraryBuilderPlugin
 {
 public:
-	CBuilder () throw()
-	{
-		m_pUnkMarshaler = NULL;
-	}
 
 DECLARE_REGISTRY_RESOURCEID(IDR_BUILDER)
 
 BEGIN_COM_MAP(CBuilder)
 	COM_INTERFACE_ENTRY(ILibraryBuilderPlugin)
-	COM_INTERFACE_ENTRY_AGGREGATE(IID_IMarshal, m_pUnkMarshaler.p)
 END_COM_MAP()
-
-DECLARE_PROTECT_FINAL_CONSTRUCT()
-DECLARE_GET_CONTROLLING_UNKNOWN()
-
-	HRESULT FinalConstruct () throw();
-	void FinalRelease () throw();
-
-	CComPtr<IUnknown> m_pUnkMarshaler;
 
 // ILibraryBuilderPlugin
 public:

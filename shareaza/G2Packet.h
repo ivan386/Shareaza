@@ -302,16 +302,19 @@ public:
 
 	// Packet handler
 	virtual BOOL OnPacket(const SOCKADDR_IN* pHost);
+	virtual BOOL OnPacket(const SOCKADDR_IN6* pHost);
 
 protected:
 	BOOL OnPing(const SOCKADDR_IN* pHost);
+	BOOL OnPing(const SOCKADDR_IN6* pHost);
 	BOOL OnPong(const SOCKADDR_IN* pHost);
-	BOOL OnQuery(const SOCKADDR_IN* pHost);
+	BOOL OnPong(const SOCKADDR_IN6* pHost);
+	BOOL OnQuery(const SOCKADDR* pHost);
 	BOOL OnQueryAck(const SOCKADDR_IN* pHost);
 	BOOL OnCommonHit(const SOCKADDR_IN* pHost);
 	BOOL OnQueryKeyRequest(const SOCKADDR_IN* pHost);
 	BOOL OnQueryKeyAnswer(const SOCKADDR_IN* pHost);
-	BOOL OnPush(const SOCKADDR_IN* pHost);
+	BOOL OnPush(const SOCKADDR* pHost);
 	BOOL OnCrawlRequest(const SOCKADDR_IN* pHost);
 	BOOL OnCrawlAnswer(const SOCKADDR_IN* pHost);
 	BOOL OnDiscovery(const SOCKADDR_IN* pHost);

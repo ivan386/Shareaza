@@ -1,7 +1,7 @@
 //
 // DlgURLExport.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2013.
+// Copyright (c) Shareaza Development Team, 2002-2015.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -209,7 +209,7 @@ void CURLExportDlg::OnCopy()
 		strOutput += strLine;
 	}
 
-	CURLCopyDlg::SetClipboardText( strOutput );
+	theApp.SetClipboardText( strOutput );
 
 	EndDialog( IDOK );
 }

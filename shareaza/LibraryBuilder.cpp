@@ -151,7 +151,7 @@ void CLibraryBuilder::Remove(const CLibraryFile* pFile)
 		{
 			CQuickLock oLock( m_pSection );
 
-			if ( m_nProgress == 100 || m_sPath.CompareNoCase( sPath ) != 0 )
+			if ( m_nProgress == 100 || m_sPath.CompareNoCase( sPath ) != 0 || theApp.m_bClosing )
 				break;
 
 			m_oSkip.SetEvent();
@@ -197,8 +197,32 @@ void CLibraryBuilder::Remove(LPCTSTR szPath)
 
 CString CLibraryBuilder::GetCurrent() const
 {
-	CQuickLock oLock( m_pSection );
-	return m_sPath;
+	DWORD nIndex = 0;
+
+	// Return currently hashing file
+	{
+		CQuickLock oLock( m_pSection );
+		if ( ! m_sPath.IsEmpty()  )
+			return m_sPath;
+		else if ( m_pFiles.size() )
+			nIndex = m_pFiles.front().nIndex;
+		else
+			return CString();
+	}
+
+	// else first file from queue
+	{
+		CSingleLock oLibraryLock( &Library.m_pSection );
+		if ( oLibraryLock.Lock( 100 ) )
+		{
+			if ( const CLibraryFile* pFile = LibraryMaps.LookupFile( nIndex ) )
+			{
+				return pFile->GetPath();
+			}
+		}
+	}
+
+	return CString();
 }
 
 size_t CLibraryBuilder::GetRemaining() const
@@ -370,7 +394,10 @@ DWORD CLibraryBuilder::GetNextFileToHash()
 	}
 
 	CQuickLock oLock( m_pSection );
-	m_sPath = sPath;
+	if ( nIndex )
+		m_sPath = sPath;
+	else
+		m_sPath.Empty();
 
 	return nIndex;
 }
@@ -438,6 +465,8 @@ void CLibraryBuilder::OnRun()
 				{
 					nAttempts = 0;
 					SetFilePointer( hFile, 0, NULL, FILE_BEGIN );
+
+					ExtractProperties( nIndex, m_sPath );
 
 					try
 					{
@@ -678,22 +707,30 @@ bool CLibraryBuilder::HashFile(LPCTSTR szPath, HANDLE hFile)
 //////////////////////////////////////////////////////////////////////
 // CLibraryBuilder metadata submission (threaded)
 
-int CLibraryBuilder::SubmitMetadata(DWORD nIndex, LPCTSTR pszSchemaURI, CXMLElement* pXML)
+int CLibraryBuilder::SubmitMetadata(DWORD nIndex, LPCTSTR pszSchemaURI, CXMLElement* pXMLElement)
 {
-	CSchemaPtr pSchema = SchemaCache.Get( pszSchemaURI );
-
-	if ( pSchema == NULL )
-	{
-		delete pXML;
+	if ( ! pXMLElement )
 		return 0;
-	}
+
+	CAutoPtr< CXMLElement > pXML( pXMLElement );
+
+	if ( pXML->GetAttributeCount() == 0 && pXML->GetElementCount() == 0 )
+		return 0;
+
+	if ( pszSchemaURI == NULL )
+		return 0;
+
+	CSchemaPtr pSchema = SchemaCache.Get( pszSchemaURI );
+	if ( pSchema == NULL )
+		return 0;
 
 	// Validate schema
-	auto_ptr< CXMLElement > pBase( pSchema->Instantiate( true ) );
+	CAutoPtr< CXMLElement > pBase( pSchema->Instantiate( true ) );
 	pBase->AddElement( pXML );
-	if ( ! pSchema->Validate( pBase.get(), true ) )
-		return 0;
+	BOOL bValid = pSchema->Validate( pBase, true );
 	pXML->Detach();
+	if ( ! bValid )
+		return 0;
 
 	int nAttributeCount = pXML->GetAttributeCount();
 
@@ -701,15 +738,13 @@ int CLibraryBuilder::SubmitMetadata(DWORD nIndex, LPCTSTR pszSchemaURI, CXMLElem
 	if ( CLibraryFile* pFile = Library.LookupFile( nIndex ) )
 	{
 		BOOL bMetadataAuto = pFile->m_bMetadataAuto;
-		if ( pFile->MergeMetadata( pXML, TRUE ) )
+		if ( pFile->MergeMetadata( pXML.m_p, TRUE ) )
 		{
 			if ( bMetadataAuto )
 				pFile->m_bMetadataAuto = TRUE;
 			Library.Update();
 		}
 	}
-
-	delete pXML;
 
 	return nAttributeCount;
 }
@@ -983,7 +1018,7 @@ bool CLibraryBuilder::DetectVirtualLAME(HANDLE hFile, QWORD& nOffset, QWORD& nLe
     else
         nSampleRate = samplerate_table[ nId ][ nSampleRateIndex ];
 	int nFrameSize = ( ( nId + 1 ) * 72000 * nBitrate ) / nSampleRate;
-	if ( nFrameSize > nLength )
+	if ( nFrameSize > (int)nLength )
 		return false;
  
 	int nVbrHeaderOffset = GetVbrHeaderOffset( nId, nMode );
@@ -1141,12 +1176,14 @@ bool CLibraryBuilder::RefreshMetadata(const CString& sPath)
 		if ( ! pFile )
 			return false;
 		nIndex = pFile->m_nIndex;
-		pFile->m_bMetadataAuto = TRUE;
 	}
 
 	theApp.Message( MSG_DEBUG, _T("Refreshing: %s"), (LPCTSTR)sPath );
 
 	bool bResult = false;
+
+	bResult |= ExtractProperties( nIndex, sPath );
+
 	HANDLE hFile = CreateFile( CString( _T("\\\\?\\") ) + sPath, GENERIC_READ,
 		 FILE_SHARE_READ | FILE_SHARE_DELETE, NULL,
 		 OPEN_EXISTING, FILE_ATTRIBUTE_NORMAL | FILE_FLAG_SEQUENTIAL_SCAN, NULL );

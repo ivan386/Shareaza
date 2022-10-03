@@ -2,7 +2,7 @@
 // or project specific include files that are used frequently,
 // but are changed infrequently
 //
-// Copyright (c) Nikolay Raspopov, 2005.
+// Copyright (c) Nikolay Raspopov, 2005-2014.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // GFL Library, GFL SDK and XnView
@@ -33,15 +33,16 @@
 #define _ATL_CSTRING_NO_CRT
 #define _ATL_ALL_WARNINGS
 
-#pragma warning( push, 0 )
+#define _WIN32_WINNT 0x0501
+#include <SDKDDKVer.h>
 
 #include "resource.h"
+
 #include <atlbase.h>
 #include <atlcom.h>
 #include <atlstr.h>
 #include <atlcoll.h>
+
 #include "libgfl.h"
 
 using namespace ATL;
-
-#pragma warning( pop )

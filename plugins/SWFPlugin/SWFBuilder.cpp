@@ -25,16 +25,6 @@
 #include "stdafx.h"
 #include "SWFBuilder.h"
 
-HRESULT CSWFBuilder::FinalConstruct () throw()
-{
-	return CoCreateFreeThreadedMarshaler (GetControllingUnknown(), &m_pUnkMarshaler.p);
-}
-
-void CSWFBuilder::FinalRelease () throw()
-{
-	m_pUnkMarshaler.Release ();
-}
-
 STDMETHODIMP CSWFBuilder::Process (
 	/* [in] */ BSTR /* sFile */,
 	/* [in] */ ISXMLElement* pXML)

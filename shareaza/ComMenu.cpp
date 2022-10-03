@@ -1,7 +1,7 @@
 //
 // ComMenu.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2007.
+// Copyright (c) Shareaza Development Team, 2002-2014.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -23,6 +23,7 @@
 #include "Shareaza.h"
 #include "Application.h"
 #include "ComMenu.h"
+#include "CoolInterface.h"
 
 #ifdef _DEBUG
 #define new DEBUG_NEW
@@ -31,8 +32,6 @@ static char THIS_FILE[] = __FILE__;
 #endif
 
 BEGIN_MESSAGE_MAP(CComMenu, CCmdTarget)
-	//{{AFX_MSG_MAP(CComMenu)
-	//}}AFX_MSG_MAP
 END_MESSAGE_MAP()
 
 BEGIN_INTERFACE_MAP(CComMenu, CComObject)
@@ -41,22 +40,78 @@ BEGIN_INTERFACE_MAP(CComMenu, CComObject)
 END_INTERFACE_MAP()
 
 
+BOOL FindMenuId(HMENU hMenu, UINT nRequestID, HMENU& hParent, UINT& nPosition, HMENU& hResultMenu)
+{
+	const int nCount = GetMenuItemCount( hMenu );
+	if ( nCount > 0 && nCount < (int)nRequestID  )
+	{
+		for ( int i = 0; i < nCount; ++i )
+		{
+			if ( HMENU hSubMenu = GetSubMenu( hMenu, i ) )
+			{
+				// Check help id of submenu menu item
+				if ( const UINT nID = GetMenuContextHelpId( hSubMenu ) )
+				{
+					if ( nID == nRequestID )
+					{
+						hParent = hMenu;
+						hResultMenu = hSubMenu;
+						nPosition = i;
+						return TRUE;
+					}
+				}
+
+				// Check submenu recursively
+				if ( FindMenuId( hSubMenu, nRequestID, hParent, nPosition, hResultMenu ) )
+					return TRUE;
+			}
+			else
+			{
+				// Check item id of normal menu item
+				const UINT nID = GetMenuItemID( hMenu, i );
+				if ( nID == nRequestID )
+				{
+					hParent = hMenu;
+					hResultMenu = NULL;
+					nPosition = i;
+					return TRUE;
+				}
+			}
+		}
+	}
+	return FALSE;
+}
+
 /////////////////////////////////////////////////////////////////////////////
 // CComMenu construction
 
 CComMenu::CComMenu(HMENU hMenu, UINT nPosition)
+	: m_hParent		( NULL )
+	, m_hMenu		( NULL )
+	, m_nPosition	( 0 )
 {
 	if ( nPosition == 0xFFFFFFFF )
 	{
-		m_hParent	= NULL;
 		m_hMenu		= hMenu;
-		m_nPosition	= 0;
 	}
 	else
 	{
 		m_hParent	= hMenu;
 		m_hMenu		= GetSubMenu( hMenu, nPosition );
 		m_nPosition	= nPosition;
+		if ( ! m_hMenu )
+		{
+			// Try to find item by ID
+			if ( ! FindMenuId( hMenu, nPosition, m_hParent, m_nPosition, m_hMenu ) )
+			{
+				// Item not found
+				if ( (int)nPosition >= GetMenuItemCount( hMenu ) )
+				{
+					// No item
+					m_hParent = NULL;
+				}
+			}
+		}
 	}
 
 	EnableDispatch( IID_ISMenu );
@@ -72,6 +127,17 @@ CComMenu::~CComMenu()
 ISMenu* CComMenu::Wrap(HMENU hMenu, UINT nPosition)
 {
 	CComMenu* pWrap = new CComMenu( hMenu, nPosition );
+	if ( ! pWrap )
+		// Out of memory
+		return NULL;
+
+	if ( ! pWrap->m_hParent && ! pWrap->m_hMenu )
+	{
+		// Not a item, not a submenu
+		delete pWrap;
+		return NULL;
+	}
+
 	return (ISMenu*)pWrap->GetInterface( IID_ISMenu, FALSE );
 }
 
@@ -113,13 +179,7 @@ STDMETHODIMP CComMenu::XSMenu::get_Item(VARIANT vIndex, ISMenu FAR* FAR* ppMenu)
 	if ( FAILED( VariantChangeType( &va, (VARIANT FAR*)&vIndex, 0, VT_I4 ) ) )
 	{
 		*ppMenu = NULL;
-		return S_OK;
-	}
-
-	if ( va.lVal < 0 || va.lVal >= GetMenuItemCount( pThis->m_hMenu ) )
-	{
-		*ppMenu = NULL;
-		return S_OK;
+		return E_INVALIDARG;
 	}
 
 	*ppMenu = CComMenu::Wrap( pThis->m_hMenu, (UINT)va.lVal );
@@ -266,6 +326,28 @@ STDMETHODIMP CComMenu::XSMenu::InsertCommand(LONG nPosition, LONG nCommandID, BS
 		(UINT)nCommandID, CString( sText ) );
 
 	if ( ppMenu ) *ppMenu = CComMenu::Wrap( pThis->m_hMenu, nPosition );
+
+	return S_OK;
+}
+
+STDMETHODIMP CComMenu::XSMenu::get_Position(LONG FAR* pnCommandID)
+{
+	METHOD_PROLOGUE( CComMenu, SMenu )
+
+	if ( pThis->m_hParent == NULL ) return E_FAIL;
+
+	if ( pnCommandID ) *pnCommandID = pThis->m_nPosition;
+
+	return S_OK;
+}
+
+STDMETHODIMP CComMenu::XSMenu::get_Parent(ISMenu FAR* FAR* ppMenu)
+{
+	METHOD_PROLOGUE( CComMenu, SMenu )
+
+	if ( pThis->m_hParent == NULL ) return E_FAIL;
+
+	if ( ppMenu ) *ppMenu = CComMenu::Wrap( pThis->m_hParent );
 
 	return S_OK;
 }

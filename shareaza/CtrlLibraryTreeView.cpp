@@ -1,7 +1,7 @@
 //
 // CtrlLibraryTreeView.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2013.
+// Copyright (c) Shareaza Development Team, 2002-2016.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -306,9 +306,9 @@ BOOL CLibraryTreeView::Select(CLibraryTreeItem* pItem, TRISTATE bSelect, BOOL bI
 		}
 
 		if ( m_bVirtual )
-			m_pFocusedObject[ 1 ] = pItem ? pItem->m_pVirtual : NULL;
+			m_pFocusedObject[ 1 ] = pItem->m_pVirtual;
 		else
-			m_pFocusedObject[ 0 ] = pItem ? pItem->m_pPhysical : NULL;
+			m_pFocusedObject[ 0 ] = pItem->m_pPhysical;
 
 		m_nSelected++;
 
@@ -487,7 +487,7 @@ BOOL CLibraryTreeView::CleanItems(CLibraryTreeItem* pItem, DWORD nCookie, BOOL b
 void CLibraryTreeView::NotifySelection()
 {
 	if (!m_hWnd) return;
-	NMHDR pNM = { GetSafeHwnd(), GetDlgCtrlID(), LTN_SELCHANGED };
+	NMHDR pNM = { GetSafeHwnd(), (UINT_PTR)GetDlgCtrlID(), LTN_SELCHANGED };
 	GetOwner()->SendMessage( WM_NOTIFY, pNM.idFrom, (LPARAM)&pNM );
 }
 

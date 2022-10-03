@@ -1,7 +1,7 @@
 //
 // RichViewCtrl.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2011.
+// Copyright (c) Shareaza Development Team, 2002-2015.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -552,7 +552,7 @@ void CRichViewCtrl::Layout(CDC* pDC, CRect* pRect)
 
 			int nGap = 0, nIndent = 0;
 
-			if ( _stscanf( pElement->m_sText, _T("%lu.%lu"), &nGap, &nIndent ) == 2 )
+			if ( _stscanf( pElement->m_sText, _T("%d.%d"), &nGap, &nIndent ) == 2 )
 			{
 				nLeftPoint	= pRect->left + nIndent;
 				nWidth		= pRect->right - nIndent;
@@ -967,19 +967,7 @@ void CRichViewCtrl::CopySelection() const
 	}
 	// end of block
 
-	if ( str.GetLength() && AfxGetMainWnd()->OpenClipboard() )
-	{
-		EmptyClipboard();
-
-		CT2W pszWide( (LPCTSTR)str );
-		HANDLE hMem = GlobalAlloc( GMEM_MOVEABLE|GMEM_DDESHARE, ( wcslen(pszWide) + 1 ) * sizeof(WCHAR) );
-		LPVOID pMem = GlobalLock( hMem );
-		CopyMemory( pMem, pszWide, ( wcslen(pszWide) + 1 ) * sizeof(WCHAR) );
-		GlobalUnlock( hMem );
-		SetClipboardData( CF_UNICODETEXT, hMem );
-
-		CloseClipboard();
-	}
+	theApp.SetClipboardText( str );
 }
 
 void CRichViewCtrl::OnLButtonDblClk(UINT nFlags, CPoint point)

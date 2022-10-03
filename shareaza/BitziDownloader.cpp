@@ -83,7 +83,7 @@ BOOL CBitziDownloader::Start(CBitziDownloadDlg* pDlg)
 {
 	if ( m_hInternet != NULL ) return FALSE;
 
-	m_hInternet = CNetwork::InternetOpen();
+	m_hInternet = CNetwork::CNInternetOpen();
 	if ( ! m_hInternet ) return FALSE;
 
 	m_hSession	= NULL;

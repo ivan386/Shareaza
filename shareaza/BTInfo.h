@@ -1,7 +1,7 @@
 //
 // BTInfo.h
 //
-// Copyright (c) Shareaza Development Team, 2002-2012.
+// Copyright (c) Shareaza Development Team, 2002-2017.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -61,11 +61,18 @@ public:
 	{
 	public:
 		// Find file on disk
-		CString	FindFile() const;
+		const CString& FindFile();
+
+		// Get existing file on disk for this file
+		inline const CString& GetBestPath() const
+		{
+			return m_sBestPath;
+		}
 
 	private:
 		const CBTInfo*	m_pInfo;			// Parent torrent handler
 		QWORD			m_nOffset;			// File offset inside torrent (cached)
+		CString			m_sBestPath;		// Best existing file on disk for this file (cached)
 
 		CBTFile(const CBTInfo* pInfo, const CBTFile* pFile = NULL);
 		void Serialize(CArchive& ar, int nVersion);
@@ -126,11 +133,11 @@ private:
 	DWORD		m_nInfoStart;
 	DWORD		m_nInfoSize;
 
-	void		Clear();
 	BOOL		CheckFiles();
 
 // Operations
 public:
+	void		Clear();
 	void		Serialize(CArchive& ar);
 
 	BOOL		LoadInfoPiece(BYTE *pPiece, DWORD nPieceSize, DWORD nInfoSize, DWORD nInfoPiece);
@@ -159,6 +166,8 @@ public:
 	int			GetTrackerTier(int nTrackerIndex = -1) const;
 	DWORD		GetTrackerNextTry() const;
 	void		OnTrackerFailure();
+
+	BOOL		IsZeroBlock(uint32 nBlock) const;
 
 	// Count of files
 	inline INT_PTR GetCount() const

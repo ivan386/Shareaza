@@ -1,7 +1,7 @@
 //
 // EDPacket.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2013.
+// Copyright (c) Shareaza Development Team, 2002-2014.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -33,7 +33,7 @@
 #include "SharedFile.h"
 #include "Statistics.h"
 #include "XML.h"
-#include "ZLib.h"
+#include "ZLibWarp.h"
 
 #ifdef _DEBUG
 #undef THIS_FILE
@@ -327,11 +327,11 @@ void CEDPacket::WriteFile(const CShareazaFile* pShareazaFile, QWORD nSize,
 
 					// Bitrate
 					if ( pFile->m_pMetadata->GetAttributeValue( _T("bitrate") ).GetLength() )
-						_stscanf( pFile->m_pMetadata->GetAttributeValue( _T("bitrate") ), _T("%i"), &nBitrate );
+						_stscanf( pFile->m_pMetadata->GetAttributeValue( _T("bitrate") ), _T("%lu"), &nBitrate );
 
 					// Length
 					if ( pFile->m_pMetadata->GetAttributeValue( _T("seconds") ).GetLength() )
-						_stscanf( pFile->m_pMetadata->GetAttributeValue( _T("seconds") ), _T("%i"), &nLength );
+						_stscanf( pFile->m_pMetadata->GetAttributeValue( _T("seconds") ), _T("%lu"), &nLength );
 				}
 				else if ( pFile->IsSchemaURI( CSchema::uriVideo ) )
 				{
@@ -396,7 +396,7 @@ void CEDPacket::WriteFile(const CShareazaFile* pShareazaFile, QWORD nSize,
 	// Title
 	if ( strTitle.GetLength() )
 		CEDTag( ED2K_FT_TITLE, strTitle ).Write( this, bUnicode, bSmlTags );
-	
+
 	// Artist
 	if ( strArtist.GetLength() )
 		CEDTag( ED2K_FT_ARTIST, strArtist ).Write( this, bUnicode, bSmlTags );
@@ -408,11 +408,11 @@ void CEDPacket::WriteFile(const CShareazaFile* pShareazaFile, QWORD nSize,
 	// Bitrate
 	if ( nBitrate )
 		CEDTag( ED2K_FT_BITRATE, nBitrate ).Write( this, bUnicode, bSmlTags );
-	
+
 	// Length
 	if ( nLength )
 		CEDTag( ED2K_FT_LENGTH, nLength ).Write( this, bUnicode, bSmlTags );
-	
+
 	// Codec
 	if ( strCodec.GetLength() )
 		CEDTag( ED2K_FT_CODEC, strCodec ).Write( this, bUnicode, bSmlTags );
@@ -459,7 +459,7 @@ CEDPacket* CEDPacket::ReadBuffer(CBuffer* pBuffer)
 	CEDPacket* pPacket = CEDPacket::New( pHeader );
 	pBuffer->Remove( sizeof(*pHeader) + pHeader->nLength - 1 );
 	if ( pPacket->Inflate() )
-		return pPacket;	
+		return pPacket;
 	pPacket->Release();
 	return NULL;
 }
@@ -576,7 +576,7 @@ CString CEDPacket::ToASCII() const
 								if ( m_nLength >= 28 )
 								{
 									const DWORD& nUDPFlags = *(const DWORD*)( m_pBuffer + 24 );
-									strOutput.AppendFormat( _T(", udp flags: %s"), GetED2KServerUDPFlags( nUDPFlags ) );
+									strOutput.AppendFormat( _T(", udp flags: %s"), (LPCTSTR)GetED2KServerUDPFlags( nUDPFlags ) );
 									if ( m_nLength >= 32 )
 									{
 										const DWORD& nLowID = *(const DWORD*)( m_pBuffer + 28 );
@@ -602,8 +602,8 @@ CString CEDPacket::ToASCII() const
 					const Hashes::Ed2kHash oMD4( *(const Hashes::Ed2kHash::RawStorage*)( m_pBuffer ));
 					const IN_ADDR& nID = *(const IN_ADDR*)( m_pBuffer+ Hashes::Ed2kHash::byteCount );
 					const WORD& nPort = *(const WORD*)( m_pBuffer + Hashes::Ed2kHash::byteCount + 4 );
-					strOutput.AppendFormat( _T("hash: %s, id: %u, port: %u, tags: %s"), oMD4.toString(), nID, nPort,
-						CEDTag::ToString( m_pBuffer + Hashes::Ed2kHash::byteCount + 4 + 2, m_nLength - ( Hashes::Ed2kHash::byteCount + 4 + 2 ) ) );
+					strOutput.AppendFormat( _T("hash: %s, id: %u, port: %u, tags: %s"), (LPCTSTR)oMD4.toString(), nID.s_addr, nPort,
+						(LPCTSTR)CEDTag::ToString( m_pBuffer + Hashes::Ed2kHash::byteCount + 4 + 2, m_nLength - ( Hashes::Ed2kHash::byteCount + 4 + 2 ) ) );
 				}
 				break;
 
@@ -615,10 +615,10 @@ CString CEDPacket::ToASCII() const
 					if ( nSize == 0 && m_nLength >= Hashes::Ed2kHash::byteCount + 4 + 8 )
 					{
 						const QWORD& nSize64 = *(const QWORD*)( m_pBuffer + Hashes::Ed2kHash::byteCount + 4 );
-						strOutput.Format( _T("hash: %s, size: %I64u"), oMD4.toString(), nSize64 );
+						strOutput.Format( _T("hash: %s, size: %I64u"), (LPCTSTR)oMD4.toString(), nSize64 );
 					}
 					else
-						strOutput.Format( _T("hash: %s, size: %u"), oMD4.toString(), nSize );
+						strOutput.Format( _T("hash: %s, size: %u"), (LPCTSTR)oMD4.toString(), nSize );
 				}
 				break;
 
@@ -626,7 +626,7 @@ CString CEDPacket::ToASCII() const
 				if ( m_nLength >= Hashes::Ed2kHash::byteCount )
 				{
 					const Hashes::Ed2kHash oMD4( *(const Hashes::Ed2kHash::RawStorage*)m_pBuffer );
-					strOutput.Format( _T("hash: %s"), oMD4.toString() );
+					strOutput.Format( _T("hash: %s"), (LPCTSTR)oMD4.toString() );
 				}
 				break;
 
@@ -635,12 +635,12 @@ CString CEDPacket::ToASCII() const
 				{
 					const Hashes::Ed2kHash oMD4( *(const Hashes::Ed2kHash::RawStorage*)m_pBuffer );
 					const BYTE& nCount = *(const BYTE*)( m_pBuffer + Hashes::Ed2kHash::byteCount );
-					strOutput.Format( _T("hash: %s, number: %u"), oMD4.toString(), nCount );
+					strOutput.Format( _T("hash: %s, number: %u"), (LPCTSTR)oMD4.toString(), nCount );
 					if ( nCount && m_nLength >= Hashes::Ed2kHash::byteCount + 1 + 4 + 2 )
 					{
 						const IN_ADDR& nID = *(const IN_ADDR*)( m_pBuffer + Hashes::Ed2kHash::byteCount + 1 );
 						const WORD& nPort = *(const WORD*)( m_pBuffer + Hashes::Ed2kHash::byteCount + 1 + 4 );
-						strOutput.AppendFormat( _T(" -> id: %u, port: %u"), nID, nPort );
+						strOutput.AppendFormat( _T(" -> id: %u, port: %u"), nID.s_addr, nPort );
 					}
 				}
 				break;
@@ -656,8 +656,8 @@ CString CEDPacket::ToASCII() const
 					const Hashes::Guid oGUID( *(const Hashes::Guid::RawStorage*)( m_pBuffer ));
 					const DWORD& nClientID = *(const DWORD*)( m_pBuffer + Hashes::Guid::byteCount );
 					const WORD& nPort = *(const WORD*)( m_pBuffer + Hashes::Guid::byteCount + 4 );
-					strOutput.Format( _T("guid: %s, id: %u, port: %u, tags: %s"), oGUID.toString(), nClientID, nPort,
-						CEDTag::ToString( m_pBuffer + Hashes::Guid::byteCount + 4 + 2, m_nLength - ( Hashes::Guid::byteCount + 4 + 2 ) ) );
+					strOutput.Format( _T("guid: %s, id: %u, port: %u, tags: %s"), (LPCTSTR)oGUID.toString(), nClientID, nPort,
+						(LPCTSTR)CEDTag::ToString( m_pBuffer + Hashes::Guid::byteCount + 4 + 2, m_nLength - ( Hashes::Guid::byteCount + 4 + 2 ) ) );
 				}
 				break;
 
@@ -667,8 +667,8 @@ CString CEDPacket::ToASCII() const
 					const Hashes::Guid oGUID( *(const Hashes::Guid::RawStorage*)( m_pBuffer ));
 					const IN_ADDR& nIP = *(const IN_ADDR*)( m_pBuffer + Hashes::Guid::byteCount );
 					const WORD& nPort = *(const WORD*)( m_pBuffer + Hashes::Guid::byteCount + 4 );
-					strOutput.Format( _T("guid: %s, address: %s:%u, tags: %s"), oGUID.toString(), (LPCTSTR)CString( inet_ntoa( nIP ) ), nPort,
-						CEDTag::ToString( m_pBuffer + Hashes::Guid::byteCount + 4 + 2, m_nLength - ( Hashes::Guid::byteCount + 4 + 2 ) ) );
+					strOutput.Format( _T("guid: %s, address: %s:%u, tags: %s"), (LPCTSTR)oGUID.toString(), (LPCTSTR)CString( inet_ntoa( nIP ) ), nPort,
+						(LPCTSTR)CEDTag::ToString( m_pBuffer + Hashes::Guid::byteCount + 4 + 2, m_nLength - ( Hashes::Guid::byteCount + 4 + 2 ) ) );
 				}
 				break;
 
@@ -693,7 +693,7 @@ CString CEDPacket::ToASCII() const
 				if ( m_nLength >= Hashes::Ed2kHash::byteCount )
 				{
 					const Hashes::Ed2kHash oMD4( *(const Hashes::Ed2kHash::RawStorage*)m_pBuffer );
-					strOutput.Format( _T("hash: %s"), oMD4.toString() );
+					strOutput.Format( _T("hash: %s"), (LPCTSTR)oMD4.toString() );
 				}
 				break;
 
@@ -702,12 +702,12 @@ CString CEDPacket::ToASCII() const
 				{
 					const Hashes::Ed2kHash oMD4( *(const Hashes::Ed2kHash::RawStorage*)m_pBuffer );
 					const BYTE& nCount = *(const BYTE*)( m_pBuffer + Hashes::Ed2kHash::byteCount );
-					strOutput.Format( _T("hash: %s, number: %u"), oMD4.toString(), nCount );
+					strOutput.Format( _T("hash: %s, number: %u"), (LPCTSTR)oMD4.toString(), nCount );
 					if ( nCount && m_nLength >= Hashes::Ed2kHash::byteCount + 1 + 4 + 2 )
 					{
 						const IN_ADDR& nID = *(const IN_ADDR*)( m_pBuffer + Hashes::Ed2kHash::byteCount + 1 );
 						const WORD& nPort = *(const WORD*)( m_pBuffer + Hashes::Ed2kHash::byteCount + 1 + 4 );
-						strOutput.AppendFormat( _T(" -> id: %u, port: %u"), nID, nPort );
+						strOutput.AppendFormat( _T(" -> id: %u, port: %u"), nID.s_addr, nPort );
 					}
 				}
 				break;
@@ -720,7 +720,7 @@ CString CEDPacket::ToASCII() const
 					if ( m_nLength >= 8 )
 					{
 						const DWORD& nFlags = *(const DWORD*)( m_pBuffer + 4 );
-						strOutput.AppendFormat( _T(", tcp flags: %s"), GetED2KServerTCPFlags( nFlags ) );
+						strOutput.AppendFormat( _T(", tcp flags: %s"), (LPCTSTR)GetED2KServerTCPFlags( nFlags ) );
 						if ( m_nLength >= 12 )
 						{
 							const DWORD& nTCPPort = *(const DWORD*)( m_pBuffer + 8 );
@@ -763,8 +763,8 @@ CString CEDPacket::ToASCII() const
 						const Hashes::Ed2kHash oMD4( *(const Hashes::Ed2kHash::RawStorage*)( m_pBuffer + 4 ));
 						const IN_ADDR& nID = *(const IN_ADDR*)( m_pBuffer + 4 + Hashes::Ed2kHash::byteCount );
 						const WORD& nPort = *(const WORD*)( m_pBuffer + 4 + Hashes::Ed2kHash::byteCount + 4 );
-						strOutput.AppendFormat( _T(" -> hash: %s, id: %u, port: %u, tags: %s%s"), oMD4.toString(), nID, nPort,
-							CEDTag::ToString( m_pBuffer + 4 + Hashes::Ed2kHash::byteCount + 4 + 2, m_nLength - ( 4 + Hashes::Ed2kHash::byteCount + 4 + 2 ) ),
+						strOutput.AppendFormat( _T(" -> hash: %s, id: %u, port: %u, tags: %s%s"), (LPCTSTR)oMD4.toString(), nID.s_addr, nPort,
+							(LPCTSTR)CEDTag::ToString( m_pBuffer + 4 + Hashes::Ed2kHash::byteCount + 4 + 2, m_nLength - ( 4 + Hashes::Ed2kHash::byteCount + 4 + 2 ) ),
 							( nCount > 1 ) ? _T("...") : _T("") );
 					}
 				}
@@ -791,7 +791,7 @@ CString CEDPacket::ToASCII() const
 				if ( m_nLength >= Hashes::Ed2kHash::byteCount )
 				{
 					const Hashes::Ed2kHash oMD4( *(const Hashes::Ed2kHash::RawStorage*)m_pBuffer );
-					strOutput.Format( _T("hash: %s"), oMD4.toString() );
+					strOutput.Format( _T("hash: %s"), (LPCTSTR)oMD4.toString() );
 				}
 				break;
 
@@ -817,8 +817,8 @@ CString CEDPacket::ToASCII() const
 						const Hashes::Guid oGUID( *(const Hashes::Guid::RawStorage*)(m_pBuffer + 1) );
 						const DWORD& nClientID = *(const DWORD*)( m_pBuffer + 1 + Hashes::Guid::byteCount );
 						const WORD& nPort = *(const WORD*)( m_pBuffer + 1 + Hashes::Guid::byteCount + 4 );
-						strOutput.Format( _T("guid: %s, id: %u, port: %u, tags: %s"), oGUID.toString(), nClientID, nPort,
-							CEDTag::ToString( m_pBuffer + 1 + Hashes::Guid::byteCount + 4 + 2, m_nLength - ( 1 + Hashes::Guid::byteCount + 4 + 2 ) ) );
+						strOutput.Format( _T("guid: %s, id: %u, port: %u, tags: %s"), (LPCTSTR)oGUID.toString(), nClientID, nPort,
+							(LPCTSTR)CEDTag::ToString( m_pBuffer + 1 + Hashes::Guid::byteCount + 4 + 2, m_nLength - ( 1 + Hashes::Guid::byteCount + 4 + 2 ) ) );
 					}
 					break;
 
@@ -830,8 +830,8 @@ CString CEDPacket::ToASCII() const
 						const WORD& nPort = *(const WORD*)( m_pBuffer + Hashes::Guid::byteCount + 4 );
 						const IN_ADDR& nServerIP = *(const IN_ADDR*)( m_pBuffer + m_nLength - 2 - 4 );
 						const WORD& nServerPort = *(const WORD*)( m_pBuffer + m_nLength - 2 );
-						strOutput.Format( _T("guid: %s, id: %u, port: %u, tags: %s, server: %s:%u"), oGUID.toString(), nClientID, nPort,
-							CEDTag::ToString( m_pBuffer + Hashes::Guid::byteCount + 4 + 2, m_nLength - ( Hashes::Guid::byteCount + 4 + 2 ) ),
+						strOutput.Format( _T("guid: %s, id: %u, port: %u, tags: %s, server: %s:%u"), (LPCTSTR)oGUID.toString(), nClientID, nPort,
+							(LPCTSTR)CEDTag::ToString( m_pBuffer + Hashes::Guid::byteCount + 4 + 2, m_nLength - ( Hashes::Guid::byteCount + 4 + 2 ) ),
 							(LPCTSTR)CString( inet_ntoa( nServerIP ) ), nServerPort );
 					}
 					break;
@@ -856,7 +856,7 @@ CString CEDPacket::ToASCII() const
 						const WORD& nLen = *(const WORD*)( m_pBuffer + Hashes::Ed2kHash::byteCount );
 						if ( m_nLength >= Hashes::Ed2kHash::byteCount + 2u + nLen )
 						{
-							strOutput.Format( _T("hash: %s, name: \"%s\" (%u bytes)"), oMD4.toString(), (LPCTSTR)UTF8Decode( (char*)m_pBuffer + Hashes::Ed2kHash::byteCount + 2, nLen ), nLen );
+							strOutput.Format( _T("hash: %s, name: \"%s\" (%u bytes)"), (LPCTSTR)oMD4.toString(), (LPCTSTR)UTF8Decode( (char*)m_pBuffer + Hashes::Ed2kHash::byteCount + 2, nLen ), nLen );
 						}
 					}
 					break;
@@ -869,7 +869,7 @@ CString CEDPacket::ToASCII() const
 					if ( m_nLength >= Hashes::Ed2kHash::byteCount )
 					{
 						const Hashes::Ed2kHash oMD4( *(const Hashes::Ed2kHash::RawStorage*)m_pBuffer );
-						strOutput.Format( _T("hash: %s"), oMD4.toString() );
+						strOutput.Format( _T("hash: %s"), (LPCTSTR)oMD4.toString() );
 					}
 					break;
 
@@ -879,7 +879,7 @@ CString CEDPacket::ToASCII() const
 					{
 						const Hashes::Ed2kHash oMD4( *(const Hashes::Ed2kHash::RawStorage*)m_pBuffer );
 						const WORD& nBlocks = *(const WORD*)( m_pBuffer + Hashes::Ed2kHash::byteCount );
-						strOutput.Format( _T("hash: %s, blocks: %u"), oMD4.toString(), nBlocks );
+						strOutput.Format( _T("hash: %s, blocks: %u"), (LPCTSTR)oMD4.toString(), nBlocks );
 					}
 					break;
 
@@ -898,7 +898,7 @@ CString CEDPacket::ToASCII() const
 					{
 						const Hashes::Ed2kHash oMD4( *(const Hashes::Ed2kHash::RawStorage*)m_pBuffer );
 						const DWORD* offset = (const DWORD*)( m_pBuffer + Hashes::Ed2kHash::byteCount );
-						strOutput.Format( _T("hash: %s, offsets: %u-%u, %u-%u, %u-%u"), oMD4.toString(), offset[0], offset[3], offset[1], offset[4], offset[2], offset[5] );
+						strOutput.Format( _T("hash: %s, offsets: %u-%u, %u-%u, %u-%u"), (LPCTSTR)oMD4.toString(), offset[0], offset[3], offset[1], offset[4], offset[2], offset[5] );
 					}
 					break;
 
@@ -907,7 +907,7 @@ CString CEDPacket::ToASCII() const
 					{
 						const Hashes::Ed2kHash oMD4( *(const Hashes::Ed2kHash::RawStorage*)m_pBuffer );
 						const DWORD* offset = (const DWORD*)( m_pBuffer + Hashes::Ed2kHash::byteCount );
-						strOutput.Format( _T("hash: %s, offsets: %u, length: %u bytes"), oMD4.toString(), offset[0], offset[1] - offset[0] );
+						strOutput.Format( _T("hash: %s, offsets: %u, length: %u bytes"), (LPCTSTR)oMD4.toString(), offset[0], offset[1] - offset[0] );
 					}
 					break;
 				}
@@ -923,7 +923,7 @@ CString CEDPacket::ToASCII() const
 						const BYTE& nVers = *(const BYTE*)( m_pBuffer );
 						const BYTE& nProto = *(const BYTE*)( m_pBuffer + 1 );
 						strOutput.Format( _T("version: %u, protocol: %u, tags: %s"), nVers, nProto,
-							CEDTag::ToString( m_pBuffer + 1 + 1, m_nLength - ( 1 + 1 ) ) );
+							(LPCTSTR)CEDTag::ToString( m_pBuffer + 1 + 1, m_nLength - ( 1 + 1 ) ) );
 					}
 					break;
 
@@ -943,7 +943,7 @@ CString CEDPacket::ToASCII() const
 						const WORD& nLen = *(const WORD*)( m_pBuffer + 16 );
 						if ( m_nLength >= Hashes::Ed2kHash::byteCount + 2 + nLen )
 						{
-							strOutput.Format( _T("hash: %s, desc: \"%s\" (%u bytes)"), (LPCTSTR)UTF8Decode( (char*)m_pBuffer + 16 + 2, nLen ), nLen );
+							strOutput.Format( _T("hash: %s, desc: \"%s\" (%u bytes)"), (LPCTSTR)oMD4.toString(), (LPCTSTR)UTF8Decode( (char*)m_pBuffer + 16 + 2, nLen ), nLen );
 						}
 					}
 					break;
@@ -953,7 +953,7 @@ CString CEDPacket::ToASCII() const
 					if ( m_nLength >= Hashes::Ed2kHash::byteCount )
 					{
 						const Hashes::Ed2kHash oMD4( *(const Hashes::Ed2kHash::RawStorage*)m_pBuffer );
-						strOutput.Format( _T("hash: %s"), oMD4.toString() );
+						strOutput.Format( _T("hash: %s"), (LPCTSTR)oMD4.toString() );
 					}
 					break;
 
@@ -962,7 +962,7 @@ CString CEDPacket::ToASCII() const
 					{
 						const Hashes::Ed2kHash oMD4( *(const Hashes::Ed2kHash::RawStorage*)m_pBuffer );
 						const QWORD* offset = (const QWORD*)( m_pBuffer + Hashes::Ed2kHash::byteCount );
-						strOutput.Format( _T("hash: %s, offsets: %I64u-%I64u, %I64u-%I64u, %I64u-%I64u"), oMD4.toString(), offset[0], offset[3], offset[1], offset[4], offset[2], offset[5] );
+						strOutput.Format( _T("hash: %s, offsets: %I64u-%I64u, %I64u-%I64u, %I64u-%I64u"), (LPCTSTR)oMD4.toString(), offset[0], offset[3], offset[1], offset[4], offset[2], offset[5] );
 					}
 					break;
 
@@ -972,7 +972,7 @@ CString CEDPacket::ToASCII() const
 						const Hashes::Ed2kHash oMD4( *(const Hashes::Ed2kHash::RawStorage*)m_pBuffer );
 						const DWORD& offset = *(const DWORD*)( m_pBuffer + Hashes::Ed2kHash::byteCount );
 						const DWORD& length = *(const DWORD*)( m_pBuffer + Hashes::Ed2kHash::byteCount + 4 );
-						strOutput.Format( _T("hash: %s, offset: %u, length: %u bytes"), oMD4.toString(), offset, length );
+						strOutput.Format( _T("hash: %s, offset: %u, length: %u bytes"), (LPCTSTR)oMD4.toString(), offset, length );
 					}
 					break;
 
@@ -982,7 +982,7 @@ CString CEDPacket::ToASCII() const
 						const Hashes::Ed2kHash oMD4( *(const Hashes::Ed2kHash::RawStorage*)m_pBuffer );
 						const QWORD& offset = *(const QWORD*)( m_pBuffer + Hashes::Ed2kHash::byteCount );
 						const DWORD& length = *(const DWORD*)( m_pBuffer + Hashes::Ed2kHash::byteCount + 8 );
-						strOutput.Format( _T("hash: %s, offset: %I64u, length: %u bytes"), oMD4.toString(), offset, length );
+						strOutput.Format( _T("hash: %s, offset: %I64u, length: %u bytes"), (LPCTSTR)oMD4.toString(), offset, length );
 					}
 					break;
 
@@ -991,7 +991,7 @@ CString CEDPacket::ToASCII() const
 					{
 						const Hashes::Ed2kHash oMD4( *(const Hashes::Ed2kHash::RawStorage*)m_pBuffer );
 						const QWORD* offset = (const QWORD*)( m_pBuffer + Hashes::Ed2kHash::byteCount );
-						strOutput.Format( _T("hash: %s, offsets: %I64u, length: %I64u bytes"), oMD4.toString(), offset[0], offset[1] - offset[0] );
+						strOutput.Format( _T("hash: %s, offsets: %I64u, length: %I64u bytes"), (LPCTSTR)oMD4.toString(), offset[0], offset[1] - offset[0] );
 					}
 					break;
 				}
@@ -1020,56 +1020,60 @@ void CEDPacket::Debug(LPCTSTR pszReason) const
 //////////////////////////////////////////////////////////////////////
 // CEDTag construction
 
-CEDTag::CEDTag() :
-	m_nType ( ED2K_TAG_NULL ),
-	m_nKey	( 0 )
+CEDTag::CEDTag()
+	: m_nType	( ED2K_TAG_NULL )
+	, m_nKey	( 0 )
+	, m_nValue	( 0 )
 {
 }
 
 CEDTag::CEDTag(const CEDTag& t)
-	: m_nType( t.m_nType )
-	, m_sKey( t.m_sKey )
-	, m_nKey( t.m_nKey )
-	, m_sValue( t.m_sValue )
-	, m_nValue( t.m_nValue )
-	, m_oValue( t.m_oValue )
+	: m_nType	( t.m_nType )
+	, m_sKey	( t.m_sKey )
+	, m_nKey	( t.m_nKey )
+	, m_sValue	( t.m_sValue )
+	, m_nValue	( t.m_nValue )
+	, m_oValue	( t.m_oValue )
 {
 }
 
-CEDTag::CEDTag(BYTE nKey, const Hashes::Ed2kHash& oHash) :
-	m_nType ( ED2K_TAG_HASH ),
-	m_nKey	( nKey ),
-	m_oValue( oHash )
+CEDTag::CEDTag(BYTE nKey, const Hashes::Ed2kHash& oHash)
+	: m_nType	( ED2K_TAG_HASH )
+	, m_nKey	( nKey )
+	, m_nValue	( 0 )
+	, m_oValue	( oHash )
 {
 }
 
-CEDTag::CEDTag(BYTE nKey, QWORD nValue) :
-	m_nType	( ED2K_TAG_INT ),
-	m_nKey	( nKey ),
-	m_nValue( nValue )
+CEDTag::CEDTag(BYTE nKey, QWORD nValue)
+	: m_nType	( ED2K_TAG_INT )
+	, m_nKey	( nKey )
+	, m_nValue	( nValue )
 {
 }
 
-CEDTag::CEDTag(BYTE nKey, LPCTSTR pszValue) :
-	m_nType	( ED2K_TAG_STRING ),
-	m_nKey	( nKey ),
-	m_sValue( pszValue )
+CEDTag::CEDTag(BYTE nKey, LPCTSTR pszValue)
+	: m_nType	( ED2K_TAG_STRING )
+	, m_nKey	( nKey )
+	, m_nValue	( 0 )
+	, m_sValue	( pszValue )
 {
 }
 
-CEDTag::CEDTag(LPCTSTR pszKey, QWORD nValue) :
-	m_nType	( ED2K_TAG_INT ),
-	m_sKey	( pszKey ),
-	m_nKey	( 0 ),
-	m_nValue( nValue )
+CEDTag::CEDTag(LPCTSTR pszKey, QWORD nValue)
+	: m_nType	( ED2K_TAG_INT )
+	, m_sKey	( pszKey )
+	, m_nKey	( 0 )
+	, m_nValue	( nValue )
 {
 }
 
-CEDTag::CEDTag(LPCTSTR pszKey, LPCTSTR pszValue) :
-	m_nType	( ED2K_TAG_STRING ),
-	m_sKey	( pszKey ),
-	m_nKey	( 0 ),
-	m_sValue( pszValue )
+CEDTag::CEDTag(LPCTSTR pszKey, LPCTSTR pszValue)
+	: m_nType	( ED2K_TAG_STRING )
+	, m_sKey	( pszKey )
+	, m_nKey	( 0 )
+	, m_nValue	( 0 )
+	, m_sValue	( pszValue )
 {
 }
 
@@ -1171,7 +1175,11 @@ CString CEDTag::ToString() const
 
 	case ED2K_TAG_INT:
 		if ( m_nKey == 0xFB )
-			strOutput.AppendFormat( _T("%u.%u.%u.%u"), (BYTE)( m_nValue >> 17 ) & 0x7f, (BYTE)( m_nValue >> 10 ) & 0x7f, (BYTE)( m_nValue >> 7 ) & 0x7, (BYTE)m_nValue & 0x7f );
+			strOutput.AppendFormat( _T("%u.%u.%u.%u"),
+				(BYTE)( ( m_nValue >> 17 ) & 0x7f ),
+				(BYTE)( ( m_nValue >> 10 ) & 0x7f ),
+				(BYTE)( ( m_nValue >> 7  ) & 0x07 ),
+				(BYTE)(   m_nValue         & 0x7f ) );
 		else
 			strOutput.AppendFormat( _T("%I64u"), m_nValue );
 		break;

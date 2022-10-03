@@ -558,7 +558,7 @@ BOOL CCollectionExportDlg::Step2()
 					if ( CThumbCache::Cache( strFilePath, &pImageFile ) )
 					{
 						CString strTarget;
-						strTarget.Format( _T("%s\\thumbs\\%d.jpg"), strPath, nPosDocs2 + 1 );
+						strTarget.Format( _T("%s\\thumbs\\%d.jpg"), (LPCTSTR)strPath, nPosDocs2 + 1 );
 						CreateDirectory( strTarget.Left( strTarget.ReverseFind( _T('\\') ) ) );
 						if ( ! pImageFile.SaveToFile( strTarget, 85 ) )
 						{

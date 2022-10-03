@@ -37,6 +37,7 @@ static char THIS_FILE[]=__FILE__;
 
 CTransfer::CTransfer(PROTOCOLID nProtocol)
 	: CConnection		( nProtocol )
+	, m_pServer			( SOCKADDR_IN() )
 	, m_nRunCookie		( 0 )
 	, m_nState			( 0 )
 	, m_nBandwidth		( 0ul )
@@ -45,6 +46,7 @@ CTransfer::CTransfer(PROTOCOLID nProtocol)
 	, m_nPosition		( 0 )
 	, m_tRequest		( 0 )
 {
+	m_pServer.sin_family = AF_INET;
 }
 
 CTransfer::~CTransfer()
@@ -57,6 +59,19 @@ CTransfer::~CTransfer()
 // CTransfer operations
 
 BOOL CTransfer::ConnectTo(const IN_ADDR* pAddress, WORD nPort)
+{
+	m_nState = 0;
+
+	if ( CConnection::ConnectTo( pAddress, nPort ) )
+	{
+		Transfers.Add( this );
+		return TRUE;
+	}
+
+	return FALSE;
+}
+
+BOOL CTransfer::ConnectToIPv6(const IN6_ADDR* pAddress, WORD nPort)
 {
 	m_nState = 0;
 

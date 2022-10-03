@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Shareaza\n"
-"Report-Msgid-Bugs-To: ryo-oh-ki <ryo-oh-ki@narod.ru>\n"
-"POT-Creation-Date: 2014-01-27 13:47+0000\n"
+"Report-Msgid-Bugs-To: shareaza <shareaza@cherubicsoft.com>\n"
+"POT-Creation-Date: 2015-02-24 08:37+0000\n"
 "PO-Revision-Date: \n"
 "Last-Translator: ryo-oh-ki <ryo-oh-ki@narod.ru>\n"
 "Language-Team: Shareaza Development Team\n"
@@ -1184,19 +1184,6 @@ msgstr "Sama Seriaali Osasid"
 msgid "_Web Services"
 msgstr "_Weebiteenused"
 
-#: csearchwnd.basic;30;item;id_library_bitzi_web
-#: csearchwnd;32;item;id_library_bitzi_web
-#: cbrowsehostwnd.basic;34;item;id_library_bitzi_web
-#: cbrowsehostwnd;36;item;id_library_bitzi_web
-#: chitmonitorwnd;38;item;id_library_bitzi_web
-#: clibraryfileview.physical.basic;41;item;id_library_bitzi_web
-#: clibraryfileview.physical;44;item;id_library_bitzi_web
-#: clibraryfileview.virtual.basic;47;item;id_library_bitzi_web
-#: clibraryfileview.virtual;50;item;id_library_bitzi_web
-#: webservices.list.menu;item;id_library_bitzi_web
-msgid "View _Bitzi Ticket"
-msgstr "Vaata _Bitzist"
-
 #: csearchwnd;item;id_search_downloadnow
 #: cbrowsehostwnd.basic;item;id_search_downloadnow
 #: cbrowsehostwnd;item;id_search_downloadnow
@@ -1482,6 +1469,7 @@ msgstr "Näita Ajalugu"
 
 #: clibrarytree.physical.basic;item;id_library_explore
 #: clibrarytree.physical;item;id_library_explore
+#: path.menu;item;id_path_explore
 msgid "_Explore"
 msgstr "_Vaata Faile"
 
@@ -1567,14 +1555,6 @@ msgstr "_Uus Kaust..."
 #: clibrarytileview;item;id_library_album_open
 msgid "_Open"
 msgstr "_Ava"
-
-#: clibraryfileview.physical.basic;41;item;id_library_bitzi_download
-#: clibraryfileview.physical;44;item;id_library_bitzi_download
-#: clibraryfileview.virtual.basic;47;item;id_library_bitzi_download
-#: clibraryfileview.virtual;50;item;id_library_bitzi_download
-#: webservices.list.menu;item;id_library_bitzi_download
-msgid "_Download Metadata"
-msgstr "_Tõmba Andmebaas"
 
 #: clibraryfileview.physical.basic;41;item;id_webservices_musicbrainz
 #: clibraryfileview.physical;44;item;id_webservices_musicbrainz
@@ -1809,7 +1789,8 @@ msgstr ""
 msgid "Timestam_p"
 msgstr "Ajastu_s"
 
-#: csystemwnd;item;id_system_copy curlexportdlg;control;7
+#: csystemwnd;item;id_system_copy path.menu;item;id_path_copy
+#: curlexportdlg;control;7
 msgid "_Copy"
 msgstr "_Kopeeri"
 
@@ -3647,14 +3628,6 @@ msgstr "Ava valitud Albumi kaust."
 msgid "View and edit the properties of the selected album folder..."
 msgstr "Vaata ja muuda valitud Albumi kausta omadusi..."
 
-#: message;id_library_bitzi_download
-msgid "Download metadata for the selected file(s) from Bitzi(TM)..."
-msgstr "Tõmba Bitzist(TM) valitud faili kohta andmebaas ..."
-
-#: message;id_library_bitzi_web
-msgid "View the Bitzi(TM) ticket for the selected file on the web."
-msgstr "Vaata Bitzi(TM) infot valitud faili kohta."
-
 #: message;id_library_columns message;id_search_columns
 msgid "Select metadata columns to be displayed..."
 msgstr "Vali andmebaasi info, mida kuvada..."
@@ -4147,6 +4120,14 @@ msgstr "Hüppa tagasi, eelmisele failile playlistis ."
 #, fuzzy
 msgid "Previous Pane"
 msgstr "Eelmine"
+
+#: message;id_path_copy
+msgid "Copy this path to clipboard."
+msgstr ""
+
+#: message;id_path_explore
+msgid "Explore this path."
+msgstr ""
 
 #: message;id_scheduler_activate
 #, fuzzy
@@ -5239,6 +5220,10 @@ msgstr "Ebausaldatav"
 msgid "Free:"
 msgstr "Loodud:"
 
+#: string;12999
+msgid "Client %s has a prohibited user agent \"%s\", banning."
+msgstr ""
+
 #: string;13000
 msgid "Are you sure you want to delete the selected security rules? This cannot be undone."
 msgstr ""
@@ -6038,14 +6023,6 @@ msgstr "Sa hakkad faili %i andmebaasi muutma, oled kindel, et tahad jätkata?"
 msgid "Editing metadata of %i files."
 msgstr "Faili %i andmebaasi muutmine."
 
-#: string;16387
-msgid "The file \"%s\" has not yet been hashed. Please wait for the file to be hashed, and then try again."
-msgstr "Fail \"%s\" on alles segamini.  Palun oota kuni fail koos on ja proovi siis uuesti."
-
-#: string;16388
-msgid "This option uses services provided by Bitzi.com for recognising and sharing information about selected files.\\n\\nShareaza will transmit the SHA1 hash code for the selected file(s) in order to query the Bitzi database. If you are concerned about privacy, you may wish to consult the Bitzi.com privacy policy.\\n\\nWould you like to proceed?"
-msgstr "See võimalus kasutab teenuseid, mida pakub Bitzi.com failide tuvastamise ja jagamiste kohta.\\n\\nShareaza võtab SHA1 koodi, valitud failide kohta Bitzi andmebaasist.  Kui oled mures oma turvalisuse pärast, siis võid tutvuda Bitzi.com privaatsus poliitikaga.\\n\\nKas tahad jätkata?"
-
 #: string;16389
 msgid "Are you sure you want to permanently delete the %i selected file(s) ?\\n\\nThe files will be moved to your \"recycle bin\" if it is enabled."
 msgstr "Oled kindel, et tahad lõplikult kustutada %i faili ?\\n\\nFailid viiakse sinu \"prügikasti\" kui see on võimaldatud."
@@ -6335,22 +6312,6 @@ msgstr "Tüüp:"
 #: string;16780
 msgid "Unspecified"
 msgstr "Täpsustamata"
-
-#: string;16781
-msgid "Requesting..."
-msgstr "Saadan päringu..."
-
-#: string;16782
-msgid "Success!"
-msgstr "Õnnestus!"
-
-#: string;16783
-msgid "Finished, click Close"
-msgstr "Lõpetatud, kliki Sule"
-
-#: string;16784
-msgid "&Close"
-msgstr "&Sule"
 
 #: string;16785
 msgid "(No Visualisation)"
@@ -7410,12 +7371,11 @@ msgstr "OK"
 #: cgraphlistdlg;control;17 cgraphitemdlg;control;2
 #: cschemacolumnsdlg;control;4 csecureruledlg;control;34
 #: csharemanagerdlg;control;6 curlcopydlg;control;6 curlexportdlg;control;10
-#: curlactiondlg;control;11 cbitzidownloaddlg;control;4
-#: cfilepreviewdlg;control;6 cexistingfiledlg;control;2
-#: cclosemodedlg;control;6 cdonkeyserversdlg;control;5
-#: cdeletefiledlg;control;5 ctorrentseeddlg;control;4
-#: cdownloadgroupdlg;control;2 cmediavisdlg;control;6
-#: cdecodemetadatadlg;control;9 circinputdlg;control;3
+#: curlactiondlg;control;11 cfilepreviewdlg;control;6
+#: cexistingfiledlg;control;2 cclosemodedlg;control;6
+#: cdonkeyserversdlg;control;5 cdeletefiledlg;control;5
+#: ctorrentseeddlg;control;4 cdownloadgroupdlg;control;2
+#: cmediavisdlg;control;6 cdecodemetadatadlg;control;9 circinputdlg;control;3
 msgid "Cancel"
 msgstr "Tühista"
 
@@ -7530,6 +7490,22 @@ msgstr ""
 msgid "No Tasks Currently Scheduled"
 msgstr ""
 
+#: string;20268 cdownloadssettingspage;control;1
+msgid "Save Completed Files Here"
+msgstr "Salvesta Lõpetatud Failid Siia"
+
+#: string;20269 cdownloadssettingspage;control;23
+msgid "Store Temporary Incomplete Files Here"
+msgstr "Salvesta Ajutised Poolikud Failid Siia"
+
+#: string;20270 cbittorrentsettingspage;control;20
+msgid "Store Torrents Here"
+msgstr "Salvesta Torrentid Siia"
+
+#: string;20271 clibrarysettingspage;control;24
+msgid "Store Collections Here"
+msgstr "Siia Salvesta Kollektsioonid"
+
 #: csettingsheet;control;4 cprofilemanagerdlg;control;4
 msgid "Apply"
 msgstr "Kinnita"
@@ -7566,9 +7542,9 @@ msgstr "_Allalaadimised:"
 msgid "Expand new downloads by default"
 msgstr "Laienda uued allalaadimised vaikimisi"
 
-#: cgeneralsettingspage;control;9
-msgid "Display simple progress bar"
-msgstr "Kuva lihtne edenemisriba"
+#: cgeneralsettingspage;control;9 curlactiondlg;control;13
+msgid "Open a download _monitor window"
+msgstr "Ava allalaadimise _jälgimise aken"
 
 #: cgeneralsettingspage;control;10
 msgid "_Search:"
@@ -7680,10 +7656,6 @@ msgstr "_Lisa"
 #: clibrarysettingspage;control;20
 msgid "_Never Share:"
 msgstr "_Ära Kunagi Jaga:"
-
-#: clibrarysettingspage;control;24
-msgid "Store _Collections Here:"
-msgstr "Siia _Salvesta Kollektsioonid:"
 
 #: clibrarysettingspage;control;27
 msgid "Create ghost files when deleting"
@@ -7921,11 +7893,6 @@ msgstr "Ühendusi:"
 msgid "Handshake:"
 msgstr ""
 
-#: cdownloadssettingspage;control;1
-#, fuzzy
-msgid "Save Completed Files Here"
-msgstr "Salvesta _Lõpetatud Failid Siia:"
-
 #: cdownloadssettingspage;control;4
 msgid "Scan every completed file with AntiVirus"
 msgstr ""
@@ -7968,11 +7935,6 @@ msgstr "Maksimaalne Järjekordade arv:"
 #: cdownloadssettingspage;control;22
 msgid "Only download and upload to networks which are connected."
 msgstr "Tõmba ainult ühendatud võrkudest."
-
-#: cdownloadssettingspage;control;23
-#, fuzzy
-msgid "Store Temporary Incomplete Files Here"
-msgstr "Salvesta Ajutised _Poolikud Failid Siia:"
 
 #: cuploadssettingspage;control;2
 msgid "Share NEW partial downloads"
@@ -8294,10 +8256,6 @@ msgstr ""
 msgid "_Download Connections:"
 msgstr "_Allalaadimisühendused:"
 
-#: cbittorrentsettingspage;control;20
-msgid "_Store Torrents Here:"
-msgstr "_Salvesta Torrentid Siia:"
-
 #: cbittorrentsettingspage;control;21
 msgid "Torrents at once"
 msgstr "Torrentit korraga"
@@ -8349,7 +8307,7 @@ msgid "Author:"
 msgstr "Autor:"
 
 #: cskinssettingspage;control;7 cpluginssettingspage;control;5
-#: cadvancedsettingspage;control;7 ccollectionexportdlg;control;8
+#: cadvancedsettingspage;control;9 ccollectionexportdlg;control;8
 msgid "Description:"
 msgstr "Kirjeldus:"
 
@@ -8373,15 +8331,15 @@ msgstr "Plugina teave:"
 msgid "_Setup..."
 msgstr "_Seade..."
 
-#: cadvancedsettingspage;control;4
+#: cadvancedsettingspage;control;6
 msgid "Set Default"
 msgstr "Set Default"
 
-#: cadvancedsettingspage;control;5
+#: cadvancedsettingspage;control;7
 msgid "Setting Properties:"
 msgstr "Kirjeldus:"
 
-#: cadvancedsettingspage;control;6
+#: cadvancedsettingspage;control;8
 msgid "Value:"
 msgstr "Seadete Omadused:"
 
@@ -9028,8 +8986,8 @@ msgid "Discovery Service Type:"
 msgstr "Teenuse Tüüp:"
 
 #: cdiscoveryservicedlg;control;4
-msgid "Gnutella Bootstrap|G1 GWebCache|G2 GWebCache|G1/G2 GWebCache|Server.met URL|Blocked"
-msgstr "Gnutella Bootstrap|GWebCache|Server.met URL"
+msgid "Gnutella Bootstrap|G1 GWebCache|G2 GWebCache|G1/G2 GWebCache|Server.met URL|DC++ Hub List URL|Blocked"
+msgstr "Gnutella Bootstrap|G1 GWebCache|G2 GWebCache|G1/G2 GWebCache|Server.met URL|DC++ Hub List URL|Blocked"
 
 #: dialog;cdownloadmonitordlg
 msgid "Download : Shareaza"
@@ -9367,25 +9325,9 @@ msgstr "_Otsi Faili"
 msgid "_Remember my selection next time"
 msgstr "_Pea minu valik meeles"
 
-#: curlactiondlg;control;13
-msgid "Open a download _monitor window"
-msgstr "Ava allalaadimise _jälgimise aken"
-
 #: curlactiondlg;control;14
 msgid "You have clicked on a Shareaza-powered URI which will add the following Discovery Service to your Discovery Services cache."
 msgstr "Sa oled klikkinud Shareaza poolt koostatud URI-l, mis lisab järgmised Serverid sinu Serverite mälusse."
-
-#: dialog;cbitzidownloaddlg
-msgid "Downloading Metadata..."
-msgstr "Tõmban Andmebaasi..."
-
-#: cbitzidownloaddlg;control;2
-msgid "Shareaza is attempting to download metadata from Bitzi(TM)..."
-msgstr "Shareaza üritab tõmmata Bitzi(TM) andmebaasi..."
-
-#: cbitzidownloaddlg;control;6
-msgid "www.bitzi.com"
-msgstr "www.bitzi.com"
 
 #: dialog;cfilepreviewdlg
 msgid "Smart Download Preview..."
@@ -10049,6 +9991,54 @@ msgstr "TigerTree"
 #, fuzzy
 msgid "NextRun"
 msgstr "Järgmine"
+
+#~ msgid "Store _Collections Here:"
+#~ msgstr "Siia _Salvesta Kollektsioonid:"
+
+#~ msgid "_Store Torrents Here:"
+#~ msgstr "_Salvesta Torrentid Siia:"
+
+#~ msgid "Display simple progress bar"
+#~ msgstr "Kuva lihtne edenemisriba"
+
+#~ msgid "Requesting..."
+#~ msgstr "Saadan päringu..."
+
+#~ msgid "Success!"
+#~ msgstr "Õnnestus!"
+
+#~ msgid "Finished, click Close"
+#~ msgstr "Lõpetatud, kliki Sule"
+
+#~ msgid "&Close"
+#~ msgstr "&Sule"
+
+#~ msgid "The file \"%s\" has not yet been hashed. Please wait for the file to be hashed, and then try again."
+#~ msgstr "Fail \"%s\" on alles segamini.  Palun oota kuni fail koos on ja proovi siis uuesti."
+
+#~ msgid "View _Bitzi Ticket"
+#~ msgstr "Vaata _Bitzist"
+
+#~ msgid "_Download Metadata"
+#~ msgstr "_Tõmba Andmebaas"
+
+#~ msgid "Download metadata for the selected file(s) from Bitzi(TM)..."
+#~ msgstr "Tõmba Bitzist(TM) valitud faili kohta andmebaas ..."
+
+#~ msgid "View the Bitzi(TM) ticket for the selected file on the web."
+#~ msgstr "Vaata Bitzi(TM) infot valitud faili kohta."
+
+#~ msgid "This option uses services provided by Bitzi.com for recognising and sharing information about selected files.\\n\\nShareaza will transmit the SHA1 hash code for the selected file(s) in order to query the Bitzi database. If you are concerned about privacy, you may wish to consult the Bitzi.com privacy policy.\\n\\nWould you like to proceed?"
+#~ msgstr "See võimalus kasutab teenuseid, mida pakub Bitzi.com failide tuvastamise ja jagamiste kohta.\\n\\nShareaza võtab SHA1 koodi, valitud failide kohta Bitzi andmebaasist.  Kui oled mures oma turvalisuse pärast, siis võid tutvuda Bitzi.com privaatsus poliitikaga.\\n\\nKas tahad jätkata?"
+
+#~ msgid "Downloading Metadata..."
+#~ msgstr "Tõmban Andmebaasi..."
+
+#~ msgid "Shareaza is attempting to download metadata from Bitzi(TM)..."
+#~ msgstr "Shareaza üritab tõmmata Bitzi(TM) andmebaasi..."
+
+#~ msgid "www.bitzi.com"
+#~ msgstr "www.bitzi.com"
 
 #, fuzzy
 #~ msgid "This option uses services provided by ShareMonkey.com for recognising information about selected files.\\n\\nShareaza will transmit file details and your location in order to query the ShareMonkey database.  If you are concerned about privacy, you may wish to consult the ShareMonkey.com privacy policy.\\n\\nWould you like to proceed?"

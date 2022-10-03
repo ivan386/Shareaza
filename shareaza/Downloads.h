@@ -48,6 +48,8 @@ public:
 	DWORD			m_tBandwidthAtMaxED2K;		// The last time all ed2k bandwidth was used
 	DWORD			m_nTransfers;
 	DWORD			m_nBandwidth;
+	DWORD			m_nTryingCount;
+	DWORD			m_nTryingNoSourcesCount;
 	bool			m_bClosing;
 	QWORD			m_nComplete;				// The last complete size of incomplete downloads
 	QWORD			m_nTotal;					// The last total size of incomplete downloads
@@ -59,8 +61,6 @@ private:
 	DWORD			m_tBandwidthLastCalc;		// The last time the bandwidth was calculated
 	DWORD			m_nLimitGeneric;
 	DWORD			m_nLimitDonkey;
-	DWORD			m_nTryingCount;
-	DWORD			m_nBTTryingCount;
 	bool			m_bAllowMoreDownloads;
 	bool			m_bAllowMoreTransfers;
 
@@ -75,13 +75,11 @@ public:
 	void		ClearPaused();
 	void		Clear(bool bClosing = false);
 	void		CloseTransfers();
-	void		StartTrying(bool bIsTorrent = false);
-	void		StopTrying(bool bIsTorrent = false);
 
 	int			GetSeedCount() const;
 	INT_PTR		GetCount(BOOL bActiveOnly = FALSE) const;
-	DWORD		GetTryingCount(bool bTorrentsOnly = false) const;
-	DWORD		GetConnectingTransferCount() const;
+	DWORD		GetTryingCount(bool bTorrentsOnly = false, DWORD nLimit = 0) const;
+	DWORD		GetConnectingTransferCount(DWORD nLimit = 0) const;
 	BOOL		Check(CDownloadSource* pSource) const;
 	bool		CheckActive(CDownload* pDownload, int nScope) const;
 	BOOL		Move(CDownload* pDownload, int nDelta);
@@ -118,7 +116,7 @@ public:
 	void		UpdateAllows();
 	bool		AllowMoreDownloads() const;
 	bool		AllowMoreTransfers() const;
-	bool		AllowMoreTransfers(IN_ADDR* pAdress) const;
+	bool		AllowMoreTransfers(IN_ADDR* pAdress, bool bFirstAttempt = false) const;
 	void		Remove(CDownload* pDownload);
 
 	POSITION	GetIterator() const;

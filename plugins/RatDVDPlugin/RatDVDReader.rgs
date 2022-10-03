@@ -2,7 +2,10 @@ HKCR
 {
 	NoRemove AppID
 	{
-		'%APPID%' = s 'RatDVDReader'
+		'%APPID%' = s 'RatDVD Metadata Reader and Thumbnailer'
+		{
+			val DllSurrogate = s ''
+		}
 		'RatDVDReader.DLL'
 		{
 			val AppID = s '%APPID%'

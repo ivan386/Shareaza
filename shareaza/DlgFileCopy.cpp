@@ -1,7 +1,7 @@
 //
 // DlgFileCopy.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2013.
+// Copyright (c) Shareaza Development Team, 2002-2014.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -301,30 +301,6 @@ void CFileCopyDlg::OnRun()
 		}
 
 		delete pMetadata;
-/*
-		// Alternate code to check if file is hashing first
-		CString sCurrent, sFile;
-		int nRemaining;
-		LibraryBuilder.UpdateStatus( &sCurrent, &nRemaining );
-		sFile = strPath + _T("\\") + strName;
-
-		if ( sFile == sCurrent )
-		{
-			LoadString ( sFile, IDS_LIBRARY_BITZI_HASHED );
-			sCurrent.Format( sFile, strName );
-			theApp.Message( MSG_NOTICE, sCurrent  );
-
-			LoadString ( sCurrent, IDS_STATUS_FILEERROR );
-			m_wndFileName.SetWindowText( sCurrent );
-
-		}
-		else
-		{
-			m_wndFileName.SetWindowText( strName );
-			ProcessFile( strName, strPath, bMetaData );
-		}
-		//
-*/
 	}
 
 	m_bCompleted = true;
@@ -350,7 +326,7 @@ bool CFileCopyDlg::ProcessFile(const CString& strName, const CString& strPath)
 		if ( hFile == INVALID_HANDLE_VALUE )
 		{
 			CString strMessage;
-			strMessage.Format( LoadString( IDS_LIBRARY_MOVE_FAIL ), strName );
+			strMessage.Format( LoadString( IDS_LIBRARY_MOVE_FAIL ), (LPCTSTR)strName );
 			switch ( AfxMessageBox( strMessage, MB_ICONQUESTION | MB_YESNO | MB_DEFBUTTON2 ) )
 			{
 			case IDYES:
@@ -389,7 +365,7 @@ bool CFileCopyDlg::CheckTarget(const CString& strTarget)
 	CString strFormat, strMessage;
 
 	LoadString( strFormat, IDS_LIBRARY_TARGET_EXISTS );
-	strMessage.Format( strFormat, strTarget );
+	strMessage.Format( strFormat, (LPCTSTR)strTarget );
 
 	switch ( AfxMessageBox( strMessage, MB_ICONQUESTION|MB_YESNOCANCEL|MB_DEFBUTTON2 ) )
 	{
@@ -408,7 +384,7 @@ bool CFileCopyDlg::CheckTarget(const CString& strTarget)
 	CString strError = GetErrorString();
 
 	LoadString( strFormat, IDS_LIBRARY_DELETE_FAIL );
-	strMessage.Format( strFormat, strTarget );
+	strMessage.Format( strFormat, (LPCTSTR)strTarget );
 	strMessage += _T("\r\n\r\n") + strError;
 
 	AfxMessageBox( strMessage, MB_ICONEXCLAMATION );

@@ -25,7 +25,7 @@
 #include "Settings.h"
 #include "GGEP.h"
 #include "G1Packet.h"
-#include "ZLib.h"
+#include "ZLibWarp.h"
 
 #ifdef _DEBUG
 #undef THIS_FILE

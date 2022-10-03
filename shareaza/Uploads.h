@@ -52,7 +52,9 @@ public:
 	DWORD		GetTorrentCount(int nState) const;
 public:
 	BOOL		AllowMoreTo(const IN_ADDR* pAddress) const;
+	BOOL		AllowMoreTo(const IN6_ADDR* pAddress) const;
 	BOOL		CanUploadFileTo(const IN_ADDR* pAddress, const CShareazaFile* pFile) const;
+	BOOL		CanUploadFileTo(const IN6_ADDR* pAddress, const CShareazaFile* pFile) const;
 	BOOL		EnforcePerHostLimit(CUploadTransfer* pUpload, BOOL bRequest = FALSE);
 public:
 	void		SetStable(DWORD nSpeed);

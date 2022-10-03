@@ -115,7 +115,7 @@ CArray<DATA_TYPE, INSTANCE_TRAITS, COMPARE_TRAITS>::CArray(size_t nSize)
 	m_nCount = 0;
 	if (nSize > 0)
 	{
-		m_arrData = (DATA_TYPE*)new BYTE[nSize * sizeof(DATA_TYPE)];
+		m_arrData = (DATA_TYPE*)new (std::nothrow) BYTE[nSize * sizeof(DATA_TYPE)];
 		if (m_arrData == NULL)
 		{
 			m_nSize = 0;
@@ -135,7 +135,7 @@ CArray<DATA_TYPE, INSTANCE_TRAITS, COMPARE_TRAITS>::CArray(const CArray& rArray)
 	m_nSize = m_nCount = rArray.m_nCount;
 	if (m_nSize)
 	{
-		m_arrData = (DATA_TYPE*)new BYTE[m_nSize * sizeof(DATA_TYPE)];
+		m_arrData = (DATA_TYPE*)new (std::nothrow) BYTE[m_nSize * sizeof(DATA_TYPE)];
 		if (m_arrData == NULL)
 		{
 			m_nSize = m_nCount = 0;
@@ -207,7 +207,7 @@ void CArray<DATA_TYPE, INSTANCE_TRAITS, COMPARE_TRAITS>::EnsureSize(size_t nSize
 			else
 				nSize += nSize / 2;
 		}
-		DATA_TYPE* arrData = (DATA_TYPE*)new BYTE[nSize * sizeof(DATA_TYPE)];
+		DATA_TYPE* arrData = (DATA_TYPE*)new (std::nothrow) BYTE[nSize * sizeof(DATA_TYPE)];
 		if (arrData == NULL)
 			RaiseException(STATUS_NO_MEMORY, 0, 0, NULL);
 		if (m_arrData)
@@ -339,7 +339,7 @@ DATA_TYPE& CArray<DATA_TYPE, INSTANCE_TRAITS, COMPARE_TRAITS>::InsertItem(size_t
 	if (m_nSize < nSize)
 	{
 		nSize += nSize / 2;
-		DATA_TYPE* arrData = (DATA_TYPE*)new BYTE[nSize * sizeof(DATA_TYPE)];
+		DATA_TYPE* arrData = (DATA_TYPE*)new (std::nothrow) BYTE[nSize * sizeof(DATA_TYPE)];
 		if (arrData == NULL)
 			RaiseException(STATUS_NO_MEMORY, 0, 0, NULL);
 		CopyMemory(arrData, m_arrData, nItemPos * sizeof(DATA_TYPE));

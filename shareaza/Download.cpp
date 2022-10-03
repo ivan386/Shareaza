@@ -1,7 +1,7 @@
 //
 // Download.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2014.
+// Copyright (c) Shareaza Development Team, 2002-2017.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -66,7 +66,11 @@ CDownload::CDownload() :
 ,	m_tSaved		( 0 )
 ,	m_tBegan		( 0 )
 ,	m_bDownloading	( false )
+,	m_nCompletedAtBegan ( 0 )
+,	m_nStartFrom	( 0 )
+#pragma warning(suppress:4355) // 'this' : used in base member initializer list
 ,	m_pTask			( this )
+,	m_bStableName	( false )
 {
 }
 
@@ -74,6 +78,16 @@ CDownload::~CDownload()
 {
 	AbortTask();
 	DownloadGroups.Unlink( this );
+}
+
+bool CDownload::HasStableName() const
+{
+	return ! m_sName.IsEmpty() && ( m_bStableName || HasHash() );
+}
+
+void CDownload::SetStableName(bool bStable)
+{
+	m_bStableName = bStable;
 }
 
 float CDownload::GetProgress() const
@@ -133,13 +147,14 @@ void CDownload::Pause(BOOL bRealPause)
 	if ( m_bComplete || m_bPaused )
 		return;
 
-	theApp.Message( MSG_NOTICE, IDS_DOWNLOAD_PAUSED, GetDisplayName() );
+	theApp.Message( MSG_NOTICE, IDS_DOWNLOAD_PAUSED, (LPCTSTR)GetDisplayName() );
 
-	StopTrying();
 	m_bTempPaused = TRUE;
 
 	if ( bRealPause )
 		m_bPaused = TRUE;
+
+	StopTrying();
 
 	SetModified();
 }
@@ -246,10 +261,9 @@ void CDownload::StopTrying()
 	if ( !IsTrying() || ( IsCompleted() && !IsSeeding() ) )
 		return;
 
-	Downloads.StopTrying( IsTorrent() );
-
 	m_tBegan = 0;
 	m_bDownloading = false;
+	Downloads.m_nTryingCount--;
 
 	// if m_bTorrentRequested = TRUE, raza sends Stop
 	// CloseTorrent() additionally closes uploads
@@ -275,8 +289,45 @@ void CDownload::StartTrying()
 	if ( !Network.IsConnected() && !Network.Connect( TRUE ) )
 		return;
 
-	Downloads.StartTrying( IsTorrent() );
 	m_tBegan = GetTickCount();
+	m_nCompletedAtBegan = GetVolumeComplete();
+	Downloads.m_nTryingCount++;
+
+	if ( ! GetEmptyFragmentList().empty() )
+		SetStartFrom( GetEmptyFragmentList().begin()->begin() );
+	else
+		SetStartFrom();
+}
+
+QWORD CDownload::GetRealSpeed()
+{
+	DWORD tTime = GetTickCount() - m_tBegan;
+	if ( tTime > 0 )
+		return ( GetVolumeComplete() - m_nCompletedAtBegan ) * 1000 / tTime;
+	return 0;
+}
+
+void CDownload::SetStartFrom(QWORD nStartFrom)
+{
+	m_nStartFrom = nStartFrom;
+	m_tStartFromSet = GetTickCount();
+}
+
+QWORD CDownload::GetNonRandomEnd(bool bForce)
+{
+	if ( m_nBitrate < 8 )
+		return 0;
+
+	if ( m_nBitrate == ~(QWORD)0 )
+		return this->m_nSize;
+
+	QWORD nByterate = ( m_nBitrate / 8 );
+
+	if ( Settings.Downloads.MediaBuffer && m_tStartFromSet > 0 &&
+		( GetRealSpeed() > nByterate || GetAverageSpeed() > nByterate || bForce ) )
+		return m_nStartFrom + ( ( ( GetTickCount() - m_tStartFromSet + Settings.Downloads.MediaBuffer ) / 1000 ) * nByterate );
+
+	return 0;
 }
 
 //////////////////////////////////////////////////////////////////////
@@ -369,21 +420,18 @@ CString CDownload::GetDownloadStatus() const
 	else if ( IsDownloading() )
 	{
 		DWORD nTime = GetTimeRemaining();
-	
+
 		if ( nTime == 0xFFFFFFFF )
 			LoadString( strText, IDS_STATUS_ACTIVE );
+		else if ( nTime == 0 )
+			LoadString( strText, IDS_STATUS_DOWNLOADING );
+		else if ( nTime > 86400 )
+			strText.Format( _T("%u:%.2u:%.2u:%.2u"), nTime / 86400, ( nTime / 3600 ) % 24, ( nTime / 60 ) % 60, nTime % 60 );
 		else
-		{
-			if ( nTime > 86400 )
-				strText.Format( _T("%u:%.2u:%.2u:%.2u"), nTime / 86400, ( nTime / 3600 ) % 24, ( nTime / 60 ) % 60, nTime % 60 );
-			else
-				strText.Format( _T("%u:%.2u:%.2u"), nTime / 3600, ( nTime / 60 ) % 60, nTime % 60 );
-		}
+			strText.Format( _T("%u:%.2u:%.2u"), nTime / 3600, ( nTime / 60 ) % 60, nTime % 60 );
 	}
 	else if ( ! IsTrying() )
 		LoadString( strText, IDS_STATUS_QUEUED );
-	else if ( IsDownloading() )
-		LoadString( strText, IDS_STATUS_DOWNLOADING );
 	else if ( nSources > 0 )
 		LoadString( strText, IDS_STATUS_PENDING );
 	else if ( IsTorrent() )
@@ -463,6 +511,9 @@ void CDownload::OnRun()
 		{
 			// This download is trying to download
 			OpenDownload();
+			
+			if (GetEffectiveSourceCount() == 0)
+				Downloads.m_nTryingNoSourcesCount++;
 
 			//'Dead download' check- if download appears dead, give up and allow another to start.
 			if ( ! IsCompleted() && ( tNow - GetStartTimer() ) > ( 3 * 60 * 60 * 1000 )  )
@@ -475,7 +526,7 @@ void CDownload::OnRun()
 
 					if ( IsTorrent() )	//If it's a torrent
 					{
-						if ( Downloads.GetTryingCount( true ) >= Settings.BitTorrent.DownloadTorrents )
+						if ( Downloads.GetTryingCount( true, Settings.BitTorrent.DownloadTorrents ) >= Settings.BitTorrent.DownloadTorrents )
 						{	//If there are other torrents that could start
 							StopTrying();		//Give up for now, try again later
 							return;
@@ -493,40 +544,52 @@ void CDownload::OnRun()
 			}	//End of 'dead download' check
 
 			// Run the download
-			if ( ! IsTorrent() || RunTorrent( tNow ) )
-			{
-				RunSearch( tNow );
-				RunValidation();
+			RunTorrent( tNow );
+			RunSearch( tNow );
+			RunValidation();
 
-				if ( IsSeeding() )
+			if ( IsSeeding() )
+			{
+				// Mark as collapsed to get correct heights when dragging files
+				if ( ! Settings.General.DebugBTSources && m_bExpanded )
+					m_bExpanded = FALSE;
+			}
+			else
+			{
+				if ( IsComplete() && IsFileOpen() )
 				{
-					// Mark as collapsed to get correct heights when dragging files
-					if ( ! Settings.General.DebugBTSources && m_bExpanded )
-						m_bExpanded = FALSE;
+					if ( IsFullyVerified() )
+						OnDownloaded();
 				}
-				else
+				else if ( CheckTorrentRatio() )
 				{
-					if ( IsComplete() && IsFileOpen() )
+					if ( Network.IsConnected() )
+						StartTransfersIfNeeded( tNow );
+					else
 					{
-						if ( IsFullyVerified() )
-							OnDownloaded();
-					}
-					else if ( CheckTorrentRatio() )
-					{
-						if ( Network.IsConnected() )
-							StartTransfersIfNeeded( tNow );
-						else
-						{
-							StopTrying();
-							return;
-						}
+						StopTrying();
+						return;
 					}
 				}
-			} // if ( RunTorrent( tNow ) )
+			}
 
 			// Calculate the current downloading state
 			if ( HasActiveTransfers() )
 				m_bDownloading = true;
+
+			// Mutate regular download to torrent download
+			if ( Settings.BitTorrent.EnablePromote && m_oBTH && ! IsTorrent() )
+			{
+				m_pTorrent.Clear();
+				m_pTorrent.m_oMD5	= m_oMD5;
+				m_pTorrent.m_oBTH	= m_oBTH;
+				m_pTorrent.m_oSHA1	= m_oSHA1;
+				m_pTorrent.m_oED2K	= m_oED2K;
+				m_pTorrent.m_oTiger	= m_oTiger;
+				m_pTorrent.m_sName	= m_sName;
+				m_pTorrent.m_nSize	= m_nSize;
+				SetTorrent();
+			}
 		}
 		else if ( ! IsCompleted() && m_bVerify != TRI_TRUE )
 		{
@@ -539,7 +602,8 @@ void CDownload::OnRun()
 				{
 					if ( ! IsTorrent() ||
 						// Torrents only try when 'ready to go'. (Reduce tracker load)
-						Downloads.GetTryingCount( true ) < Settings.BitTorrent.DownloadTorrents )
+						( Downloads.GetCount() < Settings.BitTorrent.DownloadTorrents 
+						|| Downloads.GetTryingCount( true,  Settings.BitTorrent.DownloadTorrents ) < Settings.BitTorrent.DownloadTorrents ) )
 					{
 						Resume();
 					}
@@ -566,9 +630,9 @@ void CDownload::OnRun()
 
 void CDownload::OnDownloaded()
 {
-	ASSERT( m_bComplete == false );
+//	ASSERT( m_bComplete == false );
 
-	theApp.Message( MSG_NOTICE, IDS_DOWNLOAD_COMPLETED, GetDisplayName() );
+	theApp.Message( MSG_NOTICE, IDS_DOWNLOAD_COMPLETED, (LPCTSTR)GetDisplayName() );
 
 	m_tCompleted = GetTickCount();
 	m_bDownloading = false;
@@ -639,31 +703,33 @@ void CDownload::OnMoved()
 BOOL CDownload::OpenDownload()
 {
 	if ( m_sName.IsEmpty() )
+		// Download has no name yet, postponing
 		return TRUE;
 
 	if ( IsFileOpen() )
+		// Already opened
 		return TRUE;
 
 	SetModified();
 
-	if ( IsTorrent() )
+	if ( IsTorrent() && ! ( m_oSHA1 || m_oTiger || m_oED2K || m_oMD5 ) )
 	{
 		if ( Open( m_pTorrent ) )
 			return TRUE;
 	}
 	else
 	{
-		if ( Open() )
+		if ( Open( this ) )
 			return TRUE;
 	}
 
 	if ( m_nSize != SIZE_UNKNOWN && ! Downloads.IsSpaceAvailable( m_nSize, Downloads.dlPathIncomplete ) )
 	{
 		CString sFileError;
-		sFileError.Format( LoadString( IDS_DOWNLOAD_DISK_SPACE ), m_sName, Settings.SmartVolume( m_nSize ) );
+		sFileError.Format( LoadString( IDS_DOWNLOAD_DISK_SPACE ), (LPCTSTR)m_sName, (LPCTSTR)Settings.SmartVolume( m_nSize ) );
 		SetFileError( ERROR_DISK_FULL, sFileError );
 
-		theApp.Message( MSG_ERROR, _T("%s"), sFileError );
+		theApp.Message( MSG_ERROR, _T("%s"), (LPCTSTR)sFileError );
 	}
 
 	return FALSE;
@@ -702,12 +768,12 @@ BOOL CDownload::SeedTorrent()
 		return FALSE;
 	}
 
-	AttachFile( pFragmentedFile );
+	AttachFile( pFragmentedFile.release() );
 
 	if ( IsSingleFileTorrent() )
 	{
 		// Refill missed hashes for single-file torrent
-		const CBTInfo::CBTFile* pBTFile = m_pTorrent.m_pFiles.GetHead();
+		CBTInfo::CBTFile* pBTFile = m_pTorrent.m_pFiles.GetHead();
 		if ( ! m_pTorrent.m_oSHA1 && pBTFile->m_oSHA1 )
 			m_pTorrent.m_oSHA1 = pBTFile->m_oSHA1;
 		if ( ! m_pTorrent.m_oTiger && pBTFile->m_oTiger )
@@ -716,7 +782,7 @@ BOOL CDownload::SeedTorrent()
 			m_pTorrent.m_oED2K = pBTFile->m_oED2K;
 		if ( ! m_pTorrent.m_oMD5 && pBTFile->m_oMD5 )
 			m_pTorrent.m_oMD5 = pBTFile->m_oMD5;
-		
+
 		// Refill missed hash for library file
 		CQuickLock oLock( Library.m_pSection );
 		if ( CLibraryFile* pLibraryFile = LibraryMaps.LookupFileByPath( pBTFile->FindFile() ) )
@@ -786,7 +852,7 @@ BOOL CDownload::Load(LPCTSTR pszName)
 		}
 		AND_CATCH_ALL( pException )
 		{
-			theApp.Message( MSG_ERROR, IDS_DOWNLOAD_FILE_OPEN_ERROR, m_sPath );
+			theApp.Message( MSG_ERROR, IDS_DOWNLOAD_FILE_OPEN_ERROR, (LPCTSTR)m_sPath );
 		}
 		END_CATCH_ALL
 
@@ -811,7 +877,7 @@ BOOL CDownload::Load(LPCTSTR pszName)
 		}
 		AND_CATCH_ALL( pException )
 		{
-			theApp.Message( MSG_ERROR, IDS_DOWNLOAD_FILE_OPEN_ERROR, m_sPath + _T(".sav") );
+			theApp.Message( MSG_ERROR, IDS_DOWNLOAD_FILE_OPEN_ERROR, (LPCTSTR)( m_sPath + _T(".sav") ) );
 		}
 		END_CATCH_ALL
 
@@ -913,6 +979,14 @@ BOOL CDownload::OnVerify(const CLibraryFile* pFile, TRISTATE bVerified)
 			m_oED2K = pFile->m_oED2K;
 		if ( ! m_oMD5 && pFile->m_oMD5 )
 			m_oMD5 = pFile->m_oMD5;
+
+		// Auto-start for certain file extensions
+		const CString strExt = PathFindExtension( pFile->GetPath() );
+		if ( strExt.CompareNoCase( _T(".torrent") ) == 0 )
+		{
+			theApp.Message( MSG_DEBUG, _T("Auto-starting torrent file: %s"), (LPCTSTR)pFile->GetPath() );
+			theApp.OpenTorrent( pFile->GetPath(), TRUE );
+		}
 	}
 
 	return TRUE;
@@ -1110,4 +1184,27 @@ BOOL CDownload::Enqueue(int nIndex, CSingleLock* pLock)
 	}
 
 	return bResult;
+}
+
+bool CDownload::Resize(QWORD nNewSize)
+{
+	if ( m_nSize == nNewSize )
+		return false;
+
+	// Check for possible change to multi-file download
+	if ( ! m_oSHA1 && ! m_oTiger && ! m_oED2K && ! m_oMD5 && ( m_oBTH || IsTorrent() ) && IsFileOpen() )
+	{
+		// Remove old file
+		AbortTask();
+		ClearVerification();
+		CloseFile();
+		DeleteFile();
+
+		// Create a fresh one
+		AttachFile( new CFragmentedFile );
+	}
+
+	SetSize( nNewSize );
+
+	return true;
 }

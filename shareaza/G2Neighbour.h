@@ -63,7 +63,7 @@ public:
 
 	static CG2Packet* CreateLNIPacket(CG2Neighbour* pOwner = NULL);
 	static CG2Packet* CreateKHLPacket(CG2Neighbour* pOwner = NULL);
-	static BOOL		ParseKHLPacket(CG2Packet* pPacket, const SOCKADDR_IN* pHost);
+	static BOOL		ParseKHLPacket(CG2Packet* pPacket, const SOCKADDR* pHost);
 
 public:
 	DWORD				m_nLeafCount;

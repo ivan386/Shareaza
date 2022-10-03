@@ -31,7 +31,6 @@
 #include "SchemaCache.h"
 #include "SchemaMember.h"
 #include "ThumbCache.h"
-#include "ImageServices.h"
 #include "ImageFile.h"
 #include "CtrlLibraryTip.h"
 
@@ -105,7 +104,7 @@ BOOL CLibraryTipCtrl::OnPrepare()
 
 	m_sSize = Settings.SmartVolume( pFile->GetSize() );
 
-	if ( pLibraryFile ) 
+	if ( pLibraryFile )
 		m_sFolder = pLibraryFile->GetFolder();
 	else
 		m_sFolder.Empty(); // Ghost files have no location
@@ -366,7 +365,7 @@ void CLibraryTipCtrl::OnRun()
 		if ( m_sPath == strPath )
 		{
 			m_sPath.Empty();
-			
+
 			if ( bSuccess )
 			{
 				m_bmThumb.Attach( pFile.CreateBitmap() );

@@ -152,6 +152,7 @@ protected:
 
 	BOOL	VirtualRead(QWORD nOffset, char* pBuffer, QWORD nBuffer, QWORD* pnRead);
 	BOOL	VirtualWrite(QWORD nOffset, const char* pBuffer, QWORD nBuffer, QWORD* pnWritten);
+	BOOL	VirtualSparse(QWORD nOffset, QWORD nLength);
 
 	// Get completed size of defined range (in bytes)
 	QWORD GetCompleted(QWORD nOffset, QWORD nLength) const;
@@ -247,7 +248,7 @@ public:
 	// Is file has size?
 	inline BOOL IsValid() const
 	{
-		return m_oFList.limit() > 0;
+		return m_oFList.limit() > 0 && m_oFList.limit() < SIZE_UNKNOWN;
 	}
 	
 	// Returns file download progress ( < 0 - unknown or 0..100% )

@@ -461,6 +461,7 @@ BOOL CDownloadTransferDC::StartNextFragment()
 
 	m_nOffset = SIZE_UNKNOWN;
 	m_nPosition = 0;
+	m_bWantBackwards = FALSE;
 
 	CString sName;
 	if ( m_pDownload->m_oTiger )

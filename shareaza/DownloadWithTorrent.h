@@ -1,7 +1,7 @@
 //
 // DownloadWithTorrent.h
 //
-// Copyright (c) Shareaza Development Team, 2002-2012.
+// Copyright (c) Shareaza Development Team, 2002-2015.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -45,6 +45,7 @@ public:
 	BOOL		m_bTorrentStarted;
 	DWORD		m_tTorrentTracker;
 	DWORD		m_tTorrentSources;
+	DWORD		m_tTorrentSourcesDHT;
 	QWORD		m_nTorrentUploaded;
 	QWORD		m_nTorrentDownloaded;
 	BOOL		m_bTorrentTrackerError;
@@ -57,10 +58,11 @@ protected:
 	DWORD		m_nTorrentBlock;
 	DWORD		m_nTorrentSuccess;
 	DWORD		m_nTorrentSize;
-	BYTE*		m_pTorrentBlock;
+	CAutoVectorPtr< BYTE >		m_pTorrentBlock;
 private:
 	CList< CUploadTransferBT* >	m_pTorrentUploads;
 	DWORD						m_tTorrentChoke;
+	bool						m_bZerosBlocksChecked;
 
 // Operations
 public:
@@ -71,6 +73,7 @@ public:
 	bool			IsSingleFileTorrent() const;
 	float			GetRatio() const;
 	BOOL			UploadExists(in_addr* pIP) const;
+	BOOL			UploadExists(in6_addr* pIPv6) const;
 	BOOL			UploadExists(const Hashes::BtGuid& oGUID) const;
 	virtual void	OnTrackerEvent(bool bSuccess, LPCTSTR pszReason, LPCTSTR pszTip, CBTTrackerRequest* pEvent);
 	void			ChokeTorrent(DWORD tNow = 0);
@@ -79,10 +82,18 @@ public:
 	// Apply new .torrent file to download or update from existing one
 	BOOL			SetTorrent(const CBTInfo* pTorrent = NULL);
 	// Generate Peer ID
+
+	void			FindZerosRangesTorrent();
+
 	BOOL			GenerateTorrentDownloadID();
+	virtual BOOL	SubmitData(QWORD nOffset, LPBYTE pData, QWORD nLength);
+
+	inline BOOL IsTorrentSet() const{
+		return m_pTorrentBlock != NULL && m_nTorrentBlock > 0;
+	}
 
 protected:
-	bool			RunTorrent(DWORD tNow);
+	void			RunTorrent(DWORD tNow);
 	void			SendCompleted();
 	void			CloseTorrent();
 	void			CloseTorrentUploads();

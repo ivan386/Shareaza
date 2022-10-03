@@ -1,7 +1,7 @@
 //
 // Strings.cpp
 //
-// Copyright (c) Shareaza Development Team, 2010-2012.
+// Copyright (c) Shareaza Development Team, 2010-2014.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -21,6 +21,7 @@
 
 #include "StdAfx.h"
 #include "Strings.h"
+#include <WinDNS.h>
 
 bool IsCharacter(const WCHAR nChar)
 {
@@ -99,7 +100,7 @@ const CLowerCaseTable ToLower;
 CLowerCaseTable::CLowerCaseTable()
 {
 	for ( size_t i = 0; i < 65536; ++i ) cTable[ i ] = TCHAR( i );
-	VERIFY( CharLowerBuff( cTable, 65536 ) == 65536 );
+	CharLowerBuff( cTable, 65536 );
 	
 	cTable[ 0x0130 ] = 0x0069;	// Turkish Capital I with dot above to Latin Small I
 
@@ -266,7 +267,7 @@ CString URLEncode(LPCTSTR pszInputT)
 {
 	// Setup two strings, one with all the hexidecimal digits, the other with all the characters to find and encode
 	static LPCTSTR pszHex	= _T("0123456789ABCDEF");	// A string with all the hexidecimal digits
-	static LPCSTR pszUnsafe	= "<>\"#%{}|\\^~[]+?&@=:,$";// A string with all the characters unsafe for a URL
+	static LPCSTR pszUnsafe	= "<>\"#%{}|\\^~[]+?&@=:,$/";// A string with all the characters unsafe for a URL
 
 	// The output string starts blank
 	CString strOutput;
@@ -427,7 +428,7 @@ CString URLDecodeANSI(const TCHAR* __restrict pszInput)
 				pszInput += 5;
 			}
 			else if ( pszInput[ 1 ] == '#' &&
-				_stscanf_s( &pszInput[ 2 ], _T("%lu;"), &nHex ) == 1 &&
+				_stscanf_s( &pszInput[ 2 ], _T("%d;"), &nHex ) == 1 &&
 				nHex > 0 )
 			{
 				*pszOutput++ = (CHAR)nHex;
@@ -516,7 +517,7 @@ CString URLDecodeUnicode(const TCHAR* __restrict pszInput)
 				pszInput += 5;
 			}
 			else if ( pszInput[ 1 ] == '#' &&
-				_stscanf_s( &pszInput[ 2 ], _T("%lu;"), &nHex ) == 1 &&
+				_stscanf_s( &pszInput[ 2 ], _T("%d;"), &nHex ) == 1 &&
 				nHex > 0 )
 			{
 				*pszOutput++ = (TCHAR)nHex;
@@ -640,6 +641,7 @@ bool atoin(__in_bcount(nLen) const char* pszString, __in size_t nLen, __int64& n
 	return true;
 }
 
+#ifdef __AFXCOLL_H__
 void Split(const CString& strSource, TCHAR cDelimiter, CStringArray& pAddIt, BOOL bAddFirstEmpty)
 {
 	for ( LPCTSTR start = strSource; *start; start++ )
@@ -656,6 +658,7 @@ void Split(const CString& strSource, TCHAR cDelimiter, CStringArray& pAddIt, BOO
 		start = c;
 	}
 }
+#endif // __AFXCOLL_H__
 
 BOOL StartsWith(const CString& sInput, LPCTSTR pszText, size_t nLen)
 {
@@ -663,6 +666,7 @@ BOOL StartsWith(const CString& sInput, LPCTSTR pszText, size_t nLen)
 		! _tcsnicmp( (LPCTSTR)sInput, pszText, nLen );
 }
 
+#ifdef __AFX_H__
 CString LoadFile(LPCTSTR pszPath)
 {
 	CString strXML;
@@ -732,6 +736,7 @@ CString LoadFile(LPCTSTR pszPath)
 
 	return strXML;
 }
+#endif // __AFX_H__
 
 BOOL ReplaceNoCase(CString& sInStr, LPCTSTR pszOldStr, LPCTSTR pszNewStr)
 {
@@ -770,12 +775,91 @@ fail:
 	return bModified;
 }
 
+#ifdef _WINSOCKAPI_
+
+BOOL IPv6FromString(CString sIPv6, IN6_ADDR* pAddress)
+{
+	SOCKADDR_IN6 nHost = { AF_INET6 };
+	if ( IPv6FromString( sIPv6, &nHost ) )
+	{
+		*pAddress = nHost.sin6_addr;
+		return TRUE;
+	}
+	return FALSE;
+}
+
+BOOL IPv6FromString(CString sIPv6, SOCKADDR_IN6* pAddress)
+{
+	LPWSTR psIPv6 = sIPv6.GetBuffer();
+
+	int size = sizeof(SOCKADDR_IN6);
+	BOOL bCoverted = ( WSAStringToAddress( psIPv6, AF_INET6, NULL, (struct sockaddr *) pAddress, &size ) == 0 );
+	sIPv6.ReleaseBuffer();
+	return bCoverted;
+}
+
+CString IPv4Or6ToString(IN_ADDR* pIPv4, IN6_ADDR* pIPv6)
+{
+	if ( pIPv4 && pIPv6 )
+	{
+		if ( ( pIPv4->s_addr == 0 ) && !IN6_IS_ADDR_UNSPECIFIED( pIPv6 ) )
+			return IPv6ToString( pIPv6 );
+		else
+			return CString( inet_ntoa( *pIPv4 ) );
+	}
+	else if( pIPv6 )
+		return IPv6ToString( pIPv6 );
+	else if( pIPv4 )
+		return CString( inet_ntoa( *pIPv4 ) );
+	else
+		return CString();
+}
+
+CString IPv6ToString(const IN6_ADDR* pAddress, bool bForUrl)
+{
+	// #TODO: check why this ASSERT fails
+	// ASSERT( pAddress );
+	SOCKADDR_IN6 pHost = { AF_INET6 };
+	pHost.sin6_addr = (*pAddress);
+	if ( bForUrl )
+	{
+		pHost.sin6_port = htons( 1 );
+		CString IPv6 = HostToString( &pHost );
+		return IPv6.Left( IPv6.GetLength() - 2 );
+	}
+	return HostToString( &pHost );
+}
+
+CString HostToString(const SOCKADDR* pHost)
+{
+	if ( pHost->sa_family == AF_INET )
+		return HostToString( (SOCKADDR_IN*) pHost );
+	else if( pHost->sa_family == AF_INET6 )
+		return HostToString( (SOCKADDR_IN6*) pHost );
+	else
+		return CString();
+}
+
 CString HostToString(const SOCKADDR_IN* pHost)
 {
 	CString sHost;
 	sHost.Format( _T("%s:%hu"), (LPCTSTR)CString( inet_ntoa( pHost->sin_addr ) ), ntohs( pHost->sin_port ) );
 	return sHost;
 }
+
+CString HostToString(const SOCKADDR_IN6* pHost)
+{
+	CString sIPv6;
+
+	LPWSTR pBuffer = sIPv6.GetBuffer( IP6_ADDRESS_STRING_LENGTH + 1);
+	unsigned long nBuffer = ( IP6_ADDRESS_STRING_LENGTH + 1 ) * sizeof(WCHAR) ;
+	
+	WSAAddressToString( (struct sockaddr *) pHost, sizeof( SOCKADDR_IN6 ), NULL, pBuffer, &nBuffer );
+
+	sIPv6.ReleaseBuffer();
+	return sIPv6;
+}
+#endif // _WINSOCKAPI_
 
 CString MakeKeywords(const CString& strPhrase, bool bExpression)
 {
@@ -829,7 +913,6 @@ CString MakeKeywords(const CString& strPhrase, bool bExpression)
 			if ( nPos > nPrevWord )
 			{
 				int len = str.GetLength();
-				ASSERT( len );
 				TCHAR last1 = str.GetAt( len - 1 );
 				TCHAR last2 = ( len > 1 ) ? str.GetAt( len - 2 ) : _T('\0');
 				TCHAR last3 = ( len > 2 ) ? str.GetAt( len - 3 ) : _T('\0');
@@ -848,10 +931,8 @@ CString MakeKeywords(const CString& strPhrase, bool bExpression)
 						( ! bNegative || ! ( boundary[ 0 ] & ( sHiragana | sKatakana | sKanji ) ) ) )
 						str += _T(' ');
 				}
-				ASSERT( strPhrase.GetLength() > nPos - 1 );
 				if ( strPhrase.GetAt( nPos - 1 ) == _T('-') && nPos > 1 )
 				{
-					ASSERT( strPhrase.GetLength() > nPos - 2 );
 					if ( *pszPtr != _T(' ') && strPhrase.GetAt( nPos - 2 ) != _T(' ') )
 					{
 						nPrevWord += nDistance + 1;
@@ -879,7 +960,6 @@ CString MakeKeywords(const CString& strPhrase, bool bExpression)
 	}
 
 	int len = str.GetLength();
-	ASSERT( len );
 	TCHAR last1 = str.GetAt( len - 1 );
 	TCHAR last2 = ( len > 1 ) ? str.GetAt( len - 2 ) : _T('\0');
 	if ( boundary[ 0 ] && boundary[ 1 ] &&
@@ -996,53 +1076,93 @@ CString Escape(const CString& strValue)
 	bool bChanged = false;
 
 	CString strXML;
-	LPTSTR pszXML = strXML.GetBuffer( strValue.GetLength() * 8  + 1 );
+	int nXMLLength = strValue.GetLength() * 8 + 1;
+	LPTSTR pszXML = strXML.GetBuffer( nXMLLength );
 
-	for ( LPCTSTR pszValue = strValue ; *pszValue ; ++pszValue )
+	for ( LPCTSTR pszValue = strValue ; nXMLLength > 1 && *pszValue ; ++pszValue )
 	{
 		switch ( *pszValue )
 		{
 		case _T('&'):
-			_tcscpy( pszXML, _T("&amp;") );
+			_tcscpy_s( pszXML, nXMLLength, _T("&amp;") );
 			pszXML += 5;
+			nXMLLength -= 5;
 			bChanged = true;
 			break;
 		case _T('<'):
-			_tcscpy( pszXML, _T("&lt;") );
+			_tcscpy_s( pszXML, nXMLLength, _T( "&lt;" ) );
 			pszXML += 4;
+			nXMLLength -= 4;
 			bChanged = true;
 			break;
 		case _T('>'):
-			_tcscpy( pszXML, _T("&gt;") );
+			_tcscpy_s( pszXML, nXMLLength, _T( "&gt;" ) );
 			pszXML += 4;
+			nXMLLength -= 4;
 			bChanged = true;
 			break;
 		case _T('\"'):
-			_tcscpy( pszXML, _T("&quot;") );
+			_tcscpy_s( pszXML, nXMLLength, _T("&quot;") );
 			pszXML += 6;
+			nXMLLength -= 6;
 			bChanged = true;
 			break;
 		case _T('\''):
-			_tcscpy( pszXML, _T("&apos;") );
+			_tcscpy_s( pszXML, nXMLLength, _T("&apos;") );
 			pszXML += 6;
+			nXMLLength -= 6;
 			bChanged = true;
 			break;
 		default:
 			if ( *pszValue < 32 || *pszValue > 127 )
 			{
-				pszXML += _stprintf_s( pszXML, 9, _T("&#%lu;"), *pszValue );
+				unsigned long nCode = *pszValue;
+
+				if ( nCode >= 0xD800 && nCode <= 0xDFFF ) // Surrogate Pairs
+				{
+					if ( nCode <= 0xDBFF )
+					{
+						unsigned long nPair = *( pszValue + 1 );
+						
+						if ( nPair >= 0xDC00 && nPair <= 0xDFFF )
+						{
+							nCode = (nCode & 0x3FF) << 10;
+							nCode |= nPair & 0x3FF;
+							nCode += 0x10000;
+							++pszValue;
+						}
+						else
+							nCode = 0xFFFD; // Replacement character
+					}
+					else
+						nCode = 0xFFFD;
+				}
+
+				int n = _stprintf_s( pszXML, nXMLLength, _T("&#%u;"), nCode );
+				pszXML += n;
+				nXMLLength -= n;
 				bChanged = true;
 			}
 			else
+			{
 				*pszXML++ = *pszValue;
+				nXMLLength--;
+			}
 		}
 	}
 
 	*pszXML = 0;
 
-	strXML.ReleaseBuffer();
-
-	return bChanged ? strXML : strValue;
+	if ( bChanged )
+	{
+		strXML.ReleaseBuffer();
+		return strXML;
+	}
+	else
+	{
+		strXML.ReleaseBufferSetLength( 0 );
+		return strValue;
+	}
 }
 
 CString Unescape(const TCHAR* __restrict pszXML, int nLength)
@@ -1061,11 +1181,11 @@ CString Unescape(const TCHAR* __restrict pszXML, int nLength)
 
 	while ( pszXML < pszNull && *pszXML )
 	{
-		if ( IsSpace( *pszXML ) && *pszXML != 0xa0 )	// Keep non-breaking space
+		if ( IsSpaceW( *pszXML ) && *pszXML != 0xa0 )	// Keep non-breaking space
 		{
 			if ( pszValue != pszOut ) *pszOut++ = ' ';
 			pszXML++;
-			while ( *pszXML && IsSpace( *pszXML ) && *pszXML != 0xa0 ) pszXML++;
+			while ( *pszXML && IsSpaceW( *pszXML ) && *pszXML != 0xa0 ) pszXML++;
 			if ( pszXML >= pszNull || ! *pszXML ) break;
 		}
 
@@ -1110,7 +1230,7 @@ CString Unescape(const TCHAR* __restrict pszXML, int nLength)
 				pszXML++;
 				if ( pszXML >= pszNull || ! *pszXML || ! _istdigit( *pszXML ) ) break;
 
-				if ( _stscanf_s( pszXML, _T("%lu;"), &nChar ) == 1 )
+				if ( _stscanf_s( pszXML, _T("%d;"), &nChar ) == 1 )
 				{
 					*pszOut++ = (TCHAR)nChar;
 					while ( *pszXML && *pszXML != ';' ) pszXML++;
@@ -1129,8 +1249,6 @@ CString Unescape(const TCHAR* __restrict pszXML, int nLength)
 		}
 	}
 
-	ASSERT( pszNull == pszXML );
-	ASSERT( pszOut - pszValue <= nLength );
 	strValue.ReleaseBuffer( (int)( pszOut - pszValue ) );
 
 	return strValue;

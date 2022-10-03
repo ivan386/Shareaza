@@ -59,7 +59,6 @@
 #define IDD_FOLDER_SCAN                 160
 #define IDI_BROWSE                      160
 #define IDD_DOWNLOAD                    162
-#define IDD_BITZI_DOWNLOAD              163
 #define IDD_SECURE_RULE                 165
 #define IDD_FILE_COPY                   167
 #define IDD_URL_ACTION                  168
@@ -203,6 +202,8 @@
 #define IDI_USER                        347
 #define IDI_USER_ME                     348
 #define IDD_DEBUG_HEX                   350
+#define IDR_XSL_DCFileListStyle         351
+#define IDR_XSL_ShareazaFileListStyle   352
 #define IDR_CHANSFRAME                  991
 #define IDD_DOWNLOAD_ACTIONS            993
 #define IDR_USERSFRAME                  995
@@ -820,7 +821,12 @@
 #define IDC_TORRENT_TRACKERS_REN        1623
 #define IDC_FONT                        1624
 #define IDC_BOOL                        1625
+#define IDC_BITRATE                     1626
 #define IDC_EDIT_HEX                    1626
+#define IDC_QUICKFILTER                 1627
+#define IDC_QUICKFILTER_ICON            1628
+#define IDC_FILTER_PARTIAL              1629
+#define IDC_FILTER_COMMETS              1630
 #define IDS_FILTER_DELETE_CONFIRM       7000
 #define IDS_SCHEMAS                     7001
 #define IDS_MULTIPLE_VALUES             7002
@@ -982,6 +988,7 @@
 #define IDR_XML_DEFAULT                 12009
 #define IDR_XML_DEFINITIONS             12010
 #define IDR_HTML_DISABLED               12011
+#define IDS_SECURITY_BANNED_USERAGENT   12999
 #define IDS_SECURITY_REMOVE_CONFIRM     13000
 #define IDS_FOLDER_TIP                  13001
 #define IDS_NETWORK_UPNP_FAILED         16063
@@ -996,10 +1003,10 @@
 #define IDS_NETWORK_LISTENING_UDP       16072
 #define IDS_NETWORK_RESOLVING           16073
 #define IDS_NETWORK_RESOLVE_FAIL        16074
-#define IDS_NETWORK_SECURITY_DENIED     16075
-#define IDS_NETWORK_SECURITY_OUTGOING   16076
-#define IDS_NETWORK_SECURITY_ALREADY_BLOCKED 16077
-#define IDS_NETWORK_SECURITY_BLOCKED    16078
+#define IDS_SECURITY_DENIED             16075
+#define IDS_SECURITY_OUTGOING           16076
+#define IDS_SECURITY_ALREADY_BLOCKED    16077
+#define IDS_SECURITY_BLOCKED            16078
 #define IDS_NETWORK_DISCONNECT_CONFIRM  16079
 #define IDS_NETWORK_UNLIMIT             16080
 #define IDS_NETWORK_ALWAYS              16080
@@ -1182,8 +1189,6 @@
 #define IDS_LIBRARY_CONFIRM_EXECUTE     16384
 #define IDS_LIBRARY_METADATA_MANY       16385
 #define IDS_LIBRARY_METADATA_EDIT       16386
-#define IDS_LIBRARY_BITZI_HASHED        16387
-#define IDS_LIBRARY_BITZI_MESSAGE       16388
 #define IDS_LIBRARY_DELETE              16389
 #define IDS_LIBRARY_ENQUEUE             16390
 #define IDS_NEIGHBOURS_NOT_CONNECTED    16391
@@ -1257,10 +1262,6 @@
 #define IDS_URL_URL                     16778
 #define IDS_URL_TYPE                    16779
 #define IDS_URL_UNSPECIFIED             16780
-#define IDS_BITZI_REQUESTING            16781
-#define IDS_BITZI_SUCCESS               16782
-#define IDS_BITZI_FINISHED              16783
-#define IDS_BITZI_CLOSE                 16784
 #define IDS_MEDIAVIS_NOVIS              16785
 #define IDS_WIZARD_NEED_SPEED           16800
 #define IDS_WIZARD_SHARE_CONFIRM        16802
@@ -1561,6 +1562,10 @@
 #define IDS_SCHEDULER_TASK_DONE         20265
 #define IDS_SCHEDULER_TASK_WAITING      20266
 #define IDS_SCHEDULER_NOTASK            20267
+#define IDS_SELECT_FOLDER_DOWNLOAD      20268
+#define IDS_SELECT_FOLDER_INCOMPLETE    20269
+#define IDS_SELECT_FOLDER_TORRENTS      20270
+#define IDS_SELECT_FOLDER_COLLECTIONS   20271
 #define ID_HELP_ABOUT                   32772
 #define ID_HELP_VERSION_CHECK           32773
 #define ID_CHECKMARK                    32774
@@ -1568,6 +1573,8 @@
 #define ID_NETWORK_CONNECT              32777
 #define ID_NETWORK_DISCONNECT           32778
 #define ID_TOOLS_SETTINGS               32779
+#define ID_PATH_EXPLORE                 32780
+#define ID_PATH_COPY                    32781
 #define ID_VIEW_SYSTEM                  32782
 #define ID_VIEW_NEIGHBOURS              32783
 #define ID_VIEW_TRAFFIC                 32784
@@ -1664,8 +1671,6 @@
 #define ID_SEARCH_STOP                  32889
 #define ID_TOOLS_DOWNLOAD               32890
 #define ID_DOWNLOADS_URL                32891
-#define ID_LIBRARY_BITZI_WEB            32892
-#define ID_LIBRARY_BITZI_DOWNLOAD       32893
 #define ID_LIBRARY_REFRESH_METADATA     32894
 #define ID_VIEW_SECURITY                32895
 #define ID_SECURITY_EDIT                32896
@@ -1949,9 +1954,9 @@
 #ifdef APSTUDIO_INVOKED
 #ifndef APSTUDIO_READONLY_SYMBOLS
 #define _APS_3D_CONTROLS                     1
-#define _APS_NEXT_RESOURCE_VALUE        351
+#define _APS_NEXT_RESOURCE_VALUE        353
 #define _APS_NEXT_COMMAND_VALUE         33329
-#define _APS_NEXT_CONTROL_VALUE         1627
+#define _APS_NEXT_CONTROL_VALUE         1631
 #define _APS_NEXT_SYMED_VALUE           104
 #endif
 #endif

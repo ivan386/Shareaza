@@ -1,7 +1,7 @@
 //
 // DlgUpgrade.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2007.
+// Copyright (c) Shareaza Development Team, 2002-2014.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -24,9 +24,11 @@
 #include "Settings.h"
 #include "VersionChecker.h"
 #include "Network.h"
+#include "Download.h"
 #include "Downloads.h"
 #include "ShareazaURL.h"
 #include "DlgUpgrade.h"
+#include "Transfers.h"
 #include "WndMain.h"
 #include "WndDownloads.h"
 
@@ -37,29 +39,24 @@ static char THIS_FILE[] = __FILE__;
 #endif
 
 BEGIN_MESSAGE_MAP(CUpgradeDlg, CSkinDialog)
-	//{{AFX_MSG_MAP(CUpgradeDlg)
-	//}}AFX_MSG_MAP
 END_MESSAGE_MAP()
 
 
 /////////////////////////////////////////////////////////////////////////////
 // CUpgradeDlg dialog
 
-CUpgradeDlg::CUpgradeDlg(CWnd* pParent) : CSkinDialog(CUpgradeDlg::IDD, pParent)
+CUpgradeDlg::CUpgradeDlg(CWnd* pParent)
+	: CSkinDialog	( CUpgradeDlg::IDD, pParent )
+	, m_bCheck		( FALSE )
 {
-	//{{AFX_DATA_INIT(CUpgradeDlg)
-	m_bCheck = FALSE;
-	m_sMessage = _T("");
-	//}}AFX_DATA_INIT
 }
 
 void CUpgradeDlg::DoDataExchange(CDataExchange* pDX)
 {
 	CSkinDialog::DoDataExchange(pDX);
-	//{{AFX_DATA_MAP(CUpgradeDlg)
+
 	DDX_Check(pDX, IDC_DONT_CHECK, m_bCheck);
 	DDX_Text(pDX, IDC_MESSAGE, m_sMessage);
-	//}}AFX_DATA_MAP
 }
 
 /////////////////////////////////////////////////////////////////////////////
@@ -94,19 +91,25 @@ void CUpgradeDlg::OnOK()
 	if ( Settings.VersionCheck.UpgradeSize.GetLength() )
 	{
 		QWORD nSize;
-		if ( ( _stscanf( Settings.VersionCheck.UpgradeSize.GetString(), _T("%I64i"), &nSize ) == 1 ) && ( nSize > 0 ) )
+		if ( _stscanf( Settings.VersionCheck.UpgradeSize.GetString(), _T("%I64u"), &nSize ) == 1 && nSize > 0 )
 		{
-			pURL.m_bSize = TRUE;
 			pURL.m_nSize = nSize;
 		}
 	}
 
-	Downloads.Add( pURL );
+	if ( ( GetAsyncKeyState( VK_SHIFT ) & 0x8000 ) == 0 && ! Network.IsWellConnected() )
+		Network.Connect( TRUE );
 
-	if ( ! Network.IsWellConnected() ) Network.Connect( TRUE );
+	if ( CMainWnd* pMainWnd = (CMainWnd*)AfxGetMainWnd() )
+		pMainWnd->m_pWindows.Open( RUNTIME_CLASS(CDownloadsWnd) );
 
-	CMainWnd* pMainWnd = (CMainWnd*)AfxGetMainWnd();
-	pMainWnd->m_pWindows.Open( RUNTIME_CLASS(CDownloadsWnd) );
+	CSingleLock pLock( &Transfers.m_pSection, TRUE );
+
+	if ( CDownload* pDownload = Downloads.Add( pURL ) )
+	{
+		if ( Settings.Downloads.ShowMonitorURLs )
+			pDownload->ShowMonitor();
+	}
 
 	CSkinDialog::OnOK();
 }

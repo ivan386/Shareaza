@@ -23,7 +23,6 @@
 #include "Shareaza.h"
 #include "Settings.h"
 #include "GProfile.h"
-#include "ImageServices.h"
 #include "ImageFile.h"
 #include "PageProfileAvatar.h"
 #include "CoolInterface.h"

@@ -1,7 +1,7 @@
 //
 // DownloadTransferHTTP.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2013.
+// Copyright (c) Shareaza Development Team, 2002-2017.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -23,6 +23,7 @@
 #include "Shareaza.h"
 #include "Settings.h"
 #include "Download.h"
+#include "DownloadGroups.h"
 #include "Downloads.h"
 #include "DownloadSource.h"
 #include "DownloadTransfer.h"
@@ -55,7 +56,6 @@ CDownloadTransferHTTP::CDownloadTransferHTTP(CDownloadSource* pSource) :
 	m_bBusyFault( FALSE ),
 	m_bRangeFault( FALSE ),
 	m_bKeepAlive( FALSE ),
-	m_bHashMatch( FALSE ),
 	m_bTigerFetch( FALSE ),
 	m_bTigerIgnore( FALSE ),
 	m_bMetaFetch( FALSE ),
@@ -90,7 +90,12 @@ BOOL CDownloadTransferHTTP::Initiate()
 		(LPCTSTR)CString( inet_ntoa( m_pSource->m_pAddress ) ), m_pSource->m_nPort,
 		(LPCTSTR)m_pDownload->GetDisplayName() );
 	
-	if ( ConnectTo( &m_pSource->m_pAddress, m_pSource->m_nPort ) )
+	if ( m_pDownload->IsCompleted() )
+	{
+		m_pDownload->RemoveSource( m_pSource, FALSE );
+		return FALSE;
+	}
+	else if ( m_pSource->m_pAddress.s_addr ? ConnectTo( &m_pSource->m_pAddress, m_pSource->m_nPort ) : ConnectToIPv6( &m_pSource->m_pAddressIPv6, m_pSource->m_nPort ) )
 	{
 		SetState( dtsConnecting );
 		
@@ -144,8 +149,52 @@ void CDownloadTransferHTTP::Close( TRISTATE bKeepSource, DWORD nRetryAfter )
 			m_pSource->AddFragment( m_nOffset, m_nPosition );
 		}
 	}
+
+	if ( Settings.Connection.Reuse && m_bKeepAlive && ! ( m_bBusyFault || m_bBadResponse ) )
+		GiveConnectionToNext();
 	
 	CDownloadTransfer::Close( bKeepSource, nRetryAfter );
+}
+
+void CDownloadTransferHTTP::GiveConnectionToNext()
+{
+	if ( m_hSocket == INVALID_SOCKET )
+		return;
+
+	ASSUME_LOCK( Transfers.m_pSection );
+
+	for ( POSITION pos = Downloads.GetIterator() ; pos != NULL ; )
+	{
+		CDownload* pDownload = Downloads.GetNext( pos );
+
+		if ( pDownload == m_pDownload )
+			continue;
+
+		if ( pDownload->IsComplete() || pDownload->IsCompleted() || pDownload->IsMoving() )
+			continue;
+		
+		for ( POSITION posSource = pDownload->GetIterator(); posSource ; )
+		{
+			CDownloadSource* pSource = pDownload->GetNext( posSource );
+
+			if ( pSource->m_nBusyCount == 0 
+				 && pSource->IsHTTPSource()
+				 && !pSource->IsConnected()
+				 && pSource->Equals(m_pSource) )
+			{
+				if ( pSource->GetTransfer() )
+					continue;
+
+				CDownloadTransfer * pTransfer = pSource->CreateTransfer();
+
+				if ( pTransfer )
+				{
+					pTransfer->AttachTo(this);
+					return;
+				}
+			}
+		}
+	}
 }
 
 //////////////////////////////////////////////////////////////////////
@@ -220,45 +269,54 @@ BOOL CDownloadTransferHTTP::StartNextFragment()
 	{
 		return SendRequest();
 	}
-	else if ( m_pDownload->NeedTigerTree() && m_sTigerTree.GetLength() )
+
+	if ( m_pDownload->NeedTigerTree() && ( ! m_sTigerTree.IsEmpty() || _tcsistr( m_pSource->m_sURL, _T("?urn:") ) != NULL ) )
 	{
-		theApp.Message( MSG_INFO, IDS_DOWNLOAD_TIGER_REQUEST,
-			(LPCTSTR)m_pDownload->GetDisplayName(), (LPCTSTR)m_sAddress );
-		
-		m_bTigerFetch	= TRUE;
-		m_bTigerIgnore	= TRUE;
-		
-		return SendRequest();
+		if ( m_sTigerTree.IsEmpty() && m_pDownload->m_oTiger && Settings.Downloads.VerifyTiger && ! m_bTigerIgnore )
+		{
+			// Converting urn containing tiger tree root to
+			// "/gnutella/thex/v1?urn:tree:tiger/:{TIGER_ROOT}&depth={TIGER_HEIGHT}&ed2k={0/1}"
+			// in case if "X-Thex-URI" and "X-TigerTree-Path" headers will be absent or it is a "GIV" (push) connection
+			m_sTigerTree.Format( L"/gnutella/thex/v1?%s&depth=%u&ed2k=%d", (LPCTSTR)m_pDownload->m_oTiger.toUrn(),
+				Settings.Library.TigerHeight, ( Settings.Downloads.VerifyED2K ? 1 : 0 ) );
+		}
+
+		if ( ! m_sTigerTree.IsEmpty() )
+		{
+			theApp.Message( MSG_INFO,IDS_DOWNLOAD_TIGER_REQUEST, (LPCTSTR)m_pDownload->GetDisplayName(),(LPCTSTR)m_sAddress );
+
+			m_bTigerFetch = TRUE;
+			m_bTigerIgnore = TRUE;
+
+			return SendRequest();
+		}
 	}
-	else if ( m_pSource && ! m_pSource->m_bMetaIgnore && ! m_sMetadata.IsEmpty() )
+
+	if ( m_pSource && ! m_pSource->m_bMetaIgnore && ! m_sMetadata.IsEmpty() )
 	{
-		theApp.Message( MSG_INFO, IDS_DOWNLOAD_METADATA_REQUEST,
-			(LPCTSTR)m_pDownload->GetDisplayName(), (LPCTSTR)m_sAddress );
+		theApp.Message( MSG_INFO, IDS_DOWNLOAD_METADATA_REQUEST, (LPCTSTR)m_pDownload->GetDisplayName(), (LPCTSTR)m_sAddress );
 
 		m_bMetaFetch = TRUE;
 		m_pSource->m_bMetaIgnore = TRUE;
 
 		return SendRequest();
 	}
-	else if ( m_pDownload->GetFragment( this ) )
+
+	if ( m_pDownload->GetFragment( this ) )
 	{
-		ChunkifyRequest( &m_nOffset, &m_nLength, Settings.Downloads.ChunkSize, TRUE );
+		m_bWantBackwards = ChunkifyRequest( &m_nOffset, &m_nLength, Settings.Downloads.ChunkSize, TRUE );
 		
-		theApp.Message( MSG_INFO, IDS_DOWNLOAD_FRAGMENT_REQUEST,
-			m_nOffset, m_nOffset + m_nLength - 1,
-			(LPCTSTR)m_pDownload->GetDisplayName(), (LPCTSTR)m_sAddress );
+		theApp.Message( MSG_INFO, IDS_DOWNLOAD_FRAGMENT_REQUEST, m_nOffset, m_nOffset + m_nLength - 1, (LPCTSTR)m_pDownload->GetDisplayName(), (LPCTSTR)m_sAddress );
 		
 		return SendRequest();
 	}
-	else
-	{
-		if ( m_pSource != NULL ) m_pSource->SetAvailableRanges( NULL );
+
+	if ( m_pSource != NULL ) m_pSource->SetAvailableRanges( NULL );
 		
-		theApp.Message( MSG_INFO, IDS_DOWNLOAD_FRAGMENT_END, (LPCTSTR)m_sAddress );
-		Close( TRI_TRUE );
+	theApp.Message( MSG_INFO, IDS_DOWNLOAD_FRAGMENT_END, (LPCTSTR)m_sAddress );
+	Close( TRI_TRUE );
 		
-		return FALSE;
-	}
+	return FALSE;
 }
 
 //////////////////////////////////////////////////////////////////////
@@ -342,6 +400,7 @@ BOOL CDownloadTransferHTTP::SendRequest()
 	}
 	else
 	{
+		m_nOffset = 0;
 		Write( _P("Range: bytes=0-\r\n") );
 	}
 	
@@ -388,71 +447,80 @@ BOOL CDownloadTransferHTTP::SendRequest()
 	
 	if ( ! m_bTigerFetch && ! m_bMetaFetch )
 	{
-		if ( m_pDownload->m_oSHA1 || m_pDownload->m_oTiger )
-		{
-			Write( _P("X-Content-URN: ") );
-			Write( m_pDownload->GetBitprint() );
-			Write( _P("\r\n") );
-		}
-		if ( m_pDownload->m_oED2K )
-		{
-			Write( _P("X-Content-URN: ") );
-			Write( m_pDownload->m_oED2K.toUrn() );
-			Write( _P("\r\n") );
-		}
-		if ( m_pDownload->m_oBTH )
-		{
-			Write( _P("X-Content-URN: ") );
-			Write( m_pDownload->m_oBTH.toUrn() );
-			Write( _P("\r\n") );
-		}
-		if ( m_pDownload->m_oMD5 )
-		{
-			Write( _P("X-Content-URN: ") );
-			Write( m_pDownload->m_oMD5.toUrn() );
-			Write( _P("\r\n") );
-		}
-		if ( m_pSource->m_bSHA1 && Settings.Library.SourceMesh )
-		{
-			strLine = m_pDownload->GetSourceURLs( &m_pSourcesSent, 15,
-				( m_pSource->m_nGnutella < 2 ) ? PROTOCOL_G1 : PROTOCOL_HTTP, m_pSource );
-			if ( strLine.GetLength() )
+		m_pSource->m_bPartialSame = pURL.m_oSHA1 && m_pDownload->m_oSHA1 && pURL.m_oSHA1 != m_pDownload->m_oSHA1;
+		
+		if ( ! m_pSource->m_bPartialSame ){
+			if ( m_pDownload->m_oSHA1 || m_pDownload->m_oTiger )
 			{
-				if ( m_pSource->m_nGnutella < 2 )
-					Write( _P("X-Alt: ") );
-				else
-					Write( _P("Alt-Location: ") );
-				Write( strLine );
+				Write( _P("X-Content-URN: ") );
+				Write( m_pDownload->GetBitprint() );
 				Write( _P("\r\n") );
 			}
-			
-			if ( m_pDownload->IsShared() && m_pDownload->IsStarted() && Network.IsStable() )
+			if ( m_pDownload->m_oED2K )
 			{
-				if ( m_pSource->m_nGnutella < 2 )
-				{
-					strLine.Format( _T("%s:%i"),
-						(LPCTSTR)CString( inet_ntoa( Network.m_pHost.sin_addr ) ),
-						htons( Network.m_pHost.sin_port ) );
-					Write( _P("X-Alt: ") );
-				}
-				else
-				{
-					strLine = m_pDownload->GetURL( Network.m_pHost.sin_addr,
-						htons( Network.m_pHost.sin_port ) ) + _T(" ") +
-						TimeToString( time( NULL ) - 180 );
-					Write( _P("Alt-Location: ") );
-				}
-				Write( strLine );
+				Write( _P("X-Content-URN: ") );
+				Write( m_pDownload->m_oED2K.toUrn() );
 				Write( _P("\r\n") );
-				
-				if ( m_pSource->m_nGnutella < 2 )
+			}
+			if ( m_pDownload->m_oBTH )
+			{
+				Write( _P("X-Content-URN: ") );
+				Write( m_pDownload->m_oBTH.toUrn() );
+				Write( _P("\r\n") );
+			}
+			if ( m_pDownload->m_oMD5 )
+			{
+				Write( _P("X-Content-URN: ") );
+				Write( m_pDownload->m_oMD5.toUrn() );
+				Write( _P("\r\n") );
+			}
+			if ( m_pSource->m_bSHA1 && Settings.Library.SourceMesh )
+			{
+				strLine = m_pDownload->GetSourceURLs( &m_pSourcesSent, 15,
+					( m_pSource->m_nGnutella < 2 ) ? PROTOCOL_G1 : PROTOCOL_HTTP, m_pSource );
+				if ( strLine.GetLength() )
 				{
-					strLine = m_pDownload->GetTopFailedSources( 15, PROTOCOL_G1 );
-					if ( strLine.GetLength() )
+					if ( m_pSource->m_nGnutella < 2 )
+						Write( _P("X-Alt: ") );
+					else
+						Write( _P("Alt-Location: ") );
+					Write( strLine );
+					Write( _P("\r\n") );
+				}
+
+				if ( m_pDownload->IsShared() && m_pDownload->IsStarted() && Network.IsStable() )
+				{
+					IN_ADDR MyAddress = Network.GetMyAddressFor( &m_pHost.sin_addr );
+					
+					if ( MyAddress.S_un.S_addr )
 					{
-						Write( _P("X-NAlt: ") );
+						if ( m_pSource->m_nGnutella < 2 )
+						{
+							strLine.Format( _T("%s:%u"),
+								(LPCTSTR)CString( inet_ntoa( MyAddress ) ),
+								htons( Network.m_pHost.sin_port ) );
+							Write( _P("X-Alt: ") );
+						}
+						else
+						{
+							strLine = m_pDownload->GetURL( MyAddress,
+								htons( Network.m_pHost.sin_port ) ) + _T(" ") +
+								TimeToString( time( NULL ) - 180 );
+							Write( _P("Alt-Location: ") );
+						}
 						Write( strLine );
 						Write( _P("\r\n") );
+					}
+
+					if ( m_pSource->m_nGnutella < 2 )
+					{
+						strLine = m_pDownload->GetTopFailedSources( 15, PROTOCOL_G1 );
+						if ( strLine.GetLength() )
+						{
+							Write( _P("X-NAlt: ") );
+							Write( strLine );
+							Write( _P("\r\n") );
+						}
 					}
 				}
 			}
@@ -468,7 +536,6 @@ BOOL CDownloadTransferHTTP::SendRequest()
 	m_bBusyFault		= FALSE;
 	m_bRangeFault		= FALSE;
 	m_bKeepAlive		= FALSE;
-	m_bHashMatch		= FALSE;
 	m_bGotRange			= FALSE;
 	m_bGotRanges		= FALSE;
 	m_bQueueFlag		= FALSE;
@@ -481,7 +548,6 @@ BOOL CDownloadTransferHTTP::SendRequest()
 	m_ChunkState		= Header;
 	m_nChunkLength		= SIZE_UNKNOWN;
 
-	m_sTigerTree.Empty();
 	m_nRequests++;
 	
 	m_pSource->SetLastSeen();
@@ -623,7 +689,7 @@ BOOL CDownloadTransferHTTP::ReadResponseLine()
 	{
 		strCode		= strLine.Mid( 5, 3 );
 		strMessage	= strLine.Mid( 8 );
-		theApp.Message( MSG_DEBUG, _T("HTTP with unknown version: %s"), strLine );
+		theApp.Message( MSG_DEBUG, _T("HTTP with unknown version: %s"), (LPCTSTR)strLine );
 		m_bKeepAlive = FALSE;
 	}
 	else
@@ -835,7 +901,7 @@ BOOL CDownloadTransferHTTP::OnHeaderLine(CString& strHeader, CString& strValue)
 		}
 		else
 		{
-			theApp.Message( MSG_DEBUG, _T( "Unknown transfer encoding: %s" ), strValue );
+			theApp.Message( MSG_DEBUG, _T( "Unknown transfer encoding: %s" ), (LPCTSTR)strValue );
 			Close( TRI_FALSE );
 			return FALSE;
 		}
@@ -850,7 +916,7 @@ BOOL CDownloadTransferHTTP::OnHeaderLine(CString& strHeader, CString& strValue)
 		Hashes::BtHash oBTH;
 		Hashes::Md5Hash oMD5;
 		CString strURNs = strValue + ',';
-		for ( int nPos = strURNs.Find( ',' ); nPos >= 0; nPos = strURNs.Find( ',' ) )
+		for ( int nPos = strURNs.Find( ',' ); nPos >= 0 && ! m_pSource->m_bPartialSame; nPos = strURNs.Find( ',' ) )
 		{
 			strValue = strURNs.Left( nPos ).TrimLeft();
 			strURNs = strURNs.Mid( nPos + 1 );
@@ -861,24 +927,9 @@ BOOL CDownloadTransferHTTP::OnHeaderLine(CString& strHeader, CString& strValue)
 				&& ( !oMD5  .fromUrn( strValue ) || m_pSource->CheckHash( oMD5   ) )
 				&& ( !oBTH  .fromUrn( strValue ) || ( m_pSource->CheckHash( oBTH   ), TRUE ) ) )
 			{
-				if ( oTiger && Settings.Downloads.VerifyTiger && !m_bTigerIgnore && m_sTigerTree.IsEmpty()
-					&& (   _tcsistr( m_sUserAgent, L"shareaza 2.1.4" ) != NULL
-						|| _tcsistr( m_sUserAgent, L"shareaza 2.2.0" ) != NULL ) )
-				{
-					// Converting urn containing tiger tree root to
-					// "/gnutella/thex/v1?urn:tree:tiger/:{TIGER_ROOT}&depth={TIGER_HEIGHT}&ed2k={0/1}"
-					// in case if "X-Thex-URI" and "X-TigerTree-Path" headers
-					// will be absent (perfect workaround for "silent" Sareaza 2.2.0.0)
-					m_sTigerTree.Format( L"/gnutella/thex/v1?%s&depth=%u&ed2k=%d",
-						(LPCTSTR)oTiger.toUrn(),
-						Settings.Library.TigerHeight,
-						( Settings.Downloads.VerifyED2K ? 1 : 0 ) );
-				}
-				m_bHashMatch = m_bHashMatch || oSHA1 || oTiger || oED2K || oBTH || oMD5;
 				continue;
 			}
-			theApp.Message( MSG_ERROR, IDS_DOWNLOAD_WRONG_HASH, (LPCTSTR)m_sAddress,
-				(LPCTSTR)m_pDownload->GetDisplayName() );
+			theApp.Message( MSG_ERROR, IDS_DOWNLOAD_WRONG_HASH, (LPCTSTR)m_sAddress, (LPCTSTR)m_pDownload->GetDisplayName() );
 			Close( TRI_FALSE );
 			return FALSE;
 		}
@@ -891,7 +942,7 @@ BOOL CDownloadTransferHTTP::OnHeaderLine(CString& strHeader, CString& strValue)
 	}
 	else if ( strHeader.CompareNoCase( _T("X-TigerTree-Path") ) == 0 )
 	{
-		if ( Settings.Downloads.VerifyTiger && ! m_bTigerIgnore && m_sTigerTree.IsEmpty() )
+		if ( Settings.Downloads.VerifyTiger && ! m_bTigerIgnore )
 		{
 			if ( strValue.Find( _T("tigertree/v1") ) < 0 &&
 				 strValue.Find( _T("tigertree/v2") ) < 0 )
@@ -917,7 +968,7 @@ BOOL CDownloadTransferHTTP::OnHeaderLine(CString& strHeader, CString& strValue)
 				strHeader.CompareNoCase( _T("X-Alt") ) == 0 )
 	{
 		if ( Settings.Library.SourceMesh )
-			m_pDownload->AddSourceURLs( strValue, m_bHashMatch );
+			m_pDownload->AddSourceURLs( strValue, 0, m_pSource->m_bPartialSame );
 		m_pSource->SetGnutella( 1 );
 	}
 	else if ( strHeader.CompareNoCase( _T("X-Available-Ranges") ) == 0 )
@@ -940,21 +991,21 @@ BOOL CDownloadTransferHTTP::OnHeaderLine(CString& strHeader, CString& strValue)
 		ToLower( strValue );
 		
 		int nPos = strValue.Find( _T("position=") );
-		if ( nPos >= 0 ) _stscanf( strValue.Mid( nPos + 9 ), _T("%u"), &m_nQueuePos );
+		if ( nPos >= 0 ) _stscanf( strValue.Mid( nPos + 9 ), _T("%lu"), &m_nQueuePos );
 		
 		nPos = strValue.Find( _T("length=") );
-		if ( nPos >= 0 ) _stscanf( strValue.Mid( nPos + 7 ), _T("%u"), &m_nQueueLen );
+		if ( nPos >= 0 ) _stscanf( strValue.Mid( nPos + 7 ), _T("%lu"), &m_nQueueLen );
 		
 		DWORD nLimit = 0;
 		
 		nPos = strValue.Find( _T("pollmin=") );
-		if ( nPos >= 0 && _stscanf( strValue.Mid( nPos + 8 ), _T("%u"), &nLimit ) == 1 )
+		if ( nPos >= 0 && _stscanf( strValue.Mid( nPos + 8 ), _T("%lu"), &nLimit ) == 1 )
 		{
 			m_nRetryDelay = max( m_nRetryDelay, nLimit * 1000 + 3000  );
 		}
 		
 		nPos = strValue.Find( _T("pollmax=") );
-		if ( nPos >= 0 && _stscanf( strValue.Mid( nPos + 8 ), _T("%u"), &nLimit ) == 1 )
+		if ( nPos >= 0 && _stscanf( strValue.Mid( nPos + 8 ), _T("%lu"), &nLimit ) == 1 )
 		{
 			m_nRetryDelay = min( m_nRetryDelay, nLimit * 1000 - 8000 );
 		}
@@ -980,7 +1031,7 @@ BOOL CDownloadTransferHTTP::OnHeaderLine(CString& strHeader, CString& strValue)
 	{
 		DWORD nLimit = 0;
 
-		if ( _stscanf( strValue, _T("%u"), &nLimit ) == 1 )
+		if ( _stscanf( strValue, _T("%lu"), &nLimit ) == 1 )
 		{
 			m_nRetryAfter = nLimit;
 		}
@@ -990,7 +1041,7 @@ BOOL CDownloadTransferHTTP::OnHeaderLine(CString& strHeader, CString& strValue)
 	{
 		DWORD nLimit = 0;
 		
-		if ( _stscanf( strValue, _T("%u"), &nLimit ) != 1 )
+		if ( _stscanf( strValue, _T("%lu"), &nLimit ) != 1 )
 		{
 			Downloads.SetPerHostLimit( &m_pHost.sin_addr, nLimit );
 		}
@@ -1015,6 +1066,7 @@ BOOL CDownloadTransferHTTP::OnHeaderLine(CString& strHeader, CString& strValue)
 	else if ( strHeader.CompareNoCase( _T("Location") ) == 0 )
 	{
 		m_sRedirectionURL = strValue;
+		m_pDownload->SetStableName( false );
 	}
 	else if ( strHeader.CompareNoCase( _T("X-NAlt") ) == 0 ||
 			  strHeader.CompareNoCase( _T("X-PAlt") ) == 0 ||
@@ -1025,20 +1077,18 @@ BOOL CDownloadTransferHTTP::OnHeaderLine(CString& strHeader, CString& strValue)
 	}
 	else if ( strHeader.CompareNoCase( _T("Content-Disposition") ) == 0 )
 	{
-		BOOL bIsP2P = m_pSource->m_bSHA1 || m_pSource->m_bTiger || m_pSource->m_bED2K || m_pSource->m_bMD5 || m_pSource->m_bBTH;
-
-		// Accept Content-Disposition only if the current display name is empty or if it came from Web Servers and the current display name is shorter than 13 chars (Is likely to be default.html, default.asp, etc.).
-		if ( m_pDownload->m_sName.IsEmpty() || ( ! bIsP2P && m_pDownload->m_sName.GetLength() < 13 ) )
+		if ( ! m_pDownload->HasStableName() )
 		{ 
-			int nPos = strValue.Find( _T("filename=") );
+			const int nPos = strValue.Find( _T("filename=") );
 			if ( nPos >= 0 )
 			{
 				// If exactly, it should follow RFC 2184 rules
-				CString strFilename = URLDecode( strValue.Mid( nPos + 9 ).Trim( _T("\" \t\r\n") ) );
-
-				// If the filenames contain an invalid character (because web servers or P2P clients are evil or because sometimes non-ascii chars, specially Japanese chars, are encoded as "?" (%3F) by a faulty coding)
-				if ( strFilename == SafeFilename( strFilename ) || ( m_pDownload->GetSourceCount() <= 1 && ! bIsP2P ) )
-					m_pDownload->Rename( strFilename );
+				const CString strFilename = URLDecode( strValue.Mid( nPos + 9 ).Trim( _T("\" \t\r\n") ) );
+				if ( m_pDownload->Rename( strFilename ) )
+				{
+					m_pDownload->SetStableName();
+					DownloadGroups.Link( m_pDownload );
+				}
 			}		
 		}
 	}	
@@ -1073,8 +1123,8 @@ BOOL CDownloadTransferHTTP::OnHeadersComplete()
 	}
 	else if ( m_bRedirect )
 	{
-		int nRedirectionCount = m_pSource->m_nRedirectionCount;
-		m_pDownload->AddSourceURL( m_sRedirectionURL, m_bHashMatch, NULL, nRedirectionCount + 1 );
+		CShareazaURL pURL( m_sRedirectionURL );
+		m_pDownload->AddSourceHit( pURL, TRUE, m_pSource->m_nRedirectionCount + 1 );
 		Close( TRI_FALSE );
 		return FALSE;
 	}
@@ -1395,14 +1445,14 @@ BOOL CDownloadTransferHTTP::ReadContent()
 
 		if ( m_bRecvBackwards )
 		{
-			CAutoVectorPtr< BYTE >pBuffer( new BYTE[ nLength ] );
+			CAutoVectorPtr< BYTE >pBuffer( new BYTE[ (size_t)nLength ] );
 			if ( ! pBuffer )
 			{
 				// Out of memory
 				Close( TRI_TRUE );
 				return FALSE;
 			}
-			CBuffer::ReverseBuffer( pInput->m_pBuffer, pBuffer, nLength );
+			CBuffer::ReverseBuffer( pInput->m_pBuffer, pBuffer, (size_t)nLength );
 			bSubmit = m_pDownload->SubmitData( m_nOffset + m_nLength - m_nPosition - nLength, pBuffer, nLength );
 		}
 		else
@@ -1412,7 +1462,7 @@ BOOL CDownloadTransferHTTP::ReadContent()
 		}
 
 		if ( m_bChunked )
-			pInput->Remove( nLength );
+			pInput->Remove( (size_t)nLength );
 		else
 			pInput->Clear();
 
@@ -1482,7 +1532,9 @@ BOOL CDownloadTransferHTTP::ReadTiger(bool bDropped)
 	
 	if ( m_sContentType.CompareNoCase( _T("application/tigertree-breadthfirst") ) == 0 )
 	{
-		m_pDownload->SetTigerTree( pInput->m_pBuffer, (DWORD)m_nLength );
+		if ( m_pDownload->SetTigerTree( pInput->m_pBuffer, (DWORD)m_nLength ) )
+			m_pDownload->FindZerosRangesTreeTiger();
+
 		pInput->Remove( (DWORD)m_nLength );
 	}
 	else if ( m_sContentType.CompareNoCase( _T("application/dime") ) == 0 ||
@@ -1510,7 +1562,7 @@ BOOL CDownloadTransferHTTP::ReadTiger(bool bDropped)
 						if ( CXMLElement* pxFile = pXML->GetElementByName( _T("file") ) )
 						{
 							QWORD nSize = 0;
-							_stscanf( pxFile->GetAttributeValue( _T("size") ), _T("%I64i"), &nSize );
+							_stscanf( pxFile->GetAttributeValue( _T("size") ), _T("%I64u"), &nSize );
 							bSize = ( nSize == m_pDownload->m_nSize );
 						}
 						if ( CXMLElement* pxDigest = pXML->GetElementByName( _T("digest") ) )
@@ -1536,15 +1588,16 @@ BOOL CDownloadTransferHTTP::ReadTiger(bool bDropped)
 			}
 			else if ( ( strID == strUUID || strID.IsEmpty() ) && strType.CompareNoCase( _T("http://open-content.net/spec/thex/breadthfirst") ) == 0 )
 			{
-				m_pDownload->SetTigerTree( pInput->m_pBuffer, nBody );
+				if ( m_pDownload->SetTigerTree( pInput->m_pBuffer, nBody ) )
+					m_pDownload->FindZerosRangesTreeTiger();
 			}
 			else if ( strType.CompareNoCase( _T("http://edonkey2000.com/spec/md4-hashset") ) == 0 )
 			{
-				m_pDownload->SetHashset( pInput->m_pBuffer, nBody );
+				if ( m_pDownload->SetHashset( pInput->m_pBuffer, nBody ) )
+					m_pDownload->FindZerosRangesHashset();
 			}
 			
 			pInput->Remove( ( nBody + 3 ) & ~3 );
-			if ( nFlags & 2 ) break;
 		}
 		
 		pInput->Clear();
@@ -1572,7 +1625,7 @@ BOOL CDownloadTransferHTTP::ReadFlush()
 	QWORD nRemove = min( (QWORD)pInput->m_nLength, m_nContentLength );
 	m_nContentLength -= nRemove;
 	
-	pInput->Remove( nRemove );
+	pInput->Remove( (size_t)nRemove );
 	
 	if ( m_nContentLength == 0 )
 	{

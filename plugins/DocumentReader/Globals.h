@@ -3,7 +3,7 @@
 //
 //	Created by:		Rolandas Rudomanskis
 //
-// Copyright (c) Shareaza Development Team, 2002-2008.
+// Copyright (c) Shareaza Development Team, 2002-2014.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -40,7 +40,6 @@ extern HINSTANCE           v_hModule;
 extern ULONG               v_cLocks;
 extern CRITICAL_SECTION    v_csSynch;
 extern HANDLE              v_hPrivateHeap;
-extern BOOL                v_fRunningOnNT;
 
 #define DllModuleHandle()  ((HMODULE)v_hModule)
 #define DllAddRef()  InterlockedIncrement((LPLONG)&v_cLocks)

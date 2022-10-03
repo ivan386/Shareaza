@@ -311,6 +311,138 @@ void CPacketWnd::SmartDump(const CPacket* pPacket, const SOCKADDR_IN* pAddress, 
 
 	if ( ! theApp.m_pPacketWnd )
 		return;
+	
+	for (; m_pQueue.GetCount() > Settings.Search.MonitorQueue ;)
+	{
+		CLiveItem* pItem = m_pQueue.RemoveHead();
+		delete pItem;
+	}
+
+	m_pQueue.AddTail( pItem.Detach() );
+}
+
+void CPacketWnd::SmartDump(const CPacket* pPacket, const SOCKADDR_IN6* pAddress, BOOL bUDP, BOOL bOutgoing, DWORD_PTR nNeighbourUnique)
+{
+	if ( m_bPaused || m_hWnd == NULL )
+		return;
+
+	if ( bUDP )
+	{
+		if ( ! m_bUDP )
+			return;
+	}
+	else
+	{
+		if ( ! m_bTCP )
+			return;
+	}
+
+	if ( nNeighbourUnique )
+	{
+		if ( bOutgoing )
+		{
+			if ( m_nOutputFilter && m_nOutputFilter != nNeighbourUnique )
+				return;
+		}
+		else
+		{
+			if ( m_nInputFilter && m_nInputFilter != nNeighbourUnique )
+				return;
+		}
+	}
+	else
+	{
+		if ( bOutgoing )
+		{
+			if ( m_nOutputFilter )
+				return;
+		}
+		else
+		{
+			if ( m_nInputFilter )
+				return;
+		}
+	}
+
+	switch ( pPacket->m_nProtocol )
+	{
+	case PROTOCOL_G1:
+		if ( ! m_bTypeG1[ ((CG1Packet*)pPacket)->m_nTypeIndex ] )
+			return;
+		break;
+
+	case PROTOCOL_G2:
+		for ( int nType = 0 ; nType < nTypeG2Size ; nType++ )
+		{
+			if ( ((CG2Packet*)pPacket)->IsType( m_nG2[ nType ] ) )
+			{
+				if ( ! m_bTypeG2[ nType ] )
+					return;
+				break;
+			}
+		}
+		break;
+
+	case PROTOCOL_ED2K:
+		// TODO: Filter ED2K packets
+		if ( ! m_bTypeED )
+			return;
+		break;
+
+	case PROTOCOL_BT:
+		// TODO: Filter BitTorrent packets
+		if ( ! m_bTypeBT )
+			return;
+		break;
+
+	case PROTOCOL_DC:
+		// TODO: Filter DC++ packets
+		if ( ! m_bTypeDC )
+			return;
+		break;
+
+	default:
+		;
+	}
+		
+	CAutoPtr< CLiveItem > pItem( new CLiveItem( 8, bOutgoing ) );
+	if ( ! pItem )
+		// Out of memory
+		return;
+
+	CTime pNow( CTime::GetCurrentTime() );
+	CString strNow;
+	strNow.Format( _T("%0.2i:%0.2i:%0.2i"),
+		pNow.GetHour(), pNow.GetMinute(), pNow.GetSecond() );
+	CString sAddress( HostToString( pAddress ) );
+	CString sProtocol( protocolAbbr[ pPacket->m_nProtocol ] );
+
+	pItem->Set( 0, strNow );
+	pItem->Set( 1, bUDP ? _T("(") + sAddress + _T(")") : sAddress );
+	pItem->Set( 2, sProtocol + ( bUDP ? _T(" UDP") : _T(" TCP") ) );
+	pItem->Set( 3, pPacket->GetType() );
+	pItem->Set( 5, pPacket->ToHex() );
+	pItem->Set( 6, pPacket->ToASCII() );
+
+	pItem->SetImage( 0, PROTOCOL_LAST + ( bOutgoing ? 0 : 1 ) );
+	pItem->SetImage( 2, pPacket->m_nProtocol );
+
+	if ( pPacket->m_nProtocol == PROTOCOL_G1 )
+	{
+		pItem->Format( 4, _T("%u/%u"), ((CG1Packet*)pPacket)->m_nTTL, ((CG1Packet*)pPacket)->m_nHops );
+		pItem->Set( 7, ((CG1Packet*)pPacket)->GetGUID() );
+	}
+
+	CQuickLock pLock( m_pSection );
+
+	if ( ! theApp.m_pPacketWnd )
+		return;
+
+	for (; m_pQueue.GetCount() > Settings.Search.MonitorQueue ;)
+	{
+		CLiveItem* pItem = m_pQueue.RemoveHead();
+		delete pItem;
+	}
 
 	m_pQueue.AddTail( pItem.Detach() );
 }
@@ -329,6 +461,13 @@ void CPacketWnd::OnTimer(UINT_PTR nIDEvent)
 		pLock.Lock();
 
 		if ( m_pQueue.GetCount() == 0 ) break;
+
+		for (; m_pQueue.GetCount() > Settings.Search.MonitorQueue ;)
+		{
+			CLiveItem* pItem = m_pQueue.RemoveHead();
+			delete pItem;
+		}
+
 		CLiveItem* pItem = m_pQueue.RemoveHead();
 
 		pLock.Unlock();

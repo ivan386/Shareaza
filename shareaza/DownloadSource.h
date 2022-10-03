@@ -1,7 +1,7 @@
 //
 // DownloadSource.h
 //
-// Copyright (c) Shareaza Development Team, 2002-2012.
+// Copyright (c) Shareaza Development Team, 2002-2014.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -36,7 +36,8 @@ public:
 	CDownloadSource(const CDownload* pDownload, const CQueryHit* pHit);
 	CDownloadSource(const CDownload* pDownload, DWORD nClientID, WORD nClientPort, DWORD nServerIP, WORD nServerPort, const Hashes::Guid& oGUID);
     CDownloadSource(const CDownload* pDownload, const Hashes::BtGuid& oGUID, const IN_ADDR* pAddress, WORD nPort);
-	CDownloadSource(const CDownload* pDownload, LPCTSTR pszURL, BOOL bSHA1 = FALSE, BOOL bHashAuth = FALSE, FILETIME* pLastSeen = NULL, int nRedirectionCount = 0);
+	CDownloadSource(const CDownload* pDownload, const Hashes::BtGuid& oGUID, const IN6_ADDR* pAddress, WORD nPort);
+	CDownloadSource(const CDownload* pDownload, LPCTSTR pszURL, BOOL bHashAuth = FALSE, FILETIME* pLastSeen = NULL, int nRedirectionCount = 0, BOOL bPartialSame = FALSE);
 	~CDownloadSource();
 
 private:
@@ -51,8 +52,10 @@ public:
 	PROTOCOLID			m_nProtocol;
 	Hashes::Guid		m_oGUID;
 	IN_ADDR				m_pAddress;
+	IN6_ADDR			m_pAddressIPv6;
 	WORD				m_nPort;
 	IN_ADDR				m_pServerAddress;
+	IN6_ADDR			m_pIPv6ServerAddress;
 	WORD				m_nServerPort;
 	CString				m_sCountry;
 	CString				m_sCountryName;
@@ -64,6 +67,7 @@ public:
 	BOOL				m_bED2K;
 	BOOL				m_bBTH;
 	BOOL				m_bMD5;
+	BOOL				m_bPartialSame;
 	CString				m_sServer;
 	CString				m_sNick;
 	DWORD				m_nSpeed;
@@ -71,6 +75,7 @@ public:
 	BOOL				m_bCloseConn;
 	BOOL				m_bReadContent;
 	FILETIME			m_tLastSeen;
+	DWORD				m_tLastQuery;
 	int					m_nGnutella;			// Gnutella functionality:
 												// 0 - Pure HTTP
 												// 1 - Pure G1
@@ -80,10 +85,11 @@ public:
 	DWORD				m_nSortOrder;			// How should this source be sorted in the list?
 	COLORREF			m_crColour;
 	DWORD				m_tAttempt;
+	DWORD				m_tDropped;
 	BOOL				m_bKeep;				// Source keeped by NeverDrop == TRUE flag
-	int					m_nFailures;			// failure count.
-	int					m_nBusyCount;			// busy count. (used for incrementing RetryDelay)
-	int					m_nRedirectionCount;
+	DWORD				m_nFailures;			// failure count.
+	DWORD				m_nBusyCount;			// busy count. (used for incrementing RetryDelay)
+	DWORD				m_nRedirectionCount;
 	Fragments::List		m_oAvailable;
 	Fragments::List		m_oPastFragments;
 	BOOL				m_bPreview;				// Does the user allow previews?
@@ -94,7 +100,7 @@ public:
 public:
 	BOOL		ResolveURL();
 	void		Serialize(CArchive& ar, int nVersion /* DOWNLOAD_SER_VERSION */);
-	BOOL		CanInitiate(BOOL bNetwork, BOOL bEstablished);
+	BOOL		CanInitiate(BOOL bNetwork, BOOL bEstablished, bool bFirstAttempt = false);
 	// Remove source from download, add it to failed sources if bBan == TRUE, and destroy source itself
 	void		Remove(BOOL bCloseTransfer = TRUE, BOOL bBan = FALSE, DWORD nRetryAfter = 0);
 	void		OnFailure(BOOL bNondestructive, DWORD nRetryAfter = 0);
@@ -140,12 +146,15 @@ public:
 		{
 			// Push
 			if ( m_pServerAddress.S_un.S_addr != pSource->m_pServerAddress.S_un.S_addr ) return FALSE;
+			if ( !IN6_ADDR_EQUAL( &m_pIPv6ServerAddress, &pSource->m_pIPv6ServerAddress ) ) return FALSE;
 			if ( m_pAddress.S_un.S_addr != pSource->m_pAddress.S_un.S_addr ) return FALSE;
+			if ( !IN6_ADDR_EQUAL( &m_pAddressIPv6, &pSource->m_pAddressIPv6 ) ) return FALSE;
 		}
 		else
 		{
 			// Direct
 			if ( m_pAddress.S_un.S_addr != pSource->m_pAddress.S_un.S_addr ) return FALSE;
+			if ( !IN6_ADDR_EQUAL( &m_pAddressIPv6, &pSource->m_pAddressIPv6 ) ) return FALSE;
 			if ( m_nPort != pSource->m_nPort ) return FALSE;
 		}
 
@@ -160,6 +169,25 @@ public:
 	inline bool IsHTTPSource() const
 	{
 		return ( m_nProtocol == PROTOCOL_HTTP || m_nProtocol == PROTOCOL_G2 );
+	}
+
+	inline bool IsIPv6Source() const
+	{
+		if ( m_pAddress.s_addr == 0 )
+		{
+			int i = 0;
+
+			for (; i < 8 && m_pAddressIPv6.u.Word[i] == 0 ; i++ );
+
+			if ( i < 8 )
+				return true;
+			else
+			{
+				ASSUME_LOCK( Transfers.m_pSection );
+				return m_pTransfer ? m_pTransfer->IsIPv6Host() : false;
+			}
+		}
+		return false;
 	}
 
 	// Source have live connection
@@ -208,7 +236,10 @@ public:
 	inline WORD GetPort() const
 	{
 		ASSUME_LOCK( Transfers.m_pSection );
-		return ( m_pTransfer ? m_pTransfer->m_pHost.sin_port : 0 );
+		if ( m_pTransfer ? m_pTransfer->IsIPv6Host() : 0 )
+			return ( m_pTransfer ? m_pTransfer->m_pHostIPv6.sin6_port : 0 );
+		else
+			return ( m_pTransfer ? m_pTransfer->m_pHost.sin_port : 0 );
 	}
 
 	// Source transfer downloaded bytes
@@ -244,3 +275,14 @@ public:
 	// Source can be previewed
 	bool IsPreviewCapable() const;
 };
+
+template<>
+struct std::less< CDownloadSource* > : public std::binary_function < CDownloadSource*, CDownloadSource*, bool >
+{
+	inline bool operator()( const CDownloadSource* _Left, const CDownloadSource* _Right ) const throw( )
+	{
+		return ( CompareFileTime( &_Left->m_tLastSeen, &_Right->m_tLastSeen ) < 0 );
+	}
+};
+
+typedef std::set< CDownloadSource* > CSortedSources;

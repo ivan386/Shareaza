@@ -1,7 +1,7 @@
 //
 // DownloadGroup.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2011.
+// Copyright (c) Shareaza Development Team, 2002-2017.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -131,12 +131,12 @@ BOOL CDownloadGroup::Link(CDownload* pDownload)
 
 	for ( POSITION pos = m_pFilters.GetHeadPosition() ; pos ; )
 	{
-		CString strFilter = m_pFilters.GetNext( pos );
+		const CString strFilter = m_pFilters.GetNext( pos );
 		
 		if ( strFilter.GetAt( 0 ) == _T('.') )
 		{
 			// Filter by extension
-			int nPos( pDownload->m_sName.ReverseFind( _T('.') ) );
+			const int nPos = pDownload->m_sName.ReverseFind( _T('.') );
 			if ( nPos != -1 && ! strFilter.CompareNoCase( pDownload->m_sName.Mid( nPos ) ) )
 			{
 				Add( pDownload );
@@ -150,6 +150,21 @@ BOOL CDownloadGroup::Link(CDownload* pDownload)
 			{
 				Add( pDownload );
 				return TRUE;
+			}
+
+			// Filter by BitTorrent tracker URL
+			if ( pDownload->IsTorrent() )
+			{
+				const int nTrackerCount = pDownload->m_pTorrent.GetTrackerCount();
+				for ( int i = 0; i < nTrackerCount; ++i )
+				{
+					const CString strTracker = pDownload->m_pTorrent.GetTrackerAddress( i );
+					if ( _tcsistr( strTracker, strFilter ) != NULL )
+					{
+						Add( pDownload );
+						return TRUE;
+					}
+				}
 			}
 		}
 	}

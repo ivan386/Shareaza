@@ -54,6 +54,8 @@ const DWORD g_dwProtocolSignature = (('B' << 0) | ('T' << 8) | ('0' << 16) | ('1
 
 /// BugTrap module handle.
 extern HINSTANCE g_hInstance;
+/// Module of interest handle
+extern HINSTANCE g_hModule;
 /// Application name.
 extern TCHAR g_szAppName[MAX_PATH];
 /// Application version number.
@@ -98,8 +100,6 @@ extern BT_ErrHandler g_pfnPostErrHandler;
 extern INT_PTR g_nPostErrHandlerParam;
 /// Pointer to the exception information.
 extern PEXCEPTION_POINTERS g_pExceptionPointers;
-/// True if application runs on Windows NT platform.
-extern BOOL g_bWinNT;
 /// Custom resources manager.
 extern CResManager* g_pResManager;
 /// Pointer to Simple MAPI session object.

@@ -1,7 +1,7 @@
 //
 // CtrlTaskPanel.h
 //
-// Copyright (c) Shareaza Development Team, 2002-2010.
+// Copyright (c) Shareaza Development Team, 2002-2017.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -38,8 +38,8 @@ protected:
 	CTaskBox*	m_pStretch;
 	int			m_nMargin;
 	int			m_nCurve;
-	HBITMAP		m_hbmWatermark;
-	HBITMAP		m_hbmFooter;
+	CString		m_sWatermark;
+	CString		m_sFooter;
 	BOOL		m_bLayout;
 
 // Operations
@@ -83,7 +83,7 @@ public:
 	virtual ~CTaskBox();
 
 	DECLARE_DYNAMIC(CTaskBox)
-	
+
 	CTaskPanel*	GetPanel() const;
 	void		SetCaption(LPCTSTR pszCaption);
 	void		SetIcon(HICON hIcon);
@@ -102,9 +102,8 @@ protected:
 	BOOL		m_bPrimary;
 	HICON		m_hIcon;
 	BOOL		m_bIconDel;
-	HBITMAP		m_hbmWatermark;
-	HBITMAP		m_hbmCaptionmark;
-	BOOL		m_bCaptionCurve;
+	CString		m_sWatermark;
+	CString		m_sCaptionmark;
 
 	int			GetOuterHeight() const;
 	void		PaintBorders();

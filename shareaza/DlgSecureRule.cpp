@@ -48,9 +48,7 @@ CSecureRuleDlg::CSecureRuleDlg(CWnd* pParent, CSecureRule* pRule) : CSkinDialog(
 	m_nExpireM = 0;
 	m_nAction = -1;
 	m_nExpire = -1;
-	m_sComment = _T("");
 	m_nType = -1;
-	m_sContent = _T("");
 	m_nMatch = -1;
 	m_pRule	= pRule;
 	m_bNew	= FALSE;
@@ -85,7 +83,7 @@ void CSecureRuleDlg::DoDataExchange(CDataExchange* pDX)
 	DDX_CBIndex(pDX, IDC_RULE_ACTION, m_nAction);
 	DDX_CBIndex(pDX, IDC_RULE_EXPIRE, m_nExpire);
 	DDX_Text(pDX, IDC_RULE_COMMENT, m_sComment);
-	DDX_CBIndex(pDX, IDC_RULE_TYPE, m_nType);
+	DDX_CBIndex(pDX, IDC_RULE_TYPE,  m_nType);
 	DDX_Text(pDX, IDC_RULE_CONTENT, m_sContent);
 	DDX_Radio(pDX, IDC_RULE_MATCH_0, m_nMatch);
 	//}}AFX_DATA_MAP
@@ -129,6 +127,14 @@ BOOL CSecureRuleDlg::OnInitDialog()
 				pwIP[ nByte ]->SetWindowText( strItem );
 			}
 		}
+		break;
+	case CSecureRule::srAddressIPv6:
+		m_nType = 2;
+		m_nMatch = 0;
+		if ( m_pRule->m_nIPv6PrefixLen >= 128 )
+			m_sContent = IPv6ToString( &m_pRule->m_nIPv6 );
+		else
+			m_sContent.Format( _T("%s/%i"), IPv6ToString( &m_pRule->m_nIPv6 ), m_pRule->m_nIPv6PrefixLen );
 		break;
 	case CSecureRule::srContentAny:
 		m_nType = 1;
@@ -186,6 +192,12 @@ void CSecureRuleDlg::OnSelChangeRuleType()
 
 	ShowGroup( &m_wndGroupNetwork, m_nType == 0 );
 	ShowGroup( &m_wndGroupContent, m_nType == 1 );
+
+	if ( m_nType == 2 )
+	{
+		m_wndGroupNetwork.ShowWindow( SW_SHOW );
+		m_wndContent.ShowWindow( SW_SHOW );
+	}
 
 	if ( m_nType == 0 )
 	{
@@ -298,6 +310,12 @@ void CSecureRuleDlg::OnOK()
 			break;
 		}
 	}
+	else if ( m_nType == 2 )
+	{
+		m_pRule->m_nType = CSecureRule::srAddressIPv6;
+		m_pRule->SetIPv6( m_sContent );
+	}
+
 	m_pRule->m_sComment	= m_sComment;
 	m_pRule->m_nAction	= BYTE( m_nAction );
 	m_pRule->m_nExpire	= m_nExpire;

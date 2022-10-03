@@ -1,7 +1,7 @@
 //
 // SchemaCache.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2011.
+// Copyright (c) Shareaza Development Team, 2002-2015.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -25,7 +25,7 @@
 #include "SchemaCache.h"
 #include "Schema.h"
 #include "XML.h"
-#include "Zlib.h"
+#include "ZLibWarp.h"
 
 #ifdef _DEBUG
 #undef THIS_FILE
@@ -78,19 +78,12 @@ int CSchemaCache::Load()
 		__int64 nStart = GetMicroCount();
 #endif
 		strPath.Format( _T("%s\\Schemas\\%s"), (LPCTSTR)Settings.General.Path, pFind.cFileName );
-		
+
 		CSchema* pSchema = new CSchema();
 		if ( pSchema && pSchema->Load( strPath ) )
 		{
-			CString strURI( pSchema->GetURI() );
-			strURI.MakeLower();
-
-			m_pURIs.SetAt( strURI, pSchema );
-			
-			CString strName( pSchema->m_sSingular );
-			strName.MakeLower();
-
-			m_pNames.SetAt( strName, pSchema );
+			m_pURIs.SetAt( pSchema->GetURI(), pSchema );
+			m_pNames.SetAt( pSchema->m_sSingular, pSchema );
 
 			for ( POSITION pos = pSchema->GetFilterIterator(); pos; )
 			{
@@ -113,8 +106,8 @@ int CSchemaCache::Load()
 
 #ifdef _DEBUG
 		__int64 nEnd = GetMicroCount();
-		TRACE( _T("Schema \"%s\" load time : %I64i ms : %s\n"), strPath,
-			( nEnd - nStart ) / 1000, pSchema ? _T("SUCCESS") : _T("FAILED") );
+		TRACE( "Schema \"%s\" load time : %I64i ms : %s\n", (LPCSTR)CT2A( strPath ),
+			( nEnd - nStart ) / 1000, pSchema ? "SUCCESS" : "FAILED" );
 #endif
 	}
 	while ( FindNextFile( hSearch, &pFind ) );
@@ -139,7 +132,7 @@ void CSchemaCache::Clear()
 	{
 		delete GetNext( pos );
 	}
-	
+
 	m_pURIs.RemoveAll();
 	m_pNames.RemoveAll();
 	m_pTypeFilters.RemoveAll();

@@ -1,7 +1,7 @@
 //
 // CoolMenu.h
 //
-// Copyright (c) Shareaza Development Team, 2002-2012.
+// Copyright (c) Shareaza Development Team, 2002-2014.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -45,7 +45,7 @@ public:
 	void		OnMeasureItem(LPMEASUREITEMSTRUCT lpMeasureItemStruct);
 	void		OnDrawItem(LPDRAWITEMSTRUCT lpDrawItemStruct);
 	LRESULT		OnMenuChar(UINT nChar, UINT nFlags, CMenu* pMenu);
-	void		DoExplorerMenu(HWND hwnd, const CStringList& oFiles, POINT point, HMENU hMenu, HMENU hSubMenu, UINT nFlags);
+	BOOL		DoExplorerMenu(HWND hwnd, const CStringList& oFiles, POINT point, HMENU hMenu, HMENU hSubMenu, UINT nFlags);
 
 protected:
 	CComPtr< IContextMenu >		m_pContextMenuCache;

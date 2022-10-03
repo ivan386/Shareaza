@@ -1,7 +1,7 @@
 //
 // WndBaseMatch.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2012.
+// Copyright (c) Shareaza Development Team, 2002-2015.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -65,7 +65,6 @@ static char THIS_FILE[] = __FILE__;
 IMPLEMENT_DYNCREATE(CBaseMatchWnd, CPanelWnd)
 
 BEGIN_MESSAGE_MAP(CBaseMatchWnd, CPanelWnd)
-	//{{AFX_MSG_MAP(CBaseMatchWnd)
 	ON_WM_CREATE()
 	ON_WM_DESTROY()
 	ON_WM_SIZE()
@@ -86,8 +85,6 @@ BEGIN_MESSAGE_MAP(CBaseMatchWnd, CPanelWnd)
 	ON_UPDATE_COMMAND_UI(ID_SEARCH_FILTER_REMOVE, OnUpdateSearchFilterRemove)
 	ON_COMMAND(ID_SEARCH_FILTER_REMOVE, OnSearchFilterRemove)
 	ON_COMMAND(ID_SEARCH_COLUMNS, OnSearchColumns)
-	ON_UPDATE_COMMAND_UI(ID_LIBRARY_BITZI_WEB, OnUpdateLibraryBitziWeb)
-	ON_COMMAND(ID_LIBRARY_BITZI_WEB, OnLibraryBitziWeb)
 	ON_UPDATE_COMMAND_UI(ID_SECURITY_BAN, OnUpdateSecurityBan)
 	ON_COMMAND(ID_SECURITY_BAN, OnSecurityBan)
 	ON_UPDATE_COMMAND_UI(ID_HITMONITOR_SEARCH, OnUpdateHitMonitorSearch)
@@ -115,8 +112,6 @@ BEGIN_MESSAGE_MAP(CBaseMatchWnd, CPanelWnd)
 	ON_UPDATE_COMMAND_UI_RANGE(ID_SCHEMA_MENU_MIN, ID_SCHEMA_MENU_MAX, OnUpdateBlocker)
 	ON_UPDATE_COMMAND_UI_RANGE(3000, 3100, OnUpdateFilters)
 	ON_COMMAND_RANGE(3000, 3100, OnFilters)
-	//}}AFX_MSG_MAP
-
 END_MESSAGE_MAP()
 
 
@@ -132,7 +127,8 @@ CBaseMatchWnd::CBaseMatchWnd() :
 	m_bUpdate( FALSE ),
 	m_bBMWActive( TRUE ),
 	m_nCacheFiles( 0 ),
-	m_tModify( static_cast< DWORD >( time( NULL ) ) )
+	m_tModify( static_cast< DWORD >( time( NULL ) ) ),
+	m_tSave( 0 )
 {
 	m_pMatches = new CMatchList( this );
 }
@@ -231,7 +227,7 @@ void CBaseMatchWnd::OnContextMenu(CWnd* pWnd, CPoint point)
 		}
 		else if ( nCmd )
 		{
-			CList< CSchemaMember* > pColumns;
+			CSchemaMemberList pColumns;
 			CSchemaColumnsDlg::ToggleColumnHelper( m_wndList.m_pSchema,
 				&m_wndList.m_pColumns, &pColumns, nCmd, TRUE );
 			m_wndList.SelectSchema( m_wndList.m_pSchema, &pColumns );
@@ -312,37 +308,42 @@ void CBaseMatchWnd::OnDownload(BOOL bAddToHead)
 
 	if ( pFiles.IsEmpty() && pHits.IsEmpty() ) return;
 
-	CSyncObject* pSync[2] = { &Network.m_pSection, &Transfers.m_pSection };
-	CMultiLock pMultiLock( pSync, 2, TRUE );
-
-	for ( POSITION pos = pFiles.GetHeadPosition() ; pos ; )
 	{
-		CMatchFile* pFile = pFiles.GetNext( pos );
+		CSingleLock pTransfersLock( &Transfers.m_pSection, TRUE );
 
-		if ( m_pMatches->m_pSelectedFiles.Find( pFile ) != NULL )
+		for ( POSITION pos = pFiles.GetHeadPosition() ; pos ; )
 		{
-			Downloads.Add( pFile, bAddToHead );
+			CMatchFile* pFile = pFiles.GetNext( pos );
+
+			if ( m_pMatches->m_pSelectedFiles.Find( pFile ) != NULL )
+			{
+				if ( CDownload *pDownload = Downloads.Add( pFile, bAddToHead ) )
+				{
+					if ( Settings.Downloads.ShowMonitorURLs )
+						pDownload->ShowMonitor();
+				}
+			}
+
 		}
 
-	}
-
-	for ( POSITION pos = pHits.GetHeadPosition() ; pos ; )
-	{
-		CQueryHit* pHit = pHits.GetNext( pos );
-
-		if ( m_pMatches->m_pSelectedHits.Find( pHit ) != NULL )
+		for ( POSITION pos = pHits.GetHeadPosition() ; pos ; )
 		{
-			if ( CDownload *pDownload = Downloads.Add( pHit, bAddToHead ) )
+			CQueryHit* pHit = pHits.GetNext( pos );
+
+			if ( m_pMatches->m_pSelectedHits.Find( pHit ) != NULL )
 			{
-				if ( pHit->IsRated() )
+				if ( CDownload *pDownload = Downloads.Add( pHit, bAddToHead ) )
 				{
-					pDownload->AddReview( &pHit->m_pAddress, 2, pHit->m_nRating, pHit->m_sNick, pHit->m_sComments );
+					if ( pHit->IsRated() )
+					{
+						pDownload->AddReview( &pHit->m_pAddress, 2, pHit->m_nRating, pHit->m_sNick, pHit->m_sComments );
+					}
+					if ( Settings.Downloads.ShowMonitorURLs )
+						pDownload->ShowMonitor();
 				}
 			}
 		}
 	}
-
-	pMultiLock.Unlock();
 
 	m_wndList.Invalidate();
 
@@ -374,21 +375,21 @@ void CBaseMatchWnd::OnSearchDownloadNow()
 
 void CBaseMatchWnd::OnUpdateSearchCopy(CCmdUI* pCmdUI)
 {
-	CString strMessage;
-	BOOL bSelected = m_pMatches->m_pSelectedFiles.GetCount() ||
-		m_pMatches->m_pSelectedHits.GetCount();
-	pCmdUI->Enable( bSelected );
-	bSelected > 1 ? LoadString( strMessage, IDS_LIBRARY_EXPORTURIS ) : LoadString( strMessage, IDS_LIBRARY_COPYURI );
-	pCmdUI->SetText( strMessage );
+	const bool bShift = ( GetAsyncKeyState( VK_SHIFT ) & 0x8000 ) != 0;
+
+	INT_PTR bSelected = m_pMatches->m_pSelectedFiles.GetCount() + m_pMatches->m_pSelectedHits.GetCount();
+	pCmdUI->Enable( bSelected != FALSE );
+	pCmdUI->SetText( LoadString( ( bSelected == 1 && ! bShift ) ? IDS_LIBRARY_COPYURI : IDS_LIBRARY_EXPORTURIS ) );
 }
 
 void CBaseMatchWnd::OnSearchCopy()
 {
+	const bool bShift = ( GetAsyncKeyState( VK_SHIFT ) & 0x8000 ) != 0;
+
 	CSingleLock pLock( &m_pMatches->m_pSection, TRUE );
 
-	INT_PTR bSelected = m_pMatches->m_pSelectedFiles.GetCount() +
-		m_pMatches->m_pSelectedHits.GetCount();
-	if ( bSelected == 1 )
+	INT_PTR bSelected = m_pMatches->m_pSelectedFiles.GetCount() + m_pMatches->m_pSelectedHits.GetCount();
+	if ( bSelected == 1 && ! bShift )
 	{
 		CURLCopyDlg dlg;
 
@@ -405,7 +406,7 @@ void CBaseMatchWnd::OnSearchCopy()
 
 		dlg.DoModal();
 	}
-	else if ( bSelected > 1 )
+	else if ( bSelected > 0 )
 	{
 		CURLExportDlg dlg;
 
@@ -524,129 +525,6 @@ void CBaseMatchWnd::OnBrowseLaunch()
 			pHit->m_bPush == TRI_TRUE, pHit->m_oClientID, pHit->m_sNick  );
 	}
 }
-
-void CBaseMatchWnd::OnUpdateLibraryBitziWeb(CCmdUI* pCmdUI)
-{
-	if ( m_pMatches->GetSelectedCount() != 1 || Settings.WebServices.BitziWebView.IsEmpty() )
-	{
-		pCmdUI->Enable( FALSE );
-	}
-	else if ( CMatchFile* pFile = m_pMatches->GetSelectedFile() )
-	{
-		pCmdUI->Enable( TRUE );
-	}
-	else if ( CQueryHit* pHit = m_pMatches->GetSelectedHit() )
-	{
-		pCmdUI->Enable( TRUE );
-	}
-}
-
-void CBaseMatchWnd::OnLibraryBitziWeb()
-{
-	if ( ! Settings.WebServices.BitziOkay )
-	{
-		CString strMessage;
-		Skin.LoadString( strMessage, IDS_LIBRARY_BITZI_MESSAGE );
-		if ( AfxMessageBox( strMessage, MB_ICONQUESTION|MB_YESNO ) != IDYES ) return;
-		Settings.WebServices.BitziOkay = true;
-		Settings.Save();
-	}
-
-	if ( m_pMatches->GetSelectedCount() != 1 ) return;
-
-	CString strURN;
-
-	if ( CMatchFile* pFile = m_pMatches->GetSelectedFile() )
-	{
-		if ( pFile->m_oSHA1 )
-			strURN = pFile->m_oSHA1.toString();
-
-		if ( pFile->m_oTiger )
-		{
-			if ( strURN.GetLength() )
-				strURN	+= _T(".");
-			else
-				strURN	= _T("tree:tiger:");
-
-			strURN += pFile->m_oTiger.toString();
-		}
-
-		if ( pFile->m_oED2K && ! strURN.GetLength() )
-			strURN = _T("ed2k:") + pFile->m_oED2K.toString();
-
-		if ( pFile->m_oMD5 && ! strURN.GetLength() )
-			strURN = _T("md5:") + pFile->m_oMD5.toString();
-	}
-	else if ( CQueryHit* pHit = m_pMatches->GetSelectedHit() )
-	{
-		if ( pHit->m_oSHA1 )
-			strURN = pHit->m_oSHA1.toString();
-
-		if ( pHit->m_oTiger )
-		{
-			if ( strURN.GetLength() )
-				strURN	+= _T(".");
-			else
-				strURN	= _T("tree:tiger:");
-
-			strURN += pHit->m_oTiger.toString();
-		}
-
-		if ( pHit->m_oED2K && ! strURN.GetLength() )
-			strURN = _T("ed2k:") + pHit->m_oED2K.toString();
-
-		if ( pHit->m_oMD5 && ! strURN.GetLength() )
-			strURN = _T("md5:") + pHit->m_oMD5.toString();
-	}
-
-	if ( strURN.IsEmpty() ) return;
-
-	CString strURL = Settings.WebServices.BitziWebView;
-	strURL.Replace( _T("(URN)"), strURN );
-	ShellExecute( GetSafeHwnd(), _T("open"), strURL, NULL, NULL, SW_SHOWNORMAL );
-}
-
-/*
-void CBaseMatchWnd::OnUpdateLibraryJigle(CCmdUI* pCmdUI)
-{
-	if ( m_pMatches->GetSelectedCount() != 1 )
-	{
-		pCmdUI->Enable( FALSE );
-	}
-	else if ( CMatchFile* pFile = m_pMatches->GetSelectedFile() )
-	{
-		pCmdUI->Enable( pFile->m_bED2K );
-	}
-	else if ( CQueryHit* pHit = m_pMatches->GetSelectedHit() )
-	{
-		pCmdUI->Enable( pHit->m_bED2K );
-	}
-}
-
-void CBaseMatchWnd::OnLibraryJigle()
-{
-	if ( m_pMatches->GetSelectedCount() != 1 ) return;
-
-	CString strED2K;
-
-	if ( CMatchFile* pFile = m_pMatches->GetSelectedFile() )
-	{
-		if ( pFile->m_bED2K )
-			strED2K = CED2K::HashToString( &pFile->m_pED2K );
-	}
-	else if ( CQueryHit* pHit = m_pMatches->GetSelectedHit() )
-	{
-		if ( pHit->m_bED2K )
-			strED2K = CED2K::HashToString( &pHit->m_pED2K );
-	}
-
-	if ( strED2K.IsEmpty() ) return;
-
-	CString strURL;
-	strURL.Format( _T("http://jigle.com/search?p=ed2k%%3A%s&v=1"), (LPCTSTR)strED2K );
-	ShellExecute( GetSafeHwnd(), _T("open"), strURL, NULL, NULL, SW_SHOWNORMAL );
-}
-*/
 
 void CBaseMatchWnd::OnUpdateSearchForThis(CCmdUI* pCmdUI)
 {
@@ -955,15 +833,22 @@ void CBaseMatchWnd::OnTimer(UINT_PTR nIDEvent)
 		}
 	}
 
-	// Lazy save
-	if ( m_tModify && static_cast< DWORD >( time( NULL ) ) - m_tModify > 10 )
-	{
-		m_tModify = 0;
 
-		if ( IsKindOf( RUNTIME_CLASS(CSearchWnd) ) )
-			GetManager()->SaveSearchWindows();
-		else if ( IsKindOf( RUNTIME_CLASS(CBrowseHostWnd) ) )
-			GetManager()->SaveBrowseHostWindows();
+	// Lazy save
+	if ( m_tModify )
+	{
+		DWORD tTime = static_cast< DWORD >( time( NULL ) );
+		if ( tTime - m_tSave > 1000 && tTime - m_tModify > 10 )
+		{
+			m_tModify = 0;
+
+			if ( IsKindOf( RUNTIME_CLASS(CSearchWnd) ) )
+				GetManager()->SaveSearchWindows();
+			else if ( IsKindOf( RUNTIME_CLASS(CBrowseHostWnd) ) )
+				GetManager()->SaveBrowseHostWindows();
+
+			m_tSave = static_cast< DWORD >( time( NULL ) );
+		}
 	}
 }
 
@@ -1029,7 +914,7 @@ void CBaseMatchWnd::Serialize(CArchive& ar)
 		ar >> strSchema;
 		if ( CSchemaPtr pSchema = SchemaCache.Get( strSchema ) )
 		{
-			CList< CSchemaMember* > pColumns;
+			CSchemaMemberList pColumns;
 			CSchemaColumnsDlg::LoadColumns( pSchema, &pColumns );
 			m_wndList.SelectSchema( pSchema, &pColumns );
 		}
@@ -1044,4 +929,6 @@ void CBaseMatchWnd::Serialize(CArchive& ar)
 		pException->Delete();
 		m_pMatches->Clear();
 	}
+
+	m_tSave = static_cast< DWORD >( time( NULL ) );
 }

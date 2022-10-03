@@ -98,9 +98,12 @@ int CNeighboursWithRouting::Broadcast(CPacket* pPacket, CNeighbour* pExcept, BOO
 
 bool CNeighboursWithRouting::CheckQuery(const CQuerySearch* pSearch)
 {
-	CIPTime pThisQuery;
-	pThisQuery.m_pAddress = pSearch->m_pEndpoint.sin_addr;
-	pThisQuery.m_nTime = GetTickCount();
+	CIPTime pThisQuery = { GetTickCount() };
+
+	if ( pSearch->IsIPv6Endpoint() )
+		pThisQuery.m_pAddressIPv6 = pSearch->m_pEndpointIPv6.sin6_addr;
+	else
+		pThisQuery.m_pAddress = pSearch->m_pEndpoint.sin_addr;
 
 	for ( POSITION pos = m_pQueries.GetHeadPosition(); pos; )
 	{
@@ -112,7 +115,9 @@ bool CNeighboursWithRouting::CheckQuery(const CQuerySearch* pSearch)
 			// Remove old
 			m_pQueries.RemoveAt( posOrig );
 		}
-		else if ( pThisQuery.m_pAddress.s_addr == pLastQuery.m_pAddress.s_addr )
+		else if ( pThisQuery.m_pAddress.s_addr ? 
+			pThisQuery.m_pAddress.s_addr == pLastQuery.m_pAddress.s_addr 
+			: IN6_ADDR_EQUAL( &pThisQuery.m_pAddressIPv6, &pLastQuery.m_pAddressIPv6 ) )
 		{
 			// Too early
 			return false;

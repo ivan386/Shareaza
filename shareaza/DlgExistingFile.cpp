@@ -51,11 +51,32 @@ CExistingFileDlg::Action CExistingFileDlg::CheckExisting(const CShareazaURL* pUR
 	// Check files inside torrent
 	if ( pURL->m_pTorrent )
 	{
-		for ( POSITION pos = pURL->m_pTorrent->m_pFiles.GetHeadPosition() ; pos ; )
+		INT_PTR nCount = pURL->m_pTorrent->m_pFiles.GetCount();
+		if ( nCount > 0 )
 		{
-			const CBTInfo::CBTFile* pBTFile = pURL->m_pTorrent->m_pFiles.GetNext( pos );
+			BOOL bDownload = FALSE;
+			const CBTInfo::CBTFile* pFound = NULL;
+			for ( POSITION pos = pURL->m_pTorrent->m_pFiles.GetHeadPosition() ; pos ; )
+			{
+				const CBTInfo::CBTFile* pBTFile = pURL->m_pTorrent->m_pFiles.GetNext( pos );
 
-			return CheckExisting( static_cast< const CShareazaFile* >( pBTFile ), bInteracive );
+				switch ( CExistingFileDlg::Action action = CheckExisting( static_cast< const CShareazaFile* >( pBTFile ), FALSE ) )
+				{
+				case ShowInLibrary:
+					pFound = pBTFile;
+					break;
+				case Download:
+					bDownload = TRUE;
+					break;
+				default:
+					return Cancel;
+				}
+			}
+			if ( pFound && bInteracive )
+			{
+				return CheckExisting( static_cast< const CShareazaFile* >( pFound ), TRUE );
+			}
+			return bDownload ? Download : ShowInLibrary;
 		}
 	}
 
@@ -67,7 +88,17 @@ CExistingFileDlg::Action CExistingFileDlg::CheckExisting(const CShareazaFile* pF
 {
 	CSingleLock pLock( &Library.m_pSection );
 	if ( ! pLock.Lock( 1000 ) )
-		return Download;
+		return Cancel;
+
+	if ( pFile->m_sPath.GetLength() )
+	{
+		const BOOL bIsFolder = ( pFile->m_sPath.GetAt( pFile->m_sPath.GetLength() - 1 ) == _T('\\') );
+		if ( bIsFolder )
+		{
+			const CLibraryFolder* pFolder =  LibraryFolders.GetFolder( pFile->m_sPath.Left( pFile->m_sPath.GetLength() - 1 ) );
+			return pFolder ? ShowInLibrary : Download;
+		}
+	}
 
 	const CLibraryFile* pLibFile = LibraryMaps.LookupFileByHash( pFile );
 	if ( pLibFile == NULL )

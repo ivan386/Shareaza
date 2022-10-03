@@ -1,7 +1,7 @@
 //
 // UploadTransfer.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2013.
+// Copyright (c) Shareaza Development Team, 2002-2015.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -62,7 +62,6 @@ CUploadTransfer::CUploadTransfer(PROTOCOLID nProtocol)
 	, m_nAveragePos		( 0 )
 	, m_tRatingTime		( 0 )
 	, m_nMaxRate		( 0 )
-	, m_pFile			( NULL )
 {
 	m_nBandwidth		= Settings.Bandwidth.Request;
 	m_nOffset			= 0; // ?
@@ -81,7 +80,7 @@ CUploadTransfer::~CUploadTransfer()
 //////////////////////////////////////////////////////////////////////
 // CUploadTransfer remove record
 
-void CUploadTransfer::Remove(BOOL bMessage)
+void CUploadTransfer::Remove(BOOL bMessage, UINT nError)
 {
 	ASSERT( this != NULL );
 
@@ -92,7 +91,7 @@ void CUploadTransfer::Remove(BOOL bMessage)
 	}
 
 	m_nUploaded = 1;
-	Close();
+	Close( nError );
 
 	delete this;
 }
@@ -287,9 +286,9 @@ void CUploadTransfer::LongTermAverage(DWORD tNow)
 		m_nBandwidth = min( nAverage, m_nBandwidth );
 
 		theApp.Message( MSG_DEBUG, _T("Changing upload throttle on %s from %s to %s"),
-			m_sAddress,
-			Settings.SmartSpeed( nOld ),
-			Settings.SmartSpeed( m_nBandwidth ) );
+			(LPCTSTR)m_sAddress,
+			(LPCTSTR)Settings.SmartSpeed( nOld ),
+			(LPCTSTR)Settings.SmartSpeed( m_nBandwidth ) );
 	}
 	else if ( m_pQueue && m_pQueue->GetAvailableBandwidth() )
 	{
@@ -303,9 +302,9 @@ void CUploadTransfer::LongTermAverage(DWORD tNow)
 			m_nBandwidth = m_nMaxRate;
 
 		theApp.Message( MSG_DEBUG, _T("Changing upload throttle on %s from %s to %s"),
-			m_sAddress,
-			Settings.SmartSpeed( nOld ),
-			Settings.SmartSpeed( m_nBandwidth ) );
+			(LPCTSTR)m_sAddress,
+			(LPCTSTR)Settings.SmartSpeed( nOld ),
+			(LPCTSTR)Settings.SmartSpeed( m_nBandwidth ) );
 	}
 }
 
@@ -461,11 +460,11 @@ BOOL CUploadTransfer::RequestPartial(CDownload* pDownload)
 	m_bFilePartial = TRUE;
 
 	// Try to get existing file object from download
-	auto_ptr< CFragmentedFile > pDownloadFile( pDownload->GetFile() );
-	if ( ! pDownloadFile.get() )
+	auto_ptr< CFragmentedFile > pFile( pDownload->GetFile() );
+	if ( ! pFile.get() )
 		return FALSE;
 
-	AttachFile( pDownloadFile );
+	AttachFile( pFile.release() );
 
 	if ( m_oSHA1 && !pDownload->m_oSHA1 )
 	{
@@ -533,7 +532,7 @@ void CUploadTransfer::AllocateBaseFile()
 
 BOOL CUploadTransfer::IsFileOpen() const
 {
-	return ( m_pFile.get() != NULL );
+	return m_pFile.get() && m_pFile->IsOpen();
 }
 
 BOOL CUploadTransfer::OpenFile()
@@ -544,9 +543,12 @@ BOOL CUploadTransfer::OpenFile()
 	auto_ptr< CFragmentedFile > pFile( new CFragmentedFile );
 	if ( pFile.get() && pFile->Open( this, FALSE ) )
 	{
-		AttachFile( pFile );
+		AttachFile( pFile.release() );
 		return TRUE;
 	}
+
+	theApp.Message( MSG_ERROR, IDS_UPLOAD_CANTOPEN, (LPCTSTR)m_sName, (LPCTSTR)m_sAddress );
+
 	return FALSE;
 }
 
@@ -571,7 +573,10 @@ BOOL CUploadTransfer::ReadFile(QWORD nOffset, LPVOID pData, QWORD nLength, QWORD
 	return m_pFile->Read( nOffset, pData, nLength, pnRead );
 }
 
-void CUploadTransfer::AttachFile(auto_ptr< CFragmentedFile >& pFile)
+void CUploadTransfer::AttachFile(CFragmentedFile* pFile)
 {
-	m_pFile = pFile;
+	if ( pFile && m_pFile.get() == pFile )
+		pFile->Release();
+	else
+		m_pFile.reset( pFile );
 }

@@ -1,7 +1,7 @@
 //
 // CtrlUploadTip.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2011.
+// Copyright (c) Shareaza Development Team, 2002-2014.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -151,7 +151,7 @@ void CUploadTipCtrl::OnCalcSize(CDC* pDC, CUploadTransfer* pUpload)
 	m_nHeaders = 0;
 	if ( Settings.General.GUIMode != GUI_BASIC )
 	{
-		m_nHeaders = pUpload->m_pHeaderName.GetSize();
+		m_nHeaders = (int)pUpload->m_pHeaderName.GetSize();
 		for ( int nHeader = 0 ; nHeader < m_nHeaders ; nHeader++ )
 		{
 			CString strName		= pUpload->m_pHeaderName.GetAt( nHeader ) + _T(':');

@@ -84,6 +84,7 @@ class CKademlia
 {
 public:
 	BOOL Bootstrap(const SOCKADDR_IN* pHost, bool bKad2 = true);
+	BOOL Bootstrap(const SOCKADDR_IN6* pHost, bool bKad2 = true);
 
 	BOOL OnPacket(const SOCKADDR_IN* pHost, CEDPacket* pPacket);
 
@@ -91,8 +92,11 @@ protected:
 	CCriticalSection m_pSection;
 
 	BOOL Send(const SOCKADDR_IN* pHost, CEDPacket* pPacket);
+	BOOL Send(const SOCKADDR_IN6* pHost, CEDPacket* pPacket);
 	BOOL Send(const SOCKADDR_IN* pHost, BYTE nType);
+	BOOL Send(const SOCKADDR_IN6* pHost, BYTE nType);
 	BOOL SendMyDetails(const SOCKADDR_IN* pHost, BYTE nType, bool bKad2);
+	BOOL SendMyDetails(const SOCKADDR_IN6* pHost, BYTE nType, bool bKad2);
 
 	BOOL OnPacket_KADEMLIA_BOOTSTRAP_RES(const SOCKADDR_IN* pHost, CEDPacket* pPacket);
 	BOOL OnPacket_KADEMLIA2_BOOTSTRAP_RES(const SOCKADDR_IN* pHost, CEDPacket* pPacket);

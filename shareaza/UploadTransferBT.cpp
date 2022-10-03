@@ -1,7 +1,7 @@
 //
 // UploadTransferBT.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2013.
+// Copyright (c) Shareaza Development Team, 2002-2015.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -65,7 +65,7 @@ CUploadTransferBT::CUploadTransferBT(CBTClient* pClient, CDownload* pDownload)
 	m_sUserAgent		= pClient->m_sUserAgent;
 	m_bClientExtended	= pClient->m_bClientExtended;
 	m_nState			= upsReady;
-	
+
 	RequestPartial( m_pDownload );
 	m_pDownload->AddUpload( this );
 }
@@ -89,10 +89,10 @@ void CUploadTransferBT::SetChoke(BOOL bChoke)
 
 	// Update state
 	m_bChoked = bChoke;
-	
+
 	m_oRequested.clear();
 	m_oServed.clear();
-	
+
 	if ( bChoke )
 	{
 		m_nState = upsReady;
@@ -104,7 +104,7 @@ void CUploadTransferBT::SetChoke(BOOL bChoke)
 	{
 		m_pClient->UnChoke();
 	}
-	
+
 	theApp.Message( MSG_DEBUG, _T("%s upload to %s"),
 		bChoke ? _T("Choking") : _T("Unchoking"), (LPCTSTR)m_sAddress );
 }
@@ -117,20 +117,20 @@ void CUploadTransferBT::Close(UINT nError)
 	if ( m_pClient != NULL )
 	{
 		if ( Settings.General.DebugBTSources )
-			theApp.Message( MSG_DEBUG, L"Closing BT upload connection: %s", m_pClient->m_sAddress );
+			theApp.Message( MSG_DEBUG, L"Closing BT upload connection: %s", (LPCTSTR)m_pClient->m_sAddress );
 		m_pClient->m_pUploadTransfer = NULL;
 		m_pClient->Close();
 		m_pClient = NULL;
 	}
-	
+
 	CloseFile();
-	
+
 	if ( m_pDownload != NULL ) m_pDownload->RemoveUpload( this );
 	m_pDownload = NULL;
-	
+
 	m_oRequested.clear();
 	m_oServed.clear();
-	
+
 	CUploadTransfer::Close( nError );
 }
 
@@ -197,13 +197,13 @@ BOOL CUploadTransferBT::OnRequest(CBTPacket* pPacket)
 {
 	if ( pPacket->GetRemaining() < 4 * 3 ) return TRUE;
 	if ( m_bChoked ) return TRUE;
-	
+
 	QWORD nIndex	= pPacket->ReadLongBE();
 	QWORD nOffset	= pPacket->ReadLongBE();
 	QWORD nLength	= pPacket->ReadLongBE();
-	
+
 	nOffset += nIndex * m_pDownload->m_pTorrent.m_nBlockSize;
-	
+
 	if ( nLength > Settings.BitTorrent.RequestLimit )
 	{
 		// error
@@ -211,7 +211,7 @@ BOOL CUploadTransferBT::OnRequest(CBTPacket* pPacket)
 		Close();
 		return FALSE;
 	}
-	
+
 	if ( nOffset + nLength > m_nSize )
 	{
 		// error
@@ -219,12 +219,12 @@ BOOL CUploadTransferBT::OnRequest(CBTPacket* pPacket)
 		Close();
 		return FALSE;
 	}
-	
+
 	if ( std::find_first_of( m_oRequested.begin(), m_oRequested.end(), m_oServed.begin(), m_oServed.end() )
 		!= m_oRequested.end() ) return TRUE;
 
 	m_oRequested.push_back( Fragments::Fragment( nOffset, nOffset + nLength ) );
-	
+
 	if ( m_nState == upsReady )
 	{
 		m_nState = upsRequest;
@@ -235,26 +235,26 @@ BOOL CUploadTransferBT::OnRequest(CBTPacket* pPacket)
 		{
 			theApp.Message( MSG_NOTICE, IDS_UPLOAD_FILE,
 				(LPCTSTR)m_sName, (LPCTSTR)m_sAddress );
-		
+
 			PostMainWndMessage( WM_NOWUPLOADING, 0, (LPARAM)new CString( m_pBaseFile->m_sPath ) );
 		}
 	}
-	
+
 	return ServeRequests();
 }
 
 BOOL CUploadTransferBT::OnCancel(CBTPacket* pPacket)
 {
 	if ( pPacket->GetRemaining() < 4 * 3 ) return TRUE;
-	
+
 	QWORD nIndex	= pPacket->ReadLongBE();
 	QWORD nOffset	= pPacket->ReadLongBE();
 	QWORD nLength	= pPacket->ReadLongBE();
-	
+
 	nOffset += nIndex * m_pDownload->m_pTorrent.m_nBlockSize;
-	
+
 	m_oRequested.erase( Fragments::Fragment( nOffset, nOffset + nLength ) );
-	
+
 	if ( m_pDownload->IsSeeding() )
 	{
 		Close(); // Remove from upload queue
@@ -274,23 +274,23 @@ BOOL CUploadTransferBT::OpenFile()
 
 	if ( m_pClient && Downloads.Check( m_pClient->m_pDownload ) )
 	{
-		// Try to get existing file object from download
+		// TODO: Change to CUploadTransfer::RequestPartial(CDownload* pDownload) ?
 		auto_ptr< CFragmentedFile > pFile( m_pClient->m_pDownload->GetFile() );
 		if ( pFile.get() )
 		{
-			AttachFile( pFile );
+			AttachFile( pFile.release() );
 			return TRUE;
 		}
 
 		// HACK: Open from disk (replace this with SeedTorrent in OnDownloadComplete)
 		if ( m_pClient->m_pDownload->IsSeeding() )
 		{
-			auto_ptr< CFragmentedFile > pFile( new CFragmentedFile );
-			if ( pFile.get() )
+			auto_ptr< CFragmentedFile > pSeedingFile( new CFragmentedFile );
+			if ( pSeedingFile.get() )
 			{
-				if ( pFile->Open( m_pClient->m_pDownload->m_pTorrent, FALSE ) )
+				if ( pSeedingFile->Open( m_pClient->m_pDownload->m_pTorrent, FALSE ) )
 				{
-					AttachFile( pFile );
+					AttachFile( pSeedingFile.release() );
 					return TRUE;
 				}
 			}
@@ -312,10 +312,10 @@ BOOL CUploadTransferBT::ServeRequests()
 {
 	ASSERT( m_nState == upsRequest || m_nState == upsUploading );
 	ASSERT( m_pBaseFile != NULL );
-	
+
 	if ( m_bChoked ) return TRUE;
 	if ( m_pClient->GetOutputLength() > Settings.BitTorrent.RequestSize / 3 ) return TRUE;
-	
+
 	while ( ! m_oRequested.empty() && ( m_nLength == SIZE_UNKNOWN || m_nLength == 0 ) )
 	{
 		if ( std::find( m_oServed.begin(), m_oServed.end(), *m_oRequested.begin() ) == m_oServed.end()
@@ -329,24 +329,24 @@ BOOL CUploadTransferBT::ServeRequests()
 		}
 		m_oRequested.pop_front();
 	}
-	
+
 	if ( m_nLength != SIZE_UNKNOWN && m_nLength != 0 && m_pDownload->m_pTorrent.m_nBlockSize != 0 )
 	{
 		if ( ! OpenFile() ) return FALSE;
-		
+
 		theApp.Message( MSG_DEBUG, IDS_UPLOAD_CONTENT,
 			m_nOffset, m_nOffset + m_nLength - 1,
 			(LPCTSTR)m_sName, (LPCTSTR)m_sAddress, _T("BT") );
-		
+
 		CBuffer pBuffer;
-		pBuffer.EnsureBuffer( m_nLength );
+		pBuffer.EnsureBuffer( (size_t)m_nLength );
 
 		QWORD nRead = 0;
 		if ( ! ReadFile( m_nOffset + m_nPosition, pBuffer.m_pBuffer, m_nLength, &nRead ) )
 			return FALSE;
 		pBuffer.m_nLength = (DWORD)nRead;
 
-		m_pClient->Piece( 
+		m_pClient->Piece(
 			(DWORD)( m_nOffset / m_pDownload->m_pTorrent.m_nBlockSize ),
 			(DWORD)( m_nOffset % m_pDownload->m_pTorrent.m_nBlockSize ),
 			pBuffer.m_nLength, pBuffer.m_pBuffer );
@@ -356,7 +356,7 @@ BOOL CUploadTransferBT::ServeRequests()
 		m_pDownload->m_nTorrentUploaded += m_nLength;
 		m_pDownload->m_pTorrent.m_nTotalUpload += m_nLength;
 		Statistics.Current.Uploads.Volume += ( m_nLength / 1024 );
-		
+
 		m_oServed.push_back( Fragments::Fragment( m_nOffset, m_nOffset + m_nLength ) );
 		m_pBaseFile->AddFragment( m_nOffset, m_nLength );
 
@@ -367,7 +367,7 @@ BOOL CUploadTransferBT::ServeRequests()
 	{
 		m_nState = upsRequest;
 	}
-	
+
 	return TRUE;
 }
 

@@ -1,0 +1,5 @@
+1. Download latest file "miniupnpc-*.tar.gz" from here: http://miniupnp.free.fr/files/
+2. Unpack all files to "miniupnpc" sub-folder
+3. Update version information inside "miniupnpcstrings.h" and "MiniUPnPc.rc"
+
+Also development sources can be found on GitHub: https://github.com/miniupnp/miniupnp/tree/master/miniupnpc

@@ -32,7 +32,7 @@
 #include "G1Packet.h"
 #include "G2Packet.h"
 #include "XML.h"
-#include "ZLib.h"
+#include "ZLibWarp.h"
 
 #ifdef _DEBUG
 #undef THIS_FILE

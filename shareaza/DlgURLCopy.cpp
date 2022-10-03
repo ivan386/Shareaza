@@ -1,7 +1,7 @@
 //
 // DlgURLCopy.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2013.
+// Copyright (c) Shareaza Development Team, 2002-2015.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -89,7 +89,7 @@ BOOL CURLCopyDlg::OnInitDialog()
 	return TRUE;
 }
 
-void CURLCopyDlg::Resolve(CShareazaFile& pFile, CString& sTracker)
+void CURLCopyDlg::Resolve(CShareazaFile& pFile, CString& sTracker, CString& sWebSeed)
 {
 	// Use contents of .torrent-file instead of file itself
 	CBTInfo pTorrent;
@@ -104,6 +104,13 @@ void CURLCopyDlg::Resolve(CShareazaFile& pFile, CString& sTracker)
 		{
 			if ( sTracker.GetLength() ) sTracker += _T("&");
 			sTracker += _T("tr=") + URLEncode( pTorrent.GetTrackerAddress( i ) );
+		}
+
+		// Get Web-seeds
+		for ( POSITION pos = pTorrent.m_sURLs.GetHeadPosition(); pos; )
+		{
+			if ( sWebSeed.GetLength() ) sWebSeed += _T("&");
+			sWebSeed += _T("ws=") + URLEncode( pTorrent.m_sURLs.GetNext( pos ) );
 		}
 	}
 
@@ -122,6 +129,8 @@ void CURLCopyDlg::Resolve(CShareazaFile& pFile, CString& sTracker)
 				pFile.m_oED2K = pDownload->m_oED2K;
 			if ( ! pFile.m_oMD5 && pDownload->m_oMD5 )
 				pFile.m_oMD5 = pDownload->m_oMD5;
+			if ( ! pFile.m_nBitrate && pDownload->m_nBitrate )
+				pFile.m_nBitrate = pDownload->m_nBitrate;
 
 			// Get trackers
 			if ( sTracker.IsEmpty() && pDownload->IsTorrent() )
@@ -150,15 +159,17 @@ void CURLCopyDlg::Resolve(CShareazaFile& pFile, CString& sTracker)
 				pFile.m_oED2K = pLibraryFile->m_oED2K;
 			if ( ! pFile.m_oMD5 && pLibraryFile->m_oMD5 )
 				pFile.m_oMD5 = pLibraryFile->m_oMD5;
+			if ( ! pFile.m_nBitrate && pLibraryFile->m_nBitrate )
+				pFile.m_nBitrate = pLibraryFile->m_nBitrate;
 		}
 	}
 }
 
 CString CURLCopyDlg::CreateMagnet(CShareazaFile& pFile)
 {
-	CString strURN, sTracker;
+	CString strURN, sTracker, sWebSeed;
 
-	Resolve( pFile, sTracker );
+	Resolve( pFile, sTracker, sWebSeed );
 	
 	if ( pFile.m_oTiger && pFile.m_oSHA1 )
 	{
@@ -209,10 +220,22 @@ CString CURLCopyDlg::CreateMagnet(CShareazaFile& pFile)
 		sMagnet += URLEncode( pFile.m_sName );
 	}
 
+	if ( pFile.m_nBitrate != 0 && pFile.m_nBitrate != SIZE_UNKNOWN )
+	{
+		if ( sMagnet.GetLength() ) sMagnet += _T("&");
+		sMagnet.AppendFormat( _T("br=%I64u"), pFile.m_nBitrate );
+	}
+
 	if ( sTracker.GetLength() )
 	{
 		if ( sMagnet.GetLength() ) sMagnet += _T("&");
 		sMagnet += sTracker;
+	}
+
+	if ( sWebSeed.GetLength() )
+	{
+		if ( sMagnet.GetLength() ) sMagnet += _T("&");
+		sMagnet += sWebSeed;
 	}
 
 	sMagnet = _T("magnet:?") + sMagnet;
@@ -328,37 +351,13 @@ BOOL CURLCopyDlg::OnSetCursor(CWnd* pWnd, UINT nHitTest, UINT message)
 	return CSkinDialog::OnSetCursor( pWnd, nHitTest, message );
 }
 
-BOOL CURLCopyDlg::SetClipboardText(CString& strText)
-{
-	if ( ! AfxGetMainWnd()->OpenClipboard() ) return FALSE;
-
-	EmptyClipboard();
-
-	CT2CW pszWide( (LPCTSTR)strText );
-	HANDLE hMem = GlobalAlloc( GMEM_MOVEABLE|GMEM_DDESHARE, ( wcslen(pszWide) + 1 ) * sizeof(WCHAR) );
-	if ( hMem )
-	{
-		LPVOID pMem = GlobalLock( hMem );
-		if ( pMem )
-		{
-			CopyMemory( pMem, pszWide, ( wcslen(pszWide) + 1 ) * sizeof(WCHAR) );
-			GlobalUnlock( hMem );
-			SetClipboardData( CF_UNICODETEXT, hMem );
-		}
-	}
-
-	CloseClipboard();
-
-	return TRUE;
-}
-
 void CURLCopyDlg::OnStnClickedUrlHost()
 {
 	UpdateData();
 
 	if ( m_sHost.GetLength() )
 	{
-		SetClipboardText( m_sHost );
+		theApp.SetClipboardText( m_sHost );
 
 		CSkinDialog::OnOK();
 	}
@@ -370,7 +369,7 @@ void CURLCopyDlg::OnStnClickedUrlMagnet()
 
 	if ( m_sMagnet.GetLength() )
 	{
-		SetClipboardText( m_sMagnet );
+		theApp.SetClipboardText( m_sMagnet );
 
 		CSkinDialog::OnOK();
 	}
@@ -382,7 +381,7 @@ void CURLCopyDlg::OnStnClickedUrlEd2k()
 
 	if ( m_sED2K.GetLength() )
 	{
-		SetClipboardText( m_sED2K );
+		theApp.SetClipboardText( m_sED2K );
 
 		CSkinDialog::OnOK();
 	}

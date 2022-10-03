@@ -1,7 +1,7 @@
 //
 // CoolInterface.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2010.
+// Copyright (c) Shareaza Development Team, 2002-2017.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -43,7 +43,7 @@ CCoolInterface::CCoolInterface()
 	m_czBuffer = CSize( 0, 0 );
 
 	// experimental values
-	m_pNameMap.InitHashTable( 509 );
+	m_pNameMap.InitHashTable( 631 );
 	m_pImageMap16.InitHashTable( 347 );
 	m_pImageMap32.InitHashTable( 61 );
 	m_pImageMap48.InitHashTable( 61 );
@@ -121,10 +121,15 @@ void CCoolInterface::NameCommand(UINT nID, LPCTSTR pszName)
 
 UINT CCoolInterface::NameToID(LPCTSTR pszName) const
 {
+	if ( ! pszName || ! *pszName )
+		return 0;
+
 	CQuickLock oLock( m_pSection );
 
 	UINT nID = 0;
-	if ( m_pNameMap.Lookup( pszName, nID ) ) return nID;
+	if ( m_pNameMap.Lookup( pszName, nID ) )
+		return nID;
+
 	return _tcstoul( pszName, NULL, 10 );
 }
 
@@ -416,18 +421,25 @@ CDC* CCoolInterface::GetBuffer(CDC& dcScreen, const CSize& szItem)
 
 BOOL CCoolInterface::DrawWatermark(CDC* pDC, CRect* pRect, CBitmap* pMark, int nOffX, int nOffY)
 {
-	BITMAP pWatermark;
-	CBitmap* pOldMark;
-	CDC dcMark;
-
 	if ( pDC == NULL || pRect == NULL || pMark == NULL || pMark->m_hObject == NULL )
 		return FALSE;
 
-	dcMark.CreateCompatibleDC( pDC );
+	BITMAP pWatermark = {};
+	if ( ! pMark->GetBitmap( &pWatermark ) ||
+		! pWatermark.bmWidth ||
+		! pWatermark.bmHeight ||
+		! pWatermark.bmPlanes ||
+		! pWatermark.bmBitsPixel )
+		return FALSE;
+
+	CDC dcMark;
+	if ( ! dcMark.CreateCompatibleDC( pDC ) )
+		return FALSE;
+
 	if ( Settings.General.LanguageRTL )
 		SetLayout( dcMark.m_hDC, LAYOUT_BITMAPORIENTATIONPRESERVED );
-	pOldMark = (CBitmap*)dcMark.SelectObject( pMark );
-	pMark->GetBitmap( &pWatermark );
+
+	CBitmap* pOldMark = (CBitmap*)dcMark.SelectObject( pMark );
 
 	for ( int nY = pRect->top - nOffY ; nY < pRect->bottom ; nY += pWatermark.bmHeight )
 	{
@@ -717,7 +729,7 @@ void CCoolInterface::CalculateColours(BOOL bCustom)
 	m_crFragmentFail		= RGB( 220, 0, 0 );
 	m_crFragmentRequest		= RGB( 255, 255, 0 );
 	m_crFragmentBorder		= RGB( 50, 50, 50 );
-	m_crFragmentBorderSelected	= RGB( 50, 50, 50 );
+	m_crFragmentBorderSelected	= RGB( 255, 255, 255 );
 	m_crFragmentBorderSimpleBar	= RGB( 50, 50, 50 );
 	m_crFragmentBorderSimpleBarSelected	= RGB( 255, 255, 255 );
 
@@ -816,8 +828,8 @@ BOOL CCoolInterface::Add(CXMLElement* pBase, HBITMAP hbmImage, COLORREF crMask, 
 		CXMLElement* pXML = pBase->GetNextElement( pos );
 		if ( ! pXML->IsNamed( _T("image") ) )
 		{
-			TRACE( _T("Unknown tag \"%s\" inside \"%s:%s\" in CCoolInterface::Add\r\n"),
-				pXML->GetName(), pBase->GetName(), pBase->GetAttributeValue( _T("id") ) );
+			TRACE( "Unknown tag \"%s\" inside \"%s:%s\" in CCoolInterface::Add\r\n",
+				(LPCSTR)CT2A( pXML->GetName() ), (LPCSTR)CT2A( pBase->GetName() ), (LPCSTR)CT2A( pBase->GetAttributeValue( _T("id") ) ) );
 			continue;
 		}
 
@@ -826,8 +838,8 @@ BOOL CCoolInterface::Add(CXMLElement* pBase, HBITMAP hbmImage, COLORREF crMask, 
 		{
 			if ( _stscanf( strValue, _T("%i"), &nIndex ) != 1 )
 			{
-				TRACE( _T("Image \"%s\" has invalid index \"%s\" in CCoolInterface::Add\r\n"),
-					pBase->GetAttributeValue( _T("id") ), strValue );
+				TRACE( "Image \"%s\" has invalid index \"%s\" in CCoolInterface::Add\r\n",
+					(LPCSTR)CT2A( pBase->GetAttributeValue( _T("id") ) ), (LPCSTR)CT2A( strValue ) );
 				continue;
 			}
 		}

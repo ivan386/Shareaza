@@ -1,7 +1,7 @@
 //
 // Emoticons.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2010.
+// Copyright (c) Shareaza Development Team, 2002-2017.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -23,7 +23,6 @@
 #include "Shareaza.h"
 #include "Settings.h"
 #include "Emoticons.h"
-#include "ImageServices.h"
 #include "ImageFile.h"
 #include "XML.h"
 
@@ -210,8 +209,7 @@ void CEmoticons::Clear()
 
 int CEmoticons::AddEmoticon(LPCTSTR pszText, CImageFile* pImage, CRect* pRect, COLORREF crBack, BOOL bButton)
 {
-	ASSERT( pImage->m_bLoaded && pImage->m_nComponents == 3 );
-
+	if ( ! pImage->IsLoaded() || pImage->m_nComponents != 3 ) return -1;
 	if ( pRect->left < 0 || pRect->left + EMOTICON_SIZE > pImage->m_nWidth ) return -1;
 	if ( pRect->top < 0 || pRect->top > pImage->m_nHeight + EMOTICON_SIZE ) return -1;
 	if ( pRect->right != pRect->left + EMOTICON_SIZE ) return -1;
@@ -376,13 +374,13 @@ BOOL CEmoticons::LoadTrillian(LPCTSTR pszFile)
 		CRect rc( 0, 0, 0, 0 );
 
 		strValue = pSource->GetAttributeValue( _T("left"), _T("0") );
-		_stscanf( strValue, _T("%i"), &rc.left );
+		_stscanf( strValue, _T("%li"), &rc.left );
 		strValue = pSource->GetAttributeValue( _T("top"), _T("0") );
-		_stscanf( strValue, _T("%i"), &rc.top );
+		_stscanf( strValue, _T("%li"), &rc.top );
 		strValue = pSource->GetAttributeValue( _T("right"), _T("0") );
-		_stscanf( strValue, _T("%i"), &rc.right );
+		_stscanf( strValue, _T("%li"), &rc.right );
 		strValue = pSource->GetAttributeValue( _T("bottom"), _T("0") );
-		_stscanf( strValue, _T("%i"), &rc.bottom );
+		_stscanf( strValue, _T("%li"), &rc.bottom );
 
 		BOOL bButton = pEmoticon->GetAttributeValue( _T("button") ).CompareNoCase( _T("yes") ) == 0;
 

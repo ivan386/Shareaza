@@ -1,7 +1,7 @@
 //
 // LibraryHistory.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2012.
+// Copyright (c) Shareaza Development Team, 2002-2015.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -147,7 +147,8 @@ void CLibraryHistory::Add(LPCTSTR pszPath, const CDownload* pDownload)
 	CLibraryRecent* pRecent = GetByPath( pszPath );
 	if ( pRecent == NULL )
 	{
-		if ( CLibraryRecent* pRecent = new CLibraryRecent( pszPath, pDownload ) )
+		pRecent = new CLibraryRecent( pszPath, pDownload );
+		if ( pRecent )
 		{
 			m_pList.AddHead( pRecent );
 			Prune();

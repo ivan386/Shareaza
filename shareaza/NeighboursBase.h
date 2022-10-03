@@ -39,6 +39,7 @@ public:
 	CNeighbour* GetNext(POSITION& pos) const;	// Give the POSITION to GetNext to get the neighbour beneath it and move to the next one
 	CNeighbour* Get(DWORD_PTR nUnique) const;	// Lookup a neighbour by its unique number, like 2, 3, 4, and so on
 	CNeighbour* Get(const IN_ADDR& pAddress) const;	// Lookup a neighbour by the remote computer's IP address
+	CNeighbour* Get(const IN6_ADDR& pAddress) const;	// Lookup a neighbour by the remote computer's IPv6 address
 	CNeighbour* GetNewest(PROTOCOLID nProtocol, int nState, int nNodeType) const;	// Finds the newest neighbour object
 
 	// Count how many computers we are connected to, specifying various filtering characteristics
@@ -51,10 +52,20 @@ public:
 	virtual void Remove(CNeighbour* pNeighbour);
 
 private:
+
+	struct ipv6_compare {
+		inline bool operator()(const IN6_ADDR& _Left, const IN6_ADDR& _Right) const throw()
+		{
+			return ( memcmp( &_Left, &_Right, sizeof( IN6_ADDR ) ) > 0 );
+		}
+	};
+
 	typedef CMap< IN_ADDR, const IN_ADDR&, CNeighbour*, CNeighbour*& > CAMap;
+	typedef std::map< IN6_ADDR, CNeighbour*, ipv6_compare > CA6Map;
 	typedef CMap< DWORD_PTR, const DWORD_PTR&, CNeighbour*, CNeighbour*& > CNMap;
 
 	CAMap	m_pNeighbours;	// The list of remote computers we are connected to
+	CA6Map	m_pNeighboursIPv6;// The list of remote computers we are connected to
 	CNMap	m_pIndex;		// Additional index
 	DWORD	m_nRunCookie;	// OnRun uses this to run each neighbour once even if GetNext returns the same one more than once in the loop
 };

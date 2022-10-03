@@ -1,7 +1,7 @@
 //
 // XML.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2013.
+// Copyright (c) Shareaza Development Team, 2002-2014.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -70,7 +70,7 @@ BOOL CXMLNode::ParseMatch(LPCTSTR& pszBase, LPCTSTR pszToken)
 	LPCTSTR pszXML = pszBase;
 	int nParse = 0;
 
-	for ( ; IsSpace( *pszXML ) ; pszXML++, nParse++ );
+	for ( ; IsSpaceW( *pszXML ) ; pszXML++, nParse++ );
 	if ( ! *pszXML ) return FALSE;
 
 	for ( ; *pszXML && *pszToken ; pszXML++, pszToken++, nParse++ )
@@ -88,7 +88,7 @@ BOOL CXMLNode::ParseIdentifier(LPCTSTR& pszBase, CString& strIdentifier)
 	LPCTSTR pszXML = pszBase;
 	int nParse = 0;
 
-	while ( IsSpace( *pszXML ) )
+	while ( IsSpaceW( *pszXML ) )
 	{
 		pszXML++;
 		nParse++;
@@ -378,7 +378,7 @@ CXMLElement* CXMLElement::FromString(LPCTSTR pszXML, BOOL bHeader, CString* pEnc
 					LPCTSTR pszEncodingEnd = _tcschr( pszEncoding, _T('\"') );
 					if ( pszEncodingEnd && pszEncodingEnd < pszElement )
 					{
-						pEncoding->Append( pszEncoding, pszEncodingEnd - pszEncoding );
+						pEncoding->Append( pszEncoding, (int)( pszEncodingEnd - pszEncoding ) );
 					}
 				}
 			}
@@ -654,9 +654,15 @@ BOOL CXMLElement::Merge(const CXMLElement* pInput, BOOL bOverwrite)
 {
 	if ( ! this || ! pInput ) return FALSE;
 	if ( this == pInput ) return TRUE;
-	if ( m_sName.CompareNoCase( pInput->m_sName ) != 0 ) return FALSE;
 
-	TRACE( "Merging XML:%sand XML:%s", (LPCSTR)CT2A( ToString( FALSE, TRUE ) ), (LPCSTR)CT2A( pInput->ToString( FALSE, TRUE ) ) );
+	TRACE( "Merging   XML: %s\n", (LPCSTR)CT2A( ToString( FALSE, FALSE ) ) );
+	TRACE( "      and XML: %s\n", (LPCSTR)CT2A( pInput->ToString( FALSE, FALSE ) ) );
+
+	if ( m_sName.CompareNoCase( pInput->m_sName ) != 0 )
+	{
+		TRACE( "Failed to merge XML due different schemes \"%s\" and \"%s\".\n", (LPCSTR)CT2A( m_sName ), (LPCSTR)CT2A( pInput->m_sName ) );
+		return FALSE;
+	}
 
 	BOOL bChanged = FALSE;
 
@@ -695,7 +701,7 @@ BOOL CXMLElement::Merge(const CXMLElement* pInput, BOOL bOverwrite)
 
 	if ( bChanged )
 	{
-		TRACE( "resulting XML:%s\n", (LPCSTR)CT2A( ToString( FALSE, TRUE ) ) );
+		TRACE( "resulting XML: %s\n", (LPCSTR)CT2A( ToString( FALSE, FALSE ) ) );
 	}
 	else
 	{

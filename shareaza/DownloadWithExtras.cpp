@@ -1,7 +1,7 @@
 //
 // DownloadWithExtras.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2013.
+// Copyright (c) Shareaza Development Team, 2002-2014.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -327,24 +327,19 @@ int CDownloadWithExtras::GetReviewAverage() const
 //////////////////////////////////////////////////////////////////////
 // CDownloadWithExtras monitor window
 
-void CDownloadWithExtras::ShowMonitor(CSingleLock* pLock)
+void CDownloadWithExtras::ShowMonitor()
 {
-	bool bLocked = pLock && pLock->IsLocked();
-	if ( bLocked )
-	{
-		if ( !pLock->Unlock() )
-			return;
-	}
+	ASSUME_LOCK( Transfers.m_pSection );
 
 	if ( ! IsMonitorVisible() )
 	{
 		m_pMonitorWnd = new CDownloadMonitorDlg( (CDownload*)this );
 	}
 
-	m_pMonitorWnd->ShowWindow( SW_SHOWNORMAL );
-	m_pMonitorWnd->BringWindowToTop();
-
-	if ( bLocked ) pLock->Lock();
+	if ( m_pMonitorWnd )
+	{
+		m_pMonitorWnd->Show();
+	}
 }
 
 BOOL CDownloadWithExtras::IsMonitorVisible() const

@@ -22,11 +22,13 @@
 #pragma once
 
 #include "SecureRule.h"
+#include "Network.h"
 
 
-#define SECURITY_SER_VERSION	5
+#define SECURITY_SER_VERSION	6
 // History:
 // 5 - extended security rule type (ryo-oh-ki)
+// 6 - m_nIPv6, m_nIPv6PrefixLen in CSecureRule (ivan386)
 
 enum
 {
@@ -64,6 +66,19 @@ protected:
 	typedef std::map< DWORD, CSecureRule* > CAddressRuleMap;
 	CAddressRuleMap	m_pIPRules;
 
+	struct ipv6_compare {
+		inline bool operator()(const IN6_ADDR& _Left, const IN6_ADDR& _Right) const throw()
+		{
+			return ( memcmp( &_Left, &_Right, sizeof( IN6_ADDR ) ) > 0 );
+		}
+	};
+
+	typedef std::set< IN6_ADDR, ipv6_compare > CAddressIPv6Map;
+	CAddressIPv6Map		m_CacheIPv6; // miss cache
+
+	typedef std::map< IN6_ADDR, CSecureRule*, ipv6_compare > CAddressIPv6RuleMap;
+	CAddressIPv6RuleMap	m_pIPv6Rules;
+
 // Operations
 public:
 	POSITION		GetIterator() const;
@@ -76,14 +91,36 @@ public:
 	void			MoveDown(CSecureRule* pRule);
 
 	void			Ban(const IN_ADDR* pAddress, int nBanLength, BOOL bMessage = TRUE, LPCTSTR szComment = NULL);
+	void			Ban(const IN6_ADDR* pAddress, int nBanLength, BOOL bMessage = TRUE, LPCTSTR szComment = NULL);
 	void			Ban(const CShareazaFile* pFile, int nBanLength, BOOL bMessage = TRUE, LPCTSTR szComment = NULL);
 
 	bool			Complain(const IN_ADDR* pAddress, int nBanLength = ban5Mins, int nExpire = 10, int nCount = 3);
 	void			Clear();
+	BOOL			IsIgnoredCountry(const CString& strCountry);
 	BOOL			IsDenied(const IN_ADDR* pAddress);
+	BOOL			IsDenied(const IN6_ADDR* pAddress);
 	BOOL			IsDenied(LPCTSTR pszContent);
 	BOOL			IsDenied(const CShareazaFile* pFile);
 	BOOL			IsDenied(const CQuerySearch* pQuery, const CString& strContent);
+
+	inline  BOOL    IsDeniedComplexCheck(const IN_ADDR* pAddress, const IN_ADDR* pForAddress, BOOL bIncludeSelf = FALSE)
+	{
+		return Network.IsFirewalledAddress( pAddress, bIncludeSelf ) ||
+			   Network.IsReserved( pAddress ) ||
+			   ! Network.IsValidAddressFor( pForAddress , pAddress ) ||
+		       IsIgnoredCountry( theApp.GetCountryCode( *pAddress ) ) || 
+			   IsDenied( pAddress );
+	}
+
+	inline  BOOL    IsDeniedComplexCheck(const IN6_ADDR* pAddress, const IN6_ADDR* pForAddress, BOOL bIncludeSelf = FALSE)
+	{
+		return Network.IsFirewalledAddress( pAddress, bIncludeSelf ) ||
+			   Network.IsReserved( pAddress ) ||
+			   ! Network.IsValidAddressFor( pForAddress , pAddress ) ||
+		       IsIgnoredCountry( theApp.GetCountryCode( *pAddress ) ) || 
+			   IsDenied( pAddress );
+	}
+
 	void			Expire();
 	BOOL			Load();
 	BOOL			Save();

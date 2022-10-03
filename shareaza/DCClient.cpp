@@ -724,7 +724,7 @@ BOOL CDCClient::OnADCGet(const std::string& strParams)
 		// Invalid command
 		return FALSE;
 	QWORD nLength;
-	if ( sscanf_s( strLength.c_str(), "%I64d", &nLength ) != 1 )
+	if ( sscanf_s( strLength.c_str(), "%I64u", &nLength ) != 1 )
 		// Invalid command
 		return FALSE;
 
@@ -790,7 +790,7 @@ BOOL CDCClient::OnADCSnd(const std::string& strParams)
 		return FALSE;
 
 	QWORD nLength;
-	if ( sscanf_s( strLength.c_str(), "%I64d", &nLength ) != 1 )
+	if ( sscanf_s( strLength.c_str(), "%I64u", &nLength ) != 1 )
 		// Invalid command
 		return FALSE;
 

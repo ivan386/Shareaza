@@ -1,7 +1,7 @@
 //
 // DCNeighbour.cpp
 //
-// Copyright (c) Shareaza Development Team, 2010-2014.
+// Copyright (c) Shareaza Development Team, 2010-2015.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -47,7 +47,9 @@ CDCNeighbour::CDCNeighbour()
 	: CNeighbour	( PROTOCOL_DC )
 	, m_bExtended	( FALSE )
 	, m_bNickValid	( FALSE )
+	, m_nMyAddress	()
 {
+	m_nMyAddress.S_un.S_addr = 0;
 	m_nNodeType = ntHub;
 
 	m_oUsers.InitHashTable( GetBestHashTableSize( 3000 ) );
@@ -83,8 +85,14 @@ BOOL CDCNeighbour::ConnectToMe(const CString& sNick)
 	ASSERT( ! sNick.IsEmpty() );
 
 	CString strRequest;
+
+	SOCKADDR_IN nHost( Network.m_pHost );
+
+	if (m_nMyAddress.S_un.S_addr)
+		nHost.sin_addr = m_nMyAddress;
+	
 	strRequest.Format( _T("$ConnectToMe %s %s|"),
-		(LPCTSTR)DCClients.CreateNick( sNick ), (LPCTSTR)HostToString( &Network.m_pHost ) );
+		(LPCTSTR)DCClients.CreateNick( sNick ), (LPCTSTR)HostToString( &nHost ) );
 
 	if ( CDCPacket* pPacket = CDCPacket::New() )
 	{
@@ -143,6 +151,35 @@ BOOL CDCNeighbour::ConnectTo(const IN_ADDR* pAddress, WORD nPort, BOOL bAutomati
 	return TRUE;
 }
 
+BOOL CDCNeighbour::ConnectTo(const IN6_ADDR* pAddress, WORD nPort, BOOL bAutomatic)
+{
+	CString sHost( IPv6ToString( pAddress ) );
+
+	if ( CConnection::ConnectTo( pAddress, nPort ) )
+	{
+		WSAEventSelect( m_hSocket, Network.GetWakeupEvent(),
+			FD_CONNECT | FD_READ | FD_WRITE | FD_CLOSE );
+
+		theApp.Message( MSG_INFO, IDS_CONNECTION_ATTEMPTING,
+			(LPCTSTR)sHost, htons( m_pHost.sin_port ) );
+	}
+	else
+	{
+		theApp.Message( MSG_ERROR, IDS_CONNECTION_CONNECT_FAIL,
+			(LPCTSTR)sHost );
+		return FALSE;
+	}
+
+	m_nState = nrsConnecting;
+
+	m_bAutomatic = bAutomatic;
+
+	Neighbours.Add( this );
+
+	return TRUE;
+}
+
+
 BOOL CDCNeighbour::OnRead()
 {
 	CNeighbour::OnRead();
@@ -170,7 +207,7 @@ BOOL CDCNeighbour::ProcessPackets()
 		}
 	}
 
-	CBuffer* pInput = m_pZInput ? m_pZInput : pInputLocked;
+	CBuffer* pInput = m_pZInput ? m_pZInput : (CBuffer*)pInputLocked;
 
 	return ProcessPackets( pInput );
 }
@@ -251,9 +288,9 @@ BOOL CDCNeighbour::SendUserInfo()
 		// Number of connected hubs as regular user
 		Neighbours.GetCount( PROTOCOL_DC, nrsConnected, ntHub ),
 		// Number of connected hubs as VIP
-		0,
+		0u,
 		// Number of connected hubs as operator
-		0,
+		0u,
 		// Number of upload slots
 		nUploadSlots,
 		// Upload speed (Mbit/s)
@@ -430,7 +467,7 @@ BOOL CDCNeighbour::OnChat(CDCPacket* pPacket)
 
 	if ( LPCSTR szMessage = strchr( (LPCSTR)pPacket->m_pBuffer, '>' ) )
 	{
-		int nNickLen = szMessage - (LPCSTR)pPacket->m_pBuffer - 1;
+		int nNickLen = (int)( szMessage - (LPCSTR)pPacket->m_pBuffer - 1 );
 		CString sNick( UTF8Decode( (LPCSTR)&pPacket->m_pBuffer[ 1 ], nNickLen ) );
 
 		if ( nNickLen > 0 && m_sNick != sNick )
@@ -494,7 +531,7 @@ BOOL CDCNeighbour::OnQuery(CDCPacket* pPacket)
 
 	if ( pSearch->m_bUDP )
 	{
-		if ( Security.IsDenied( &pSearch->m_pEndpoint.sin_addr ) )
+		if ( pSearch->IsIPv6Endpoint() ? Security.IsDenied( &pSearch->m_pEndpointIPv6.sin6_addr ) : Security.IsDenied( &pSearch->m_pEndpoint.sin_addr ) )
 		{
 			m_nDropCount++;
 			return TRUE;
@@ -528,7 +565,8 @@ BOOL CDCNeighbour::OnLock(LPSTR szParams)
 		else
 		{
 			// Bad way
-			if ( LPSTR szUserAgent = strchr( szParams, ' ' ) )
+			szUserAgent = strchr( szParams, ' ' );
+			if ( szUserAgent )
 			{
 				*szUserAgent++ = 0;
 				m_sUserAgent = UTF8Decode( szUserAgent );
@@ -820,14 +858,15 @@ BOOL CDCNeighbour::OnUserIP(LPSTR szIP)
 		if ( LPSTR szAddress = strchr( szMyNick, ' ' ) )
 		{
 			*szAddress++ = 0;
+			if ( LPSTR szAddressEnd = strchr( szAddress, '$' ) )
+				*szAddressEnd = 0;
 
 			CString sNick( UTF8Decode( szMyNick ) );
 
 			if ( m_bNickValid && m_sNick == sNick )
 			{
-				IN_ADDR nAddress;
-				nAddress.s_addr = inet_addr( szAddress );
-				Network.AcquireLocalAddress( nAddress );
+				m_nMyAddress.S_un.S_addr = inet_addr( szAddress );
+				Network.AcquireLocalAddress( m_nMyAddress, 0, &m_pHost.sin_addr );
 			}
 		}
 	}

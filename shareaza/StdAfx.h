@@ -1,7 +1,7 @@
 //
 // StdAfx.h
 //
-// Copyright (c) Shareaza Development Team, 2002-2012.
+// Copyright (c) Shareaza Development Team, 2002-2017.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -26,21 +26,22 @@
 
 #pragma once
 
-#include "..\build.h"
+// Set "1" for release and "0" for alpha, beta, etc. daily builds
+#ifndef RELEASE_BUILD
+	#define RELEASE_BUILD 0
+#endif
 
 //
 // Configuration
 //
 
 #if 1
-
+#pragma warning ( disable : 4548 )
 #pragma warning ( disable : 4619 )	// #pragma warning : there is no warning number
 
 // Warnings that are normally ON by default
 #pragma warning ( disable : 4350 )	// (Level 1)	behavior change: 'member1' called instead of 'member2'
 #pragma warning ( disable : 4351 )	// (Level 1)	new behavior: elements of array 'array' will be default initialized
-
-#pragma warning ( disable : 4244 )	// (Level 2)	'argument' : conversion from 'type1' to 'type2', possible loss of data
 
 #pragma warning ( disable : 4347 )	// (Level 4)	behavior change: 'function template' is called instead of 'function'
 #pragma warning ( disable : 4512 )	// (Level 4)	'class' : assignment operator could not be generated
@@ -49,7 +50,6 @@
 #pragma warning ( disable : 4264 )	// (Level 1)	'virtual_function' : no override available for virtual member function from base 'class'; function is hidden
 #pragma warning ( disable : 4555 )	// (Level 1)	expression has no effect; expected expression with side-effect
 #pragma warning ( disable : 4711 )	// (Level 1)	function 'function' selected for inline expansion
-#pragma warning ( disable : 4548 )	// (Level 1)	expression before comma has no effect; expected expression with side-effect
 
 #pragma warning ( disable : 4191 )	// (Level 3)	'operator/operation' : unsafe conversion from 'type of expression' to 'type required'
 #pragma warning ( disable : 4640 )	// (Level 3)	'instance' : construction of local static object is not thread-safe
@@ -66,11 +66,27 @@
 #pragma warning ( disable : 4710 )	// (Level 4)	'function' : function not inlined
 #pragma warning ( disable : 4820 )	// (Level 4)	'bytes' bytes padding added after construct 'member_name'
 
+#if _MSC_VER >= 1900 // VS 2015
+#pragma warning ( disable : 5026 )	// (Level 4)	'derived class' : move constructor was implicitly defined as deleted because a base class move constructor is inaccessible or deleted
+#pragma warning ( disable : 5027 )	// (Level 4)	'derived class' : move assignment operator was implicitly defined as deleted because a base class move assignment operator is inaccessible or deleted
 #endif
 
-#include <sdkddkver.h>					// Setup versioning for windows SDK/DDK
+#endif
 
+#include "targetver.h"					// Setup versioning for windows SDK/DDK
+
+#ifndef _SECURE_ATL
+#define _SECURE_ATL 1
+#endif
+
+#ifndef VC_EXTRALEAN
 #define VC_EXTRALEAN
+#endif
+
+#ifndef WIN32_LEAN_AND_MEAN
+#define WIN32_LEAN_AND_MEAN
+#endif
+
 #define SECURITY_WIN32
 
 #define _CRT_SECURE_CPP_OVERLOAD_STANDARD_NAMES 1		// Enable secure template overloads
@@ -85,6 +101,7 @@
 
 #define _ATL_NO_COM_SUPPORT					// Prevents ATL COM-related code from being compiled
 #define _ATL_CSTRING_EXPLICIT_CONSTRUCTORS	// Makes certain ATL CString constructors explicit, preventing any unintentional conversions
+#define _ATL_CSTRING_NO_CRT
 
 #pragma warning ( push )			// Suppress Microsoft warnings
 
@@ -117,8 +134,10 @@
 // ATL
 //
 
+#include <atlcoll.h>		// Collection classes
 #include <atlfile.h>		// Thin file classes
 #include <atltime.h>		// Time classes
+#include <atlsafe.h>		// CComSafeArray class
 
 //
 // WIN32
@@ -139,6 +158,7 @@
 #include <powrprof.h>		// The power policy applicator
 #include <propkey.h>
 #include <propvarutil.h>
+#include <ras.h>
 #include <security.h>		// For security aware components
 #include <shlwapi.h>		// Windows Shell API
 #include <taskschd.h>		// Task Scheduler 2.0 interfaces
@@ -148,7 +168,8 @@
 #include <winioctl.h>		// Sparse files support
 #include <winsock2.h>		// Windows sockets V2
 #include <winsvc.h>			// Services (excluded by VC_EXTRALEAN)
-#include <ws2tcpip.h> 
+#include <ws2tcpip.h>
+#include <ws2ipdef.h>
 #include <wspiapi.h>
 
 // Work-around for Microsoft double declaration
@@ -173,6 +194,7 @@
 #include <string>
 #include <utility>
 #include <vector>
+#include <limits>
 
 //
 // Boost
@@ -194,10 +216,6 @@
 #include "../bzlib/bzlib.h"
 #include "../zlib/zlib.h"
 
-// Work-around for VC9 where a (pop) is ifdef'd out in stdio.h
-#if _MSC_VER >= 1500 && _MSC_VER < 1600
-	#pragma warning ( pop )
-#endif
 #pragma warning ( pop )
 
 #include "MinMax.hpp"
@@ -220,21 +238,69 @@ using augment::IUnknownImplementation;
 
 typedef CString StringType;
 
+// Case insensitive string to string map
+typedef CAtlMap< CString, CString, CStringElementTraitsI< CString > > CStringIMap;
+typedef CAtlList< CString, CStringElementTraitsI< CString > > CStringIList;
+
 //! \brief Hash function needed for CMap with const CString& as ARG_KEY.
-template<> AFX_INLINE UINT AFXAPI HashKey(const CString& key)
+
+template<>
+AFX_INLINE UINT AFXAPI HashKey(const CStringW& key)
 {
-	return HashKey< LPCTSTR >( key );
+	UINT nHash = 0;
+	const wchar_t* pszKey = key;
+	for ( int nSize = key.GetLength(); nSize; ++pszKey, --nSize )
+	{
+		nHash = ( nHash << 5 ) + nHash + *pszKey;
+	}
+	return nHash;
 }
 
-template<> AFX_INLINE BOOL AFXAPI CompareElements(const IN_ADDR* pElement1, const IN_ADDR* pElement2)
+template<>
+AFX_INLINE UINT AFXAPI HashKey(const CStringA& key)
+{
+	UINT nHash = 0;
+	const char* pszKey = key;
+	for ( int nSize = key.GetLength(); nSize; ++pszKey, --nSize )
+	{
+		nHash = ( nHash << 5 ) + nHash + *pszKey;
+	}
+	return nHash;
+}
+
+template<>
+AFX_INLINE BOOL AFXAPI CompareElements(const IN_ADDR* pElement1, const IN_ADDR* pElement2)
 {
 	return pElement1->s_addr == pElement2->s_addr;
 }
 
-template<> AFX_INLINE UINT AFXAPI HashKey(const IN_ADDR& key)
+template<>
+AFX_INLINE UINT AFXAPI HashKey(const IN_ADDR& key)
 {
 	return key.s_addr;
 }
+
+#ifdef _WIN64
+
+template<>
+AFX_INLINE UINT AFXAPI HashKey( void* key )
+{
+	return HashKey< __int64 >( (__int64)key );
+}
+
+template<>
+AFX_INLINE UINT AFXAPI HashKey( HICON key )
+{
+	return HashKey< __int64 >( (__int64)key );
+}
+
+template<>
+AFX_INLINE UINT AFXAPI HashKey( LPUNKNOWN key )
+{
+	return HashKey< __int64 >( (__int64)key );
+}
+
+#endif // _WIN64
 
 #include "Hashes.hpp"
 
@@ -624,6 +690,26 @@ private:
 	CTimeAverage& operator=(const CTimeAverage&);
 };
 
+// Simple PROPVARIANT wrapper
+class CComPropVariant : public PROPVARIANT
+{
+public:
+	inline CComPropVariant()
+	{
+		::PropVariantInit( this );
+	}
+
+	inline ~CComPropVariant()
+	{
+		Clear();
+	}
+
+	inline HRESULT Clear()
+	{
+		return ::PropVariantClear( this );
+	}
+};
+
 template< class T >
 inline void SafeRelease(CComPtr< T >& pObj) throw()
 {
@@ -657,7 +743,7 @@ inline bool IsFileNewerThan(LPCTSTR pszFile, const QWORD nMilliseconds)
 inline QWORD GetFileSize(LPCTSTR pszFile)
 {
 	WIN32_FILE_ATTRIBUTE_DATA fd = {};
-	if ( GetFileAttributesEx( pszFile, GetFileExInfoStandard, &fd ) )
+	if ( pszFile && pszFile[ 0 ] && GetFileAttributesEx( ( pszFile[ 0 ] == _T('\\') ) ? pszFile : ( CString( _T("\\\\?\\") ) + pszFile ), GetFileExInfoStandard, &fd ) )
 		return MAKEQWORD( fd.nFileSizeLow, fd.nFileSizeHigh );
 	else
 		return SIZE_UNKNOWN;

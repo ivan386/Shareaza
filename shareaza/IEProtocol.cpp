@@ -36,7 +36,6 @@
 #include "ZIPFile.h"
 #include "ShellIcons.h"
 #include "Connection.h"
-#include "ImageServices.h"
 #include "ImageFile.h"
 #include "Skin.h"
 #include "ThumbCache.h"
@@ -417,12 +416,66 @@ HRESULT CIEProtocol::OnRequestCollection(LPCTSTR pszURL, CBuffer& oBuffer, CStri
 			{
 				if ( ! bParseOnly )
 				{
-					CString strBuffer;
-					pCollFile->Render( strBuffer );
-					oBuffer.Print( strBuffer, CP_UTF8 );
-					sMimeType = _T("text/html");
+					if (strURL.Find(_T("/shareaza_filelist_style.xsl")) > 0){
+						oBuffer.Print( LoadHTML( GetModuleHandle( NULL ), IDR_XSL_ShareazaFileListStyle ) );
+						sMimeType = _T("text/xsl");
+						return S_OK;
+					}
+
+					pCollFile->Render( oBuffer );
+					sMimeType = _T("text/xml");
 				}
 				return S_OK;
+			}
+			else if ( pCollFile && pCollFile->IsType( CCollectionFile::DCCollection ) )
+			{
+				if ( ! bParseOnly ){
+					if (strURL.Find(_T("/dc_filelist_style.xsl")) > 0){
+						oBuffer.Print( LoadHTML( GetModuleHandle( NULL ), IDR_XSL_DCFileListStyle ) );
+						sMimeType = _T("text/xsl");
+						return S_OK;
+					}
+
+					// Try to load as urn first
+					CLibraryFile* pDCCollFile = LibraryMaps.LookupFileByURN( strURN, FALSE, TRUE );
+					if ( ! pDCCollFile )
+					{
+						// else load as sha1
+						if ( ! oSHA1 )
+							return INET_E_INVALID_URL;
+						pDCCollFile = LibraryMaps.LookupFileBySHA1( oSHA1, FALSE, TRUE );
+						if ( ! pDCCollFile )
+							return INET_E_INVALID_URL;
+					}
+
+					CString strDCCollPath = pDCCollFile->GetPath();
+					CFile pDCFile(strDCCollPath, CFile::modeRead);
+					ULONGLONG nInSize = pDCFile.GetLength();
+					
+					CBuffer pDCBuffer;
+
+					if ( ! pDCBuffer.EnsureBuffer( nInSize ) )
+						// Out of memory
+						return INET_E_CANNOT_LOAD_DATA;
+
+					if ( pDCFile.Read( pDCBuffer.GetData(), nInSize ) != nInSize )
+						// File read error
+						return INET_E_CANNOT_LOAD_DATA;
+					pDCBuffer.m_nLength = nInSize;
+
+					pDCFile.Close();
+
+					if ( ! pDCBuffer.UnBZip() )
+						// Decompression error
+						return INET_E_CANNOT_LOAD_DATA;
+
+					CString strTemp;
+					strTemp.Format(	_T("<?xml-stylesheet type=\"text/xsl\" href=\"dc_filelist_style.xsl\"?>") );
+					oBuffer.Print( strTemp , CP_UTF8 );
+					oBuffer.AddBuffer( &pDCBuffer );
+					sMimeType = _T("text/xml");
+					return S_OK;
+				}
 			}
 		}
 	}
@@ -585,13 +638,14 @@ HRESULT CIEProtocol::OnRequestApplication(LPCTSTR pszURL, CBuffer& oBuffer, CStr
 			_T(".time1 { width: 8%%; background-color: %s; text-align: right; }\n")
 			_T(".icon { width: 16px; height: 16px; border-style: none; }\n")
 			_T("</style>\n</head>\n<body onmousemove=\"window.external.hover(''); event.cancel\">\n<h1> %s </h1>\n<table>\n"),
-			/* body */ Settings.Fonts.DefaultFont, Settings.Fonts.FontSize, ToCSSColor( CoolInterface.m_crWindow ), ToCSSColor( CoolInterface.m_crDisabled ),
-			/* h1 */ ToCSSColor( Skin.m_crBannerText ) , ToCSSColor( Skin.m_crBannerBack ),
-			/* .name0 */ ToCSSColor( Skin.m_crSchemaRow[ 0 ] ), ToCSSColor( CoolInterface.m_crTextLink ),
-			/* .time0 */ ToCSSColor( Skin.m_crSchemaRow[ 0 ] ), 
-			/* .name1 */ ToCSSColor( Skin.m_crSchemaRow[ 1 ] ), ToCSSColor( CoolInterface.m_crTextLink ),
-			/* .time1 */ ToCSSColor( Skin.m_crSchemaRow[ 1 ] ), 
-			/* h1 */ Escape( LoadString( IDS_LIBPANEL_RECENT_ADDITIONS ) ) );
+			/* body */ (LPCTSTR)Settings.Fonts.DefaultFont, Settings.Fonts.FontSize,
+			(LPCTSTR)ToCSSColor( CoolInterface.m_crWindow ), (LPCTSTR)ToCSSColor( CoolInterface.m_crDisabled ),
+			/* h1 */ (LPCTSTR)ToCSSColor( Skin.m_crBannerText ) , (LPCTSTR)ToCSSColor( Skin.m_crBannerBack ),
+			/* .name0 */ (LPCTSTR)ToCSSColor( Skin.m_crSchemaRow[ 0 ] ), (LPCTSTR)ToCSSColor( CoolInterface.m_crTextLink ),
+			/* .time0 */ (LPCTSTR)ToCSSColor( Skin.m_crSchemaRow[ 0 ] ),
+			/* .name1 */ (LPCTSTR)ToCSSColor( Skin.m_crSchemaRow[ 1 ] ), (LPCTSTR)ToCSSColor( CoolInterface.m_crTextLink ),
+			/* .time1 */ (LPCTSTR)ToCSSColor( Skin.m_crSchemaRow[ 1 ] ),
+			/* h1 */ (LPCTSTR)Escape( LoadString( IDS_LIBPANEL_RECENT_ADDITIONS ) ) );
 
 		CSingleLock oLock( &Library.m_pSection, FALSE );
 		if ( ! oLock.Lock( 500 ) )
@@ -622,8 +676,8 @@ HRESULT CIEProtocol::OnRequestApplication(LPCTSTR pszURL, CBuffer& oBuffer, CStr
 				_T("<td class=\"name%d\" onclick=\"window.external.display('%s');\" onmousemove=\"window.external.hover('%s'); window.event.cancelBubble = true;\">")
 				_T("<img class=\"icon\" src=\"p2p-file://%s/icon16\"> %s </a></td>")
 				_T("<td class=\"time%d\"> %s </td>"),
-				( nCount & 2 ) >> 1, Escape( strURN ), Escape( strURN ), Escape( strURN ), Escape( pRecent->m_pFile->m_sName ),
-				( nCount & 2 ) >> 1, Escape( sTime ) );
+				( nCount & 2 ) >> 1, (LPCTSTR)Escape( strURN ), (LPCTSTR)Escape( strURN ), (LPCTSTR)Escape( strURN ), (LPCTSTR)Escape( pRecent->m_pFile->m_sName ),
+				( nCount & 2 ) >> 1, (LPCTSTR)Escape( sTime ) );
 
 			if ( ( nCount & 1 ) != 0 )
 				strXML += _T("</tr>\n");

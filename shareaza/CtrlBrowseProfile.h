@@ -19,13 +19,9 @@
 // Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 //
 
-#if !defined(AFX_CTRLBROWSEPROFILE_H__AB5BA2FC_D09C_4A55_A73E_B44179AFA245__INCLUDED_)
-#define AFX_CTRLBROWSEPROFILE_H__AB5BA2FC_D09C_4A55_A73E_B44179AFA245__INCLUDED_
-
 #pragma once
 
 #include "RichViewCtrl.h"
-#include "ImageServices.h"
 #include "ImageFile.h"
 
 class CHostBrowser;
@@ -98,8 +94,4 @@ protected:
 
 };
 
-//{{AFX_INSERT_LOCATION}}
-
 #define IDC_BROWSE_PROFILE	124
-
-#endif // !defined(AFX_CTRLBROWSEPROFILE_H__AB5BA2FC_D09C_4A55_A73E_B44179AFA245__INCLUDED_)

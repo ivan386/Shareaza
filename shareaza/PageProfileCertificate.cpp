@@ -46,10 +46,6 @@ END_MESSAGE_MAP()
 
 CCertificateProfilePage::CCertificateProfilePage() : CSettingsPage( CCertificateProfilePage::IDD )
 {
-	//{{AFX_DATA_INIT(CCertificateProfilePage)
-	m_sGUID = _T("");
-	m_sTime = _T("");
-	//}}AFX_DATA_INIT
 }
 
 CCertificateProfilePage::~CCertificateProfilePage()

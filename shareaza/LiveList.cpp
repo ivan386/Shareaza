@@ -1,7 +1,7 @@
 //
 // LiveList.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2012.
+// Copyright (c) Shareaza Development Team, 2002-2015.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -208,7 +208,7 @@ void CLiveItem::Format(int nColumn, LPCTSTR pszFormat, ...)
 	va_list pArgs;
 
 	va_start( pArgs, pszFormat );
-	_vsntprintf( szBuffer, sizeof( szBuffer ) / sizeof( TCHAR ), pszFormat, pArgs );
+	_vsntprintf_s( szBuffer, sizeof( szBuffer ) / sizeof( TCHAR ), pszFormat, pArgs );
 	szBuffer[ sizeof( szBuffer ) / sizeof( TCHAR ) - 1 ] = 0;
 	va_end( pArgs );
 

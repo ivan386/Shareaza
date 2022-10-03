@@ -1,7 +1,7 @@
 //
 // CtrlMediaFrame.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2012.
+// Copyright (c) Shareaza Development Team, 2002-2015.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -129,6 +129,7 @@ END_MESSAGE_MAP()
 #define SPEED_FACTOR	100
 #define ONE_SECOND		10000000
 
+CMediaFrame* CMediaFrame::m_wndMediaFrame = NULL;
 
 /////////////////////////////////////////////////////////////////////////////
 // CMediaFrame construction
@@ -168,18 +169,7 @@ CMediaFrame::~CMediaFrame()
 
 CMediaFrame* CMediaFrame::GetMediaFrame()
 {
-	if ( CMainWnd* pMainWnd = theApp.SafeMainWnd() )
-	{
-		if ( CMediaWnd* pMediaWnd = static_cast< CMediaWnd* >( pMainWnd->m_pWindows.Find( RUNTIME_CLASS(CMediaWnd) ) ) )
-		{
-			if ( CMediaFrame* pMediaFrame = static_cast< CMediaFrame* >( pMediaWnd->GetWindow( GW_CHILD ) ) )
-			{
-				ASSERT_KINDOF( CMediaFrame, pMediaFrame );
-				return pMediaFrame;
-			}
-		}
-	}
-	return NULL;
+	return m_wndMediaFrame;
 }
 
 /////////////////////////////////////////////////////////////////////////////
@@ -188,13 +178,15 @@ CMediaFrame* CMediaFrame::GetMediaFrame()
 BOOL CMediaFrame::Create(CWnd* pParentWnd)
 {
 	CRect rect;
-	return CWnd::Create( NULL, _T("CMediaFrame"), WS_CHILD | WS_VISIBLE,
-		rect, pParentWnd, 0, NULL );
+	return CWnd::Create( NULL, _T("CMediaFrame"), WS_CHILD | WS_VISIBLE, rect, pParentWnd, 0, NULL );
 }
 
 int CMediaFrame::OnCreate(LPCREATESTRUCT lpCreateStruct)
 {
-	if ( CWnd::OnCreate( lpCreateStruct ) == -1 ) return -1;
+	if ( CWnd::OnCreate( lpCreateStruct ) == -1 )
+		return -1;
+
+	m_wndMediaFrame = this;
 
 	CRect rectDefault;
 	SetOwner( GetParent() );
@@ -270,6 +262,8 @@ void CMediaFrame::OnDestroy()
 	Cleanup();
 
 	EnableScreenSaver();
+
+	m_wndMediaFrame = NULL;
 
 	CWnd::OnDestroy();
 }
@@ -1225,7 +1219,7 @@ void CMediaFrame::OnHScroll(UINT nSBCode, UINT /*nPos*/, CScrollBar* pScrollBar)
 			nNewPosition = 0;
 		else if ( nNewPosition > nLength )
 			nNewPosition = nLength;
-	
+
 		if ( nState == smsPlaying )
 		{
 			m_bThumbPlay = TRUE;
@@ -1813,7 +1807,7 @@ BOOL CMediaFrame::PrepareVis()
 						return FALSE;
 				}
 			}
-				
+
 			hr = m_pPlayer ? m_pPlayer->SetPluginSize( Settings.MediaPlayer.VisSize ) : E_FAIL;
 			if ( FAILED( hr ) )
 				return FALSE;
@@ -1915,7 +1909,7 @@ void CMediaFrame::ReportError()
 	m_pMetadata.Add( _T("Error"), strMessage );
 	m_pMetadata.Add( _T("Error"), LoadString( IDS_MEDIA_LOAD_FAIL_HELP ) );
 
-	theApp.Message( MSG_ERROR, _T("%s"), strMessage );
+	theApp.Message( MSG_ERROR, _T("%s"), (LPCTSTR)strMessage );
 
 	AfxMessageBox( strMessage + _T("\r\n\r\n") +
 		LoadString( IDS_MEDIA_LOAD_FAIL_HELP ), MB_ICONEXCLAMATION );
@@ -2194,7 +2188,7 @@ void CMediaFrame::UpdateNowPlaying(BOOL bEmpty)
 
 		// Strip extension
 		LPCTSTR szFilename = m_sNowPlaying;
-		m_sNowPlaying = m_sNowPlaying.Left( PathFindExtension( szFilename ) - szFilename );
+		m_sNowPlaying = m_sNowPlaying.Left( (int)( PathFindExtension( szFilename ) - szFilename ) );
 	}
 
 	CRegistry::SetString( _T("MediaPlayer"), _T("NowPlaying"), m_sNowPlaying );

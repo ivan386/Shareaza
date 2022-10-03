@@ -1,7 +1,7 @@
 //
 // DCPacket.cpp
 //
-// Copyright (c) Shareaza Development Team, 2010-2013.
+// Copyright (c) Shareaza Development Team, 2010-2014.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -58,7 +58,7 @@ CString CDCPacket::GetType() const
 		{
 			const BYTE* p = m_pBuffer;
 			for ( DWORD n = m_nLength; n && *p != ' ' && *p != '|' ; ++p, --n );
-			return CString( (LPCSTR)&m_pBuffer[ 1 ], p - m_pBuffer - 1 );
+			return CString( (LPCSTR)&m_pBuffer[ 1 ], (int)( p - m_pBuffer - 1 ) );
 		}
 	}
 	return CString();

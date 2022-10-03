@@ -1,7 +1,7 @@
 //
 // Shareaza.h
 //
-// Copyright (c) Shareaza Development Team, 2002-2014.
+// Copyright (c) Shareaza Development Team, 2002-2015.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -95,6 +95,7 @@ public:
 	bool				m_bIsServer;				// Is OS a Server version
 	bool				m_bIsWin2000;				// Is OS Windows 2000
 	bool				m_bIsVistaOrNewer;			// Is OS Vista or newer
+	bool				m_bIs7OrNewer;				// Is OS 7 or newer
 	bool				m_bLimitedConnections;		// Networking is limited (XP SP2)
 	BOOL				m_bMenuWasVisible;			// For the menus in media player window
 	DWORD				m_nLastInput;				// Time of last input event (in secs)
@@ -126,11 +127,16 @@ public:
 	HRESULT		(WINAPI *m_pfnSHGetFolderPathW)(__reserved HWND hwnd, __in int csidl, __in_opt HANDLE hToken, __in DWORD dwFlags, __out_ecount(MAX_PATH) LPWSTR pszPath);
 	HRESULT		(WINAPI *m_pfnSHGetKnownFolderPath)(__in REFKNOWNFOLDERID rfid, __in DWORD /* KNOWN_FOLDER_FLAG */ dwFlags, __in_opt HANDLE hToken, __deref_out PWSTR *ppszPath);
 	HRESULT		(WINAPI *m_pfnSHCreateItemFromParsingName)(__in PCWSTR pszPath, __in_opt IBindCtx *pbc, __in REFIID riid, __deref_out void **ppv);
+	HRESULT		(WINAPI *m_pfnSHGetPropertyStoreFromParsingName)(__in PCWSTR pszPath, __in_opt IBindCtx *pbc, __in GETPROPERTYSTOREFLAGS flags, __in REFIID riid, __deref_out void **ppv);
 	HRESULT		(WINAPI *m_pfnSetCurrentProcessExplicitAppUserModelID)(__in PCWSTR pszAppID);
 	HRESULT		(WINAPI *m_pfnSHGetImageList)(__in int iImageList, __in REFIID riid, __out void **ppv);
 
 	HINSTANCE			m_hUser32;
 	BOOL		(WINAPI *m_pfnChangeWindowMessageFilter)(UINT message, DWORD dwFlag);
+	BOOL		(WINAPI *m_pfnShutdownBlockReasonCreate)(_In_ HWND hWnd, _In_ LPCWSTR pwszReason);
+	BOOL		(WINAPI *m_pfnShutdownBlockReasonDestroy)(_In_ HWND hWnd);
+
+	BOOL GetPropertyStoreFromParsingName( LPCWSTR pszPath, IPropertyStore**ppv );
 
 	// GeoIP - IP to Country lookup
 	HINSTANCE			m_hGeoIP;
@@ -140,10 +146,14 @@ public:
 	typedef void (*GeoIP_deleteFunc)(GeoIP* gi);
 	typedef const char * (*GeoIP_country_code_by_ipnumFunc) (GeoIP* gi, unsigned long ipnum);
 	typedef const char * (*GeoIP_country_name_by_ipnumFunc) (GeoIP* gi, unsigned long ipnum);
+	typedef const char * (*GeoIP_country_code_by_ipnumFunc_v6) (GeoIP* gi, geoipv6_t ipnum);
+	typedef const char * (*GeoIP_country_name_by_ipnumFunc_v6) (GeoIP* gi, geoipv6_t ipnum);
 	GeoIP_cleanupFunc				m_pfnGeoIP_cleanup;
 	GeoIP_deleteFunc				m_pfnGeoIP_delete;
 	GeoIP_country_code_by_ipnumFunc	m_pfnGeoIP_country_code_by_ipnum;
 	GeoIP_country_name_by_ipnumFunc	m_pfnGeoIP_country_name_by_ipnum;
+	GeoIP_country_code_by_ipnumFunc_v6	m_pfnGeoIP_country_code_by_ipnum_v6;
+	GeoIP_country_name_by_ipnumFunc_v6	m_pfnGeoIP_country_name_by_ipnum_v6;
 
 	HINSTANCE			m_hLibGFL;
 
@@ -166,6 +176,8 @@ public:
 
 	CString				GetCountryCode(IN_ADDR pAddress) const;
 	CString				GetCountryName(IN_ADDR pAddress) const;
+	CString				GetCountryCode(IN6_ADDR pAddress) const;
+	CString				GetCountryName(IN6_ADDR pAddress) const;
 
 	// Open file or url. Returns NULL always.
 	virtual CDocument*	OpenDocumentFile(LPCTSTR lpszFileName);
@@ -189,6 +201,7 @@ public:
 	BOOL				OpenDownload(LPCTSTR lpszFileName, BOOL bDoIt);
 
 	CString				GetWindowsFolder() const;
+	CString				GetProgramFilesFolder64() const;
 	CString				GetProgramFilesFolder() const;
 	CString				GetDocumentsFolder() const;
 	CString				GetDownloadsFolder() const;
@@ -202,6 +215,9 @@ public:
 	// Get database handler
 	// Must be freed by "delete" operator.
 	CDatabase*			GetDatabase() const;
+
+	// Copy text to clipboard (Unicode)
+	BOOL SetClipboardText(const CString& strText);
 
 protected:
 	CSplashDlg*			m_dlgSplash;		// Splash dialog
@@ -228,7 +244,6 @@ private:
 };
 
 extern CShareazaApp			theApp;						// Shareaza Application
-extern OSVERSIONINFOEX		Windows;					// Windows Version
 extern SYSTEM_INFO			System;						// System Information
 
 
@@ -338,6 +353,9 @@ BOOL AreServiceHealthy(LPCTSTR szService);
 // Creates shell link
 IShellLink* CreateShellLink(LPCWSTR szTargetExecutablePath, LPCWSTR szCommandLineArgs, LPCWSTR szTitle, LPCWSTR szIconPath, int nIconIndex, LPCWSTR szDescription);
 
+// Select existing string of ComboBox, or add and select a new one
+void AddAndSelect(CComboBox& wndBox, const CString& sText);
+
 struct CompareNums
 {
 	bool operator()(WORD lhs, WORD rhs) const
@@ -372,24 +390,6 @@ __int32 GetRandomNum<__int32>(const __int32& min, const __int32& max);
 
 template <>
 __int64 GetRandomNum<__int64>(const __int64& min, const __int64& max);
-
-// Log severity (log level)
-#define MSG_SEVERITY_MASK		0x000f
-#define MSG_ERROR				0x0000
-#define MSG_WARNING				0x0001
-#define MSG_NOTICE				0x0002
-#define MSG_INFO				0x0003
-#define MSG_DEBUG				0x0004
-
-// Log facility
-#define MSG_FACILITY_MASK		0xff00
-#define MSG_FACILITY_DEFAULT	0x0000
-#define MSG_FACILITY_SEARCH		0x0100
-#define MSG_FACILITY_INCOMING	0x0200
-#define MSG_FACILITY_OUTGOING	0x0300
-
-// Log options
-#define MSG_TRAY				0x0010		// Show message in tray also
 
 #define WM_WINSOCK			(WM_APP+101)	// Winsock messages proxy to Network object ( used by WSAAsyncGetHostByName() function )
 #define WM_VERSIONCHECK		(WM_APP+102)	// Version check ( WAPARM: VERSION_CHECK nCode, LPARAM: unused )
@@ -427,6 +427,8 @@ __int64 GetRandomNum<__int64>(const __int64& min, const __int64& max);
 #define CLIENT_NAME			"Shareaza"
 #define CLIENT_NAME_T		_T( CLIENT_NAME )
 
+#define MOD_CLIENT_NAME_T	_T("i") CLIENT_NAME_T
+
 // Client's main window class name
 #define CLIENT_HWND			CLIENT_NAME_T _T("MainWnd")
 
@@ -437,18 +439,18 @@ __int64 GetRandomNum<__int64>(const __int64& min, const __int64& max);
 
 // 4 Character vendor code (used on G1, G2)
 // BEAR, LIME, RAZA, RAZB, etc
-#define VENDOR_CODE			"RAZA"
+#define VENDOR_CODE			"RAZI"
 
 // ed2k client ID number.
 // 0 = eMule, 1 = cDonkey, 4 = old Shareaza alpha/beta/mod/fork, 0x28 (40) = Shareaza, 0xcb (203) = ShareazaPlus with RazaCB core, etc
-#define ED2K_CLIENT_ID		40
+#define ED2K_CLIENT_ID		41
 
 // 2 Character BT peer-id code
 // SZ = Shareaza, S~ = old Shareaza alpha/beta , CB = ShareazaPlus with RazaCB core, AZ = Azureus, etc
-#define BT_ID1				'S'
-#define BT_ID2				'Z'
+#define BT_ID1				'i'
+#define BT_ID2				'S'
 
-#define WEB_SITE			"http://shareaza.sourceforge.net/"
+#define WEB_SITE			"http://ivan386.github.io/"
 #define WEB_SITE_T			_T( WEB_SITE )
 
 // URLs used by Shareaza

@@ -1,7 +1,7 @@
 //
 // WndSearch.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2013.
+// Copyright (c) Shareaza Development Team, 2002-2015.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -134,13 +134,13 @@ int CSearchWnd::OnCreate(LPCREATESTRUCT lpCreateStruct)
 
 	if ( pSearch && pSearch->m_pSchema != NULL )
 	{
-		CList< CSchemaMember* > pColumns;
+		CSchemaMemberList pColumns;
 		CSchemaColumnsDlg::LoadColumns( pSearch->m_pSchema, &pColumns );
 		m_wndList.SelectSchema( pSearch->m_pSchema, &pColumns );
 	}
 	else if ( CSchemaPtr pSchema = SchemaCache.Get( Settings.Search.BlankSchemaURI ) )
 	{
-		CList< CSchemaMember* > pColumns;
+		CSchemaMemberList pColumns;
 		CSchemaColumnsDlg::LoadColumns( pSchema, &pColumns );
 		m_wndList.SelectSchema( pSchema, &pColumns );
 	}
@@ -525,7 +525,7 @@ void CSearchWnd::OnSearchSearch()
 		CSchemaPtr pSchema = pManaged->GetSchema();
 		if ( m_pMatches->m_nFiles == 0 && pSchema )
 		{
-			CList< CSchemaMember* > pColumns;
+			CSchemaMemberList pColumns;
 			CSchemaColumnsDlg::LoadColumns( pSchema, &pColumns );
 			m_wndList.SelectSchema( pSchema, &pColumns );
 		}
@@ -733,29 +733,13 @@ void CSearchWnd::UpdateMessages()
 			strCaption += _T(" : ");
 			if ( Settings.General.LanguageRTL ) strCaption += _T("\x202B");
 
-			if ( pSearch->m_sSearch.GetLength() )
+			if ( pSearch->HasHash() )
+			{
+				strCaption += _T( "Hash " ) + pSearch->GetURN();
+			}
+			else if ( pSearch->m_sSearch.GetLength() )
 			{
 				strCaption += pSearch->m_sSearch;
-			}
-			else if ( pSearch->m_oSHA1 )
-			{
-				strCaption += pSearch->m_oSHA1.toUrn();
-			}
-			else if ( pSearch->m_oTiger )
-			{
-				strCaption += pSearch->m_oTiger.toUrn();
-			}
-			else if ( pSearch->m_oED2K )
-			{
-				strCaption += pSearch->m_oED2K.toUrn();
-			}
-			else if ( pSearch->m_oBTH )
-			{
-				strCaption += pSearch->m_oBTH.toUrn();
-			}
-			else if ( pSearch->m_oMD5 )
-			{
-				strCaption += pSearch->m_oMD5.toUrn();
 			}
 			else if ( pSearch->m_pSchema && pSearch->m_pXML )
 			{

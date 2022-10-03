@@ -41,5 +41,7 @@ protected:
 // Operations
 public:
 	DWORD	Create(DWORD nAddress);
+	DWORD	Create(IN6_ADDR nAddress);
 	BOOL	Check(DWORD nAddress, DWORD nKey);
+	BOOL	Check(IN6_ADDR nAddress, DWORD nKey);
 };

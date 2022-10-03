@@ -1,7 +1,7 @@
 //
 // UploadTransferED2K.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2013.
+// Copyright (c) Shareaza Development Team, 2002-2015.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -101,9 +101,9 @@ BOOL CUploadTransferED2K::Request(const Hashes::Ed2kHash& oED2K)
 		if ( bLocked )
 			oLock.Unlock();
 
-		if ( CDownload* pFile = Downloads.FindByED2K( oED2K, TRUE ) )
+		if ( CDownload* pDownload = Downloads.FindByED2K( oED2K, TRUE ) )
 		{
-			RequestPartial( pFile );
+			RequestPartial( pDownload );
 		}
 		else
 		{
@@ -160,7 +160,7 @@ void CUploadTransferED2K::Close(UINT nError)
 		return;
 	}
 
-	if ( m_pBaseFile != NULL && m_pClient->IsOnline() )
+	if ( m_pBaseFile != NULL && m_pClient && m_pClient->IsOnline() )
 	{
 		if ( m_nState == upsUploading || m_nState == upsQueued )
 		{
@@ -504,8 +504,6 @@ BOOL CUploadTransferED2K::ServeRequests()
 
 		if ( ! OpenFile() )
 		{
-			theApp.Message( MSG_ERROR, IDS_UPLOAD_CANTOPEN, (LPCTSTR)m_sName, (LPCTSTR)m_sAddress );
-
 			CEDPacket* pReply = CEDPacket::New( ED2K_C2C_FILENOTFOUND );
 			pReply->Write( m_oED2K );
 			Send( pReply );
@@ -554,13 +552,14 @@ BOOL CUploadTransferED2K::StartNextRequest()
 
 	while ( !m_oRequested.empty() && m_nLength == SIZE_UNKNOWN )
 	{
-		if ( std::find( m_oServed.begin(), m_oServed.end(), *m_oRequested.begin() ) == m_oServed.end()
+		Fragments::Queue::const_iterator iRequested = m_oRequested.begin();
+		if ( std::find( m_oServed.begin(), m_oServed.end(), *iRequested ) == m_oServed.end()
 			// This should be redundant (Camper)
-			&& m_oRequested.begin()->begin() < m_nSize
-			&& m_oRequested.begin()->end() <= m_nSize )
+			&& iRequested->begin() < m_nSize
+			&& iRequested->end() <= m_nSize )
 		{
-			m_nOffset = m_oRequested.begin()->begin();
-			m_nLength = m_oRequested.begin()->size();
+			m_nOffset = iRequested->begin();
+			m_nLength = iRequested->size();
 			m_nPosition = 0;
 		}
 		m_oRequested.pop_front();
@@ -635,10 +634,10 @@ BOOL CUploadTransferED2K::DispatchNextChunk()
 				return FALSE;
 
 			pPacket->Write( m_oED2K );
-			pPacket->WriteLongLE( nOffset );
-			pPacket->WriteLongLE( nOffset + nChunk );
+			pPacket->WriteLongLE( (DWORD)nOffset );
+			pPacket->WriteLongLE( (DWORD)( nOffset + nChunk ) );
 		}
-		if ( ! ReadFile( m_nFileBase + nOffset, pPacket->WriteGetPointer( nChunk ), nChunk, &nChunk ) || nChunk == 0 )
+		if ( ! ReadFile( m_nFileBase + nOffset, pPacket->WriteGetPointer( (DWORD)nChunk ), nChunk, &nChunk ) || nChunk == 0 )
 		{
 			// File error
 			pPacket->Release();

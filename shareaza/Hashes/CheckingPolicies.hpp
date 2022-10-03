@@ -2,8 +2,8 @@
 //                                                                            //
 // Hashes/CheckingPolicies.hpp                                                //
 //                                                                            //
-// Copyright (C) 2005 Shareaza Development Team.                              //
-// This file is part of SHAREAZA (shareaza.sourceforge.net).                          //
+// Copyright (C) 2005-2014 Shareaza Development Team.                         //
+// This file is part of SHAREAZA (shareaza.sourceforge.net).                  //
 //                                                                            //
 // Shareaza is free software; you can redistribute it                         //
 // and/or modify it under the terms of the GNU General Public License         //
@@ -230,7 +230,7 @@ namespace Hashes
 			{
 				// we don't want duplicates
 				if ( !std::binary_search( m_blacklist.begin(),
-						m_blackList.end(), storage ) )
+						m_blacklist.end(), storage ) )
 				{
 					m_blacklist.insert( std::lower_bound( m_blacklist.begin(),
 						m_blacklist.end(), storage() ), storage() );
@@ -243,7 +243,7 @@ namespace Hashes
 					storage = alignedStorage())
 			{
 				if ( std::binary_search( m_blacklist.begin(),
-						m_blackList.end(), storage() ) )
+						m_blacklist.end(), storage() ) )
 				{
 					m_blacklist.erase( std::lower_bound( m_blacklist.begin(),
 						m_blacklist.end(), storage() ) );

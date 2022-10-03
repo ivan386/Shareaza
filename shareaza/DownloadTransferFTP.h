@@ -88,7 +88,7 @@ protected:
 
 		virtual QWORD ExtractFileSize() const
 		{
-			TRACE( _T("Extracting file size from:\n%ls\n"), m_sData );
+			TRACE( "Extracting file size from:\n%ls\n", (LPCSTR)CT2A( m_sData ) );
 			CString in( m_sData ), out;
 			for ( int n = 0; Split( in, _T(' '), out ); ++n )
 			{
@@ -176,7 +176,7 @@ protected:
 						m_pOwner->m_nLength - m_pOwner->m_nPosition );
 					m_pOwner->m_pDownload->SubmitData(
 						m_pOwner->m_nOffset + m_pOwner->m_nPosition,
-						pInput->m_pBuffer, nLength );		
+						pInput->m_pBuffer, nLength );
 					m_pOwner->m_nPosition += nLength;
 					m_pOwner->m_nDownloaded += nLength;
 					// Measuring speed
@@ -185,7 +185,7 @@ protected:
 						m_pOwner->GetSource()->m_nSpeed =
 							(DWORD) ( ( ( pInput->m_nLength + m_nTotal ) /
 							( nCurrent - m_tContent ) ) * 1000 );
-						m_tContent = nCurrent;	
+						m_tContent = nCurrent;
 						m_nTotal = 0;
 					} else
 						m_nTotal += pInput->m_nLength;

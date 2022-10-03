@@ -1,7 +1,7 @@
 //
 // WndSettingsPage.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2014.
+// Copyright (c) Shareaza Development Team, 2002-2015.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -52,10 +52,6 @@ CSettingsPage::CSettingsPage(UINT nIDTemplate, LPCTSTR pszName)
 
 	if ( m_lpszTemplateName )
 		LoadDefaultCaption();
-}
-
-CSettingsPage::~CSettingsPage()
-{
 }
 
 /////////////////////////////////////////////////////////////////////////////
@@ -249,7 +245,6 @@ HBRUSH CSettingsPage::OnCtlColor(CDC* pDC, CWnd* pWnd, UINT nCtlColor)
 	return hbr;
 }
 
-
 BOOL CSettingsPage::PreTranslateMessage(MSG* pMsg)
 {
 	if ( pMsg->message >= WM_MOUSEFIRST && pMsg->message <= WM_MOUSELAST )
@@ -274,25 +269,39 @@ BOOL CSettingsPage::PreTranslateMessage(MSG* pMsg)
 }
 
 /////////////////////////////////////////////////////////////////////////////
-// CEditPath
+// CComboBoxPath
 
-IMPLEMENT_DYNAMIC(CEditPath, CEdit)
+IMPLEMENT_DYNAMIC(CComboBoxPath, CComboBox)
 
-BEGIN_MESSAGE_MAP(CEditPath, CEdit)
-	ON_WM_LBUTTONDBLCLK()
+BEGIN_MESSAGE_MAP(CComboBoxPath, CComboBox)
+	ON_WM_RBUTTONDOWN()
 END_MESSAGE_MAP()
 
-void CEditPath::OnLButtonDblClk(UINT nFlags, CPoint point)
+static void TrackPathMenu( const CPoint& point, const CString& sPath )
 {
-	CEdit::OnLButtonDblClk( nFlags, point );
+	if ( CMenu* pMenu = Skin.GetMenu( _T( "Path.Menu" ) ) )
+	{
+		CoolMenu.AddMenu( pMenu, TRUE );
+		switch ( pMenu->TrackPopupMenu( TPM_LEFTALIGN | TPM_LEFTBUTTON | TPM_RIGHTBUTTON | TPM_RETURNCMD, point.x, point.y, AfxGetMainWnd() ) )
+		{
+		case ID_PATH_EXPLORE:
+			if ( GetFileAttributes( CString( _T( "\\\\?\\" ) ) + sPath ) != INVALID_FILE_ATTRIBUTES )
+			{
+				ShellExecute( AfxGetMainWnd()->GetSafeHwnd(), NULL, CString( _T( "\\\\?\\" ) ) + sPath, NULL, NULL, SW_SHOWDEFAULT );
+			}
+			break;
 
+		case ID_PATH_COPY:
+			theApp.SetClipboardText( sPath );
+			break;
+		}
+	}
+}
+
+void CComboBoxPath::OnRButtonDown(UINT /*nFlags*/, CPoint point)
+{
 	CString sPath;
 	GetWindowText( sPath );
-
-	sPath = CString( _T("\\\\?\\") ) + sPath;	// very long path
-
-	if ( GetFileAttributes( sPath ) != INVALID_FILE_ATTRIBUTES )
-	{
-		ShellExecute( GetSafeHwnd(), NULL, sPath, NULL, NULL, SW_SHOWDEFAULT );
-	}
+	ClientToScreen( &point );
+	TrackPathMenu( point, sPath );
 }

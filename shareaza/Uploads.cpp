@@ -201,6 +201,25 @@ BOOL CUploads::AllowMoreTo(const IN_ADDR* pAddress) const
 	return ( nCount <= Settings.Uploads.MaxPerHost );
 }
 
+BOOL CUploads::AllowMoreTo(const IN6_ADDR* pAddress) const
+{
+	DWORD nCount = 0;
+
+	for ( POSITION pos = GetIterator() ; pos ; )
+	{
+		const CUploadTransfer* pUpload = GetNext( pos );
+
+		if ( pUpload->m_nState == upsUploading ||
+			 pUpload->m_nState == upsQueued )
+		{
+			if ( IN6_ADDR_EQUAL( &pUpload->m_pHostIPv6.sin6_addr, pAddress ) )
+				nCount++;
+		}
+	}
+
+	return ( nCount <= Settings.Uploads.MaxPerHost );
+}
+
 BOOL CUploads::CanUploadFileTo(const IN_ADDR* pAddress, const CShareazaFile* pFile) const
 {
 	DWORD nCount = 0;
@@ -213,6 +232,31 @@ BOOL CUploads::CanUploadFileTo(const IN_ADDR* pAddress, const CShareazaFile* pFi
 			 pUpload->m_nState == upsQueued )
 		{
 			if ( pUpload->m_pHost.sin_addr.s_addr == pAddress->s_addr )
+			{
+				nCount++;
+
+				// If we're already uploading this file to this client
+				if ( *pUpload == *pFile )
+					return FALSE;
+			}
+		}
+	}
+
+	return ( nCount < Settings.Uploads.MaxPerHost );
+}
+
+BOOL CUploads::CanUploadFileTo(const IN6_ADDR* pAddress, const CShareazaFile* pFile) const
+{
+	DWORD nCount = 0;
+
+	for ( POSITION pos = GetIterator() ; pos ; )
+	{
+		const CUploadTransfer* pUpload = GetNext( pos );
+
+		if ( pUpload->m_nState == upsUploading ||
+			 pUpload->m_nState == upsQueued )
+		{
+			if ( IN6_ADDR_EQUAL( &pUpload->m_pHostIPv6.sin6_addr, pAddress ) )
 			{
 				nCount++;
 

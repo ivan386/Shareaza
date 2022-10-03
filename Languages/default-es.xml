@@ -921,8 +921,7 @@
 				<item id="ID_SEARCH_FOR_ALBUM" text="Música de este álbum"/>
 				<item id="ID_SEARCH_FOR_SERIES" text="Episodios de esta serie"/>
 			</menu>
-			<menu text="_Web Services">
-				<item id="ID_LIBRARY_BITZI_WEB" text="Ver _Bitzi Ticket"/>
+			<menu id="ID_WEBSERVICES_LIST" text="_Web Services">
 			</menu>
 		</menu>
 		<menu name="CSearchWnd">
@@ -942,8 +941,7 @@
 				<item id="ID_SEARCH_FOR_ALBUM" text="Música de este álbum"/>
 				<item id="ID_SEARCH_FOR_SERIES" text="Episodios de esta serie"/>
 			</menu>
-			<menu text="_Web Services">
-				<item id="ID_LIBRARY_BITZI_WEB" text="Ver _Bitzi Ticket"/>
+			<menu id="ID_WEBSERVICES_LIST" text="_Web Services">
 			</menu>
 			<separator/>
 			<item id="ID_SEARCH_FILTER" text="_Filtrar resultados..."/>
@@ -968,8 +966,7 @@
 				<item id="ID_SEARCH_FOR_ALBUM" text="Música de este álbum"/>
 				<item id="ID_SEARCH_FOR_SERIES" text="Episodios de esta serie"/>
 			</menu>
-			<menu text="_Web Services">
-				<item id="ID_LIBRARY_BITZI_WEB" text="Ver _Bitzi Ticket"/>
+			<menu id="ID_WEBSERVICES_LIST" text="_Web Services">
 			</menu>
 		</menu>
 		<menu name="CBrowseHostWnd">
@@ -987,8 +984,7 @@
 				<item id="ID_SEARCH_FOR_ALBUM" text="Música de este álbum"/>
 				<item id="ID_SEARCH_FOR_SERIES" text="Episodios de esta serie"/>
 			</menu>
-			<menu text="_Web Services">
-				<item id="ID_LIBRARY_BITZI_WEB" text="Ver _Bitzi Ticket"/>
+			<menu id="ID_WEBSERVICES_LIST" text="_Web Services">
 			</menu>
 			<separator/>
 			<item id="ID_SEARCH_FILTER" text="_Filtrar resultados..."/>
@@ -1012,8 +1008,7 @@
 				<item id="ID_SEARCH_FOR_ALBUM" text="Música de este álbum"/>
 				<item id="ID_SEARCH_FOR_SERIES" text="Episodios de esta serie"/>
 			</menu>
-			<menu text="_Web Services">
-				<item id="ID_LIBRARY_BITZI_WEB" text="Ver _Bitzi Ticket"/>
+			<menu id="ID_WEBSERVICES_LIST" text="_Web Services">
 			</menu>
 			<separator/>
 			<item id="ID_SEARCH_FILTER" text="_Filtrar resultados..."/>
@@ -1248,9 +1243,7 @@
 				<item id="ID_SEARCH_FOR_ALBUM" text="Música de este álbum"/>
 				<item id="ID_SEARCH_FOR_SERIES" text="Episodios de esta serie"/>
 			</menu>
-			<menu text="_Web Services">
-				<item id="ID_LIBRARY_BITZI_WEB" text="Ver _Bitzi Ticket"/>
-				<item id="ID_LIBRARY_BITZI_DOWNLOAD" text="_Descargar metadata"/>
+			<menu id="ID_WEBSERVICES_LIST" text="_Web Services">
 				<item id="ID_WEBSERVICES_MUSICBRAINZ" text="_MusicBrainz"/>
 			</menu>
 			<menu text="O_rganizar">
@@ -1280,9 +1273,7 @@
 				<item id="ID_SEARCH_FOR_ALBUM" text="Música de este álbum"/>
 				<item id="ID_SEARCH_FOR_SERIES" text="Episodios de esta serie"/>
 			</menu>
-			<menu text="_Web Services">
-				<item id="ID_LIBRARY_BITZI_WEB" text="Ver _Bitzi Ticket"/>
-				<item id="ID_LIBRARY_BITZI_DOWNLOAD" text="_Descargar metadata"/>
+			<menu id="ID_WEBSERVICES_LIST" text="_Web Services">
 				<item id="ID_WEBSERVICES_MUSICBRAINZ" text="_MusicBrainz"/>
 				<separator/>
 				<item id="ID_LIBRARY_CREATETORRENT" text="Crear archivo .torrent"/>
@@ -1320,9 +1311,7 @@
 				<item id="ID_SEARCH_FOR_ALBUM" text="Música de este álbum"/>
 				<item id="ID_SEARCH_FOR_SERIES" text="Episodios de esta serie"/>
 			</menu>
-			<menu text="_Web Services">
-				<item id="ID_LIBRARY_BITZI_WEB" text="Ver _Bitzi Ticket"/>
-				<item id="ID_LIBRARY_BITZI_DOWNLOAD" text="_Descargar metadata"/>
+			<menu id="ID_WEBSERVICES_LIST" text="_Web Services">
 			</menu>
 			<menu text="O_rganizar">
 				<item id="ID_LIBRARY_RENAME" text="_Renombrar archivo"/>
@@ -1355,10 +1344,7 @@
 				<item id="ID_SEARCH_FOR_ALBUM" text="Música de este álbum"/>
 				<item id="ID_SEARCH_FOR_SERIES" text="Episodios de esta serie"/>
 			</menu>
-			<menu text="_Web Services">
-				<item id="ID_LIBRARY_BITZI_WEB" text="Ver _Bitzi Ticket"/>
-				<item id="ID_LIBRARY_BITZI_DOWNLOAD" text="_Descargar metadata"/>
-				<separator/>
+			<menu id="ID_WEBSERVICES_LIST" text="_Web Services">
 				<item id="ID_LIBRARY_CREATETORRENT" text="Crear archivo .torrent"/>
 			</menu>
 			<menu text="O_rganizar">
@@ -1661,9 +1647,11 @@
 			</menu>
 		</menu>
 		<menu name="WebServices.List.Menu">
-			<item id="ID_LIBRARY_BITZI_WEB" text="Ver _Bitzi Ticket"/>
-			<item id="ID_LIBRARY_BITZI_DOWNLOAD" text="_Descargar metadata"/>
 			<item id="ID_WEBSERVICES_MUSICBRAINZ" text="_MusicBrainz"/>
+		</menu>
+		<menu name="Path.Menu">
+			<item id="ID_PATH_EXPLORE" text="_Explorar"/>
+			<item id="ID_PATH_COPY" text="_Copiar"/>
 		</menu>
 	</menus>
 	<!-- Documents -->
@@ -1855,7 +1843,7 @@
 			<text group="11" align="middle">Desconectado</text>
 			<text group="12" align="middle">Conectando...</text>
 			<text group="13" align="middle">Conectado</text>
-			<text group="14" align="middle" id="G1Hubs">eDonkey:</text>
+			<text group="14" align="middle" id="G1Hubs">%i ultrapeers</text>
 			<text group="15" align="middle" id="G1Leaves">%i leaves</text>
 			<newline group="10" gap="2"/>
 			<icon group="30" command="ID_NETWORK_ED2K"/><gap group="30" size="4"/>
@@ -2460,8 +2448,6 @@ puede comenzar a transferir en cualquier momento.</text>
 		<tip id="ID_LIBRARY_ALBUM_DELETE" message="Borrar la carpeta virtual o album."/>
 		<tip id="ID_LIBRARY_ALBUM_OPEN" message="Abrir la carpeta o album seleccionado."/>
 		<tip id="ID_LIBRARY_ALBUM_PROPERTIES" message="Ver o editar propiedades..."/>
-		<tip id="ID_LIBRARY_BITZI_DOWNLOAD" message="Adquirir metadatos desde Bitzi(TM)..."/>
-		<tip id="ID_LIBRARY_BITZI_WEB" message="Ver el reporte de Bitzi(TM) en la web."/>
 		<tip id="ID_LIBRARY_COLUMNS" message="Seleccionar las columnas de metadata a mostrar..."/>
 		<tip id="ID_LIBRARY_COPY" message="Copiar archivos seleccionados a otra carpeta de Mi Colección..."/>
 		<tip id="ID_LIBRARY_CREATETORRENT" message="Crear un .torrent para este archivo y subirlo a una web."/>
@@ -2572,6 +2558,8 @@ puede comenzar a transferir en cualquier momento.</text>
 		<tip id="ID_NEXT_PANE" message="Cambiar a la siguiente area de la ventana" tip="Siguiente area"/>
 		<tip id="ID_OPEN_DOWNLOADS_FOLDER" message="Abrir mi carpeta de descargas finalizadas"/>
 		<tip id="ID_PREV_PANE" message="Ir al archivo anterior." tip="Anterior"/>
+		<tip id="ID_PATH_COPY" message="Copy this path to clipboard."/>
+		<tip id="ID_PATH_EXPLORE" message="Explore this path."/>
 		<tip id="ID_SCHEDULER_ACTIVATE" message="Eliminar las transferencias seleccionadas."/>
 		<tip id="ID_SCHEDULER_ADD" message="Añade una nueva tarea al programador."/>
 		<tip id="ID_SCHEDULER_DEACTIVATE" message="Desactiva las tareas seleccionadas."/>
@@ -2874,6 +2862,7 @@ puede comenzar a transferir en cualquier momento.</text>
 		<string id="8336" value="Las fuentes pueden ser inestables"/>
 		<string id="8337" value="No confiado"/>
 		<string id="8338" value="Gratuito:"/>
+		<string id="12999" value="Client %s has a prohibited user agent &quot;%s&quot;, banning."/>
 		<string id="13000" value="Estas seguro que quieres borrar las reglas de seguridad seleccionadas? Esto no se puede deshacer."/>
 		<string id="13001" value="Archivos compartidos a través de Internet"/>
 		<string id="16063" value="Mapeo del puerto UPnP falló después de 10 intentos."/>
@@ -2889,7 +2878,7 @@ puede comenzar a transferir en cualquier momento.</text>
 		<string id="16073" value="Resolviendo la ruta de &quot;%s&quot;..."/>
 		<string id="16074" value="No se pudo resolver host &quot;%s&quot;."/>
 		<string id="16075" value="Security manager denegó la conexión de %s."/>
-		<string id="16076" value="Security manager bloqueo conectarse a %s."/>
+		<string id="16076" value="Security manager barred a connection to %s."/>
 		<string id="16077" value="La dirección %s ya esta bloqueada en tus reglas de seguridad."/>
 		<string id="16078" value="Agregar una regla de seguridad %s."/>
 		<string id="16079" value="Estas seguro que deseas desconectarte?"/>
@@ -3073,8 +3062,6 @@ puede comenzar a transferir en cualquier momento.</text>
 		<string id="16384" value="Estás seguro(a) que quieres ejecutar el archivo &quot;%s&quot;?\n\nAlgunos archivos pueden ser peligrosos para la computadora, es recomendado tener el antivirus funcionando y actualizado."/>
 		<string id="16385" value="Estas a punto de modificar la metadata de %i archivos. ¿Estás seguro(a) en continuar?"/>
 		<string id="16386" value="Editando metadata de %i archivos."/>
-		<string id="16387" value="El archivo &quot;%s&quot; no ha sido escaneado. Por favor espere a que sea escaneado, e intente más tarde."/>
-		<string id="16388" value="Esto usa un servicio ofrecido por Bitzi.com, para adquirir metadata acerca del archivo.\n\nShareaza va a enviar una pequeña información sobre la huella digital 'bitprint' del archivo para que Bitzi lo pueda reconocer. Si tienes alguna duda sobre la privacidad de este servicio, visita bitzi.com para más información.\n\n¿Quieres continuar?"/>
 		<string id="16389" value="¿Estás seguro(a) de eliminar los %i archivo(s) seleccionados de forma permanente ?\n\nEllos van a ser movidos a &quot;la Papelera de reciclaje&quot; si esta esta activada."/>
 		<string id="16390" value="No ha seleccionado un reproductor para los archivos de media.  ¿Quieres seleccionar uno ahora?\n\nEl archivo va a ser pasado con el argumento &quot;/ADD&quot;."/>
 		<string id="16391" value="Shareaza no está conectado."/>
@@ -3148,10 +3135,6 @@ puede comenzar a transferir en cualquier momento.</text>
 		<string id="16778" value="URL:"/>
 		<string id="16779" value="Tipo:"/>
 		<string id="16780" value="No (inespecífico)"/>
-		<string id="16781" value="Pidiendo..."/>
-		<string id="16782" value="¡Operacion realizada con éxito!"/>
-		<string id="16783" value="Terminado, haz click para cerrar"/>
-		<string id="16784" value="&amp;Cerrar"/>
 		<string id="16785" value="(No Visualización)"/>
 		<string id="16800" value="Todavía no ha especificado la velocidad de conexión.  Antes de continuar, por favor elija o escriba la velocidad de su conexión."/>
 		<string id="16802" value="No ha especificado ninguna carpeta para compartir. Recuerda que cuanto más compartas, más velocidad de descarga podrás alcanzar(eDonkey). ¿Estás seguro(a) de no compartir tus carpetas?"/>
@@ -3169,7 +3152,7 @@ puede comenzar a transferir en cualquier momento.</text>
 		<string id="16816" value="La red eDonkey utiliza largas colas con tiempos largos de espera. Limitando la posición máxima de cola de espera,puede que te de problemas para iniciar las descargas.\nEstas seguro que deseas limitar las posiciones de cola que vas a aceptar?"/>
 		<string id="16817" value="Windows no soporta nombres más grandes que 256 caracteres.\nPor favor, selecciona un nombre con un tamaño más pequeño."/>
 		<string id="16818" value="La carpeta de archivos incompletos no debe de estar en Mi Colección, porque reduce velocidad. Archivos incompletos pueden ser compartidos directamente de la ventana de transferencias."/>
-		<string id="16819" value="Una subcarpeta de la carpeta seleccionada &quot;%s&quot; ya es parte de Mi Colección. \n\nDeseas agregar la carpeta seleccionada a Mi colección?\n\n La carpeta existente va a ser una subcarpeta de la nueva carpeta. Esto va a causar refusión de todos los archivos en esta carpeta."/>
+		<string id="16819" value="The incomplete files folder should not be in the library, as it would reduce performance. Incomplete files may be shared directly from the transfers window."/>
 		<string id="16864" value="Pidiendo informacion a servicios de descubrimiento..."/>
 		<string id="16865" value="Pidiendo informacion al servicio de descubrimiento &quot;%s&quot;..."/>
 		<string id="16866" value="Transacción con el GWebCache (&quot;%s&quot;) fué completada."/>
@@ -3346,8 +3329,8 @@ puede comenzar a transferir en cualquier momento.</text>
 		<string id="18510" value="¿Estás seguro de asumir esta descarga como completa y reverificarla? Shareaza reverificará el archivo, y aceptará las partes correctas, y descarga de nuevo aquellas incorrectas."/>
 		<string id="18511" value="Has hecho cambios en el tamaño del archivo.  Estas seguro que quieres cambiar el tamaño de esta descarga?"/>
 		<string id="18512" value="¿Estás seguro que deseas cancelar/abortar todas las descargas en este grupo?"/>
-		<string id="18513" value="El valor del hash de eDonkey asignado no es válido. Por favor, revíselo e intentelo de nuevo."/>
-		<string id="18514" value="¿Estás seguro de cambiar el SHA1?"/>
+		<string id="18513" value="You have typed an %s hash value, however it is invalid. Please check it and try again."/>
+		<string id="18514" value="You have provided an %s hash value which is different to the one currently associated with this download. Are you sure you want to change the %s hash now?"/>
 		<string id="18515" value="El elemento de descarga seleccionado tiene alguna tarea adjunta. Por favor, espera e intentalo mas tarde."/>
 		<string id="19000" value="El Acceso Remoto esta deshabilitado."/>
 		<string id="19001" value="Debes Seleccionar un nombre de usuario y contraseña."/>
@@ -3452,6 +3435,10 @@ puede comenzar a transferir en cualquier momento.</text>
 		<string id="20265" value="Hecho"/>
 		<string id="20266" value="Esperando..."/>
 		<string id="20267" value="No hay tareas programadas"/>
+		<string id="20268" value="Carpeta de archivos completados"/>
+		<string id="20269" value="Carpeta de archivos incompletos"/>
+		<string id="20270" value="Almacena torrents aquí"/>
+		<string id="20271" value="Guardar Colecciones Aquí"/>
 	</strings>
 	<!-- Localised Dialog Text, the "cookie" verifies that the dialog matches the skin -->
 	<!-- Don't edit dialogs manualy! Use DialogScan feature instead -->
@@ -3473,7 +3460,7 @@ puede comenzar a transferir en cualquier momento.</text>
 			<control caption="bits/segundo|bytes/segundo|b/s|B/s|Kb/s|KB/s|Mb/s|MB/s"/>
 			<control caption="_Descargas:"/>
 			<control caption="Expandir nuevas transferencias por defecto"/>
-			<control caption="Mostrar barra simple de progreso"/>
+			<control caption="Abrir el _Monitor de transferencias"/>
 			<control caption="_Buscar:"/>
 			<control caption="Expandir multiples fuentes por defecto"/>
 			<control caption="Mostrar la pestaña de Transferencias al iniciar la descarga"/>
@@ -3492,7 +3479,7 @@ puede comenzar a transferir en cualquier momento.</text>
 			<control caption="Cuando hago click minimizar:"/>
 			<control caption="Normal|Minimizar en el area de notificación"/>
 		</dialog>
-		<dialog name="CLibrarySettingsPage" cookie="BuBuBuBuBuBuStEdmsStStEdmsStBuBuCoBuBuBuCoBuBuBuEdBuBuBu" caption="Mi Colección">
+		<dialog name="CLibrarySettingsPage" cookie="BuBuBuBuBuBuStEdmsStStEdmsStBuBuCoBuBuBuCoBuBuBuCoBuBuBu" caption="Mi Colección">
 			<control caption="_Opciones:"/>
 			<control caption="Recordar vistas de carpetas"/>
 			<control caption="Ver carpetas de Mi Colección"/>
@@ -3516,7 +3503,7 @@ puede comenzar a transferir en cualquier momento.</text>
 			<control/>
 			<control caption="_Agregar"/>
 			<control caption="_Eliminar"/>
-			<control caption="Guardar _Colecciones Aquí:"/>
+			<control caption="Guardar Colecciones Aquí"/>
 			<control/>
 			<control/>
 			<control caption="Crear huellas de archivos (ghost files) cuando sean borrados"/>
@@ -3629,8 +3616,8 @@ puede comenzar a transferir en cualquier momento.</text>
 			<control/>
 			<control/>
 		</dialog>
-		<dialog name="CDownloadsSettingsPage" cookie="BuEdBuBuStCoBuStEdmsStEdmsStEdmsBuStCoStCoBuBuEdBu" caption="Descargas">
-			<control caption="_Carpeta de archivos completados:"/>
+		<dialog name="CDownloadsSettingsPage" cookie="BuCoBuBuStCoBuStEdmsStEdmsStEdmsBuStCoStCoBuBuCoBu" caption="Descargas">
+			<control caption="Carpeta de archivos completados"/>
 			<control/>
 			<control/>
 			<control caption="Escanear con el antivirus cada archivo completado"/>
@@ -3652,7 +3639,7 @@ puede comenzar a transferir en cualquier momento.</text>
 			<control caption="Tamaño máximo de las colas:"/>
 			<control/>
 			<control caption="Solo subir y descargar usando las redes conectadas."/>
-			<control caption="Carpeta de archivos _incompletos: (temporales)"/>
+			<control caption="Carpeta de archivos incompletos"/>
 			<control/>
 			<control/>
 		</dialog>
@@ -3763,7 +3750,7 @@ puede comenzar a transferir en cualquier momento.</text>
 			<control caption="_Herramientas de eDonkey:"/>
 			<control caption="Descargar lista de servidores eDonkey de la web:"/>
 		</dialog>
-		<dialog name="CBitTorrentSettingsPage" cookie="BuBuBuEdmsEdmsBuEdmsBuBuEdBuEdBuEdBuBuBuStStStStBu" caption="BitTorrent">
+		<dialog name="CBitTorrentSettingsPage" cookie="BuBuBuEdmsEdmsBuEdmsBuBuCoBuEdBuEdBuBuBuStStStStBu" caption="BitTorrent">
 			<control caption="Always connect to BitTorrent"/>
 			<control caption="Connect to BitTorrent today"/>
 			<control caption="Enable BitTorrent DHT"/>
@@ -3783,7 +3770,7 @@ puede comenzar a transferir en cualquier momento.</text>
 			<control/>
 			<control caption="_BitTorrent Network:"/>
 			<control caption="_Conexiones de descarga:"/>
-			<control caption="Almacena torrent_s aquí "/>
+			<control caption="Almacena torrents aquí"/>
 			<control caption="Torrents al mismo tiempo"/>
 			<control caption="Conexiones de cliente"/>
 			<control caption="%"/>
@@ -3817,7 +3804,9 @@ puede comenzar a transferir en cualquier momento.</text>
 			<control caption="_Configurar..."/>
 			<control caption="Buscar más..."/>
 		</dialog>
-		<dialog name="CAdvancedSettingsPage" cookie="SyEdmsBuBuStStEdBuCo" caption="Avanzado">
+		<dialog name="CAdvancedSettingsPage" cookie="EdStSyEdmsBuBuStStEdBuCo" caption="Avanzado">
+			<control/>
+			<control/>
 			<control/>
 			<control/>
 			<control/>
@@ -3976,7 +3965,7 @@ puede comenzar a transferir en cualquier momento.</text>
 			<control/>
 			<control/>
 			<control caption="_Acerca de ti:"/>
-			<control caption="|Hombre|Mujer"/>
+			<control caption="Male|Female"/>
 			<control caption="Sexo:"/>
 			<control/>
 			<control caption="Edad:"/>
@@ -4120,7 +4109,7 @@ puede comenzar a transferir en cualquier momento.</text>
 			<control caption="Dirección _del servicio:"/>
 			<control/>
 			<control caption="Tipo de servicio de descubrimiento:"/>
-			<control caption="Gnutella Bootstrap|G1 GWebCache|G2 GWebCache|G1/G2 GWebCache|Server.met URL|Bloqueado"/>
+			<control caption="Gnutella Bootstrap|G1 GWebCache|G2 GWebCache|G1/G2 GWebCache|Server.met URL|DC++ Hub List URL|Bloqueado"/>
 			<control caption="Aceptar"/>
 			<control caption="Cancelar"/>
 		</dialog>
@@ -4333,14 +4322,6 @@ puede comenzar a transferir en cualquier momento.</text>
 			<control caption="_Recordar mi selección para siempre"/>
 			<control caption="Abrir el _Monitor de transferencias"/>
 			<control caption="Este enlace permite agregar a Shareaza el siguiente Servicio de Descubrimiento."/>
-		</dialog>
-		<dialog name="CBitziDownloadDlg" cookie="StStmsBuSySt" caption="Descargando metadata...">
-			<control/>
-			<control caption="Shareaza está intentando descargar metadata desde Bitzi(TM)..."/>
-			<control/>
-			<control caption="Cancelar"/>
-			<control/>
-			<control caption="www.bitzi.com"/>
 		</dialog>
 		<dialog name="CFilePreviewDlg" cookie="StStStmsStBu" caption="Vista previa inteligente...">
 			<control/>

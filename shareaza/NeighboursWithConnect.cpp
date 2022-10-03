@@ -1,7 +1,7 @@
 //
 // NeighboursWithConnect.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2014.
+// Copyright (c) Shareaza Development Team, 2002-2017.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -103,7 +103,7 @@ CNeighbour* CNeighboursWithConnect::ConnectTo(
 		if ( bAutomatic ) return NULL;
 
 		// Report that this address is on the block list, and return no new connection made
-		theApp.Message( MSG_ERROR, IDS_NETWORK_SECURITY_OUTGOING, (LPCTSTR)CString( inet_ntoa( pAddress ) ) );
+		theApp.Message( MSG_ERROR, IDS_SECURITY_OUTGOING, (LPCTSTR)CString( inet_ntoa( pAddress ) ) );
 		return NULL;
 	}
 
@@ -141,7 +141,8 @@ CNeighbour* CNeighboursWithConnect::ConnectTo(
 
 		case PROTOCOL_ED2K:
 			Settings.eDonkey.EnableToday = true;
-			CloseDonkeys();
+			if ( Settings.eDonkey.CloseNeighboursOnConnect )
+				CloseDonkeys();
 			break;
 
 		case PROTOCOL_BT:
@@ -187,6 +188,140 @@ CNeighbour* CNeighboursWithConnect::ConnectTo(
 	case PROTOCOL_KAD:
 		{
 			SOCKADDR_IN pHost = { AF_INET, htons( nPort ), pAddress };
+			Kademlia.Bootstrap( &pHost );
+		}
+		break;
+
+	case PROTOCOL_DC:
+		{
+			auto_ptr< CDCNeighbour > pNeighbour( new CDCNeighbour() );
+			if ( pNeighbour->ConnectTo( &pAddress, nPort, bAutomatic ) )
+			{
+				return pNeighbour.release();
+			}
+		}
+		break;
+
+	default:
+		{
+			auto_ptr< CShakeNeighbour > pNeighbour( new CShakeNeighbour() );
+			if ( pNeighbour->ConnectTo( &pAddress, nPort, bAutomatic, bNoUltraPeer ) )
+			{
+				if ( Settings.Gnutella.SpecifyProtocol )
+				{
+					pNeighbour->m_nProtocol = nProtocol;
+				}
+				return pNeighbour.release();
+			}
+		}
+	}
+
+	return NULL; // Not able to connect
+}
+
+CNeighbour* CNeighboursWithConnect::ConnectTo(
+	const IN6_ADDR& pAddress, // IPv6 address from the host cache to connect to, like 67.163.208.23
+	WORD       nPort,        // Port number that goes with that IP address, like 6346
+	PROTOCOLID nProtocol,    // Protocol name, like PROTOCOL_G1 for Gnutella
+	BOOL       bAutomatic,   // True to (do)
+	BOOL       bNoUltraPeer) // By default, false to not (do)
+{
+	// Don't connect to self
+	if ( Settings.Connection.IgnoreOwnIP && Network.IsSelfIP( pAddress ) )
+		return NULL;
+
+	// Don't connect to blocked addresses
+	if ( Security.IsDenied( &pAddress ) )
+	{
+		// If automatic (do) leave without making a note of the error
+		if ( bAutomatic ) return NULL;
+
+		// Report that this address is on the block list, and return no new connection made
+		theApp.Message( MSG_ERROR, IDS_SECURITY_OUTGOING, (LPCTSTR)IPv6ToString( &pAddress ) );
+		return NULL;
+	}
+
+	// If automatic (do) and the network object knows this IP address is firewalled and can't receive connections, give up
+	if ( bAutomatic && Network.IsFirewalledAddress( &pAddress, TRUE ) )
+		return NULL;
+	
+	CSingleLock pLock( &Network.m_pSection );
+	if ( ! pLock.Lock( 100 ) )
+		return NULL;
+
+	// If the list of connected computers already has this IP address
+	if ( Get( pAddress ) )
+	{
+		// If automatic (do) leave without making a note of the error
+		if ( bAutomatic ) return NULL;
+
+		// Report that we're already connected to that computer, and return no new connection made
+		theApp.Message( MSG_ERROR, IDS_CONNECTION_ALREADY_ABORT, (LPCTSTR)IPv6ToString( &pAddress ) );
+		return NULL;
+	}
+
+	// If the caller wants automatic behavior, then make this connection request also connect the network it is for
+	if ( ! bAutomatic )
+	{
+		switch ( nProtocol )
+		{
+		case PROTOCOL_G1:
+			Settings.Gnutella1.EnableToday = true;
+			break;
+
+		case PROTOCOL_G2:
+			Settings.Gnutella2.EnableToday = true;
+			break;
+
+		case PROTOCOL_ED2K:
+			Settings.eDonkey.EnableToday = true;
+			if ( Settings.eDonkey.CloseNeighboursOnConnect )
+				CloseDonkeys();
+			break;
+
+		case PROTOCOL_BT:
+			Settings.BitTorrent.EnableToday = true;
+			break;
+
+		case PROTOCOL_KAD:
+			Settings.eDonkey.EnableToday = true;
+			break;
+
+		case PROTOCOL_DC:
+			Settings.DC.EnableToday = true;
+			break;
+
+		default:
+			;
+		}
+	}
+
+	// Run network connect (do), and leave if it reports an error
+	if ( ! Network.Connect() )
+		return NULL;
+
+	// The computer at the IP address we have is running eDonkey2000 software
+	switch ( nProtocol )
+	{
+	case PROTOCOL_ED2K:
+		{
+			auto_ptr< CEDNeighbour > pNeighbour( new CEDNeighbour() );
+			if ( pNeighbour->ConnectTo( &pAddress, nPort, bAutomatic ) )
+			{
+				return pNeighbour.release();
+			}
+		}
+		break;
+
+	case PROTOCOL_BT:
+		{
+			DHT.Ping( &pAddress, nPort );
+		}
+		break;
+
+	case PROTOCOL_KAD:
+		{
+			SOCKADDR_IN6 pHost = { AF_INET6, htons( nPort ), 0, pAddress };
 			Kademlia.Bootstrap( &pHost );
 		}
 		break;
@@ -1051,7 +1186,7 @@ void CNeighboursWithConnect::Maintain()
 	nCount[ PROTOCOL_G2 ][ ntNode ] += nCount[ PROTOCOL_NULL ][ ntNode ];
 
 	// Connect to more computers or disconnect from some to get the connection counts where settings wants them to be
-	for ( PROTOCOLID nProtocol = PROTOCOL_NULL ; nProtocol < PROTOCOL_LAST ; ++nProtocol ) // Loop once for each protocol, eDonkey2000, Gnutella2, then Gnutella
+	for ( int nProtocol = PROTOCOL_NULL ; nProtocol < PROTOCOL_LAST ; ++nProtocol ) // Loop once for each protocol, eDonkey2000, Gnutella2, then Gnutella
 	{
 		// If we're connected to a hub of this protocol, store the tick count now in m_tPresent for this protocol
 		if ( nCount[ nProtocol ][ ntHub ] > 0 ) m_tPresent[ nProtocol ] = tNow;
@@ -1090,9 +1225,10 @@ void CNeighboursWithConnect::Maintain()
 			}
 
 			// Lower the needed hub number to avoid hitting Windows XP Service Pack 2's half open connection limit
-			nAttempt = min( nAttempt, Settings.Downloads.MaxConnectingSources );
+			if ( Settings.Downloads.MaxConnectingSources > 0 )
+				nAttempt = min( nAttempt, Settings.Downloads.MaxConnectingSources );
 
-			CHostCacheList* pCache = HostCache.ForProtocol( nProtocol );
+			CHostCacheList* pCache = HostCache.ForProtocol( (PROTOCOLID)nProtocol );
 
 			CSingleLock oLock( &pCache->m_pSection, FALSE );
 			if ( ! oLock.Lock( 250 ) )
@@ -1171,13 +1307,13 @@ void CNeighboursWithConnect::Maintain()
 				{
 					// Execute the discovery services (do)
 					if ( pCache->IsEmpty() && tNow >= tDiscoveryLastExecute + 8 )
-						DiscoveryServices.Execute( TRUE, PROTOCOL_G2, 1 );
+						DiscoveryServices.Execute( PROTOCOL_G2, 1 );
 				} // We're looping for Gnutella right now
 				else if ( nProtocol == PROTOCOL_G1 && Settings.Gnutella1.EnableToday )
 				{
 					// If the Gnutella host cache is empty (do), execute discovery services (do)
 					if ( pCache->IsEmpty() && tNow >= tDiscoveryLastExecute + 8 )
-						DiscoveryServices.Execute( TRUE, PROTOCOL_G1, 1 );
+						DiscoveryServices.Execute( PROTOCOL_G1, 1 );
 				}
 			}
 

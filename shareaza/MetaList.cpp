@@ -1,7 +1,7 @@
 //
 // MetaList.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2012.
+// Copyright (c) Shareaza Development Team, 2002-2017.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -156,7 +156,7 @@ void CMetaList::Setup(CSchemaPtr pSchema, BOOL bClear)
 	
 	for ( POSITION pos = pSchema->GetMemberIterator() ; pos ; )
 	{
-		CSchemaMember* pMember = pSchema->GetNextMember( pos );
+		CSchemaMemberPtr pMember = pSchema->GetNextMember( pos );
 		m_pItems.AddTail( new CMetaItem( pMember ) );
 	}
 
@@ -565,7 +565,7 @@ BOOL CMetaList::OnClick(const CPoint& point)
 //////////////////////////////////////////////////////////////////////
 // CMetaItem construction
 
-CMetaItem::CMetaItem(CSchemaMember* pMember)
+CMetaItem::CMetaItem(CSchemaMemberPtr pMember)
 	: CRect()
 	, m_pMember( pMember )
 	, m_bLink( FALSE )
@@ -652,32 +652,48 @@ BOOL CMetaItem::Limit(int nMaxLength)
 
 BOOL CMetaItem::CreateLink()
 {
-	if ( m_sValue.Find( _T("http://") ) == 0 || m_sValue.Find( _T("www.") ) == 0 ) 
+	if ( StartsWith( m_sValue, _PT("http://") ) ||
+		 StartsWith( m_sValue, _PT("https://") ) ||
+		 StartsWith( m_sValue, _PT("www.") ) ) 
 	{
 		m_bLink = TRUE;
 
 		int curPos = 0;
-		m_sLink = m_sValue.Tokenize( L"|", curPos );
+		m_sLink = m_sValue.Tokenize( _T("|"), curPos );
 		if ( curPos != -1 )
-			m_sLinkName = m_sValue.Tokenize( L"|", curPos );
+			m_sLinkName = m_sValue.Tokenize( _T("|"), curPos );
 
 		return TRUE;
 	}
 
-	if ( m_pMember == NULL ) return FALSE;
-	
-	if ( m_pMember->m_sLinkURI.IsEmpty() ) return FALSE;
-	if ( m_pMember->m_sLinkName.IsEmpty() ) return FALSE;
+	if ( m_pMember )
+	{
+		if ( m_pMember->m_sName == _T("hash") )
+		{
+			m_bLink = TRUE;
+			m_sLink = _T("magnet:?xt=urn:btih:") + m_sValue;
+			m_sLinkName = m_sValue;
 
-	CQuickLock oLock( Library.m_pSection );
+			return TRUE;
+		}
+	
+		if ( ! m_pMember->m_sLinkURI.IsEmpty() && ! m_pMember->m_sLinkName.IsEmpty() )
+		{
+			CSingleLock pLock( &Library.m_pSection );
+			if ( pLock.Lock( 100 ) )
+			{
+				if ( LibraryFolders.GetAlbumTarget( m_pMember->m_sLinkURI, m_pMember->m_sLinkName, m_sValue ) != NULL )
+				{
+					m_bLink = TRUE;
+					m_sLink = m_sValue;
 
-	m_bLink = LibraryFolders.GetAlbumTarget(	m_pMember->m_sLinkURI,
-												m_pMember->m_sLinkName,
-												m_sValue ) != NULL;
-	
-	if ( m_bLink ) m_sLink = m_sValue;
-	
-	return m_bLink;
+					return TRUE;
+				}
+			}
+		}
+	}
+
+	return FALSE;
 }
 
 //////////////////////////////////////////////////////////////////////
@@ -687,16 +703,16 @@ CAlbumFolder* CMetaItem::GetLinkTarget(BOOL bHTTP) const
 {
 	if ( bHTTP )
 	{
-		if ( m_sLink.Find( _T("http://") ) == 0 )
+		if ( StartsWith( m_sLink, _PT("http://") ) ||
+			 StartsWith( m_sLink, _PT("https://") ) ||
+			 StartsWith( m_sLink, _PT("magnet:?") ) )
 		{
-			ShellExecute( AfxGetMainWnd()->GetSafeHwnd(), _T("open"), m_sLink,
-				NULL, NULL, SW_SHOWNORMAL );
+			ShellExecute( AfxGetMainWnd()->GetSafeHwnd(), _T("open"), m_sLink, NULL, NULL, SW_SHOWNORMAL );
 			return NULL;
 		}
-		else if ( m_sLink.Find( _T("www.") ) == 0 )
+		else if ( StartsWith( m_sLink, _PT("www.") ) )
 		{
-			ShellExecute( AfxGetMainWnd()->GetSafeHwnd(), _T("open"),
-				_T("http://") + m_sLink, NULL, NULL, SW_SHOWNORMAL );
+			ShellExecute( AfxGetMainWnd()->GetSafeHwnd(), _T("open"), _T("http://") + m_sLink, NULL, NULL, SW_SHOWNORMAL );
 			return NULL;
 		}
 	}
@@ -705,9 +721,7 @@ CAlbumFolder* CMetaItem::GetLinkTarget(BOOL bHTTP) const
 	if ( m_pMember->m_sLinkURI.IsEmpty() ) return NULL;
 	if ( m_pMember->m_sLinkName.IsEmpty() ) return NULL;
 
-	return LibraryFolders.GetAlbumTarget(	m_pMember->m_sLinkURI,
-											m_pMember->m_sLinkName,
-											m_sLink );
+	return LibraryFolders.GetAlbumTarget( m_pMember->m_sLinkURI, m_pMember->m_sLinkName, m_sLink );
 }
 
 CString CMetaItem::GetMusicBrainzLink() const

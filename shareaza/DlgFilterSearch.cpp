@@ -52,6 +52,8 @@ END_MESSAGE_MAP()
 CFilterSearchDlg::CFilterSearchDlg(CWnd* pParent, CMatchList* pMatches) 
 : CSkinDialog(CFilterSearchDlg::IDD, pParent)
 , m_bHideBusy( FALSE )
+, m_bHideComments( FALSE )
+, m_bHidePartial( FALSE )
 , m_bHideLocal( FALSE )
 , m_bHidePush( FALSE )
 , m_bHideReject( FALSE )
@@ -73,6 +75,8 @@ void CFilterSearchDlg::DoDataExchange(CDataExchange* pDX)
 	DDX_Control(pDX, IDC_SOURCES_SPIN, m_wndSources);
 	DDX_Text(pDX, IDC_FILTER, m_sFilter);
 	DDX_Check(pDX, IDC_FILTER_BUSY, m_bHideBusy);
+	DDX_Check(pDX, IDC_FILTER_COMMETS, m_bHideComments);
+	DDX_Check(pDX, IDC_FILTER_PARTIAL, m_bHidePartial);
 	DDX_Check(pDX, IDC_FILTER_LOCAL, m_bHideLocal);
 	DDX_Check(pDX, IDC_FILTER_PUSH, m_bHidePush);
 	DDX_Check(pDX, IDC_FILTER_REJECT, m_bHideReject);
@@ -123,6 +127,8 @@ void CFilterSearchDlg::OnOK()
 	{
 		m_pMatches->m_sFilter			= m_sFilter;
 		m_pMatches->m_bFilterBusy		= m_bHideBusy;
+		m_pMatches->m_bFilterComments	= m_bHideComments;
+		m_pMatches->m_bFilterPartial	= m_bHidePartial;
 		m_pMatches->m_bFilterPush		= m_bHidePush;
 		m_pMatches->m_bFilterUnstable	= m_bHideUnstable;
 		m_pMatches->m_bFilterLocal		= m_bHideLocal;
@@ -162,6 +168,8 @@ void CFilterSearchDlg::OnBnClickedSaveFilter()
 		pOptions->m_sName				= dlg.m_sName;
 		pOptions->m_sFilter				= m_sFilter;
 		pOptions->m_bFilterBusy			= m_bHideBusy;
+		pOptions->m_bFilterComments		= m_bHideComments;
+		pOptions->m_bFilterPartial		= m_bHidePartial;
 		pOptions->m_bFilterPush			= m_bHidePush;
 		pOptions->m_bFilterUnstable		= m_bHideUnstable;
 		pOptions->m_bFilterLocal		= m_bHideLocal;
@@ -193,6 +201,8 @@ void CFilterSearchDlg::UpdateFields()
 {
 	m_sFilter			= m_pMatches->m_sFilter;
 	m_bHideBusy			= m_pMatches->m_bFilterBusy;
+	m_bHideComments		= m_pMatches->m_bFilterComments;
+	m_bHidePartial		= m_pMatches->m_bFilterPartial;
 	m_bHidePush			= m_pMatches->m_bFilterPush;
 	m_bHideUnstable		= m_pMatches->m_bFilterUnstable;
 	m_bHideLocal		= m_pMatches->m_bFilterLocal;
@@ -251,6 +261,8 @@ void CFilterSearchDlg::OnCbnSelChangeFilters()
 
 		m_sFilter			= pOptions->m_sFilter;
 		m_bHideBusy			= pOptions->m_bFilterBusy;
+		m_bHideComments		= pOptions->m_bFilterComments;
+		m_bHidePartial		= pOptions->m_bFilterPartial;
 		m_bHidePush			= pOptions->m_bFilterPush;
 		m_bHideUnstable		= pOptions->m_bFilterUnstable;
 		m_bHideLocal		= pOptions->m_bFilterLocal;

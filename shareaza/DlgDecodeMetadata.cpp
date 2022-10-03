@@ -1,7 +1,7 @@
 //
 // DlgDecodeMetadata.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2012.
+// Copyright (c) Shareaza Development Team, 2002-2014.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -116,7 +116,7 @@ void CDecodeMetadataDlg::OnOK()
 
 	CProgressDialog dlgProgress( LoadString( ID_LIBRARY_REBUILD_ANSI ) + _T("..") );
 
-	DWORD nCompleted = 0, nTotal = m_pFiles.GetCount();
+	DWORD nCompleted = 0, nTotal = (DWORD)m_pFiles.GetCount();
 
 	unsigned nCodePage = m_wndCodepages.GetCurSel();
 	nCodePage = ( nCodePage < _countof( codePages ) ) ? codePages[ nCodePage ] : 1252; // english

@@ -1,7 +1,7 @@
 //
 // WndDownloads.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2013.
+// Copyright (c) Shareaza Development Team, 2002-2015.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -35,6 +35,7 @@
 
 #include "Library.h"
 #include "LibraryMaps.h"
+#include "MatchListView.h"
 #include "SharedFile.h"
 #include "FileExecutor.h"
 #include "ShareazaURL.h"
@@ -170,6 +171,16 @@ CDownloadsWnd::CDownloadsWnd()
 
 CDownloadsWnd::~CDownloadsWnd()
 {
+}
+
+HRESULT CDownloadsWnd::GetGenericView(IGenericView** ppView)
+{
+	*ppView = NULL;
+	if ( IsWindow( m_wndDownloads.GetSafeHwnd() ) )
+	{
+		*ppView = CMatchListView::Attach( _T("CDownloadsWnd"), &Downloads );
+	}
+	return *ppView ? S_OK : S_FALSE;
 }
 
 /////////////////////////////////////////////////////////////////////////////
@@ -428,34 +439,39 @@ void CDownloadsWnd::OnContextMenu(CWnd* /*pWnd*/, CPoint point)
 	m_wndDownloads.ScreenToClient( &ptLocal );
 	m_tSel = 0;
 
-	int nMenu;
+	int nMenu = 4;
+
+	bool bControl = ( GetAsyncKeyState( VK_CONTROL ) & 0x8000 ) != 0;
+
 	CStringList pList;
 	{
 		CSingleLock pLock( &Transfers.m_pSection, TRUE );
 
-		CDownloadSource* pSource;
-		CDownload* pDownload;
-		if ( m_wndDownloads.HitTest( ptLocal, &pDownload, &pSource, NULL, NULL ) )
+		CDownloadSource* pSource = NULL;
+		CDownload* pDownload = NULL;
+
+		if ( ( point.x < 0 && point.y < 0 ) ? !bControl &&
+			m_wndDownloads.GetAt( m_wndDownloads.m_nFocus, &pDownload, &pSource )
+			: m_wndDownloads.HitTest( ptLocal, &pDownload, &pSource, NULL, NULL ) )
 		{
-			if ( pDownload )
+			if ( pDownload && pDownload->m_bSelected )
 			{
 				for ( DWORD i = 0; i < pDownload->GetFileCount(); ++i )
 				{
 					pList.AddTail( pDownload->GetPath( i ) );
 				}
+
+				if ( pDownload->IsSeeding() )
+					nMenu = 1;
+				else if ( pDownload->IsCompleted() )
+					nMenu = 2;
+				else
+					nMenu = 3;
 			}
 
-			if ( pSource )
+			if ( pSource && pSource->m_bSelected )
 				nMenu = 0;
-			else if ( pDownload->IsSeeding() )
-				nMenu = 1;
-			else if ( pDownload->IsCompleted() )
-				nMenu = 2;
-			else
-				nMenu = 3;
 		}
-		else
-			nMenu = 4;
 	}
 
 	Skin.TrackPopupMenu( ContextMenus[ nMenu ].szMenu, point, ContextMenus[ nMenu ].nDefaultID, pList );
@@ -530,7 +546,7 @@ void CDownloadsWnd::Prepare()
 	DWORD tNow = GetTickCount();
 	if ( tNow - m_tSel < 250 ) return;
 
-	m_nSelectedDownloads = 0;
+	m_nSelectedDownloads = m_nSelectedSources = 0;
 	m_bSelAny = m_bSelDownload = m_bSelSource = m_bSelTrying = m_bSelPaused = FALSE;
 	m_bSelNotPausedOrMoving = m_bSelNoPreview = m_bSelNotCompleteAndNoPreview = FALSE;
 	m_bSelCompletedAndNoPreview = m_bSelStartedAndNotMoving = m_bSelCompleted = FALSE;
@@ -613,13 +629,17 @@ void CDownloadsWnd::Prepare()
 
 			if ( pSource->m_bSelected )
 			{
+				m_nSelectedSources ++;
 				m_bSelAny = TRUE;
 				m_bSelSource = TRUE;
 				m_bSelSourceExtended = pSource->m_bClientExtended;
+
 				if ( pSource->IsIdle() )
 					m_bSelIdleSource = TRUE;
 				else
 					m_bSelActiveSource = TRUE;
+
+
 				if ( pSource->m_bClientExtended || pSource->m_nProtocol == PROTOCOL_ED2K )
 				{
 					m_bSelBrowse = TRUE;
@@ -631,6 +651,9 @@ void CDownloadsWnd::Prepare()
 					// m_bSelChat = TRUE;
 					m_bSelBrowse = TRUE;
 				}
+				else if ( Settings.Downloads.ForceBrowse )
+					m_bSelBrowse = TRUE;
+
 				if ( ! pSource->m_bPushOnly ) m_bSelSourceAcceptConnections = TRUE;
 			}
 
@@ -736,30 +759,30 @@ void CDownloadsWnd::OnDownloadsClear()
 	if ( pList.IsEmpty() )
 		OnTransfersForget();
 
-	DWORD nTotal = pList.GetCount();
+	DWORD nTotal = (DWORD)pList.GetCount();
 
 	while ( ! pList.IsEmpty() )
 	{
-		CDownload* pDownload = pList.GetHead();
+		CDownload* pDownload1 = pList.GetHead();
 
 		CDeleteFileDlg dlg;
 		dlg.m_bAll = ( pList.GetCount() > 1 );
 
 		{
 			CQuickLock pTransfersLock( Transfers.m_pSection ); // Can clear uploads and downloads
-			if ( ! Downloads.Check( pDownload ) || pDownload->IsTasking() || pDownload->IsPreviewVisible() )
+			if ( ! Downloads.Check( pDownload1 ) || pDownload1->IsTasking() || pDownload1->IsPreviewVisible() )
 			{
 				pList.RemoveHead();
 				continue;
 			}
-			else if ( pDownload->IsCompleted() || ! pDownload->IsStarted() )
+			else if ( pDownload1->IsCompleted() || ! pDownload1->IsStarted() )
 			{
 				pList.RemoveHead();
-				pDownload->Remove();
+				pDownload1->Remove();
 				continue;
 			}
 
-			dlg.m_sName = pDownload->m_sName;
+			dlg.m_sName = pDownload1->m_sName;
 		}
 
 		if ( dlg.DoModal() != IDOK )
@@ -770,20 +793,20 @@ void CDownloadsWnd::OnDownloadsClear()
 		for ( INT_PTR nProcess = dlg.m_bAll ? pList.GetCount() : 1 ;
 			nProcess > 0 && pList.GetCount() > 0 ; nProcess-- )
 		{
-			CDownload* pDownload = pList.RemoveHead();
+			CDownload* pDownload2 = pList.RemoveHead();
 
 			CQuickLock pTransfersLock( Transfers.m_pSection ); // Can clear uploads and downloads
 			{
-				if ( Downloads.Check( pDownload ) && ! pDownload->IsTasking() && ! pDownload->IsPreviewVisible() )
+				if ( Downloads.Check( pDownload2 ) && ! pDownload2->IsTasking() && ! pDownload2->IsPreviewVisible() )
 				{
-					dlgProgress.Progress( pDownload->m_sName, nTotal - pList.GetCount(), nTotal );
+					dlgProgress.Progress( pDownload2->m_sName, nTotal - pList.GetCount(), nTotal );
 
-					if ( ! pDownload->IsCompleted() && pDownload->IsStarted() )
+					if ( ! pDownload2->IsCompleted() && pDownload2->IsStarted() )
 					{
 						CQuickLock pLibraryLock( Library.m_pSection );
-						dlg.Apply( pDownload, pDownload->IsShared() );
+						dlg.Apply( pDownload2, pDownload2->IsShared() );
 					}
-					pDownload->Remove();
+					pDownload2->Remove();
 				}
 			}
 		}
@@ -814,11 +837,11 @@ void CDownloadsWnd::OnDownloadsClearIncomplete()
 		}
 	}
 
-	DWORD nTotal = pList.GetCount();
+	DWORD nTotal = (DWORD)pList.GetCount();
 
 	while ( ! pList.IsEmpty() )
 	{
-		CDownload* pDownload = pList.GetHead();
+		CDownload* pDownload1 = pList.GetHead();
 
 		CDeleteFileDlg dlg;
 		dlg.m_bAll = ( pList.GetCount() > 1 );
@@ -826,19 +849,19 @@ void CDownloadsWnd::OnDownloadsClearIncomplete()
 		{
 			CQuickLock pTransfersLock( Transfers.m_pSection ); // Can clear uploads and downloads
 
-			if ( ! Downloads.Check( pDownload ) || pDownload->IsTasking() || pDownload->IsPreviewVisible() || pDownload->IsCompleted() )
+			if ( ! Downloads.Check( pDownload1 ) || pDownload1->IsTasking() || pDownload1->IsPreviewVisible() || pDownload1->IsCompleted() )
 			{
 				pList.RemoveHead();
 				continue;
 			}
-			else if ( ! pDownload->IsStarted() )
+			else if ( ! pDownload1->IsStarted() )
 			{
 				pList.RemoveHead();
-				pDownload->Remove();
+				pDownload1->Remove();
 				continue;
 			}
 
-			dlg.m_sName = pDownload->m_sName;
+			dlg.m_sName = pDownload1->m_sName;
 		}
 
 		if ( dlg.DoModal() != IDOK )
@@ -849,20 +872,20 @@ void CDownloadsWnd::OnDownloadsClearIncomplete()
 		for ( INT_PTR nProcess = dlg.m_bAll ? pList.GetCount() : 1 ;
 			nProcess > 0 && pList.GetCount() > 0 ; nProcess-- )
 		{
-			CDownload* pDownload = pList.RemoveHead();
+			CDownload* pDownload2 = pList.RemoveHead();
 
 			CQuickLock pTransfersLock( Transfers.m_pSection ); // Can clear uploads and downloads
 			{
-				if ( Downloads.Check( pDownload ) && ! pDownload->IsTasking() && ! pDownload->IsPreviewVisible() && ! pDownload->IsCompleted() )
+				if ( Downloads.Check( pDownload2 ) && ! pDownload2->IsTasking() && ! pDownload2->IsPreviewVisible() && ! pDownload2->IsCompleted() )
 				{
-					dlgProgress.Progress( pDownload->m_sName, nTotal - pList.GetCount(), nTotal );
+					dlgProgress.Progress( pDownload2->m_sName, nTotal - pList.GetCount(), nTotal );
 
-					if ( pDownload->IsStarted() )
+					if ( pDownload2->IsStarted() )
 					{
 						CQuickLock pLibraryLock( Library.m_pSection );
-						dlg.Apply( pDownload, pDownload->IsShared() );
+						dlg.Apply( pDownload2, pDownload2->IsShared() );
 					}
-					pDownload->Remove();
+					pDownload2->Remove();
 				}
 			}
 		}
@@ -1004,7 +1027,7 @@ void CDownloadsWnd::OnDownloadsRemotePreview()
 				{
 					if (  pSource->m_sPreview.IsEmpty() )
 					{
-						pSource->m_sPreview.Format( _T("http://%s:%i/gnutella/preview/v1?%s"),
+						pSource->m_sPreview.Format( _T("http://%s:%u/gnutella/preview/v1?%s"),
 							(LPCTSTR)CString( inet_ntoa( pSource->m_pAddress ) ), pSource->m_nPort,
 							(LPCTSTR)pDownload->m_oSHA1.toUrn() );
 					}
@@ -1201,7 +1224,8 @@ void CDownloadsWnd::OnDownloadsUrl()
 
 				for ( POSITION pos = dlg.m_pURLs.GetHeadPosition(); pos; )
 				{
-					pDownload->AddSourceURL( dlg.m_pURLs.GetNext( pos ), FALSE );
+					CShareazaURL pURL( dlg.m_pURLs.GetNext( pos ) );
+					pDownload->AddSourceHit( pURL, TRUE );
 				}
 			}
 		}
@@ -1245,11 +1269,17 @@ void CDownloadsWnd::OnDownloadsBoost()
 void CDownloadsWnd::OnUpdateDownloadsCopy(CCmdUI* pCmdUI)
 {
 	Prepare();
+
+	const bool bShift = ( GetAsyncKeyState( VK_SHIFT ) & 0x8000 ) != 0;
+
 	pCmdUI->Enable( m_bSelSHA1orTTHorED2KorName || m_bSelSource );
+	pCmdUI->SetText( LoadString( ( ( m_nSelectedSources + m_nSelectedDownloads ) == 1 && ! bShift ) ? IDS_LIBRARY_COPYURI : IDS_LIBRARY_EXPORTURIS ) );
 }
 
 void CDownloadsWnd::OnDownloadsCopy()
 {
+	const bool bShift = ( GetAsyncKeyState( VK_SHIFT ) & 0x8000 ) != 0;
+
 	CList< CShareazaFile > pList;
 
 	{
@@ -1278,13 +1308,13 @@ void CDownloadsWnd::OnDownloadsCopy()
 		}
 	}
 
-	if ( pList.GetCount() == 1 )
+	if ( pList.GetCount() == 1  && ! bShift )
 	{
 		CURLCopyDlg dlg;
 		dlg.Add( &pList.GetHead() );
 		dlg.DoModal();
 	}
-	else if ( pList.GetCount() > 1 )
+	else if ( pList.GetCount() > 0 )
 	{
 		CURLExportDlg dlg;
 		for ( POSITION pos = pList.GetHeadPosition(); pos; )
@@ -1330,21 +1360,13 @@ void CDownloadsWnd::OnUpdateDownloadsMonitor(CCmdUI* pCmdUI)
 void CDownloadsWnd::OnDownloadsMonitor()
 {
 	CSingleLock pLock( &Transfers.m_pSection, TRUE );
-	CList<CDownload*> pList;
 
 	for ( POSITION pos = Downloads.GetIterator() ; pos ; )
 	{
 		CDownload* pDownload = Downloads.GetNext( pos );
-		if ( pDownload->m_bSelected ) pList.AddTail( pDownload );
-	}
-
-	while ( ! pList.IsEmpty() )
-	{
-		CDownload* pDownload = pList.RemoveHead();
-
-		if ( Downloads.Check( pDownload ) && ! pDownload->IsMoving() )
+		if ( pDownload->m_bSelected  && ! pDownload->IsMoving() )
 		{
-			pDownload->ShowMonitor( &pLock );
+			pDownload->ShowMonitor();
 		}
 	}
 }
@@ -1407,6 +1429,8 @@ void CDownloadsWnd::OnTransfersConnect()
 {
 	CSingleLock pLock( &Transfers.m_pSection, TRUE );
 
+	CList< CDownloadSource* > pSelectedSources;
+
 	for ( POSITION pos = Downloads.GetIterator() ; pos ; )
 	{
 		CDownload* pDownload = Downloads.GetNext( pos );
@@ -1421,23 +1445,25 @@ void CDownloadsWnd::OnTransfersConnect()
 			ASSERT( pSource->m_pDownload == pDownload );
 
 			// Only create a new Transfer if there isn't already one
-			if ( pSource->m_bSelected && pSource->IsIdle()
-				&& pSource->m_nProtocol != PROTOCOL_ED2K )
+			if ( pSource->m_bSelected && pSource->IsIdle() )
 			{
-				if ( pDownload->IsPaused() )
-					pDownload->Resume();
-
-				pDownload->Resume();
-
-				if ( pSource->m_bPushOnly )
-					pSource->PushRequest();
-				else
-				{
-					CDownloadTransfer* pTransfer = pSource->CreateTransfer();
-					if ( pTransfer )
-						pTransfer->Initiate();
-				}
+				pSelectedSources.AddTail( pSource );
 			}
+		}
+	}
+
+	for ( POSITION posSource = pSelectedSources.GetHeadPosition(); posSource ; )
+	{
+		CDownloadSource* pSource = pSelectedSources.GetNext( posSource );
+
+		pSource->m_pDownload->Resume();
+
+		if ( pSource->m_bPushOnly )
+			pSource->PushRequest();
+		else
+		{
+			if ( CDownloadTransfer* pTransfer = pSource->CreateTransfer() )
+				pTransfer->Initiate();
 		}
 	}
 
@@ -1454,6 +1480,8 @@ void CDownloadsWnd::OnTransfersDisconnect()
 {
 	CSingleLock pLock( &Transfers.m_pSection, TRUE );
 
+	CList< CDownloadSource* > pSelectedSources;
+
 	for ( POSITION pos = Downloads.GetIterator() ; pos ; )
 	{
 		CDownload* pDownload = Downloads.GetNext( pos );
@@ -1464,9 +1492,16 @@ void CDownloadsWnd::OnTransfersDisconnect()
 
 			if ( pSource->m_bSelected && ! pSource->IsIdle() )
 			{
-				pSource->Close();
+				pSelectedSources.AddTail( pSource );
 			}
 		}
+	}
+
+	for ( POSITION posSource = pSelectedSources.GetHeadPosition(); posSource ; )
+	{
+		CDownloadSource* pSource = pSelectedSources.GetNext( posSource );
+
+		pSource->Close();
 	}
 
 	Update();
@@ -1481,6 +1516,8 @@ void CDownloadsWnd::OnUpdateTransfersForget(CCmdUI* pCmdUI)
 void CDownloadsWnd::OnTransfersForget()
 {
 	CSingleLock pLock( &Transfers.m_pSection, TRUE );
+	
+	CList< CDownloadSource* > pSelectedSources;
 
 	for ( POSITION pos = Downloads.GetIterator() ; pos ; )
 	{
@@ -1491,8 +1528,17 @@ void CDownloadsWnd::OnTransfersForget()
 			CDownloadSource* pSource = pDownload->GetNext( posSource );
 
 			if ( pSource->m_bSelected )
-				pSource->Remove( TRUE, TRUE );
+			{
+				pSelectedSources.AddTail( pSource );
+			}
 		}
+	}
+
+	for ( POSITION posSource = pSelectedSources.GetHeadPosition(); posSource ; )
+	{
+		CDownloadSource* pSource = pSelectedSources.GetNext( posSource );
+
+		pSource->Remove( TRUE, TRUE );
 	}
 
 	Update();

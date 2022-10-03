@@ -1,7 +1,7 @@
 //
 // BTInfo.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2014.
+// Copyright (c) Shareaza Development Team, 2002-2017.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -26,6 +26,7 @@
 #include "BTInfo.h"
 #include "Buffer.h"
 #include "DownloadTask.h"
+#include "DownloadGroups.h"
 #include "Library.h"
 #include "SharedFile.h"
 #include "SharedFolder.h"
@@ -106,58 +107,73 @@ CBTInfo::CBTFile::CBTFile(const CBTInfo* pInfo, const CBTFile* pBTFile)
 	}
 }
 
-CString	CBTInfo::CBTFile::FindFile() const
+const CString& CBTInfo::CBTFile::FindFile()
 {
-	CQuickLock oLock( Library.m_pSection );
+	CString strShortPath;
+	int nSlash = m_sPath.Find( _T('\\') );
+	if ( nSlash != -1 )
+		strShortPath = m_sPath.Mid( nSlash + 1 );
 
-	// Try find file by hash/size
-	CString strFile;
-	const CLibraryFile* pShared = LibraryMaps.LookupFileByHash( this, FALSE, TRUE );
-	if ( pShared )
-		strFile = pShared->GetPath();
-	if ( ! pShared ||
-		 GetFileSize( CString( _T("\\\\?\\") ) + strFile ) != m_nSize )
+	CStringIList mFolders;
+
+	// Try complete folder
+	mFolders.AddTail( Settings.Downloads.CompletePath );
+
+	// Try all possible download folders
+	DownloadGroups.GetFolders( mFolders );
+
+	// Try folder of original .torrent
+	mFolders.AddTail( m_pInfo->m_sPath.Left( m_pInfo->m_sPath.ReverseFind( _T('\\') ) ) );
+
+	for ( POSITION pos = mFolders.GetHeadPosition(); pos; )
 	{
-		// Try complete folder
-		strFile = Settings.Downloads.CompletePath + _T("\\") + m_sPath;
-		if ( GetFileSize( CString( _T("\\\\?\\") ) + strFile ) != m_nSize )
+		const CString sFolder = mFolders.GetNext( pos );
+
+		CString strFile = sFolder + _T("\\") + m_sPath;
+		if ( GetFileSize( strFile ) == m_nSize )
 		{
-			// Try folder of original .torrent
-			CString strTorrentPath = m_pInfo->m_sPath.Left(
-				m_pInfo->m_sPath.ReverseFind( _T('\\') ) + 1 );
-			strFile = strTorrentPath + m_sPath;
-			if ( GetFileSize( CString( _T("\\\\?\\") ) + strFile ) != m_nSize )
+			m_sBestPath = strFile;
+			return m_sBestPath;
+		}
+
+		// ... without outer file directory
+		if ( ! strShortPath.IsEmpty() )
+		{
+			strFile = sFolder + _T("\\") + strShortPath;
+			if ( GetFileSize( strFile ) == m_nSize )
 			{
-				// Try complete folder without outer file directory
-				CString strShortPath;
-				int nSlash = m_sPath.Find( _T('\\') );
-				if ( nSlash != -1 )
-					strShortPath = m_sPath.Mid( nSlash + 1 );
-				strFile = Settings.Downloads.CompletePath + _T("\\") + strShortPath;
-				if ( strShortPath.IsEmpty() ||
-					 GetFileSize( CString( _T("\\\\?\\") ) + strFile ) != m_nSize )
-				{
-					// Try folder of original .torrent without outer file directory
-					strFile = strTorrentPath + strShortPath;
-					if ( strShortPath.IsEmpty() ||
-						GetFileSize( CString( _T("\\\\?\\") ) + strFile ) != m_nSize )
-					{
-						// Try find by name only
-						pShared = LibraryMaps.LookupFileByName( m_sName, m_nSize, FALSE, TRUE );
-						if ( pShared )
-							strFile = pShared->GetPath();
-						if ( ! pShared ||
-							 GetFileSize( CString( _T("\\\\?\\") ) + strFile ) != m_nSize )
-						{
-							return m_sPath;
-						}
-					}
-				}
+				m_sBestPath = strFile;
+				return m_sBestPath;
 			}
 		}
 	}
 
-	return strFile;
+	CQuickLock oLock( Library.m_pSection );
+
+	// Try find file by hash/size
+	if ( const CLibraryFile* pShared = LibraryMaps.LookupFileByHash( this, FALSE, TRUE ) )
+	{
+		const CString strFile = pShared->GetPath();
+		if ( GetFileSize( strFile ) == m_nSize )
+		{
+			m_sBestPath = strFile;
+			return m_sBestPath;
+		}
+	}
+
+	// Try find by name only
+	if ( const CLibraryFile* pShared = LibraryMaps.LookupFileByName( m_sName, m_nSize, FALSE, TRUE ) )
+	{
+		const CString strFile = pShared->GetPath();
+		if ( GetFileSize( strFile ) == m_nSize )
+		{
+			m_sBestPath = strFile;
+			return m_sBestPath;
+		}
+	}
+
+	m_sBestPath.Empty();
+	return m_sPath;
 }
 
 //////////////////////////////////////////////////////////////////////
@@ -165,12 +181,46 @@ CString	CBTInfo::CBTFile::FindFile() const
 
 void CBTInfo::Clear()
 {
+	m_oMD5.clear();
+	m_oBTH.clear();
+	m_oSHA1.clear();
+	m_oED2K.clear();
+	m_oTiger.clear();
+	m_sName.Empty();
+	m_sPath.Empty();
+	m_sURL.Empty();
+	m_nSize				= SIZE_UNKNOWN;
+
+	m_oNodes.RemoveAll();
+	m_sURLs.RemoveAll();
+
+	m_nBlockSize		= 0;
+	m_nBlockCount		= 0;
 	delete [] m_pBlockBTH;
-	m_pBlockBTH = NULL;
+	m_pBlockBTH			= NULL;
+
+	m_nTotalUpload		= 0;
+	m_nTotalDownload	= 0;
 
 	for ( POSITION pos = m_pFiles.GetHeadPosition(); pos; )
 		delete m_pFiles.GetNext( pos );
 	m_pFiles.RemoveAll();
+
+	m_nEncoding			= Settings.BitTorrent.TorrentCodePage;
+	m_sComment.Empty();
+	m_tCreationDate		= 0;
+	m_sCreatedBy.Empty();
+	m_bPrivate			= FALSE;
+	m_nStartDownloads	= dtAlways;
+	m_oTrackers.RemoveAll();
+	m_nTrackerIndex		= -1;
+	m_nTrackerMode		= tNull;
+	m_bEncodingError	= false;
+	m_pTestSHA1.Reset();
+	m_nTestByte			= 0;
+	m_pSource.Clear();
+	m_nInfoSize			= 0;
+	m_nInfoStart		= 0;
 }
 
 //////////////////////////////////////////////////////////////////////
@@ -182,7 +232,6 @@ CBTInfo& CBTInfo::operator=(const CBTInfo& oSource)
 
 	CShareazaFile::operator=( oSource );
 
-	m_sURLs.RemoveAll();
 	for ( POSITION pos = oSource.m_sURLs.GetHeadPosition(); pos; )
 		m_sURLs.AddTail( oSource.m_sURLs.GetNext( pos ) );
 
@@ -208,11 +257,9 @@ CBTInfo& CBTInfo::operator=(const CBTInfo& oSource)
 	m_bPrivate			= oSource.m_bPrivate;
 	m_nStartDownloads	= oSource.m_nStartDownloads;
 
-	m_oTrackers.RemoveAll();
 	for ( INT_PTR i = 0; i < oSource.m_oTrackers.GetCount(); ++i )
 		m_oTrackers.Add( oSource.m_oTrackers[ i ] );
 
-	m_oNodes.RemoveAll();
 	for ( POSITION pos = oSource.m_oNodes.GetHeadPosition(); pos; )
 		m_oNodes.AddTail( oSource.m_oNodes.GetNext( pos ) );
 
@@ -222,7 +269,6 @@ CBTInfo& CBTInfo::operator=(const CBTInfo& oSource)
 	m_pTestSHA1			= oSource.m_pTestSHA1;
 	m_nTestByte			= oSource.m_nTestByte;
 
-	m_pSource.Clear();
 	m_pSource.Add( oSource.m_pSource.m_pBuffer, oSource.m_pSource.m_nLength );
 	m_nInfoSize			= oSource.m_nInfoSize;
 	m_nInfoStart		= oSource.m_nInfoStart;
@@ -534,7 +580,7 @@ BOOL CBTInfo::SaveTorrentFile(const CString& sFolder)
 BOOL CBTInfo::LoadInfoPiece(BYTE *pPiece, DWORD nPieceSize, DWORD nInfoSize, DWORD nInfoPiece)
 {
 	ASSERT( nPieceSize <= MAX_PIECE_SIZE );
-	if ( nPieceSize > MAX_PIECE_SIZE ) 
+	if ( nPieceSize > MAX_PIECE_SIZE )
 		return FALSE;
 
 	if ( m_pSource.m_nLength == 0 && nInfoPiece == 0 )
@@ -578,7 +624,7 @@ BOOL CBTInfo::LoadInfoPiece(BYTE *pPiece, DWORD nPieceSize, DWORD nInfoSize, DWO
 int CBTInfo::NextInfoPiece() const
 {
 	if ( m_pSource.m_nLength == 0 )
-		return 0; 
+		return 0;
 	else if ( m_pSource.m_nLength > m_nInfoStart && ! m_nInfoSize )
 		return ( m_pSource.m_nLength - m_nInfoStart ) / MAX_PIECE_SIZE;
 
@@ -622,14 +668,14 @@ BOOL CBTInfo::CheckInfoData()
 	{
 		Hashes::BtHash oBTH;
 		CSHA pBTH;
-		pBTH.Add( &m_pSource.m_pBuffer[pInfo->m_nPosition], pInfo->m_nSize );
+		pBTH.Add( &m_pSource.m_pBuffer[pInfo->m_nPosition], (DWORD)pInfo->m_nSize );
 		pBTH.Finish();
 		pBTH.GetHash( &oBTH[0] );
-		
+
 		if ( oBTH == m_oBTH )
 		{
-			m_nInfoStart = pInfo->m_nPosition;
-			m_nInfoSize	 = pInfo->m_nSize;
+			m_nInfoStart = (DWORD)pInfo->m_nPosition;
+			m_nInfoSize	 = (DWORD)pInfo->m_nSize;
 			return TRUE;
 		}
 	}
@@ -644,10 +690,10 @@ BOOL CBTInfo::LoadTorrentBuffer(const CBuffer* pBuffer)
 	auto_ptr< CBENode > pNode ( CBENode::Decode( pBuffer ) );
 	if ( ! pNode.get() )
 	{
-		theApp.Message( MSG_ERROR, _T("[BT] Failed to decode torrent data: %s"), pBuffer->ReadString( (size_t)-1 ) );
+		theApp.Message( MSG_ERROR, _T("[BT] Failed to decode torrent data: %s"), (LPCTSTR)pBuffer->ReadString( (size_t)-1 ) );
 		return FALSE;
 	}
- 
+
 	return LoadTorrentTree( pNode.get() );
 }
 
@@ -769,7 +815,7 @@ BOOL CBTInfo::LoadTorrentTree(const CBENode* pRoot)
 				if ( pHost && pHost->IsType( CBENode::beString ) && pPort && pPort->IsType( CBENode::beInt ) )
 				{
 					CString sHost;
-					sHost.Format( _T("%s:%u"), pHost->GetString(), (WORD)pPort->GetInt() );
+					sHost.Format( _T("%s:%u"), (LPCTSTR)pHost->GetString(), (WORD)pPort->GetInt() );
 					m_oNodes.AddTail( sHost );
 				}
 			}
@@ -974,15 +1020,33 @@ BOOL CBTInfo::LoadTorrentTree(const CBENode* pRoot)
 		m_pFiles.AddTail( pBTFile.Detach() );
 
 		// Add sources from torrents - DWK
-		const CBENode* pSources = pRoot->GetNode( "sources" );
-		if( pSources && pSources->IsType( CBENode::beList ) )
+		if ( const CBENode* pSources = pRoot->GetNode( "sources" ) )
 		{
-			int m_nSources = pSources->GetCount();
-			for( int nSource = 0 ; nSource < m_nSources; nSource++)
+			if( pSources->IsType( CBENode::beList ) )
 			{
-				CBENode* pSource = pSources->GetNode( nSource );
-				if( ! pSource || ! pSource->IsType(CBENode::beString) ) continue;
-				m_sURLs.AddTail( pSource->GetString() );
+				const int nSources = pSources->GetCount();
+				for ( int nSource = 0 ; nSource < nSources; ++nSource )
+				{
+					if ( const CBENode* pSource = pSources->GetNode( nSource ) )
+						if( pSource->IsType(CBENode::beString) )
+							m_sURLs.AddTail( pSource->GetString() );
+				}
+			}
+		}
+
+		// BEP 19 : WebSeed - HTTP/FTP Seeding (GetRight style) : http://bittorrent.org/beps/bep_0019.html
+		// TODO: Support multi-file torrents
+		if ( const CBENode* pUrlList = pRoot->GetNode( "url-list" ) )
+		{
+			if ( pUrlList->IsType( CBENode::beList ) )
+			{
+				const int nUrls = pUrlList->GetCount();
+				for ( int nUrl = 0; nUrl < nUrls; ++nUrl )
+				{
+					if ( const CBENode* pUrl = pUrlList->GetNode( nUrl ) )
+						if ( pUrl->IsType( CBENode::beString ) )
+							m_sURLs.AddTail( pUrl->GetString() );
+				}
 			}
 		}
 	}
@@ -1017,21 +1081,16 @@ BOOL CBTInfo::LoadTorrentTree(const CBENode* pRoot)
 
 			// Try path.utf8 if it's set
 			const CBENode* pPath = pFile->GetNode( "path.utf-8" );
-			if ( pPath )
+			if ( pPath && pPath->IsType( CBENode::beList ) )
 			{
-				if ( pPath->IsType( CBENode::beList ) && pPath->GetCount() > 32 )
-				{
-					CBENode* pPart = pPath->GetNode( 0 );
-					if ( pPart && pPart->IsType( CBENode::beString ) )
-						strPath = pPart->GetString();
-				}
+				const CBENode* pPart = pPath->GetNode( 0 );
+				if ( pPart && pPart->IsType( CBENode::beString ) )
+					strPath = pPart->GetString();
 			}
 
 			// Get the regular path
 			pPath = pFile->GetNode( "path" );
-
-			if ( ! pPath ) return FALSE;
-			if ( ! pPath->IsType( CBENode::beList ) ) return FALSE;
+			if ( ! pPath || ! pPath->IsType( CBENode::beList ) ) return FALSE;
 
 			const CBENode* pPathPart = pPath->GetNode( 0 );
 			if ( pPathPart && pPathPart->IsType( CBENode::beString ) )
@@ -1053,7 +1112,7 @@ BOOL CBTInfo::LoadTorrentTree(const CBENode* pRoot)
 			}
 
 			// If that didn't work, try decoding the path
-			if ( ( ! IsValid( strPath ) )  )
+			if ( ! IsValid( strPath ) )
 			{
 				// There was an error reading the path
 				m_bEncodingError = true;
@@ -1067,10 +1126,8 @@ BOOL CBTInfo::LoadTorrentTree(const CBENode* pRoot)
 				}
 			}
 
-			if ( ! pPath ) return FALSE;
-			if ( ! pPath->IsType( CBENode::beList ) ) return FALSE;
-			if ( pPath->GetCount() > 32 ) return FALSE;
-			if ( _tcsicmp( strPath.GetString() , _T("#ERROR#") ) == 0 ) return FALSE;
+			if ( ! pPath || ! pPath->IsType( CBENode::beList ) ) return FALSE;
+			if ( strPath.CompareNoCase( _T("#ERROR#") ) == 0 ) return FALSE;
 
 			pBTFile->m_sName = PathFindFileName( strPath );
 
@@ -1082,8 +1139,9 @@ BOOL CBTInfo::LoadTorrentTree(const CBENode* pRoot)
 				const CBENode* pPart = pPath->GetNode( nPath );
 				if ( ! pPart || ! pPart->IsType( CBENode::beString ) ) return FALSE;
 
-				if ( pBTFile->m_sPath.GetLength() )
-					pBTFile->m_sPath += '\\';
+				const int nPathLength = pBTFile->m_sPath.GetLength();
+				if ( nPathLength && pBTFile->m_sPath.GetAt( nPathLength - 1 ) != _T('\\') )
+					pBTFile->m_sPath += _T('\\');
 
 				// Get the path
 
@@ -1172,40 +1230,41 @@ BOOL CBTInfo::LoadTorrentTree(const CBENode* pRoot)
 			m_sName = strPath;
 
 			// Set data/file hashes (if they aren't)
-			if ( m_pFiles.GetHead()->m_oSHA1 )
+			CBTFile* pSingleFile = m_pFiles.GetHead();
+			if ( pSingleFile->m_oSHA1 )
 			{
-				m_oSHA1 = m_pFiles.GetHead()->m_oSHA1;
+				m_oSHA1 = pSingleFile->m_oSHA1;
 			}
 			else if ( m_oSHA1 )
 			{
-				m_pFiles.GetHead()->m_oSHA1 = m_oSHA1;
+				pSingleFile->m_oSHA1 = m_oSHA1;
 			}
 
-			if ( m_pFiles.GetHead()->m_oED2K )
+			if ( pSingleFile->m_oED2K )
 			{
-				m_oED2K = m_pFiles.GetHead()->m_oED2K;
+				m_oED2K = pSingleFile->m_oED2K;
 			}
 			else if ( m_oED2K )
 			{
-				m_pFiles.GetHead()->m_oED2K = m_oED2K;
+				pSingleFile->m_oED2K = m_oED2K;
 			}
 
-			if ( m_pFiles.GetHead()->m_oMD5 )
+			if ( pSingleFile->m_oMD5 )
 			{
-				m_oMD5 = m_pFiles.GetHead()->m_oMD5;
+				m_oMD5 = pSingleFile->m_oMD5;
 			}
 			else if ( m_oMD5 )
 			{
-				m_pFiles.GetHead()->m_oMD5 = m_oMD5;
+				pSingleFile->m_oMD5 = m_oMD5;
 			}
 
-			if ( m_pFiles.GetHead()->m_oTiger )
+			if ( pSingleFile->m_oTiger )
 			{
-				m_oTiger = m_pFiles.GetHead()->m_oTiger;
+				m_oTiger = pSingleFile->m_oTiger;
 			}
 			else if ( m_oTiger )
 			{
-				m_pFiles.GetHead()->m_oTiger = m_oTiger;
+				pSingleFile->m_oTiger = m_oTiger;
 			}
 		}
 	}
@@ -1223,20 +1282,20 @@ BOOL CBTInfo::LoadTorrentTree(const CBENode* pRoot)
 	oSHA.GetHash( &m_oBTH[ 0 ] );
 	m_oBTH.validate();
 
-	if ( m_pSource.m_nLength > 0 
-		 && pInfo->m_nSize 
+	if ( m_pSource.m_nLength > 0
+		 && pInfo->m_nSize
 		 && pInfo->m_nPosition + pInfo->m_nSize < m_pSource.m_nLength )
 	{
 		Hashes::BtHash oBTH;
 		CSHA pBTH;
-		pBTH.Add( &m_pSource.m_pBuffer[pInfo->m_nPosition], pInfo->m_nSize );
+		pBTH.Add( &m_pSource.m_pBuffer[pInfo->m_nPosition], (DWORD)pInfo->m_nSize );
 		pBTH.Finish();
 		pBTH.GetHash( &oBTH[0] );
-		
+
 		if ( oBTH == m_oBTH )
 		{
-			m_nInfoStart = pInfo->m_nPosition;
-			m_nInfoSize	 = pInfo->m_nSize;
+			m_nInfoStart = (DWORD)pInfo->m_nPosition;
+			m_nInfoSize	 = (DWORD)pInfo->m_nSize;
 		}
 	}
 
@@ -1547,6 +1606,63 @@ CString CBTInfo::GetTrackerHash() const
 
 	// Return hex-encoded hash
 	return oSHA1.toString< Hashes::base16Encoding >();
+}
+
+BOOL CBTInfo::IsZeroBlock(uint32 nBlock) const
+{
+	static const uint32 ZeroHash[22][5] = {
+		// Hash: 897256B6709E1A4DA9DABA92B6BDE39CCFCCD8C1       Size: 16384
+		{ 0xB6567289, 0x4D1A9E70, 0x92BADAA9, 0x9CE3BDB6, 0xC1D8CCCF },
+		// Hash: 5188431849B4613152FD7BDBA6A3FF0A4FD6424B       Size: 32768
+		{ 0x18438851, 0x3161B449, 0xDB7BFD52, 0x0AFFA3A6, 0x4B42D64F },
+		// Hash: 1ADC95BEBE9EEA8C112D40CD04AB7A8D75C4F961       Size: 65536
+		{ 0xBE95DC1A, 0x8CEA9EBE, 0xCD402D11, 0x8D7AAB04, 0x61F9C475 },
+		// Hash: 67DFD19F3EB3649D6F3F6631E44D0BD36B8D8D19       Size: 131072
+		{ 0x9FD1DF67, 0x9D64B33E, 0x31663F6F, 0xD30B4DE4, 0x198D8D6B },
+		// Hash: 2E000FA7E85759C7F4C254D4D9C33EF481E459A7       Size: 262144
+		{ 0xA70F002E, 0xC75957E8, 0xD454C2F4, 0xF43EC3D9, 0xA759E481 },
+		// Hash: 6A521E1D2A632C26E53B83D2CC4B0EDECFC1E68C       Size: 524288
+		{ 0x1D1E526A, 0x262C632A, 0xD2833BE5, 0xDE0E4BCC, 0x8CE6C1CF },
+		// Hash: 3B71F43FF30F4B15B5CD85DD9E95EBC7E84EB5A3       Size: 1048576
+		{ 0x3FF4713B, 0x154B0FF3, 0xDD85CDB5, 0xC7EB959E, 0xA3B54EE8 },
+		// Hash: 7D76D48D64D7AC5411D714A4BB83F37E3E5B8DF6       Size: 2097152
+		{ 0x8DD4767D, 0x54ACD764, 0xA414D711, 0x7EF383BB, 0xF68D5B3E },
+		// Hash: 2BCCBD2F38F15C13EB7D5A89FD9D85F595E23BC3       Size: 4194304
+		{ 0x2FBDCC2B, 0x135CF138, 0x895A7DEB, 0xF5859DFD, 0xC33BE295 },
+		// Hash: 5FDE1CCE603E6566D20DA811C9C8BCCCB044D4AE       Size: 8388608
+		{ 0xCE1CDE5F, 0x66653E60, 0x11A80DD2, 0xCCBCC8C9, 0xAED444B0 },
+		// Hash: 3B4417FC421CEE30A9AD0FD9319220A8DAE32DA2       Size: 16777216
+		{ 0xFC17443B, 0x30EE1C42, 0xD90FADA9, 0xA8209231, 0xA22DE3DA },
+		// Hash: 57B587E1BF2D09335BDAC6DB18902D43DFE76449       Size: 33554432
+		{ 0xE187B557, 0x33092DBF, 0xDBC6DA5B, 0x432D9018, 0x4964E7DF },
+		// Hash: 44FAC4BEDDE4DF04B9572AC665D3AC2C5CD00C7D       Size: 67108864
+		{ 0xBEC4FA44, 0x04DFE4DD, 0xC62A57B9, 0x2CACD365, 0x7D0CD05C },
+		// Hash: BA713B819C1202DCB0D178DF9D2B3222BA1BBA44       Size: 134217728
+		{ 0x813B71BA, 0xDC02129C, 0xDF78D1B0, 0x22322B9D, 0x44BA1BBA },
+		// Hash: 7B91DBDC56C5781EDF6C8847B4AA6965566C5C75       Size: 268435456
+		{ 0xDCDB917B, 0x1E78C556, 0x47886CDF, 0x6569AAB4, 0x755C6C56 },
+		// Hash: 5B088492C9F4778F409B7AE61477DEC124C99033       Size: 536870912
+		{ 0x9284085B, 0x8F77F4C9, 0xE67A9B40, 0xC1DE7714, 0x3390C924 },
+		// Hash: 2A492F15396A6768BCBCA016993F4B4C8B0B5307       Size: 1073741824
+		{ 0x152F492A, 0x68676A39, 0x16A0BCBC, 0x4C4B3F99, 0x07530B8B },
+		// Hash: 91D50642DD930E9542C39D36F0516D45F4E1AF0D       Size: 2147483648
+		{ 0x4206D591, 0x950E93DD, 0x369DC342, 0x456D51F0, 0x0DAFE1F4 },
+		// Hash: 1BF99EE9F374E58E201E4DDA4F474E570EB77229       Size: 4294967296
+		{ 0xE99EF91B, 0x8EE574F3, 0xDA4D1E20, 0x574E474F, 0x2972B70E },
+		// Hash: BCC8C0CA9E402EEE924A6046966D18B1F66EB577       Size: 8589934592
+		{ 0xCAC0C8BC, 0xEE2E409E, 0x46604A92, 0xB1186D96, 0x77B56EF6 },
+		// Hash: DC44DD38511BD6D1233701D63C15B87D0BD9F3A5       Size: 17179869184
+		{ 0x38DD44DC, 0xD1D61B51, 0xD6013723, 0x7DB8153C, 0xA5F3D90B },
+		// Hash: 7FFB233B3B2806328171FB8B5C209F48DC095B72       Size: 34359738368
+		{ 0x3B23FB7F, 0x3206283B, 0x8BFB7181, 0x489F205C, 0x725B09DC }
+	};
+
+	int i = 0;
+	for(; m_nBlockSize > ( (uint64) 16384 << i ); i++)
+		if ( i > 21 )
+			return FALSE;
+
+	return memcmp( &m_pBlockBTH[ nBlock ], ZeroHash[ i ], sizeof( ZeroHash[ i ] ) ) == 0;
 }
 
 //////////////////////////////////////////////////////////////////////

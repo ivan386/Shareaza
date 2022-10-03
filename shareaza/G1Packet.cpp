@@ -1,7 +1,7 @@
 //
 // G1Packet.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2013.
+// Copyright (c) Shareaza Development Team, 2002-2014.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -244,7 +244,7 @@ void CG1Packet::ToBuffer(CBuffer* pBuffer, bool /*bTCP*/)
 void CG1Packet::Debug(LPCTSTR pszReason) const
 {
 	CString strOutput;
-	strOutput.Format( L"[G1] %s Type: %s [%i/%i]", pszReason, GetType(), m_nTTL, m_nHops );
+	strOutput.Format( L"[G1] %s Type: %s [%i/%i]", pszReason, (LPCTSTR)GetType(), m_nTTL, m_nHops );
 	CPacket::Debug( strOutput );
 }
 
@@ -264,7 +264,7 @@ int CG1Packet::GGEPReadCachedHosts(const CGGEPBlock& pGGEP)
 			WORD nPort = 0;
 			pIPPs->Read( (void*)&nAddress, 4 );
 			pIPPs->Read( (void*)&nPort, 2 );
-			DEBUG_ONLY( theApp.Message( MSG_DEBUG, _T("[G1] Got host %s:%i"), (LPCTSTR)CString( inet_ntoa( *(IN_ADDR*)&nAddress ) ), nPort ) ); 
+			DEBUG_ONLY( theApp.Message( MSG_DEBUG, _T("[G1] Got host %s:%i"), (LPCTSTR)CString( inet_ntoa( *(IN_ADDR*)&nAddress ) ), nPort ) );
 			CHostCacheHostPtr pCachedHost =
 				HostCache.Gnutella1.Add( (IN_ADDR*)&nAddress, nPort );
 			if ( pCachedHost ) nCount++;
@@ -286,11 +286,11 @@ int CG1Packet::GGEPReadCachedHosts(const CGGEPBlock& pGGEP)
 				WORD nPort = 0;
 				pGDNAs->Read( (void*)&nAddress, 4 );
 				pGDNAs->Read( (void*)&nPort, 2 );
-				DEBUG_ONLY( theApp.Message( MSG_DEBUG, _T("Got GDNA host %s:%i"), (LPCTSTR)CString( inet_ntoa( *(IN_ADDR*)&nAddress ) ), nPort ) ); 
+				DEBUG_ONLY( theApp.Message( MSG_DEBUG, _T("Got GDNA host %s:%i"), (LPCTSTR)CString( inet_ntoa( *(IN_ADDR*)&nAddress ) ), nPort ) );
 				CHostCacheHostPtr pCachedHost =
 					HostCache.Gnutella1.Add( (IN_ADDR*)&nAddress, nPort );
 				if ( pCachedHost ) nCount++;
-				HostCache.G1DNA.Add( (IN_ADDR*)&nAddress, nPort, 0, _T("GDNA") );
+				HostCache.G1DNA.Add( (IN_ADDR*)&nAddress, nPort, NULL, 0, _T("GDNA") );
 			}
 		}
 	}
@@ -407,7 +407,7 @@ bool CG1Packet::ReadHUGE(CShareazaFile* pFile)
 	else if ( oBTH.fromUrn< Hashes::base16Encoding >( strURN ) )	// Got BTH base16
 		pFile->m_oBTH   = oBTH;
 	else
-		theApp.Message( MSG_DEBUG | MSG_FACILITY_SEARCH, _T("[G1] Got packet with unknown HUGE \"%s\" (%d bytes)"), strURN, len );
+		theApp.Message( MSG_DEBUG | MSG_FACILITY_SEARCH, _T("[G1] Got packet with unknown HUGE \"%s\" (%d bytes)"), (LPCTSTR)strURN, len );
 
 	return true;
 }
@@ -640,7 +640,7 @@ BOOL CG1Packet::OnPing(const SOCKADDR_IN* pHost)
 		if ( CGGEPItem* pItem = pGGEP.Add( GGEP_HEADER_VENDOR_INFO ) )
 		{
 			pItem->Write( VENDOR_CODE, 4 );
-			pItem->WriteByte( ( theApp.m_nVersion[ 0 ] << 4 ) | theApp.m_nVersion[ 1 ] );
+			pItem->WriteByte( (BYTE)( ( theApp.m_nVersion[ 0 ] << 4 ) | theApp.m_nVersion[ 1 ] ) );
 		}
 
 		if ( bSCP )
@@ -703,7 +703,7 @@ BOOL CG1Packet::OnPong(const SOCKADDR_IN* pHost)
 		CGGEPBlock pGGEP;
 		if ( pGGEP.ReadFromPacket( this ) )
 		{
-			// Read vendor code			
+			// Read vendor code
 			if ( CGGEPItem* pVC = pGGEP.Find( GGEP_HEADER_VENDOR_INFO, 4 ) )
 			{
 				CHAR szaVendor[ 5 ] = {};
@@ -739,10 +739,10 @@ BOOL CG1Packet::OnPong(const SOCKADDR_IN* pHost)
 
 	if ( bUltrapeer )
 	{
-		HostCache.Gnutella1.Add( (IN_ADDR*)&nAddress, nPort, 0, strVendorCode, nUptime );
+		HostCache.Gnutella1.Add( (IN_ADDR*)&nAddress, nPort, &pHost->sin_addr, 0, strVendorCode, nUptime );
 
 		if ( bGDNA )
-			HostCache.G1DNA.Add( (IN_ADDR*)&nAddress, nPort, 0, strVendorCode, nUptime );
+			HostCache.G1DNA.Add( (IN_ADDR*)&nAddress, nPort, &pHost->sin_addr, 0, strVendorCode, nUptime );
 	}
 
 	// Update Gnutella UDPHC state
@@ -814,7 +814,7 @@ BOOL CG1Packet::OnQuery(const SOCKADDR_IN* pHost)
 		return TRUE;
 	}
 
-	CQuerySearchPtr pSearch = CQuerySearch::FromPacket( this, pHost );
+	CQuerySearchPtr pSearch = CQuerySearch::FromPacket( this, (SOCKADDR*) pHost );
 	if ( ! pSearch || pSearch->m_bDropMe )
 	{
 		if ( ! pSearch )
@@ -918,7 +918,7 @@ BOOL CG1Packet::OnPush(const SOCKADDR_IN* pHost)
 		}
 	}
 
-	if ( ! nPort || ( m_nHops && ( 
+	if ( ! nPort || ( m_nHops && (
 		Network.IsFirewalledAddress( (IN_ADDR*)&nAddress ) ||
 		Network.IsReserved( (IN_ADDR*)&nAddress ) ) ) )
 	{

@@ -1,7 +1,7 @@
 //
 // Schema.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2011.
+// Copyright (c) Shareaza Development Team, 2002-2015.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -77,10 +77,8 @@ BOOL CSchema::FilterType(LPCTSTR pszFile) const
 	if ( ! *pszExt )
 		return FALSE;
 
-	const CSBMap::CPair* pPair = m_pTypeFilters.PLookup(
-		CString( pszExt + 1 ).MakeLower() );
-
-	return pPair && pPair->value;
+	BOOL bValue;
+	return m_pTypeFilters.Lookup( pszExt + 1, bValue ) ? bValue : FALSE;
 }
 
 CString CSchema::GetFilterSet() const
@@ -97,7 +95,7 @@ CString CSchema::GetFilterSet() const
 			sFilters += _T('|');
 		}
 	}
-	return sFilters;
+	return sFilters.MakeLower();
 }
 
 POSITION CSchema::GetMemberIterator() const
@@ -105,18 +103,30 @@ POSITION CSchema::GetMemberIterator() const
 	return m_pMembers.GetHeadPosition();
 }
 
-CSchemaMember* CSchema::GetNextMember(POSITION& pos) const
+CSchemaMemberPtr CSchema::GetNextMember(POSITION& pos) const
 {
 	return m_pMembers.GetNext( pos );
 }
 
-CSchemaMember* CSchema::GetMember(LPCTSTR pszName) const
+CSchemaMemberPtr CSchema::GetMember(LPCTSTR pszName) const
 {
 	if ( ! pszName || ! *pszName ) return NULL;
 
-	for ( POSITION pos = GetMemberIterator() ; pos ; )
+	for ( POSITION pos = m_pMembers.GetHeadPosition(); pos ; )
 	{
-		CSchemaMember* pMember = GetNextMember( pos );
+		CSchemaMemberPtr pMember = m_pMembers.GetNext( pos );
+		if ( pMember->m_sName.CompareNoCase( pszName ) == 0 ) return pMember;
+	}
+	return NULL;
+}
+
+CSchemaMember* CSchema::GetWritableMember(LPCTSTR pszName) const
+{
+	if ( !pszName || !*pszName ) return NULL;
+
+	for ( POSITION pos = m_pMembers.GetHeadPosition(); pos; )
+	{
+		CSchemaMember* pMember = m_pMembers.GetNext( pos );
 		if ( pMember->m_sName.CompareNoCase( pszName ) == 0 ) return pMember;
 	}
 	return NULL;
@@ -131,12 +141,11 @@ CString CSchema::GetFirstMemberName() const
 {
 	if ( m_pMembers.GetCount() )
 	{
-		CSchemaMember* pMember = m_pMembers.GetHead();
+		CSchemaMemberPtr pMember = m_pMembers.GetHead();
 		return pMember->m_sName;
 	}
 
-	CString str( _T("title") );
-	return str;
+	return CString( _T("title") );
 }
 
 //////////////////////////////////////////////////////////////////////
@@ -144,9 +153,9 @@ CString CSchema::GetFirstMemberName() const
 
 void CSchema::Clear()
 {
-	for ( POSITION pos = GetMemberIterator() ; pos ; )
+	for ( POSITION pos = m_pMembers.GetHeadPosition(); pos ; )
 	{
-		delete GetNextMember( pos );
+		delete m_pMembers.GetNext( pos );
 	}
 
 	for ( POSITION pos = m_pContains.GetHeadPosition() ; pos ; )
@@ -154,14 +163,8 @@ void CSchema::Clear()
 		delete m_pContains.GetNext( pos );
 	}
 
-	for ( POSITION pos = m_pBitziMap.GetHeadPosition() ; pos ; )
-	{
-		delete m_pBitziMap.GetNext( pos );
-	}
-
 	m_pMembers.RemoveAll();
 	m_pContains.RemoveAll();
-	m_pBitziMap.RemoveAll();
 }
 
 //////////////////////////////////////////////////////////////////////
@@ -205,26 +208,24 @@ BOOL CSchema::Load(LPCTSTR pszFile)
 
 BOOL CSchema::LoadSchema(LPCTSTR pszFile)
 {
-	CString strXML;
-
-	CXMLElement* pRoot = CXMLElement::FromFile( pszFile );
+	const CXMLElement* pRoot = CXMLElement::FromFile( pszFile );
 	if ( NULL == pRoot ) return FALSE;
 
 	BOOL bResult = FALSE;
 
 	m_sURI = pRoot->GetAttributeValue( _T("targetNamespace"), _T("") );
 
-	CXMLElement* pPlural = pRoot->GetElementByName( _T("element") );
+	const CXMLElement* pPlural = pRoot->GetElementByName( _T("element") );
 
 	if ( pPlural && m_sURI.GetLength() )
 	{
 		m_sPlural = pPlural->GetAttributeValue( _T("name") );
 
-		CXMLElement* pComplexType = pPlural->GetFirstElement();
+		const CXMLElement* pComplexType = pPlural->GetFirstElement();
 		
 		if ( pComplexType && pComplexType->IsNamed( _T("complexType") ) && m_sPlural.GetLength() )
 		{
-			CXMLElement* pElement = pComplexType->GetFirstElement();
+			const CXMLElement* pElement = pComplexType->GetFirstElement();
 
 			if ( pElement && pElement->IsNamed( _T("element") ) )
 			{
@@ -236,7 +237,7 @@ BOOL CSchema::LoadSchema(LPCTSTR pszFile)
 				}
 				else
 				{
-					CString strType = pElement->GetAttributeValue( _T("type") );
+					const CString strType = pElement->GetAttributeValue( _T("type") );
 					bResult = LoadPrimary( pRoot, GetType( pRoot, strType ) );
 				}
 
@@ -245,17 +246,15 @@ BOOL CSchema::LoadSchema(LPCTSTR pszFile)
 		}
 	}
 	
-	CXMLElement* pMapping = pRoot->GetElementByName( _T("mapping") );
-	if ( pMapping )
+	if ( const CXMLElement* pMapping = pRoot->GetElementByName( _T("mapping") ) )
 	{
 		for ( POSITION pos = pMapping->GetElementIterator() ; pos ; )
 		{
-			CXMLElement* pNetwork = pMapping->GetNextElement( pos );
-			if ( pNetwork )
+			if ( const CXMLElement* pNetwork = pMapping->GetNextElement( pos ) )
 			{
 				BOOL bFound = pNetwork->IsNamed( _T("network") );
 
-				CString strName = pNetwork->GetAttributeValue( _T("name") );
+				const CString strName = pNetwork->GetAttributeValue( _T("name") );
 				if ( ! bFound || strName != _T("ed2k") )
 					continue;
 				else
@@ -272,7 +271,7 @@ BOOL CSchema::LoadSchema(LPCTSTR pszFile)
 	return bResult;
 }
 
-BOOL CSchema::LoadPrimary(CXMLElement* pRoot, CXMLElement* pType)
+BOOL CSchema::LoadPrimary(const CXMLElement* pRoot, const CXMLElement* pType)
 {
 	if ( ! pRoot || ! pType ) return FALSE;
 	
@@ -281,8 +280,8 @@ BOOL CSchema::LoadPrimary(CXMLElement* pRoot, CXMLElement* pType)
 
 	for ( POSITION pos = pType->GetElementIterator() ; pos ; )
 	{
-		CXMLElement* pElement	= pType->GetNextElement( pos );
-		CString strElement		= pElement->GetName();
+		const CXMLElement* pElement	= pType->GetNextElement( pos );
+		const CString strElement = pElement->GetName();
 
 		if ( strElement.CompareNoCase( _T("attribute") ) == 0 ||
 			 strElement.CompareNoCase( _T("element") ) == 0 )
@@ -308,15 +307,15 @@ BOOL CSchema::LoadPrimary(CXMLElement* pRoot, CXMLElement* pType)
 	return TRUE;
 }
 
-CXMLElement* CSchema::GetType(CXMLElement* pRoot, LPCTSTR pszName) const
+const CXMLElement* CSchema::GetType(const CXMLElement* pRoot, LPCTSTR pszName) const
 {
 	if ( ! pszName || ! *pszName ) return NULL;
 
 	for ( POSITION pos = pRoot->GetElementIterator() ; pos ; )
 	{
-		CXMLElement* pElement = pRoot->GetNextElement( pos );
+		const CXMLElement* pElement = pRoot->GetNextElement( pos );
 
-		CString strElement = pElement->GetName();
+		const CString strElement = pElement->GetName();
 
 		if ( strElement.CompareNoCase( _T("simpleType") ) == 0 ||
 			 strElement.CompareNoCase( _T("complexType") ) == 0 )
@@ -348,24 +347,20 @@ BOOL CSchema::LoadDescriptor(LPCTSTR pszFile)
 	
 	for ( POSITION pos = pRoot->GetElementIterator() ; pos ; )
 	{
-		CXMLElement* pElement = pRoot->GetNextElement( pos );
+		const CXMLElement* pElement = pRoot->GetNextElement( pos );
 		
 		if ( pElement->IsNamed( _T("object") ) )
 		{
-			CString strType = pElement->GetAttributeValue( _T("type") );
-			ToLower( strType );
-			
-			if ( strType == _T("file") )
+			const CString strType = pElement->GetAttributeValue( _T("type") );
+			if ( strType.CompareNoCase( _T("file") ) == 0 )
 				m_nType = stFile;
-			else if ( strType == _T("folder") || strType == _T("album") )
+			else if ( strType.CompareNoCase( _T("folder") ) == 0 || strType.CompareNoCase( _T("album") ) == 0 )
 				m_nType = stFolder;
 			
-			strType = pElement->GetAttributeValue( _T("availability") );
-			ToLower( strType );
-			
-			if ( strType == _T("system") )
+			const CString strAvailability = pElement->GetAttributeValue( _T("availability") );
+			if ( strAvailability.CompareNoCase( _T("system") ) == 0 )
 				m_nAvailability = saSystem;
-			else if ( strType == _T("advanced") )
+			else if ( strAvailability.CompareNoCase( _T("advanced") ) == 0 )
 				m_nAvailability = saAdvanced;
 			else
 				m_nAvailability = saDefault;
@@ -396,10 +391,6 @@ BOOL CSchema::LoadDescriptor(LPCTSTR pszFile)
 		{
 			LoadDescriptorTypeFilter( pElement );
 		}
-		else if ( pElement->IsNamed( _T("bitziImport") ) )
-		{
-			LoadDescriptorBitziImport( pElement );
-		}
 		else if ( pElement->IsNamed( _T("headerContent") ) )
 		{
 			LoadDescriptorHeaderContent( pElement );
@@ -419,11 +410,11 @@ BOOL CSchema::LoadDescriptor(LPCTSTR pszFile)
 	return TRUE;
 }
 
-void CSchema::LoadDescriptorTitles(CXMLElement* pElement)
+void CSchema::LoadDescriptorTitles(const CXMLElement* pElement)
 {
 	for ( POSITION pos = pElement->GetElementIterator() ; pos ; )
 	{
-		CXMLElement* pTitle = pElement->GetNextElement( pos );
+		const CXMLElement* pTitle = pElement->GetNextElement( pos );
 
 		if ( pTitle->IsNamed( _T("title") ) )
 		{
@@ -441,11 +432,11 @@ void CSchema::LoadDescriptorTitles(CXMLElement* pElement)
 	}
 }
 
-void CSchema::LoadDescriptorIcons(CXMLElement* pElement)
+void CSchema::LoadDescriptorIcons(const CXMLElement* pElement)
 {
 	for ( POSITION pos = pElement->GetElementIterator() ; pos ; )
 	{
-		CXMLElement* pIcon = pElement->GetNextElement( pos );
+		const CXMLElement* pIcon = pElement->GetNextElement( pos );
 
 		if ( pIcon->IsNamed( _T("icon") ) )
 		{
@@ -456,19 +447,19 @@ void CSchema::LoadDescriptorIcons(CXMLElement* pElement)
 	}
 }
 
-void CSchema::LoadDescriptorMembers(CXMLElement* pElement)
+void CSchema::LoadDescriptorMembers(const CXMLElement* pElement)
 {
 	BOOL bPrompt = FALSE;
 	
 	for ( POSITION pos = pElement->GetElementIterator() ; pos ; )
 	{
-		CXMLElement* pDisplay = pElement->GetNextElement( pos );
+		const CXMLElement* pDisplay = pElement->GetNextElement( pos );
 		
 		if ( pDisplay->IsNamed( _T("member") ) )
 		{
-			CString strMember = pDisplay->GetAttributeValue( _T("name") );
+			const CString strMember = pDisplay->GetAttributeValue( _T("name") );
 			
-			if ( CSchemaMember* pMember = GetMember( strMember ) )
+			if ( CSchemaMember* pMember = GetWritableMember( strMember ) )
 			{
 				pMember->LoadDescriptor( pDisplay );
 				bPrompt |= pMember->m_bPrompt;
@@ -478,17 +469,17 @@ void CSchema::LoadDescriptorMembers(CXMLElement* pElement)
 	
 	if ( bPrompt ) return;
 	
-	for ( POSITION pos = GetMemberIterator() ; pos ; )
+	for ( POSITION pos = m_pMembers.GetHeadPosition(); pos ; )
 	{
-		GetNextMember( pos )->m_bPrompt = TRUE;
+		m_pMembers.GetNext( pos )->m_bPrompt = TRUE;
 	}
 }
 
-void CSchema::LoadDescriptorExtends(CXMLElement* pElement)
+void CSchema::LoadDescriptorExtends(const CXMLElement* pElement)
 {
 	for ( POSITION pos = pElement->GetElementIterator() ; pos ; )
 	{
-		CXMLElement* pExtend = pElement->GetNextElement( pos );
+		const CXMLElement* pExtend = pElement->GetNextElement( pos );
 
 		if ( pExtend->IsNamed( _T("schema") ) )
 		{
@@ -498,17 +489,17 @@ void CSchema::LoadDescriptorExtends(CXMLElement* pElement)
 	}
 }
 
-void CSchema::LoadDescriptorContains(CXMLElement* pElement)
+void CSchema::LoadDescriptorContains(const CXMLElement* pElement)
 {
 	for ( POSITION pos = pElement->GetElementIterator() ; pos ; )
 	{
-		CXMLElement* pExtend = pElement->GetNextElement( pos );
+		const CXMLElement* pExtend = pElement->GetNextElement( pos );
 
 		if ( pExtend->IsNamed( _T("object") ) )
 		{
 			CSchemaChild* pChild = new CSchemaChild( this );
 
-			if ( pChild->Load( pExtend ) )
+			if ( pChild && pChild->Load( pExtend ) )
 			{
 				m_pContains.AddTail( pChild );
 			}
@@ -520,46 +511,24 @@ void CSchema::LoadDescriptorContains(CXMLElement* pElement)
 	}
 }
 
-void CSchema::LoadDescriptorTypeFilter(CXMLElement* pElement)
+void CSchema::LoadDescriptorTypeFilter(const CXMLElement* pElement)
 {
 	for ( POSITION pos = pElement->GetElementIterator() ; pos ; )
 	{
-		CXMLElement* pType = pElement->GetNextElement( pos );
+		const CXMLElement* pType = pElement->GetNextElement( pos );
 
 		if ( pType->GetName().CompareNoCase( _T("type") ) == 0 )
 		{
-			CString strExt = pType->GetAttributeValue( _T("extension") );
-			BOOL bResult = TRUE;
-
-			ASSERT( strExt.GetLength() );
-
-			m_pTypeFilters.SetAt( strExt.MakeLower(), bResult );
+			m_pTypeFilters.SetAt( pType->GetAttributeValue( _T("extension") ), TRUE );
 		}
 	}
 }
 
-void CSchema::LoadDescriptorBitziImport(CXMLElement* pElement)
-{
-	m_sBitziTest = pElement->GetAttributeValue( _T("testExists"), NULL );
-
-	for ( POSITION pos = pElement->GetElementIterator() ; pos ; )
-	{
-		CXMLElement* pBitzi = pElement->GetNextElement( pos );
-
-		if ( pBitzi->GetName().CompareNoCase( _T("mapping") ) == 0 )
-		{
-			CSchemaBitzi* pMap = new CSchemaBitzi();
-			pMap->Load( pBitzi );
-			m_pBitziMap.AddTail( pMap );
-		}
-	}
-}
-
-void CSchema::LoadDescriptorHeaderContent(CXMLElement* pElement)
+void CSchema::LoadDescriptorHeaderContent(const CXMLElement* pElement)
 {
 	for ( POSITION pos = pElement->GetElementIterator() ; pos ; )
 	{
-		CXMLElement* pXML = pElement->GetNextElement( pos );
+		const CXMLElement* pXML = pElement->GetNextElement( pos );
 		
 		BOOL bLanguage = pXML->GetAttributeValue( _T("language") ).
 			CompareNoCase( Settings.General.Language ) == 0;
@@ -577,13 +546,13 @@ void CSchema::LoadDescriptorHeaderContent(CXMLElement* pElement)
 	}
 }
 
-void CSchema::LoadDescriptorViewContent(CXMLElement* pElement)
+void CSchema::LoadDescriptorViewContent(const CXMLElement* pElement)
 {
 	m_sLibraryView = pElement->GetAttributeValue( _T("preferredView") );
 	
 	for ( POSITION pos = pElement->GetElementIterator() ; pos ; )
 	{
-		CXMLElement* pXML = pElement->GetNextElement( pos );
+		const CXMLElement* pXML = pElement->GetNextElement( pos );
 
 		BOOL bLanguage = pXML->GetAttributeValue( _T("language") ).
 			CompareNoCase( Settings.General.Language ) == 0;
@@ -635,27 +604,24 @@ BOOL CSchema::LoadIcon()
 //////////////////////////////////////////////////////////////////////
 // CSchema contained object helpers
 
-CSchemaChild* CSchema::GetContained(LPCTSTR pszURI) const
+CSchemaChildPtr CSchema::GetContained(LPCTSTR pszURI) const
 {
 	for ( POSITION pos = m_pContains.GetHeadPosition() ; pos ; )
 	{
-		CSchemaChild* pChild = m_pContains.GetNext( pos );
+		CSchemaChildPtr pChild = m_pContains.GetNext( pos );
 		if ( pChild->m_sURI.CompareNoCase( pszURI ) == 0 ) return pChild;
 	}
 	return NULL;
 }
 
-CString CSchema::GetContainedURI(int nType) const
+CString CSchema::GetContainedURI(Type nType) const
 {
 	for ( POSITION pos = m_pContains.GetHeadPosition() ; pos ; )
 	{
-		CSchemaChild* pChild = m_pContains.GetNext( pos );
-
+		CSchemaChildPtr pChild = m_pContains.GetNext( pos );
 		if ( pChild->m_nType == nType ) return pChild->m_sURI;
 	}
-
-	CString strURI;
-	return strURI;
+	return CString();
 }
 
 //////////////////////////////////////////////////////////////////////
@@ -683,12 +649,12 @@ BOOL CSchema::Validate(CXMLElement* pXML, BOOL bFix) const
 	if ( pBody == NULL ) return FALSE;
 	if ( ! pBody->IsNamed( m_sSingular ) ) return FALSE;
 	
-	for ( POSITION pos = GetMemberIterator() ; pos ; )
+	for ( POSITION pos = m_pMembers.GetHeadPosition(); pos ; )
 	{
-		CSchemaMember* pMember = GetNextMember( pos );
+		CSchemaMemberPtr pMember = m_pMembers.GetNext( pos );
 		
-		CString str = pMember->GetValueFrom( pBody, L"(~np~)", FALSE );
-		if ( str == L"(~np~)" ) continue;
+		CString str = pMember->GetValueFrom( pBody, NO_VALUE, FALSE );
+		if ( str == NO_VALUE ) continue;
 		
 		if ( pMember->m_bNumeric )
 		{
@@ -702,7 +668,7 @@ BOOL CSchema::Validate(CXMLElement* pXML, BOOL bFix) const
 			if ( !bValid )
 			{
 				if ( !bFix ) return FALSE;
-				pMember->SetValueTo( pBody, L"" );
+				pMember->SetValueTo( pBody );
 			}
 		}
 		else if ( pMember->m_bYear )
@@ -711,7 +677,7 @@ BOOL CSchema::Validate(CXMLElement* pXML, BOOL bFix) const
 			if ( _stscanf( str, L"%i", &nYear ) != 1 || nYear < 1000 || nYear > 9999 )
 			{
 				if ( !bFix ) return FALSE;
-				pMember->SetValueTo( pBody, L"" );
+				pMember->SetValueTo( pBody );
 			}
 		}
 		else if ( pMember->m_bGUID )
@@ -720,7 +686,7 @@ BOOL CSchema::Validate(CXMLElement* pXML, BOOL bFix) const
 			if ( !(Hashes::fromGuid( str, &tmp[ 0 ] ) && tmp.validate() ) )
 			{
 				if ( !bFix ) return FALSE;
-				pMember->SetValueTo( pBody, L"" );
+				pMember->SetValueTo( pBody );
 			}
 		}
 		else if ( pMember->m_nMaxLength > 0 )
@@ -740,7 +706,7 @@ BOOL CSchema::Validate(CXMLElement* pXML, BOOL bFix) const
 			else if ( str == L"0" || str.CompareNoCase( L"false" ) == 0 )
 				str = L"false";
 			else if ( !bFix ) return FALSE;
-			pMember->SetValueTo( pBody, L"" );
+			pMember->SetValueTo( pBody );
 		}
 	}
 	
@@ -750,15 +716,15 @@ BOOL CSchema::Validate(CXMLElement* pXML, BOOL bFix) const
 //////////////////////////////////////////////////////////////////////
 // CSchema indexed words
 
-CString CSchema::GetIndexedWords(CXMLElement* pXML) const
+CString CSchema::GetIndexedWords(const CXMLElement* pXML) const
 {
 	CString str;
 	
 	if ( pXML == NULL ) return str;
 	
-	for ( POSITION pos = GetMemberIterator() ; pos ; )
+	for ( POSITION pos = m_pMembers.GetHeadPosition(); pos ; )
 	{
-		CSchemaMember* pMember = GetNextMember( pos );
+		CSchemaMemberPtr pMember = m_pMembers.GetNext( pos );
 		
 		if ( pMember->m_bIndexed )
 		{
@@ -775,15 +741,15 @@ CString CSchema::GetIndexedWords(CXMLElement* pXML) const
 	return str;
 }
 
-CString CSchema::GetVisibleWords(CXMLElement* pXML) const
+CString CSchema::GetVisibleWords(const CXMLElement* pXML) const
 {
 	CString str;
 	
 	if ( pXML == NULL ) return str;
 	
-	for ( POSITION pos = GetMemberIterator() ; pos ; )
+	for ( POSITION pos = m_pMembers.GetHeadPosition(); pos ; )
 	{
-		CSchemaMember* pMember = GetNextMember( pos );
+		CSchemaMemberPtr pMember = m_pMembers.GetNext( pos );
 		
 		if ( !pMember->m_bHidden )
 		{
@@ -816,29 +782,13 @@ void CSchema::ResolveTokens(CString& str, CXMLElement* pXML) const
 
 		CString strValue;
 
-		if ( CSchemaMember* pMember = GetMember( strMember ) )
+		if ( CSchemaMemberPtr pMember = GetMember( strMember ) )
 		{
 			strValue = pMember->GetValueFrom( pXML, NULL, TRUE );
 		}
 
 		str = str.Left( nOpen ) + strValue + str.Mid( nClose + 1 );
 	}
-}
-
-//////////////////////////////////////////////////////////////////////
-// CSchemaBitzi Bitzi map
-
-BOOL CSchemaBitzi::Load(CXMLElement* pXML)
-{
-	m_sFrom	= pXML->GetAttributeValue( _T("from"), NULL );
-	m_sTo	= pXML->GetAttributeValue( _T("to"), NULL );
-
-	CString strFactor = pXML->GetAttributeValue( _T("factor"), NULL );
-
-	if ( strFactor.IsEmpty() || _stscanf( strFactor, _T("%lf"), &m_nFactor ) != 1 )
-		m_nFactor = 0;
-
-	return m_sFrom.GetLength() && m_sTo.GetLength();
 }
 
 //////////////////////////////////////////////////////////////////////

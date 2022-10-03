@@ -1,7 +1,7 @@
 //
 // RouteCache.h
 //
-// Copyright (c) Shareaza Development Team, 2002-2012.
+// Copyright (c) Shareaza Development Team, 2002-2015.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -21,6 +21,9 @@
 
 #pragma once
 
+#define ROUTE_HASH_SIZE		1024
+#define ROUTE_HASH_MASK		1023
+
 class CNeighbour;
 
 
@@ -34,6 +37,7 @@ public:
 	Hashes::Guid		m_oGUID;
 	const CNeighbour*	m_pNeighbour;
 	SOCKADDR_IN			m_pEndpoint;
+	SOCKADDR_IN6		m_pEndpointIPv6;
 };
 
 
@@ -46,7 +50,7 @@ public:
 
 // Attributes
 protected:
-	CRouteCacheItem*	m_pHash[1024];
+	CRouteCacheItem*	m_pHash[ ROUTE_HASH_SIZE ];
 	CRouteCacheItem*	m_pFree;
 	CRouteCacheItem*	m_pBuffer;
 	DWORD				m_nBuffer;
@@ -57,7 +61,7 @@ protected:
 // Operations
 public:
 	CRouteCacheItem*	Find(const Hashes::Guid& oGUID);
-	CRouteCacheItem*	Add(const Hashes::Guid& oGUID, const CNeighbour* pNeighbour, const SOCKADDR_IN* pEndpoint, DWORD nTime = 0);
+	CRouteCacheItem*	Add(const Hashes::Guid& oGUID, const CNeighbour* pNeighbour, const SOCKADDR* pEndpoint, DWORD nTime = 0);
 	void				Remove(CNeighbour* pNeighbour);
 	void				Resize(DWORD nSize);
 	DWORD				GetNextSize(DWORD nDesired);
@@ -84,15 +88,15 @@ protected:
 	CRouteCacheTable*	m_pRecent;
 	CRouteCacheTable*	m_pHistory;
 
-	CRouteCacheItem*	Add(const Hashes::Guid& oGUID, const CNeighbour* pNeighbour, const SOCKADDR_IN* pEndpoint, DWORD tAdded);
+	CRouteCacheItem*	Add(const Hashes::Guid& oGUID, const CNeighbour* pNeighbour, const SOCKADDR* pEndpoint, DWORD tAdded);
 
 // Operations
 public:
 	void		SetDuration(DWORD nSeconds);
 	BOOL		Add(const Hashes::Guid& oGUID, const CNeighbour* pNeighbour);
-	BOOL		Add(const Hashes::Guid& oGUID, const SOCKADDR_IN* pEndpoint);
+	BOOL		Add(const Hashes::Guid& oGUID, const SOCKADDR* pEndpoint);
 	void		Remove(CNeighbour* pNeighbour);
 	void		Clear();
 
-	CRouteCacheItem*	Lookup(const Hashes::Guid& oGUID, CNeighbour** ppNeighbour = NULL, SOCKADDR_IN* pEndpoint = NULL);
+	CRouteCacheItem*	Lookup(const Hashes::Guid& oGUID, CNeighbour** ppNeighbour = NULL, SOCKADDR_IN* pEndpoint = NULL, SOCKADDR_IN6* pEndpointIPv6 = NULL);
 };

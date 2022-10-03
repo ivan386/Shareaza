@@ -3,7 +3,7 @@
 // or project specific include files that are used frequently,
 // but are changed infrequently
 //
-// Copyright (c) Shareaza Development Team, 2007-2013.
+// Copyright (c) Shareaza Development Team, 2007-2014.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -23,8 +23,6 @@
 
 #pragma once
 
-#include <SDKDDKVer.h>
-
 #define STRICT
 
 #ifndef _SECURE_ATL
@@ -39,6 +37,9 @@
 
 #define ISOLATION_AWARE_ENABLED 1
 
+#define _WIN32_WINNT 0x0501
+#include <SDKDDKVer.h>
+
 #include "resource.h"
 
 #include <atlbase.h>
@@ -46,7 +47,7 @@
 #include <atlstr.h>
 #include <atlcoll.h>
 
-#pragma pack(push,1)
+#pragma pack(push)
 
 #include "unrar.h"
 

@@ -1,7 +1,7 @@
 //
 // TigerTree.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2011.
+// Copyright (c) Shareaza Development Team, 2002-2017.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -682,6 +682,7 @@ namespace
 
 CTigerTree::CTigerTree() :
 	m_nHeight		( 0 )
+,	m_nActualHeight ( 0 )
 ,	m_pNode			( NULL )
 ,	m_nNodeCount	( 0 )
 ,	m_nNodeBase		( 0 )
@@ -713,32 +714,31 @@ void CTigerTree::SetupAndAllocate(uint32 nHeight, uint64 nLength)
 
 	Clear();
 
-	uint64 nCount = (uint32)( nLength / BLOCK_SIZE );
+	uint64 nCount = nLength / BLOCK_SIZE;
 	if ( nLength % BLOCK_SIZE ) nCount++;
 
-	uint32 nActualHeight = 1;
+	m_nActualHeight = 1;
 
-	for ( uint32 nStep = 1 ; nStep < nCount ; nStep *= 2 ) nActualHeight++;
+	for ( uint64 nStep = 1 ; nStep < nCount ; nStep *= 2 ) m_nActualHeight++;
 
-	m_nHeight = min( nActualHeight, nHeight );
+	m_nHeight = min( m_nActualHeight, nHeight );
 
 	m_nBlockCount	= 1;
 	m_nBlockPos		= 0;
 
-	if ( nActualHeight > nHeight )
+	if ( m_nActualHeight > nHeight )
 	{
-		for ( uint32 nStep = nActualHeight - nHeight ; nStep ; nStep-- ) m_nBlockCount *= 2;
+		for ( uint32 nStep = m_nActualHeight - nHeight ; nStep ; nStep-- ) m_nBlockCount *= 2;
 	}
 
 	m_nNodeCount = 1;
-
 	for ( uint32 nStep = m_nHeight ; nStep ; nStep-- ) m_nNodeCount *= 2;
-
 	m_nNodeBase	= ( m_nNodeCount / 2 );
+	m_nNodeCount--;
 	m_nBaseUsed	= (uint32)( nCount / m_nBlockCount );
 	if ( nCount % m_nBlockCount ) m_nBaseUsed++;
 
-	m_pNode		= new CTigerNode[ --m_nNodeCount ];
+	m_pNode		= new (std::nothrow) CTigerNode[ m_nNodeCount ];
 	m_nNodePos	= 0;
 }
 
@@ -749,22 +749,21 @@ void CTigerTree::SetupParameters(uint64 nLength)
 	uint64 nCount = nLength / BLOCK_SIZE;
 	if ( nLength % BLOCK_SIZE ) nCount++;
 
-	uint32 nActualHeight = 1;
-	for ( uint32 nStep = 1 ; nStep < nCount ; nStep *= 2 ) nActualHeight++;
+	m_nActualHeight = 1;
+	for ( uint64 nStep = 1 ; nStep < nCount ; nStep *= 2 ) m_nActualHeight++;
 
 	m_nBlockCount	= 1;
 	m_nBlockPos		= 0;
 
-	if ( nActualHeight > m_nHeight )
+	if ( m_nActualHeight > m_nHeight )
 	{
-		for ( uint32 nStep = nActualHeight - m_nHeight ; nStep ; nStep-- ) m_nBlockCount *= 2;
+		for ( uint32 nStep = m_nActualHeight - m_nHeight ; nStep ; nStep-- ) m_nBlockCount *= 2;
 	}
 
 	m_nNodeCount = 1;
 	for ( uint32 nStep = m_nHeight ; nStep ; nStep-- ) m_nNodeCount *= 2;
-
-	m_nNodeBase = ( m_nNodeCount-- / 2 );
-
+	m_nNodeBase = ( m_nNodeCount / 2 );
+	m_nNodeCount--;
 	m_nBaseUsed	= (uint32)( nCount / m_nBlockCount );
 	if ( nCount % m_nBlockCount ) m_nBaseUsed++;
 }
@@ -806,7 +805,7 @@ void CTigerTree::Load(const uchar* pBuf)
 
 	if ( m_nHeight )
 	{
-		CTigerNode* pNode = new CTigerNode[ m_nNodeCount ];
+		CTigerNode* pNode = new (std::nothrow) CTigerNode[ m_nNodeCount ];
 		if ( pNode )
 		{
 			m_pNode = pNode;
@@ -861,21 +860,21 @@ BOOL CTigerTree::GetRoot(__in_bcount(24) uchar* pHash) const
 //////////////////////////////////////////////////////////////////////
 // CTigerTree assume
 
-void CTigerTree::Assume(CTigerTree* pSource)
-{
-	CSectionLock oLock( &m_pSection );
-
-	Clear();
-	if ( pSource->m_pNode == NULL ) return;
-
-	m_nHeight		= pSource->m_nHeight;
-	m_nNodeCount	= pSource->m_nNodeCount;
-	m_pNode			= pSource->m_pNode;
-
-	pSource->m_nHeight		= 0;
-	pSource->m_nNodeCount	= 0;
-	pSource->m_pNode		= NULL;
-}
+//void CTigerTree::Assume(CTigerTree* pSource)
+//{
+//	CSectionLock oLock( &m_pSection );
+//
+//	Clear();
+//	if ( pSource->m_pNode == NULL ) return;
+//
+//	m_nHeight		= pSource->m_nHeight;
+//	m_nNodeCount	= pSource->m_nNodeCount;
+//	m_pNode			= pSource->m_pNode;
+//
+//	pSource->m_nHeight		= 0;
+//	pSource->m_nNodeCount	= 0;
+//	pSource->m_pNode		= NULL;
+//}
 
 //////////////////////////////////////////////////////////////////////
 // CTigerTree create from file
@@ -886,7 +885,7 @@ void CTigerTree::BeginFile(uint32 nHeight, uint64 nLength)
 
 	SetupAndAllocate( nHeight, nLength );
 
-	if ( m_pStackBase == NULL ) m_pStackBase = new CTigerNode[ STACK_SIZE ];
+	if ( m_pStackBase == NULL ) m_pStackBase = new (std::nothrow) CTigerNode[ STACK_SIZE ];
 	m_pStackTop	= m_pStackBase;
 	m_nBlockPos = 0;
 }
@@ -981,7 +980,7 @@ void CTigerTree::BeginBlockTest()
 {
 	CSectionLock oLock( &m_pSection );
 
-	if ( m_pStackBase == NULL ) m_pStackBase = new CTigerNode[ STACK_SIZE ];
+	if ( m_pStackBase == NULL ) m_pStackBase = new (std::nothrow) CTigerNode[ STACK_SIZE ];
 	m_pStackTop	= m_pStackBase;
 	m_nBlockPos = 0;
 }
@@ -1038,7 +1037,7 @@ BOOL CTigerTree::FinishBlockTest(uint32 nBlock)
 //////////////////////////////////////////////////////////////////////
 // CTigerTree breadth-first serialize
 
-BOOL CTigerTree::ToBytes(uint8** ppOutput, uint32* pnOutput, uint32 nHeight)
+BOOL CTigerTree::ToBytes(uint8** ppOutput, uint32* pnOutput, uint32 nHeight) const
 {
 	CSectionLock oLock( &m_pSection );
 
@@ -1072,7 +1071,7 @@ BOOL CTigerTree::ToBytes(uint8** ppOutput, uint32* pnOutput, uint32 nHeight)
 	return TRUE;
 }
 
-BOOL CTigerTree::ToBytesLevel1(uint8** ppOutput, uint32* pnOutput)
+BOOL CTigerTree::ToBytesLevel1(uint8** ppOutput, uint32* pnOutput) const
 {
 	CSectionLock oLock( &m_pSection );
 
@@ -1214,13 +1213,13 @@ BOOL CTigerTree::FromBytesLevel1(const uint8* pInput, uint32 nInput, uint64 nLen
 //////////////////////////////////////////////////////////////////////
 // CTigerTree integrity check
 
-BOOL CTigerTree::CheckIntegrity()
+BOOL CTigerTree::CheckIntegrity() const
 {
 	CSectionLock oLock( &m_pSection );
 
 	if ( m_pNode == NULL ) return FALSE;
 
-	m_nNodeBase = ( m_nNodeCount + 1 ) / 2;
+	_ASSERT( m_nNodeBase == ( m_nNodeCount + 1 ) / 2 );
 	CTigerNode* pBase = m_pNode + m_nNodeCount - m_nNodeBase;
 
 	for ( uint32 nCombine = m_nNodeBase ; nCombine > 1 ; )
@@ -1267,6 +1266,126 @@ BOOL CTigerTree::CheckIntegrity()
 	}
 
 	return TRUE;
+}
+
+COLORREF CTigerTree::GetColor(uint32 nBlock) const
+{
+	CTigerNode* pBase = m_pNode + m_nNodeCount - m_nNodeBase + nBlock;
+	return (COLORREF) (pBase->value[0] ^ pBase->value[1] ^ pBase->value[2]) & 0xFFFFFF;
+}
+
+uint32 CTigerTree::FindBlockCopy(uint32 nBlock) const
+{
+	if ( nBlock >= m_nBaseUsed ) return FALSE;
+
+	CTigerNode* pBase = m_pNode + m_nNodeCount - m_nNodeBase + nBlock;
+
+	for (uint32 nIndex = 1; nIndex < m_nBaseUsed; nIndex++)
+	{
+		uint32 nNextBlock = nBlock + nIndex;
+		if ( nNextBlock >= m_nBaseUsed )
+			nNextBlock -= m_nBaseUsed;
+
+		CTigerNode* pNextBase = m_pNode + m_nNodeCount - m_nNodeBase + nNextBlock;
+		
+		if ( memcmp( pNextBase->value, pBase->value, sizeof( pBase->value ) ) == 0 )
+			return nNextBlock;
+	}
+
+	return UINT_MAX;
+}
+
+BOOL CTigerTree::IsZeroBlock(uint32 nBlock) const
+{
+	static const uint64 ZeroHash[37][3] =
+	{
+		// Hash: 13143C45D95485EACD9C47D72630EF0139436CB77DF2632B        Size: 1024
+		{ 0xEA8554D9453C1413, 0x01EF3026D7479CCD, 0x2B63F27DB76C4339 },
+		// Hash: 855DCE7FE3E963F50295A673120E6259165CED9F086DB031        Size: 2048
+		{ 0xF563E9E37FCE5D85, 0x59620E1273A69502, 0x31B06D089FED5C16 },
+		// Hash: 38FB763B44ECA3B13F40182C75694360AC8DA0865DDB29D6        Size: 4096
+		{ 0xB1A3EC443B76FB38, 0x604369752C18403F, 0xD629DB5D86A08DAC },
+		// Hash: 721BEF53CBBDA47BE44BD26C43EC048F136D371E918200CF        Size: 8192
+		{ 0x7BA4BDCB53EF1B72, 0x8F04EC436CD24BE4, 0xCF0082911E376D13 },
+		// Hash: AFDDF505C1E1D5AF8FAE007BBE4E64578F34D912345E23D8        Size: 16384
+		{ 0xAFD5E1C105F5DDAF, 0x57644EBE7B00AE8F, 0xD8235E3412D9348F },
+		// Hash: 53CC478ED14FF7FB671F94ECE0FD7C8C5DCB2FE611ACAC6B        Size: 32768
+		{ 0xFBF74FD18E47CC53, 0x8C7CFDE0EC941F67, 0x6BACAC11E62FCB5D },
+		// Hash: 098B212D6EE0398D319D4F1807E87235A0B8665BA46EF77F        Size: 65536
+		{ 0x8D39E06E2D218B09, 0x3572E807184F9D31, 0x7FF76EA45B66B8A0 },
+		// Hash: 69940A3C20C43576D258BD210339565711D696E94A3511EB        Size: 131072
+		{ 0x7635C4203C0A9469, 0x5756390321BD58D2, 0xEB11354AE996D611 },
+		// Hash: FA4317C074C2D7CD9BBFD7F4C8BD3F9F79F330F0C27B61B8        Size: 262144
+		{ 0xCDD7C274C01743FA, 0x9F3FBDC8F4D7BF9B, 0xB8617BC2F030F379 },
+		// Hash: AF8E46E049A800C2339E863AF390C5CFF02BCC39025D44AA        Size: 524288
+		{ 0xC200A849E0468EAF, 0xCFC590F33A869E33, 0xAA445D0239CC2BF0 },
+		// Hash: 650022207EA4EB454E24D3279539F3CCD92F034E2F83CCB7        Size: 1048576
+		{ 0x45EBA47E20220065, 0xCCF3399527D3244E, 0xB7CC832F4E032FD9 },
+		// Hash: 0BED4DF002309E7D33D52ED0D5C3C24B1ECAA330CBAFB723        Size: 2097152
+		{ 0x7D9E3002F04DED0B, 0x4BC2C3D5D02ED533, 0x23B7AFCB30A3CA1E },
+		// Hash: 2FFF449E538E158CD346C5BF7778F2FF67383707955C72C1        Size: 4194304
+		{ 0x8C158E539E44FF2F, 0xFFF27877BFC546D3, 0xC1725C9507373867 },
+		// Hash: F2D3852A12C25C0C1EE124C07144C6CFA3CD0E72DB9364F8        Size: 8388608
+		{ 0x0C5CC2122A85D3F2, 0xCFC64471C024E11E, 0xF86493DB720ECDA3 },
+		// Hash: 8E6FD02F7F9A0D5233E9287C6D139D44DE76BB80BCBD8BEC        Size: 16777216
+		{ 0x520D9A7F2FD06F8E, 0x449D136D7C28E933, 0xEC8BBDBC80BB76DE },
+		// Hash: F98C3CB14C4B501DCEF346D6FB92E56AC3F96102B17468F4        Size: 33554432
+		{ 0x1D504B4CB13C8CF9, 0x6AE592FBD646F3CE, 0xF46874B10261F9C3 },
+		// Hash: 1830D2019F1A54C7A8A3947E36D34A4E676523FF0735E0FC        Size: 67108864
+		{ 0xC7541A9F01D23018, 0x4E4AD3367E94A3A8, 0xFCE03507FF236567 },
+		// Hash: 3D002613BA2F88DA7D7E1AB165677FC939B5EC6FFD5D2E73        Size: 134217728
+		{ 0xDA882FBA1326003D, 0xC97F6765B11A7E7D, 0x732E5DFD6FECB539 },
+		// Hash: BC0466EE7A0C30E31EFD803598BE8F69400B96AE3126AF70        Size: 268435456
+		{ 0xE3300C7AEE6604BC, 0x698FBE983580FD1E, 0x70AF2631AE960B40 },
+		// Hash: 31D3A13D9F1BD0D2E16FF2BF6749F830D81693D63E4C1903        Size: 536870912
+		{ 0xD2D01B9F3DA1D331, 0x30F84967BFF26FE1, 0x03194C3ED69316D8 },
+		// Hash: 6EF9A41AEC7C0C0B821D3A845994E6F18E5268E37BC982C1        Size: 1073741824
+		{ 0x0B0C7CEC1AA4F96E, 0xF1E69459843A1D82, 0xC182C97BE368528E },
+		// Hash: 13132A77BAB0B8A0130FC2B5BF6C36701C622A36AFFBD175        Size: 2147483648
+		{ 0xA0B8B0BA772A1313, 0x70366CBFB5C20F13, 0x75D1FBAF362A621C },
+		// Hash: E684CA0E3D759457F3F2B4183A0889B25C49F70AB5B5AD8E        Size: 4294967296
+		{ 0x5794753D0ECA84E6, 0xB289083A18B4F2F3, 0x8EADB5B50AF7495C },
+		// Hash: 8C4AEAB1D5A2E3ABBD19848EBC9813121A83D196320EFE54        Size: 8589934592
+		{ 0xABE3A2D5B1EA4A8C, 0x121398BC8E8419BD, 0x54FE0E3296D1831A },
+		// Hash: 2CB4627DB09C230212258BAD4120AA0A1C4A185BD2CC4C57        Size: 17179869184
+		{ 0x02239CB07D62B42C, 0x0AAA2041AD8B2512, 0x574CCCD25B184A1C },
+		// Hash: B58DE81DC064E964720A0C181AE6EF415F865BAA18E9F019        Size: 34359738368
+		{ 0x64E964C01DE88DB5, 0x41EFE61A180C0A72, 0x19F0E918AA5B865F },
+		// Hash: EC0B596EFA9EDBEFE275539914F30757E2E3EB82C30B6FB8        Size: 68719476736
+		{ 0xEFDB9EFA6E590BEC, 0x5707F314995375E2, 0xB86F0BC382EBE3E2 },
+		// Hash: BA0078DAD436099159ADA9CFA1457806EB581730364084E0        Size: 137438953472
+		{ 0x910936D4DA7800BA, 0x067845A1CFA9AD59, 0xE0844036301758EB },
+		// Hash: D96DA2416DBF7DAC663872838F8F4E7D8E7C4D2D2A2051AB        Size: 274877906944
+		{ 0xAC7DBF6D41A26DD9, 0x7D4E8F8F83723866, 0xAB51202A2D4D7C8E },
+		// Hash: 74816B22B67E4E6995FECAEB84302D01E489BCD76845444B        Size: 549755813888
+		{ 0x694E7EB6226B8174, 0x012D3084EBCAFE95, 0x4B444568D7BC89E4 },
+		// Hash: 307DB672C03531EB0E9B19FC2ED134ACCEFFB4E04D8EB62D        Size: 1099511627776
+		{ 0xEB3135C072B67D30, 0xAC34D12EFC199B0E, 0x2DB68E4DE0B4FFCE },
+		// Hash: 43CD6009D7931ECC1FFC484D8156A92EC673DEF3D6AE7CF9        Size: 2199023255552
+		{ 0xCC1E93D70960CD43, 0x2EA956814D48FC1F, 0xF97CAED6F3DE73C6 },
+		// Hash: 84814323435A450426EECC6700349387D61BD5027F6E7085        Size: 4398046511104
+		{ 0x04455A4323438184, 0x8793340067CCEE26, 0x85706E7F02D51BD6 },
+		// Hash: 05275B3D69A996B1E8ABDA6EACE8605D5BB7DD8964AC4C79        Size: 8796093022208
+		{ 0xB196A9693D5B2705, 0x5D60E8AC6EDAABE8, 0x794CAC6489DDB75B },
+		// Hash: 434934E2D0EFDEE9864982221FB8A0A872D842B4DA6C59E7        Size: 17592186044416
+		{ 0xE9DEEFD0E2344943, 0xA8A0B81F22824986, 0xE7596CDAB442D872 },
+		// Hash: 435396F0F684A6B3E5B5940A79800EE384915CCAD7C52385        Size: 35184372088832
+		{ 0xB3A684F6F0965343, 0xE30E80790A94B5E5, 0x8523C5D7CA5C9184 },
+		// Hash: 7F377469FB6883D13331667F52CF23194846311094A363C4        Size: 70368744177664
+		{ 0xD18368FB6974377F, 0x1923CF527F663133, 0xC463A39410314648 }
+	};
+
+	CSectionLock oLock( &m_pSection );
+	
+	if ( nBlock >= m_nBaseUsed ) return FALSE;
+	if ( m_nActualHeight < m_nHeight ) return FALSE;
+
+	uint32 nBlockHeight = m_nActualHeight - m_nHeight;
+
+	if ( nBlockHeight > 36 ) return FALSE;
+
+	CTigerNode* pBase = m_pNode + m_nNodeCount - m_nNodeBase + nBlock;
+	return memcmp( ZeroHash[ nBlockHeight ], pBase->value, sizeof( pBase->value ) ) == 0;
 }
 
 BOOL CTigerTree::IsAvailable() const

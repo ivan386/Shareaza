@@ -1,7 +1,7 @@
 //
 // Shareaza.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2014.
+// Copyright (c) Shareaza Development Team, 2002-2015.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -42,7 +42,6 @@
 #include "GProfile.h"
 #include "HostCache.h"
 #include "IEProtocol.h"
-#include "ImageServices.h"
 #include "Library.h"
 #include "LibraryBuilder.h"
 #include "Neighbours.h"
@@ -87,6 +86,7 @@ const LPCTSTR RT_BMP = _T("BMP");
 const LPCTSTR RT_JPEG = _T("JPEG");
 const LPCTSTR RT_PNG = _T("PNG");
 const LPCTSTR RT_GZIP = _T("GZIP");
+const LPCTSTR RT_XSL = _T("XSL");
 // double scaleX = 1;
 // double scaleY = 1;
 
@@ -183,74 +183,127 @@ SYSTEM_INFO			System = {};
 /////////////////////////////////////////////////////////////////////////////
 // CShareazaApp construction
 
-CShareazaApp::CShareazaApp() :
-	m_pMutex				( NULL )
-,	m_nFontQuality			( DEFAULT_QUALITY )
-,	m_pSafeWnd				( NULL )
-,	m_bBusy					( 0 )
-,	m_bInteractive			( false )
-,	m_bLive					( false )
-,	m_bClosing				( false )
+CShareazaApp::CShareazaApp()
+	:	m_pMutex				( NULL )
+	,	m_nFontQuality			( DEFAULT_QUALITY )
+	,	m_pSafeWnd				( NULL )
+	,	m_bBusy					( 0 )
+	,	m_bInteractive			( false )
+	,	m_bLive					( false )
+	,	m_bClosing				( false )
 ,	m_bIsServer				( false )
 ,	m_bIsWin2000			( false )
-,	m_bIsVistaOrNewer		( false )
-,	m_bLimitedConnections	( true )
-,	m_bMenuWasVisible		( FALSE )
-,	m_nLastInput			( 0ul )
-,	m_hHookKbd				( NULL )
-,	m_hHookMouse			( NULL )
-,	m_pPacketWnd			( NULL )
+	,	m_bIsVistaOrNewer		( false )
+	,	m_bIs7OrNewer			( false )
+	,	m_bLimitedConnections	( false )
+	,	m_bMenuWasVisible		( FALSE )
+	,	m_nLastInput			( 0ul )
+	,	m_hHookKbd				( NULL )
+	,	m_hHookMouse			( NULL )
+	,	m_pPacketWnd			( NULL )
 
-,	m_hCryptProv			( NULL )
+	,	m_hCryptProv			( NULL )
 
-,	m_pRegisterApplicationRestart( NULL )
+	,	m_pRegisterApplicationRestart( NULL )
 
-,	m_hTheme				( NULL )
-,	m_pfnSetWindowTheme		( NULL )
-,	m_pfnIsThemeActive		( NULL )
-,	m_pfnOpenThemeData		( NULL )
-,	m_pfnCloseThemeData		( NULL )
-,	m_pfnDrawThemeBackground( NULL )
-,	m_pfnGetThemeSysFont	( NULL )
+	,	m_hTheme				( NULL )
+	,	m_pfnSetWindowTheme		( NULL )
+	,	m_pfnIsThemeActive		( NULL )
+	,	m_pfnOpenThemeData		( NULL )
+	,	m_pfnCloseThemeData		( NULL )
+	,	m_pfnDrawThemeBackground( NULL )
+	,	m_pfnGetThemeSysFont	( NULL )
 
-,	m_hShlWapi				( NULL )
-,	m_pfnAssocIsDangerous	( NULL )
+	,	m_hShlWapi				( NULL )
+	,	m_pfnAssocIsDangerous	( NULL )
 
-,	m_hShell32				( NULL )
-,	m_pfnSHGetFolderPathW	( NULL )
-,	m_pfnSHGetKnownFolderPath( NULL )
-,	m_pfnSHCreateItemFromParsingName( NULL )
-,	m_pfnSetCurrentProcessExplicitAppUserModelID( NULL )
-,	m_pfnSHGetImageList		( NULL )
+	,	m_hShell32									( NULL )
+	,	m_pfnSHGetFolderPathW						( NULL )
+	,	m_pfnSHGetKnownFolderPath					( NULL )
+	,	m_pfnSHCreateItemFromParsingName			( NULL )
+	,	m_pfnSHGetPropertyStoreFromParsingName		( NULL )
+	,	m_pfnSetCurrentProcessExplicitAppUserModelID( NULL )
+	,	m_pfnSHGetImageList							( NULL )
 
-,	m_hUser32				( NULL )
-,	m_pfnChangeWindowMessageFilter( NULL )
+	,	m_hUser32									( NULL )
+	,	m_pfnChangeWindowMessageFilter				( NULL )
+	,	m_pfnShutdownBlockReasonCreate				( NULL )
+	,	m_pfnShutdownBlockReasonDestroy				( NULL )
 
-,	m_hGeoIP				( NULL )
-,	m_pGeoIP				( NULL )
-,	m_pfnGeoIP_cleanup		( NULL )
-,	m_pfnGeoIP_delete		( NULL )
-,	m_pfnGeoIP_country_code_by_ipnum( NULL )
-,	m_pfnGeoIP_country_name_by_ipnum( NULL )
+	,	m_hGeoIP				( NULL )
+	,	m_pGeoIP				( NULL )
+	,	m_pfnGeoIP_cleanup		( NULL )
+	,	m_pfnGeoIP_delete		( NULL )
+	,	m_pfnGeoIP_country_code_by_ipnum( NULL )
+	,	m_pfnGeoIP_country_name_by_ipnum( NULL )
 
-,	m_hLibGFL				( NULL )
+	,	m_hLibGFL				( NULL )
 
-,	m_dlgSplash				( NULL )
-
+	,	m_dlgSplash				( NULL )
 {
 	// Determine the version of Windows
-	GetVersionEx( (OSVERSIONINFO*)&Windows );
+	OSVERSIONINFOEX osvi = { sizeof( osvi ) };
+	const DWORDLONG dwlMajorMinorPack = VerSetConditionMask( VerSetConditionMask( VerSetConditionMask( 0, VER_MAJORVERSION, VER_GREATER_EQUAL ),
+		VER_MINORVERSION, VER_GREATER_EQUAL ), VER_SERVICEPACKMAJOR, VER_GREATER_EQUAL );
+
+	// Windows Vista
+	osvi.dwMajorVersion = 6;
+	osvi.dwMinorVersion = 0;
+	m_bIsVistaOrNewer = VerifyVersionInfo( &osvi, VER_MAJORVERSION | VER_MINORVERSION | VER_SERVICEPACKMAJOR, dwlMajorMinorPack ) != FALSE;
+
+	// Windows 7
+	osvi.dwMajorVersion = 6;
+	osvi.dwMinorVersion = 1;
+	m_bIs7OrNewer = VerifyVersionInfo( &osvi, VER_MAJORVERSION | VER_MINORVERSION | VER_SERVICEPACKMAJOR, dwlMajorMinorPack ) != FALSE;
+
+	// Half-Open limit from Windows XP SP2 to Windows Vista SP1
+	bool bCanBeRegistryPatched = false;
+	osvi.dwMajorVersion = 5;
+	osvi.dwMinorVersion = 1;
+	osvi.wServicePackMajor = 2;
+	if ( VerifyVersionInfo( &osvi, VER_MAJORVERSION | VER_MINORVERSION | VER_SERVICEPACKMAJOR, dwlMajorMinorPack ) )
+	{
+		// >= Windows XP SP2
+		osvi.dwMajorVersion = 6;
+		osvi.dwMinorVersion = 0;
+		osvi.wServicePackMajor = 2;
+		if ( VerifyVersionInfo( &osvi, VER_MAJORVERSION | VER_MINORVERSION | VER_SERVICEPACKMAJOR, dwlMajorMinorPack ) )
+			// >= Windows Vista SP2
+			bCanBeRegistryPatched = true;
+		else
+			// < Windows Vista SP2
+			m_bLimitedConnections = true;
+	}
+	// No limit on Windows Server
+	osvi.wProductType = VER_NT_WORKSTATION;
+	if ( ! VerifyVersionInfo( &osvi, VER_PRODUCT_TYPE, VerSetConditionMask( 0, VER_PRODUCT_TYPE, VER_EQUAL ) ) )
+	{
+		m_bLimitedConnections = false;
+	}
+	if ( bCanBeRegistryPatched )
+	{
+		HKEY hKey;
+		if ( RegOpenKeyEx( HKEY_LOCAL_MACHINE, L"SYSTEM\\CurrentControlSet\\Services\\Tcpip\\Parameters", 0, KEY_QUERY_VALUE, &hKey ) == ERROR_SUCCESS )
+		{
+			DWORD nSize = sizeof( DWORD ), nResult = 0, nType = REG_NONE;
+			if ( ( RegQueryValueEx( hKey, L"EnableConnectionRateLimiting", NULL, &nType, (LPBYTE)&nResult, &nSize ) == ERROR_SUCCESS ) &&
+				nType == REG_DWORD && nResult == 1 )
+				m_bLimitedConnections = true;
+			RegCloseKey( hKey );
+		}
+	}
+
 	GetSystemInfo( (SYSTEM_INFO*)&System );
 
 	ZeroMemory( m_nVersion, sizeof( m_nVersion ) );
 	ZeroMemory( m_pBTVersion, sizeof( m_pBTVersion ) );
 
 // BugTrap http://www.intellesoft.net/
-	BT_SetAppName( CLIENT_NAME_T );
+	BT_SetAppName( MOD_CLIENT_NAME_T );
 	BT_SetFlags( BTF_INTERCEPTSUEF | BTF_SHOWADVANCEDUI | BTF_DESCRIBEERROR | BTF_DETAILEDMODE | BTF_ATTACHREPORT | BTF_EDITMAIL );
 	BT_SetExitMode( BTEM_CONTINUESEARCH );
 	BT_SetDumpType( 0x00001851 /* MiniDumpWithDataSegs | MiniDumpScanMemory | MiniDumpWithIndirectlyReferencedMemory | MiniDumpWithFullMemoryInfo | MiniDumpWithThreadInfo */ );
-	BT_SetSupportEMail( _T("shareaza-bugtrap@lists.sourceforge.net") );
+	BT_SetSupportEMail( _T("shareaza@cherubicsoft.com") );
 	BT_SetSupportURL( WEB_SITE_T _T("?id=support") );
 	BT_AddRegFile( _T("settings.reg"), _T("HKEY_CURRENT_USER\\") REGISTRY_KEY );
 	BT_InstallSehFilter();
@@ -293,7 +346,9 @@ BOOL CShareazaApp::InitInstance()
 	if ( Settings.Live.FirstRun || ! pTest )
 	{
 		pTest.Release();
-		if ( ! Plugins.Register( Settings.General.Path ) )
+		Plugins.Register( Settings.General.Path );
+		pTest.Attach( Plugins.GetPlugin( _T( "ImageService" ), _T( ".png" ) ) );
+		if ( ! pTest )
 		{
 			Plugins.Register( m_strBinaryPath.Left( m_strBinaryPath.ReverseFind( _T('\\') ) ) );
 		}
@@ -326,10 +381,10 @@ BOOL CShareazaApp::InitInstance()
 	tCompileTime.ParseDateTime( _T(__DATE__), LOCALE_NOUSEROVERRIDE, 1033 );
 	COleDateTime tCurrent = COleDateTime::GetCurrentTime();
 	COleDateTimeSpan tTimeOut( 7, 0, 0, 0);			// Daily builds
-	if ( ( tCompileTime + tTimeOut )  < tCurrent )
+	if ( ! m_cmdInfo.m_bNoAlphaWarning && ( tCompileTime + tTimeOut )  < tCurrent )
 	{
 		if ( MsgBox(
-			_T("This is a pre-release version of ") CLIENT_NAME_T _T(", and the beta testing period has ended.  ")
+			_T("This is a pre-release version of ") MOD_CLIENT_NAME_T _T(", and the beta testing period has ended.  ")
 			_T("Please download the full, official release from ") WEB_SITE_T _T("."), MB_ICONQUESTION|MB_OK, 0, NULL, 30 ) != IDOK )
 			return FALSE;
 	}
@@ -338,7 +393,7 @@ BOOL CShareazaApp::InitInstance()
 	if ( ! m_cmdInfo.m_bNoAlphaWarning && m_cmdInfo.m_bShowSplash )
 	{
 		if ( MsgBox(
-			_T("WARNING: This is an ALPHA TEST version of ") CLIENT_NAME_T _T(".\n\n")
+			_T("WARNING: This is an ALPHA TEST version of ") MOD_CLIENT_NAME_T _T(".\n\n")
 			_T("It is NOT FOR GENERAL USE, and is only for testing specific features in a controlled ")
 			_T("environment. It will frequently stop running, or display debug information to assist testing.\n\n")
 			_T("If you wish to actually use this software, you should download ")
@@ -686,7 +741,7 @@ BOOL CShareazaApp::Register()
 
 	CShareazaURL::Register( TRUE, TRUE );
 
-	if ( Windows.dwMajorVersion > 6 || ( Windows.dwMajorVersion == 6 && Windows.dwMinorVersion >= 1 ) )
+	if ( theApp.m_bIs7OrNewer )
 	{
 		// For VS2010:
 		//	CJumpList oTasks;
@@ -694,8 +749,8 @@ BOOL CShareazaApp::Register()
 		//	oTasks.AddKnownCategory( KDC_RECENT );
 		//	oTasks.AddTask( _T("shareaza:command:search"), _T(""), LoadString( IDS_SEARCH_TASK ) + _T("..."), theApp.m_strBinaryPath, - IDR_SEARCHFRAME );
 		//	oTasks.AddTask( _T("shareaza:command:download"), _T(""), LoadString( IDS_DOWNLOAD_TASK ) + _T("..."), theApp.m_strBinaryPath, - IDR_DOWNLOADSFRAME );
-	
-		// For VS2008:
+
+		/*/ For VS2008:
 		CComPtr< ICustomDestinationList > pList;
 		if ( SUCCEEDED( pList.CoCreateInstance( CLSID_DestinationList ) ) )
 		{
@@ -725,6 +780,7 @@ BOOL CShareazaApp::Register()
 
 			VERIFY( SUCCEEDED( pList->CommitList() ) );
 		}
+		//*/
 	}
 
 	return CWinApp::Register();
@@ -748,18 +804,20 @@ void CShareazaApp::AddToRecentFileList(LPCTSTR lpszPathName)
 {
 	SHAddToRecentDocs( SHARD_PATHW, lpszPathName );
 
+/*/ 
 	if ( Windows.dwMajorVersion > 6 || ( Windows.dwMajorVersion == 6 && Windows.dwMinorVersion >= 1 ) )
 	{
-		if ( m_pfnSHCreateItemFromParsingName )
+	if ( m_pfnSHCreateItemFromParsingName )
+	{
+		CComPtr< IShellItem > pItem;
+		if ( SUCCEEDED( m_pfnSHCreateItemFromParsingName( lpszPathName, NULL, IID_IShellItem, (LPVOID*)&pItem ) ) )
 		{
-			CComPtr< IShellItem > pItem;
-			if ( SUCCEEDED( m_pfnSHCreateItemFromParsingName( lpszPathName, NULL, IID_IShellItem, (LPVOID*)&pItem ) ) )
-			{
-				SHARDAPPIDINFO info = { pItem, CLIENT_NAME_T };
-				SHAddToRecentDocs( SHARD_APPIDINFO, &info );
-			}
+			SHARDAPPIDINFO info = { pItem, CLIENT_NAME_T };
+			SHAddToRecentDocs( SHARD_APPIDINFO, &info );
 		}
 	}
+}
+//*/
 }
 
 CDocument* CShareazaApp::OpenDocumentFile(LPCTSTR lpszFileName)
@@ -953,7 +1011,7 @@ BOOL CShareazaApp::OpenDownload(LPCTSTR lpszFileName, BOOL bDoIt)
 			{
 				// Rename old file
 				::MoveFileEx( _T("\\\\?\\") + strFileName, _T("\\\\?\\") + strFileName + _T(".sav"), MOVEFILE_REPLACE_EXISTING | MOVEFILE_WRITE_THROUGH );
-				
+
 				theApp.Message( MSG_NOTICE, _T("Download file \"%s\" has been successfully loaded and saved as \"%s\"."), (LPCTSTR)strFileName, (LPCTSTR)pDownload->m_sPath );
 			}
 			else
@@ -1009,7 +1067,7 @@ void CShareazaApp::InitResources()
 		m_nVersion[0], m_nVersion[1],
 		m_nVersion[2], m_nVersion[3] );
 
-	m_sVersionLong = m_sVersion + 
+	m_sVersionLong = m_sVersion +
 #ifdef _DEBUG
 		_T(" Debug")
 #else
@@ -1022,12 +1080,12 @@ void CShareazaApp::InitResources()
 #endif
 #ifdef LAN_MODE
 		_T(" LAN")
-#endif		
-		_T(" (r") _T(__REVISION__) _T(" ") + m_sBuildDate + _T(")");
+#endif
+		_T(" (r") _T(__REVISION__) _T("i ") + m_sBuildDate + _T(")");
 
 	BT_SetAppVersion( m_sVersionLong );
 
-	m_sSmartAgent = CLIENT_NAME_T;
+	m_sSmartAgent = MOD_CLIENT_NAME_T;
 	m_sSmartAgent += _T(" ");
 	m_sSmartAgent += m_sVersion;
 
@@ -1035,75 +1093,6 @@ void CShareazaApp::InitResources()
 	m_pBTVersion[ 1 ] = BT_ID2;
 	m_pBTVersion[ 2 ] = (BYTE)m_nVersion[ 0 ];
 	m_pBTVersion[ 3 ] = (BYTE)m_nVersion[ 1 ];
-
-	// Determine if it's a server
-	m_bIsServer = Windows.wProductType != VER_NT_WORKSTATION;
-
-	// Most supported windows versions have network limiting
-	m_bLimitedConnections = true;
-	TCHAR* sp = _tcsstr( Windows.szCSDVersion, _T("Service Pack") );
-
-	// Set some variables for different Windows OSes
-	if ( Windows.dwMajorVersion == 5 )
-	{
-		if ( Windows.dwMinorVersion == 0 )		// Windows 2000
-			m_bIsWin2000 = true;
-		else if ( Windows.dwMinorVersion == 1 )	// Windows XP
-		{
-			// 10 Half-open concurrent TCP connections limit was introduced in SP2
-			// Windows Server will never compare this value though.
-			if ( !sp || sp[ 13 ] == '1' )
-				m_bLimitedConnections = false;
-		}
-		else if ( Windows.dwMinorVersion == 2 )	// Windows 2003 or Windows XP64
-		{
-			if ( !sp )
-				m_bLimitedConnections = false;
-		}
-	}
-	else if ( Windows.dwMajorVersion >= 6 ) 
-	{
-		// Used for GUI improvement
-		m_bIsVistaOrNewer = true;
-		bool bCanBeRegistryPatched = true;
-
-		if ( Windows.dwMinorVersion == 0 )
-		{
-			if ( !sp || sp[ 13 ] == '1' )
-			{
-				// Has TCP connections limit
-				bCanBeRegistryPatched = false;
-			} 
-			else
-			{
-				m_bLimitedConnections = false;
-			}
-		}
-
-		// Server versions can be limited too
-		if ( bCanBeRegistryPatched ) 
-		{
-			HKEY hKey;
-			if ( RegOpenKeyEx( HKEY_LOCAL_MACHINE, 
-							   L"SYSTEM\\CurrentControlSet\\Services\\Tcpip\\Parameters", 
-							   0, KEY_QUERY_VALUE, &hKey ) == ERROR_SUCCESS )
-			{
-				DWORD nSize = sizeof( DWORD ), nResult = 0, nType = REG_NONE;
-				if ( ( RegQueryValueEx( hKey, L"EnableConnectionRateLimiting", 
-									    NULL, &nType, (LPBYTE)&nResult, &nSize ) == ERROR_SUCCESS ) &&
-					 nType == REG_DWORD && nResult == 1 )
-					m_bLimitedConnections = true;
-				RegCloseKey( hKey );
-				if ( nResult == 1 )
-					return; // Don't check if that was a server
-			}
-		}
-	}
-
-	// Windows Small Business Server allows 74 simultaneous
-	// connections and any full Server version allows unlimited connections
-	if ( Windows.wProductType == VER_NT_SERVER && ( Windows.wSuiteMask & VER_SUITE_SMALLBUSINESS ) == 0 )
-		m_bLimitedConnections = false;
 
 	// Get pointers to some functions that require Windows Vista or greater
 	if ( HMODULE hKernel32 = GetModuleHandle( _T("kernel32.dll") ) )
@@ -1133,6 +1122,7 @@ void CShareazaApp::InitResources()
 		(FARPROC&)m_pfnSHGetFolderPathW = GetProcAddress( m_hShell32, "SHGetFolderPathW" );
 		(FARPROC&)m_pfnSHGetKnownFolderPath = GetProcAddress( m_hShell32, "SHGetKnownFolderPath" );
 		(FARPROC&)m_pfnSHCreateItemFromParsingName = GetProcAddress( m_hShell32, "SHCreateItemFromParsingName" );
+		(FARPROC&)m_pfnSHGetPropertyStoreFromParsingName  = GetProcAddress( m_hShell32, "SHGetPropertyStoreFromParsingName" );
 		(FARPROC&)m_pfnSetCurrentProcessExplicitAppUserModelID = GetProcAddress( m_hShell32, "SetCurrentProcessExplicitAppUserModelID" );
 		(FARPROC&)m_pfnSHGetImageList = GetProcAddress( m_hShell32, MAKEINTRESOURCEA(727) );
 	}
@@ -1140,6 +1130,8 @@ void CShareazaApp::InitResources()
 	if ( ( m_hUser32 = LoadLibrary( _T("user32.dll") ) ) != NULL )
 	{
 		(FARPROC&)m_pfnChangeWindowMessageFilter = GetProcAddress( m_hUser32, "ChangeWindowMessageFilter" );
+		(FARPROC&)m_pfnShutdownBlockReasonCreate = GetProcAddress( m_hUser32, "ShutdownBlockReasonCreate" );
+		(FARPROC&)m_pfnShutdownBlockReasonDestroy = GetProcAddress( m_hUser32, "ShutdownBlockReasonDestroy" );
 	}
 
 	// Windows Vista: Enable drag-n-drop and window control operations from application with lower security level
@@ -1517,7 +1509,7 @@ CString GetErrorString(DWORD dwError)
 void ReportError(DWORD dwError)
 {
 	CString sError = GetErrorString( dwError );
-	theApp.Message( MSG_ERROR, _T("%s"), sError );
+	theApp.Message( MSG_ERROR, _T("%s"), (LPCTSTR)sError );
 	AfxMessageBox( sError, MB_OK | MB_ICONEXCLAMATION );
 }
 
@@ -1535,6 +1527,20 @@ CString CShareazaApp::GetCountryName(IN_ADDR pAddress) const
 	return _T("");
 }
 
+CString CShareazaApp::GetCountryCode(IN6_ADDR pAddress) const
+{
+	if ( m_pfnGeoIP_country_code_by_ipnum_v6 && m_pGeoIP )
+		return CString( m_pfnGeoIP_country_code_by_ipnum_v6( m_pGeoIP, pAddress ) );
+	return _T("");
+}
+
+CString CShareazaApp::GetCountryName(IN6_ADDR pAddress) const
+{
+	if ( m_pfnGeoIP_country_name_by_ipnum_v6 && m_pGeoIP )
+		return CString( m_pfnGeoIP_country_name_by_ipnum_v6( m_pGeoIP, pAddress ) );
+	return _T("");
+}
+
 void CShareazaApp::LoadCountry()
 {
 	if ( ( m_hGeoIP = CustomLoadLibrary( _T("geoip.dll") ) ) != NULL )
@@ -1544,6 +1550,8 @@ void CShareazaApp::LoadCountry()
 		m_pfnGeoIP_delete = (GeoIP_deleteFunc)GetProcAddress( m_hGeoIP, "GeoIP_delete" );
 		m_pfnGeoIP_country_code_by_ipnum = (GeoIP_country_code_by_ipnumFunc)GetProcAddress( m_hGeoIP, "GeoIP_country_code_by_ipnum" );
 		m_pfnGeoIP_country_name_by_ipnum = (GeoIP_country_name_by_ipnumFunc)GetProcAddress( m_hGeoIP, "GeoIP_country_name_by_ipnum" );
+		m_pfnGeoIP_country_code_by_ipnum_v6 = (GeoIP_country_code_by_ipnumFunc_v6)GetProcAddress( m_hGeoIP, "GeoIP_country_code_by_ipnum_v6" );
+		m_pfnGeoIP_country_name_by_ipnum_v6 = (GeoIP_country_name_by_ipnumFunc_v6)GetProcAddress( m_hGeoIP, "GeoIP_country_name_by_ipnum_v6" );
 		if ( pfnGeoIP_new )
 			m_pGeoIP = pfnGeoIP_new( GEOIP_MEMORY_CACHE );
 	}
@@ -1702,6 +1710,29 @@ BOOL CShareazaApp::InternalURI(LPCTSTR pszURI)
 	}
 	else
 		return FALSE;
+
+	return TRUE;
+}
+
+BOOL CShareazaApp::SetClipboardText(const CString& strText)
+{
+	if ( ! m_pMainWnd || ! m_pMainWnd->OpenClipboard() )
+		return FALSE;
+
+	EmptyClipboard();
+
+	size_t nSize = ( strText.GetLength() + 1 ) * sizeof( WCHAR );
+	if ( HANDLE hMem = GlobalAlloc( GMEM_MOVEABLE | GMEM_DDESHARE, nSize ) )
+	{
+		if ( LPVOID pMem = GlobalLock( hMem ) )
+		{
+			CopyMemory( pMem, (LPCTSTR)strText, nSize );
+			GlobalUnlock( hMem );
+			SetClipboardData( CF_UNICODETEXT, hMem );
+		}
+	}
+
+	CloseClipboard();
 
 	return TRUE;
 }
@@ -1890,7 +1921,7 @@ CString	TimeToString(FILETIME* pTime)
 
 	FileTimeToSystemTime( pTime, &pOut );
 
-	str.Format( _T("%.4i-%.2i-%.2iT%.2i:%.2iZ"),
+	str.Format( _T("%.4u-%.2u-%.2uT%.2u:%.2uZ"),
 		pOut.wYear, pOut.wMonth, pOut.wDay,
 		pOut.wHour, pOut.wMinute );
 
@@ -2179,8 +2210,7 @@ CString CShareazaApp::GetWindowsFolder() const
 	if ( m_pfnSHGetKnownFolderPath )
 	{
 		PWSTR pPath = NULL;
-		hr = m_pfnSHGetKnownFolderPath( FOLDERID_Windows,
-			KF_FLAG_CREATE | KF_FLAG_INIT, NULL, &pPath );
+		hr = m_pfnSHGetKnownFolderPath( FOLDERID_Windows, KF_FLAG_DONT_VERIFY, NULL, &pPath );
 		if ( pPath )
 		{
 			sWindows = pPath;
@@ -2195,8 +2225,7 @@ CString CShareazaApp::GetWindowsFolder() const
 	// Win2K/XP way
 	if ( m_pfnSHGetFolderPathW )
 	{
-		hr = m_pfnSHGetFolderPathW( NULL, CSIDL_WINDOWS, NULL, NULL,
-			sWindows.GetBuffer( MAX_PATH ) );
+		hr = m_pfnSHGetFolderPathW( NULL, CSIDL_WINDOWS, NULL, NULL, sWindows.GetBuffer( MAX_PATH ) );
 		sWindows.ReleaseBuffer();
 		if ( SUCCEEDED( hr  ) && ! sWindows.IsEmpty() )
 		{
@@ -2210,6 +2239,40 @@ CString CShareazaApp::GetWindowsFolder() const
 	return sWindows;
 }
 
+CString CShareazaApp::GetProgramFilesFolder64() const
+{
+	HRESULT hr;
+	CString sProgramFiles;
+
+	// 64-bit way
+	if ( m_pfnSHGetKnownFolderPath )
+	{
+		PWSTR pPath = NULL;
+		hr = m_pfnSHGetKnownFolderPath( FOLDERID_ProgramFilesX64, KF_FLAG_DONT_VERIFY, NULL, &pPath );
+		if ( pPath )
+		{
+			sProgramFiles = pPath;
+			CoTaskMemFree( pPath );
+		}
+		if ( SUCCEEDED( hr ) && ! sProgramFiles.IsEmpty() )
+		{
+			return sProgramFiles;
+		}
+	}
+
+	// 32-bit way
+	ExpandEnvironmentStrings( _T("%ProgramW6432%"), sProgramFiles.GetBuffer( MAX_PATH ), MAX_PATH );
+	sProgramFiles.ReleaseBuffer();
+	sProgramFiles.Trim();
+	sProgramFiles.TrimRight( _T( "\\" ) );
+	if ( ! sProgramFiles.IsEmpty() )
+	{
+		return sProgramFiles;
+	}
+
+	return GetProgramFilesFolder();
+}
+
 CString CShareazaApp::GetProgramFilesFolder() const
 {
 	HRESULT hr;
@@ -2219,8 +2282,7 @@ CString CShareazaApp::GetProgramFilesFolder() const
 	if ( m_pfnSHGetKnownFolderPath )
 	{
 		PWSTR pPath = NULL;
-		hr = m_pfnSHGetKnownFolderPath( FOLDERID_ProgramFiles,
-			KF_FLAG_CREATE | KF_FLAG_INIT, NULL, &pPath );
+		hr = m_pfnSHGetKnownFolderPath( FOLDERID_ProgramFilesX86, KF_FLAG_DONT_VERIFY, NULL, &pPath );
 		if ( pPath )
 		{
 			sProgramFiles = pPath;
@@ -2235,8 +2297,7 @@ CString CShareazaApp::GetProgramFilesFolder() const
 	// Win2K/XP way
 	if ( m_pfnSHGetFolderPathW )
 	{
-		hr = m_pfnSHGetFolderPathW( NULL, CSIDL_PROGRAM_FILES, NULL, NULL,
-			sProgramFiles.GetBuffer( MAX_PATH ) );
+		hr = m_pfnSHGetFolderPathW( NULL, CSIDL_PROGRAM_FILES, NULL, NULL, sProgramFiles.GetBuffer( MAX_PATH ) );
 		sProgramFiles.ReleaseBuffer();
 		if ( SUCCEEDED( hr  ) && ! sProgramFiles.IsEmpty() )
 		{
@@ -2435,6 +2496,21 @@ CDatabase* CShareazaApp::GetDatabase() const
 	return new CDatabase( Settings.General.UserPath + _T("\\Data\\") CLIENT_NAME_T _T(".db3") );
 }
 
+BOOL CShareazaApp::GetPropertyStoreFromParsingName( LPCWSTR pszPath, IPropertyStore**ppv )
+{
+	if ( m_pfnSHGetPropertyStoreFromParsingName )
+	{
+		__try
+		{
+			return SUCCEEDED( m_pfnSHGetPropertyStoreFromParsingName( pszPath, NULL, GPS_BESTEFFORT, __uuidof( IPropertyStore ), (void**)ppv ) );
+		}
+		__except ( EXCEPTION_EXECUTE_HANDLER )
+		{
+		}
+	}
+	return FALSE;
+}
+
 CString SafeFilename(CString strName, bool bPath)
 {
 	// Restore spaces
@@ -2484,10 +2560,10 @@ BOOL CreateDirectory(LPCTSTR szPath)
 	}
 	return CreateDirectory( CString( _T("\\\\?\\") ) + szPath, NULL );
 }
-	
+
 void DeleteFiles(CStringList& pList)
 {
-	DWORD nTotal = pList.GetCount();
+	DWORD nTotal = (DWORD)pList.GetCount();
 
 	while ( ! pList.IsEmpty() )
 	{
@@ -2658,6 +2734,9 @@ CString LoadHTML(HINSTANCE hInstance, UINT nResourceID)
 	BOOL bGZIP = FALSE;
 	HRSRC hRes = FindResource( hInstance, MAKEINTRESOURCE( nResourceID ), RT_HTML );
 	if ( ! hRes )
+		hRes = FindResource( hInstance, MAKEINTRESOURCE( nResourceID ), RT_XSL );
+
+	if ( ! hRes )
 	{
 		hRes = FindResource( hInstance, MAKEINTRESOURCE( nResourceID ), RT_GZIP );
 		bGZIP = ( hRes != NULL );
@@ -2717,7 +2796,7 @@ CString LoadRichHTML(UINT nResourceID, CString& strResponse, CShareazaFile* pFil
 	{
 		int nStart = strBody.Find( _T("<%") );
 		if ( nStart < 0 ) break;
-		
+
 		int nEnd = strBody.Find( _T("%>") );
 		if ( nEnd < nStart ) break;
 
@@ -2725,9 +2804,9 @@ CString LoadRichHTML(UINT nResourceID, CString& strResponse, CShareazaFile* pFil
 
 		strReplace.TrimLeft();
 		strReplace.TrimRight();
-		
+
 		if ( strReplace.CompareNoCase( _T("Client") ) == 0 )
-			strReplace = CLIENT_NAME_T;
+			strReplace = MOD_CLIENT_NAME_T;
 		else if ( strReplace.CompareNoCase( _T("SmartAgent") ) == 0 )
 			strReplace = theApp.m_sSmartAgent;
 		else if ( strReplace.CompareNoCase( _T("Name") ) == 0 )
@@ -2744,7 +2823,7 @@ CString LoadRichHTML(UINT nResourceID, CString& strResponse, CShareazaFile* pFil
 		{
 			if ( Network.IsListening() )
 			{
-				strReplace.Format( _T("%s:%i"),
+				strReplace.Format( _T("%s:%u"),
 					(LPCTSTR)CString( inet_ntoa( Network.m_pHost.sin_addr ) ),
 					htons( Network.m_pHost.sin_port ) );
 			}
@@ -2899,7 +2978,7 @@ BOOL SaveIcon(HICON hIcon, CBuffer& oBuffer, int colors)
 	HDC hDC = GetDC( NULL );
 	if ( ! hDC )
 		return FALSE;
-	
+
 	// Calculate mask size
 	bih.bmiHeader.biBitCount = 1;
 	if ( ! GetDIBits( hDC, ii.hbmMask, 0, cx, NULL, &bih, DIB_RGB_COLORS ) )
@@ -2942,9 +3021,9 @@ BOOL SaveIcon(HICON hIcon, CBuffer& oBuffer, int colors)
 	};
 	ICONDIRENTRY ide =
 	{
-		( ( cx < 256 ) ? (BYTE)cx : 0 ),
-		( ( cx < 256 ) ? (BYTE)cx : 0 ),
-		( ( colors < 8 ) ? ( 1 << colors ) : 0 ),
+		(BYTE)( ( cx < 256 ) ? cx : 0 ),
+		(BYTE)( ( cx < 256 ) ? cx : 0 ),
+		(BYTE)( ( colors < 8 ) ? ( 1 << colors ) : 0 ),
 		0,
 		1,
 		(WORD)colors,
@@ -3368,6 +3447,22 @@ INT_PTR MsgBox(UINT nIDPrompt, UINT nType, UINT nIDHelp, DWORD* pnDefault, DWORD
 	return MsgBox( LoadString( nIDPrompt ), nType, nIDHelp, pnDefault, nTimer );
 }
 
+void AddAndSelect(CComboBox& wndBox, const CString& sText)
+{
+	const int nCount = wndBox.GetCount();
+	for ( int i = 0; i < nCount; ++i )
+	{
+		CString sTemp;
+		wndBox.GetLBText( i, sTemp );
+		if ( sText.CompareNoCase( sTemp ) == 0 )
+		{
+			wndBox.SetCurSel( i );
+			return;
+		}
+	}
+	wndBox.SetCurSel( wndBox.AddString( sText ) );
+}
+
 /////////////////////////////////////////////////////////////////////////////
 // CProgressDialog
 
@@ -3375,7 +3470,7 @@ CProgressDialog::CProgressDialog(LPCTSTR szTitle, DWORD dwFlags)
 {
 	if ( SUCCEEDED( CoCreateInstance( CLSID_ProgressDialog ) ) )
 	{
-		p->SetTitle( CLIENT_NAME_T );
+		p->SetTitle( MOD_CLIENT_NAME_T );
 		p->SetLine( 1, szTitle, FALSE, NULL );
 		p->StartProgressDialog( theApp.SafeMainWnd() ? theApp.SafeMainWnd()->GetSafeHwnd() : GetDesktopWindow(), NULL, dwFlags, NULL );
 	}

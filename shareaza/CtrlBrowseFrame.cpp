@@ -1,7 +1,7 @@
 //
 // CtrlBrowseFrame.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2009.
+// Copyright (c) Shareaza Development Team, 2002-2015.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -66,15 +66,15 @@ END_MESSAGE_MAP()
 // CBrowseFrameCtrl construction
 
 CBrowseFrameCtrl::CBrowseFrameCtrl()
+	: m_wndList			( NULL )
+	, m_bTreeVisible	( FALSE )
+	, m_nTreeSize		( Settings.Search.BrowseTreeSize )
+	, m_bPanelEnable	( FALSE )
+	, m_bPanelVisible	( Settings.Search.DetailPanelVisible )
+	, m_nPanelSize		( Settings.Search.DetailPanelSize )
+	, m_pTree			()
+	, m_nTree			( 1 )
 {
-	m_bTreeVisible	= FALSE;
-	m_nTreeSize		= Settings.Search.BrowseTreeSize;
-	m_bPanelEnable	= FALSE;
-	m_bPanelVisible	= Settings.Search.DetailPanelVisible;
-	m_nPanelSize	= Settings.Search.DetailPanelSize;
-	m_pTree[0]		= NULL;
-	m_pTree[1]		= NULL;
-	m_nTree			= 1;
 }
 
 CBrowseFrameCtrl::~CBrowseFrameCtrl()
@@ -473,7 +473,7 @@ void CBrowseFrameCtrl::OnTreeSelection(NMHDR* /*pNotify*/, LRESULT* pResult)
 		{
 			if ( CSchemaPtr pSchema = SchemaCache.Get( strURI ) )
 			{
-				CList< CSchemaMember* > pColumns;
+				CSchemaMemberList pColumns;
 				CSchemaColumnsDlg::LoadColumns( pSchema, &pColumns );
 				m_wndList->SelectSchema( pSchema, &pColumns );
 			}

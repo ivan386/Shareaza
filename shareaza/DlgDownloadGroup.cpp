@@ -1,7 +1,7 @@
 //
 // DlgDownloadGroup.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2014.
+// Copyright (c) Shareaza Development Team, 2002-2015.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -292,16 +292,16 @@ void CDownloadGroupDlg::OnCbnCloseupSchemas()
 	// Remove old schema filters (preserve custom ones)
 	if ( CSchemaPtr pOldSchema = SchemaCache.Get( m_sOldSchemaURI ) )
 	{
-		for ( POSITION pos = pOldSchema->GetFilterIterator(); pos ; )
+		for ( POSITION pos1 = pOldSchema->GetFilterIterator(); pos1 ; )
 		{
 			CString strFilter;
 			BOOL bResult;
-			pOldSchema->GetNextFilter( pos, strFilter, bResult );
+			pOldSchema->GetNextFilter( pos1, strFilter, bResult );
 			if ( bResult )
 			{
 				strFilter.Insert( 0, _T('.') );
-				while ( POSITION pos = oList.Find( strFilter ) )
-					oList.RemoveAt( pos );
+				while ( POSITION pos2 = oList.Find( strFilter ) )
+					oList.RemoveAt( pos2 );
 			}
 		}
 	}

@@ -1,7 +1,7 @@
 //
 // QueryHit.h
 //
-// Copyright (c) Shareaza Development Team, 2002-2011.
+// Copyright (c) Shareaza Development Team, 2002-2015.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -21,10 +21,6 @@
 
 #pragma once
 
-#include "Schema.h"
-#include "ShareazaFile.h"
-
-class CVendor;
 class CMatchFile;
 class CXMLElement;
 class CQuerySearch;
@@ -32,6 +28,12 @@ class CG1Packet;
 class CG2Packet;
 class CEDPacket;
 class CDCPacket;
+
+#include "Schema.h"
+#include "ShareazaFile.h"
+#include "VendorCache.h"
+#include "Network.h"
+
 
 class CQueryHit : public CShareazaFile
 {
@@ -49,11 +51,12 @@ public:
 	PROTOCOLID		m_nProtocol;
 	Hashes::Guid	m_oClientID;
 	IN_ADDR			m_pAddress;
+	IN6_ADDR		m_pAddressIPv6;
 	CString			m_sCountry;
 	WORD			m_nPort;
 	DWORD			m_nSpeed;
 	CString			m_sSpeed;
-	CVendor*		m_pVendor;
+	CVendorPtr		m_pVendor;
 	TRISTATE		m_bPush;
 	TRISTATE		m_bBusy;
 	TRISTATE		m_bStable;
@@ -107,7 +110,7 @@ public:
 	void		Resolve();
 	void		ReadEDPacket(CEDPacket* pPacket, const SOCKADDR_IN* pServer, BOOL bUnicode);
 protected:
-	void		ParseAttributes(const Hashes::Guid& pClientID, CVendor* pVendor, BYTE* nFlags, BOOL bChat, BOOL bBrowseHost);
+	void		ParseAttributes(const Hashes::Guid& pClientID, CVendorPtr pVendor, BYTE* nFlags, BOOL bChat, BOOL bBrowseHost);
 	void		ReadG1Packet(CG1Packet* pPacket);
 	void		ReadGGEP(CG1Packet* pPacket);
 	BOOL		CheckValid() const;
@@ -116,6 +119,14 @@ protected:
 	BOOL		ParseXML(CXMLElement* pXML, DWORD nRealIndex);
 
 // Inlines
+
+	inline CString GetIPForURL() const
+	{
+		if ( IsIPv6Hit() )
+			return IPv6ToString( &m_pAddressIPv6, true );
+		else
+			return CString( inet_ntoa( m_pAddress ) );
+	}
 public:
 	inline DWORD GetSources() const
 	{
@@ -124,6 +135,19 @@ public:
 	inline BOOL IsRated() const
 	{
 		return ( m_nRating || m_sComments.GetLength() );
+	}
+	inline bool IsIPv6Hit() const
+	{
+		if ( m_pAddress.s_addr == 0 )
+		{
+			int i = 0;
+
+			for (; i < 8 && m_pAddressIPv6.u.Word[i] == 0 ; i++ );
+
+			if ( i < 8 )
+				return true;
+		}
+		return false;
 	}
 };
 

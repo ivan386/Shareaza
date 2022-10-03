@@ -1,7 +1,7 @@
 //
 // XML.inl
 //
-// Copyright (c) Shareaza Development Team, 2002-2013.
+// Copyright (c) Shareaza Development Team, 2002-2015.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -81,10 +81,10 @@ inline CString CXMLNode::GetValue() const
 	return m_sValue;
 }
 
-inline void CXMLNode::SetValue(LPCTSTR pszValue)
+inline void CXMLNode::SetValue(const CString& strValue)
 {
 	ASSERT( m_sName.GetLength() );
-	m_sValue = pszValue;
+	m_sValue = strValue;
 }
 
 //////////////////////////////////////////////////////////////////////

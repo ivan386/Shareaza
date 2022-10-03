@@ -1,7 +1,7 @@
 //
 // Network.h
 //
-// Copyright (c) Shareaza Development Team, 2002-2014.
+// Copyright (c) Shareaza Development Team, 2002-2017.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -22,6 +22,7 @@
 #pragma once
 
 #include "ThreadImpl.h"
+#include "Settings.h"
 
 class CBuffer;
 class CConnection;
@@ -39,7 +40,7 @@ class CUPnP;
 
 enum // It is used from CNetwork::IsFirewalled
 {
-	CHECK_BOTH, CHECK_TCP, CHECK_UDP, CHECK_IP
+	CHECK_BOTH, CHECK_TCP, CHECK_UDP, CHECK_IP, CHECK_TCP6, CHECK_UDP6, CHECK_IP6
 };
 
 enum // AsyncResolver command
@@ -66,6 +67,8 @@ public:
 
 	CMutexEx		m_pSection;
 	SOCKADDR_IN		m_pHost;					// Structure (Windows Sockets) which holds address of the local machine
+	SOCKADDR_IN6	m_pHostIPv6;				// Structure (Windows Sockets) which holds address of the local machine
+	
 	BOOL			m_bAutoConnect;
 	volatile bool	m_bConnected;				// Network has finished initializing and is connected
 	DWORD			m_tStartedConnecting;		// The time Shareaza started trying to connect
@@ -76,8 +79,19 @@ protected:
 	mutable CCriticalSection	m_pHASection;
 	CList< ULONG >	m_pHostAddresses;
 
+	struct ipv6_compare {
+		inline bool operator()(const IN6_ADDR& _Left, const IN6_ADDR& _Right) const throw()
+		{
+			return ( memcmp( &_Left, &_Right, sizeof( IN6_ADDR ) ) > 0 );
+		}
+	};
+
+	typedef std::set< IN6_ADDR, ipv6_compare > ipv6_set;
+	ipv6_set m_pHostAddressesIPv6;
+
 	DWORD			m_nUPnPTier;				// UPnP tier number (0..UPNP_MAX)
 	DWORD			m_tUPnPMap;					// Time of last UPnP port mapping
+	BOOL			m_bHomeNetworkNAT;				// Home network NAT> LAN NAT> Internet
 
 	typedef struct
 	{
@@ -182,30 +196,45 @@ public:
 	// Shutdown network
 	void		Clear();
 	BOOL		IsSelfIP(const IN_ADDR& nAddress) const;
+	BOOL		IsSelfIP(const IN6_ADDR& nAddress) const;
 	bool		IsAvailable() const;
 	bool		IsConnected() const;
 	bool		IsListening() const;
+	bool		IsListeningIPv6() const;
 	bool		IsWellConnected() const;
 	bool		IsStable() const;
+	bool		IsStableIPv6() const;
 	BOOL		IsFirewalled(int nCheck = CHECK_UDP) const;
 	DWORD		GetStableTime() const;
 	BOOL		IsConnectedTo(const IN_ADDR* pAddress) const;
+	BOOL		IsConnectedTo(const IN6_ADDR* pAddress) const;
 	BOOL		ReadyToTransfer(DWORD tNow) const;		// Are we ready to start downloading?
 
 	BOOL		Connect(BOOL bAutoConnect = FALSE);
 	void		Disconnect();
 	BOOL		ConnectTo(LPCTSTR pszAddress, int nPort = 0, PROTOCOLID nProtocol = PROTOCOL_NULL, BOOL bNoUltraPeer = FALSE);
-	BOOL		AcquireLocalAddress(SOCKET hSocket);
-	BOOL		AcquireLocalAddress(LPCTSTR pszHeader, WORD nPort = 0);
-	BOOL		AcquireLocalAddress(const IN_ADDR& pAddress, WORD nPort = 0);
+	BOOL		AcquireLocalAddress(SOCKET hSocket, bool bPort = false, const IN_ADDR* pFromAddress = NULL, const IN6_ADDR* pFromIPv6Address = NULL);
+	BOOL		AcquireLocalAddress(LPCTSTR pszHeader, WORD nPort = 0, const IN_ADDR* pFromAddress = NULL, const IN6_ADDR* pFromIPv6Address = NULL);
+	BOOL		AcquireLocalAddress(const IN_ADDR& pAddress, WORD nPort = 0, const IN_ADDR* pFromAddress = NULL);
+	BOOL		AcquireLocalAddress(const IN6_ADDR& pAddress, WORD nPort = 0, const IN6_ADDR* pFromAddress = NULL);
 	static BOOL	Resolve(LPCTSTR pszHost, int nPort, SOCKADDR_IN* pHost, BOOL bNames = TRUE);
 	BOOL		AsyncResolve(LPCTSTR pszAddress, WORD nPort, PROTOCOLID nProtocol, BYTE nCommand);
 	// Pending network name resolves queue size
 	UINT		GetResolveCount() const;
 	BOOL		IsReserved(const IN_ADDR* pAddress) const;
+	BOOL		IsReserved(const IN6_ADDR* pAddress) const;
 	WORD		RandomPort() const;
 	void		CreateID(Hashes::Guid& oID);
-	BOOL		IsFirewalledAddress(const IN_ADDR* pAddress, BOOL bIncludeSelf = FALSE) const;
+	BOOL		IsFirewalledAddress(const IN_ADDR* pAddress, BOOL bIncludeSelf = FALSE, BOOL bIgnoreLocalIP = Settings.Connection.IgnoreLocalIP) const;
+	BOOL		IsFirewalledAddress(const IN6_ADDR* pAddress, BOOL bIncludeSelf = FALSE, BOOL bIgnoreLocalIP = Settings.Connection.IgnoreLocalIP) const;
+	BOOL		IsValidAddressFor(const IN_ADDR* pForAddress, const IN_ADDR* pAddress) const;
+	BOOL		IsValidAddressFor(const IN6_ADDR* pForAddress, const IN6_ADDR* pAddress) const;
+	BOOL		IsHomeNetwork(const IN_ADDR* pAddress) const;
+	BOOL		IsLocalAreaNetwork(const IN_ADDR* pAddress) const;
+	int			GetNetworkLevel(const IN_ADDR* pAddress) const;
+	int			GetNetworkLevel(const IN6_ADDR* pAddress) const;
+	IN_ADDR		GetMyAddressFor(const IN_ADDR* pAddress) const;
+	IN6_ADDR	GetMyAddressFor(const IN6_ADDR* pAddress) const;
 	WORD		GetPort() const;
 
 	BOOL		GetNodeRoute(const Hashes::Guid& oGUID, CNeighbour** ppNeighbour, SOCKADDR_IN* pEndpoint);
@@ -225,16 +254,20 @@ public:
 
 	// Safe way to accept socket
 	static SOCKET AcceptSocket(SOCKET hSocket, SOCKADDR_IN* addr, LPCONDITIONPROC lpfnCondition, DWORD_PTR dwCallbackData = 0);
+	static SOCKET AcceptSocket(SOCKET hSocket, SOCKADDR_IN6* addr, LPCONDITIONPROC lpfnCondition, DWORD_PTR dwCallbackData = 0);
+
 	// Safe way to close socket
 	static void	CloseSocket(SOCKET& hSocket, const bool bForce);
 	// Safe way to send TCP data
 	static int Send(SOCKET s, const char* buf, int len);
 	// Safe way to send UDP data
 	static int SendTo(SOCKET s, const char* buf, int len, const SOCKADDR_IN* pTo);
+	static int SendTo(SOCKET s, const char* buf, int len, const SOCKADDR_IN6* pTo);
 	// Safe way to receive TCP data
 	static int Recv(SOCKET s, char* buf, int len);
 	// Safe way to receive UDP data
 	static int RecvFrom(SOCKET s, char* buf, int len, SOCKADDR_IN* pFrom);
+	static int RecvFrom(SOCKET s, char* buf, int len, SOCKADDR_IN6* pFrom);
 	// Safe way to call InternetOpen
 	static HINTERNET InternetOpen();
 	// Safe way to call InternetOpenUrl

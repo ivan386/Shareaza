@@ -1,7 +1,7 @@
 //
 // CtrlMatchTip.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2012.
+// Copyright (c) Shareaza Development Team, 2002-2014.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -107,8 +107,8 @@ void CMatchTipCtrl::LoadFromFile()
 	}
 	else
 	{
-		m_sCountryCode = _T("");
-		m_sCountry = _T("");
+		m_sCountryCode.Empty();
+		m_sCountry.Empty();
 	}
 	m_sSize = LoadString( IDS_TIP_SIZE ) + _T(": ") + m_pFile->m_sSize;
 	LoadTypeInfo();
@@ -435,7 +435,7 @@ void CMatchTipCtrl::OnCalcSize(CDC* pDC)
 	}
 	
 	//Metadata
-	if ( int nCount = m_pMetadata.GetCount( TRUE ) )
+	if ( int nCount = (int)m_pMetadata.GetCount( TRUE ) )
 	{
 		m_sz.cy += TIP_RULE;
 
@@ -454,7 +454,6 @@ void CMatchTipCtrl::OnCalcSize(CDC* pDC)
 void CMatchTipCtrl::OnPaint(CDC* pDC)
 {
 	CPoint pt( 0, 0 );
-	CSize sz( m_sz.cx, TIP_TEXTHEIGHT );
 
 	DrawText( pDC, &pt, m_sName );
 	pt.y += TIP_TEXTHEIGHT;

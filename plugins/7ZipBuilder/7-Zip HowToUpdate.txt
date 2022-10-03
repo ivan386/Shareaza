@@ -1,0 +1,4 @@
+1. Download latest "LZMA SDK" (lzmaXXX.tar.bz2) file here: https://sourceforge.net/projects/sevenzip/files/LZMA%20SDK/
+2. Unpack replacing files from "C\", "CPP\Common\", "CPP\7zip\" to "7zxr\C\", "7zxr\CPP\Common\" and "7zxr\CPP\7Zip\"
+3. Download latest "7-Zip Extra" (7zXXX_extra.7z) here: http://sourceforge.net/projects/sevenzip/files/7-Zip/
+4. Unpack renaming and replacing next files: "x64\7zxa.dll" to "7zxa64.dll".

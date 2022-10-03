@@ -3,7 +3,7 @@
 //
 //	Created by:		Rolandas Rudomanskis
 //
-// Copyright (c) Shareaza Development Team, 2002-2007.
+// Copyright (c) Shareaza Development Team, 2002-2014.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -31,9 +31,13 @@
 #define _ATL_ALL_WARNINGS
 #define _HAS_EXCEPTIONS 0
 
+#define _WIN32_WINNT 0x0501
+#include <SDKDDKVer.h>
+
 #pragma warning( push, 0 )
 
 #include "resource.h"
+
 #include <atlbase.h>
 #include <atlcom.h>
 #include <atlstr.h>

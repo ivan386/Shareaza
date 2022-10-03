@@ -1,7 +1,7 @@
 //
 // DlgURLAction.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2012.
+// Copyright (c) Shareaza Development Team, 2002-2015.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -49,8 +49,8 @@ static char THIS_FILE[] = __FILE__;
 IMPLEMENT_DYNAMIC(CURLActionDlg, CSkinDialog)
 
 BEGIN_MESSAGE_MAP(CURLActionDlg, CSkinDialog)
-	ON_BN_CLICKED(IDC_URL_DOWNLOAD, OnUrlDownload)
-	ON_BN_CLICKED(IDC_URL_SEARCH, OnUrlSearch)
+	ON_BN_CLICKED(IDC_URL_DOWNLOAD, &CURLActionDlg::OnUrlDownload)
+	ON_BN_CLICKED(IDC_URL_SEARCH, &CURLActionDlg::OnUrlSearch)
 END_MESSAGE_MAP()
 
 
@@ -58,9 +58,9 @@ END_MESSAGE_MAP()
 // CURLActionDlg construction
 
 CURLActionDlg::CURLActionDlg(CShareazaURL* pURL)
-:	CSkinDialog( CURLActionDlg::IDD )
-,	m_bNewWindow	( FALSE )
-,	m_bAlwaysOpen	( FALSE )
+	: CSkinDialog( CURLActionDlg::IDD )
+	, m_bNewWindow( FALSE )
+	, m_bAlwaysOpen( FALSE )
 {
 	if ( pURL )
 	{
@@ -78,7 +78,7 @@ CURLActionDlg::~CURLActionDlg()
 void CURLActionDlg::DoDataExchange(CDataExchange* pDX)
 {
 	CSkinDialog::DoDataExchange(pDX);
-	//{{AFX_DATA_MAP(CURLActionDlg)
+
 	DDX_Control(pDX, IDC_MESSAGE_4, m_wndMessage4);
 	DDX_Control(pDX, IDC_MESSAGE_3, m_wndMessage3);
 	DDX_Control(pDX, IDC_NEW_WINDOW, m_wndNewWindow);
@@ -93,7 +93,6 @@ void CURLActionDlg::DoDataExchange(CDataExchange* pDX)
 	DDX_Text(pDX, IDC_URL_URN_VALUE, m_sHashValue);
 	DDX_Check(pDX, IDC_NEW_WINDOW, m_bNewWindow);
 	DDX_Check(pDX, IDC_ALWAYS_OPEN, m_bAlwaysOpen);
-	//}}AFX_DATA_MAP
 }
 
 /////////////////////////////////////////////////////////////////////////////
@@ -159,14 +158,22 @@ BOOL CURLActionDlg::OnInitDialog()
 
 		m_sNameValue = m_pURL->m_sURL;
 
-		switch ( m_pURL->m_nSize )
+		switch ( m_pURL->GetDiscoveryService() )
 		{
+		case CDiscoveryService::dsGnutella:
+			m_sHashValue = _T( "Gnutella Bootstrap" );
+			break;
 		case CDiscoveryService::dsWebCache:
-			m_sHashValue = _T("GWebCache");
+			m_sHashValue = _T( "G1/G2 GWebCache" );
 			break;
 		case CDiscoveryService::dsServerMet:
-			m_sHashValue = _T("Server.met URL");
+			m_sHashValue = _T( "Server.met URL" );
 			break;
+		case CDiscoveryService::dsDCHubList:
+			m_sHashValue = _T( "DC++ Hub List URL" );
+			break;
+		default:
+			m_sHashValue.Empty();
 		}
 
 		m_wndMessage4.ShowWindow( SW_SHOW );
@@ -193,7 +200,7 @@ BOOL CURLActionDlg::OnInitDialog()
 		{
 			m_sNameValue = m_pURL->m_sName;
 
-			if ( m_pURL->m_bSize )
+			if ( m_pURL->m_nSize != SIZE_UNKNOWN )
 				m_sNameValue += _T(" (") + Settings.SmartVolume( m_pURL->m_nSize ) + _T(")");
 		}
 		else
@@ -201,31 +208,9 @@ BOOL CURLActionDlg::OnInitDialog()
 			LoadString(m_sNameValue, IDS_URL_UNSPECIFIED );
 		}
 
-		if ( m_pURL->m_oTiger && m_pURL->m_oSHA1 )
+		if ( m_pURL->HasHash() )
 		{
-			m_sHashValue = _T("bitprint:")
-						 + m_pURL->m_oSHA1.toString() + _T(".")
-						 + m_pURL->m_oTiger.toString();
-		}
-		else if ( m_pURL->m_oTiger )
-		{
-			m_sHashValue = m_pURL->m_oTiger.toShortUrn();
-		}
-		else if ( m_pURL->m_oSHA1 )
-		{
-			m_sHashValue = m_pURL->m_oSHA1.toShortUrn();
-		}
-		else if ( m_pURL->m_oED2K )
-		{
-			m_sHashValue = m_pURL->m_oED2K.toShortUrn();
-		}
-		else if ( m_pURL->m_oMD5 )
-		{
-			m_sHashValue = m_pURL->m_oMD5.toShortUrn();
-		}
-		else if ( m_pURL->m_oBTH )
-		{
-			m_sHashValue = m_pURL->m_oBTH.toShortUrn();
+			m_sHashValue = m_pURL->GetShortURN();
 		}
 		else
 		{
@@ -298,28 +283,18 @@ void CURLActionDlg::OnUrlDownload()
 			return;
 		}
 
-		CDownload* pDownload = Downloads.Add( *m_pURL );
-
-		if ( pDownload == NULL )
-		{
-			DestroyWindow();
-			return;
-		}
-
-		if ( ( GetAsyncKeyState( VK_SHIFT ) & 0x8000 ) == 0 &&
-			! Network.IsWellConnected() )
-		{
+		if ( ( GetAsyncKeyState( VK_SHIFT ) & 0x8000 ) == 0 && ! Network.IsWellConnected() )
 			Network.Connect( TRUE );
-		}
 
-		CMainWnd* pMainWnd = (CMainWnd*)AfxGetMainWnd();
-		pMainWnd->m_pWindows.Open( RUNTIME_CLASS(CDownloadsWnd) );
+		if ( CMainWnd* pMainWnd = (CMainWnd*)AfxGetMainWnd() )
+			pMainWnd->m_pWindows.Open( RUNTIME_CLASS(CDownloadsWnd) );
 
-		if ( Settings.Downloads.ShowMonitorURLs )
+		CSingleLock pLock( &Transfers.m_pSection, TRUE );
+
+		if ( CDownload* pDownload = Downloads.Add( *m_pURL ) )
 		{
-			CSingleLock pLock( &Transfers.m_pSection, TRUE );
-			if ( Downloads.Check( pDownload ) )
-				pDownload->ShowMonitor( &pLock );
+			if ( Settings.Downloads.ShowMonitorURLs )
+				pDownload->ShowMonitor();
 		}
 	}
 	else if ( m_pURL->m_nAction == CShareazaURL::uriHost )
@@ -337,7 +312,7 @@ void CURLActionDlg::OnUrlDownload()
 	}
 	else if ( m_pURL->m_nAction == CShareazaURL::uriDiscovery )
 	{
-		DiscoveryServices.Add( m_pURL->m_sURL, (int)m_pURL->m_nSize );
+		DiscoveryServices.Add( m_pURL->m_sURL, m_pURL->GetDiscoveryService() );
 	}
 
 	DestroyWindow();

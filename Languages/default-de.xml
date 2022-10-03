@@ -921,8 +921,7 @@
 				<item id="ID_SEARCH_FOR_ALBUM" text="Musik aus dem gleichen Album"/>
 				<item id="ID_SEARCH_FOR_SERIES" text="Folgen der gleichen Serie"/>
 			</menu>
-			<menu text="_Web Dienste">
-				<item id="ID_LIBRARY_BITZI_WEB" text="Bitzi-_Ticket anzeigen"/>
+			<menu id="ID_WEBSERVICES_LIST" text="_Web Dienste">
 			</menu>
 		</menu>
 		<menu name="CSearchWnd">
@@ -942,8 +941,7 @@
 				<item id="ID_SEARCH_FOR_ALBUM" text="Musik aus dem gleichen Album"/>
 				<item id="ID_SEARCH_FOR_SERIES" text="Folgen der gleichen Serie"/>
 			</menu>
-			<menu text="_Web Dienste">
-				<item id="ID_LIBRARY_BITZI_WEB" text="Bitzi-_Ticket anzeigen"/>
+			<menu id="ID_WEBSERVICES_LIST" text="_Web Dienste">
 			</menu>
 			<separator/>
 			<item id="ID_SEARCH_FILTER" text="Ergebnisse _filtern..."/>
@@ -968,8 +966,7 @@
 				<item id="ID_SEARCH_FOR_ALBUM" text="Musik aus dem gleichen Album"/>
 				<item id="ID_SEARCH_FOR_SERIES" text="Folgen der gleichen Serie"/>
 			</menu>
-			<menu text="_Web Dienste">
-				<item id="ID_LIBRARY_BITZI_WEB" text="Bitzi-_Ticket anzeigen"/>
+			<menu id="ID_WEBSERVICES_LIST" text="_Web Dienste">
 			</menu>
 		</menu>
 		<menu name="CBrowseHostWnd">
@@ -987,8 +984,7 @@
 				<item id="ID_SEARCH_FOR_ALBUM" text="Musik aus dem gleichen Album"/>
 				<item id="ID_SEARCH_FOR_SERIES" text="Folgen der gleichen Serie"/>
 			</menu>
-			<menu text="_Web Dienste">
-				<item id="ID_LIBRARY_BITZI_WEB" text="Bitzi-_Ticket anzeigen"/>
+			<menu id="ID_WEBSERVICES_LIST" text="_Web Dienste">
 			</menu>
 			<separator/>
 			<item id="ID_SEARCH_FILTER" text="Ergebnisse _filtern..."/>
@@ -1012,8 +1008,7 @@
 				<item id="ID_SEARCH_FOR_ALBUM" text="Musik aus dem gleichen Album"/>
 				<item id="ID_SEARCH_FOR_SERIES" text="Folgen der gleichen Serie"/>
 			</menu>
-			<menu text="_Web Dienste">
-				<item id="ID_LIBRARY_BITZI_WEB" text="Bitzi-_Ticket anzeigen"/>
+			<menu id="ID_WEBSERVICES_LIST" text="_Web Dienste">
 			</menu>
 			<separator/>
 			<item id="ID_SEARCH_FILTER" text="Ergebnisse _filtern..."/>
@@ -1248,9 +1243,7 @@
 				<item id="ID_SEARCH_FOR_ALBUM" text="Musik aus dem gleichen Album"/>
 				<item id="ID_SEARCH_FOR_SERIES" text="Folgen der gleichen Serie"/>
 			</menu>
-			<menu text="_Web Dienste">
-				<item id="ID_LIBRARY_BITZI_WEB" text="Bitzi-_Ticket anzeigen"/>
-				<item id="ID_LIBRARY_BITZI_DOWNLOAD" text="Meta_daten suchen"/>
+			<menu id="ID_WEBSERVICES_LIST" text="_Web Dienste">
 				<item id="ID_WEBSERVICES_MUSICBRAINZ" text="_MusicBrainz"/>
 			</menu>
 			<menu text="_Verwalten">
@@ -1280,9 +1273,7 @@
 				<item id="ID_SEARCH_FOR_ALBUM" text="Musik aus dem gleichen Album"/>
 				<item id="ID_SEARCH_FOR_SERIES" text="Folgen der gleichen Serie"/>
 			</menu>
-			<menu text="_Web Dienste">
-				<item id="ID_LIBRARY_BITZI_WEB" text="Bitzi-_Ticket anzeigen"/>
-				<item id="ID_LIBRARY_BITZI_DOWNLOAD" text="Meta_daten suchen"/>
+			<menu id="ID_WEBSERVICES_LIST" text="_Web Dienste">
 				<item id="ID_WEBSERVICES_MUSICBRAINZ" text="_MusicBrainz"/>
 				<separator/>
 				<item id="ID_LIBRARY_CREATETORRENT" text="._torrent-Datei erstellen"/>
@@ -1320,9 +1311,7 @@
 				<item id="ID_SEARCH_FOR_ALBUM" text="Musik aus dem gleichen Album"/>
 				<item id="ID_SEARCH_FOR_SERIES" text="Folgen der gleichen Serie"/>
 			</menu>
-			<menu text="_Web Dienste">
-				<item id="ID_LIBRARY_BITZI_WEB" text="Bitzi-_Ticket anzeigen"/>
-				<item id="ID_LIBRARY_BITZI_DOWNLOAD" text="Meta_daten suchen"/>
+			<menu id="ID_WEBSERVICES_LIST" text="_Web Dienste">
 			</menu>
 			<menu text="_Verwalten">
 				<item id="ID_LIBRARY_RENAME" text="Datei _umbenennen"/>
@@ -1355,10 +1344,7 @@
 				<item id="ID_SEARCH_FOR_ALBUM" text="Musik aus dem gleichen Album"/>
 				<item id="ID_SEARCH_FOR_SERIES" text="Folgen der gleichen Serie"/>
 			</menu>
-			<menu text="_Web Dienste">
-				<item id="ID_LIBRARY_BITZI_WEB" text="Bitzi-_Ticket anzeigen"/>
-				<item id="ID_LIBRARY_BITZI_DOWNLOAD" text="Meta_daten suchen"/>
-				<separator/>
+			<menu id="ID_WEBSERVICES_LIST" text="_Web Dienste">
 				<item id="ID_LIBRARY_CREATETORRENT" text="._torrent-Datei erstellen"/>
 			</menu>
 			<menu text="_Verwalten">
@@ -1661,9 +1647,11 @@
 			</menu>
 		</menu>
 		<menu name="WebServices.List.Menu">
-			<item id="ID_LIBRARY_BITZI_WEB" text="Bitzi-_Ticket anzeigen"/>
-			<item id="ID_LIBRARY_BITZI_DOWNLOAD" text="Meta_daten suchen"/>
 			<item id="ID_WEBSERVICES_MUSICBRAINZ" text="_MusicBrainz"/>
+		</menu>
+		<menu name="Path.Menu">
+			<item id="ID_PATH_EXPLORE" text="Im Explorer _öffnen"/>
+			<item id="ID_PATH_COPY" text="_Kopieren"/>
 		</menu>
 	</menus>
 	<!-- Documents -->
@@ -2224,9 +2212,9 @@
 		<document name="GeneralHelp.AdultFilter">
 			<text format="b">Erotikfitler aktiviert</text>
 			<newline gap="8"/>
-			<text>Bitte beachten Sie, dass dieser Filter (wie jeder automatische Filter) nicht mit 100%iger Genauigkeit arbeiten kann.
-		Er wurde entwickelt, um übermäßige, ungewollte Spam-Suchergebnisse herauszufiltern und nicht als eine
-		100%ig sichere Blockade.</text>
+			<text>Please note that (as with any automated filter) it may not be 100% effective at
+			screening content. It is designed simply to filter out excess unwanted results, rather than 
+			as a 100% safe block.</text>
 			<newline gap="8"/>
 			<text>Wenn Kinder das Internet nutzen (inklusive P2P), sollte dies immer von den Eltern überwacht werden.</text>
 		</document>
@@ -2459,8 +2447,6 @@
 		<tip id="ID_LIBRARY_ALBUM_DELETE" message="Das markierte Album löschen."/>
 		<tip id="ID_LIBRARY_ALBUM_OPEN" message="Das ausgewählte Album öffnen."/>
 		<tip id="ID_LIBRARY_ALBUM_PROPERTIES" message="Die Eigenschaften des markierten Albums anzeigen und bearbeiten..."/>
-		<tip id="ID_LIBRARY_BITZI_DOWNLOAD" message="Metadaten für die markierte(n) Datei(en) von Bitzi(TM) herunterladen..."/>
-		<tip id="ID_LIBRARY_BITZI_WEB" message="Das Bitzi(TM)-Ticket für die markierte Datei im Browser anzeigen."/>
 		<tip id="ID_LIBRARY_COLUMNS" message="Anzeigende Metadaten-Spalten auswählen..."/>
 		<tip id="ID_LIBRARY_COPY" message="Die markierten Dateien in einen anderen Ordner kopieren..."/>
 		<tip id="ID_LIBRARY_CREATETORRENT" message="Einen .torrent für diese Datei erstellen, um ihn auf eine Webseite hochzuladen."/>
@@ -2571,6 +2557,8 @@
 		<tip id="ID_NEXT_PANE" message="Zur nächsten Fenstersektion wechseln" tip="Nächste Fenstersektion"/>
 		<tip id="ID_OPEN_DOWNLOADS_FOLDER" message="Öffne das Verzeichnis der abgeschlossenen Downloads."/>
 		<tip id="ID_PREV_PANE" message="Zur vorherigen Fenstersektion wechseln" tip="Vorherige Fenstersektion"/>
+		<tip id="ID_PATH_COPY" message="Copy this path to clipboard."/>
+		<tip id="ID_PATH_EXPLORE" message="Explore this path."/>
 		<tip id="ID_SCHEDULER_ACTIVATE" message="Markierte(n) Task(s) aus der Liste entfernen."/>
 		<tip id="ID_SCHEDULER_ADD" message="Neuen geplanten Task hinzufügen."/>
 		<tip id="ID_SCHEDULER_DEACTIVATE" message="Markierte(n) Task(s) deaktivieren."/>
@@ -2873,6 +2861,7 @@
 		<string id="8336" value="Quellen für diese Datei können instabil sein"/>
 		<string id="8337" value="Nicht vertraut"/>
 		<string id="8338" value="Frei:"/>
+		<string id="12999" value="Client %s has a prohibited user agent &quot;%s&quot;, banning."/>
 		<string id="13000" value="Sind Sie sicher, dass Sie die ausgewählten Sicherheitsregeln löschen möchten? Dieser Schritt kann nicht rückgängig gemacht werden."/>
 		<string id="13001" value="Über das Internet freigegebene Dateien"/>
 		<string id="16063" value="UPnP-Portfreigabe nach 10 Versuchen fehlgeschlagen."/>
@@ -3072,8 +3061,6 @@
 		<string id="16384" value="Sind Sie sicher, dass Sie die Datei &quot;%s&quot; ausführen möchten?\n\nManche Dateien können ihren Computer beschädigen. Stellen Sie die Echtheit der Datei sicher, bevor Sie sie ausführen (Virenscan)."/>
 		<string id="16385" value="Sie sind dabei die Metadaten von %i Dateien zu ändern. Wollen Sie fortfahren?"/>
 		<string id="16386" value="Metadaten von %i bearbeiten."/>
-		<string id="16387" value="Die Datei &quot;%s&quot; wurde noch nicht gehasht. Bitte warten Sie bis die Datei gehasht wurde und versuchen Sie es später erneut."/>
-		<string id="16388" value="Diese Option benutzt Dienste, die von Bitzi.com zur Verfügung gestellt werden, um Information über Dateien zu sammeln und zugänglich zu machen.\n\nShareaza wird den SHA1-Hashwert für die ausgewählte(n) Datei(en) übertragen, um die Bitzi-Datenbank abzufragen.\nWenn Sie sich Sorgen um ihre Privatsphäre machen, können Sie die &quot;Bitzi.com privacy policy&quot; lesen.\n\nWollen Sie fortfahren?"/>
 		<string id="16389" value="Sind Sie sicher, dass Sie die %i ausgewählten Datei(en) löschen möchten?\n\nDie Dateien werden in den Windows Papierkorb verschoben."/>
 		<string id="16390" value="Sie haben keinen Mediaplayer wie z.B. Winamp gewählt, um Dateien in die Wiedergabeliste aufzunehmen. Wollen Sie jetzt einen auswählen?\n\nShareaza wird dem gewählten Programm den Dateinamen mit der &quot;/ADD&quot; Option übergeben."/>
 		<string id="16391" value="Sie sind mit keinem Netzwerk verbunden."/>
@@ -3147,10 +3134,6 @@
 		<string id="16778" value="URL:"/>
 		<string id="16779" value="Typ:"/>
 		<string id="16780" value="Undefiniert"/>
-		<string id="16781" value="Anfordern..."/>
-		<string id="16782" value="Erfolg!"/>
-		<string id="16783" value="Fertig, Schließen klicken"/>
-		<string id="16784" value="&amp;Schließen"/>
 		<string id="16785" value="(Keine Visualisierung)"/>
 		<string id="16800" value="Sie haben Ihre Verbindungsgeschwindigkeit noch nicht angegeben. Bevor Sie fortfahren stellen Sie bitte ihre Verbindungsart oder Geschwindigkeit ein."/>
 		<string id="16802" value="Sie haben keine Ordner freigegeben. Sind Sie sicher, dass Sie fortfahren wollen?"/>
@@ -3168,7 +3151,7 @@
 		<string id="16816" value="eDonkey-Clients benutzen meist nicht-lineare Warteschlangen. Hohe Warteschlangenpositionen bedeuten nicht unbedingt lange Wartezeiten. Wenn Sie die Maximale Warteschlangenlänge zu strikt einstellen, könnten Sie Probleme bekommen, Dateien herunterzuladen.\nSind Sie sicher, dass Sie die Maximale Warteschlangenposition auf diesen Wert setzen wollen?"/>
 		<string id="16817" value="Windows unterstützt keine Dateipfade länger als 256 Zeichen.\nBitte wählen Sie einen Ordner mit einem kürzeren Pfad."/>
 		<string id="16818" value="Das Verzeichnis für unvollständige Dateien darf sich nicht im Downloadverzeichnis befinden."/>
-		<string id="16819" value="Ein Unterordner des gewählten Ordners &quot;%s&quot; ist schon in ihrer Bibliothek.\nBeim Hinzufügen des Ordners müssen einige Dateien neu verifiziert werden.\n\nWollen Sie fortfahren ?"/>
+		<string id="16819" value="The incomplete files folder should not be in the library, as it would reduce performance. Incomplete files may be shared directly from the transfers window."/>
 		<string id="16864" value="Service-Provider abfragen..."/>
 		<string id="16865" value="Service-Provider &quot;%s&quot; abfragen..."/>
 		<string id="16866" value="GWebCache-Übertragung erfolgreich (&quot;%s&quot;)."/>
@@ -3345,8 +3328,8 @@
 		<string id="18510" value="Sind Sie sicher, dass Sie diesen Download als komplett annehmen und neu verifizieren wollen?  Die ganze Datei wird untersucht und Shareaza wird die Teile akzeptieren, die die Verifizierung bestehen und die, die sie nicht bestehen neu herunterladen."/>
 		<string id="18511" value="Sie wollen Änderungen an der Dateigröße vornehmen. Sind Sie sicher, dass Sie die Dateigröße dieses Downloads ändern wollen?"/>
 		<string id="18512" value="Download abbrechen aber unvollstaendige Datei(en) behalten"/>
-		<string id="18513" value="Sie haben einen ungültigen eD2k-Hash angegeben. Bitte überprüfen Sie Ihre Eingabe und versuchen Sie es erneut."/>
-		<string id="18514" value="Sie haben einen SHA1-Hash eingegeben, der sich von dem unterscheidet, der zur Zeit mit diesem Download verknüpft ist. Sind Sie sicher, dass Sie den SHA1-Hash jetzt ändern wollen?"/>
+		<string id="18513" value="You have typed an %s hash value, however it is invalid. Please check it and try again."/>
+		<string id="18514" value="You have provided an %s hash value which is different to the one currently associated with this download. Are you sure you want to change the %s hash now?"/>
 		<string id="18515" value="Der ausgewählte Download ist gerade in Bearbeitung. Bitte versuchen Sie es später erneut."/>
 		<string id="19000" value="Remote-Zugriff ist deaktiviert."/>
 		<string id="19001" value="Sie müssen Benutzername und Passwort angeben."/>
@@ -3451,6 +3434,10 @@
 		<string id="20265" value="Fertig"/>
 		<string id="20266" value="Warte..."/>
 		<string id="20267" value="Keine Aufgaben geplant"/>
+		<string id="20268" value="Downloadverzeichnis"/>
+		<string id="20269" value="Unvollständige Dateien"/>
+		<string id="20270" value="Torrents hier speichern"/>
+		<string id="20271" value="Kollektionen hier speichern"/>
 	</strings>
 	<!-- Localised Dialog Text, the "cookie" verifies that the dialog matches the skin -->
 	<!-- Don't edit dialogs manualy! Use DialogScan feature instead -->
@@ -3472,7 +3459,7 @@
 			<control caption="bits/Sekunde|Bytes/Sekunde|b/s|B/s|Kb/s|KB/s|Mb/s|MB/s"/>
 			<control caption="_Downloads:"/>
 			<control caption="Neue Downloads automatisch erweitern"/>
-			<control caption="Einfache Fortschrittsanzeige verwenden"/>
+			<control caption="Ein _Monitorfenster anzeigen"/>
 			<control caption="_Suche:"/>
 			<control caption="Multi-Source-Dateien erweitern"/>
 			<control caption="Bei Download zu Transfers wechseln"/>
@@ -3491,7 +3478,7 @@
 			<control caption="Bei Klick auf [-]:"/>
 			<control caption="Minimieren (normal)|In den Tray minimieren"/>
 		</dialog>
-		<dialog name="CLibrarySettingsPage" cookie="BuBuBuBuBuBuStEdmsStStEdmsStBuBuCoBuBuBuCoBuBuBuEdBuBuBu" caption="Bibliothek">
+		<dialog name="CLibrarySettingsPage" cookie="BuBuBuBuBuBuStEdmsStStEdmsStBuBuCoBuBuBuCoBuBuBuCoBuBuBu" caption="Bibliothek">
 			<control caption="_Optionen:"/>
 			<control caption="Ansichtoptionen speichern"/>
 			<control caption="Ordner überwachen"/>
@@ -3515,7 +3502,7 @@
 			<control/>
 			<control caption="_Hinzufügen"/>
 			<control caption="_Entfernen"/>
-			<control caption="_Kollektionen hier speichern:"/>
+			<control caption="Kollektionen hier speichern"/>
 			<control/>
 			<control/>
 			<control caption="Erst. Ghost-Dateien beim Löschen"/>
@@ -3628,8 +3615,8 @@
 			<control/>
 			<control/>
 		</dialog>
-		<dialog name="CDownloadsSettingsPage" cookie="BuEdBuBuStCoBuStEdmsStEdmsStEdmsBuStCoStCoBuBuEdBu" caption="Downloads">
-			<control caption="_Downloadverzeichnis:"/>
+		<dialog name="CDownloadsSettingsPage" cookie="BuCoBuBuStCoBuStEdmsStEdmsStEdmsBuStCoStCoBuBuCoBu" caption="Downloads">
+			<control caption="Downloadverzeichnis"/>
 			<control/>
 			<control/>
 			<control caption="Scan every completed file with AntiVirus"/>
@@ -3651,7 +3638,7 @@
 			<control caption="Max. Warteschlangenlänge:"/>
 			<control/>
 			<control caption="Nur in verbundenen Netzwerken hoch- und herunterladen."/>
-			<control caption="_Unvollständige Dateien:"/>
+			<control caption="Unvollständige Dateien"/>
 			<control/>
 			<control/>
 		</dialog>
@@ -3762,7 +3749,7 @@
 			<control caption="eDonkey-_Tools:"/>
 			<control caption="Serverliste aus dem Internet herunterladen:"/>
 		</dialog>
-		<dialog name="CBitTorrentSettingsPage" cookie="BuBuBuEdmsEdmsBuEdmsBuBuEdBuEdBuEdBuBuBuStStStStBu" caption="BitTorrent">
+		<dialog name="CBitTorrentSettingsPage" cookie="BuBuBuEdmsEdmsBuEdmsBuBuCoBuEdBuEdBuBuBuStStStStBu" caption="BitTorrent">
 			<control caption="Always connect to BitTorrent"/>
 			<control caption="Connect to BitTorrent today"/>
 			<control caption="Enable BitTorrent DHT"/>
@@ -3782,7 +3769,7 @@
 			<control/>
 			<control caption="_BitTorrent Network:"/>
 			<control caption="_Download-Verbindungen:"/>
-			<control caption="Torrents hier _speichern:"/>
+			<control caption="Torrents hier speichern"/>
 			<control caption="Torrents gleichzeitig"/>
 			<control caption="Client-Verbindungen"/>
 			<control caption="%"/>
@@ -3816,7 +3803,9 @@
 			<control caption="_Einstellungen..."/>
 			<control caption="Mehr..."/>
 		</dialog>
-		<dialog name="CAdvancedSettingsPage" cookie="SyEdmsBuBuStStEdBuCo" caption="Erweitert">
+		<dialog name="CAdvancedSettingsPage" cookie="EdStSyEdmsBuBuStStEdBuCo" caption="Erweitert">
+			<control/>
+			<control/>
 			<control/>
 			<control/>
 			<control/>
@@ -4119,7 +4108,7 @@
 			<control caption="Service _Adresse:"/>
 			<control/>
 			<control caption="Service Typ:"/>
-			<control caption="Gnutella Bootstrap|G1 GWebCache|G2 GWebCache|G1/G2 GWebCache|Server.met-URL|Blockiert"/>
+			<control caption="Gnutella Bootstrap|G1 GWebCache|G2 GWebCache|G1/G2 GWebCache|Server.met-URL|DC++ Hub List URL|Blockiert"/>
 			<control caption="OK"/>
 			<control caption="Abbrechen"/>
 		</dialog>
@@ -4333,14 +4322,6 @@
 			<control caption="Ein _Monitorfenster anzeigen"/>
 			<control caption="Sie haben auf eine von Shareaza unterstützte URI geklickt, die den folgenden Service-Provider zu ihrer Service-Provider Liste hinzufügen wird."/>
 		</dialog>
-		<dialog name="CBitziDownloadDlg" cookie="StStmsBuSySt" caption="Metadaten herunterladen...">
-			<control/>
-			<control caption="Shareaza versucht Metadaten von Bitzi(TM) herunterzuladen..."/>
-			<control/>
-			<control caption="Abbrechen"/>
-			<control/>
-			<control caption="www.bitzi.com"/>
-		</dialog>
 		<dialog name="CFilePreviewDlg" cookie="StStStmsStBu" caption="Vorschau...">
 			<control/>
 			<control caption="Vorschau erstellen für:"/>
@@ -4350,7 +4331,7 @@
 			<control caption="Abbrechen"/>
 		</dialog>
 		<dialog name="CWarningsDlg" cookie="StStStStStStBu" caption="Shareaza respektiert seine Benutzer">
-			<control caption="Wussten Sie, dass Shareaza 100%ig kostenlose Software ist?"/>
+			<control caption="Did you know Shareaza is a 100% free product?"/>
 			<control caption="Shareaza enthält KEINE weder Spy-, noch Adware und auch keine Software Dritter. Es zeigt weder Werbung oder Popups an.{n}{n}Sollten Sie Werbung oder Popups sehen, während Sie Shareaza benutzen, können Sie sicher sein, dass diese nicht von Shareaza stammen."/>
 			<control caption="Leider installieren viele andere Programme unerwünschte Adware oder Spyware. Falls Sie etwas Verdächtiges beobachten, können Sie ihren PC mit einem Anti-Spyware-Programm überprüfen."/>
 			<control caption="Shareaza ist kostenlos und kann von jedem auf http://shareaza.sourceforge.net/ heruntergeladen werden. Wenn Sie jemandem Geld für Shareaza bezahlt haben, sollten Sie dieses sofort zurückverlangen."/>

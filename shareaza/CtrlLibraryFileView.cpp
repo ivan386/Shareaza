@@ -1,7 +1,7 @@
 //
 // CtrlLibraryFileView.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2012.
+// Copyright (c) Shareaza Development Team, 2002-2014.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -37,7 +37,6 @@
 #include "Shell.h"
 #include "DlgFilePropertiesSheet.h"
 #include "DlgFileCopy.h"
-#include "DlgBitziDownload.h"
 #include "DlgURLCopy.h"
 #include "DlgURLExport.h"
 #include "DlgDeleteFile.h"
@@ -72,10 +71,6 @@ BEGIN_MESSAGE_MAP(CLibraryFileView, CLibraryView)
 	ON_COMMAND(ID_LIBRARY_COPY, OnLibraryCopy)
 	ON_UPDATE_COMMAND_UI(ID_LIBRARY_DELETE, OnUpdateLibraryDelete)
 	ON_COMMAND(ID_LIBRARY_DELETE, OnLibraryDelete)
-	ON_UPDATE_COMMAND_UI(ID_LIBRARY_BITZI_WEB, OnUpdateLibraryBitziWeb)
-	ON_COMMAND(ID_LIBRARY_BITZI_WEB, OnLibraryBitziWeb)
-	ON_UPDATE_COMMAND_UI(ID_LIBRARY_BITZI_DOWNLOAD, OnUpdateLibraryBitziDownload)
-	ON_COMMAND(ID_LIBRARY_BITZI_DOWNLOAD, OnLibraryBitziDownload)
 	ON_UPDATE_COMMAND_UI(ID_LIBRARY_REFRESH_METADATA, OnUpdateLibraryRefreshMetadata)
 	ON_COMMAND(ID_LIBRARY_REFRESH_METADATA, OnLibraryRefreshMetadata)
 	ON_UPDATE_COMMAND_UI(ID_LIBRARY_SHARED_FILE, OnUpdateLibraryShared)
@@ -207,7 +202,7 @@ void CLibraryFileView::OnMouseMove(UINT nFlags, CPoint point)
 {
 	CLibraryView::OnMouseMove( nFlags, point );
 
-	if ( DWORD_PTR nFile = HitTestIndex( point ) )
+	if ( DWORD nFile = (DWORD)HitTestIndex( point ) )
 	{
 		GetToolTip()->Show( nFile );
 	}
@@ -283,19 +278,21 @@ void CLibraryFileView::OnLibraryEnqueue()
 
 void CLibraryFileView::OnUpdateLibraryURL(CCmdUI* pCmdUI)
 {
-	CString strMessage;
+	const bool bShift = ( GetAsyncKeyState( VK_SHIFT ) & 0x8000 ) != 0;
+
 	pCmdUI->Enable( GetSelectedCount() > 0 );
-	GetSelectedCount() > 1 ? LoadString( strMessage, IDS_LIBRARY_EXPORTURIS ) : LoadString( strMessage, IDS_LIBRARY_COPYURI );
-	pCmdUI->SetText( strMessage );
+	pCmdUI->SetText( LoadString( ( GetSelectedCount() == 1 && ! bShift ) ? IDS_LIBRARY_COPYURI : IDS_LIBRARY_EXPORTURIS ) );
 }
 
 void CLibraryFileView::OnLibraryURL()
 {
+	const bool bShift = ( GetAsyncKeyState( VK_SHIFT ) & 0x8000 ) != 0;
+
 	CSingleLock pLock( &Library.m_pSection, TRUE );
 
-	if ( GetSelectedCount() == 1 )
+	if ( GetSelectedCount() == 1 && ! bShift )
 	{
-		CLibraryFile* pFile = GetSelectedFile();
+		const CLibraryFile* pFile = GetSelectedFile();
 		if ( ! pFile ) return;
 
 		CURLCopyDlg dlg;
@@ -306,13 +303,13 @@ void CLibraryFileView::OnLibraryURL()
 
 		dlg.DoModal();
 	}
-	else
+	else if ( GetSelectedCount() > 0 )
 	{
 		CURLExportDlg dlg;
 
 		POSITION posSel = StartSelectedFileLoop();
 
-		while ( CLibraryFile* pFile = GetNextSelectedFile( posSel ) )
+		while ( const CLibraryFile* pFile = GetNextSelectedFile( posSel ) )
 		{
 			dlg.Add( pFile );
 		}
@@ -399,23 +396,6 @@ void CLibraryFileView::OnLibraryDelete()
 	Library.Update( true );
 }
 
-void CLibraryFileView::OnUpdateLibraryBitziWeb(CCmdUI* pCmdUI)
-{
-	pCmdUI->Enable( Settings.WebServices.BitziWebSubmit.GetLength() && GetSelectedCount() == 1 );
-}
-
-void CLibraryFileView::OnLibraryBitziWeb()
-{
-	CSingleLock pLock( &Library.m_pSection, TRUE );
-
-	if ( CLibraryFile* pFile = GetSelectedFile() )
-	{
-		DWORD nIndex = pFile->m_nIndex;
-		pLock.Unlock();
-		CFileExecutor::ShowBitziTicket( nIndex );
-	}
-}
-
 void CLibraryFileView::OnUpdateLibraryCreateTorrent(CCmdUI* pCmdUI)
 {
 	pCmdUI->Enable( ! m_bGhostFolder && Settings.BitTorrent.TorrentCreatorPath.GetLength() && GetSelectedCount() == 1 );
@@ -489,39 +469,6 @@ void CLibraryFileView::OnLibraryRebuild()
 	Library.Update( true );
 }
 
-void CLibraryFileView::OnUpdateLibraryBitziDownload(CCmdUI* pCmdUI)
-{
-	pCmdUI->Enable( ! m_bGhostFolder && ! m_bRequestingService && Settings.WebServices.BitziXML.GetLength() && GetSelectedCount() > 0 );
-}
-
-void CLibraryFileView::OnLibraryBitziDownload()
-{
-	GetFrame()->SetDynamicBar( NULL );
-
-	if ( ! Settings.WebServices.BitziOkay )
-	{
-		CString strFormat;
-		Skin.LoadString( strFormat, IDS_LIBRARY_BITZI_MESSAGE );
-		if ( AfxMessageBox( strFormat, MB_ICONQUESTION|MB_YESNO ) != IDYES ) return;
-		Settings.WebServices.BitziOkay = true;
-		Settings.Save();
-	}
-
-	CSingleLock pLock( &Library.m_pSection, TRUE );
-	CBitziDownloadDlg dlg;
-
-	POSITION posSel = StartSelectedFileLoop();
-
-	while ( CLibraryFile* pFile = GetNextSelectedFile( posSel ) )
-	{
-		if ( pFile->m_oSHA1 ) dlg.AddFile( pFile->m_nIndex );
-	}
-
-	pLock.Unlock();
-
-	dlg.DoModal();
-}
-
 void CLibraryFileView::OnUpdateLibraryRefreshMetadata(CCmdUI* pCmdUI)
 {
 	pCmdUI->Enable( ! m_bGhostFolder && GetSelectedCount() > 0 );
@@ -533,7 +480,7 @@ void CLibraryFileView::OnLibraryRefreshMetadata()
 
 	CQuickLock pLock( Library.m_pSection );
 
-	DWORD nCompleted = 0, nTotal = GetSelectedCount();
+	DWORD nCompleted = 0, nTotal = (DWORD)GetSelectedCount();
 
 	POSITION posSel = StartSelectedFileLoop();
 	while ( CLibraryFile* pFile = GetNextSelectedFile( posSel ) )

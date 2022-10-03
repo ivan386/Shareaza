@@ -1,7 +1,7 @@
 //
 // Connection.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2011.
+// Copyright (c) Shareaza Development Team, 2002-2014.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -57,6 +57,8 @@ CConnection::CConnection(PROTOCOLID nProtocol)
 {
 	ZeroMemory( &m_pHost, sizeof( m_pHost ) );
 	m_pHost.sin_family = AF_INET;
+	ZeroMemory( &m_pHostIPv6, sizeof( m_pHostIPv6 ) );
+	m_pHostIPv6.sin6_family = AF_INET6;
 	ZeroMemory( &m_mInput, sizeof( m_mInput ) );
 	ZeroMemory( &m_mOutput, sizeof( m_mOutput ) );
 	m_pInputSection.reset( new CCriticalSection() );
@@ -82,6 +84,7 @@ void CConnection::AttachTo(CConnection* pConnection)
 
 	// Copy values from the given CConnection object to this one
 	m_pHost				= pConnection->m_pHost;
+	m_pHostIPv6			= pConnection->m_pHostIPv6;
 	m_sAddress			= pConnection->m_sAddress;
 	m_sCountry			= pConnection->m_sCountry;
 	m_sCountryName		= pConnection->m_sCountryName;
@@ -151,6 +154,12 @@ BOOL CConnection::ConnectTo(const SOCKADDR_IN* pHost)
 	return ConnectTo( &pHost->sin_addr, htons( pHost->sin_port ) );
 }
 
+BOOL CConnection::ConnectTo(const SOCKADDR_IN6* pHost)
+{
+	// Call the next ConnectTo method, and return the result
+	return ConnectTo( &pHost->sin6_addr, htons( pHost->sin6_port ) );
+}
+
 // Connect this CConnection object to a remote computer on the Internet
 // Takes pAddress, a Windows Sockets structure that holds an IP address, and takes the port number seprately
 // Returns true if connected
@@ -172,7 +181,7 @@ BOOL CConnection::ConnectTo(const IN_ADDR* pAddress, WORD nPort)
 	if ( Security.IsDenied( pAddress ) )
 	{
 		// Report that we aren't connecting to this IP address and return false
-		theApp.Message( MSG_ERROR, IDS_NETWORK_SECURITY_OUTGOING, (LPCTSTR)CString( inet_ntoa( *pAddress ) ) );
+		theApp.Message( MSG_ERROR, IDS_SECURITY_OUTGOING, (LPCTSTR)CString( inet_ntoa( *pAddress ) ) );
 		return FALSE;
 	}
 
@@ -269,6 +278,89 @@ BOOL CConnection::ConnectTo(const IN_ADDR* pAddress, WORD nPort)
 	return TRUE;
 }
 
+BOOL CConnection::ConnectTo(const IN6_ADDR* pAddress, WORD nPort)
+{
+	if ( IsValid() )
+		return FALSE;
+
+	// Make sure we have an address and a nonzero port number
+	if ( pAddress == NULL || nPort == 0 )
+		return FALSE;
+
+	// The IN_ADDR structure we just got passed isn't the same as the one already stored in this object
+	if ( pAddress != &m_pHostIPv6.sin6_addr )
+	{
+		// Zero the memory of the entire SOCKADDR_IN structure m_pHost, and then copy in the sin_addr part
+		ZeroMemory( &m_pHostIPv6, sizeof(m_pHostIPv6) );
+		m_pHostIPv6.sin6_addr = *pAddress;
+	}
+
+	// Fill in more parts of the m_pHost structure
+	m_pHostIPv6.sin6_family	= AF_INET6;							// AF_INET6 means just normal IPv6
+	m_pHostIPv6.sin6_port	= htons( nPort );					// Copy the port number into the m_pHost structure
+	m_sAddress			= IPv6ToString( &m_pHostIPv6.sin6_addr );	// Save the IP address as a string of text
+
+	// Create a socket and store it in m_hSocket
+	m_hSocket = socket( AF_INET6, SOCK_STREAM, IPPROTO_TCP );
+	if ( ! IsValid() )	// Now, make sure it has been created
+	{
+		theApp.Message( MSG_ERROR, _T("Failed to create socket. (1st Try)") );
+		// Second attempt
+		m_hSocket = socket( AF_INET6, SOCK_STREAM, IPPROTO_TCP );
+		if ( ! IsValid() )
+		{
+			theApp.Message( MSG_ERROR, _T("Failed to create socket. (2nd Try)") );
+			return FALSE;
+		}
+	}
+
+	// Disables the Nagle algorithm for send coalescing
+	//VERIFY( setsockopt( m_hSocket, IPPROTO_TCP, TCP_NODELAY, "\x01", 1 ) == 0 );
+
+	// Allows the socket to be bound to an address that is already in use
+	VERIFY( setsockopt( m_hSocket, SOL_SOCKET, SO_REUSEADDR, "\x01", 1 ) == 0 );
+
+	// Choose asynchronous, non-blocking reading and writing on our new socket
+	DWORD dwValue = 1;
+	ioctlsocket( m_hSocket, FIONBIO, &dwValue );
+
+	DestroyBuffers();
+
+	// Try to connect to the remote computer
+	if ( WSAConnect(
+		m_hSocket,					// Our socket
+		(SOCKADDR*)&m_pHostIPv6,		// The remote IP address and port number
+		sizeof(SOCKADDR_IN6),		// How many bytes the function can read
+		NULL, NULL, NULL, NULL ) )	// No advanced features
+	{
+		// If no error occurs, WSAConnect returns 0, so if we're here an error happened
+		int nError = WSAGetLastError(); // Get the last Windows Sockets error number
+
+		// An error of "would block" is normal because connections can't be made instantly and this is a non-blocking socket
+		if ( nError != WSAEWOULDBLOCK )
+		{
+			CNetwork::CloseSocket( m_hSocket, true );
+
+			if ( nError != 0 ) 
+				Statistics.Current.Connections.Errors++;
+
+			return FALSE;
+		}
+	}
+
+	CreateBuffers();
+
+	// Record that we initiated this connection, and when it happened
+	m_bInitiated	= TRUE;
+	m_tConnected	= GetTickCount();
+
+	// Record one more outgoing connection in the statistics
+	Statistics.Current.Connections.Outgoing++;
+
+	// The connection was successfully attempted
+	return TRUE;
+}
+
 //////////////////////////////////////////////////////////////////////
 // CConnection accept an incoming connection
 
@@ -303,6 +395,35 @@ void CConnection::AcceptFrom(SOCKET hSocket, SOCKADDR_IN* pHost)
 	Statistics.Current.Connections.Incoming++;
 }
 
+void CConnection::AcceptFrom(SOCKET hSocket, SOCKADDR_IN6* pHost)
+{
+	// Make sure the newly accepted socket is valid
+	ASSERT( ! IsValid() );
+
+	// Record the connection information here
+	m_hSocket		= hSocket;							// Keep the socket here
+	m_pHostIPv6		= *pHost;							// Copy the remote IP address into this object
+	m_sAddress		= IPv6ToString( &m_pHostIPv6.sin6_addr );	// Store it as a string also
+	UpdateCountry();
+
+	// Make new input and output buffer objects
+	ASSERT( m_pInput == NULL );
+	ASSERT( m_pOutput == NULL );
+	CreateBuffers();
+
+	// Facts about the connection
+	m_bInitiated	= FALSE;			// We didn't initiate this connection
+	m_bConnected	= TRUE;				// We're connected right now
+	m_tConnected	= GetTickCount();	// Record the time this happened
+
+	// Choose asynchronous, non-blocking reading and writing on the new socket
+	DWORD dwValue = 1;
+	ioctlsocket( m_hSocket, FIONBIO, &dwValue );
+
+	// Record one more incoming connection in the statistics
+	Statistics.Current.Connections.Incoming++;
+}
+
 //////////////////////////////////////////////////////////////////////
 // CConnection close
 
@@ -315,7 +436,15 @@ void CConnection::Close(UINT nError)
 
 	if ( nError )
 	{
-		if ( nError == IDS_HANDSHAKE_REJECTED )
+		if ( nError == IDS_SECURITY_BANNED_USERAGENT )
+		{
+			CString sComment;
+			sComment.Format( IDS_SECURITY_BANNED_USERAGENT, (LPCTSTR)m_sAddress, (LPCTSTR)m_sUserAgent );
+			Security.Ban( &m_pHost.sin_addr, ban2Hours, FALSE, sComment );
+
+			theApp.Message( MSG_ERROR, IDS_SECURITY_BANNED_USERAGENT, (LPCTSTR)m_sAddress, (LPCTSTR)m_sUserAgent );
+		}
+		else if ( nError == IDS_HANDSHAKE_REJECTED )
 			theApp.Message( MSG_ERROR, IDS_HANDSHAKE_REJECTED, (LPCTSTR)m_sAddress, (LPCTSTR)m_sUserAgent );
 		else
 		{
@@ -727,10 +856,11 @@ BOOL CConnection::OnHeaderLine(CString& strHeader, CString& strValue)
 		m_bClientExtended = VendorCache.IsExtended( m_sUserAgent );
 
 	} // It's the remote IP header
-	else if ( strHeader.CompareNoCase( _T("Remote-IP") ) == 0 )
+	else if ( strHeader.CompareNoCase( _T("Remote-IP") ) == 0
+			  || strHeader.CompareNoCase( _T("Host") ) == 0 )
 	{
 		// Add this address to our record of them
-		Network.AcquireLocalAddress( strValue );
+		Network.AcquireLocalAddress( strValue, 0, &m_pHost.sin_addr, &m_pHostIPv6.sin6_addr );
 	
 	} // It's the x my address, listen IP, or node header, like "X-My-Address: 10.254.0.16:6349"
 	else if (  strHeader.CompareNoCase( _T("X-My-Address") ) == 0
@@ -739,14 +869,18 @@ BOOL CConnection::OnHeaderLine(CString& strHeader, CString& strValue)
 			|| strHeader.CompareNoCase( _T("Node") ) == 0 )
 	{
 		// Find another colon in the value
-		int nColon = strValue.Find( ':' );
+		int nColon = strValue.Find( _T("]:") );
+		if ( nColon > 0 )
+			nColon++;
+		else
+			nColon = strValue.Find( ':' );
 
 		// If the remote computer first contacted us and the colon is there but not first
 		if ( ! m_bInitiated && nColon > 0 )
 		{
 			// Read the number after the colon into nPort
 			int nPort = protocolPorts[ PROTOCOL_G2 ];
-			if ( _stscanf( strValue.Mid( nColon + 1 ), _T("%lu"), &nPort ) == 1 // Make sure 1 number was found
+			if ( _stscanf( strValue.Mid( nColon + 1 ), _T("%d"), &nPort ) == 1 // Make sure 1 number was found
 				&& nPort != 0 ) // Make sure the found number isn't 0
 			{
 				// Save the found port number in m_pHost
@@ -788,15 +922,26 @@ BOOL CConnection::SendMyAddress()
 	{
 		// Compose header text
 		CString strHeader;
+		
+		if ( IsIPv6Host() )
+		{
+			strHeader.Format(
+				_T("Listen-IP: %s\r\n"),								// Make it like "Listen-IP: [FFFF:FFFF:FFFF:FFFF:FFFF:FFFF:FFFF:FFFF]:6346\r\n"
+				(LPCTSTR) HostToString( &Network.m_pHostIPv6 ) );
+			
+			// Print the line into the bottom of the output buffer
+			Write( strHeader ); // It will be sent to the remote computer on the next write
+		}
+		else
+		{
+			strHeader.Format(
+				_T("Listen-IP: %s:%hu\r\n"),								// Make it like "Listen-IP: 67.176.34.172:6346\r\n"
+				(LPCTSTR)CString( inet_ntoa( Network.GetMyAddressFor( &m_pHost.sin_addr ) ) ),	// Insert the IP address like "67.176.34.172"
+				htons( Network.m_pHost.sin_port ) );						// Our port number in big endian
 
-		strHeader.Format(
-			_T("Listen-IP: %s:%hu\r\n"),								// Make it like "Listen-IP: 67.176.34.172:6346\r\n"
-			(LPCTSTR)CString( inet_ntoa( Network.m_pHost.sin_addr ) ),	// Insert the IP address like "67.176.34.172"
-			htons( Network.m_pHost.sin_port ) );						// Our port number in big endian
-
-		// Print the line into the bottom of the output buffer
-		Write( strHeader ); // It will be sent to the remote computer on the next write
-
+			// Print the line into the bottom of the output buffer
+			Write( strHeader ); // It will be sent to the remote computer on the next write
+		}
 		// Report that we are listening on a port, and the header is sent
 		return TRUE;
 	}

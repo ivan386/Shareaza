@@ -1,7 +1,7 @@
 //
 // DownloadWithSources.h
 //
-// Copyright (c) Shareaza Development Team, 2002-2012.
+// Copyright (c) Shareaza Development Team, 2002-2017.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -77,6 +77,7 @@ public:
 	DWORD				GetBTSourceCount(BOOL bNoPush = FALSE) const;
 	DWORD				GetED2KCompleteSourceCount() const;
 	BOOL				CheckSource(CDownloadSource* pSource) const;
+	bool				IsFewOnlineSources() const;
 	void				AddFailedSource(const CDownloadSource* pSource, bool bLocal = true, bool bOffline = false);
 	void				AddFailedSource(LPCTSTR pszUrl, bool bLocal = true, bool bOffline = false);
 	CFailedSource*		LookupFailedSource(LPCTSTR pszUrl, bool bReliable = false);
@@ -86,11 +87,12 @@ public:
 	void				MergeMetadata(const CXMLElement* pXML);
 	BOOL				AddSourceHit(const CQueryHit* pHit, BOOL bForce = FALSE);
 	BOOL				AddSourceHit(const CMatchFile* pMatchFile, BOOL bForce = FALSE);
-	BOOL				AddSourceHit(const CShareazaURL& oURL, BOOL bForce = FALSE);
+	BOOL				AddSourceHit(const CShareazaURL& oURL, BOOL bForce = FALSE, int nRedirectionCount = 0);
 	BOOL				AddSourceED2K(DWORD nClientID, WORD nClientPort, DWORD nServerIP, WORD nServerPort, const Hashes::Guid& oGUID);
-    BOOL				AddSourceBT(const Hashes::BtGuid& oGUID, const IN_ADDR* pAddress, WORD nPort);
-	BOOL				AddSourceURL(LPCTSTR pszURL, BOOL bURN = FALSE, FILETIME* pLastSeen = NULL, int nRedirectionCount = 0, BOOL bFailed = FALSE);
-	int					AddSourceURLs(LPCTSTR pszURLs, BOOL bURN = FALSE, BOOL bFailed = FALSE);
+    BOOL				AddSourceBT(const Hashes::BtGuid& oGUID, const IN_ADDR* pAddress, WORD nPort, BOOL bIgnoreLocalIP = FALSE);
+	BOOL				AddSourceBT(const Hashes::BtGuid& oGUID, const IN6_ADDR* pAddress, WORD nPort, BOOL bIgnoreLocalIP = FALSE);
+	BOOL				AddSourceURL(LPCTSTR pszURL, FILETIME* pLastSeen = NULL, int nRedirectionCount = 0, BOOL bFailed = FALSE, BOOL bForce = FALSE, BOOL bPartialSame = FALSE);
+	int					AddSourceURLs(LPCTSTR pszURLs, BOOL bFailed = FALSE, BOOL bPartialSame = FALSE);
 	// Remove source from list, add it to failed sources if bBan == TRUE
 	void				RemoveSource(CDownloadSource* pSource, BOOL bBan);
 

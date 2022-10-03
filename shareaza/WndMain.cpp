@@ -1,7 +1,7 @@
 //
 // WndMain.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2014.
+// Copyright (c) Shareaza Development Team, 2002-2017.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -29,6 +29,7 @@
 #include "HostCache.h"
 #include "Neighbours.h"
 #include "Transfers.h"
+#include "Download.h"
 #include "Downloads.h"
 #include "Library.h"
 #include "LibraryBuilder.h"
@@ -287,6 +288,9 @@ BEGIN_MESSAGE_MAP(CMainWnd, CMDIFrameWnd)
 	ON_MESSAGE(WM_NOWUPLOADING, &CMainWnd::OnNowUploading)
 	ON_WM_POWERBROADCAST()
 	ON_WM_COPYDATA()
+	ON_UPDATE_COMMAND_UI(ID_PATH_EXPLORE, &CMainWnd::OnUpdatePathExplore)
+	ON_UPDATE_COMMAND_UI(ID_PATH_COPY, &CMainWnd::OnUpdatePathCopy)
+	ON_WM_QUERYENDSESSION()
 END_MESSAGE_MAP()
 
 /////////////////////////////////////////////////////////////////////////////
@@ -302,7 +306,7 @@ CMainWnd::CMainWnd()
 	, m_nAlpha			( 255 )
 {
 	ZeroMemory( &m_pTray, sizeof( NOTIFYICONDATA ) );
-	m_pTray.cbSize				= sizeof( NOTIFYICONDATA );
+	m_pTray.cbSize				= theApp.m_bIsVistaOrNewer ? sizeof( NOTIFYICONDATA ) : NOTIFYICONDATA_V3_SIZE;
 	m_pTray.uCallbackMessage	= WM_TRAY;
 	m_pTray.uVersion			= NOTIFYICON_VERSION; // NOTIFYICON_VERSION_4;
 }
@@ -435,18 +439,19 @@ int CMainWnd::OnCreate(LPCREATESTRUCT lpCreateStruct)
 
 	// Task Bar
 
-	m_pTaskbar.CoCreateInstance( CLSID_TaskbarList );
+//	m_pTaskbar.CoCreateInstance( CLSID_TaskbarList );
 
 	// Tray
 
 	m_pTray.hWnd = GetSafeHwnd();
-	m_pTray.hIcon = CoolInterface.ExtractIcon( IDR_MAINFRAME, FALSE );
+	m_pTray.hIcon = CoolInterface.ExtractIcon( IDR_MAINFRAME, FALSE, LVSIL_SMALL );
 
 	SnarlRegister();
 
 	// Icon
 
-	SetIcon( CoolInterface.ExtractIcon( IDR_MAINFRAME, FALSE ), FALSE );
+	SetIcon( CoolInterface.ExtractIcon( IDR_MAINFRAME, FALSE, LVSIL_NORMAL ), TRUE );
+	SetIcon( CoolInterface.ExtractIcon( IDR_MAINFRAME, FALSE, LVSIL_SMALL  ), FALSE );
 
 	// Status Bar
 
@@ -455,7 +460,7 @@ int CMainWnd::OnCreate(LPCREATESTRUCT lpCreateStruct)
 	m_wndStatusBar.SetIndicators( wID, _countof( wID ) );
 	m_wndStatusBar.SetPaneInfo( 0, ID_SEPARATOR, SBPS_STRETCH, 0 );
 	m_wndStatusBar.SetPaneInfo( 1, ID_SEPARATOR, SBPS_NORMAL, 200 );
-	m_wndStatusBar.SetPaneInfo( 2, ID_SEPARATOR, SBPS_NORMAL, 200 );
+	m_wndStatusBar.SetPaneInfo( 2, ID_SEPARATOR, SBPS_NORMAL, 400 );
 
 	EnableDocking( CBRS_ALIGN_ANY );
 
@@ -654,7 +659,7 @@ void CMainWnd::OnClose()
 
 	m_brshDockbar.DeleteObject();
 
-	m_pTaskbar.Release();
+//	m_pTaskbar.Release();
 
 	// Destroy main window
 	CMDIFrameWnd::OnClose();
@@ -669,6 +674,15 @@ void CMainWnd::RemoveSkin()
 	CFilePreviewDlg::OnSkinChange( FALSE );
 	m_wndRemoteWnd.RemoveSkin();
 	m_wndNavBar.RemoveSkin();
+}
+
+BOOL CMainWnd::OnQueryEndSession()
+{
+	UpdateWindow();
+
+	CMDIFrameWnd::OnQueryEndSession();
+
+	return FALSE;
 }
 
 void CMainWnd::OnEndSession(BOOL bEnding)
@@ -1498,8 +1512,7 @@ void CMainWnd::UpdateMessages()
 			if ( Settings.General.GUIMode == GUI_BASIC )
 			{
 				// In the basic GUI, don't bother with mode details or neighbour count.
-				strStatusbar.Format( LoadString( IDS_STATUS_BAR_CONNECTED_SIMPLE ),
-					Settings.SmartVolume( nLocalVolume, KiloBytes ) );
+				strStatusbar.Format( LoadString( IDS_STATUS_BAR_CONNECTED_SIMPLE ), (LPCTSTR)Settings.SmartVolume( nLocalVolume, KiloBytes ) );
 			}
 			else
 			{
@@ -1507,7 +1520,7 @@ void CMainWnd::UpdateMessages()
 				strStatusbar.Format( LoadString( Neighbours.IsG2Hub() ?
 					( Neighbours.IsG1Ultrapeer() ? IDS_STATUS_BAR_CONNECTED_HUB_UP : IDS_STATUS_BAR_CONNECTED_HUB ) :
 					( Neighbours.IsG1Ultrapeer() ? IDS_STATUS_BAR_CONNECTED_UP : IDS_STATUS_BAR_CONNECTED ) ),
-					Neighbours.GetStableCount(), Settings.SmartVolume( nLocalVolume, KiloBytes ) );
+					Neighbours.GetStableCount(), (LPCTSTR)Settings.SmartVolume( nLocalVolume, KiloBytes ) );
 			}
 		}
 		else if ( Network.IsConnected() )
@@ -1518,8 +1531,7 @@ void CMainWnd::UpdateMessages()
 				! Settings.eDonkey.EnableToday &&
 				! Settings.DC.EnableToday )
 			{
-				strStatusbar.Format( LoadString( IDS_STATUS_BAR_CONNECTED_SIMPLE ),
-					Settings.SmartVolume( nLocalVolume, KiloBytes ) );
+				strStatusbar.Format( LoadString( IDS_STATUS_BAR_CONNECTED_SIMPLE ), (LPCTSTR)Settings.SmartVolume( nLocalVolume, KiloBytes ) );
 			}
 			else
 				// Trying to connect
@@ -1546,8 +1558,8 @@ void CMainWnd::UpdateMessages()
 
 		// StatusBar pane 1
 		strStatusbar.Format( LoadString( IDS_STATUS_BAR_BANDWIDTH ),
-			Settings.SmartSpeed( CGraphItem::GetValue( GRC_TOTAL_BANDWIDTH_IN ), bits ),
-			Settings.SmartSpeed( CGraphItem::GetValue( GRC_TOTAL_BANDWIDTH_OUT ), bits ),
+			(LPCTSTR)Settings.SmartSpeed( CGraphItem::GetValue( GRC_TOTAL_BANDWIDTH_IN ), bits ),
+			(LPCTSTR)Settings.SmartSpeed( CGraphItem::GetValue( GRC_TOTAL_BANDWIDTH_OUT ), bits ),
 			CGraphItem::GetValue( GRC_DOWNLOADS_TRANSFERS ),
 			CGraphItem::GetValue( GRC_UPLOADS_TRANSFERS ) );
 		m_wndStatusBar.GetPaneText( 1, strOld );
@@ -1555,7 +1567,7 @@ void CMainWnd::UpdateMessages()
 			m_wndStatusBar.SetPaneText( 1, strStatusbar );
 
 		// StatusBar pane 2
-		strStatusbar = HostToString( &Network.m_pHost );
+		strStatusbar = HostToString( &Network.m_pHost ) + _T(", ") + HostToString( &Network.m_pHostIPv6 );
 		m_wndStatusBar.GetPaneText( 2, strOld );
 		if ( strOld != strStatusbar )
 			m_wndStatusBar.SetPaneText( 2, strStatusbar );
@@ -1569,8 +1581,8 @@ void CMainWnd::UpdateMessages()
 		CString strTip;
 		strTip.Format( LoadString( IDS_TRAY_TIP ),
 			CGraphItem::GetValue( GRC_GNUTELLA_CONNECTIONS ),
-			Settings.SmartSpeed( CGraphItem::GetValue( GRC_TOTAL_BANDWIDTH_IN ), bits ),
-			Settings.SmartSpeed( CGraphItem::GetValue( GRC_TOTAL_BANDWIDTH_OUT ), bits ),
+			(LPCTSTR)Settings.SmartSpeed( CGraphItem::GetValue( GRC_TOTAL_BANDWIDTH_IN ), bits ),
+			(LPCTSTR)Settings.SmartSpeed( CGraphItem::GetValue( GRC_TOTAL_BANDWIDTH_OUT ), bits ),
 			CGraphItem::GetValue( GRC_DOWNLOADS_TRANSFERS ),
 			CGraphItem::GetValue( GRC_UPLOADS_TRANSFERS ) );
 		strTip = Settings.SmartAgent() + _T("\r\n") + strTip;
@@ -1581,7 +1593,7 @@ void CMainWnd::UpdateMessages()
 		m_bTrayIcon = Shell_NotifyIcon( NIM_MODIFY, &m_pTray );
 	}
 
-	// Task Bar
+	/*/ Task Bar
 	if ( ! m_bTrayHide && m_pTaskbar )
 	{
 		CString sAppBarTip;
@@ -1592,17 +1604,18 @@ void CMainWnd::UpdateMessages()
 		{
 			m_pTaskbar->SetProgressState( hWnd, TBPF_NORMAL );
 			m_pTaskbar->SetProgressValue( hWnd, nComplete, nTotal );
-			sAppBarTip.Format( _T("%s\r\n%s %.2f%%\r\n%s %s"), Settings.SmartAgent(),
-				LoadString( IDS_DLM_VOLUME_DOWNLOADED ), float( ( 10000 * nComplete ) / nTotal ) / 100.f,
-				LoadString( IDS_DLM_TOTAL_SPEED ), Settings.SmartSpeed( CGraphItem::GetValue( GRC_TOTAL_BANDWIDTH_IN ), bits ) );
+			sAppBarTip.Format( _T("%s\r\n%s %.2f%%\r\n%s %s"), (LPCTSTR)Settings.SmartAgent(),
+				(LPCTSTR)LoadString( IDS_DLM_VOLUME_DOWNLOADED ), float( ( 10000 * nComplete ) / nTotal ) / 100.f,
+				(LPCTSTR)LoadString( IDS_DLM_TOTAL_SPEED ), (LPCTSTR)Settings.SmartSpeed( CGraphItem::GetValue( GRC_TOTAL_BANDWIDTH_IN ), bits ) );
 		}
 		else
 		{
 			m_pTaskbar->SetProgressState( hWnd, TBPF_NOPROGRESS );
-			sAppBarTip = Settings.SmartAgent();				
+			sAppBarTip = Settings.SmartAgent();
 		}
 		m_pTaskbar->SetThumbnailTooltip( hWnd, sAppBarTip );
 	}
+	//*/
 }
 
 // This function runs some basic checks that everything is okay- disks, directories, local network is
@@ -1707,17 +1720,22 @@ void CMainWnd::LocalSystemChecks()
 		}
 	}
 
-	// Check we have donkey servers
-	if ( Settings.Live.DefaultED2KServersLoaded == FALSE )
+	// Check we have minimum servers
+	if ( ! Settings.Live.DefaultED2KServersLoaded )
 	{
-		Settings.Live.DefaultED2KServersLoaded  = TRUE;
-		HostCache.CheckMinimumServers( PROTOCOL_ED2K );
+		Settings.Live.DefaultED2KServersLoaded = true;
+		if ( Settings.eDonkey.EnableToday ) HostCache.CheckMinimumServers( PROTOCOL_ED2K );
+	}
+	if ( ! Settings.Live.DefaultDCServersLoaded )
+	{
+		Settings.Live.DefaultDCServersLoaded = true;
+		if ( Settings.DC.EnableToday ) HostCache.CheckMinimumServers( PROTOCOL_DC );
 	}
 
-	if ( ( Settings.Live.DonkeyServerWarning == FALSE ) && ( Settings.eDonkey.EnableToday ) )
+	if ( ! Settings.Live.DonkeyServerWarning && Settings.eDonkey.EnableToday )
 	{
-		Settings.Live.DonkeyServerWarning = TRUE;
-		if ( ( ! Settings.eDonkey.MetAutoQuery ) && ( HostCache.eDonkey.CountHosts(TRUE) < 1 ) )
+		Settings.Live.DonkeyServerWarning = true;
+		if ( ! Settings.eDonkey.AutoDiscovery && ! HostCache.EnoughServers( PROTOCOL_ED2K ) )
 			PostMessage( WM_COMMAND, ID_HELP_DONKEYSERVERS );
 	}
 }
@@ -1866,7 +1884,7 @@ void CMainWnd::OnNetworkG2()
 		if( !Network.IsConnected() )
 			Network.Connect( TRUE );
 		else
-			DiscoveryServices.Execute( FALSE, PROTOCOL_G2, FALSE );
+			DiscoveryServices.ExecuteBootstraps( PROTOCOL_G2 );
 	}
 }
 
@@ -1900,7 +1918,7 @@ void CMainWnd::OnNetworkG1()
 		if ( !Network.IsConnected() )
 			Network.Connect( TRUE );
 		else
-			DiscoveryServices.Execute( FALSE, PROTOCOL_G1, FALSE );
+			DiscoveryServices.ExecuteBootstraps( PROTOCOL_G1 );
 	}
 #endif // LAN_MODE
 }
@@ -2253,7 +2271,7 @@ void CMainWnd::OnViewSecurity()
 	OpenFromTray();
 }
 
-void CMainWnd::OnUpdateViewScheduler(CCmdUI* pCmdUI) 
+void CMainWnd::OnUpdateViewScheduler(CCmdUI* pCmdUI)
 {
 	pCmdUI->SetCheck( m_pWindows.Find( RUNTIME_CLASS(CSchedulerWnd) ) != NULL );
 }
@@ -2487,6 +2505,10 @@ void CMainWnd::OnUpdateToolsDownload(CCmdUI* pCmdUI)
 
 void CMainWnd::OnToolsDownload()
 {
+	CSingleLock pLock( &Transfers.m_pSection, TRUE );
+
+	bool bDownloadsOpen = false;
+
 	for ( BOOL bBreak = FALSE; ! bBreak; )
 	{
 		bBreak = TRUE;
@@ -2513,14 +2535,19 @@ void CMainWnd::OnToolsDownload()
 			if ( pURL.m_nAction == CShareazaURL::uriDownload ||
 				 pURL.m_nAction == CShareazaURL::uriSource )
 			{
+				if ( ( GetAsyncKeyState( VK_SHIFT ) & 0x8000 ) == 0 && ! Network.IsWellConnected() )
+					Network.Connect( TRUE );
+				
+				if ( !bDownloadsOpen && Settings.Downloads.AutoShow )
+				{
+					m_pWindows.Open( RUNTIME_CLASS(CDownloadsWnd) );
+					bDownloadsOpen = true;
+				}
+
 				if ( CDownload* pDownload = Downloads.Add( pURL ) )
 				{
-					if ( ( GetAsyncKeyState( VK_SHIFT ) & 0x8000 ) == 0 &&
-						! Network.IsWellConnected() )
-					{
-						Network.Connect( TRUE );
-					}
-					m_pWindows.Open( RUNTIME_CLASS(CDownloadsWnd) );
+					if ( Settings.Downloads.ShowMonitorURLs )
+						pDownload->ShowMonitor();
 				}
 			}
 			else
@@ -3187,7 +3214,7 @@ bool CMainWnd::SnarlNotify(const CString& sText, const CString& sTitle, DWORD dw
 
 	CStringA sCommand;
 	sCommand.Format( "notify?app-sig=app/%s&timeout=%u&title=%s&text=%s",
-		CLIENT_NAME, uTimeout, UTF8Encode( sSafeTitle ), UTF8Encode( sSafeText ) );
+		CLIENT_NAME, uTimeout, (LPCSTR)UTF8Encode( sSafeTitle ), (LPCSTR)UTF8Encode( sSafeText ) );
 
 	switch ( dwIcon & NIIF_ICON_MASK )
 	{
@@ -3197,7 +3224,7 @@ bool CMainWnd::SnarlNotify(const CString& sText, const CString& sTitle, DWORD dw
 	case NIIF_WARNING:
 		sCommand += "&icon=!system-warning";
 		break;
-	case NIIF_ERROR:		
+	case NIIF_ERROR:
 		sCommand += "&icon=!system-critical";
 		break;
 	case NIIF_USER:
@@ -3258,7 +3285,11 @@ void CMainWnd::ShowTrayPopup(const CString& sText, const CString& sTitle, DWORD 
 	m_pTray.szInfoTitle[ 0 ] = _T('\0');
 }
 
+#if _MSC_VER >= 1800 // Microsoft Visual Studio 2013
+UINT CMainWnd::OnPowerBroadcast(UINT nPowerEvent, LPARAM nEventData)
+#else
 UINT CMainWnd::OnPowerBroadcast(UINT nPowerEvent, UINT nEventData)
+#endif
 {
 	static bool bWasConnected = false;
 
@@ -3305,4 +3336,14 @@ BOOL CMainWnd::OnCopyData(CWnd* /*pWnd*/, COPYDATASTRUCT* pCopyDataStruct)
 		}
 	}
 	return TRUE;
+}
+
+void CMainWnd::OnUpdatePathCopy(CCmdUI* pCmdUI)
+{
+	pCmdUI->Enable();
+}
+
+void CMainWnd::OnUpdatePathExplore(CCmdUI* pCmdUI)
+{
+	pCmdUI->Enable();
 }

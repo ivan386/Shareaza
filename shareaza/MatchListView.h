@@ -1,7 +1,7 @@
 //
 // MatchListView.h
 //
-// Copyright (c) Shareaza Development Team, 2002-2009.
+// Copyright (c) Shareaza Development Team, 2002-2014.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -22,8 +22,7 @@
 #pragma once
 
 class CMatchList;
-class CMatchFile;
-class CQueryHit;
+class CDownloads;
 
 
 class CMatchListView : public CComObject
@@ -31,22 +30,19 @@ class CMatchListView : public CComObject
 	DECLARE_DYNAMIC(CMatchListView)
 
 public:
+	static IGenericView* Attach(LPCTSTR pszName, CMatchList* pList);
+	static IGenericView* Attach(LPCTSTR pszName, CDownloads* pDownloads);
+
+protected:
+	CString					m_sName;
+	CList< CShareazaFile >	m_pSelection;
+
+	CMatchListView();
 	CMatchListView(LPCTSTR pszName, CMatchList* pList);
+	CMatchListView(LPCTSTR pszName, CDownloads* pDownloads);
 	virtual ~CMatchListView();
 
-	static IGenericView* Attach(LPCTSTR pszName, CMatchList* pList);
-
-protected:
-	CString			m_sName;
-	CMatchList*		m_pList;
-	CList< void* >	m_pSelection;
-
-	POSITION	GetIterator() const;
-	INT_PTR		GetCount() const { return m_pSelection.GetCount(); }
-	void		GetNext(POSITION& pos, CMatchFile** ppFile, CQueryHit** ppHit) const;
-
 // Automation
-protected:
 	BEGIN_INTERFACE_PART(GenericView, IGenericView)
 		DECLARE_DISPATCH()
 		STDMETHOD(get_Name)(BSTR FAR* psName);

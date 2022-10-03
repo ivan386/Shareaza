@@ -44,6 +44,7 @@ public:
 	BOOL		m_bSHA1;
 	BOOL		m_bED2K;
 	BOOL		m_bMD5;
+	BOOL		m_bTTH;
 
 // Overrides
 protected:

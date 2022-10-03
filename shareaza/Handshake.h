@@ -37,6 +37,7 @@ public:
 	// Make a new CHanshake object
 	CHandshake();                                   // Make a new object with null and default values
 	CHandshake(SOCKET hSocket, SOCKADDR_IN* pHost); // Make a new one with this socket and IP address
+	CHandshake(SOCKET hSocket, SOCKADDR_IN6* pHost); // Make a new one with this socket and IPv6 address
 	CHandshake(CHandshake* pCopy);                  // Make a new object that is a copy of this given one
 
 	// Delete this CHandshake object
@@ -52,6 +53,7 @@ public:
 
 	// Push open a connection to the remote computer with the given IP address
 	virtual BOOL Push(IN_ADDR* pAddress, WORD nPort, DWORD nIndex);
+	virtual BOOL Push(IN6_ADDR* pAddress, WORD nPort, DWORD nIndex);
 
 protected:
 

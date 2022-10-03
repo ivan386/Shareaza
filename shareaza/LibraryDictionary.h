@@ -1,7 +1,7 @@
 //
 // LibraryDictionary.h
 //
-// Copyright (c) Shareaza Development Team, 2002-2011.
+// Copyright (c) Shareaza Development Team, 2002-2017.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -33,8 +33,8 @@ public:
 	CLibraryDictionary();
 	virtual ~CLibraryDictionary();
 
-	void					AddFile(CLibraryFile& oFile);
-	void					RemoveFile(CLibraryFile& oFile);
+	void					AddFile(const CLibraryFile* pFile);
+	void					RemoveFile(const CLibraryFile* pFile);
 	void					BuildHashTable();					// Build hash table if needed
 	void					Invalidate();						// Force dictionary and hash table to re-build
 	const CQueryHashTable*	GetHashTable();
@@ -52,9 +52,9 @@ private:
 	bool				m_bValid;							// Table is up to date
 	DWORD				m_nSearchCookie;
 
-	void					ProcessFile(CLibraryFile& oFile, bool bAdd, bool bCanUpload);
-	void					ProcessPhrase(CLibraryFile& oFile, const CString& strPhrase, bool bAdd, bool bCanUpload);
-	void					ProcessWord(CLibraryFile& oFile, const CString& strWord, bool bAdd, bool bCanUpload);
+	void					ProcessFile(const CLibraryFile* pFile, bool bAdd, bool bCanUpload);
+	void					ProcessPhrase(const CLibraryFile* pFile, const CString& strPhrase, bool bAdd, bool bCanUpload);
+	void					ProcessWord(const CLibraryFile* pFile, const CString& strWord, bool bAdd, bool bCanUpload);
 };
 
 extern CLibraryDictionary LibraryDictionary;

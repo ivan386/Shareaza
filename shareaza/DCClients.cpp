@@ -1,7 +1,7 @@
 //
 // DCClients.cpp
 //
-// Copyright (c) Shareaza Development Team, 2010-2012.
+// Copyright (c) Shareaza Development Team, 2010-2014.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -89,7 +89,7 @@ int CDCClients::GetCount() const
 {
 	CQuickLock oLock( m_pSection );
 
-	return m_pList.GetCount();
+	return (int)m_pList.GetCount();
 }
 
 void CDCClients::OnRun()

@@ -1,7 +1,7 @@
 //
 // ManagedSearch.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2012.
+// Copyright (c) Shareaza Development Team, 2002-2017.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -37,6 +37,10 @@
 #include "Network.h"
 #include "QuerySearch.h"
 #include "SearchManager.h"
+#include "Downloads.h"
+#include "Download.h"
+#include "DownloadSource.h"
+#include "Transfers.h"
 
 #ifdef _DEBUG
 #undef THIS_FILE
@@ -178,9 +182,9 @@ BOOL CManagedSearch::Execute(int nPriorityClass)
 	// Throttle this individual search (so it doesn't take up too many resources)
 	DWORD nThrottle = Settings.Search.GeneralThrottle;
 	if ( m_nPriority == spLowest )
-		nThrottle += 30000; // + 30 s
+		nThrottle += Settings.Search.LowestPriorityThrottle; // + 30 s
 	else if ( m_nPriority == spMedium )
-		nThrottle += 800;	// + 800 ms
+		nThrottle += Settings.Search.MediumPriorityThrottle; // + 800 ms
 
 	const DWORD tTicks = GetTickCount();
 	const DWORD tSecs = static_cast< DWORD >( time( NULL ) );
@@ -191,9 +195,10 @@ BOOL CManagedSearch::Execute(int nPriorityClass)
 
 	// Search local neighbours: hubs, servers and ultrapeers. (TCP)
 	BOOL bSuccess = ExecuteNeighbours( tTicks, tSecs );
+	bSuccess |= ExecuteSources( tTicks, tSecs );
 
 	// G1 multicast search. (UDP)
-	if ( Settings.Gnutella1.EnableToday &&
+	if ( Settings.Gnutella1.EnableToday && Settings.Connection.EnableMulticast &&
 		 m_bAllowG1 &&
 		 tTicks > m_tLastG1 + Settings.Gnutella1.QueryGlobalThrottle &&
 		 Network.IsListening() )
@@ -240,7 +245,8 @@ BOOL CManagedSearch::ExecuteNeighbours(const DWORD tTicks, const DWORD tSecs)
 	for ( POSITION pos = Neighbours.GetIterator() ; pos ; )
 	{
 		CNeighbour* pNeighbour = Neighbours.GetNext( pos );
-		const DWORD& nAddress = pNeighbour->m_pHost.sin_addr.S_un.S_addr;
+
+		const DWORD& nAddress = pNeighbour->IsIPv6Host() ? Compress( pNeighbour->m_pHostIPv6.sin6_addr ) : pNeighbour->m_pHost.sin_addr.S_un.S_addr;
 
 		// Must be connected
 		if ( pNeighbour->m_nState != nrsConnected )
@@ -344,7 +350,10 @@ BOOL CManagedSearch::ExecuteNeighbours(const DWORD tTicks, const DWORD tSecs)
 		else if ( pNeighbour->m_nProtocol == PROTOCOL_G2 )
 		{
 			m_pSearch->m_bAndG1 = ( Settings.Gnutella1.EnableToday && m_bAllowG1 );
-			pPacket = m_pSearch->ToG2Packet( ! Network.IsFirewalled(CHECK_UDP) ? &Network.m_pHost : NULL, 0 );
+			if ( pNeighbour->IsIPv6Host() )
+				pPacket = m_pSearch->ToG2Packet( (SOCKADDR *) ( ! Network.IsFirewalled(CHECK_UDP6) ? &Network.m_pHostIPv6 : NULL ), 0 );
+			else
+				pPacket = m_pSearch->ToG2Packet( (SOCKADDR *) ( ! Network.IsFirewalled(CHECK_UDP) ? &Network.m_pHost : NULL ), 0 );
 		}
 		else if ( pNeighbour->m_nProtocol == PROTOCOL_ED2K )
 		{
@@ -357,6 +366,7 @@ BOOL CManagedSearch::ExecuteNeighbours(const DWORD tTicks, const DWORD tSecs)
 			m_pSearch->m_pMyHub = pDCNeighbour->m_pHost;
 			m_pSearch->m_sMyHub = pDCNeighbour->m_sServerName;
 			m_pSearch->m_sMyNick = pDCNeighbour->m_sNick;
+			m_pSearch->m_nMyAddress = pDCNeighbour->m_nMyAddress;
 			pPacket = m_pSearch->ToDCPacket();
 		}
 
@@ -373,9 +383,7 @@ BOOL CManagedSearch::ExecuteNeighbours(const DWORD tTicks, const DWORD tSecs)
 				m_tMoreResults = 0;
 
 				//Display message in system window
-				theApp.Message( MSG_INFO, IDS_NETWORK_SEARCH_SENT,
-					m_pSearch->m_sSearch.GetLength() ? (LPCTSTR)m_pSearch->m_sSearch : _T("URN"),
-					(LPCTSTR)CString( inet_ntoa( pNeighbour->m_pHost.sin_addr ) ) );
+				theApp.Message( MSG_INFO, IDS_NETWORK_SEARCH_SENT, (LPCTSTR)m_pSearch->GetSearch(), (LPCTSTR) pNeighbour->m_sAddress );
 
 				switch ( pNeighbour->m_nProtocol )
 				{
@@ -400,6 +408,94 @@ BOOL CManagedSearch::ExecuteNeighbours(const DWORD tTicks, const DWORD tSecs)
 	}
 
 	return ( nCount > 0 );
+}
+
+BOOL CManagedSearch::ExecuteSources(const DWORD tTicks, const DWORD tSecs)
+{
+	ASSUME_LOCK( SearchManager.m_pSection );
+
+	CSingleLock pTransfersLock( &Transfers.m_pSection );
+	if ( ! pTransfersLock.Lock( 0 ) )
+		return FALSE;
+
+	for ( POSITION pos = Downloads.GetIterator() ; pos != NULL ; )
+	{
+		CDownload* pDownload = Downloads.GetNext( pos );
+		
+		for ( POSITION posSource = pDownload->GetIterator(); posSource ; )
+		{
+			CDownloadSource* pSource = pDownload->GetNext( posSource );
+			
+			bool bIPv6 = pSource->IsIPv6Source();
+
+			if ( !pSource->m_bPushOnly && pSource->m_bClientExtended && tSecs - pSource->m_tLastQuery > Settings.Gnutella2.QueryThrottle )
+			{
+
+				CHostCacheHostPtr pHost = bIPv6 ? 
+					HostCache.Gnutella2.Find( &pSource->m_pAddressIPv6 ) 
+					: HostCache.Gnutella2.Find( &pSource->m_pAddress );
+
+				if ( pHost && !pHost->CanQuery( tSecs ) ) 
+					continue;
+
+				DWORD tLastQuery;
+
+				if ( m_pNodes.Lookup( bIPv6 ? Compress( pSource->m_pAddressIPv6 ) : pSource->m_pAddress.s_addr, tLastQuery ) )
+				{
+					if ( !pHost || tLastQuery > pHost->m_tKeyTime )
+					{
+						// Check per-hub re-query time
+						DWORD nFrequency;
+
+						if ( m_nPriority >=  spLowest )
+						{
+							// Low priority "auto find" sources
+							if ( m_pSearch->m_oSHA1 )		// Has SHA1- probably exists on G2
+								nFrequency = 16 * 60 * 60;
+							else							// Reduce frequency if no SHA1.
+								nFrequency = 32 * 60 * 60;
+						}
+						else
+							nFrequency = Settings.Gnutella2.RequeryDelay * ( m_nPriority + 1 );
+						if ( tSecs - tLastQuery < nFrequency )
+							continue;
+					}
+				}
+
+				if ( !pHost || tSecs - pHost->m_tKeyTime >= max( Settings.Gnutella2.QueryThrottle * 5ul, 5ul * 60ul ) )
+				{
+					CG2Packet* pPacket = m_pSearch->ToG2Packet( NULL, ( pHost && pHost->m_nKeyValue ) ? pHost->m_nKeyValue : 1 );
+
+					if ( bIPv6 ? 
+						Datagrams.Send( &pSource->m_pAddressIPv6, pSource->m_nPort, pPacket ) 
+						: Datagrams.Send( &pSource->m_pAddress, pSource->m_nPort, pPacket ) )
+					{
+						theApp.Message( MSG_DEBUG | MSG_FACILITY_SEARCH,
+							_T("Querying source %s"),
+							bIPv6 ? IPv6ToString( &pSource->m_pAddressIPv6 )
+							: (LPCTSTR)CString( inet_ntoa( pSource->m_pAddress ) ) );
+
+						if ( pSource->IsIPv6Source() )
+							m_pNodes.SetAt( Compress( pSource->m_pAddressIPv6 ), tSecs );
+						else
+							m_pNodes.SetAt( pSource->m_pAddress.s_addr, tSecs );
+
+						pSource->m_tLastQuery = tSecs;
+
+						if ( pHost )
+						{
+							pHost->m_tQuery = tSecs;
+							if ( pHost->m_tAck == 0 )
+								pHost->m_tAck = tSecs;
+						}
+
+						return TRUE;
+					}
+				}
+			}
+		}
+	}
+	return FALSE;
 }
 
 //////////////////////////////////////////////////////////////////////
@@ -446,6 +542,7 @@ BOOL CManagedSearch::ExecuteG2Mesh(const DWORD /*tTicks*/, const DWORD tSecs)
 		// Check if we have an appropriate query key for this host, and if so,
 		// record the receiver address
 		SOCKADDR_IN* pReceiver = NULL;
+		SOCKADDR_IN6* pReceiverIPv6 = NULL;
 
 		if ( pHost->m_nKeyValue == 0 )
 		{
@@ -455,8 +552,9 @@ BOOL CManagedSearch::ExecuteG2Mesh(const DWORD /*tTicks*/, const DWORD tSecs)
 		{
 			// If we are "stable", we have to TX/RX our own UDP traffic,
 			// so we must have a query key for the local addess
-
-			if ( pHost->m_nKeyHost == Network.m_pHost.sin_addr.S_un.S_addr )
+			if ( pHost->IsIPv6KeyHost() && IN6_ADDR_EQUAL( &pHost->m_nKeyHostIPv6, &Network.m_pHostIPv6.sin6_addr ) )
+				pReceiverIPv6 = &Network.m_pHostIPv6;
+			else if ( pHost->m_nKeyHost && pHost->m_nKeyHost == Network.m_pHost.sin_addr.S_un.S_addr )
 				pReceiver = &Network.m_pHost;
 			else
 				pHost->m_nKeyValue = 0;
@@ -465,18 +563,27 @@ BOOL CManagedSearch::ExecuteG2Mesh(const DWORD /*tTicks*/, const DWORD tSecs)
 		{
 			// Make sure we have a query key via one of our neighbours,
 			// and ensure we have queried this neighbour
-
-			if ( CNeighbour* pNeighbour = Neighbours.Get( *(IN_ADDR*)&pHost->m_nKeyHost ) )
+			
+			bool bIPv6KH = pHost->IsIPv6KeyHost();
+			if ( bIPv6KH ? 
+				!IN6_ADDR_EQUAL( &pHost->m_nKeyHostIPv6, &Network.m_pHostIPv6.sin6_addr ) 
+				: pHost->m_nKeyHost != Network.m_pHost.sin_addr.S_un.S_addr )
 			{
-				DWORD nTemp;
-				if ( m_pNodes.Lookup( pHost->m_nKeyHost, nTemp ) )
-					pReceiver = &pNeighbour->m_pHost;
+				if ( CNeighbour* pNeighbour = bIPv6KH ? Neighbours.Get( pHost->m_nKeyHostIPv6 ) : Neighbours.Get( *(IN_ADDR*)&pHost->m_nKeyHost ) )
+				{
+					DWORD nTemp;
+					if ( m_pNodes.Lookup( bIPv6KH ? Compress( pHost->m_nKeyHostIPv6 ) :  pHost->m_nKeyHost, nTemp ) )
+					{
+						if ( pNeighbour->IsIPv6Host() )
+							pReceiverIPv6 = &pNeighbour->m_pHostIPv6;
+						else
+							pReceiver = &pNeighbour->m_pHost;
+					}
+					else
+						continue;
+				}
 				else
-					continue;
-			}
-			else
-			{
-				pHost->m_nKeyValue = 0;
+					pHost->m_nKeyValue = 0;
 			}
 		}
 
@@ -485,32 +592,38 @@ BOOL CManagedSearch::ExecuteG2Mesh(const DWORD /*tTicks*/, const DWORD tSecs)
 		if ( pHost->m_nKeyValue != 0 )
 		{
 			DWORD tLastQuery;
-			ASSERT( pReceiver != NULL );
+			// ASSERT( pReceiver != NULL );
 
 			// Lookup the host
 
-			if ( m_pNodes.Lookup( pHost->m_pAddress.s_addr, tLastQuery ) )
+			if ( m_pNodes.Lookup( pHost->IsIPv6Host() ? Compress( pHost->m_pAddressIPv6 ) : pHost->m_pAddress.s_addr, tLastQuery ) )
 			{
-				// Check per-hub re-query time
-				DWORD nFrequency;
-
-				if ( m_nPriority >=  spLowest )
+				if ( tLastQuery > pHost->m_tKeyTime )
 				{
-					// Low priority "auto find" sources
-					if ( m_pSearch->m_oSHA1 )		// Has SHA1- probably exists on G2
-						nFrequency = 16 * 60 * 60;
-					else							// Reduce frequency if no SHA1.
-						nFrequency = 32 * 60 * 60;
+					// Check per-hub re-query time
+					DWORD nFrequency;
+
+					if ( m_nPriority >=  spLowest )
+					{
+						// Low priority "auto find" sources
+						if ( m_pSearch->m_oSHA1 )		// Has SHA1- probably exists on G2
+							nFrequency = 16 * 60 * 60;
+						else							// Reduce frequency if no SHA1.
+							nFrequency = 32 * 60 * 60;
+					}
+					else
+						nFrequency = Settings.Gnutella2.RequeryDelay * ( m_nPriority + 1 );
+					if ( tSecs - tLastQuery < nFrequency )
+						continue;
 				}
-				else
-					nFrequency = Settings.Gnutella2.RequeryDelay * ( m_nPriority + 1 );
-				if ( tSecs - tLastQuery < nFrequency )
-					continue;
 			}
 
 			// Set the last query time for this host for this search
 
-			m_pNodes.SetAt( pHost->m_pAddress.s_addr, tSecs );
+			if ( pHost->IsIPv6Host() )
+				m_pNodes.SetAt( Compress( pHost->m_pAddressIPv6 ), tSecs );
+			else
+				m_pNodes.SetAt( pHost->m_pAddress.s_addr, tSecs );
 
 			// Record the query time on the host, for all searches
 
@@ -522,9 +635,12 @@ BOOL CManagedSearch::ExecuteG2Mesh(const DWORD /*tTicks*/, const DWORD tSecs)
 
 			m_pSearch->m_bAndG1 = ( Settings.Gnutella1.EnableToday && m_bAllowG1 );
 
-			if ( CPacket* pPacket = m_pSearch->ToG2Packet( pReceiver, pHost->m_nKeyValue ) )
+			if ( CPacket* pPacket = m_pSearch->ToG2Packet( pReceiver ? (SOCKADDR *) pReceiver : (SOCKADDR *) pReceiverIPv6 , pHost->m_nKeyValue ) )
 			{
-				if ( Datagrams.Send( &pHost->m_pAddress, pHost->m_nPort, pPacket, TRUE, this, TRUE ) )
+
+				if ( pHost->IsIPv6Host() ? 
+					Datagrams.Send( &pHost->m_pAddressIPv6, pHost->m_nPort, pPacket, TRUE, this, TRUE ) 
+					: Datagrams.Send( &pHost->m_pAddress, pHost->m_nPort, pPacket, TRUE, this, TRUE ) )
 				{
 					theApp.Message( MSG_DEBUG | MSG_FACILITY_SEARCH,
 						_T("Querying %s"),
@@ -555,12 +671,20 @@ BOOL CManagedSearch::ExecuteG2Mesh(const DWORD /*tTicks*/, const DWORD tSecs)
 					pCacheHub = Neighbours.GetNext( pos );
 					DWORD nTemp;
 
-					if ( m_pNodes.Lookup( pCacheHub->m_pHost.sin_addr.s_addr, nTemp ) )
+					DWORD nAddress = pCacheHub->IsIPv6Host() ? 
+						Compress( pCacheHub->m_pHostIPv6.sin6_addr )
+						: pCacheHub->m_pHost.sin_addr.s_addr;
+
+					if ( m_pNodes.Lookup( nAddress, nTemp ) )
 					{
 						if ( pCacheHub->m_nProtocol == PROTOCOL_G2 &&
 							 pCacheHub->m_nNodeType == ntHub )
 						{
-							pReceiver = &pCacheHub->m_pHost;
+							if ( pCacheHub->IsIPv6Host() )
+								pReceiverIPv6 = &pCacheHub->m_pHostIPv6;
+							else
+								pReceiver = &pCacheHub->m_pHost;
+
 							if ( ! ((CG2Neighbour*)pCacheHub)->m_bCachedKeys )
 								pCacheHub = NULL;
 							break;
@@ -568,6 +692,9 @@ BOOL CManagedSearch::ExecuteG2Mesh(const DWORD /*tTicks*/, const DWORD tSecs)
 					}
 				}
 			}
+
+			if ( !pReceiver && !pReceiverIPv6 )
+				pReceiver = &Network.m_pHost;
 
 			// If we found a receiver, we can ask for the query key
 			if ( pCacheHub != NULL )
@@ -589,13 +716,14 @@ BOOL CManagedSearch::ExecuteG2Mesh(const DWORD /*tTicks*/, const DWORD tSecs)
 
 						theApp.Message( MSG_DEBUG | MSG_FACILITY_SEARCH,
 							_T("Requesting query key from %s through %s"),
-							(LPCTSTR)CString( inet_ntoa( pHost->m_pAddress ) ),
+							pHost->IsIPv6Host() ? IPv6ToString( &pHost->m_pAddressIPv6 )
+								: (LPCTSTR)CString( inet_ntoa( pHost->m_pAddress ) ),
 							(LPCTSTR)CString( inet_ntoa( pReceiver->sin_addr ) ) );
 						return TRUE;
 					}
 				}
 			}
-			else if ( pReceiver != NULL )
+			else if ( pReceiver != NULL ) // ToDo: pReceiverIPv6
 			{
 				// We need to transmit directly to the remote query host
 				if ( CG2Packet* pPacket = CG2Packet::New( G2_PACKET_QUERY_KEY_REQ, TRUE ) )
@@ -608,7 +736,9 @@ BOOL CManagedSearch::ExecuteG2Mesh(const DWORD /*tTicks*/, const DWORD tSecs)
 						pPacket->WriteShortBE( ntohs( pReceiver->sin_port ) );
 					}
 
-					if ( Datagrams.Send( &pHost->m_pAddress, pHost->m_nPort, pPacket, TRUE, NULL, FALSE ) )
+					if ( pHost->IsIPv6Host() ? 
+						Datagrams.Send( &pHost->m_pAddressIPv6, pHost->m_nPort, pPacket, TRUE, NULL, FALSE ) 
+						: Datagrams.Send( &pHost->m_pAddress, pHost->m_nPort, pPacket, TRUE, NULL, FALSE ) )
 					{
 						if ( pHost->m_tAck == 0 )
 							pHost->m_tAck = tSecs;
@@ -619,13 +749,15 @@ BOOL CManagedSearch::ExecuteG2Mesh(const DWORD /*tTicks*/, const DWORD tSecs)
 						{
 							theApp.Message( MSG_DEBUG | MSG_FACILITY_SEARCH,
 								_T("Requesting query key from %s"),
-								(LPCTSTR)CString( inet_ntoa( pHost->m_pAddress ) ) );
+								pHost->IsIPv6Host() ? IPv6ToString( &pHost->m_pAddressIPv6 )
+								: (LPCTSTR)CString( inet_ntoa( pHost->m_pAddress ) ) );
 						}
 						else
 						{
 							theApp.Message( MSG_DEBUG | MSG_FACILITY_SEARCH,
 								_T("Requesting query key from %s for %s"),
-								(LPCTSTR)CString( inet_ntoa( pHost->m_pAddress ) ),
+								pHost->IsIPv6Host() ? IPv6ToString( &pHost->m_pAddressIPv6 )
+								: (LPCTSTR)CString( inet_ntoa( pHost->m_pAddress ) ),
 								(LPCTSTR)CString( inet_ntoa( pReceiver->sin_addr ) ) );
 						}
 						return TRUE;
@@ -660,14 +792,16 @@ BOOL CManagedSearch::ExecuteDonkeyMesh(const DWORD /*tTicks*/, const DWORD tSecs
 		// Make sure this host can be queried (now)
 		if ( ! pHost->CanQuery( tSecs ) )
 			continue;
-		
+
 		// Never re-query eDonkey2000 servers
 		DWORD tLastQuery;
-		if ( m_pNodes.Lookup( pHost->m_pAddress.s_addr, tLastQuery ) )
+		DWORD nAddressLookup = pHost->IsIPv6Host() ? Compress( pHost->m_pAddressIPv6 )  : pHost->m_pAddress.s_addr;
+
+		if ( m_pNodes.Lookup( nAddressLookup, tLastQuery ) )
 			continue;
 
 		// Set the last query time for this host for this search
-		m_pNodes.SetAt( pHost->m_pAddress.s_addr, tSecs );
+		m_pNodes.SetAt( nAddressLookup, tSecs );
 
 		// Record the query time on the host, for all searches
 		pHost->m_tQuery = tSecs;
@@ -676,7 +810,9 @@ BOOL CManagedSearch::ExecuteDonkeyMesh(const DWORD /*tTicks*/, const DWORD tSecs
 		if ( CPacket* pPacket = m_pSearch->ToEDPacket( TRUE, pHost->m_nUDPFlags ) )
 		{
 			// Send the datagram if possible
-			if ( Datagrams.Send( &pHost->m_pAddress, pHost->m_nPort + 4, pPacket, TRUE ) )
+			if ( pHost->IsIPv6Host() ?
+				Datagrams.Send( &pHost->m_pAddressIPv6, pHost->m_nPort + 4, pPacket, TRUE )
+				: Datagrams.Send( &pHost->m_pAddress, pHost->m_nPort + 4, pPacket, TRUE ) )
 			{
 				theApp.Message( MSG_DEBUG | MSG_FACILITY_SEARCH,
 					_T("Sending UDP query to %s"),

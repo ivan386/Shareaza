@@ -63,7 +63,7 @@ void CResultFilters::Clear()
 
 void CResultFilters::Serialize(CArchive & ar)
 {
-	int nVersion = 2;
+	int nVersion = 3;
 
 	if ( ar.IsStoring() )
 	{
@@ -141,7 +141,7 @@ void CResultFilters::Remove(DWORD index)
 
 		if ( index == m_nDefault ) m_nDefault = NONE;
 		else if ( ( m_nDefault != NONE ) && ( index < m_nDefault ) ) m_nDefault--;
-		
+
 		if ( m_nFilters == 0 ) m_nDefault = NONE;
 	}
 }
@@ -152,7 +152,7 @@ BOOL CResultFilters::Load()
 
 	// Delete old content first
 	Clear();
-	
+
 	CString strFile = Settings.General.UserPath + _T("\\Data\\Filters.dat");
 
 	CFile pFile;
@@ -173,7 +173,7 @@ BOOL CResultFilters::Load()
 			ar.Abort();
 			pFile.Abort();
 			pException->Delete();
-			theApp.Message( MSG_ERROR, _T("Failed to load result filters: %s"), strFile );
+			theApp.Message( MSG_ERROR, _T("Failed to load result filters: %s"), (LPCTSTR)strFile );
 			return FALSE;
 		}
 		pFile.Close();
@@ -182,7 +182,7 @@ BOOL CResultFilters::Load()
 	{
 		pFile.Abort();
 		pException->Delete();
-		theApp.Message( MSG_ERROR, _T("Failed to load result filters: %s"), strFile );
+		theApp.Message( MSG_ERROR, _T("Failed to load result filters: %s"), (LPCTSTR)strFile );
 		return FALSE;
 	}
 
@@ -206,7 +206,7 @@ BOOL CResultFilters::Save()
 	if ( ! pFile.Open( strTemp, CFile::modeWrite | CFile::modeCreate | CFile::shareExclusive | CFile::osSequentialScan ) )
 	{
 		DeleteFile( strTemp );
-		theApp.Message( MSG_ERROR, _T("Failed to save result filters: %s"), strTemp );
+		theApp.Message( MSG_ERROR, _T("Failed to save result filters: %s"), (LPCTSTR)strTemp );
 		return FALSE;
 	}
 
@@ -224,7 +224,7 @@ BOOL CResultFilters::Save()
 			ar.Abort();
 			pFile.Abort();
 			pException->Delete();
-			theApp.Message( MSG_ERROR, _T("Failed to save result filters: %s"), strTemp );
+			theApp.Message( MSG_ERROR, _T("Failed to save result filters: %s"), (LPCTSTR)strTemp );
 			return FALSE;
 		}
 		pFile.Close();
@@ -233,14 +233,14 @@ BOOL CResultFilters::Save()
 	{
 		pFile.Abort();
 		pException->Delete();
-		theApp.Message( MSG_ERROR, _T("Failed to save result filters: %s"), strTemp );
+		theApp.Message( MSG_ERROR, _T("Failed to save result filters: %s"), (LPCTSTR)strTemp );
 		return FALSE;
 	}
 
 	if ( ! MoveFileEx( strTemp, strFile, MOVEFILE_COPY_ALLOWED | MOVEFILE_REPLACE_EXISTING ) )
 	{
 		DeleteFile( strTemp );
-		theApp.Message( MSG_ERROR, _T("Failed to save result filters: %s"), strFile );
+		theApp.Message( MSG_ERROR, _T("Failed to save result filters: %s"), (LPCTSTR)strFile );
 		return FALSE;
 	}
 
@@ -262,6 +262,8 @@ CFilterOptions::CFilterOptions()
 	m_bFilterAdult		= ( Settings.Search.FilterMask & ( 1 << 7 ) ) > 0;
 	m_bFilterSuspicious = ( Settings.Search.FilterMask & ( 1 << 8 ) ) > 0;
 	m_bRegExp			= ( Settings.Search.FilterMask & ( 1 << 9 ) ) > 0;
+	m_bFilterComments	= ( Settings.Search.FilterMask & ( 1 << 10 ) ) > 0;
+	m_bFilterPartial	= ( Settings.Search.FilterMask & ( 1 << 11 ) ) > 0;
 	m_nFilterMinSize	= 1;
 	m_nFilterMaxSize	= 0;
 	m_nFilterSources	= 1;
@@ -283,6 +285,8 @@ void CFilterOptions::Serialize(CArchive & ar, int nVersion)
 		ar << m_bFilterAdult;
 		ar << m_bFilterSuspicious;
 		ar << m_bRegExp;
+		ar << m_bFilterComments;
+		ar << m_bFilterPartial;
 		ar << m_nFilterMinSize;
 		ar << m_nFilterMaxSize;
 		ar << m_nFilterSources;
@@ -306,6 +310,12 @@ void CFilterOptions::Serialize(CArchive & ar, int nVersion)
 			ar >> m_bRegExp;
 			if ( m_sFilter.IsEmpty() )
 				m_bRegExp = FALSE;
+		}
+
+		if ( nVersion >= 3 )
+		{
+			ar >> m_bFilterComments;
+			ar >> m_bFilterPartial;
 		}
 
 		ar >> m_nFilterMinSize;

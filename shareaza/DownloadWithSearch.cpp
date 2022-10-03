@@ -100,12 +100,11 @@ void CDownloadWithSearch::RunSearch(DWORD tNow)
 	}
 	else if ( tNow > m_tSearchCheck + 1000 )
 	{
-		BOOL bFewSources = GetEffectiveSourceCount() < Settings.Downloads.MinSources;
 		BOOL bDataStarve = tNow > m_tReceived + Settings.Downloads.StarveTimeout;
 		
 		m_tSearchCheck = tNow;
 		
-		if ( bFewSources || bDataStarve )
+		if ( bDataStarve || IsFewOnlineSources() )
 		{
 			StartAutomaticSearch();
 		}
@@ -127,8 +126,15 @@ void CDownloadWithSearch::StartManualSearch()
 	m_pSearch->Start();
 }
 
-BOOL CDownloadWithSearch::IsSearching() const
+BOOL CDownloadWithSearch::IsSearching(int* pPriority) const
 {
+	if ( m_pSearch )
+	{
+		if ( pPriority )
+			*pPriority = m_pSearch->GetPriority();
+
+		return m_pSearch->IsActive();
+	}
 	return m_pSearch && m_pSearch->IsActive();
 }
 

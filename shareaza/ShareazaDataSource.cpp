@@ -1,7 +1,7 @@
 //
 // ShareazaDataSource.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2012.
+// Copyright (c) Shareaza Development Team, 2002-2015.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -138,7 +138,7 @@ UINT AsyncFileOperationThread(LPVOID param)
 	// Shell file operations
 	SHFILEOPSTRUCT sFileOp = {
 		pAFOP->hWnd,
-		( bCopy ? FO_COPY : FO_MOVE ),
+		(UINT)( bCopy ? FO_COPY : FO_MOVE ),
 		pAFOP->sFrom.GetData(),
 		pAFOP->sTo.GetData(),
 		FOF_ALLOWUNDO,
@@ -377,8 +377,7 @@ HRESULT CShareazaDataSource::DoDragDropHelper(const T* pList, HBITMAP pImage, co
 				if ( SUCCEEDED( hr ) )
 				{
 					// Begin async drag-n-drop operation
-					HANDLE hThread = BeginThread( "DragDrop",
-						DragDropThread<T>, (LPVOID)pStream );
+					HANDLE hThread = CRazaThread::BeginThread( "DragDrop", DragDropThread<T>, (LPVOID)pStream );
 					hr = ( hThread != NULL ) ? S_OK : E_FAIL;
 				}
 			}
@@ -587,7 +586,7 @@ BOOL CShareazaDataSource::DropToFolder(IDataObject* pIDataObject, DWORD grfKeySt
 			if ( nPath1Length > 0 && pszDest[ nPath1Length - 1 ] == _T('\\') )
 				nPath1Length--;
 			int nPath2Length = bFolder ? lstrlen( pAFOP->sFrom.GetData() ) :
-				( szPath2 - pAFOP->sFrom.GetData() - 1 );
+				(int)( szPath2 - pAFOP->sFrom.GetData() - 1 );
 			if ( nPath1Length == nPath2Length &&
 				_tcsncicmp( pszDest, pAFOP->sFrom.GetData(), nPath1Length ) == 0 )
 				// source == destination
@@ -615,8 +614,7 @@ BOOL CShareazaDataSource::DropToFolder(IDataObject* pIDataObject, DWORD grfKeySt
 
 	pAFOP->dwEffect = *pdwEffect;
 
-	HANDLE hThread = BeginThread( "SHFileOperation",
-		AsyncFileOperationThread, (LPVOID)pAFOP.release() );
+	HANDLE hThread = CRazaThread::BeginThread( "SHFileOperation", AsyncFileOperationThread, (LPVOID)pAFOP.release() );
 	if ( hThread == NULL )
 		return FALSE;
 
@@ -1367,9 +1365,9 @@ void CShareazaDataSource::GetTotalLength(const CLibraryList* pList, size_t& size
 				if ( pAlbum && bRoot &&
 					! CheckURI( pAlbum->m_sSchemaURI, CSchema::uriGhostFolder ) )
 				{
-					CLibraryListPtr pList( new CLibraryList() );
-					pAlbum->GetFileList( pList, TRUE );
-					GetTotalLength( pList, size_HDROP, size_Archive, size_Files, FALSE );
+					CLibraryListPtr pNewList( new CLibraryList() );
+					pAlbum->GetFileList( pNewList, TRUE );
+					GetTotalLength( pNewList, size_HDROP, size_Archive, size_Files, FALSE );
 
 					size_Archive++;
 				}
@@ -1453,11 +1451,11 @@ void CShareazaDataSource::FillBuffer(const CLibraryList* pList, LPTSTR& buf_HDRO
 						CString sTemp;
 						sTemp.Format(
 							_T("magnet:?xt=urn:bitprint:%s.%s&xt=%s&xl=%I64u&dn=%s"),
-							pFile->m_oSHA1.toString(),
-							pFile->m_oTiger.toString(),
-							pFile->m_oED2K.toUrn(),
+							(LPCTSTR)pFile->m_oSHA1.toString(),
+							(LPCTSTR)pFile->m_oTiger.toString(),
+							(LPCTSTR)pFile->m_oED2K.toUrn(),
 							pFile->m_nSize,
-							URLEncode( pFile->m_sName ) );
+							(LPCTSTR)URLEncode( pFile->m_sName ) );
 						if ( buf_Text.GetLength() )
 							buf_Text += _T("\r\n\r\n");
 						buf_Text += sTemp;
@@ -1487,9 +1485,9 @@ void CShareazaDataSource::FillBuffer(const CLibraryList* pList, LPTSTR& buf_HDRO
 				if ( pAlbum && bRoot &&
 					! CheckURI( pAlbum->m_sSchemaURI, CSchema::uriGhostFolder ) )
 				{
-					CLibraryListPtr pList( new CLibraryList() );
-					pAlbum->GetFileList( pList, TRUE );
-					FillBuffer( pList, buf_HDROP, buf_Archive, buf_Files, buf_Text, FALSE, pAlbum->m_oGUID );
+					CLibraryListPtr pNewList( new CLibraryList() );
+					pAlbum->GetFileList( pNewList, TRUE );
+					FillBuffer( pNewList, buf_HDROP, buf_Archive, buf_Files, buf_Text, FALSE, pAlbum->m_oGUID );
 
 					pAlbum->Serialize( buf_Archive, LIBRARY_SER_VERSION );
 				}

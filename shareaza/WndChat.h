@@ -1,7 +1,7 @@
 //
 // WndChat.h
 //
-// Copyright (c) Shareaza Development Team, 2002-2011.
+// Copyright (c) Shareaza Development Team, 2002-2014.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -51,11 +51,14 @@ enum UserType
 class CChatMessage
 {
 public:
-	CChatMessage(MessageType bType = cmtNull, const CString& sFrom = CString(), const CString& sMessage = CString(), HBITMAP hBitmap = NULL)
+	inline CChatMessage(MessageType bType = cmtNull, const CString& sFrom = CString(), const CString& sMessage = CString(), HBITMAP hBitmap = NULL)
 		: m_bType( bType ), m_sFrom( sFrom ), m_sMessage( sMessage ), m_hBitmap( hBitmap ) {}
 
-	CChatMessage(const CChatMessage& pMsg)
+	inline CChatMessage(const CChatMessage& pMsg)
 		: m_bType( pMsg.m_bType ), m_sFrom( pMsg.m_sFrom ), m_sMessage( pMsg.m_sMessage ), m_hBitmap( pMsg.m_hBitmap ) {}
+
+	inline CChatMessage& operator=(const CChatMessage& pMsg)
+		{ m_bType = pMsg.m_bType; m_sFrom = pMsg.m_sFrom; m_sMessage = pMsg.m_sMessage; m_hBitmap = pMsg.m_hBitmap; return *this; }
 
 	MessageType	m_bType;
 	CString		m_sFrom;
@@ -67,11 +70,14 @@ public:
 class CChatUser
 {
 public:
-	CChatUser(UserType bType = cutUser, const CString& sNick = CString(), const CString& sDescription = CString())
+	inline CChatUser(UserType bType = cutUser, const CString& sNick = CString(), const CString& sDescription = CString())
 		: m_bType( bType ), m_sNick( sNick ), m_sDescription( sDescription ) {}
 
-	CChatUser(const CChatUser& pUser)
+	inline CChatUser(const CChatUser& pUser)
 		: m_bType( pUser.m_bType ), m_sNick( pUser.m_sNick ), m_sDescription( pUser.m_sDescription ), m_sUserAgent( pUser.m_sUserAgent ) {}
+
+	inline CChatUser& operator=(const CChatUser& pUser)
+		{ m_bType = pUser.m_bType; m_sNick = pUser.m_sNick; m_sDescription = pUser.m_sDescription; m_sUserAgent = pUser.m_sUserAgent; return *this;}
 
 	typedef CMap< CString, const CString&, CChatUser*, CChatUser* > Map;
 	typedef CList< CChatUser > List;

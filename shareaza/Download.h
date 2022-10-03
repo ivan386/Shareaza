@@ -1,7 +1,7 @@
 //
 // Download.h
 //
-// Copyright (c) Shareaza Development Team, 2002-2013.
+// Copyright (c) Shareaza Development Team, 2002-2014.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -21,7 +21,7 @@
 
 #pragma once
 
-#define DOWNLOAD_SER_VERSION	42
+#define DOWNLOAD_SER_VERSION	43
 // History:
 // 33 - added m_sSearchKeyword to CDownloadBase (CyberBob)
 // 34 - added m_bSeeding and m_sServingFileName to CDownloadWithTorrent (Rolandas)
@@ -33,6 +33,7 @@
 // 40 - added virtual fragmented file (Ryo-oh-ki)
 // 41 - added m_sName to CFragmentedFile (Ryo-oh-ki)
 // 42 - added m_bMetaIgnore to CDownloadSource (Ryo-oh-ki)
+// 43 - added m_pAddressIPv6 and m_pIPv6ServerAddress to CDownloadSource (ivan386)
 
 #include "DownloadWithExtras.h"
 
@@ -52,6 +53,8 @@ public:
 	DWORD		m_tCompleted;
 	int			m_nRunCookie;
 	int			m_nGroupCookie;
+	QWORD		m_nStartFrom;
+
 private:
 	BOOL		m_bTempPaused;
 	BOOL		m_bPaused;
@@ -61,12 +64,18 @@ private:
 	DWORD		m_tSaved;
 	DWORD		m_tBegan;		// The time when this download began trying to download (Started
 								// searching, etc). 0 means has not tried this session.
+	DWORD		m_tStartFromSet;
+	QWORD		m_nCompletedAtBegan;
 	bool		m_bDownloading;	// This is used to store if a download is downloading. (Performance tweak)
 								// You should count the transfers if you need a 100% current answer.
 	CDownloadTask	m_pTask;
+	bool		m_bStableName;	// Download has a stable name
 
 // Operations
 public:
+	bool		HasStableName() const;		// Download has a stable name
+	void		SetStableName(bool bStable = true);
+
 	void		Pause(BOOL bRealPause = TRUE);
 	void		Resume();
 	void		Remove();
@@ -88,7 +97,9 @@ public:
 	BOOL		OpenDownload();
 	BOOL		SeedTorrent();
 	BOOL		PrepareFile();
-
+	QWORD		GetRealSpeed();
+	QWORD		GetNonRandomEnd(bool bForce = FALSE);
+	void		SetStartFrom(QWORD nStartFrom = 0);
 	void		Allocate();
 	void		Copy();
 	void		PreviewRequest( LPCTSTR szURL);
@@ -106,6 +117,9 @@ private:
 
 // Overrides
 public:
+	// Set download new size
+	virtual bool	Resize(QWORD nNewSize);
+
 	// Return currently running task
 	virtual dtask	GetTaskType() const;
 

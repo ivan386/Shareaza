@@ -1,7 +1,7 @@
 //
 // CtrlMatch.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2013.
+// Copyright (c) Shareaza Development Team, 2002-2017.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -209,7 +209,7 @@ void CMatchCtrl::DestructiveUpdate()
 	m_wndTip.Hide();
 }
 
-void CMatchCtrl::SelectSchema(CSchemaPtr pSchema, CList< CSchemaMember* >* pColumns)
+void CMatchCtrl::SelectSchema(CSchemaPtr pSchema, CSchemaMemberList* pColumns)
 {
 	SaveColumnState();
 	
@@ -225,7 +225,7 @@ void CMatchCtrl::SelectSchema(CSchemaPtr pSchema, CList< CSchemaMember* >* pColu
 		
 		for ( POSITION pos = m_pColumns.GetHeadPosition() ; pos ; nColumn++ )
 		{
-			CSchemaMember* pMember = m_pColumns.GetNext( pos );
+			CSchemaMemberPtr pMember = m_pColumns.GetNext( pos );
 			if ( !pMember->m_bHidden )
 				InsertColumn( nColumn, pMember->m_sTitle, pMember->m_nColumnAlign, pMember->m_nColumnWidth );
 			else
@@ -912,7 +912,7 @@ void CMatchCtrl::DrawItem(CDC& dc, CRect& rcRow, CMatchFile* pFile, CQueryHit* p
 		case MATCH_COL_COUNT:
 			if ( nHits == 1 || pHit != NULL )
 			{
-				CQueryHit* ppHit = ( nHits == 1 || pHit == NULL ) ? pFile->GetBest() : pHit;
+				const CQueryHit* ppHit = ( nHits == 1 || pHit == NULL ) ? pFile->GetBest() : pHit;
 				CString strTemp;
 
 				if ( Settings.Search.ShowNames && !ppHit->m_sNick.IsEmpty() )
@@ -920,10 +920,9 @@ void CMatchCtrl::DrawItem(CDC& dc, CRect& rcRow, CMatchFile* pFile, CQueryHit* p
 					strTemp = ppHit->m_sNick;
 
 					if ( ppHit->GetSources() > 1 )
-						_sntprintf( szBuffer, sizeof( szBuffer ) / sizeof( TCHAR ), _T("%s+%u"), (LPCTSTR)strTemp, ppHit->GetSources() - 1 );
+						_sntprintf( szBuffer, _countof( szBuffer ), _T("%s+%lu"), (LPCTSTR)strTemp, ppHit->GetSources() - 1 );
 					else
-						_sntprintf( szBuffer, sizeof( szBuffer ) / sizeof( TCHAR ), _T("%s"), (LPCTSTR)strTemp );
-					szBuffer[ sizeof( szBuffer ) / sizeof( TCHAR ) - 1 ] = 0;
+						_sntprintf( szBuffer, _countof( szBuffer ), _T("%s"), (LPCTSTR)strTemp );
 				}
 				else if ( ( ppHit->m_nProtocol == PROTOCOL_ED2K ) && ( ppHit->m_bPush == TRI_TRUE ) )
 				{
@@ -931,23 +930,19 @@ void CMatchCtrl::DrawItem(CDC& dc, CRect& rcRow, CMatchFile* pFile, CQueryHit* p
 					strTemp.Format( _T("(%s)"), (LPCTSTR)CString( inet_ntoa( (IN_ADDR&)*ppHit->m_oClientID.begin() ) ) );
 
 					if ( ppHit->GetSources() > 1 )
-						_sntprintf( szBuffer, sizeof( szBuffer ) / sizeof( TCHAR ), _T("%s+%u"), (LPCTSTR)strTemp, ppHit->GetSources() - 1 );
+						_sntprintf( szBuffer, _countof( szBuffer ), _T("%s+%lu"), (LPCTSTR)strTemp, ppHit->GetSources() - 1 );
 					else
-						_sntprintf( szBuffer, sizeof( szBuffer ) / sizeof( TCHAR ), _T("%s"), (LPCTSTR)strTemp );
-					szBuffer[ sizeof( szBuffer ) / sizeof( TCHAR ) - 1 ] = 0;
+						_sntprintf( szBuffer, _countof( szBuffer ), _T("%s"), (LPCTSTR)strTemp );
 				}
 				else if ( ppHit->m_pAddress.S_un.S_addr )
 				{
 					if ( ppHit->GetSources() > 1 )
 					{
-						_sntprintf( szBuffer, sizeof( szBuffer ) / sizeof( TCHAR ), _T("%s+%u"),
-							(LPCTSTR)CString( inet_ntoa( ppHit->m_pAddress ) ),
-							ppHit->GetSources() - 1 );
-						szBuffer[ sizeof( szBuffer ) / sizeof( TCHAR ) - 1 ] = 0;
+						_sntprintf( szBuffer, _countof( szBuffer ), _T("%s+%lu"), (LPCTSTR)CString( inet_ntoa( ppHit->m_pAddress ) ), ppHit->GetSources() - 1 );
 					}
 					else
 					{
-						MultiByteToWideChar( CP_ACP, 0, inet_ntoa( ppHit->m_pAddress ), -1, szBuffer, 64 );
+						_tcscpy( szBuffer, (LPCTSTR)CString( inet_ntoa( ppHit->m_pAddress ) ) );
 					}
 				}
 				else
@@ -965,14 +960,12 @@ void CMatchCtrl::DrawItem(CDC& dc, CRect& rcRow, CMatchFile* pFile, CQueryHit* p
 						{
 							strText.Format( _T("%u %s"), pFile->m_nFiltered, (LPCTSTR)strSource );
 						}
-						_sntprintf( szBuffer, sizeof( szBuffer ) / sizeof( TCHAR ), strText, pFile->m_nFiltered );
-						szBuffer[ sizeof( szBuffer ) / sizeof( TCHAR ) - 1 ] = 0;
+						_tcsncpy( szBuffer, (LPCTSTR)strText, _countof( szBuffer ) );
 					}
 					else
 					{
 						// Not used?
-						_sntprintf( szBuffer, sizeof( szBuffer ) / sizeof( TCHAR ), _T("(Firewalled)") );
-						szBuffer[ sizeof( szBuffer ) / sizeof( TCHAR ) - 1 ] = 0;
+						_tcscpy( szBuffer, _T("(Firewalled)") );
 					}
 				}
 			}
@@ -989,9 +982,9 @@ void CMatchCtrl::DrawItem(CDC& dc, CRect& rcRow, CMatchFile* pFile, CQueryHit* p
 				{
 					strText.Format( _T("%u %s"), pFile->m_nFiltered, (LPCTSTR)strSource );
 				}
-				_sntprintf( szBuffer, sizeof( szBuffer ) / sizeof( TCHAR ), strText, pFile->m_nFiltered );
-				szBuffer[ sizeof( szBuffer ) / sizeof( TCHAR ) - 1 ] = 0;
+				_tcsncpy( szBuffer, (LPCTSTR)strText, _countof( szBuffer ) );
 			}
+			szBuffer[ _countof( szBuffer ) - 1 ] = 0;
 			pszText = szBuffer;
 			break;
 			
@@ -1255,7 +1248,7 @@ void CMatchCtrl::DrawRating(CDC& dc, CRect& rcCol, int nRating, BOOL bSelected, 
 	dc.FillSolidRect( &rcCol, crBack );
 }
 
-void CMatchCtrl::DrawCountry(CDC& dc, CRect& rcCol, CString sCountry, BOOL bSelected, COLORREF crBack)
+void CMatchCtrl::DrawCountry(CDC& dc, CRect& rcCol, const CString& sCountry, BOOL bSelected, COLORREF crBack)
 {
 	int nFlagIndex = Flags.GetFlagIndex( sCountry );
 	// If the column is very narrow then don't draw the flag.

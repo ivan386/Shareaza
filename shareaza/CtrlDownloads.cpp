@@ -35,6 +35,7 @@
 #include "CtrlDownloads.h"
 #include "WndDownloads.h"
 #include "Flags.h"
+#include "Network.h"
 
 #ifdef _DEBUG
 #undef THIS_FILE
@@ -219,7 +220,7 @@ void CDownloadsCtrl::SaveColumnState()
 
 BOOL CDownloadsCtrl::LoadColumnState()
 {
-	CString strOrdering, strWidths, strItem;
+	CString strOrdering, strWidths;
 
 	strOrdering = theApp.GetProfileString( _T("ListStates"), _T("CDownloadCtrl.Ordering"), _T("") );
 	strWidths = theApp.GetProfileString( _T("ListStates"), _T("CDownloadCtrl.Widths"), _T("") );
@@ -289,7 +290,7 @@ BOOL CDownloadsCtrl::IsExpandable(CDownload* pDownload)
 		{
 			CDownloadSource* pSource = pDownload->GetNext( posSource );
 
-			if ( pSource->IsConnected() )
+			if ( pSource->IsOnline() )
 			{
 				return TRUE;
 			}
@@ -551,7 +552,7 @@ BOOL CDownloadsCtrl::HitTest(const CPoint& point, CDownload** ppDownload, CDownl
 		{
 			CDownloadSource* pSource = pDownload->GetNext( posSource );
 
-			if ( Settings.Downloads.ShowSources || pSource->IsConnected() )
+			if ( Settings.Downloads.ShowSources || pSource->IsOnline() )
 			{
 				if ( nScroll > 0 )
 				{
@@ -609,7 +610,7 @@ BOOL CDownloadsCtrl::GetAt(int nSelect, CDownload** ppDownload, CDownloadSource*
 		{
 			CDownloadSource* pSource = pDownload->GetNext( posSource );
 
-			if ( Settings.Downloads.ShowSources || pSource->IsConnected() )
+			if ( Settings.Downloads.ShowSources || pSource->IsOnline() )
 			{
 				if ( nIndex++ == nSelect )
 				{
@@ -670,7 +671,7 @@ BOOL CDownloadsCtrl::GetRect(CDownload* pSelect, RECT* prcItem)
 		{
 			CDownloadSource* pSource = pDownload->GetNext( posSource );
 
-			if ( pSource->IsConnected() )
+			if ( pSource->IsOnline() )
 			{
 				rcItem.OffsetRect( 0, ITEM_HEIGHT );
 			}
@@ -823,7 +824,7 @@ void CDownloadsCtrl::OnSize(UINT nType, int cx, int cy)
 			{
 				CDownloadSource* pSource = pDownload->GetNext( posSource );
 
-				if ( Settings.Downloads.ShowSources || pSource->IsConnected() )
+				if ( Settings.Downloads.ShowSources || pSource->IsOnline() )
 				{
 					nHeight ++;
 				}
@@ -926,7 +927,7 @@ void CDownloadsCtrl::OnPaint()
 			if ( rcItem.top > rcClient.bottom )
 				break;
 
-			if ( Settings.Downloads.ShowSources || pSource->IsConnected() )
+			if ( Settings.Downloads.ShowSources || pSource->IsOnline() )
 			{
 				if ( nScroll > 0 )
 					--nScroll;
@@ -1016,7 +1017,6 @@ void CDownloadsCtrl::PaintDownload(CDC& dc, const CRect& rcRow, CDownload* pDown
 	{
 		CString strText;
 		CRect rcCell;
-		CString strSource;
 		BOOL bDisplayText	= TRUE;
 
 		m_wndHeader.GetItemRect( nColumn, &rcCell );
@@ -1031,6 +1031,15 @@ void CDownloadsCtrl::PaintDownload(CDC& dc, const CRect& rcRow, CDownload* pDown
 		RECT  rcTick = { rcCell.left+2, rcCell.top+2, rcCell.left+14, rcCell.bottom-2 };
 		GetCursorPos(&ptHover);
 		ScreenToClient(&ptHover);
+
+		CRect client_rect;
+		GetClientRect( &client_rect );
+
+		if ( client_rect.right < rcCell.left ||
+			 client_rect.left > rcCell.right ||
+			 client_rect.top > rcCell.bottom ||
+			 client_rect.bottom < rcCell.top )
+			 continue;
 
 		switch ( pColumn.lParam )
 		{
@@ -1098,24 +1107,72 @@ void CDownloadsCtrl::PaintDownload(CDC& dc, const CRect& rcRow, CDownload* pDown
 			if ( rcCell.Width() > 75 )
 			{
 				bDisplayText = FALSE;
+
+				CRect client_rect;
+				GetClientRect( &client_rect );
+
+				if ( client_rect.right < rcCell.left ||
+				 client_rect.left > rcCell.right ||
+				 client_rect.top > rcCell.bottom ||
+				 client_rect.bottom < rcCell.top )
+				 break;
+
 				dc.Draw3dRect( &rcCell, crBack, crBack );
 				rcCell.DeflateRect( 1, 1 );
 				dc.Draw3dRect( &rcCell, crBack, crBack );
 				rcCell.DeflateRect( 0, 1 );
 
 				if ( Settings.Downloads.SimpleBar )
-				{
 					dc.Draw3dRect( &rcCell, crBorderSimple, crBorderSimple );
-					rcCell.DeflateRect( 1, 1 );
-					CFragmentBar::DrawDownloadSimple( &dc, &rcCell, pDownload, crNatural );
+				else
+					dc.Draw3dRect( &rcCell, crBorder, crBorder );
+
+				
+
+				QWORD NonRandomEnd = pDownload->GetNonRandomEnd( TRUE );
+
+				if ( NonRandomEnd > 0 && pDownload->m_nSize > 0)
+				{
+					CRect rect(rcCell);
+
+					if ( NonRandomEnd > pDownload->m_nSize )
+						rect.left += rect.Width() - 3;
+					else
+						rect.left += ((rect.Width() - 3) * NonRandomEnd) / pDownload->m_nSize;
+					
+					rect.right = rect.left + 3;
+					rect.InflateRect(0, 2);
+					dc.FillSolidRect(&rect, crBorder);
+				}
+
+				if ( pDownload->m_nStartFrom > 0 && pDownload->m_nSize > 0 )
+				{
+					CRect rect(rcCell);
+
+					if ( pDownload->m_nStartFrom > pDownload->m_nSize )
+						rect.left += rect.Width() - 3;
+					else
+						rect.left += ((rect.Width() - 3) * pDownload->m_nStartFrom) / pDownload->m_nSize;
+
+					rect.right = rect.left + 3;
+					rect.InflateRect(0, 2);
+					dc.FillSolidRect(&rect, crBorder);
 				}
 				else
 				{
-					dc.Draw3dRect( &rcCell, crBorder, crBorder );
-					rcCell.DeflateRect( 1, 1 );
+					CRect rect(rcCell);
+					rect.right = rect.left + 3;
+					rect.InflateRect(0, 2);
+					dc.FillSolidRect(&rect, crBorder);
+				}
+
+				rcCell.DeflateRect( 1, 1 );
+
+				if ( Settings.Downloads.SimpleBar )
+					CFragmentBar::DrawDownloadSimple( &dc, &rcCell, pDownload, crNatural );
+				else
 					CFragmentBar::DrawDownload( &dc, &rcCell, pDownload, crNatural );
 				}
-			}
 			else if ( ( pDownload->m_nSize < SIZE_UNKNOWN ) && ( pDownload->m_nSize > 0 ) )
 				if ( rcCell.Width() > 50 )
 					strText.Format( _T("%.2f%%"), pDownload->GetProgress() );
@@ -1127,16 +1184,28 @@ void CDownloadsCtrl::PaintDownload(CDC& dc, const CRect& rcRow, CDownload* pDown
 			if ( pDownload->IsTrying() )
 			{
 				DWORD nSpeed = pDownload->GetAverageSpeed();
-				if ( nSpeed )
-					strText = Settings.SmartSpeed( nSpeed );
+				DWORD nRealSpeed = pDownload->GetRealSpeed();
+
+				if ( nSpeed && nRealSpeed )
+					strText.Format( _T("%s (%s)"),
+									Settings.SmartSpeed( nSpeed ),
+									Settings.SmartSpeed( nRealSpeed ) );
+									
 			}
 			break;
 
 		case DOWNLOAD_COLUMN_STATUS:
-			if ( m_bShowSearching && pDownload->IsSearching() )
-				LoadString( strText, IDS_STATUS_SEARCHING );
-			else
-				strText = pDownload->GetDownloadStatus();
+			{
+				int nPriority = 0;
+				if ( m_bShowSearching && pDownload->IsSearching(&nPriority) )
+				{
+					CString strTemp;
+					LoadString( strTemp, IDS_STATUS_SEARCHING );
+					strText.Format( _T("%s (%i)"), strTemp, nPriority );
+				}
+				else
+					strText = pDownload->GetDownloadStatus();
+			}
 			break;
 
 		case DOWNLOAD_COLUMN_CLIENT:
@@ -1258,6 +1327,15 @@ void CDownloadsCtrl::PaintSource(CDC& dc, const CRect& rcRow, CDownload* pDownlo
 		
 		crLeftAligned = ( rcRow.left == rcCell.left ? crNatural : crBack ) ;
 
+		CRect client_rect;
+		GetClientRect( &client_rect );
+
+		if ( client_rect.right < rcCell.left ||
+			 client_rect.left > rcCell.right ||
+			 client_rect.top > rcCell.bottom ||
+			 client_rect.bottom < rcCell.top )
+			 continue;
+
 		switch ( pColumn.lParam )
 		{
 		case DOWNLOAD_COLUMN_TITLE:
@@ -1289,14 +1367,19 @@ void CDownloadsCtrl::PaintSource(CDC& dc, const CRect& rcRow, CDownload* pDownlo
 			{
 				strText.Format( _T("%s:%u"),
 					(LPCTSTR)pSource->GetAddress(),
-					ntohs( pSource->GetPort() ) );
+					 ntohs( pSource->GetPort() ) );
 			}
 			// Or just queued
 			else
 			{
-				strText.Format( _T("%s:%u"),
-					(LPCTSTR)CString( inet_ntoa( pSource->m_pAddress ) ),
-					pSource->m_nPort );
+				if ( pSource->IsIPv6Source() )
+					strText.Format( _T("%s:%u"),
+						IPv6ToString( &pSource->m_pAddressIPv6 ),
+						pSource->m_nPort );
+				else
+					strText.Format( _T("%s:%u"),
+						(LPCTSTR)CString( inet_ntoa( pSource->m_pAddress ) ),
+						pSource->m_nPort );
 			}
 
 			// Add the Nickname if there is one and they are being shown
@@ -1324,6 +1407,7 @@ void CDownloadsCtrl::PaintSource(CDC& dc, const CRect& rcRow, CDownload* pDownlo
 			if ( rcCell.Width() > 75 )
 			{
 				bDisplayText = FALSE;
+
 				dc.Draw3dRect( &rcCell, crBack, crBack );
 				rcCell.DeflateRect( 1, 1 );
 				dc.Draw3dRect( &rcCell, crBack, crBack );
@@ -1880,6 +1964,15 @@ void CDownloadsCtrl::OnLButtonDown(UINT nFlags, CPoint point)
 		}
 		else
 		{
+			if ( pDownload != NULL && ( nFlags & ( MK_SHIFT | MK_CONTROL | MK_RBUTTON ) ) == 0 )
+			{
+				CRect rcCell;
+
+				m_wndHeader.GetItemRect( DOWNLOAD_COLUMN_PROGRESS, &rcCell );
+				if ( point.x >= rcCell.left + rcItem.left && point.x <= rcCell.right + rcItem.left - 3 )
+					pDownload->SetStartFrom( pDownload->m_nSize * ( point.x - ( rcCell.left + rcItem.left ) )  / ( rcCell.Width() - 3 ) );
+			}
+
 			if ( pDownload != NULL && pDownload->m_bSelected )
 			{
 				if ( ( nFlags & ( MK_SHIFT | MK_CONTROL | MK_RBUTTON ) ) == 0 )

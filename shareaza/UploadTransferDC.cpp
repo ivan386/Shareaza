@@ -1,7 +1,7 @@
 //
 // UploadTransferDC.cpp 
 //
-// Copyright (c) Shareaza Development Team, 2010-2012.
+// Copyright (c) Shareaza Development Team, 2010-2017.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -208,7 +208,7 @@ BOOL CUploadTransferDC::OnWrite()
 			// Reading next data chunk of file
 			QWORD nToRead = min( m_nLength - m_nPosition, 1024000ull ); // 1000 KB
 			QWORD nRead = 0;
-			auto_array< BYTE > pBuffer( new BYTE[ nToRead ] );
+			auto_array< BYTE > pBuffer( new BYTE[ (size_t)nToRead ] );
 			if ( ! ReadFile( m_nFileBase + m_nOffset + m_nPosition,
 				pBuffer.get(), nToRead, &nRead ) || nToRead != nRead )
 			{
@@ -483,8 +483,6 @@ BOOL CUploadTransferDC::SendFile()
 {
 	if ( ! OpenFile() )
 	{
-		theApp.Message( MSG_ERROR, IDS_UPLOAD_CANTOPEN, (LPCTSTR)m_sName , (LPCTSTR)m_sAddress);
-
 		m_pClient->SendCommand( FILE_NOT_AVAILABLE );
 
 		return FALSE;
@@ -496,7 +494,7 @@ BOOL CUploadTransferDC::SendFile()
 	{
 		CString sAnswer;
 		sAnswer.Format( _T("$ADCSND file TTH/%s %I64u %I64u|"),
-			m_oTiger.toString(), m_nOffset, m_nLength );
+			(LPCTSTR)m_oTiger.toString(), m_nOffset, m_nLength );
 
 		m_pClient->SendCommand( sAnswer );
 	}
@@ -531,7 +529,7 @@ BOOL CUploadTransferDC::RequestTigerTree(CLibraryFile* pFile, QWORD nOffset, QWO
 	theApp.Message( MSG_INFO, IDS_UPLOAD_TIGER_SEND,
 		(LPCTSTR)m_sName, (LPCTSTR)m_sAddress );
 
-	CAutoPtr< CTigerTree > pTigerTree( pFile->GetTigerTree() );
+	CAutoPtr< const CTigerTree > pTigerTree( pFile->GetTigerTree() );
 	if ( ! pTigerTree )
 	{
 		return FALSE;
@@ -557,11 +555,11 @@ BOOL CUploadTransferDC::RequestTigerTree(CLibraryFile* pFile, QWORD nOffset, QWO
 
 	CString sAnswer;
 	sAnswer.Format( _T("$ADCSND tthl TTH/%s %I64u %I64u|"),
-		m_oTiger.toString(), nOffset, nLength );
+		(LPCTSTR)m_oTiger.toString(), nOffset, nLength );
 
 	m_pClient->SendCommand( sAnswer );
 	
-	m_pClient->Write( pSerialTree + nOffset, nLength );
+	m_pClient->Write( pSerialTree + nOffset, (size_t)nLength );
 
 	// Start uploading
 	m_nOffset = nOffset;

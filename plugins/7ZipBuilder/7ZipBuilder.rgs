@@ -2,7 +2,10 @@ HKCR
 {
 	NoRemove AppID
 	{
-		'%APPID%' = s '7ZipBuilder'
+		'%APPID%' = s '7-Zip Builder'
+		{
+			val DllSurrogate = s ''
+		}
 		'7ZipBuilder.dll'
 		{
 			val AppID = s '%APPID%'

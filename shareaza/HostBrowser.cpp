@@ -23,6 +23,7 @@
 #include "Shareaza.h"
 #include "Settings.h"
 #include "Buffer.h"
+#include "Download.h"
 #include "Downloads.h"
 #include "EDClient.h"
 #include "EDClients.h"
@@ -52,8 +53,7 @@ static char THIS_FILE[]=__FILE__;
 // CHostBrowser construction
 
 CHostBrowser::CHostBrowser(CBrowseHostWnd* pNotify, PROTOCOLID nProtocol, IN_ADDR* pAddress, WORD nPort, BOOL bMustPush, const Hashes::Guid& oClientID, const CString& sNick)
-	: m_nState		( hbsNull )
-	, m_pNotify		( pNotify )
+	: m_pNotify		( pNotify )
 	, m_pProfile	( NULL )
 	, m_bNewBrowse	( FALSE )
 	, m_nPort		( nPort )
@@ -66,7 +66,6 @@ CHostBrowser::CHostBrowser(CBrowseHostWnd* pNotify, PROTOCOLID nProtocol, IN_ADD
 	, m_pVendor		( NULL )
 	, m_bCanChat	( FALSE )
 	, m_bDeflate	( FALSE )
-	, m_nLength		( ~0ul )
 	, m_nReceived	( 0ul )
 	, m_pBuffer		( new CBuffer() )
 	, m_pInflate	( NULL )
@@ -96,7 +95,7 @@ BOOL CHostBrowser::Browse()
 	CQuickLock oTransfersLock( Transfers.m_pSection );
 
 	m_sAddress = inet_ntoa( m_pAddress );
-	m_sServer = protocolAbbr[ m_nProtocol ];
+	m_sServer = protocolAbbr[ ( ( m_nProtocol == PROTOCOL_ANY ) ? PROTOCOL_NULL : m_nProtocol ) ];
 	m_pVendor = VendorCache.Lookup( m_sServer );
 
 	switch ( m_nProtocol )
@@ -150,12 +149,17 @@ BOOL CHostBrowser::Browse()
 		oURL.m_nProtocol		= PROTOCOL_DC;
 		oURL.m_nAction			= CShareazaURL::uriDownload;
 		oURL.m_pServerAddress	= m_pAddress;
+		oURL.m_pIPv6ServerAddress= m_pAddressIPv6;
 		oURL.m_nServerPort		= m_nPort;
 		oURL.m_sLogin			= m_sNick;
 		oURL.m_sName.Format( _T("Files of %s.xml.bz2"), (LPCTSTR)SafeFilename( m_sNick ) );
 		oURL.m_sURL.Format( _T("dchub://%s@%s:%u/files.xml.bz2"), (LPCTSTR)URLEncode( m_sNick ), (LPCTSTR)CString( inet_ntoa( m_pAddress ) ), m_nPort );
 
-		return ( Downloads.Add( oURL ) != NULL );
+		CDownload *Download = Downloads.Add( oURL );
+		if ( Download )
+			Download->Rename( oURL.m_sName );
+
+		return ( Download != NULL );
 	}
 	else
 	{
@@ -208,23 +212,23 @@ BOOL CHostBrowser::Browse()
 
 void CHostBrowser::Stop(BOOL bCompleted)
 {
-	CSingleLock pLock( &Transfers.m_pSection, TRUE );
+	CQuickLock oTransfersLock( Transfers.m_pSection );
 
 	if ( bCompleted )
 	{
-		if ( m_pProfile && m_pNotify != NULL )
+		if ( m_pProfile && m_pNotify )
 			m_pNotify->OnProfileReceived();
 
-		theApp.Message( MSG_NOTICE, IDS_BROWSE_FINISHED, m_sAddress, m_nHits );
+		theApp.Message( MSG_NOTICE, IDS_BROWSE_FINISHED, (LPCTSTR)m_sAddress, m_nHits );
 	}
 	else if ( IsValid() )
 	{
-		theApp.Message( MSG_INFO, IDS_BROWSE_CLOSED, m_sAddress );
+		theApp.Message( MSG_INFO, IDS_BROWSE_CLOSED, (LPCTSTR)m_sAddress );
 	}
 
 	m_nState	= hbsNull;
 	m_tPushed	= 0;
-	
+
 	if ( m_nProtocol != PROTOCOL_ED2K && m_nProtocol != PROTOCOL_DC )
 	{
 		CTransfer::Close();
@@ -235,18 +239,24 @@ void CHostBrowser::Stop(BOOL bCompleted)
 
 BOOL CHostBrowser::IsBrowsing() const
 {
+	CQuickLock oTransfersLock( Transfers.m_pSection );
+
 	return m_nState != hbsNull;
 }
 
 float CHostBrowser::GetProgress() const
 {
-	if ( m_nState != hbsContent || m_nLength == 0ul || m_nLength == SIZE_UNKNOWN ) return 0.0f;
+	CQuickLock oTransfersLock( Transfers.m_pSection );
 
-	return (float)m_nReceived / (float)m_nLength;
+	if ( m_nState != hbsContent || m_nLength == 0 || m_nLength == SIZE_UNKNOWN ) return 0.0f;
+
+	return (float)( (double)m_nReceived / (double)m_nLength );
 }
 
 void CHostBrowser::OnQueryHits(CQueryHit* pHits)
 {
+	CQuickLock oTransfersLock( Transfers.m_pSection );
+
 	m_bCanPush	= TRUE;
 	m_oClientID	= pHits->m_oClientID;
 
@@ -272,6 +282,8 @@ void CHostBrowser::OnQueryHits(CQueryHit* pHits)
 
 BOOL CHostBrowser::OnConnected()
 {
+	CQuickLock oTransfersLock( Transfers.m_pSection );
+
 	CTransfer::OnConnected();
 
 	SendRequest();
@@ -281,6 +293,8 @@ BOOL CHostBrowser::OnConnected()
 
 BOOL CHostBrowser::OnRead()
 {
+	CQuickLock oTransfersLock( Transfers.m_pSection );
+
 	// ED2K connections aren't handled here- they are in ED2KClient
 	if ( m_nProtocol == PROTOCOL_ED2K || m_nProtocol == PROTOCOL_DC ) return TRUE;
 
@@ -308,14 +322,16 @@ BOOL CHostBrowser::OnRead()
 
 void CHostBrowser::OnDropped()
 {
+	CQuickLock oTransfersLock( Transfers.m_pSection );
+
 	if ( m_nProtocol != PROTOCOL_ED2K && m_nProtocol != PROTOCOL_DC )
 	{
 		if ( ! IsValid() ) return;
 
 		if ( m_nState == hbsConnecting )
 		{
-			theApp.Message( MSG_ERROR, IDS_BROWSE_CANT_CONNECT_TO, m_sAddress );
-			
+			theApp.Message( MSG_ERROR, IDS_BROWSE_CANT_CONNECT_TO, (LPCTSTR)m_sAddress );
+
 			if ( ! m_tPushed && SendPush( TRUE ) )
 				return;
 		}
@@ -328,7 +344,7 @@ void CHostBrowser::OnDropped()
 				return;
 			}
 
-			theApp.Message( MSG_ERROR, IDS_BROWSE_DROPPED, m_sAddress );
+			theApp.Message( MSG_ERROR, IDS_BROWSE_DROPPED, (LPCTSTR)m_sAddress );
 		}
 	}
 
@@ -337,6 +353,8 @@ void CHostBrowser::OnDropped()
 
 BOOL CHostBrowser::OnRun()
 {
+	CQuickLock oTransfersLock( Transfers.m_pSection );
+
 	CTransfer::OnRun();
 
 	DWORD nNow = GetTickCount();
@@ -354,7 +372,7 @@ BOOL CHostBrowser::OnRun()
 	case hbsHeaders:
 		if ( nNow - m_tConnected > Settings.Connection.TimeoutHandshake * 3 )
 		{
-			theApp.Message( MSG_ERROR, IDS_BROWSE_TIMEOUT, m_sAddress );
+			theApp.Message( MSG_ERROR, IDS_BROWSE_TIMEOUT, (LPCTSTR)m_sAddress );
 			Stop();
 			return FALSE;
 		}
@@ -362,7 +380,7 @@ BOOL CHostBrowser::OnRun()
 	case hbsContent:
 		if ( nNow - m_mInput.tLast > Settings.Connection.TimeoutTraffic )
 		{
-			theApp.Message( MSG_ERROR, IDS_BROWSE_TIMEOUT, m_sAddress );
+			theApp.Message( MSG_ERROR, IDS_BROWSE_TIMEOUT, (LPCTSTR)m_sAddress );
 			Stop();
 			return FALSE;
 		}
@@ -388,7 +406,7 @@ BOOL CHostBrowser::SendPush(BOOL bMessage)
 		m_tPushed = GetTickCount();
 
 		if ( bMessage )
-			theApp.Message( MSG_INFO, IDS_BROWSE_PUSHED_TO, m_sAddress );
+			theApp.Message( MSG_INFO, IDS_BROWSE_PUSHED_TO, (LPCTSTR)m_sAddress );
 
 		return TRUE;
 	}
@@ -400,6 +418,8 @@ BOOL CHostBrowser::SendPush(BOOL bMessage)
 
 BOOL CHostBrowser::OnPush(const Hashes::Guid& oClientID, CConnection* pConnection)
 {
+	CQuickLock oTransfersLock( Transfers.m_pSection );
+
 	if ( m_nProtocol == PROTOCOL_ED2K ||
 		 m_nProtocol == PROTOCOL_DC ||
 		 m_tPushed == 0 ||
@@ -411,6 +431,7 @@ BOOL CHostBrowser::OnPush(const Hashes::Guid& oClientID, CConnection* pConnectio
 	AttachTo( pConnection );
 
 	m_pAddress	= m_pHost.sin_addr;
+	m_pAddressIPv6 =  m_pHostIPv6.sin6_addr;
 	m_nPort		= htons( m_pHost.sin_port );
 
 	SendRequest();
@@ -418,8 +439,10 @@ BOOL CHostBrowser::OnPush(const Hashes::Guid& oClientID, CConnection* pConnectio
 	return TRUE;
 }
 
-BOOL CHostBrowser::OnNewFile(CLibraryFile* pFile)
+BOOL CHostBrowser::OnNewFile(const CLibraryFile* pFile)
 {
+	CQuickLock oTransfersLock( Transfers.m_pSection );
+
 	if ( m_nProtocol == PROTOCOL_DC && ! m_sNick.IsEmpty() )
 	{
 		CString sName;
@@ -481,7 +504,7 @@ BOOL CHostBrowser::LoadDC(LPCTSTR pszFile, CQueryHit*& pHits)
 		// Invalid XML file format
 		return FALSE;
 
-	CString sTitle = pXML->GetAttributeValue( _T("CID") );
+//	CString sTitle = pXML->GetAttributeValue( _T("CID") );
 
 	return LoadDCDirectory( pXML.get(), pHits );
 }
@@ -504,7 +527,7 @@ BOOL CHostBrowser::LoadDCDirectory(CXMLElement* pRoot, CQueryHit*& pHits)
 
 			CString sName = pElement->GetAttributeValue( _T("Name") );
 			QWORD nSize;
-			if ( _stscanf( pElement->GetAttributeValue( _T("Size") ), _T("%I64i"), &nSize ) != 1 )
+			if ( _stscanf( pElement->GetAttributeValue( _T("Size") ), _T("%I64u"), &nSize ) != 1 )
 				nSize = SIZE_UNKNOWN;
 			CString sTiger = pElement->GetAttributeValue( _T("TTH") );
 
@@ -523,6 +546,7 @@ BOOL CHostBrowser::LoadDCDirectory(CXMLElement* pRoot, CQueryHit*& pHits)
 				pHit->m_bBusy		= TRI_FALSE;
 				pHit->m_bPush		= TRI_TRUE;
 				pHit->m_pAddress	= m_pAddress;
+				pHit->m_pAddressIPv6= m_pAddressIPv6;
 				pHit->m_nPort		= m_nPort;
 				pHit->m_sCountry	= theApp.GetCountryCode( m_pAddress );
 				pHit->m_pVendor		= m_pVendor ? m_pVendor : VendorCache.m_pNull;
@@ -567,15 +591,7 @@ void CHostBrowser::SendRequest()
 			Write( _P("\r\n") );
 		}
 
-		Write( _P("Accept: text/html") );
-		if ( m_nProtocol == PROTOCOL_G1 ||
-			 m_nProtocol == PROTOCOL_G2 ||
-			 m_nProtocol == PROTOCOL_HTTP )
-			Write( _P(", application/x-gnutella-packets") );
-		if ( m_nProtocol == PROTOCOL_G2 ||
-			 m_nProtocol == PROTOCOL_HTTP )
-			Write( _P(", application/x-gnutella2") );
-		Write( _P("\r\n") );
+		Write( _P("Accept: text/html, application/x-gnutella-packets, application/x-gnutella2\r\n") );
 
 		Write( _P("Accept-Encoding: deflate\r\n") );
 
@@ -594,12 +610,12 @@ void CHostBrowser::SendRequest()
 
 	m_nState	= hbsRequesting;
 	m_bDeflate	= FALSE;
-	m_nLength	= ~0ul;
+	m_nLength	= SIZE_UNKNOWN;
 	m_bConnect	= TRUE;
 
 	m_mInput.pLimit = m_mOutput.pLimit = &Settings.Bandwidth.Downloads;
 
-	theApp.Message( MSG_INFO, IDS_BROWSE_SENT_REQUEST, m_sAddress );
+	theApp.Message( MSG_INFO, IDS_BROWSE_SENT_REQUEST, (LPCTSTR)m_sAddress );
 }
 
 //////////////////////////////////////////////////////////////////////
@@ -635,9 +651,8 @@ BOOL CHostBrowser::ReadResponseLine()
 	}
 	else
 	{
-		theApp.Message( MSG_DEBUG, _T("UNKNOWN BROWSE RESPONSE: %s: %s"),
-			m_sAddress, strLine );
-		theApp.Message( MSG_ERROR, IDS_BROWSE_NOT_HTTP, m_sAddress );
+		theApp.Message( MSG_DEBUG, _T("UNKNOWN BROWSE RESPONSE: %s: %s"), (LPCTSTR)m_sAddress, (LPCTSTR)strLine );
+		theApp.Message( MSG_ERROR, IDS_BROWSE_NOT_HTTP, (LPCTSTR)m_sAddress );
 		Stop();
 		return FALSE;
 	}
@@ -651,8 +666,7 @@ BOOL CHostBrowser::ReadResponseLine()
 		strMessage.TrimLeft();
 		if ( strMessage.GetLength() > 256 ) strMessage = _T("No Message");
 
-		theApp.Message( MSG_ERROR, IDS_BROWSE_HTTPCODE, m_sAddress, strCode,
-			strMessage );
+		theApp.Message( MSG_ERROR, IDS_BROWSE_HTTPCODE, (LPCTSTR)m_sAddress, (LPCTSTR)strCode, (LPCTSTR)strMessage );
 
 		Stop();
 		return FALSE;
@@ -666,6 +680,8 @@ BOOL CHostBrowser::ReadResponseLine()
 
 BOOL CHostBrowser::OnHeaderLine(CString& strHeader, CString& strValue)
 {
+	CQuickLock oTransfersLock( Transfers.m_pSection );
+
 	ASSERT ( m_nProtocol != PROTOCOL_ED2K && m_nProtocol != PROTOCOL_DC );
 
 	if ( ! CTransfer::OnHeaderLine( strHeader, strValue ) )
@@ -694,7 +710,7 @@ BOOL CHostBrowser::OnHeaderLine(CString& strHeader, CString& strValue)
 	}
 	else if ( strHeader.CompareNoCase( _T("Content-Length") ) == 0 )
 	{
-		_stscanf( strValue, _T("%lu"), &m_nLength );
+		_stscanf( strValue, _T("%I64u"), &m_nLength );
 	}
 
 	return TRUE;
@@ -702,14 +718,14 @@ BOOL CHostBrowser::OnHeaderLine(CString& strHeader, CString& strValue)
 
 BOOL CHostBrowser::OnHeadersComplete()
 {
-	CSingleLock pLock( &Transfers.m_pSection, TRUE );
+	CQuickLock oTransfersLock( Transfers.m_pSection );
 
 	if ( m_nState == hbsContent )
 		return TRUE;
 
 	if ( m_nProtocol == PROTOCOL_ANY || m_nLength == 0 )
 	{
-		theApp.Message( MSG_ERROR, IDS_BROWSE_BAD_RESPONSE, m_sAddress );
+		theApp.Message( MSG_ERROR, IDS_BROWSE_BAD_RESPONSE, (LPCTSTR)m_sAddress );
 		Stop();
 		return FALSE;
 	}
@@ -719,8 +735,7 @@ BOOL CHostBrowser::OnHeadersComplete()
 	m_pBuffer->Clear();
 	m_mInput.tLast	= GetTickCount();
 
-	theApp.Message( MSG_INFO, IDS_BROWSE_DOWNLOADING_FROM,
-		m_sAddress, protocolNames[ m_nProtocol == PROTOCOL_NULL ? PROTOCOL_HTTP : m_nProtocol ]);
+	theApp.Message( MSG_INFO, IDS_BROWSE_DOWNLOADING_FROM, (LPCTSTR)m_sAddress, protocolNames[ m_nProtocol == PROTOCOL_NULL ? PROTOCOL_HTTP : m_nProtocol ]);
 
 	return TRUE;
 }
@@ -730,7 +745,7 @@ BOOL CHostBrowser::OnHeadersComplete()
 
 BOOL CHostBrowser::ReadContent()
 {
-	CSingleLock pLock( &Transfers.m_pSection, TRUE );
+	CQuickLock oTransfersLock( Transfers.m_pSection );
 
 	if ( m_nProtocol != PROTOCOL_ED2K && m_nProtocol != PROTOCOL_DC )
 	{
@@ -803,7 +818,7 @@ BOOL CHostBrowser::StreamPacketsG1()
 
 		if ( pPacket->m_nLength < 0 || nLength >= (DWORD)Settings.Gnutella.MaximumPacket * 8 )
 		{
-			theApp.Message( MSG_ERROR, IDS_BROWSE_PACKET_ERROR, m_sAddress );
+			theApp.Message( MSG_ERROR, IDS_BROWSE_PACKET_ERROR, (LPCTSTR)m_sAddress );
 			Stop();
 			return FALSE;
 		}
@@ -873,7 +888,7 @@ BOOL CHostBrowser::OnPacket(CG1Packet* pPacket)
 
 	if ( pHits == NULL )
 	{
-		theApp.Message( MSG_ERROR, IDS_BROWSE_PACKET_ERROR, m_sAddress );
+		theApp.Message( MSG_ERROR, IDS_BROWSE_PACKET_ERROR, (LPCTSTR)m_sAddress );
 		return FALSE;
 	}
 
@@ -891,7 +906,7 @@ BOOL CHostBrowser::OnPacket(CG2Packet* pPacket)
 			OnQueryHits( pHits );
 		else
 		{
-			theApp.Message( MSG_ERROR, IDS_BROWSE_PACKET_ERROR, m_sAddress );
+			theApp.Message( MSG_ERROR, IDS_BROWSE_PACKET_ERROR, (LPCTSTR)m_sAddress );
 			return FALSE;
 		}
 		break;
@@ -955,8 +970,8 @@ void CHostBrowser::OnProfilePacket(CG2Packet* pPacket)
 			if ( pXML != NULL )
 			{
 				if ( m_pProfile == NULL ) m_pProfile = new CGProfile();
-				if ( ! m_pProfile->FromXML( pXML ) ) delete pXML;
-				if ( m_pProfile != NULL && ! m_pProfile->IsValid() )
+				if ( m_pProfile && ! m_pProfile->FromXML( pXML ) ) delete pXML;
+				if ( m_pProfile && ! m_pProfile->IsValid() )
 				{
 					delete m_pProfile;
 					m_pProfile = NULL;
@@ -1006,7 +1021,7 @@ BOOL CHostBrowser::StreamHTML()
 					else if ( strSize.Find( _T(" KB") ) >= 0 )
 						nFloat *= 1024;
 
-					nSize = (DWORD)nFloat;
+					nSize = (DWORD)ceil( nFloat );
 				}
 			}
 
@@ -1027,6 +1042,7 @@ BOOL CHostBrowser::StreamHTML()
 			CQueryHit* pHit = new CQueryHit( PROTOCOL_NULL );
 
 			pHit->m_pAddress	= m_pHost.sin_addr;
+			pHit->m_pAddressIPv6= m_pHostIPv6.sin6_addr;
 			pHit->m_nPort		= htons( m_pHost.sin_port );
 			pHit->m_pVendor		= m_pVendor ? m_pVendor : VendorCache.m_pNull;
 			pHit->m_bPush		= ( m_tPushed ) ? TRI_TRUE : TRI_FALSE;
@@ -1075,7 +1091,7 @@ void CHostBrowser::Serialize(CArchive& ar, int nVersion /* BROWSER_SER_VERSION *
 		ar << m_bCanChat;
 		ar << m_sServer;
 		ar << m_nProtocol;
-		ar << m_nLength;
+		ar << (DWORD)m_nLength;
 		ar << m_nReceived;
 		ar << m_sNick;
 
@@ -1097,16 +1113,19 @@ void CHostBrowser::Serialize(CArchive& ar, int nVersion /* BROWSER_SER_VERSION *
 		ar >> m_bCanChat;
 		ar >> m_sServer;
 		ar >> m_nProtocol;
-		ar >> m_nLength;
+		DWORD nLength = 0;
+		ar >> nLength;
+		m_nLength = nLength;
 		ar >> m_nReceived;
 		if ( nVersion >= 2 ) ar >> m_sNick;
 
 		m_pVendor = VendorCache.LookupByName( m_sServer );
 
 		ar >> bProfilePresent;
-		delete m_pProfile;
-		m_pProfile = new CGProfile();
 	}
-	if ( m_pProfile && bProfilePresent )
-		m_pProfile->Serialize( ar, nVersion );
+	if ( bProfilePresent )
+	{
+		if ( m_pProfile == NULL ) m_pProfile = new CGProfile();
+		if ( m_pProfile ) m_pProfile->Serialize( ar, nVersion );
+	}
 }

@@ -194,21 +194,21 @@ BOOL CFragmentedFile::Open(LPCTSTR pszFile, QWORD nOffset, QWORD nLength, BOOL b
 	if ( GetFileAttributes( _T("\\\\?\\") + strPath ) == INVALID_FILE_ATTRIBUTES )
 	{
 		const CString strFileName = PathFindFileName( strPath );
-		if ( GetFileAttributes( _T("\\\\?\\") + Settings.Downloads.IncompletePath + _T("\\") + strFileName ) == INVALID_FILE_ATTRIBUTES )
+		const CString strIncompletePath = Settings.Downloads.IncompletePath + _T("\\") + strFileName;
+		if ( GetFileAttributes( _T("\\\\?\\") + strIncompletePath ) != INVALID_FILE_ATTRIBUTES )
 		{
-			const CString strSDPath = m_pDownload->m_sPath.Left( m_pDownload->m_sPath.ReverseFind( _T('\\') ) );
-			if ( GetFileAttributes( _T("\\\\?\\") + strSDPath + _T("\\") + strFileName ) == INVALID_FILE_ATTRIBUTES )
-			{
-				// Use as is
-			}
-			else
-			{
-				strPath = strSDPath + _T("\\") + strFileName;
-			}
+			strPath = strIncompletePath;
 		}
 		else
 		{
-			strPath = Settings.Downloads.IncompletePath + _T("\\") + strFileName;
+			if ( m_pDownload )
+			{
+				const CString strSDPath = m_pDownload->m_sPath.Left( m_pDownload->m_sPath.ReverseFind( _T('\\') ) + 1 ) + strFileName;
+				if ( GetFileAttributes( _T("\\\\?\\") + strSDPath ) != INVALID_FILE_ATTRIBUTES )
+				{
+					strPath = strSDPath;
+				}
+			}
 		}
 	}
 
@@ -291,7 +291,7 @@ BOOL CFragmentedFile::Open(const CShareazaFile* pSHFile, BOOL bWrite)
 	if ( ! Open( strSource, 0, pSHFile->m_nSize, bWrite, pSHFile->m_sName ) )
 	{
 		m_sFileError.Format( LoadString( bWrite ? IDS_DOWNLOAD_FILE_CREATE_ERROR : IDS_DOWNLOAD_FILE_OPEN_ERROR ), (LPCTSTR)strSource );
-		theApp.Message( MSG_ERROR, _T("%s"), m_sFileError + _T(" ") + GetErrorString( m_nFileError ) );
+		theApp.Message( MSG_ERROR, _T("%s"), (LPCTSTR)( m_sFileError + _T(" ") + GetErrorString( m_nFileError ) ) );
 
 		Close();
 		return FALSE;
@@ -307,6 +307,25 @@ BOOL CFragmentedFile::Open(const CBTInfo& oInfo, BOOL bWrite)
 	size_t i = 0;
 	const size_t nCount = m_oFile.size();
 	QWORD nOffset = 0;
+
+	if ( bWrite && nCount == 0 && oInfo.GetCount() == 0 && oInfo.m_nSize != SIZE_UNKNOWN )
+	{
+		CString strSource;
+		// Generate new filename (inside incomplete folder)
+		strSource.Format( _T("%s\\%s.partial"),
+			(LPCTSTR)Settings.Downloads.IncompletePath, (LPCTSTR)oInfo.GetFilename());
+		
+		if ( ! Open( strSource, nOffset, oInfo.m_nSize, bWrite, oInfo.m_sName ) )
+		{
+			m_sFileError.Format( LoadString( bWrite ? IDS_DOWNLOAD_FILE_CREATE_ERROR : IDS_BT_SEED_SOURCE_LOST ), (LPCTSTR)strSource );
+			theApp.Message( MSG_ERROR, _T("%s"), m_sFileError + _T(" ") + GetErrorString( m_nFileError ) );
+
+			Close();
+			return FALSE;
+		}
+
+		nOffset += oInfo.m_nSize;
+	}
 
 	for ( POSITION pos = oInfo.m_pFiles.GetHeadPosition() ; pos ; ++i )
 	{
@@ -334,7 +353,7 @@ BOOL CFragmentedFile::Open(const CBTInfo& oInfo, BOOL bWrite)
 		if ( ! Open( strSource, nOffset, pBTFile->m_nSize, bWrite, pBTFile->m_sPath ) )
 		{
 			m_sFileError.Format( LoadString( bWrite ? IDS_DOWNLOAD_FILE_CREATE_ERROR : IDS_BT_SEED_SOURCE_LOST ), (LPCTSTR)strSource );
-			theApp.Message( MSG_ERROR, _T("%s"), m_sFileError + _T(" ") + GetErrorString( m_nFileError ) );
+			theApp.Message( MSG_ERROR, _T("%s"), (LPCTSTR)( m_sFileError + _T(" ") + GetErrorString( m_nFileError ) ) );
 
 			Close();
 			return FALSE;
@@ -611,16 +630,16 @@ DWORD CFragmentedFile::Move(DWORD nIndex, LPCTSTR pszDestination, LPPROGRESS_ROU
 
 	CString strTarget( CString( pszDestination ) + _T("\\") + sName );
 	CString strTargetDir = strTarget.Left( strTarget.ReverseFind( _T('\\') ) + 1 );
+	const BOOL bIsFolder = ( sName.GetAt( sName.GetLength() - 1 ) == _T('\\') );
 
 	if ( ! strTarget.CompareNoCase( sPath ) )
 		// Already moved
 		return ERROR_SUCCESS;
 
 	if ( bSkip )
-		theApp.Message( MSG_DEBUG, _T("Skipping \"%s\"..."), sPath );
+		theApp.Message( MSG_DEBUG, _T("Skipping \"%s\"..."), (LPCTSTR)sPath );
 	else
-		theApp.Message( MSG_DEBUG, _T("Moving \"%s\" to \"%s\"..."),
-			(LPCTSTR)sPath, (LPCTSTR)strTargetDir );
+		theApp.Message( MSG_DEBUG, _T("Moving \"%s\" to \"%s\"..."), (LPCTSTR)sPath, (LPCTSTR)strTargetDir );
 
 	// Close chained uploads
 	theApp.OnRename( sPath );
@@ -630,14 +649,26 @@ DWORD CFragmentedFile::Move(DWORD nIndex, LPCTSTR pszDestination, LPPROGRESS_ROU
 	DWORD dwError = ::GetLastError();
 	if ( bSuccess )
 	{
-		if ( bSkip )
+		if ( bSkip || bIsFolder )
 			bSuccess = DeleteFileEx( sPath, FALSE, TRUE, TRUE );
 		else
+		{
+			int nDot = sName.ReverseFind( _T('.') );
+			
+			if (Settings.Downloads.RenameIfExists)
+				for (int index = 0; GetFileAttributes( strTarget ) != INVALID_FILE_ATTRIBUTES; index++ )
+				{
+					if (nDot > 0)
+						strTarget.Format( _T("%s\\%s_%u%s"), pszDestination, sName.Left( nDot ), index, sName.Right( sName.GetLength() - nDot ) );
+					else
+						strTarget.Format( _T("%s\\%s_%u"), pszDestination, sName, index );
+				}
+
 			// Move/copy file using very long filenames
 			bSuccess = MoveFileWithProgress( CString( _T("\\\\?\\") ) + sPath,
 				CString( _T("\\\\?\\") ) + strTarget, lpProgressRoutine, pTask,
 				MOVEFILE_REPLACE_EXISTING | MOVEFILE_COPY_ALLOWED | MOVEFILE_WRITE_THROUGH );
-
+		}
 		dwError = ::GetLastError();
 	}
 
@@ -812,7 +843,7 @@ void CFragmentedFile::Serialize(CArchive& ar, int nVersion)
 				m_pDownload->m_sPath.GetLength() - 3 );
 			if ( ! Open( sPath, 0, m_pDownload->m_nSize, TRUE, m_pDownload->m_sName ) )
 			{
-				theApp.Message( MSG_ERROR, IDS_DOWNLOAD_FILE_OPEN_ERROR, sPath );
+				theApp.Message( MSG_ERROR, IDS_DOWNLOAD_FILE_OPEN_ERROR, (LPCTSTR)sPath );
 				AfxThrowFileException( CFileException::fileNotFound );
 			}
 		}
@@ -846,7 +877,7 @@ void CFragmentedFile::Serialize(CArchive& ar, int nVersion)
 
 				if ( ! Open( sPath, nOffset, nLength, bWrite, sName, nPriority ) )
 				{
-					theApp.Message( MSG_ERROR, IDS_DOWNLOAD_FILE_OPEN_ERROR, sPath );
+					theApp.Message( MSG_ERROR, IDS_DOWNLOAD_FILE_OPEN_ERROR, (LPCTSTR)sPath );
 					AfxThrowFileException( CFileException::fileNotFound );
 				}
 			}
@@ -871,31 +902,45 @@ BOOL CFragmentedFile::Write(QWORD nOffset, LPCVOID pData, QWORD nLength, QWORD* 
 
 	Fragments::Fragment oMatch( nOffset, nOffset + nLength );
 	Fragments::List::const_iterator_pair pMatches = m_oFList.equal_range( oMatch );
-	if ( pMatches.first == pMatches.second )
-		// Empty range
-		return FALSE;
-
-	QWORD nProcessed = 0;
-	for ( ; pMatches.first != pMatches.second; ++pMatches.first )
-	{
-		QWORD nStart = max( pMatches.first->begin(), oMatch.begin() );
-		QWORD nToWrite = min( pMatches.first->end(), oMatch.end() ) - nStart;
-
-		const char* pSource
-			= static_cast< const char* >( pData ) + ( nStart - oMatch.begin() );
-
-		QWORD nWritten = 0;
-		if ( ! VirtualWrite( nStart, pSource, nToWrite, &nWritten ) )
-			// Write error
+		if ( pMatches.first == pMatches.second )
+			// Empty range
 			return FALSE;
 
-		if ( pnWritten )
-			*pnWritten += nWritten;
+	QWORD nProcessed = 0;
 
-		nProcessed += nWritten;
+	if ( pData )
+	{
+		for ( ; pMatches.first != pMatches.second; ++pMatches.first )
+		{
+			QWORD nStart = max( pMatches.first->begin(), oMatch.begin() );
+			QWORD nToWrite = min( pMatches.first->end(), oMatch.end() ) - nStart;
+
+			const char* pSource
+				= static_cast< const char* >( pData ) + ( nStart - oMatch.begin() );
+
+			QWORD nWritten = 0;
+			if ( ! VirtualWrite( nStart, pSource, nToWrite, &nWritten ) )
+				// Write error
+				return FALSE;
+
+			if ( pnWritten )
+				*pnWritten += nWritten;
+
+			nProcessed += nWritten;
+		}
+
+		m_nUnflushed += nProcessed;
 	}
+	else
+	{
+		for ( ; pMatches.first != pMatches.second; ++pMatches.first )
+		{
+			QWORD nStart = max( pMatches.first->begin(), oMatch.begin() );
+			QWORD nToWrite = min( pMatches.first->end(), oMatch.end() ) - nStart;
 
-	m_nUnflushed += nProcessed;
+			VirtualSparse( nStart, nToWrite );
+		}
+	}
 	m_oFList.erase( oMatch );
 	return nProcessed > 0;
 }
@@ -923,7 +968,7 @@ BOOL CFragmentedFile::Read(QWORD nOffset, LPVOID pData, QWORD nLength, QWORD* pn
 BOOL CFragmentedFile::VirtualRead(QWORD nOffset, char* pBuffer, QWORD nBuffer, QWORD* pnRead)
 {
 	ASSERT( nBuffer != 0 && nBuffer != SIZE_UNKNOWN );
-	ASSERT( pBuffer != NULL && AfxIsValidAddress( pBuffer, nBuffer ) );
+	ASSERT( pBuffer != NULL && AfxIsValidAddress( pBuffer, (UINT_PTR)nBuffer ) );
 
 	// Find first file
 	CVirtualFile::const_iterator i = std::find_if( m_oFile.begin(), m_oFile.end(),
@@ -975,7 +1020,7 @@ BOOL CFragmentedFile::VirtualRead(QWORD nOffset, char* pBuffer, QWORD nBuffer, Q
 BOOL CFragmentedFile::VirtualWrite(QWORD nOffset, const char* pBuffer, QWORD nBuffer, QWORD* pnWritten)
 {
 	ASSERT( nBuffer != 0 && nBuffer != SIZE_UNKNOWN );
-	ASSERT( pBuffer != NULL && AfxIsValidAddress( pBuffer, nBuffer ) );
+	ASSERT( pBuffer != NULL && AfxIsValidAddress( pBuffer, (UINT_PTR)nBuffer ) );
 
 	// Find first file
 	CVirtualFile::const_iterator i = std::find_if( m_oFile.begin(), m_oFile.end(),
@@ -1031,6 +1076,48 @@ BOOL CFragmentedFile::VirtualWrite(QWORD nOffset, const char* pBuffer, QWORD nBu
 	return TRUE;
 }
 
+
+BOOL CFragmentedFile::VirtualSparse(QWORD nOffset, QWORD nLength)
+{
+
+	// Find first file
+	CVirtualFile::const_iterator i = std::find_if( m_oFile.begin(), m_oFile.end(),
+		bind2nd( Greater(), nOffset ) );
+	if ( i != m_oFile.begin() )
+		--i;
+
+	for ( ; nLength; ++i )
+	{
+		if ( i == m_oFile.end() )
+			// EOF
+			return FALSE;
+		const CVirtualFilePart& file = (*i);
+		if ( file.m_nOffset > nOffset )
+			// EOF
+			return FALSE;
+		QWORD nPartOffset = ( nOffset - file.m_nOffset );
+		if ( file.m_nSize < nPartOffset )
+			// EOF
+			return FALSE;
+		QWORD nPartLength = min( nLength, file.m_nSize - nPartOffset );
+		if ( ! nPartLength )
+			// Skip zero length files
+			continue;
+
+		if ( file.m_bWrite )
+		{
+			if ( ! file.m_pFile )
+				return FALSE;
+
+			file.m_pFile->ExtendSize( nPartOffset + nPartLength );
+		}
+
+		nOffset += nPartLength;
+		nLength -= nPartLength;
+	}
+
+	return TRUE;
+}
 //////////////////////////////////////////////////////////////////////
 // CFragmentedFile invalidate a range
 

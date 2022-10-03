@@ -261,7 +261,7 @@ protected:
 	CString			TrimString(CString strMessage) const;
 	CString			GetStringAfterParsedItem(int nItem) const;
 	CString			GetTargetName(CString strRecieverName, int nRecieverType, CString strSenderName, int nSenderType) const;
-	int				AddTab(CString TabName, int nKindOfTab);
+	int				AddTab(const CString& TabName, int nKindOfTab);
 	void			HighlightTab(int nTab, BOOL bHighlight = TRUE);
 	void			TabClick();
 	void			SortUserList();

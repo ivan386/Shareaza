@@ -1,0 +1,4 @@
+1. Download latest source tarball from here: http://bzip.org/downloads.html
+2. Unpack already existed files only
+3. Update version information inside "bzlib.rc"
+4. For VS2015: rename "setmode" to "_setmode", "fileno" to "_fileno" and "fdopen" to "_fdopen" in bzlib.c

@@ -1,7 +1,7 @@
 //
 // MatchObjects.h
 //
-// Copyright (c) Shareaza Development Team, 2002-2012.
+// Copyright (c) Shareaza Development Team, 2002-2015.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -21,14 +21,15 @@
 
 #pragma once
 
-#define MATCHLIST_SER_VERSION	15
+#define MATCHLIST_SER_VERSION	17
 // History:
 // 15 - added CQueryHit::m_sNick for DC++ hits (ryo-oh-ki)
+// 16 - added CQueryHit::m_pAddressIPv6 (ivan386)
+// 17 - added CMatchList::m_bFilterComments and CMatchList::m_bFilterPartial (ivan386)
 
 #include "ShareazaFile.h"
 #include "Schema.h"
 
-class CSchemaMember;
 class CQuerySearch;
 class CQueryHit;
 class CMatchFile;
@@ -58,6 +59,8 @@ public:
 	CMutex			m_pSection;
 	CString			m_sFilter;
 	BOOL			m_bFilterBusy;
+	BOOL			m_bFilterComments;
+	BOOL			m_bFilterPartial;
 	BOOL			m_bFilterPush;
 	BOOL			m_bFilterUnstable;
 	BOOL			m_bFilterReject;
@@ -97,7 +100,7 @@ protected:
 	CMatchFile**	m_pMapBTH;
 	CMatchFile**	m_pMapMD5;
 	LPTSTR			m_pszFilter;
-	CSchemaMember**	m_pColumns;
+	CSchemaMemberPtr* m_pColumns;
 	int				m_nColumns;
 	CBaseMatchWnd*	m_pParent;
 
@@ -123,7 +126,7 @@ public:
 	BOOL		ClearSelection();
 	void		Filter();
 	CString		CreateRegExpFilter(const CString& strPattern);
-	void		SelectSchema(CSchemaPtr pSchema, CList< CSchemaMember* >* pColumns);
+	void		SelectSchema(CSchemaPtr pSchema, CSchemaMemberList* pColumns);
 	void		SetSortColumn(int nColumn = -1, BOOL bDirection = FALSE);
 	void		UpdateRange(DWORD nMin = 0, DWORD nMax = 0xFFFFFFFF);
 	void		ClearUpdated();

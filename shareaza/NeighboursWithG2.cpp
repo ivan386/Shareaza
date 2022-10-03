@@ -182,7 +182,8 @@ CG2Neighbour* CNeighboursWithG2::GetRandomHub(CG2Neighbour* pExcept, const Hashe
 		if ( pNeighbour->m_nState == nrsConnected   && // We've finished the handshake with this computer, and
 			 pNeighbour->m_nProtocol == PROTOCOL_G2 && // It's running Gnutella2 software, and
 			 pNeighbour->m_nNodeType != ntLeaf      && // Our connection to it isn't down to a leaf, and
-			 pNeighbour != pExcept )                   // It's not the one the caller told us to avoid
+			 pNeighbour != pExcept                  && // It's not the one the caller told us to avoid
+			 pNeighbour->IsIPv6Host() == pExcept->IsIPv6Host() ) // Same IP version
 		{
 			// And, it doesn't know about the given GUID
 			if ( static_cast< CG2Neighbour* >( pNeighbour )->m_pGUIDCache->Lookup( oGUID ) == NULL )

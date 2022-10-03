@@ -3,7 +3,7 @@
 //
 //	Created by:		Rolandas Rudomanskis
 //
-// Copyright (c) Shareaza Development Team, 2002-2010.
+// Copyright (c) Shareaza Development Team, 2002-2014.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -23,7 +23,6 @@
 
 #pragma once
 
-#define _CRT_SECURE_NO_DEPRECATE
 #define STRICT
 #define _WIN32_DCOM
 #define _ATL_FREE_THREADED
@@ -31,6 +30,9 @@
 #define _ATL_CSTRING_EXPLICIT_CONSTRUCTORS
 #define _ATL_CSTRING_NO_CRT
 #define _ATL_ALL_WARNINGS
+
+#define _WIN32_WINNT 0x0501
+#include <SDKDDKVer.h>
 
 #pragma warning( push, 0 )
 

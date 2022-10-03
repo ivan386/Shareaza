@@ -1,7 +1,7 @@
 //
 // PageSettingsLibrary.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2012.
+// Copyright (c) Shareaza Development Team, 2002-2015.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -53,19 +53,16 @@ END_MESSAGE_MAP()
 /////////////////////////////////////////////////////////////////////////////
 // CLibrarySettingsPage property page
 
-CLibrarySettingsPage::CLibrarySettingsPage() : CSettingsPage(CLibrarySettingsPage::IDD)
-, m_bMakeGhosts(FALSE)
-, m_bWatchFolders(FALSE)
-, m_nRecentDays(0)
-, m_nRecentTotal(0)
-, m_bStoreViews(FALSE)
-, m_bBrowseFiles(FALSE)
-, m_bHighPriorityHash(FALSE)
-, m_bSmartSeries(FALSE)
-{
-}
-
-CLibrarySettingsPage::~CLibrarySettingsPage()
+CLibrarySettingsPage::CLibrarySettingsPage()
+	: CSettingsPage			( CLibrarySettingsPage::IDD )
+	, m_bMakeGhosts			( FALSE )
+	, m_bWatchFolders		( FALSE )
+	, m_nRecentDays			( 0 )
+	, m_nRecentTotal		( 0 )
+	, m_bStoreViews			( FALSE )
+	, m_bBrowseFiles		( FALSE )
+	, m_bHighPriorityHash	( FALSE )
+	, m_bSmartSeries		( FALSE )
 {
 }
 
@@ -88,7 +85,7 @@ void CLibrarySettingsPage::DoDataExchange(CDataExchange* pDX)
 	DDX_Check(pDX, IDC_BROWSE_FILES, m_bBrowseFiles);
 	DDX_Check(pDX, IDC_HIGH_HASH, m_bHighPriorityHash);
 	DDX_Control(pDX, IDC_COLLECTIONS_BROWSE, m_wndCollectionPath);
-	DDX_Text(pDX, IDC_COLLECTIONS_FOLDER, m_sCollectionPath);
+	DDX_Control(pDX, IDC_COLLECTIONS_FOLDER, m_wndCollectionFolder);
 	DDX_Check(pDX, IDC_MAKE_GHOSTS, m_bMakeGhosts);
 	DDX_Check(pDX, IDC_SMART_SERIES_DETECTION, m_bSmartSeries);
 	DDX_Control(pDX, IDC_RECENT_CLEAR, m_wndRecentClear);
@@ -103,17 +100,17 @@ BOOL CLibrarySettingsPage::OnInitDialog()
 
 	CQuickLock oLock( Library.m_pSection );
 
+	AddAndSelect( m_wndCollectionFolder, Settings.General.UserPath + _T("\\Collections") );
+	AddAndSelect( m_wndCollectionFolder, Settings.Downloads.CollectionPath );
+
 	m_bStoreViews		= Settings.Library.StoreViews;
 	m_bWatchFolders		= Settings.Library.WatchFolders;
 	m_bBrowseFiles		= Settings.Community.ServeFiles;
 	m_bHighPriorityHash = Settings.Library.HighPriorityHash;
 	m_bMakeGhosts		= Settings.Library.CreateGhosts;
 	m_bSmartSeries		= Settings.Library.SmartSeriesDetection;
-
 	m_nRecentTotal		= Settings.Library.HistoryTotal;
 	m_nRecentDays		= Settings.Library.HistoryDays;
-
-	m_sCollectionPath	= Settings.Downloads.CollectionPath;
 
 	for ( string_set::const_iterator i = Settings.Library.SafeExecute.begin() ;
 		i != Settings.Library.SafeExecute.end(); ++i )
@@ -138,8 +135,6 @@ BOOL CLibrarySettingsPage::OnInitDialog()
 	m_wndSafeRemove.EnableWindow( m_wndSafeList.GetCurSel() >= 0 );
 	m_wndPrivateAdd.EnableWindow( m_wndPrivateList.GetWindowTextLength() > 0 );
 	m_wndPrivateRemove.EnableWindow( m_wndPrivateList.GetCurSel() >= 0 );
-
-	m_wndCollectionFolder.SubclassDlgItem( IDC_COLLECTIONS_FOLDER, this );
 
 	m_wndRecentClear.EnableWindow( TRUE );
 
@@ -227,20 +222,21 @@ void CLibrarySettingsPage::OnRecentClear()
 
 void CLibrarySettingsPage::OnCollectionsBrowse()
 {
-	CString strPath( BrowseForFolder( _T("Select folder for collections:"),
-		m_sCollectionPath ) );
-	if ( strPath.IsEmpty() )
+	CString sCollectionPath;
+	m_wndCollectionFolder.GetWindowText( sCollectionPath );
+	sCollectionPath = BrowseForFolder( IDS_SELECT_FOLDER_COLLECTIONS, sCollectionPath );
+	if ( sCollectionPath.IsEmpty() )
 		return;
 
-	UpdateData( TRUE );
-	m_sCollectionPath = strPath;
-	//m_bCollectionsChanged = TRUE;
-	UpdateData( FALSE );
+	AddAndSelect( m_wndCollectionFolder, sCollectionPath );
 }
 
 void CLibrarySettingsPage::OnOK()
 {
 	UpdateData();
+
+	CString sCollectionPath;
+	m_wndCollectionFolder.GetWindowText( sCollectionPath );
 
 	Settings.Library.StoreViews			= m_bStoreViews != FALSE;
 	Settings.Library.WatchFolders		= m_bWatchFolders != FALSE;
@@ -250,8 +246,7 @@ void CLibrarySettingsPage::OnOK()
 	Settings.Library.SmartSeriesDetection = m_bSmartSeries != FALSE;
 	Settings.Library.HistoryTotal		= m_nRecentTotal;
 	Settings.Library.HistoryDays		= m_nRecentDays;
-
-	Settings.Downloads.CollectionPath = m_sCollectionPath;
+	Settings.Downloads.CollectionPath	= sCollectionPath;
 
 	//Set current hashing speed to requested
 	LibraryBuilder.BoostPriority( m_bHighPriorityHash != FALSE );

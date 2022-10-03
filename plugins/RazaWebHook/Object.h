@@ -43,18 +43,15 @@ BEGIN_COM_MAP(CRazaWebHook)
 	COM_INTERFACE_ENTRY(IRazaWebHook)
 	COM_INTERFACE_ENTRY(IDispatch)
 	COM_INTERFACE_ENTRY_IID(DIID_DWebBrowserEvents2, IDispatch)
-	COM_INTERFACE_ENTRY_AGGREGATE(IID_IMarshal, m_pUnkMarshaler.p)
 	COM_INTERFACE_ENTRY(IObjectWithSite)
 END_COM_MAP()
 
 DECLARE_PROTECT_FINAL_CONSTRUCT()
-DECLARE_GET_CONTROLLING_UNKNOWN()
 
 	HRESULT FinalConstruct();
 	void FinalRelease();
 
  protected:
-	CComPtr < IUnknown >	m_pUnkMarshaler;
 	DWORD					m_dwCookie;
 	CString					m_sURL;
 

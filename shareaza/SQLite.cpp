@@ -1,7 +1,7 @@
 //
 // SQLite.cpp
 //
-// Copyright (c) Shareaza Development Team, 2008-2010.
+// Copyright (c) Shareaza Development Team, 2008-2014.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -78,7 +78,7 @@ bool CDatabase::IsBusy() const throw()
 
 int CDatabase::GetCount() const throw()
 {
-	return m_raw.GetCount();
+	return (int)m_raw.GetCount();
 }
 
 bool CDatabase::Exec(LPCTSTR szQuery)

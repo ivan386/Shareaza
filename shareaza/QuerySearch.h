@@ -1,7 +1,7 @@
 //
 // QuerySearch.h
 //
-// Copyright (c) Shareaza Development Team, 2002-2013.
+// Copyright (c) Shareaza Development Team, 2002-2014.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -68,6 +68,7 @@ public:
 	BYTE				m_nHops;		// G1: Received packet hops
 	BOOL				m_bUDP;			// G2: Packet received over UDP
 	SOCKADDR_IN			m_pEndpoint;	// G1,G2: Packet received from this host
+	SOCKADDR_IN6		m_pEndpointIPv6;// G1,G2: Packet received from this ipv6 host
 	DWORD				m_nKey;			// G2: Hub query key
 	bool				m_bFirewall;	// G1: Firewalled host
 	bool				m_bDynamic;		// G1: Leaf Guided Dynamic Query
@@ -84,6 +85,7 @@ public:
 	SOCKADDR_IN			m_pMyHub;		// DC: Hub address
 	CString				m_sMyHub;		// DC: Hub name
 	CString				m_sMyNick;		// DC: Nick
+	in_addr				m_nMyAddress;	// DC: IP
 
 	Hash32List			m_oURNs;			// Hashed URNs
 	Hash32List			m_oKeywordHashList;	// list of hashed keywords to BOOST QUery Routing.
@@ -117,17 +119,19 @@ private:
 // Packet Operations
 public:
 	CG1Packet*				ToG1Packet(DWORD nTTL = 0) const;
-	CG2Packet*				ToG2Packet(SOCKADDR_IN* pUDP, DWORD nKey) const;
+	CG2Packet*				ToG2Packet(SOCKADDR* pUDP, DWORD nKey) const;
 	CEDPacket*				ToEDPacket(BOOL bUDP, DWORD nServerFlags = 0) const;
 	CDCPacket*				ToDCPacket() const;
 private:
 	BOOL					ReadG1Packet(CG1Packet* pPacket, const SOCKADDR_IN* pEndpoint = NULL);
 	void					ReadGGEP(CG1Packet* pPacket);
-	BOOL					ReadG2Packet(CG2Packet* pPacket, const SOCKADDR_IN* pEndpoint = NULL);
+	BOOL					ReadG2Packet(CG2Packet* pPacket, const SOCKADDR* pEndpoint = NULL);
 	BOOL					ReadDCPacket(CDCPacket* pPacket, const SOCKADDR_IN* pEndpoint = NULL);
 
 // Operations
 public:
+	CString					GetSearch() const;
+	void					SetSearch(const CString& sSearch);
 	BOOL					Match(LPCTSTR pszFilename, LPCTSTR pszSchemaURI, const CXMLElement* pXML, const CShareazaFile* pFile ) const;
 	TRISTATE				MatchMetadata(LPCTSTR pszSchemaURI, const CXMLElement* pXML) const;
 	BOOL					MatchMetadataShallow(LPCTSTR pszSchemaURI, const CXMLElement* pXML, bool* bReject = NULL) const;
@@ -152,12 +156,26 @@ public:
 	// Note: \s* - matches any number of white-space symbols (including zero).
 	CString					BuildRegExp(const CString& strPattern) const;
 
+	inline bool IsIPv6Endpoint() const throw()
+	{
+		if ( m_pEndpoint.sin_addr.s_addr == 0 )
+		{
+			int i = 0;
+
+			for (; i < 8 && m_pEndpointIPv6.sin6_addr.u.Word[i] == 0 ; i++ );
+
+			if ( i < 8 )
+				return true;
+		}
+		return false;
+	}
+
 private:
 	BOOL					WriteHashesToEDPacket(CEDPacket* pPacket, BOOL bUDP, BOOL bLargeFiles) const;
 
 // Utilities
 public:
-	static CQuerySearchPtr	FromPacket(CPacket* pPacket, const SOCKADDR_IN* pEndpoint = NULL, BOOL bGUID = FALSE);
+	static CQuerySearchPtr	FromPacket(CPacket* pPacket, const SOCKADDR* pEndpoint = NULL, BOOL bGUID = FALSE);
 	static CSearchWnd*		OpenWindow(CQuerySearch* pSearch);
 	static BOOL				WordMatch(LPCTSTR pszString, LPCTSTR pszFind, bool* bReject = NULL);
 	static BOOL				NumberMatch(const CString& strValue, const CString& strRange);

@@ -1,7 +1,7 @@
 //
 // Datagrams.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2014.
+// Copyright (c) Shareaza Development Team, 2002-2017.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -28,6 +28,8 @@
 #include "Datagrams.h"
 #include "Datagram.h"
 #include "DatagramPart.h"
+#include "Download.h"
+#include "Downloads.h"
 #include "BTPacket.h"
 #include "BTTrackerRequest.h"
 #include "G1Packet.h"
@@ -36,15 +38,13 @@
 #include "DCPacket.h"
 #include "BENode.h"
 #include "Security.h"
+#include "Transfers.h"
 
 #ifdef _DEBUG
 #undef THIS_FILE
 static char THIS_FILE[]=__FILE__;
 #define new DEBUG_NEW
 #endif
-
-#define HASH_SIZE		32
-#define HASH_MASK		31
 
 #define METER_MINIMUM	100
 #define METER_LENGTH	24
@@ -58,16 +58,38 @@ CDatagrams Datagrams;
 // CDatagrams construction
 
 CDatagrams::CDatagrams()
+	: m_nInBandwidth	( 0 )
+	, m_nInFrags		( 0 )
+	, m_nInPackets		( 0 )
+	, m_nOutBandwidth	( 0 )
+	, m_nOutFrags		( 0 )
+	, m_nOutPackets		( 0 )
+	, m_nSequence		( 0 )
+	, m_bStable			( FALSE )
+	, m_bStableIPv6		( FALSE )
+	, m_tLastWrite		( 0 )
+	, m_pBufferBuffer	( NULL )
+	, m_nBufferBuffer	( 0 )
+	, m_pBufferFree		( NULL )
+	, m_nBufferFree		( 0 )
+	, m_pInputBuffer	( NULL )
+	, m_nInputBuffer	( 0 )
+	, m_pInputFree		( NULL )
+	, m_pInputFirst		( NULL )
+	, m_pInputLast		( NULL )
+	, m_pInputHash		()
+	, m_pOutputBuffer	( NULL )
+	, m_nOutputBuffer	( 0 )
+	, m_pOutputFree		( NULL )
+	, m_pOutputFirst	( NULL )
+	, m_pOutputLast		( NULL )
+	, m_pOutputHash		()
+	, m_mInput			()
+	, m_mOutput			()
+	, m_pReadBuffer		()
 {
-	m_hSocket	= INVALID_SOCKET;
-	m_nSequence	= 0;
-	m_bStable	= FALSE;
-
-	ZeroMemory( &m_mInput, sizeof(m_mInput) );
-	ZeroMemory( &m_mOutput, sizeof(m_mOutput) );
-
-	m_nInBandwidth	= m_nInFrags	= m_nInPackets	= 0;
-	m_nOutBandwidth	= m_nOutFrags	= m_nOutPackets	= 0;
+	for ( int i = 0; i < _countof( m_hSocket ); ++i )
+		m_hSocket[ i ] = INVALID_SOCKET;
 }
 
 CDatagrams::~CDatagrams()
@@ -83,31 +105,37 @@ BOOL CDatagrams::Listen()
 	if ( IsValid() )
 		return TRUE;
 
-	m_hSocket = socket( PF_INET, SOCK_DGRAM, IPPROTO_UDP );
-	if ( ! IsValid() )	// Now, make sure it has been created
+	const BOOL bBoradcast = TRUE;
+	const BOOL bExclusive = TRUE;
+
+	m_hSocket[ 0 ] = socket( PF_INET, SOCK_DGRAM, IPPROTO_UDP );
+	if ( m_hSocket[ 0 ] == INVALID_SOCKET )	// Now, make sure it has been created
 	{
 		theApp.Message( MSG_ERROR, _T("Failed to create UDP socket. (1st Try)") );
 		// Second attempt
-		m_hSocket = socket( PF_INET, SOCK_DGRAM, IPPROTO_UDP );
-		if ( ! IsValid() )
+		m_hSocket[ 0 ] = socket( PF_INET, SOCK_DGRAM, IPPROTO_UDP );
+		if ( m_hSocket[ 0 ] == INVALID_SOCKET )
 		{
 			theApp.Message( MSG_ERROR, _T("Failed to create UDP socket. (2nd Try)") );
 			return FALSE;
 		}
 	}
 
-	VERIFY( setsockopt( m_hSocket, SOL_SOCKET, SO_BROADCAST, "\x01", 1 ) == 0 );
+	if ( Settings.Connection.EnableBroadcast )
+	{
+		VERIFY( setsockopt( m_hSocket[ 0 ], SOL_SOCKET, SO_BROADCAST, (const char*)&bBoradcast, sizeof( bBoradcast ) ) == 0 );
+	}
 
 	SOCKADDR_IN saHost = {};
 	if ( Network.Resolve( Settings.Connection.InHost, Settings.Connection.InPort, &saHost ) )
 	{
 		// Inbound resolved
-		if ( ! Settings.Connection.InBind ) 
+		if ( ! Settings.Connection.InBind )
 			saHost.sin_addr.s_addr = INADDR_ANY;
 		else
 		{
 			// Set the exclusive address option
-			VERIFY( setsockopt( m_hSocket, SOL_SOCKET, SO_EXCLUSIVEADDRUSE, "\x01", 1 ) == 0 );
+			VERIFY( setsockopt( m_hSocket[ 0 ], SOL_SOCKET, SO_EXCLUSIVEADDRUSE, (const char*)&bExclusive, sizeof( bExclusive ) ) == 0 );
 		}
 	}
 	else if ( Network.Resolve( Settings.Connection.OutHost, Settings.Connection.InPort, &saHost ) )
@@ -117,17 +145,17 @@ BOOL CDatagrams::Listen()
 	else
 	{
 		saHost = Network.m_pHost;
-		if ( ! Settings.Connection.InBind ) 
+		if ( ! Settings.Connection.InBind )
 			saHost.sin_addr.s_addr = INADDR_ANY;
 		else
 		{
 			// Set the exclusive address option
-			VERIFY( setsockopt( m_hSocket, SOL_SOCKET, SO_EXCLUSIVEADDRUSE, "\x01", 1 ) == 0 );
+			VERIFY( setsockopt( m_hSocket[ 0 ], SOL_SOCKET, SO_EXCLUSIVEADDRUSE, (const char*)&bExclusive, sizeof( bExclusive ) ) == 0 );
 		}
 	}
 
 	// First attempt to bind socket
-	if ( bind( m_hSocket, (SOCKADDR*)&saHost, sizeof( saHost ) ) != 0 )
+	if ( bind( m_hSocket[ 0 ], (SOCKADDR*)&saHost, sizeof( saHost ) ) != 0 )
 	{
 		theApp.Message( MSG_ERROR, IDS_NETWORK_CANT_LISTEN, (LPCTSTR)CString( inet_ntoa( saHost.sin_addr ) ), htons( saHost.sin_port ) );
 
@@ -136,24 +164,107 @@ BOOL CDatagrams::Listen()
 
 		// Second attempt to bind socket
 		saHost.sin_addr.s_addr = INADDR_ANY;
-		if ( bind( m_hSocket, (SOCKADDR*)&saHost, sizeof( saHost ) ) != 0 )
+		if ( bind( m_hSocket[ 0 ], (SOCKADDR*)&saHost, sizeof( saHost ) ) != 0 )
 		{
 			theApp.Message( MSG_ERROR, IDS_NETWORK_CANT_LISTEN, (LPCTSTR)CString( inet_ntoa( saHost.sin_addr ) ), htons( saHost.sin_port ) );
 			return FALSE;
 		}
 	}
-	
+
 	theApp.Message( MSG_INFO, IDS_NETWORK_LISTENING_UDP, (LPCTSTR)CString( inet_ntoa( saHost.sin_addr ) ), htons( saHost.sin_port ) );
 
-	// Multi-cast ports:
-	// eD2K: 224.0.0.1:5000
-	// LimeWire: 234.21.81.1:6347
+	WSAEventSelect( m_hSocket[ 0 ], Network.GetWakeupEvent(), FD_READ );
 
-	ip_mreq mr = {};
-	mr.imr_multiaddr.s_addr = inet_addr( DEFAULT_G1_MCAST_ADDRESS );
-	setsockopt( m_hSocket, IPPROTO_IP, IP_ADD_MEMBERSHIP, (char*)&mr, sizeof( mr ) );
+	if ( Settings.Connection.EnableBroadcast && saHost.sin_port != htons( protocolPorts[ PROTOCOL_G2 ] ) )
+	{
+		SOCKADDR_IN saBcastHost = { 0 };
+		saBcastHost.sin_family = AF_INET;
+		saBcastHost.sin_addr.s_addr = INADDR_ANY;
+		saBcastHost.sin_port = htons( protocolPorts[ PROTOCOL_G2 ] );
+		m_hSocket[ 1 ] = socket( PF_INET, SOCK_DGRAM, IPPROTO_UDP );
+		if ( m_hSocket[ 1 ] != INVALID_SOCKET )
+		{
+			if ( setsockopt( m_hSocket[ 1 ], SOL_SOCKET, SO_BROADCAST, (const char*)&bBoradcast, sizeof( bBoradcast ) ) == 0 &&
+				 bind( m_hSocket[ 1 ], (SOCKADDR*)&saBcastHost, sizeof( saBcastHost ) ) == 0 )
+			{
+				theApp.Message( MSG_INFO, IDS_NETWORK_LISTENING_UDP, (LPCTSTR)CString( inet_ntoa( saBcastHost.sin_addr ) ), htons( saBcastHost.sin_port ) );
+				WSAEventSelect( m_hSocket[ 1 ], Network.GetWakeupEvent(), FD_READ );
+			}
+			else
+				CNetwork::CloseSocket( m_hSocket[ 1 ], false );
+		}
+	}
 
-	WSAEventSelect( m_hSocket, Network.GetWakeupEvent(), FD_READ );
+	if ( Settings.Connection.EnableMulticast )
+	{
+		const DWORD bReuse = TRUE;
+		const DWORD bLoop = Settings.Connection.MulticastLoop ? TRUE : FALSE;
+		const DWORD bTTL = Settings.Connection.MulticastTTL;
+
+		USHORT nPorts[ _countof( m_hSocket ) ] = {};
+		ip_mreq mr[ _countof( m_hSocket ) ] = {};
+
+		if ( Settings.eDonkey.EnableToday )
+		{
+			mr[ 2 ].imr_multiaddr.s_addr = inet_addr( DEFAULT_ED2K_MCAST_ADDRESS );
+			nPorts[ 2 ] = htons( DEFAULT_ED2K_MCAST_PORT );
+		}
+
+		if ( Settings.Gnutella1.EnableToday )
+		{
+			mr[ 3 ].imr_multiaddr.s_addr = inet_addr( DEFAULT_G1_MCAST_ADDRESS );
+			nPorts[ 3 ] = htons( DEFAULT_G1_MCAST_PORT );
+		}
+
+		if ( Settings.BitTorrent.EnableToday )
+		{
+			mr[ 4 ].imr_multiaddr.s_addr = inet_addr( DEFAULT_BT_MCAST_ADDRESS );
+			nPorts[ 4 ] = htons( DEFAULT_BT_MCAST_PORT );
+		}
+
+		for ( int i = 2; i < _countof( m_hSocket ); ++i )
+		{
+			if ( nPorts[ i ] )
+			{
+				if ( nPorts[ i ] == saHost.sin_port )
+				{
+					setsockopt( m_hSocket[ 0 ], IPPROTO_IP, IP_MULTICAST_LOOP, (const char*)&bLoop, sizeof( bLoop ) );
+					setsockopt( m_hSocket[ 0 ], IPPROTO_IP, IP_MULTICAST_TTL, (const char*)&bTTL, sizeof( bTTL ) );
+					setsockopt( m_hSocket[ 0 ], IPPROTO_IP, IP_ADD_MEMBERSHIP, (const char*)&mr[ i ], sizeof( ip_mreq ) );
+				}
+				else
+				{
+					m_hSocket[ i ] = socket( PF_INET, SOCK_DGRAM, IPPROTO_UDP );
+					if ( m_hSocket[ i ] != INVALID_SOCKET )
+					{
+						VERIFY( setsockopt( m_hSocket[ i ], SOL_SOCKET, SO_REUSEADDR, (const char*)&bReuse, sizeof( bReuse ) ) == 0 );
+						
+						if ( Settings.Connection.EnableBroadcast )
+						{
+							VERIFY( setsockopt( m_hSocket[ i ], SOL_SOCKET, SO_BROADCAST, (const char*)&bBoradcast, sizeof( bBoradcast ) ) == 0 );
+						}
+
+						SOCKADDR_IN saMcastHost = {};
+						saMcastHost.sin_family = AF_INET;
+						saMcastHost.sin_port = nPorts[ i ];
+						if ( bind( m_hSocket[ i ], (SOCKADDR*)&saMcastHost, sizeof( saMcastHost ) ) == 0 &&
+							 setsockopt( m_hSocket[ i ], IPPROTO_IP, IP_MULTICAST_LOOP, (const char*)&bLoop, sizeof( bLoop ) ) == 0 &&
+							 setsockopt( m_hSocket[ i ], IPPROTO_IP, IP_MULTICAST_TTL, (const char*)&bTTL, sizeof( bTTL ) ) == 0 &&
+							 setsockopt( m_hSocket[ i ], IPPROTO_IP, IP_ADD_MEMBERSHIP, (const char*)&mr[ i ], sizeof( ip_mreq ) ) == 0 )
+						{
+							theApp.Message( MSG_INFO, IDS_NETWORK_LISTENING_UDP, (LPCTSTR)CString( inet_ntoa( mr[ i ].imr_multiaddr ) ), htons( saMcastHost.sin_port ) );
+
+							WSAEventSelect( m_hSocket[ i ], Network.GetWakeupEvent(), FD_READ );
+						}
+						else
+							CNetwork::CloseSocket( m_hSocket[ i ], false );
+					}
+				}
+			}
+		}
+	}
+
+	ListenIPv6();
 
 	m_nBufferBuffer	= Settings.Gnutella2.UdpBuffers; // 256;
 	m_pBufferBuffer	= new CBuffer[ m_nBufferBuffer ];
@@ -189,8 +300,8 @@ BOOL CDatagrams::Listen()
 		pDGO->m_pNextHash = ( nPos == 1 ) ? NULL : ( pDGO + 1 );
 	}
 
-	ZeroMemory( m_pInputHash,  sizeof(CDatagramIn*) * HASH_SIZE );
-	ZeroMemory( m_pOutputHash, sizeof(CDatagramIn*) * HASH_SIZE );
+	ZeroMemory( m_pInputHash,  sizeof( m_pInputHash ) );
+	ZeroMemory( m_pOutputHash, sizeof( m_pOutputHash ) );
 
 	m_pInputFirst	= m_pInputLast	= NULL;
 	m_pOutputFirst	= m_pOutputLast	= NULL;
@@ -205,6 +316,34 @@ BOOL CDatagrams::Listen()
 	return TRUE;
 }
 
+BOOL CDatagrams::ListenIPv6()
+{
+	m_hSocketIPv6 = socket( AF_INET6, SOCK_DGRAM, IPPROTO_UDP );
+
+	SOCKADDR_IN6 saHost = { AF_INET6 };
+
+	saHost.sin6_port = Network.m_pHost.sin_port;
+
+	// First attempt to bind socket
+	if ( bind( m_hSocketIPv6, (SOCKADDR*)&saHost, sizeof( saHost ) ) != 0 )
+	{
+		theApp.Message( MSG_ERROR, IDS_NETWORK_CANT_LISTEN, (LPCTSTR)CString( IPv6ToString( &saHost.sin6_addr ) ), htons( saHost.sin6_port ) );
+
+
+		if ( bind( m_hSocketIPv6, (SOCKADDR*)&saHost, sizeof( saHost ) ) != 0 )
+		{
+			theApp.Message( MSG_ERROR, IDS_NETWORK_CANT_LISTEN, (LPCTSTR)CString( IPv6ToString( &saHost.sin6_addr ) ), htons( saHost.sin6_port ) );
+			return FALSE;
+		}
+	}
+
+	theApp.Message( MSG_INFO, IDS_NETWORK_LISTENING_UDP, (LPCTSTR)CString( IPv6ToString( &saHost.sin6_addr ) ), htons( saHost.sin6_port ) );
+
+	WSAEventSelect( m_hSocketIPv6, Network.GetWakeupEvent(), FD_READ );
+
+	return TRUE;
+}
+
 //////////////////////////////////////////////////////////////////////
 // CDatagrams disconnect
 
@@ -214,7 +353,10 @@ void CDatagrams::Disconnect()
 
 	DHT.Disconnect();
 
-	CNetwork::CloseSocket( m_hSocket, false );
+	for ( int i = 0; i < _countof( m_hSocket ); ++i )
+		CNetwork::CloseSocket( m_hSocket[ i ], false );
+
+	CNetwork::CloseSocket( m_hSocketIPv6, false );
 
 	delete [] m_pOutputBuffer;
 	m_pOutputBuffer = NULL;
@@ -233,6 +375,7 @@ void CDatagrams::Disconnect()
 	m_nInBandwidth	= m_nInFrags	= m_nInPackets	= 0;
 	m_nOutBandwidth	= m_nOutFrags	= m_nOutPackets	= 0;
 	m_bStable = FALSE;
+	m_bStableIPv6 = FALSE;
 }
 
 //////////////////////////////////////////////////////////////////////
@@ -244,6 +387,16 @@ BOOL CDatagrams::Send(const IN_ADDR* pAddress, WORD nPort, CPacket* pPacket, BOO
 	pHost.sin_family = PF_INET;
 	pHost.sin_addr = *pAddress;
 	pHost.sin_port = htons( nPort );
+
+	return Send( &pHost, pPacket, bRelease, pToken, bAck );
+}
+
+BOOL CDatagrams::Send(const IN6_ADDR* pAddress, WORD nPort, CPacket* pPacket, BOOL bRelease, LPVOID pToken, BOOL bAck)
+{
+	SOCKADDR_IN6 pHost = {};
+	pHost.sin6_family = AF_INET6;
+	pHost.sin6_addr = *pAddress;
+	pHost.sin6_port = htons( nPort );
 
 	return Send( &pHost, pPacket, bRelease, pToken, bAck );
 }
@@ -282,7 +435,7 @@ BOOL CDatagrams::Send(const SOCKADDR_IN* pHost, CPacket* pPacket, BOOL bRelease,
 		pPacket->SmartDump( pHost, TRUE, TRUE );
 		if ( bRelease ) pPacket->Release();
 
-		CNetwork::SendTo( m_hSocket, (LPSTR)pBuffer.m_pBuffer, pBuffer.m_nLength, pHost );
+		CNetwork::SendTo( m_hSocket[ 0 ], (LPSTR)pBuffer.m_pBuffer, pBuffer.m_nLength, pHost );
 
 		return TRUE;
 	}
@@ -335,7 +488,125 @@ BOOL CDatagrams::Send(const SOCKADDR_IN* pHost, CPacket* pPacket, BOOL bRelease,
 				+ pHost->sin_port
 				+ pDG->m_nSequence ) & 0xff );
 
-	CDatagramOut** pHash = m_pOutputHash + ( nHash & HASH_MASK );
+	CDatagramOut** pHash = m_pOutputHash + ( nHash & DATAGRAM_HASH_MASK );
+
+	if ( *pHash ) (*pHash)->m_pPrevHash = &pDG->m_pNextHash;
+	pDG->m_pNextHash = *pHash;
+	pDG->m_pPrevHash = pHash;
+	*pHash = pDG;
+
+	m_nOutPackets++;
+	Statistics.Current.Gnutella2.Outgoing++;
+
+#ifdef DEBUG_UDP
+	theApp.Message( MSG_DEBUG, _T("UDP: Queued SGP (#%i) x%i for %s:%lu"),
+		pDG->m_nSequence, pDG->m_nCount,
+		(LPCTSTR)CString( inet_ntoa( pDG->m_pHost.sin_addr ) ),
+		htons( pDG->m_pHost.sin_port ) );
+#endif
+
+	pPacket->SmartDump( pHost, TRUE, TRUE );
+	if ( bRelease ) pPacket->Release();
+
+	TryWrite();
+
+	return TRUE;
+}
+
+BOOL CDatagrams::Send(const SOCKADDR_IN6* pHost, CPacket* pPacket, BOOL bRelease, LPVOID pToken, BOOL bAck)
+{
+	ASSERT( pHost != NULL && pPacket != NULL );
+
+	if ( pPacket->m_nProtocol != PROTOCOL_G2 )
+	{
+		CBuffer pBuffer;
+		pPacket->ToBuffer( &pBuffer, false );
+
+		m_nOutPackets++;
+		switch ( pPacket->m_nProtocol )
+		{
+		case PROTOCOL_G1:
+			Statistics.Current.Gnutella1.Outgoing++;
+			break;
+		case PROTOCOL_ED2K:
+			Statistics.Current.eDonkey.Outgoing++;
+			break;
+		case PROTOCOL_BT:
+			Statistics.Current.BitTorrent.Outgoing++;
+			break;
+		default:
+			;
+		}
+
+		pPacket->SmartDump( pHost, TRUE, TRUE );
+		if ( bRelease ) pPacket->Release();
+
+		CNetwork::SendTo( m_hSocketIPv6, (LPSTR)pBuffer.m_pBuffer, pBuffer.m_nLength, pHost );
+
+		return TRUE;
+	}
+
+	// Gnutella 2 uses SGP-powered datagrams
+
+	if ( m_pOutputFree == NULL || m_pBufferFree == NULL )
+	{
+		if ( m_pOutputLast == NULL )
+		{
+			if ( bRelease ) pPacket->Release();
+			theApp.Message( MSG_DEBUG, _T("CDatagrams output frames exhausted.") );
+			return FALSE;
+		}
+		Remove( m_pOutputLast );
+	}
+
+	if ( m_pBufferFree == NULL )
+	{
+		if ( bRelease ) pPacket->Release();
+		theApp.Message( MSG_DEBUG, _T("CDatagrams output frames really exhausted.") );
+		return FALSE;
+	}
+
+	CDatagramOut* pDG = m_pOutputFree;
+	m_pOutputFree = m_pOutputFree->m_pNextHash;
+
+	if ( m_nInFrags < 1 ) bAck = FALSE;
+
+	pDG->Create( pHost, (CG2Packet*)pPacket, m_nSequence++, m_pBufferFree, bAck );
+
+	m_pBufferFree = m_pBufferFree->m_pNext;
+	m_nBufferFree--;
+
+	pDG->m_pToken		= pToken;
+	pDG->m_pNextTime	= NULL;
+	pDG->m_pPrevTime	= m_pOutputFirst;
+
+	if ( m_pOutputFirst )
+		m_pOutputFirst->m_pNextTime = pDG;
+	else
+		m_pOutputLast = pDG;
+
+	m_pOutputFirst = pDG;
+
+	BYTE nHash	= BYTE( ( pHost->sin6_addr.u.Byte[0]
+				+ pHost->sin6_addr.u.Byte[1]
+				+ pHost->sin6_addr.u.Byte[2]
+				+ pHost->sin6_addr.u.Byte[3]
+				+ pHost->sin6_addr.u.Byte[4]
+				+ pHost->sin6_addr.u.Byte[5]
+				+ pHost->sin6_addr.u.Byte[6]
+				+ pHost->sin6_addr.u.Byte[7]
+				+ pHost->sin6_addr.u.Byte[8]
+				+ pHost->sin6_addr.u.Byte[9]
+				+ pHost->sin6_addr.u.Byte[10]
+				+ pHost->sin6_addr.u.Byte[11]
+				+ pHost->sin6_addr.u.Byte[12]
+				+ pHost->sin6_addr.u.Byte[13]
+				+ pHost->sin6_addr.u.Byte[14]
+				+ pHost->sin6_addr.u.Byte[15]
+				+ pHost->sin6_port
+				+ pDG->m_nSequence ) & 0xff );
+
+	CDatagramOut** pHash = m_pOutputHash + ( nHash & DATAGRAM_HASH_MASK );
 
 	if ( *pHash ) (*pHash)->m_pPrevHash = &pDG->m_pNextHash;
 	pDG->m_pNextHash = *pHash;
@@ -391,18 +662,22 @@ void CDatagrams::PurgeToken(LPVOID pToken)
 
 void CDatagrams::OnRun()
 {
-	if ( ! IsValid() ) return;
+	if ( ! IsValid() )
+		return;
 
 	DHT.OnRun();
 
 	TryWrite();
 	ManageOutput();
 
-	do
+	for ( int i = 0; i < _countof( m_hSocket ); ++i )
 	{
-		ManagePartials();
+		do
+		{
+			ManagePartials();
+		}
+		while ( TryRead( i ) || TryReadIPv6() );
 	}
-	while ( TryRead() );
 
 	Measure();
 }
@@ -465,6 +740,7 @@ BOOL CDatagrams::TryWrite()
 	}
 
 	DWORD nLastHost = 0;
+	IN6_ADDR nLastHostIPv6 = {};
 
 	while ( nLimit > 0 )
 	{
@@ -474,16 +750,27 @@ BOOL CDatagrams::TryWrite()
 			BYTE* pPacket;
 			DWORD nPacket;
 
-			if ( nLastHost == pDG->m_pHost.sin_addr.S_un.S_addr )
+			if ( pDG->IsIPv6DG() ? 
+				( IN6_ADDR_EQUAL( &pDG->m_pHostIPv6.sin6_addr, &nLastHostIPv6 ) )
+				: nLastHost == pDG->m_pHost.sin_addr.S_un.S_addr )
 			{
 				// Same host, skip it
 			}
 			else if ( pDG->GetPacket( tNow, &pPacket, &nPacket, m_nInFrags > 0 ) )
 			{
-				CNetwork::SendTo( m_hSocket, (LPCSTR)pPacket, nPacket, &pDG->m_pHost );
 
-				nLastHost = pDG->m_pHost.sin_addr.S_un.S_addr;
-
+				if ( pDG->IsIPv6DG() )
+				{
+					CNetwork::SendTo( m_hSocketIPv6, (LPCSTR)pPacket, nPacket, &pDG->m_pHostIPv6 );
+					nLastHostIPv6 = pDG->m_pHostIPv6.sin6_addr;
+					nLastHost = 0;
+				}
+				else
+				{
+					CNetwork::SendTo( m_hSocket[ 0 ], (LPCSTR)pPacket, nPacket, &pDG->m_pHost );
+					nLastHost = pDG->m_pHost.sin_addr.S_un.S_addr;
+					nLastHostIPv6 = in6addr_any;
+				}
 				if ( nLimit >= nPacket )
 					nLimit -= nPacket;
 				else
@@ -509,7 +796,7 @@ BOOL CDatagrams::TryWrite()
 		if ( pDG == NULL ) break;
 	}
 
-	if ( m_mOutput.pHistory && nTotal )
+	if ( nTotal )
 	{
 		if ( tNow - m_mOutput.tLastSlot < METER_MINIMUM )
 		{
@@ -584,40 +871,37 @@ void CDatagrams::Remove(CDatagramOut* pDG)
 //////////////////////////////////////////////////////////////////////
 // CDatagrams read datagram
 
-BOOL CDatagrams::TryRead()
+BOOL CDatagrams::TryRead(int nIndex)
 {
-	if ( ! IsValid() )
+	if ( m_hSocket[ nIndex ] == INVALID_SOCKET )
 		return FALSE;
 
 	SOCKADDR_IN pFrom = {};
-	int nLength	= CNetwork::RecvFrom( m_hSocket, (char*)m_pReadBuffer, sizeof( m_pReadBuffer ), &pFrom );
+	int nLength	= CNetwork::RecvFrom( m_hSocket[ nIndex ], (char*)m_pReadBuffer, sizeof( m_pReadBuffer ) - 1, &pFrom );
 
 	if ( nLength < 1 )
 		return FALSE;
 
-	// Clear rest of buffer for security reasons
+	// Clear rest of buffer for security reasons and make it a zero terminated
 	ZeroMemory( m_pReadBuffer + nLength, sizeof( m_pReadBuffer ) - nLength );
 
-	if ( m_mInput.pHistory )
+	const DWORD tNow = GetTickCount();
+	if ( tNow - m_mInput.tLastSlot < METER_MINIMUM )
 	{
-		DWORD tNow = GetTickCount();
-		if ( tNow - m_mInput.tLastSlot < METER_MINIMUM )
-		{
-			m_mInput.pHistory[ m_mInput.nPosition ] += nLength;
-		}
-		else
-		{
-			m_mInput.nPosition = ( m_mInput.nPosition + 1 ) % METER_LENGTH;
-			m_mInput.pTimes[ m_mInput.nPosition ]	= tNow;
-			m_mInput.pHistory[ m_mInput.nPosition ]	= nLength;
-			m_mInput.tLastSlot = tNow;
-		}
+		m_mInput.pHistory[ m_mInput.nPosition ] += nLength;
+	}
+	else
+	{
+		m_mInput.nPosition = ( m_mInput.nPosition + 1 ) % METER_LENGTH;
+		m_mInput.pTimes[ m_mInput.nPosition ]	= tNow;
+		m_mInput.pHistory[ m_mInput.nPosition ]	= nLength;
+		m_mInput.tLastSlot = tNow;
 	}
 
 	m_mInput.nTotal += nLength;
 	Statistics.Current.Bandwidth.Incoming += nLength;
 
-	if ( Network.IsFirewalledAddress( &pFrom.sin_addr, Settings.Connection.IgnoreOwnUDP ) ||
+	if ( Network.IsFirewalledAddress( &pFrom.sin_addr, Settings.Connection.IgnoreOwnUDP, FALSE ) ||
 		Security.IsDenied( &pFrom.sin_addr ) )
 	{
 		return TRUE;
@@ -632,8 +916,57 @@ BOOL CDatagrams::TryRead()
 			strText += ( ( m_pReadBuffer[ i ] < ' ' ) ? '.' : (char)m_pReadBuffer[ i ] );
 		}
 		theApp.Message( MSG_DEBUG | MSG_FACILITY_INCOMING,
-			_T("UDP: Recieved unknown packet (%i bytes) from %s: %s"),
-			nLength, (LPCTSTR)CString( inet_ntoa( pFrom.sin_addr ) ), strText );
+			_T("UDP: Received unknown packet (%i bytes) from %s: %s"),
+			nLength, (LPCTSTR)CString( inet_ntoa( pFrom.sin_addr ) ), (LPCTSTR)strText );
+		return TRUE;
+	}
+
+	// Packet fully handled
+
+	return TRUE;
+}
+
+BOOL CDatagrams::TryReadIPv6()
+{
+	if ( m_hSocketIPv6 == INVALID_SOCKET )
+		return FALSE;
+
+	SOCKADDR_IN6 pFrom = {};
+	int nLength	= CNetwork::RecvFrom( m_hSocketIPv6, (char*)m_pReadBuffer, sizeof( m_pReadBuffer ) - 1, &pFrom );
+
+	if ( nLength < 1 )
+		return FALSE;
+
+	// Clear rest of buffer for security reasons and make it a zero terminated
+	ZeroMemory( m_pReadBuffer + nLength, sizeof( m_pReadBuffer ) - nLength );
+
+	const DWORD tNow = GetTickCount();
+	if ( tNow - m_mInput.tLastSlot < METER_MINIMUM )
+	{
+		m_mInput.pHistory[ m_mInput.nPosition ] += nLength;
+	}
+	else
+	{
+		m_mInput.nPosition = ( m_mInput.nPosition + 1 ) % METER_LENGTH;
+		m_mInput.pTimes[ m_mInput.nPosition ]	= tNow;
+		m_mInput.pHistory[ m_mInput.nPosition ]	= nLength;
+		m_mInput.tLastSlot = tNow;
+	}
+
+	m_mInput.nTotal += nLength;
+	Statistics.Current.Bandwidth.Incoming += nLength;
+
+	if ( ! OnDatagram( &pFrom, m_pReadBuffer, nLength ) )
+	{
+		// Report unknown packets
+		CString strText;
+		for ( int i = 0; i < nLength && i < 80; i++ )
+		{
+			strText += ( ( m_pReadBuffer[ i ] < ' ' ) ? '.' : (char)m_pReadBuffer[ i ] );
+		}
+		theApp.Message( MSG_DEBUG | MSG_FACILITY_INCOMING,
+			_T("UDP: Received unknown packet (%i bytes) from %s: %s"),
+			nLength, (LPCTSTR)CString( IPv6ToString( &pFrom.sin6_addr ) ), (LPCTSTR)strText );
 		return TRUE;
 	}
 
@@ -751,10 +1084,11 @@ BOOL CDatagrams::OnDatagram(const SOCKADDR_IN* pHost, const BYTE* pBuffer, DWORD
 	}
 
 	// Detect BitTorrent packets
-	if ( nLength > 16 )
+	if ( nLength > 16 &&
+		 pBuffer[ 0 ] == 'd' &&
+		 pBuffer[ nLength - 1 ] == 'e' )
 	{
-		if ( CBTPacket* pPacket = CBTPacket::New(
-			BT_PACKET_EXTENSION, BT_EXTENSION_NOP, pBuffer, nLength ) )
+		if ( CBTPacket* pPacket = CBTPacket::New( BT_PACKET_EXTENSION, BT_EXTENSION_NOP, pBuffer, nLength ) )
 		{
 			m_nInPackets++;
 
@@ -767,10 +1101,126 @@ BOOL CDatagrams::OnDatagram(const SOCKADDR_IN* pHost, const BYTE* pBuffer, DWORD
 		}
 	}
 
+	// Detect BitTorrent Local Service Discovery (http://bittorrent.org/beps/bep_0014.html)
+	//
+	// As with any HTTP request to ensure forwards-compatibility any additional
+	// headers that not understood by a client should be ignored.
+	//
+	// BT-SEARCH * HTTP/1.1\r\n
+	// Host: <host>\r\n
+	// Port: <port>\r\n
+	// Infohash: <infohash>\r\n
+	// cookie: <cookie (optional)>\r\n
+	// \r\n
+	// \r\n
+	//
+	// host:
+	//	RFC 2616 section 14.23 and RFC 2732 compliant Host header specifying the
+	//	multicast group to which the announce is sent. In other words, strings
+	//	A) 239.192.152.143:6771 (org-local) or B) [ff15::efc0:988f]:6771 (site-local),
+	//	as appropriate.
+	//
+	// cookie:
+	//	opaque value, allowing the sending client to filter out its own announces
+	//	if it receives them via multicast loopback
+	//
+	// port:
+	//	port on which the bittorrent client is listening in base-10, ascii
+	//
+	// infohash:
+	//  hex-encoded (40 character) infohash
+	//  An announce may contain multiple, consecutive Infohash headers to announce
+	//  the participation in more than one torrent. This may not be supported by
+	//  older implementations. When sending multiple infohashes the packet length
+	//  should not exceed 1400 bytes to avoid MTU/fragmentation problems.
+
+	if ( nLength > 22 &&
+		 memcmp( pBuffer, _P("BT-SEARCH * HTTP/1.1\r\n") ) == 0 )
+	{
+		WORD nPort = 0;
+		const char* pStart = (const char*)pBuffer;
+		for ( const char* pNext = pStart; pNext; )
+		{
+			pNext += strspn( pNext, "\r\n" ); // skip CR, LF
+
+			const char* pEnd = strpbrk( pNext, "\r\n" ); // find next CR, LF
+
+			const size_t nPart = pEnd ? ( pEnd - pNext ) : ( nLength - ( pNext - pStart ) );
+
+			if ( nPart >= 5 + 1 && _strnicmp( pNext, _P("port:") ) == 0 )
+			{
+				sscanf_s( pNext + 5, "%hu", &nPort );
+			}
+			else if ( nPort && nPart >= 9 + 40 && _strnicmp( pNext, _P("infohash:") ) == 0 )
+			{
+				Hashes::BtHash oHash;
+				if ( oHash.fromString< Hashes::base16Encoding >( CString( pNext + 9, (int)nPart - 9 ).Trim() ) )
+				{
+					CSingleLock oLock( &Transfers.m_pSection, FALSE );
+					if ( oLock.Lock( 250 ) )
+					{
+						if ( CDownload* pDownload = Downloads.FindByBTH( oHash ) )
+							pDownload->AddSourceBT( Hashes::BtGuid(), &pHost->sin_addr, nPort );
+					}
+				}
+			}
+
+			pNext = pEnd;
+		}
+
+		return TRUE;
+	}
+
 	// Detect BitTorrent UDP tracker packets
 	if ( nLength > 7 )
 	{
 		if ( CBTTrackerPacket* pPacket = CBTTrackerPacket::New( pBuffer, nLength ) )
+		{
+			m_nInPackets++;
+
+			bHandled = pPacket->OnPacket( pHost );
+
+			pPacket->Release();
+
+			if ( bHandled )
+				return TRUE;
+		}
+	}
+
+	return FALSE;
+}
+
+BOOL CDatagrams::OnDatagram(const SOCKADDR_IN6* pHost, const BYTE* pBuffer, DWORD nLength)
+{
+	BOOL bHandled = FALSE;
+
+		// Detect Gnutella 2 packets
+	if ( nLength >= sizeof(SGP_HEADER) )
+	{
+		const SGP_HEADER* pSGP = (const SGP_HEADER*)pBuffer;
+		if ( ( *(DWORD*)pSGP->szTag & 0x00ffffff ) == ( *(DWORD*)SGP_TAG_2 & 0x00ffffff ) &&
+			pSGP->nPart && ( ! pSGP->nCount || pSGP->nPart <= pSGP->nCount ) )
+		{
+			if ( pSGP->nCount )
+			{
+				bHandled = OnReceiveSGP( pHost, pSGP, nLength - sizeof(SGP_HEADER) );
+			}
+			else
+			{
+				bHandled = OnAcknowledgeSGP( pHost, pSGP, nLength - sizeof(SGP_HEADER) );
+			}
+
+			if ( bHandled )
+				return TRUE;
+		}
+	}
+
+	// Detect BitTorrent packets
+	if ( nLength > 16 &&
+		 pBuffer[ 0 ] == 'd' &&
+		 pBuffer[ nLength - 1 ] == 'e' )
+	{
+		if ( CBTPacket* pPacket = CBTPacket::New( BT_PACKET_EXTENSION, BT_EXTENSION_NOP, pBuffer, nLength ) )
 		{
 			m_nInPackets++;
 
@@ -809,7 +1259,7 @@ BOOL CDatagrams::OnReceiveSGP(const SOCKADDR_IN* pHost, const SGP_HEADER* pHeade
 		pAck.nPart		= pHeader->nPart;
 		pAck.nCount		= 0;
 
-		CNetwork::SendTo( m_hSocket, (LPCSTR)&pAck, sizeof(pAck), pHost );
+		CNetwork::SendTo( m_hSocket[ 0 ], (LPCSTR)&pAck, sizeof(pAck), pHost );
 	}
 
 	BYTE nHash	= BYTE( ( pHost->sin_addr.S_un.S_un_b.s_b1
@@ -819,13 +1269,154 @@ BOOL CDatagrams::OnReceiveSGP(const SOCKADDR_IN* pHost, const SGP_HEADER* pHeade
 				+ pHost->sin_port
 				+ pHeader->nSequence ) & 0xff );
 
-	CDatagramIn** pHash = m_pInputHash + ( nHash & HASH_MASK );
+	CDatagramIn** pHash = m_pInputHash + ( nHash & DATAGRAM_HASH_MASK );
 
     CDatagramIn* pDG = *pHash;
 	for ( ; pDG ; pDG = pDG->m_pNextHash )
 	{
 		if (	pDG->m_pHost.sin_addr.S_un.S_addr == pHost->sin_addr.S_un.S_addr &&
 				pDG->m_pHost.sin_port == pHost->sin_port &&
+				pDG->m_nSequence == pHeader->nSequence &&
+				pDG->m_nCount == pHeader->nCount )
+		{
+			if ( pDG->Add( pHeader->nPart, &pHeader[1], nLength ) )
+			{
+				if ( CG2Packet* pPacket = pDG->ToG2Packet() )
+				{
+					try
+					{
+						m_nInPackets++;
+
+						pPacket->OnPacket( pHost );
+					}
+					catch ( CException* pException )
+					{
+						pException->Delete();
+						DEBUG_ONLY( pPacket->Debug( _T("Malformed packet.") ) );
+					}
+					pPacket->Release();
+				}
+
+				// Keep it to check sequence numbers
+				// Remove( pDG );
+			}
+
+			return TRUE;
+		}
+	}
+
+	while ( m_pInputFree == NULL || m_nBufferFree < pHeader->nCount )
+	{
+		if ( m_pInputLast == NULL ) return FALSE;
+		Remove( m_pInputLast );
+	}
+
+	if ( m_nBufferFree < pHeader->nCount ) return FALSE;
+
+	pDG = m_pInputFree;
+
+	pDG->Create( pHost, pHeader->nFlags, pHeader->nSequence, pHeader->nCount );
+
+	for ( WORD nPart = 0 ; nPart < pDG->m_nCount ; nPart++ )
+	{
+		ASSERT( pDG->m_pBuffer[ nPart ] == NULL );
+		pDG->m_pBuffer[ nPart ] = m_pBufferFree;
+		m_pBufferFree = m_pBufferFree->m_pNext;
+		m_nBufferFree--;
+	}
+
+	if ( pDG->Add( pHeader->nPart, &pHeader[1], nLength ) )
+	{
+		if ( CG2Packet* pPacket = pDG->ToG2Packet() )
+		{
+			try
+			{
+				m_nInPackets++;
+
+				pPacket->OnPacket( pHost );
+			}
+			catch ( CException* pException )
+			{
+				pException->Delete();
+				DEBUG_ONLY( pPacket->Debug( _T("Malformed packet.") ) );
+			}
+			pPacket->Release();
+		}
+
+		// Don't remove it, keep it to check sequence numbers
+		// Remove( pDG, TRUE );
+	}
+
+	// Always add it to the list
+
+	pDG->m_pNextTime = NULL;
+	pDG->m_pPrevTime = m_pInputFirst;
+
+	if ( m_pInputFirst )
+		m_pInputFirst->m_pNextTime = pDG;
+	else
+		m_pInputLast = pDG;
+
+	m_pInputFirst = pDG;
+	m_pInputFree = pDG->m_pNextHash;
+
+	if ( *pHash ) (*pHash)->m_pPrevHash = &pDG->m_pNextHash;
+	pDG->m_pNextHash = *pHash;
+	pDG->m_pPrevHash = pHash;
+	*pHash = pDG;
+
+	return TRUE;
+}
+
+BOOL CDatagrams::OnReceiveSGP(const SOCKADDR_IN6* pHost, const SGP_HEADER* pHeader, DWORD nLength)
+{
+#ifdef DEBUG_UDP
+	theApp.Message( MSG_DEBUG, _T("UDP: Received SGP (#%i) %i of %i from %s"),
+		pHeader->nSequence, pHeader->nPart, pHeader->nCount,
+		(LPCTSTR)CString( inet_ntoa( pHost->sin_addr ) ) );
+#endif
+
+	m_nInFrags++;
+
+	if ( pHeader->nFlags & SGP_ACKNOWLEDGE )
+	{
+		SGP_HEADER pAck;
+
+		memcpy( pAck.szTag, SGP_TAG_2, 3 );
+		pAck.nFlags		= 0;
+		pAck.nSequence	= pHeader->nSequence;
+		pAck.nPart		= pHeader->nPart;
+		pAck.nCount		= 0;
+
+		CNetwork::SendTo( m_hSocket[ 0 ], (LPCSTR)&pAck, sizeof(pAck), pHost );
+	}
+
+	BYTE nHash	= BYTE( ( pHost->sin6_addr.u.Byte[0]
+				+ pHost->sin6_addr.u.Byte[1]
+				+ pHost->sin6_addr.u.Byte[2]
+				+ pHost->sin6_addr.u.Byte[3]
+				+ pHost->sin6_addr.u.Byte[4]
+				+ pHost->sin6_addr.u.Byte[5]
+				+ pHost->sin6_addr.u.Byte[6]
+				+ pHost->sin6_addr.u.Byte[7]
+				+ pHost->sin6_addr.u.Byte[8]
+				+ pHost->sin6_addr.u.Byte[9]
+				+ pHost->sin6_addr.u.Byte[10]
+				+ pHost->sin6_addr.u.Byte[11]
+				+ pHost->sin6_addr.u.Byte[12]
+				+ pHost->sin6_addr.u.Byte[13]
+				+ pHost->sin6_addr.u.Byte[14]
+				+ pHost->sin6_addr.u.Byte[15]
+				+ pHost->sin6_port
+				+ pHeader->nSequence ) & 0xff );
+
+	CDatagramIn** pHash = m_pInputHash + ( nHash & DATAGRAM_HASH_MASK );
+
+    CDatagramIn* pDG = *pHash;
+	for ( ; pDG ; pDG = pDG->m_pNextHash )
+	{
+		if (	IN6_ADDR_EQUAL( &pDG->m_pHostIPv6.sin6_addr, &pHost->sin6_addr ) &&
+				pDG->m_pHostIPv6.sin6_port == pHost->sin6_port &&
 				pDG->m_nSequence == pHeader->nSequence &&
 				pDG->m_nCount == pHeader->nCount )
 		{
@@ -935,7 +1526,7 @@ BOOL CDatagrams::OnAcknowledgeSGP(const SOCKADDR_IN* pHost, const SGP_HEADER* pH
 				+ pHost->sin_port
 				+ pHeader->nSequence ) & 0xff );
 
-	CDatagramOut** pHash = m_pOutputHash + ( nHash & HASH_MASK );
+	CDatagramOut** pHash = m_pOutputHash + ( nHash & DATAGRAM_HASH_MASK );
 
 	for ( CDatagramOut* pDG = *pHash ; pDG ; pDG = pDG->m_pNextHash )
 	{
@@ -950,6 +1541,46 @@ BOOL CDatagrams::OnAcknowledgeSGP(const SOCKADDR_IN* pHost, const SGP_HEADER* pH
 	return TRUE;
 }
 
+BOOL CDatagrams::OnAcknowledgeSGP(const SOCKADDR_IN6* pHost, const SGP_HEADER* pHeader, DWORD /*nLength*/)
+{
+#ifdef DEBUG_UDP
+	theApp.Message( MSG_DEBUG, _T("UDP: Received SGP ack (#%i) %i from %s"),
+		pHeader->nSequence, pHeader->nPart, (LPCTSTR)CString( inet_ntoa( pHost->sin_addr ) ) );
+#endif
+
+	BYTE nHash	= BYTE( ( pHost->sin6_addr.u.Byte[0]
+				+ pHost->sin6_addr.u.Byte[1]
+				+ pHost->sin6_addr.u.Byte[2]
+				+ pHost->sin6_addr.u.Byte[3]
+				+ pHost->sin6_addr.u.Byte[4]
+				+ pHost->sin6_addr.u.Byte[5]
+				+ pHost->sin6_addr.u.Byte[6]
+				+ pHost->sin6_addr.u.Byte[7]
+				+ pHost->sin6_addr.u.Byte[8]
+				+ pHost->sin6_addr.u.Byte[9]
+				+ pHost->sin6_addr.u.Byte[10]
+				+ pHost->sin6_addr.u.Byte[11]
+				+ pHost->sin6_addr.u.Byte[12]
+				+ pHost->sin6_addr.u.Byte[13]
+				+ pHost->sin6_addr.u.Byte[14]
+				+ pHost->sin6_addr.u.Byte[15]
+				+ pHost->sin6_port
+				+ pHeader->nSequence ) & 0xff );
+
+	CDatagramOut** pHash = m_pOutputHash + ( nHash & DATAGRAM_HASH_MASK );
+
+	for ( CDatagramOut* pDG = *pHash ; pDG ; pDG = pDG->m_pNextHash )
+	{
+		if (	IN6_ADDR_EQUAL( &pDG->m_pHostIPv6.sin6_addr, &pHost->sin6_addr ) &&
+				pDG->m_pHostIPv6.sin6_port == pHost->sin6_port &&
+				pDG->m_nSequence == pHeader->nSequence )
+		{
+			if ( pDG->Acknowledge( pHeader->nPart ) ) Remove( pDG );
+		}
+	}
+
+	return TRUE;
+}
 //////////////////////////////////////////////////////////////////////
 // CDatagrams manage partial datagrams
 

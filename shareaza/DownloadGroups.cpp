@@ -1,7 +1,7 @@
 //
 // DownloadGroups.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2011.
+// Copyright (c) Shareaza Development Team, 2002-2017.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -52,6 +52,19 @@ CDownloadGroups::CDownloadGroups() :
 CDownloadGroups::~CDownloadGroups()
 {
 	Clear();
+}
+
+void CDownloadGroups::GetFolders(CStringIList& oFolders) const
+{
+	CQuickLock pLock( m_pSection );
+
+	for ( POSITION pos = GetIterator() ; pos ; )
+	{
+		const CDownloadGroup* pGroup = GetNext( pos );
+
+		if ( ! pGroup->m_sFolder.IsEmpty() && oFolders.Find( pGroup->m_sFolder ) == NULL )
+			oFolders.AddTail( pGroup->m_sFolder );
+	}
 }
 
 //////////////////////////////////////////////////////////////////////
@@ -187,17 +200,18 @@ void CDownloadGroups::CreateDefault()
 //////////////////////////////////////////////////////////////////////
 // CDownloadGroups completed path
 
-CString CDownloadGroups::GetCompletedPath(CDownload* pDownload)
+CString CDownloadGroups::GetCompletedPath(CDownload* pDownload) const
 {
 	CQuickLock pLock( m_pSection );
 
 	for ( POSITION pos = GetIterator() ; pos ; )
 	{
-		CDownloadGroup* pGroup = GetNext( pos );
+		const CDownloadGroup* pGroup = GetNext( pos );
 
 		if ( pGroup != m_pSuper && pGroup->Contains( pDownload ) )
 		{
-			if ( pGroup->m_sFolder.GetLength() ) return pGroup->m_sFolder;
+			if ( ! pGroup->m_sFolder.IsEmpty() )
+				return pGroup->m_sFolder;
 		}
 	}
 
@@ -247,7 +261,7 @@ BOOL CDownloadGroups::Load()
 				ar.Abort();
 				pFile.Abort();
 				pException->Delete();
-				theApp.Message( MSG_ERROR, _T("Failed to load download groups: %s"), strFile );
+				theApp.Message( MSG_ERROR, _T("Failed to load download groups: %s"), (LPCTSTR)strFile );
 			}
 			pFile.Close();
 		}
@@ -255,11 +269,11 @@ BOOL CDownloadGroups::Load()
 		{
 			pFile.Abort();
 			pException->Delete();
-			theApp.Message( MSG_ERROR, _T("Failed to load download groups: %s"), strFile );
+			theApp.Message( MSG_ERROR, _T("Failed to load download groups: %s"), (LPCTSTR)strFile );
 		}
 	}
 	else
-		theApp.Message( MSG_ERROR, _T("Failed to load download groups: %s"), strFile );
+		theApp.Message( MSG_ERROR, _T("Failed to load download groups: %s"), (LPCTSTR)strFile );
 
 	m_nSaveCookie = m_nBaseCookie;
 
@@ -278,7 +292,7 @@ BOOL CDownloadGroups::Save(BOOL bForce)
 	if ( ! pFile.Open( strTemp, CFile::modeWrite | CFile::modeCreate | CFile::shareExclusive | CFile::osSequentialScan ) )
 	{
 		DeleteFile( strTemp );
-		theApp.Message( MSG_ERROR, _T("Failed to save download groups: %s"), strTemp );
+		theApp.Message( MSG_ERROR, _T("Failed to save download groups: %s"), (LPCTSTR)strTemp );
 		return FALSE;
 	}
 
@@ -301,7 +315,7 @@ BOOL CDownloadGroups::Save(BOOL bForce)
 			ar.Abort();
 			pFile.Abort();
 			pException->Delete();
-			theApp.Message( MSG_ERROR, _T("Failed to save download groups: %s"), strTemp );
+			theApp.Message( MSG_ERROR, _T("Failed to save download groups: %s"), (LPCTSTR)strTemp );
 			return FALSE;
 		}
 		pFile.Close();
@@ -310,14 +324,14 @@ BOOL CDownloadGroups::Save(BOOL bForce)
 	{
 		pFile.Abort();
 		pException->Delete();
-		theApp.Message( MSG_ERROR, _T("Failed to save download groups: %s"), strTemp );
+		theApp.Message( MSG_ERROR, _T("Failed to save download groups: %s"), (LPCTSTR)strTemp );
 		return FALSE;
 	}
 
 	if ( ! MoveFileEx( strTemp, strFile, MOVEFILE_COPY_ALLOWED | MOVEFILE_REPLACE_EXISTING ) )
 	{
 		DeleteFile( strTemp );
-		theApp.Message( MSG_ERROR, _T("Failed to save download groups: %s"), strFile );
+		theApp.Message( MSG_ERROR, _T("Failed to save download groups: %s"), (LPCTSTR)strFile );
 		return FALSE;
 	}
 
@@ -423,7 +437,7 @@ void CDownloadGroups::CleanTemporary()
 
 			m_pList.RemoveAt( posCurrent );
 			delete pGroup;
-			
+
 			m_nBaseCookie ++;
 			m_nGroupCookie ++;
 

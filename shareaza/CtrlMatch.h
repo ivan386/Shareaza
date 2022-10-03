@@ -1,7 +1,7 @@
 //
 // CtrlMatch.h
 //
-// Copyright (c) Shareaza Development Team, 2002-2007.
+// Copyright (c) Shareaza Development Team, 2002-2015.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -45,7 +45,7 @@ public:
 	CMatchList*		m_pMatches;
 	LPCTSTR			m_sType;
 	CSchemaPtr		m_pSchema;
-	CList< CSchemaMember* > m_pColumns;
+	CSchemaMemberList m_pColumns;
 protected:
 	CHeaderCtrl		m_wndHeader;
 	CMatchTipCtrl	m_wndTip;
@@ -72,7 +72,7 @@ protected:
 public:
 	void	Update();
 	void	DestructiveUpdate();
-	void	SelectSchema(CSchemaPtr pSchema, CList< CSchemaMember* >* pColumns);
+	void	SelectSchema(CSchemaPtr pSchema, CSchemaMemberList* pColumns);
 	void	SetBrowseMode();
 	BOOL	HitTestHeader(const CPoint& point);
 	void	SetSortColumn(int nColumn = -1, BOOL bDirection = FALSE);
@@ -89,7 +89,7 @@ protected:
 	void	DrawItem(CDC& dc, CRect& rc, CMatchFile* pFile, CQueryHit* pHit, BOOL bFocus);
 	void	DrawStatus(CDC& dc, CRect& rcCol, CMatchFile* pFile, CQueryHit* pHit, BOOL bSelected, COLORREF crBack);
 	void	DrawRating(CDC& dc, CRect& rcCol, int nRating, BOOL bSelected, COLORREF crBack);
-	void	DrawCountry(CDC& dc, CRect& rcCol, CString sCountry, BOOL bSelected, COLORREF crBack);
+	void	DrawCountry(CDC& dc, CRect& rcCol, const CString& sCountry, BOOL bSelected, COLORREF crBack);
 	void	DrawEmptyMessage(CDC& dc, CRect& rcClient);
 	BOOL	HitTest(const CPoint& point, CMatchFile** poFile, CQueryHit** poHit, DWORD* pnIndex = NULL, CRect* pRect = NULL);
 	BOOL	GetItemRect(CMatchFile* pFindFile, CQueryHit* pFindHit, CRect* pRect);

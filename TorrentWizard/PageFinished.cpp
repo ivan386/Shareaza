@@ -110,7 +110,7 @@ void CFinishedPage::Start()
 		m_pBuilder->SetPieceSize( -1 );
 	else
 		m_pBuilder->SetPieceSize( pOutput->m_nPieceIndex );
-	m_pBuilder->Enable( pOutput->m_bSHA1, pOutput->m_bED2K, pOutput->m_bMD5 );
+	m_pBuilder->Enable( pOutput->m_bSHA1, pOutput->m_bED2K, pOutput->m_bMD5, pOutput->m_bTTH);
 
 	GET_PAGE( CTrackerPage, pTracker );
 	m_pBuilder->AddTrackerURL( pTracker->m_sTracker );
@@ -293,37 +293,15 @@ void CFinishedPage::OnTorrentCopy()
 	{
 		CString strText;
 		m_wndTorrentName.GetWindowText( strText );
-		OSVERSIONINFO pVersion;
-		pVersion.dwOSVersionInfoSize = sizeof(OSVERSIONINFO);
-		GetVersionEx( &pVersion );
 
-		if ( pVersion.dwPlatformId == VER_PLATFORM_WIN32_NT )
-		{
-			HANDLE hMem = GlobalAlloc( GMEM_MOVEABLE|GMEM_DDESHARE, strText.GetLength() * 2 + 1 );
-			LPVOID pMem = GlobalLock( hMem );
-			CopyMemory( pMem, (LPCTSTR)strText.GetBuffer(), strText.GetLength() * 2 + 1 );
-			GlobalUnlock( hMem );
+		HANDLE hMem = GlobalAlloc( GMEM_MOVEABLE|GMEM_DDESHARE, strText.GetLength() * 2 + 1 );
+		LPVOID pMem = GlobalLock( hMem );
+		CopyMemory( pMem, (LPCTSTR)strText.GetBuffer(), strText.GetLength() * 2 + 1 );
+		GlobalUnlock( hMem );
 			
-			EmptyClipboard();
-			SetClipboardData( CF_UNICODETEXT, hMem );
-			CloseClipboard();
-		}
-		else
-		{
-			int nLen = WideCharToMultiByte( CP_ACP,  0, (LPCTSTR)strText.GetBuffer(), -1, NULL, 0, NULL, NULL );
-			LPSTR pStr	= new CHAR[ nLen + 1 ];
-			WideCharToMultiByte( CP_ACP, 0, (LPCTSTR)strText.GetBuffer(), -1, pStr, nLen, NULL, NULL );
-			pStr[ nLen ] = 0;
-			HANDLE hMem = GlobalAlloc( GMEM_MOVEABLE|GMEM_DDESHARE, nLen + 1 );
-			LPVOID pMem = GlobalLock( hMem );
-			CopyMemory( pMem, pStr, nLen + 1 );
-			GlobalUnlock( hMem );
-			
-			EmptyClipboard();
-			SetClipboardData( CF_TEXT, hMem );
-			CloseClipboard();
-			delete [] pStr;
-		}
+		EmptyClipboard();
+		SetClipboardData( CF_UNICODETEXT, hMem );
+		CloseClipboard();
 	}
 }
 

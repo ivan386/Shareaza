@@ -1,7 +1,7 @@
 //
 // SkinTranslate.h
 //
-// Copyright (c) Shareaza Development Team, 2009-2011.
+// Copyright (c) Shareaza Development Team, 2009-2014.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -69,24 +69,21 @@ protected:
 	class CItem
 	{
 	public:
-		inline CItem() :
-			bKeepUnderscores( false )
-		{
-		}
-		inline CItem(const CString& r, const CString& t, bool k) :
-			sRef( r ), sID( t ), bKeepUnderscores( k )
-		{
-		}
-		inline void Clear()
-		{
-			sRef.Empty();
-			sID.Empty();
-			sTranslated.Empty();
-		}
+		CItem();
+		CItem(const CItem& it);
+		CItem(const CString& r, const CString& t, bool k);
+		CItem& operator=(const CItem& it);
+
+		void Clear();
+		void SetTranslate(LPCSTR szText);
+		void SetID(LPCSTR szText);
+
 		CString sRef;
 		CString sID;
 		CString sTranslated;
 		bool	bKeepUnderscores;
+		bool	bFuzzy;
+		bool	bError;
 	} ;
 
 	typedef CAtlList< CItem > CItemList;
@@ -101,8 +98,8 @@ protected:
 
 	static CStringA UTF8Encode(LPCWSTR szInput, int nInput = -1);
 	static CStringW UTF8Decode(LPCSTR szInput, int nInput = -1);
-	static CString& MakeSafe(CString& str);
-	static CString& UnMakeSafe(CString& str);
+	static CString MakeSafe(const CString& str);
+	static CString UnMakeSafe(const CString& str);
 	static bool IsEqual(const CString& _left, const CString& _right);
 
 	// Re-index strings

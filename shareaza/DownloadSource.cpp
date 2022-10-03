@@ -1,7 +1,7 @@
 //
 // DownloadSource.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2013.
+// Copyright (c) Shareaza Development Team, 2002-2014.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -168,21 +168,49 @@ CDownloadSource::CDownloadSource(const CDownload* pDownload,
 
 	if ( oGUID )
 	{
-		m_sURL.Format( _T("btc://%s:%i/%s/%s/"),
+		m_sURL.Format( _T("btc://%s:%u/%s/%s/"),
 			(LPCTSTR)CString( inet_ntoa( *pAddress ) ), nPort,
             (LPCTSTR)oGUID.toString(),
 			(LPCTSTR)pDownload->m_oBTH.toString() );
 	}
 	else
 	{
-		m_sURL.Format( _T("btc://%s:%i//%s/"),
+		m_sURL.Format( _T("btc://%s:%u//%s/"),
 			(LPCTSTR)CString( inet_ntoa( *pAddress ) ), nPort,
 			(LPCTSTR)pDownload->m_oBTH.toString() );
 	}
 
 	m_bBTH		= TRUE;
 	m_oGUID		= transformGuid( oGUID );
-	m_sServer	= _T("BitTorrent");
+	m_sServer	= protocolNames[ PROTOCOL_BT ];
+
+	ResolveURL();
+}
+
+CDownloadSource::CDownloadSource(const CDownload* pDownload,
+	const Hashes::BtGuid& oGUID, const IN6_ADDR* pAddress, WORD nPort)
+	: m_oAvailable		( pDownload->m_nSize )
+	, m_oPastFragments	( pDownload->m_nSize )
+{
+	Construct( pDownload );
+
+	if ( oGUID )
+	{
+		m_sURL.Format( _T("btc://%s:%u/%s/%s/"),
+			(LPCTSTR)IPv6ToString( pAddress ), nPort,
+            (LPCTSTR)oGUID.toString(),
+			(LPCTSTR)pDownload->m_oBTH.toString() );
+	}
+	else
+	{
+		m_sURL.Format( _T("btc://%s:%u//%s/"),
+			(LPCTSTR)IPv6ToString( pAddress ), nPort,
+			(LPCTSTR)pDownload->m_oBTH.toString() );
+	}
+
+	m_bBTH		= TRUE;
+	m_oGUID		= transformGuid( oGUID );
+	m_sServer	= protocolNames[ PROTOCOL_BT ];
 
 	ResolveURL();
 }
@@ -191,7 +219,7 @@ CDownloadSource::CDownloadSource(const CDownload* pDownload,
 // CDownloadSource construction from URL
 
 CDownloadSource::CDownloadSource(const CDownload* pDownload, LPCTSTR pszURL,
-	BOOL /*bSHA1*/, BOOL bHashAuth, FILETIME* pLastSeen, int nRedirectionCount)
+	BOOL bHashAuth, FILETIME* pLastSeen, int nRedirectionCount, BOOL bPartialSame)
 	: m_oAvailable		( pDownload->m_nSize )
 	, m_oPastFragments	( pDownload->m_nSize )
 {
@@ -201,6 +229,7 @@ CDownloadSource::CDownloadSource(const CDownload* pDownload, LPCTSTR pszURL,
 
 	m_sURL			= pszURL;
 	m_bHashAuth		= bHashAuth;
+	m_bPartialSame	= bPartialSame;
 
 	if ( pLastSeen )
 	{
@@ -225,6 +254,7 @@ void CDownloadSource::Construct(const CDownload* pDownload)
 	m_bSelected				= FALSE;
 	m_nProtocol				= PROTOCOL_NULL;
 	m_pAddress.s_addr		= 0;
+	IN6_SET_ADDR_UNSPECIFIED( &m_pAddressIPv6 );
 	m_nPort					= 0;
 	m_pServerAddress.s_addr	= 0;
 	m_nServerPort			= 0;
@@ -235,6 +265,7 @@ void CDownloadSource::Construct(const CDownload* pDownload)
 	m_bED2K					= FALSE;
 	m_bBTH					= FALSE;
 	m_bMD5					= FALSE;
+	m_bPartialSame			= FALSE;
 	m_nSpeed				= 0;
 	m_bPushOnly				= FALSE;
 	m_bCloseConn			= FALSE;
@@ -245,6 +276,7 @@ void CDownloadSource::Construct(const CDownload* pDownload)
 	m_nSortOrder			= 0xFFFFFFFF;
 	m_crColour				= RGB( 0, 0, 0 );
 	m_tAttempt				= 0;
+	m_tLastQuery			= 0;
 	m_bKeep					= FALSE;
 	m_nFailures				= 0;
 	m_nBusyCount			= 0;
@@ -281,6 +313,7 @@ BOOL CDownloadSource::ResolveURL()
 
 	m_nProtocol	= pURL.m_nProtocol;
 	m_pAddress	= pURL.m_pAddress;
+	m_pAddressIPv6 = pURL.m_pAddressIPv6;
 	m_nPort		= pURL.m_nPort;
 	m_sName		= pURL.m_sName;
 	
@@ -331,9 +364,17 @@ void CDownloadSource::Serialize(CArchive& ar, int nVersion /* DOWNLOAD_SER_VERSI
 		SerializeOut( ar, m_oGUID );
 		
 		ar << m_nPort;
-		if ( m_nPort ) ar.Write( &m_pAddress, sizeof(m_pAddress) );
+		if ( m_nPort ) 
+		{
+			ar.Write( &m_pAddress, sizeof(m_pAddress) );
+			ar.Write( &m_pAddressIPv6, sizeof(m_pAddressIPv6) );
+		}
 		ar << m_nServerPort;
-		if ( m_nServerPort ) ar.Write( &m_pServerAddress, sizeof(m_pServerAddress) );
+		if ( m_nServerPort )
+		{
+			ar.Write( &m_pServerAddress, sizeof(m_pServerAddress) );
+			ar.Write( &m_pServerAddress, sizeof(m_pIPv6ServerAddress) );
+		}
 		
 		ar << m_sName;
 		ar << m_nIndex;
@@ -367,10 +408,19 @@ void CDownloadSource::Serialize(CArchive& ar, int nVersion /* DOWNLOAD_SER_VERSI
 		SerializeIn( ar, m_oGUID, nVersion);
 		
 		ar >> m_nPort;
-		if ( m_nPort ) ReadArchive( ar, &m_pAddress, sizeof(m_pAddress) );
+		if ( m_nPort )
+		{ 
+			ReadArchive( ar, &m_pAddress, sizeof(m_pAddress) );
+			if ( nVersion >= 43 ) ReadArchive( ar, &m_pAddressIPv6, sizeof(m_pAddressIPv6) );
+
+		}
+
 		ar >> m_nServerPort;
-		if ( m_nServerPort ) ReadArchive( ar, &m_pServerAddress, sizeof(m_pServerAddress) );
-		
+		if ( m_nServerPort )
+		{
+			ReadArchive( ar, &m_pServerAddress, sizeof(m_pServerAddress) );
+			if ( nVersion >= 43 ) ReadArchive( ar, &m_pIPv6ServerAddress, sizeof(m_pIPv6ServerAddress) );
+		}
 		ar >> m_sName;
 		ar >> m_nIndex;
 		ar >> m_bHashAuth;
@@ -486,7 +536,7 @@ CDownloadTransfer* CDownloadSource::CreateTransfer(LPVOID pParam)
 //////////////////////////////////////////////////////////////////////
 // CDownloadSource check
 
-BOOL CDownloadSource::CanInitiate(BOOL bNetwork, BOOL bEstablished)
+BOOL CDownloadSource::CanInitiate(BOOL bNetwork, BOOL bEstablished, bool bFirstAttempt)
 {
 	if( !Network.IsConnected() ) return FALSE;
 
@@ -561,7 +611,7 @@ BOOL CDownloadSource::CanInitiate(BOOL bNetwork, BOOL bEstablished)
 	if ( ( Settings.Connection.IgnoreOwnIP ) && Network.IsSelfIP( m_pAddress ) ) 
 		return FALSE;
 	
-	return bEstablished || Downloads.AllowMoreTransfers( (IN_ADDR*)&m_pAddress );
+	return bEstablished || Downloads.AllowMoreTransfers( (IN_ADDR*)&m_pAddress, bFirstAttempt );
 }
 
 bool CDownloadSource::IsPreviewCapable() const
@@ -623,20 +673,9 @@ void CDownloadSource::OnFailure(BOOL bNondestructive, DWORD nRetryAfter)
 		m_pTransfer = NULL;
 	}
 
-	DWORD nDelay = CalcFailureDelay(nRetryAfter);
-
-	// This is not too good because if the source has Uploaded even 1Byte data, Max failure gets set to 40
-	//int nMaxFailures = ( m_bReadContent ? 40 : 3 );
-
-	int nMaxFailures = Settings.Downloads.MaxAllowedFailures;
-
-	if ( nMaxFailures < 20 &&
-		m_pDownload->GetSourceCount() > Settings.Downloads.StartDroppingFailedSourcesNumber )
-		nMaxFailures = 0;
-
-	if ( bNondestructive || ( ++m_nFailures < nMaxFailures ) )
+	if ( bNondestructive || ( ++m_nFailures < Settings.Downloads.MaxAllowedFailures ) )
 	{
-		m_tAttempt = max( m_tAttempt, nDelay );
+		m_tAttempt = max( m_tAttempt, CalcFailureDelay( nRetryAfter ) );
 		m_pDownload->SetModified();
 	}
 	else
@@ -657,9 +696,13 @@ DWORD CDownloadSource::CalcFailureDelay(DWORD nRetryAfter) const
 {
 	DWORD nDelay;
 
-	if ( nRetryAfter != 0 )
+	if ( nRetryAfter )
 	{
 		nDelay = nRetryAfter * 1000;
+	}
+	else if ( m_pDownload->IsPaused() )
+	{
+		nDelay = Settings.Downloads.ConnectThrottle;
 	}
 	else
 	{
@@ -885,6 +928,7 @@ BOOL CDownloadSource::PushRequest()
 			return FALSE;
 		if ( Network.SendPush( m_oGUID, m_nIndex ) )
 		{
+			theApp.Message( MSG_DEBUG, _T("Sending push request to %s %s..."), (LPCTSTR)CString( inet_ntoa( m_pAddress ) ).MakeUpper(), (LPCTSTR)m_oGUID.toString< Hashes::base16Encoding >().MakeUpper() );
 			theApp.Message( MSG_INFO, IDS_DOWNLOAD_PUSH_SENT, (LPCTSTR)m_pDownload->m_sName );
 			m_tAttempt = GetTickCount() + Settings.Downloads.PushTimeout;
 			return TRUE;
@@ -951,7 +995,7 @@ void CDownloadSource::SetAvailableRanges(LPCTSTR pszRanges)
 		QWORD nFirst = 0, nLast = 0;
 		
 		// 0 - 0 has special meaning
-		if ( _stscanf( strRange, _T("%I64i-%I64i"), &nFirst, &nLast ) == 2 && nLast > nFirst )
+		if ( _stscanf( strRange, _T("%I64u-%I64u"), &nFirst, &nLast ) == 2 && nLast > nFirst )
 		{
             if( nFirst < m_oAvailable.limit() ) // Sanity check
             {
@@ -1033,10 +1077,27 @@ void CDownloadSource::Draw(CDC* pDC, CRect* prcBar, COLORREF crNatural)
 	{
 		Fragments::List::const_iterator pItr = m_oAvailable.begin();
 		const Fragments::List::const_iterator pEnd = m_oAvailable.end();
-		for ( ; pItr != pEnd; ++pItr )
+
+		if ( pItr != pEnd )
 		{
+			QWORD nOffset = pItr->begin();
+			QWORD nLength = pItr->size();
+
+			for ( ++pItr; pItr != pEnd; ++pItr )
+			{
+				if ( pItr->begin() == nOffset + nLength )
+					nLength += pItr->size();
+				else
+				{
+					CFragmentBar::DrawFragment( pDC, prcBar, m_pDownload->m_nSize,
+						nOffset, nLength, crNatural, false );
+					nOffset = pItr->begin();
+					nLength = pItr->size();
+				}
+			}
+
 			CFragmentBar::DrawFragment( pDC, prcBar, m_pDownload->m_nSize,
-				pItr->begin(), pItr->size(), crNatural, false );
+						nOffset, nLength, crNatural, false );
 		}
 
 		pDC->FillSolidRect( prcBar, CoolInterface.m_crWindow );
@@ -1080,9 +1141,25 @@ void CDownloadSource::Draw(CDC* pDC, CRect* prcBar)
 
 	Fragments::List::const_iterator pItr = m_oPastFragments.begin();
 	const Fragments::List::const_iterator pEnd = m_oPastFragments.end();
-	for ( ; pItr != pEnd ; ++pItr )
+	if ( pItr != pEnd )
 	{
+		QWORD nOffset = pItr->begin();
+		QWORD nLength = pItr->size();
+
+		for ( ++pItr ; pItr != pEnd; ++pItr )
+		{
+			if ( pItr->begin() == nOffset + nLength )
+				nLength += pItr->size();
+			else
+			{
+				CFragmentBar::DrawFragment( pDC, prcBar, m_pDownload->m_nSize,
+					nOffset, nLength, crTransfer, true );
+				nOffset = pItr->begin();
+				nLength = pItr->size();
+			}
+		}
+
 		CFragmentBar::DrawFragment( pDC, prcBar, m_pDownload->m_nSize,
-			pItr->begin(), pItr->size(), crTransfer, true );
+			nOffset, nLength, crTransfer, true );
 	}
 }

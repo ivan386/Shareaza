@@ -1,7 +1,7 @@
 //
 // QueryHit.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2012.
+// Copyright (c) Shareaza Development Team, 2002-2016.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -32,7 +32,7 @@
 #include "Transfer.h"
 #include "SchemaCache.h"
 #include "Schema.h"
-#include "ZLib.h"
+#include "ZLibWarp.h"
 #include "XML.h"
 #include "GGEP.h"
 #include "VendorCache.h"
@@ -52,6 +52,8 @@ CQueryHit::CQueryHit(PROTOCOLID nProtocol, const Hashes::Guid& oSearchID) :
 	m_pNext			( NULL ),
 	m_oSearchID		( oSearchID ),
 	m_nProtocol		( nProtocol ),
+	m_pAddress		(),
+	m_pAddressIPv6	(),
 	m_nPort			( 0 ),
 	m_nSpeed		( 0 ),
 	m_pVendor		( VendorCache.m_pNull ),
@@ -82,7 +84,6 @@ CQueryHit::CQueryHit(PROTOCOLID nProtocol, const Hashes::Guid& oSearchID) :
 	m_bSelected		( FALSE ),
 	m_bResolveURL	( TRUE )
 {
-	m_pAddress.s_addr = 0;
 }
 
 CQueryHit::CQueryHit(const CQueryHit& pHit) :
@@ -159,12 +160,12 @@ CQueryHit* CQueryHit::FromG1Packet(CG1Packet* pPacket, int* pnHops)
 		}
 
 		// Read Vendor Code
-		CVendor* pVendor = VendorCache.m_pNull;
+		CVendorPtr pVendor = VendorCache.m_pNull;
 		if ( pPacket->GetRemaining() >= Hashes::Guid::byteCount + 4u )
 		{
 			CHAR szaVendor[ 4 ];
 			pPacket->Read( szaVendor, 4 );
-			TCHAR szVendor[ 5 ] = { szaVendor[0], szaVendor[1], szaVendor[2], szaVendor[3], 0 };
+			TCHAR szVendor[ 5 ] = { (TCHAR)szaVendor[0], (TCHAR)szaVendor[1], (TCHAR)szaVendor[2], (TCHAR)szaVendor[3], 0 };
 			if ( Security.IsVendorBlocked( szVendor ) )
 			{
 				theApp.Message( MSG_DEBUG | MSG_FACILITY_SEARCH, _T("[G1] Got hit packet from invalid client") );
@@ -258,7 +259,7 @@ CQueryHit* CQueryHit::FromG1Packet(CG1Packet* pPacket, int* pnHops)
 				if ( pVendor )
 					strVendorName = pVendor->m_sName;
 
-				theApp.Message( MSG_DEBUG | MSG_FACILITY_SEARCH, L"[G1] Invalid compressed metadata. Vendor: %s", strVendorName );
+				theApp.Message( MSG_DEBUG | MSG_FACILITY_SEARCH, L"[G1] Invalid compressed metadata. Vendor: %s", (LPCTSTR)strVendorName );
 			}
 		}
 
@@ -326,13 +327,14 @@ CQueryHit* CQueryHit::FromG2Packet(CG2Packet* pPacket, int* pnHops)
 	Hashes::Guid oClientID;
 
 	DWORD		nAddress	= 0;
+	IN6_ADDR	nIPv6Address = { 0 };
 	WORD		nPort		= 0;
 	BOOL		bBusy		= FALSE;
 	BOOL		bPush		= FALSE;
 	BOOL		bStable		= TRUE;
 	BOOL		bBrowseHost	= FALSE;
 	BOOL		bPeerChat	= FALSE;
-	CVendor*	pVendor		= VendorCache.m_pNull;
+	CVendorPtr	pVendor		= VendorCache.m_pNull;
 	bool		bSpam		= false;
 	CString		strNick;
 	DWORD		nGroupState[8][4] = {};
@@ -434,7 +436,7 @@ CQueryHit* CQueryHit::FromG2Packet(CG2Packet* pPacket, int* pnHops)
 							strNick = pPacket->ReadString( nInner );
 							CT2A pszIP( (LPCTSTR)strNick );
 							ip = inet_addr( (LPCSTR)pszIP );
-							if ( ip != INADDR_NONE && strcmp( inet_ntoa( *(IN_ADDR*)&ip ), (LPCSTR)pszIP ) == 0 &&
+							if ( ip != INADDR_NONE && _tcscmp( (LPCTSTR)CString( inet_ntoa( *(IN_ADDR*)&ip ) ), strNick ) == 0 &&
 								nAddress != ip )
 								bSpam = true;
 							if ( ! strNick.CompareNoCase( _T( VENDOR_CODE ) ) )
@@ -448,7 +450,7 @@ CQueryHit* CQueryHit::FromG2Packet(CG2Packet* pPacket, int* pnHops)
 				break;
 
 			case G2_PACKET_NEIGHBOUR_HUB:
-				if ( nLength >= 6 )
+				if ( nLength == 6 )
 				{
 					SOCKADDR_IN pHub;
 					pHub.sin_addr.S_un.S_addr = pPacket->ReadLongLE();
@@ -477,12 +479,36 @@ CQueryHit* CQueryHit::FromG2Packet(CG2Packet* pPacket, int* pnHops)
 
 			case G2_PACKET_NODE_ADDRESS:
 			case G2_PACKET_NODE_INFO:
-				if ( nLength >= 6 )
+				if ( nLength == 6 ) // IPv4
 				{
 					nAddress = pPacket->ReadLongLE();
 					if ( Network.IsReserved( (IN_ADDR*)&nAddress ) || Security.IsDenied( (IN_ADDR*)&nAddress ) )
 						bSpam = true;
+
 					nPort = pPacket->ReadShortBE();
+				}
+				else if( nLength == 18 ) // IPv6
+				{
+					pPacket->Read( &nIPv6Address, 16 );
+
+					nPort = pPacket->ReadShortBE();
+					if ( Network.IsReserved( &nIPv6Address ) || Security.IsDenied( &nIPv6Address ) )
+					{
+						nIPv6Address = in6addr_any;
+						bSpam |= ( nAddress == 0 );
+					}
+				}
+				else if( nLength == 6 + 18 ) // IPv4 + IPv6
+				{
+					nAddress = pPacket->ReadLongLE();
+					nPort = pPacket->ReadShortBE();
+					if ( Network.IsReserved( (IN_ADDR*)&nAddress ) || Security.IsDenied( (IN_ADDR*)&nAddress ) )
+						nAddress = 0;
+
+					pPacket->Read( &nIPv6Address, 16 );
+					nPort = pPacket->ReadShortBE();
+					if ( Network.IsReserved( &nIPv6Address ) || Security.IsDenied( &nIPv6Address ) )
+						bSpam |= ( nAddress == 0 );
 				}
 				else
 					theApp.Message( MSG_DEBUG | MSG_FACILITY_SEARCH, _T("[G2] Hit Error: Got node address with invalid length (%u bytes)"), nLength );
@@ -617,6 +643,7 @@ CQueryHit* CQueryHit::FromG2Packet(CG2Packet* pPacket, int* pnHops)
 		pHit->m_oSearchID	= oSearchID;
 		pHit->m_oClientID	= oClientID;
 		pHit->m_pAddress	= *(IN_ADDR*)&nAddress;
+		pHit->m_pAddressIPv6 = nIPv6Address;
 		pHit->m_sCountry	= theApp.GetCountryCode( pHit->m_pAddress );
 		pHit->m_nPort		= nPort;
 		pHit->m_pVendor		= pVendor;
@@ -669,7 +696,7 @@ CQueryHit* CQueryHit::FromG2Packet(CG2Packet* pPacket, int* pnHops)
 			SOCKADDR_IN pHub = { AF_INET };
 			pHub.sin_addr.s_addr = iter->first;
 			pHub.sin_port = iter->second;
-			Network.NodeRoute->Add( oClientID, &pHub );
+			Network.NodeRoute->Add( oClientID, (SOCKADDR*) &pHub );
 		}
 	}
 
@@ -1004,13 +1031,15 @@ BOOL CQueryHit::CheckValid() const
 {
 	if ( m_sName.GetLength() > 160 )
 	{
-		theApp.Message( MSG_DEBUG | MSG_FACILITY_SEARCH, _T("Got bogus hit packet from %s. Too long name (> 160): %d symbols. File \"%s\"."), (LPCTSTR)CString( inet_ntoa( m_pAddress ) ), m_sName.GetLength(), m_sName );
+		theApp.Message( MSG_DEBUG | MSG_FACILITY_SEARCH, _T("Got bogus hit packet from %s. Too long name (> 160): %d symbols. File \"%s\"."),
+			(LPCTSTR)CString( inet_ntoa( m_pAddress ) ), m_sName.GetLength(), (LPCTSTR)m_sName );
 		return FALSE;
 	}
 
 	if ( ! HasHash() )
 	{
-		theApp.Message( MSG_DEBUG | MSG_FACILITY_SEARCH, _T("Got bogus hit packet from %s. No hash. File \"%s\"."), (LPCTSTR)CString( inet_ntoa( m_pAddress ) ), m_sName );
+		theApp.Message( MSG_DEBUG | MSG_FACILITY_SEARCH, _T("Got bogus hit packet from %s. No hash. File \"%s\"."),
+			(LPCTSTR)CString( inet_ntoa( m_pAddress ) ), (LPCTSTR)m_sName );
 		return FALSE;
 	}
 
@@ -1024,7 +1053,8 @@ BOOL CQueryHit::CheckValid() const
 			if ( sExt.CompareNoCase( _T("wma") ) == 0 ||
 				 sExt.CompareNoCase( _T("wmv") ) == 0 )
 			{
-				theApp.Message( MSG_DEBUG | MSG_FACILITY_SEARCH, _T("Got bogus hit packet from %s. No metadata in extended client. File \"%s\"."), (LPCTSTR)CString( inet_ntoa( m_pAddress ) ), m_sName );
+				theApp.Message( MSG_DEBUG | MSG_FACILITY_SEARCH, _T("Got bogus hit packet from %s. No metadata in extended client. File \"%s\"."),
+					(LPCTSTR)CString( inet_ntoa( m_pAddress ) ), (LPCTSTR)m_sName );
 				return FALSE;
 			}
 		}
@@ -1037,7 +1067,8 @@ BOOL CQueryHit::CheckValid() const
 		{
 			if ( ++nCurWord > 50 )
 			{
-				theApp.Message( MSG_DEBUG | MSG_FACILITY_SEARCH, _T("Got bogus hit packet from %s. Too long word (> 50 symbols) in name. File \"%s\"."), (LPCTSTR)CString( inet_ntoa( m_pAddress ) ), m_sName );
+				theApp.Message( MSG_DEBUG | MSG_FACILITY_SEARCH, _T("Got bogus hit packet from %s. Too long word (> 50 symbols) in name. File \"%s\"."),
+					(LPCTSTR)CString( inet_ntoa( m_pAddress ) ), (LPCTSTR)m_sName );
 				return FALSE;
 			}
 		}
@@ -1050,7 +1081,8 @@ BOOL CQueryHit::CheckValid() const
 	}
 	if ( nWords > 30 )
 	{
-		theApp.Message( MSG_DEBUG | MSG_FACILITY_SEARCH, _T("Got bogus hit packet from %s. Too many words (> 30) in name: %d words. File \"%s\"."), (LPCTSTR)CString( inet_ntoa( m_pAddress ) ), nWords, m_sName );
+		theApp.Message( MSG_DEBUG | MSG_FACILITY_SEARCH, _T("Got bogus hit packet from %s. Too many words (> 30) in name: %d words. File \"%s\"."),
+			(LPCTSTR)CString( inet_ntoa( m_pAddress ) ), nWords, (LPCTSTR)m_sName );
 		return FALSE;
 	}
 
@@ -1061,7 +1093,8 @@ BOOL CQueryHit::CheckValid() const
 			CString sValue = pAttribute->GetValue();
 			if ( _tcsnistr( (LPCTSTR)sValue, L"not related", 11 ) )
 			{
-				theApp.Message( MSG_DEBUG | MSG_FACILITY_SEARCH, _T("Got bogus hit packet from %s. Bogus matadata: \"%s\". File \"%s\"."), (LPCTSTR)CString( inet_ntoa( m_pAddress ) ), sValue, m_sName );
+				theApp.Message( MSG_DEBUG | MSG_FACILITY_SEARCH, _T("Got bogus hit packet from %s. Bogus matadata: \"%s\". File \"%s\"."),
+					(LPCTSTR)CString( inet_ntoa( m_pAddress ) ), (LPCTSTR)sValue, (LPCTSTR)m_sName );
 				return FALSE;
 			}
 		}
@@ -1202,7 +1235,7 @@ void CQueryHit::ReadGGEP(CG1Packet* pPacket)
 				else if ( oBTH.fromUrn(   strURN ) );	// Got BTH base32
 				else if ( oBTH.fromUrn< Hashes::base16Encoding >( strURN ) );	// Got BTH base16
 				else
-					theApp.Message( MSG_DEBUG | MSG_FACILITY_SEARCH, _T("[G1] Got hit packet with unknown GGEP URN: \"%s\""), strURN );
+					theApp.Message( MSG_DEBUG | MSG_FACILITY_SEARCH, _T("[G1] Got hit packet with unknown GGEP URN: \"%s\""), (LPCTSTR)strURN );
 			}
 			else if ( pItemPos->IsNamed( GGEP_HEADER_TTROOT ) )
 			{
@@ -1242,7 +1275,7 @@ void CQueryHit::ReadGGEP(CG1Packet* pPacket)
 			else if ( pItemPos->IsNamed( GGEP_HEADER_ALTS_TLS ) );
 				// AlternateLocations that support TLS not supported yet
 			else
-				DEBUG_ONLY( theApp.Message( MSG_DEBUG | MSG_FACILITY_SEARCH, _T("[G1] Got hit packet with unknown GGEP \"%s\" (%d bytes)"), pItemPos->m_sID, pItemPos->m_nLength ) );
+				DEBUG_ONLY( theApp.Message( MSG_DEBUG | MSG_FACILITY_SEARCH, _T("[G1] Got hit packet with unknown GGEP \"%s\" (%d bytes)"), (LPCTSTR)pItemPos->m_sID, pItemPos->m_nLength ) );
 		}
 
 		if ( oSHA1  && ! m_oSHA1 )  m_oSHA1  = oSHA1;
@@ -1262,7 +1295,7 @@ void CQueryHit::ReadGGEP(CG1Packet* pPacket)
 //////////////////////////////////////////////////////////////////////
 // CQueryHit G1 attributes suffix
 
-void CQueryHit::ParseAttributes(const Hashes::Guid& oClientID, CVendor* pVendor, BYTE* nFlags, BOOL bChat, BOOL bBrowseHost)
+void CQueryHit::ParseAttributes(const Hashes::Guid& oClientID, CVendorPtr pVendor, BYTE* nFlags, BOOL bChat, BOOL bBrowseHost)
 {
 	m_oClientID		= oClientID;
 	m_pVendor		= pVendor ? pVendor : VendorCache.m_pNull;
@@ -1631,15 +1664,15 @@ void CQueryHit::ReadEDPacket(CEDPacket* pPacket, const SOCKADDR_IN* pServer, BOO
 
 			if ( pTag.m_sValue.GetLength() < 3 )
 			{
-				_stscanf( pTag.m_sValue, _T("%i"), &nSecs );
+				_stscanf( pTag.m_sValue, _T("%lu"), &nSecs );
 			}
 			else if ( pTag.m_sValue.GetLength() < 6 )
 			{
-				_stscanf( pTag.m_sValue, _T("%i:%i"), &nMins, &nSecs );
+				_stscanf( pTag.m_sValue, _T("%lu:%lu"), &nMins, &nSecs );
 			}
 			else
 			{
-				_stscanf( pTag.m_sValue, _T("%i:%i:%i"), &nHours, &nMins, &nSecs );
+				_stscanf( pTag.m_sValue, _T("%lu:%lu:%lu"), &nHours, &nMins, &nSecs );
 			}
 
 			nLength = (nHours * 60 * 60) + (nMins * 60) + (nSecs);
@@ -1781,7 +1814,7 @@ void CQueryHit::Resolve()
 	if ( m_bPreview && m_oSHA1 && m_sPreview.IsEmpty() )
 	{
 		m_sPreview.Format( _T("http://%s:%u/gnutella/preview/v1?%s"),
-			(LPCTSTR)CString( inet_ntoa( m_pAddress ) ), m_nPort,
+			(LPCTSTR)GetIPForURL(), m_nPort,
 			(LPCTSTR)m_oSHA1.toUrn() );
 	}
 
@@ -1808,7 +1841,7 @@ void CQueryHit::Resolve()
 		else
 		{
 			m_sURL.Format( _T("ed2kftp://%s:%u/%s/%I64u/"),
-				(LPCTSTR)CString( inet_ntoa( m_pAddress ) ), m_nPort,
+				(LPCTSTR)GetIPForURL(), m_nPort,
 				(LPCTSTR)m_oED2K.toString(), m_bSize ? m_nSize : 0 );
 		}
 		return;
@@ -1817,7 +1850,7 @@ void CQueryHit::Resolve()
 	{
 		m_sURL.Format( _T("dchub://%s@%s:%u/TTH:%s/%I64u/"),
 			(LPCTSTR)URLEncode( m_sNick ),
-			(LPCTSTR)CString( inet_ntoa( m_pAddress ) ),
+			(LPCTSTR)GetIPForURL(),
 			m_nPort,
 			(LPCTSTR)m_oTiger.toString(),
 			m_bSize ? m_nSize : 0 );
@@ -1826,7 +1859,7 @@ void CQueryHit::Resolve()
 
 	if ( Settings.Downloads.RequestHash || m_nIndex == 0 )
 	{
-		m_sURL = GetURL( m_pAddress, m_nPort );
+		m_sURL = GetURL( GetIPForURL(), m_nPort );
 		if ( m_sURL.GetLength() )
 			return;
 	}
@@ -1834,13 +1867,13 @@ void CQueryHit::Resolve()
 	if ( Settings.Downloads.RequestURLENC )
 	{
 		m_sURL.Format( _T("http://%s:%u/get/%lu/%s"),
-			(LPCTSTR)CString( inet_ntoa( m_pAddress ) ), m_nPort, m_nIndex,
+			(LPCTSTR)GetIPForURL(), m_nPort, m_nIndex,
 			(LPCTSTR)URLEncode( m_sName ) );
 	}
 	else
 	{
 		m_sURL.Format( _T("http://%s:%u/get/%lu/%s"),
-			(LPCTSTR)CString( inet_ntoa( m_pAddress ) ), m_nPort, m_nIndex,
+			(LPCTSTR)GetIPForURL(), m_nPort, m_nIndex,
 			(LPCTSTR)m_sName );
 	}
 }
@@ -1885,6 +1918,7 @@ CQueryHit& CQueryHit::operator=(const CQueryHit& pOther)
 	m_nProtocol		= pOther.m_nProtocol;
 	m_oClientID		= pOther.m_oClientID;
 	m_pAddress		= pOther.m_pAddress;
+	m_pAddressIPv6	= pOther.m_pAddressIPv6;
 	m_sCountry		= pOther.m_sCountry;
 	m_nPort			= pOther.m_nPort;
 	m_nSpeed		= pOther.m_nSpeed;
@@ -1974,6 +2008,7 @@ void CQueryHit::Serialize(CArchive& ar, int nVersion /* MATCHLIST_SER_VERSION */
 		ar << m_nProtocol;
 		ar.Write( &m_oClientID[ 0 ], Hashes::Guid::byteCount );
 		ar.Write( &m_pAddress, sizeof(IN_ADDR) );
+		ar.Write( &m_pAddressIPv6, sizeof(IN6_ADDR) );
 		ar << m_nPort;
 		ar << m_nSpeed;
 		ar << m_sSpeed;
@@ -2027,6 +2062,7 @@ void CQueryHit::Serialize(CArchive& ar, int nVersion /* MATCHLIST_SER_VERSION */
 		ReadArchive( ar, &m_oClientID[ 0 ], Hashes::Guid::byteCount );
 		m_oClientID.validate();
 		ReadArchive( ar, &m_pAddress, sizeof(IN_ADDR) );
+		if ( nVersion >= 16 ) ReadArchive( ar, &m_pAddressIPv6, sizeof(IN6_ADDR) );
 		m_sCountry = theApp.GetCountryCode( m_pAddress );
 		ar >> m_nPort;
 		ar >> m_nSpeed;
@@ -2102,5 +2138,8 @@ void CQueryHit::Serialize(CArchive& ar, int nVersion /* MATCHLIST_SER_VERSION */
 
 void CQueryHit::Ban(int nBanLength)
 {
-	Security.Ban( &m_pAddress, nBanLength );
+	if ( IsIPv6Hit() )
+		Security.Ban( &m_pAddressIPv6, nBanLength );
+	else
+		Security.Ban( &m_pAddress, nBanLength );
 }

@@ -1,7 +1,7 @@
 //
 // MatchObjects.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2012.
+// Copyright (c) Shareaza Development Team, 2002-2015.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -67,6 +67,8 @@ CMatchList::CMatchList(CBaseMatchWnd* pParent) : m_pParent( pParent )
 	{
 		m_sFilter			= m_pResultFilters->m_pFilters[nDefaultFilter]->m_sFilter;
 		m_bFilterBusy		= m_pResultFilters->m_pFilters[nDefaultFilter]->m_bFilterBusy;
+		m_bFilterComments	= m_pResultFilters->m_pFilters[nDefaultFilter]->m_bFilterComments;
+		m_bFilterPartial	= m_pResultFilters->m_pFilters[nDefaultFilter]->m_bFilterPartial;
 		m_bFilterPush		= m_pResultFilters->m_pFilters[nDefaultFilter]->m_bFilterPush;
 		m_bFilterUnstable	= m_pResultFilters->m_pFilters[nDefaultFilter]->m_bFilterUnstable;
 		m_bFilterReject		= m_pResultFilters->m_pFilters[nDefaultFilter]->m_bFilterReject;
@@ -91,6 +93,8 @@ CMatchList::CMatchList(CBaseMatchWnd* pParent) : m_pParent( pParent )
 		m_bFilterDRM		= ( Settings.Search.FilterMask & ( 1 << 6 ) ) > 0;
 		m_bFilterAdult		= ( Settings.Search.FilterMask & ( 1 << 7 ) ) > 0;
 		m_bFilterSuspicious	= ( Settings.Search.FilterMask & ( 1 << 8 ) ) > 0;
+		m_bFilterComments	= ( Settings.Search.FilterMask & ( 1 << 10 ) ) > 0;
+		m_bFilterPartial	= ( Settings.Search.FilterMask & ( 1 << 11 ) ) > 0;
 		m_nFilterMinSize	= 1;
 		m_nFilterMaxSize	= 0;
 		m_nFilterSources	= 1;
@@ -244,7 +248,7 @@ void CMatchList::AddHits(const CQueryHit* pHits, const CQuerySearch* pFilter)
 			// Thus, we can filter them if we get two or more the same keyword
 			// lists from one user.
 
-			if ( BOOL bName = _tcsistr( pFilter->m_sKeywords, pHit->m_sName ) == 0 )
+			if ( _tcsistr( pFilter->m_sKeywords, pHit->m_sName ) == 0 )
 				pHit->m_bExactMatch = TRUE;
 
 			pHit->m_bMatched = pFilter->Match( pHit->m_sName,
@@ -611,7 +615,7 @@ BOOL CMatchList::Select(CMatchFile* pFile, CQueryHit* pHit, BOOL bSelected)
 		else
 			m_pSelectedHits.RemoveAt( m_pSelectedHits.Find( pHit ) );
 	}
-	else
+	else if ( pFile != NULL )
 	{
 		if ( pFile->m_bSelected == bSelected ) return FALSE;
 		pFile->m_bSelected = bSelected;
@@ -731,6 +735,8 @@ void CMatchList::Filter()
 	if ( m_bFilterAdult	)		Settings.Search.FilterMask |= ( 1 << 7 );
 	if ( m_bFilterSuspicious )	Settings.Search.FilterMask |= ( 1 << 8 );
 	if ( m_bRegExp )			Settings.Search.FilterMask |= ( 1 << 9 );
+	if ( m_bFilterComments )	Settings.Search.FilterMask |= ( 1 << 10 );
+	if ( m_bFilterPartial )		Settings.Search.FilterMask |= ( 1 << 11 );
 
 	delete [] m_pszFilter;
 	m_pszFilter = NULL;
@@ -846,7 +852,9 @@ BOOL CMatchList::FilterHit(CQueryHit* pHit)
 		( m_bFilterReject && pHit->m_bMatched == FALSE ) ||
 		( m_bFilterBogus && pHit->m_bBogus ) ||
 		( m_nFilterMinSize > 0 && pHit->m_nSize < m_nFilterMinSize ) ||
-		( m_nFilterMaxSize > 0 && pHit->m_nSize > m_nFilterMaxSize ) )
+		( m_nFilterMaxSize > 0 && pHit->m_nSize > m_nFilterMaxSize ) ||
+		( m_bFilterComments && !pHit->m_sComments.IsEmpty() ) ||
+		( m_bFilterPartial && pHit->m_nPartial > 0))
 		return FALSE;
 
 	if ( m_pszFilter )
@@ -879,7 +887,7 @@ BOOL CMatchList::FilterHit(CQueryHit* pHit)
 //////////////////////////////////////////////////////////////////////
 // CMatchList schema selection
 
-void CMatchList::SelectSchema(CSchemaPtr pSchema, CList< CSchemaMember* >* pColumns)
+void CMatchList::SelectSchema(CSchemaPtr pSchema, CSchemaMemberList* pColumns)
 {
 	CSingleLock pLock( &m_pSection, TRUE );
 
@@ -902,7 +910,7 @@ void CMatchList::SelectSchema(CSchemaPtr pSchema, CList< CSchemaMember* >* pColu
 
 	if ( ! pSchema || ! pColumns ) return;
 
-	m_pColumns = new CSchemaMember*[ pColumns->GetCount() ];
+	m_pColumns = new CSchemaMemberPtr[ pColumns->GetCount() ];
 
 	for ( POSITION pos = pColumns->GetHeadPosition() ; pos ; )
 	{
@@ -1102,6 +1110,9 @@ void CMatchList::Serialize(CArchive& ar, int nVersion /* MATCHLIST_SER_VERSION *
 		ar << m_bFilterSuspicious;
 		ar << m_bRegExp;
 
+		ar << m_bFilterComments;
+		ar << m_bFilterPartial;
+
 		ar << m_nFilterMinSize;
 		ar << m_nFilterMaxSize;
 		ar << m_nFilterSources;
@@ -1135,6 +1146,12 @@ void CMatchList::Serialize(CArchive& ar, int nVersion /* MATCHLIST_SER_VERSION *
 			ar >> m_bFilterAdult;
 			ar >> m_bFilterSuspicious;
 			ar >> m_bRegExp;
+		}
+
+		if ( nVersion >= 17 )
+		{
+			ar >> m_bFilterComments;
+			ar >> m_bFilterPartial;
 		}
 
 		if ( nVersion >= 10 )
@@ -1716,7 +1733,7 @@ void CMatchFile::Added(CQueryHit* pHit)
 			m_pColumns = new CString[ m_nColumns ];
 		}
 
-		CSchemaMember** pMember = m_pList->m_pColumns;
+		CSchemaMemberPtr* pMember = m_pList->m_pColumns;
 		CString strValue;
 
 		for ( int nCount = 0 ; nCount < m_nColumns ; nCount ++, pMember ++ )

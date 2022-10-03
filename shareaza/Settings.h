@@ -1,7 +1,7 @@
 //
 // Settings.h
 //
-// Copyright (c) Shareaza Development Team, 2002-2014.
+// Copyright (c) Shareaza Development Team, 2002-2017.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -75,6 +75,7 @@ public:
 		DWORD		LastSettingsIndex;			// Top item index of Advanced Settings list
 		bool		SearchPanelResults;			// Search Results Panel state (open or closed)
 		CString		AntiVirus;					// Anti-virus path or CLSID
+		bool		UnlimitedSettings;			// Disable min/max for settings
 	} General;
 
 	struct sVersionCheck
@@ -106,6 +107,8 @@ public:
 		bool		TipNeighbours;
 		bool		TipMedia;
 		bool		Snarl;						// Use Snarl notifications - http://www.getsnarl.info/
+		DWORD		SearchWindowsLimit;			// Maximum amount of opened Search windows
+		DWORD		BrowseWindowsLimit;			// Maximum amount of opened Browse Host windows
 	} Interface;
 
 	struct sWindows
@@ -154,6 +157,7 @@ public:
 		bool		HighPriorityHash;			// Use high priority hashing
 		bool		HashWindow;					// Display annoying hashing window
 		bool		CreateGhosts;				// Default action in the delete file dialog
+		DWORD		GhostLimit;					// Maximum amount of ghost files
 		DWORD		HighPriorityHashing;		// desired speed in MB/s when hashing with hi priority
 		DWORD		LowPriorityHashing;			// desired speed in MB/s when hashing with low priority
 		DWORD		MaxMaliciousFileSize;		// Size for which to trigger malicious software search
@@ -166,26 +170,19 @@ public:
 		bool		ScanAVI;					// Enable .avi metadata extraction by internals
 		bool		ScanCHM;					// Enable .chm metadata extraction by internals
 		bool		ScanEXE;					// Enable .exe,.dll metadata extraction by internals
+		bool		ScanFLV;					// Enable .flv metadata extraction by internals
 		bool		ScanImage;					// Enable .jpg,.jpeg,.gif,.png,.bmp metadata extraction by internals
 		bool		ScanMP3;					// Enable .mp3 metadata extraction by internals
 		bool		ScanMPEG;					// Enable .mpeg,.mpg metadata extraction by internals
 		bool		ScanMSI;					// Enable .msi metadata extraction by internals
 		bool		ScanOGG;					// Enable .ogg metadata extraction by internals
 		bool		ScanPDF;					// Enable .pdf metadata extraction by internals
+		bool		ScanProperties;				// Enable Windows properties metadata extraction by internals
 		bool		SmartSeriesDetection;		// Organize video files in Library by using predefined patterns
 		CString		LastUsedView;				// Name of last used view
 		CString		URLExportFormat;			// Template for URL export
 		DWORD		TooManyWarning;				// Too many files warning. 0 - ask user; 1 - no; 2 - yes.
 	} Library;
-
-	struct sWebServices
-	{
-		CString		BitziAgent;
-		CString		BitziWebView;
-		CString		BitziWebSubmit;
-		CString		BitziXML;
-		bool		BitziOkay;
-	} WebServices;
 
 	struct sSearch
 	{
@@ -210,6 +207,8 @@ public:
 		bool		AdvancedPanel;
 		DWORD		SpamFilterThreshold;		// Percentage of spam hits which triggers file sources to be treated as a spam
 		DWORD		GeneralThrottle;			// A general throttle for how often each individual search may run. Low values may cause source finding to get overlooked.
+		DWORD		LowestPriorityThrottle;
+		DWORD		MediumPriorityThrottle;
 		DWORD		ClearPrevious;				// Clear previous search results? 0 - ask user; 1 - no; 2 - yes.
 		bool		SanityCheck;				// Drop hits of banned hosts
 		bool		AutoPreview;				// Auto-previewing selected hit
@@ -271,6 +270,7 @@ public:
 		DWORD		TimeoutTraffic;
 		DWORD		SendBuffer;
 		bool		RequireForTransfers;		// Only upload/download to connected networks
+		bool		Reuse;						// Give socket to another HTTP source with same ip:port
 		DWORD		ConnectThrottle;			// Delay between connection attempts to neighbors (milliseconds)
 		DWORD		FailurePenalty;				// Delay after connection failure (seconds, default = 300) (Neighbour connections)
 		DWORD		FailureLimit;				// Max allowed connection failures (default = 3) (Neighbour connections)
@@ -287,6 +287,11 @@ public:
 		bool		SkipWANPPPSetup;			// UPnP: Skip WANPPPConn1 device setup
 		bool		SkipWANIPSetup;				// UPnP: Skip WANIPConn1 device setup
 		DWORD		ZLibCompressionLevel;		// ZLib compression level: 0(none/fastest)..9(best/slowest)
+		string_set	IgnoredCountry;
+		bool		EnableMulticast;			// Send and accept multi-cast packets (default = true)
+		bool		MulticastLoop;				// Use multi-cast loopback (for debugging, default = false)
+		DWORD		MulticastTTL;				// TTL for multi-cast packets (default = 1)
+		bool		EnableBroadcast;			// Send and accept broadcast packets (for LAN, default = false)
 	} Connection;
 
 	struct sBandwidth
@@ -322,7 +327,7 @@ public:
 		DWORD		AccessThrottle;
 		DWORD		Lowpoint;
 		DWORD		FailureLimit;
-		DWORD		UpdatePeriod;
+		DWORD		AccessPeriod;
 		DWORD		DefaultUpdate;
 		DWORD		BootstrapCount;
 		DWORD		CacheCount;					// Limit ability to learn new caches
@@ -413,6 +418,7 @@ public:
 
 	struct seDonkey
 	{
+		bool		CloseNeighboursOnConnect;
 		bool		EnableToday;
 		bool		EnableAlways;
 		bool		FastConnect;				// Try connecting to 2 servers to get online faster
@@ -431,7 +437,6 @@ public:
 		DWORD		QueueRankThrottle;			// How frequently queue ranks are sent
 		DWORD		PacketThrottle;				// ED2K packet rate limiter
 		DWORD		SourceThrottle;				// ED2K source rate limiter
-		DWORD		MetAutoQuery;				// Auto query for a new server list
 		bool		LearnNewServers;			// Get new servers from servers
 		bool		LearnNewServersClient;		// Get new servers from clients
 		CString		ServerListURL;
@@ -447,6 +452,7 @@ public:
 		DWORD		DefaultServerFlags;			// Default server flags (for UDP searches)
 		bool		Endgame;					// Allow endgame mode when completing downloads. (Download same chunk from multiple sources)
 		bool		LargeFileSupport;			// Allow 64 bit file sizes
+		bool		AutoDiscovery;				// Auto query for a new server list using discovery services
 	} eDonkey;
 
 	struct sDC
@@ -457,6 +463,7 @@ public:
 		DWORD		QueryThrottle;				// Throttle for DC++ neighbor searches (s), default: two minutes delay
 		DWORD		ReAskTime;					// How often Shareaza re-ask a remote client about download (ms), default: every minute
 		DWORD		DequeueTime;				// Timeout for remote client confirmation of upload queue (ms), default: 5 min
+		bool		AutoDiscovery;				// Auto query for a new server list using discovery services
 	} DC;
 
 	struct sBitTorrent
@@ -491,6 +498,7 @@ public:
 		DWORD		QueryHostDeadline;			// Time to wait for DHT reply (sec)
 		bool		AutoMerge;					// Automatically merge download with local files on start-up
 		CString		PeerID;						// Use this peer ID for trackers in form of "CCvvvv" where "CC" - agent code ("SZ", "UT" etc,), v.v.v.v - version
+		bool		EnablePromote;				// Enable regular to torrent download promotion
 	} BitTorrent;
 
 	struct sDownloads
@@ -515,15 +523,19 @@ public:
 		DWORD		StarveGiveUp;				// How long (in hours) before Shareaza will give up and try another download if it gets no data. (+ 0-9 h, depending on sources)
 		DWORD		RetryDelay;
 		DWORD		PushTimeout;
+		DWORD		MediaBuffer;
 		bool		StaggardStart;
 		bool		AllowBackwards;				// Permit download to run in reverse when appropriate
+		bool		AllowUnlimitedFirstAttempt;	// Connect first time without host limit
 		DWORD		ChunkSize;
 		DWORD		ChunkStrap;
 		bool		Metadata;
 		bool		VerifyFiles;
 		bool		VerifyTiger;
 		bool		VerifyED2K;
+		bool		VerifyTorrent;
 		bool		NeverDrop;					// Do not drop bad sources (may pollute source list with many dead sources)
+		bool		RenameIfExists;
 		bool		RequestHash;
 		bool		RequestHTTP11;
 		bool		RequestURLENC;
@@ -535,14 +547,17 @@ public:
 		bool		ShowGroups;
 		bool		AutoExpand;
 		bool		AutoClear;
+		bool		AutoShow;					// Show window downloads when new added
 		DWORD		ClearDelay;
+		bool		ClearSourcesAfter;			// Clear sources list after download end.
+		bool		CountOnlyWithSources;
 		DWORD		FilterMask;
 		bool		ShowMonitorURLs;
 		bool		SortColumns;				// Allow user to sort downloads by clicking column headers
 		bool		SortSources;				// Automatically sort sources (Status, protocol, queue)
 		DWORD		SourcesWanted;				// Number of sources Shareaza 'wants'. (Will not request more than this number of sources from ed2k)
 		DWORD		MaxReviews;					// Maximum number of reviews to store per download
-		DWORD		StartDroppingFailedSourcesNumber;	// The number of sources where Shareaza start dropping failed sources after only one attempt
+		bool		ForceBrowse;				// All download sources activate browse host menu item
 		bool		WebHookEnable;
 		string_set	WebHookExtensions;
 	} Downloads;
@@ -606,6 +621,7 @@ public:
 		bool		AdultWarning;				// Has the user been warned about the adult filter?
 		bool		QueueLimitWarning;			// Has the user been warned about limiting the max Q position accepted?
 		bool		DefaultED2KServersLoaded;	// Has Shareaza already loaded default ED2K servers?
+		bool		DefaultDCServersLoaded;		// Has Shareaza already loaded default DC++ servers?
 		bool		DonkeyServerWarning;		// Has the user been warned about having an empty server list?
 		bool		UploadLimitWarning;			// Has the user been warned about the ed2k/BT ratio?
 		bool		DiskSpaceStop;				// Has Shareaza paused all downloads due to critical disk space?

@@ -1,7 +1,7 @@
 //
 // PageSettingsDownloads.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2014.
+// Copyright (c) Shareaza Development Team, 2002-2015.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -70,15 +70,14 @@ void CDownloadsSettingsPage::DoDataExchange(CDataExchange* pDX)
 	DDX_Control(pDX, IDC_ANTIVIRUS, m_wndAntiVirus);
 	DDX_Control(pDX, IDC_DOWNLOADS_BANDWIDTH_LIMIT, m_wndBandwidthLimit);
 	DDX_Control(pDX, IDC_DOWNLOADS_QUEUE_LIMIT, m_wndQueueLimit);
-	DDX_Text(pDX, IDC_DOWNLOADS_FOLDER, m_sDownloadsPath);
-	DDX_Text(pDX, IDC_INCOMPLETE_FOLDER, m_sIncompletePath);
+	DDX_Control(pDX, IDC_DOWNLOADS_FOLDER, m_wndDownloadsFolder);
+	DDX_Control(pDX, IDC_INCOMPLETE_FOLDER, m_wndIncompleteFolder);
 	DDX_Text(pDX, IDC_MAX_FILES, m_nMaxDownFiles);
 	DDX_Text(pDX, IDC_MAX_TPF, m_nMaxFileTransfers);
 	DDX_Text(pDX, IDC_MAX_TRANSFERS, m_nMaxDownTransfers);
 	DDX_CBString(pDX, IDC_DOWNLOADS_BANDWIDTH_LIMIT, m_sBandwidthLimit);
 	DDX_CBString(pDX, IDC_DOWNLOADS_QUEUE_LIMIT, m_sQueueLimit);
 	DDX_Check(pDX, IDC_REQUIRE_CONNECT, m_bRequireConnect);
-	DDX_Control(pDX, IDC_ANTIVIRUS, m_wndAntiVirus);
 }
 
 /////////////////////////////////////////////////////////////////////////////
@@ -88,8 +87,20 @@ BOOL CDownloadsSettingsPage::OnInitDialog()
 {
 	CSettingsPage::OnInitDialog();
 
-	m_sDownloadsPath		= Settings.Downloads.CompletePath;
-	m_sIncompletePath		= Settings.Downloads.IncompletePath;
+	AddAndSelect( m_wndDownloadsFolder, theApp.GetDownloadsFolder() );
+	{
+		CQuickLock oLock( Library.m_pSection );
+		for ( POSITION pos = LibraryFolders.GetFolderIterator(); pos; )
+		{
+			const CLibraryFolder* pFolder = LibraryFolders.GetNextFolder( pos );
+			AddAndSelect( m_wndDownloadsFolder, pFolder->m_sPath );
+		}
+	}
+	AddAndSelect( m_wndDownloadsFolder, Settings.Downloads.CompletePath );
+
+	AddAndSelect( m_wndIncompleteFolder, theApp.GetLocalAppDataFolder() + _T("\\") CLIENT_NAME_T _T("\\Incomplete") );
+	AddAndSelect( m_wndIncompleteFolder, Settings.Downloads.IncompletePath );
+
 	m_nMaxDownFiles			= Settings.Downloads.MaxFiles;
 	m_nMaxDownTransfers		= Settings.Downloads.MaxTransfers;
 	m_nMaxFileTransfers		= Settings.Downloads.MaxFileTransfers;
@@ -110,8 +121,6 @@ BOOL CDownloadsSettingsPage::OnInitDialog()
 	else
 		m_sQueueLimit = _T("MAX");
 
-	m_bDownloadsChanged = FALSE;
-
 	// Update the text in the bandwidth limit combo
 	if ( Settings.Bandwidth.Downloads )
 		m_sBandwidthLimit = Settings.SmartSpeed( Settings.Bandwidth.Downloads );
@@ -120,80 +129,68 @@ BOOL CDownloadsSettingsPage::OnInitDialog()
 
 	UpdateData( FALSE );
 
-	m_wndDownloadsFolder.SubclassDlgItem( IDC_DOWNLOADS_FOLDER, this );
-	m_wndIncompleteFolder.SubclassDlgItem( IDC_INCOMPLETE_FOLDER, this );
-
 	return TRUE;
 }
 
 void CDownloadsSettingsPage::OnDownloadsBrowse()
 {
-	CString strPath( BrowseForFolder( _T("Select folder for downloads:"),
-		m_sDownloadsPath ) );
-	if ( strPath.IsEmpty() )
+	CString sDownloadsPath;
+	m_wndDownloadsFolder.GetWindowText( sDownloadsPath );
+	sDownloadsPath = BrowseForFolder( IDS_SELECT_FOLDER_DOWNLOAD, sDownloadsPath );
+	if ( sDownloadsPath.IsEmpty() )
 		return;
 
 	// Warn user about a path that's too long
-	if ( _tcslen( strPath ) > MAX_PATH - 33 )
+	if ( _tcslen( sDownloadsPath ) > MAX_PATH - 33 )
 	{
-		CString strMessage;
-		LoadString( strMessage, IDS_SETTINGS_FILEPATH_TOO_LONG );
-		AfxMessageBox( strMessage, MB_ICONEXCLAMATION );
+		AfxMessageBox( IDS_SETTINGS_FILEPATH_TOO_LONG, MB_ICONEXCLAMATION );
 		return;
 	}
 
 	// Make sure download/incomplete folders aren't the same
-	if ( _tcsicmp( strPath, m_sIncompletePath ) == 0 )
+	CString sIncompletePath;
+	m_wndIncompleteFolder.GetWindowText( sIncompletePath );
+	if ( _tcsicmp( sDownloadsPath, sIncompletePath ) == 0 )
 	{
-		CString strMessage;
-		LoadString( strMessage, IDS_SETTINGS_FILEPATH_NOT_SAME );
-		AfxMessageBox( strMessage, MB_ICONEXCLAMATION );
+		AfxMessageBox( IDS_SETTINGS_FILEPATH_NOT_SAME, MB_ICONEXCLAMATION );
 		return;
 	}
 
-	UpdateData( TRUE );
-	m_sDownloadsPath = strPath;
-	m_bDownloadsChanged = TRUE;
-	UpdateData( FALSE );
+	AddAndSelect( m_wndDownloadsFolder, sDownloadsPath );
 }
 
 void CDownloadsSettingsPage::OnIncompleteBrowse()
 {
-	CString strPath( BrowseForFolder( _T("Select folder for incomplete files:"),
-		m_sIncompletePath ) );
-	if ( strPath.IsEmpty() )
+	CString sIncompletePath;
+	m_wndIncompleteFolder.GetWindowText( sIncompletePath );
+	sIncompletePath = BrowseForFolder( IDS_SELECT_FOLDER_INCOMPLETE, sIncompletePath );
+	if ( sIncompletePath.IsEmpty() )
 		return;
 
 	// Warn user about a path that's too long
-	if ( _tcslen( strPath ) > MAX_PATH - 60 )
+	if ( _tcslen( sIncompletePath ) > MAX_PATH - 60 )
 	{
-		CString strMessage;
-		LoadString( strMessage, IDS_SETTINGS_FILEPATH_TOO_LONG );
-		AfxMessageBox( strMessage, MB_ICONEXCLAMATION );
+		AfxMessageBox( IDS_SETTINGS_FILEPATH_TOO_LONG, MB_ICONEXCLAMATION );
 		return;
 	}
 
 	// Make sure download/incomplete folders aren't the same
-	if ( _tcsicmp( strPath, m_sDownloadsPath ) == 0 )
+	CString sDownloadsPath;
+	m_wndDownloadsFolder.GetWindowText( sDownloadsPath );
+	if ( _tcsicmp( sIncompletePath, sDownloadsPath ) == 0 )
 	{
-		CString strMessage;
-		LoadString( strMessage, IDS_SETTINGS_FILEPATH_NOT_SAME );
-		AfxMessageBox( strMessage, MB_ICONEXCLAMATION );
+		AfxMessageBox( IDS_SETTINGS_FILEPATH_NOT_SAME, MB_ICONEXCLAMATION );
 		return;
 	}
 
 	// Warn user about an incomplete folder in the library
-	if ( LibraryFolders.IsFolderShared( strPath ) )
+	if ( LibraryFolders.IsFolderShared( sIncompletePath ) )
 	{
-		CString strMessage;
-		LoadString( strMessage, IDS_SETTINGS_INCOMPLETE_LIBRARY );
-		AfxMessageBox( strMessage, MB_ICONEXCLAMATION );
+		AfxMessageBox( IDS_SETTINGS_INCOMPLETE_LIBRARY, MB_ICONEXCLAMATION );
 		return;
 	}
 
-	UpdateData( TRUE );
-	m_sIncompletePath = strPath;
-	UpdateData( FALSE );
+	AddAndSelect( m_wndIncompleteFolder, sIncompletePath );
 }
 
 BOOL CDownloadsSettingsPage::OnKillActive()
@@ -202,9 +199,7 @@ BOOL CDownloadsSettingsPage::OnKillActive()
 
 	if ( IsLimited( m_sBandwidthLimit ) && !Settings.ParseVolume( m_sBandwidthLimit ) )
 	{
-		CString strMessage;
-		LoadString( strMessage, IDS_SETTINGS_NEED_BANDWIDTH );
-		AfxMessageBox( strMessage, MB_ICONEXCLAMATION );
+		AfxMessageBox( IDS_SETTINGS_NEED_BANDWIDTH, MB_ICONEXCLAMATION );
 		GetDlgItem( IDC_DOWNLOADS_BANDWIDTH_LIMIT )->SetFocus();
 		return FALSE;
 	}
@@ -246,10 +241,7 @@ void CDownloadsSettingsPage::OnOK()
 		 ( Settings.eDonkey.EnableToday || Settings.eDonkey.EnableAlways ) && ( Settings.Downloads.QueueLimit != (int)nQueueLimit ) )
 	{
 		// Warn the user about setting the max queue wait limit too low
-		CString strMessage;
-		LoadString( strMessage, IDS_SETTINGS_WARN_QUEUELIMIT );
-
-		if ( AfxMessageBox( strMessage, MB_ICONQUESTION|MB_YESNO ) == IDNO )
+		if ( AfxMessageBox( IDS_SETTINGS_WARN_QUEUELIMIT, MB_ICONQUESTION|MB_YESNO ) == IDNO )
 		{
 			nQueueLimit = 0;
 		}
@@ -260,9 +252,17 @@ void CDownloadsSettingsPage::OnOK()
 		}
 	}
 
+	CString sDownloadsPath;
+	m_wndDownloadsFolder.GetWindowText( sDownloadsPath );
+	const bool bDownloadsChanged = ( sDownloadsPath.CompareNoCase( Settings.Downloads.CompletePath ) != 0 );
+
+	CString sIncompletePath;
+	m_wndIncompleteFolder.GetWindowText( sIncompletePath );
+	//const bool bIncompleteChanged = ( sIncompletePath.CompareNoCase( Settings.Downloads.IncompletePath ) != 0 );
+
 	// Put new values in the settings.
-	Settings.Downloads.CompletePath			= m_sDownloadsPath;
-	Settings.Downloads.IncompletePath		= m_sIncompletePath;
+	Settings.Downloads.CompletePath			= sDownloadsPath;
+	Settings.Downloads.IncompletePath		= sIncompletePath;
 	Settings.Downloads.MaxFiles				= m_nMaxDownFiles;
 	Settings.Downloads.MaxTransfers			= m_nMaxDownTransfers;
 	Settings.Downloads.MaxFileTransfers		= m_nMaxFileTransfers;
@@ -288,32 +288,24 @@ void CDownloadsSettingsPage::OnOK()
 	// Display any data changes
 	UpdateData( FALSE );
 
-	CreateDirectory( m_sDownloadsPath );
-	CreateDirectory( m_sIncompletePath );
-	// CreateDirectory( m_sTorrentPath );
+	CreateDirectory( sDownloadsPath );
+	CreateDirectory( sIncompletePath );
 
-	if ( m_bDownloadsChanged )
+	if ( bDownloadsChanged )
 	{
 		if ( LibraryFolders.GetFolderCount() == 0 )
 		{
-			LibraryFolders.AddFolder( m_sDownloadsPath );
+			LibraryFolders.AddFolder( sDownloadsPath );
 		}
-		else if ( ! LibraryFolders.IsFolderShared( m_sDownloadsPath ) )
+		else if ( ! LibraryFolders.IsFolderShared( sDownloadsPath ) )
 		{
-			CString strFormat, strMessage;
-
-			LoadString( strFormat, IDS_LIBRARY_DOWNLOADS_ADD );
-			strMessage.Format( strFormat, (LPCTSTR)m_sDownloadsPath );
-
+			CString strMessage;
+			strMessage.Format( LoadString( IDS_LIBRARY_DOWNLOADS_ADD ), (LPCTSTR)sDownloadsPath );
 			if ( AfxMessageBox( strMessage, MB_ICONQUESTION|MB_YESNO ) == IDYES )
 			{
-				CLibraryFolder* pFolder = LibraryFolders.AddFolder( m_sDownloadsPath );
-
-				if ( pFolder )
+				if ( CLibraryFolder* pFolder = LibraryFolders.AddFolder( sDownloadsPath ) )
 				{
-					LoadString( strMessage, IDS_LIBRARY_DOWNLOADS_SHARE );
-
-					BOOL bShare = AfxMessageBox( strMessage, MB_ICONQUESTION|MB_YESNO ) == IDYES;
+					const BOOL bShare = AfxMessageBox( IDS_LIBRARY_DOWNLOADS_SHARE, MB_ICONQUESTION|MB_YESNO ) == IDYES;
 
 					CQuickLock oLock( Library.m_pSection );
 					if ( LibraryFolders.CheckFolder( pFolder, TRUE ) )

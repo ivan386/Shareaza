@@ -22,7 +22,6 @@
 #include "StdAfx.h"
 #include "Shareaza.h"
 #include "Settings.h"
-#include "ImageServices.h"
 #include "Skin.h"
 #include "WndMain.h"
 #include "WndMedia.h"

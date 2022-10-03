@@ -1,7 +1,7 @@
 //
 // PageProfileProfile.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2007.
+// Copyright (c) Shareaza Development Team, 2002-2014.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -22,6 +22,7 @@
 #include "StdAfx.h"
 #include "Shareaza.h"
 #include "Settings.h"
+#include "Flags.h"
 #include "GProfile.h"
 #include "XML.h"
 #include "PageProfileProfile.h"
@@ -36,30 +37,22 @@ static char THIS_FILE[] = __FILE__;
 IMPLEMENT_DYNCREATE(CProfileProfilePage, CSettingsPage)
 
 BEGIN_MESSAGE_MAP(CProfileProfilePage, CSettingsPage)
-	//{{AFX_MSG_MAP(CProfileProfilePage)
-	ON_CBN_SELCHANGE(IDC_LOC_COUNTRY, OnSelChangeCountry)
-	ON_CBN_SELCHANGE(IDC_LOC_CITY, OnSelChangeCity)
-	ON_LBN_SELCHANGE(IDC_INTEREST_LIST, OnSelChangeInterestList)
-	ON_CBN_SELCHANGE(IDC_INTEREST_ALL, OnSelChangeInterestAll)
-	ON_CBN_EDITCHANGE(IDC_INTEREST_ALL, OnEditChangeInterestAll)
-	ON_BN_CLICKED(IDC_INTEREST_ADD, OnInterestAdd)
-	ON_BN_CLICKED(IDC_INTEREST_REMOVE, OnInterestRemove)
-	//}}AFX_MSG_MAP
+	ON_CBN_SELCHANGE(IDC_LOC_COUNTRY, &CProfileProfilePage::OnSelChangeCountry)
+	ON_CBN_SELCHANGE(IDC_LOC_CITY, &CProfileProfilePage::OnSelChangeCity)
+	ON_LBN_SELCHANGE(IDC_INTEREST_LIST, &CProfileProfilePage::OnSelChangeInterestList)
+	ON_CBN_SELCHANGE(IDC_INTEREST_ALL, &CProfileProfilePage::OnSelChangeInterestAll)
+	ON_CBN_EDITCHANGE(IDC_INTEREST_ALL, &CProfileProfilePage::OnEditChangeInterestAll)
+	ON_BN_CLICKED(IDC_INTEREST_ADD, &CProfileProfilePage::OnInterestAdd)
+	ON_BN_CLICKED(IDC_INTEREST_REMOVE, &CProfileProfilePage::OnInterestRemove)
 END_MESSAGE_MAP()
-
 
 /////////////////////////////////////////////////////////////////////////////
 // CProfileProfilePage property page
 
-CProfileProfilePage::CProfileProfilePage() : CSettingsPage( CProfileProfilePage::IDD )
+CProfileProfilePage::CProfileProfilePage()
+	: CSettingsPage	( CProfileProfilePage::IDD )
+	, m_pWorld		( NULL )
 {
-	//{{AFX_DATA_INIT(CProfileProfilePage)
-	m_sLocCity = _T("");
-	m_sLocCountry = _T("");
-	m_sLocLatitude = _T("");
-	m_sLocLongitude = _T("");
-	//}}AFX_DATA_INIT
-	m_pWorld = NULL;
 }
 
 CProfileProfilePage::~CProfileProfilePage()
@@ -70,7 +63,7 @@ CProfileProfilePage::~CProfileProfilePage()
 void CProfileProfilePage::DoDataExchange(CDataExchange* pDX)
 {
 	CSettingsPage::DoDataExchange(pDX);
-	//{{AFX_DATA_MAP(CProfileProfilePage)
+
 	DDX_Control(pDX, IDC_INTEREST_REMOVE, m_wndInterestRemove);
 	DDX_Control(pDX, IDC_INTEREST_ADD, m_wndInterestAdd);
 	DDX_Control(pDX, IDC_INTEREST_ALL, m_wndInterestAll);
@@ -81,7 +74,6 @@ void CProfileProfilePage::DoDataExchange(CDataExchange* pDX)
 	DDX_CBString(pDX, IDC_LOC_COUNTRY, m_sLocCountry);
 	DDX_Text(pDX, IDC_LOC_LAT, m_sLocLatitude);
 	DDX_Text(pDX, IDC_LOC_LONG, m_sLocLongitude);
-	//}}AFX_DATA_MAP
 }
 
 /////////////////////////////////////////////////////////////////////////////
@@ -90,17 +82,7 @@ void CProfileProfilePage::DoDataExchange(CDataExchange* pDX)
 BOOL CProfileProfilePage::OnInitDialog()
 {
 	CSettingsPage::OnInitDialog();
-
-	m_pWorld = new CWorldGPS();
-	m_pWorld->Load();
-
-	CWorldCountry* pCountry = m_pWorld->m_pCountry;
-
-	for ( int nCountry = m_pWorld->m_nCountry ; nCountry ; nCountry--, pCountry++ )
-	{
-		m_wndCountry.SetItemData( m_wndCountry.AddString( pCountry->m_sName ), (LPARAM)pCountry );
-	}
-
+	
 	if ( CXMLElement* pLocation = MyProfile.GetXML( _T("location") ) )
 	{
 		if ( CXMLElement* pPolitical = pLocation->GetElementByName( _T("political") ) )
@@ -146,6 +128,49 @@ BOOL CProfileProfilePage::OnInitDialog()
 			}
 		}
 	}
+
+	const int nFlags = Flags.GetCount();
+	VERIFY( m_gdiFlags.Create( 18, 18, ILC_COLOR32|ILC_MASK, nFlags, 0 ) ||
+			m_gdiFlags.Create( 18, 18, ILC_COLOR24|ILC_MASK, nFlags, 0 ) ||
+			m_gdiFlags.Create( 18, 18, ILC_COLOR16|ILC_MASK, nFlags, 0 ) );
+	for ( int nFlag = 0 ; nFlag < nFlags ; nFlag++ )
+	{
+		if ( HICON hIcon = Flags.ExtractIcon( nFlag ) )
+		{
+			VERIFY( m_gdiFlags.Add( hIcon ) != -1 );
+			VERIFY( DestroyIcon( hIcon ) );
+		}
+	}
+	m_wndCountry.SetImageList( &m_gdiFlags );
+
+	m_pWorld = new CWorldGPS();
+	m_pWorld->Load();
+
+	const CWorldCountry* pCountry = m_pWorld->m_pCountry;
+
+	int nSelect = -1;
+	for ( int nCountry = 0 ; nCountry < (int)m_pWorld->m_nCountry; ++nCountry, ++pCountry )
+	{
+		const int nImage = Flags.GetFlagIndex( CString( pCountry->m_szID, 2 ) );
+		const COMBOBOXEXITEM cbei =
+		{
+			CBEIF_IMAGE | CBEIF_SELECTEDIMAGE | CBEIF_LPARAM | CBEIF_TEXT,
+			nCountry,
+			(LPTSTR)(LPCTSTR)pCountry->m_sName,
+			pCountry->m_sName.GetLength() + 1,
+			nImage,
+			nImage,
+			0,
+			0,
+			(LPARAM)pCountry
+		};
+		m_wndCountry.InsertItem( &cbei );
+		if ( pCountry->m_sName.CompareNoCase( m_sLocCountry ) == 0 )
+		{
+			nSelect = nCountry;
+		}
+	}
+	m_wndCountry.SetCurSel( nSelect );
 
 	UpdateData( FALSE );
 
@@ -325,4 +350,3 @@ void CProfileProfilePage::OnOK()
 
 	CSettingsPage::OnOK();
 }
-

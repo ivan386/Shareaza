@@ -64,11 +64,12 @@ INT_PTR CALLBACK ExtractProc(HWND hwndDlg, UINT msg, WPARAM wParam, LPARAM lPara
 				SetDlgItemText(hwndDlg, IDC_AUTH, buf);
 			}
 			if ( szUpdates && wcscmp( szAuthor, szUpdates ) != 0 ) {
-				TCHAR updbuf[MAX_PATH], buf[MAX_PATH];
+				TCHAR buf[MAX_PATH];
+				size_t len;
 				if (szAuthor) {
-					_snwprintf(updbuf, MAX_PATH, L"; Updated by %s", szUpdates);
 					GetDlgItemText(hwndDlg, IDC_AUTH, buf, MAX_PATH );
-					wcsncat( buf, updbuf, MAX_PATH - wcslen(buf) );
+					len = wcslen(buf);
+					_snwprintf(buf + len, MAX_PATH - len, L"; Updated by %s", szUpdates);
 				}
 				else
 					_snwprintf(buf, MAX_PATH, L"Updated by %s", szUpdates);

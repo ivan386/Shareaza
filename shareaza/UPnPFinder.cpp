@@ -1,7 +1,7 @@
 //
 // UPnPFinder.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2011.
+// Copyright (c) Shareaza Development Team, 2002-2015.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -220,7 +220,7 @@ void CUPnPFinder::AddDevice(DevicePointer device, bool bAddChilds, int nLevel)
 	if ( deviceSet == m_pDevices.end() )
 	{
 		m_pDevices.push_back( device );
-		theApp.Message( MSG_DEBUG, L"Found UPnP device: %s (ChildLevel: %i, UID: %s)", bsFriendlyName, nLevel, bsUniqueName );
+		theApp.Message( MSG_DEBUG, L"Found UPnP device: %s (ChildLevel: %i, UID: %s)", (LPCTSTR)bsFriendlyName, nLevel, (LPCTSTR)bsUniqueName );
 	}
 
 	if ( ! bAddChilds )
@@ -266,22 +266,20 @@ void CUPnPFinder::AddDevice(DevicePointer device, bool bAddChilds, int nLevel)
 // This is called by the devicefinder callback object (DeviceRemoved func)
 void CUPnPFinder::RemoveDevice(CComBSTR bsUDN)
 {
-	theApp.Message( MSG_DEBUG, L"Finder asked to remove: %s", bsUDN );
+	theApp.Message( MSG_DEBUG, L"Finder asked to remove: %s", (LPCTSTR)bsUDN );
 
 	std::vector< CAdapt< DevicePointer > >::iterator device
 		= std::find_if( m_pDevices.begin(), m_pDevices.end(), FindDevice( bsUDN ) );
 
 	if ( device != m_pDevices.end() )
 	{
-		theApp.Message( MSG_DEBUG, L"Device removed: %s", bsUDN );
+		theApp.Message( MSG_DEBUG, L"Device removed: %s", (LPCTSTR)bsUDN );
 		m_pDevices.erase( device );
 	}
 }
 
 bool CUPnPFinder::OnSearchComplete()
 {
-	ATLTRACE2( atlTraceCOM, 1, L"CUPnPFinder(%p)->OnSearchComplete\n", this );
-
 	if ( m_pDevices.empty() )
 	{
 		if ( m_bSecondTry )
@@ -373,7 +371,7 @@ HRESULT CUPnPFinder::SaveServices(CComPtr< IEnumUnknown > pEU, const LONG nTotal
 		if ( FAILED( hr = pService->get_Id( &bsServiceId ) ) )
 			return UPnPMessage( hr ), hr;
 
-		theApp.Message( MSG_DEBUG, L"Found UPnP service: %s", bsServiceId );
+		theApp.Message( MSG_DEBUG, L"Found UPnP service: %s", (LPCTSTR)bsServiceId );
 		m_pServices.push_back( pService );
 		bsServiceId.Empty();
 	}
@@ -446,7 +444,7 @@ HRESULT CUPnPFinder::MapPort(const ServicePointer& service)
 	if ( strResult.IsEmpty() )
 		return hr;
 
-	theApp.Message( MSG_DEBUG, L"Got status info from the service %s: %s", strServiceId, strResult );
+	theApp.Message( MSG_DEBUG, L"Got status info from the service %s: %s", (LPCTSTR)strServiceId, (LPCTSTR)strResult );
 
 	if ( _tcsistr( strResult, L"|VT_BSTR=Connected|" ) != NULL )
 	{
@@ -459,8 +457,7 @@ HRESULT CUPnPFinder::MapPort(const ServicePointer& service)
 		if ( FAILED( hr ) )
 			UPnPMessage( hr );
 		else
-			theApp.Message( MSG_DEBUG, L"Callback added for the service %s",
-				strServiceId );
+			theApp.Message( MSG_DEBUG, L"Callback added for the service %s", (LPCTSTR)strServiceId );
 
 		// Delete old and add new port mappings
 		m_sLocalIP = GetLocalRoutableIP( service );
@@ -581,7 +578,7 @@ CString CUPnPFinder::GetLocalRoutableIP(ServicePointer pService)
 
 	if ( ! strLocalIP.IsEmpty() && ! strExternalIP.IsEmpty() )
 	{
-		theApp.Message( MSG_INFO, L"UPnP route: %s->%s", strLocalIP, strExternalIP );
+		theApp.Message( MSG_INFO, L"UPnP route: %s->%s", (LPCTSTR)strLocalIP, (LPCTSTR)strExternalIP );
 
 		Network.AcquireLocalAddress( strExternalIP );
 	}
@@ -635,7 +632,7 @@ void CUPnPFinder::DeleteExistingPortMappings(ServicePointer pService)
 			// DeletePortMapping action takes 3 arguments:
 			//		RemoteHost, ExternalPort and PortMappingProtocol
 
-			CString strHost, strPort, strProtocol, strLocalIP;
+			CString strHost, strPort, strProtocol;
 
 			if ( _tcsistr( strActionResult, L"|VT_BSTR=Shareaza TCP|" ) != NULL ||
 				_tcsistr( strActionResult, L"|VT_BSTR=Shareaza UDP|" ) != NULL )
@@ -666,8 +663,7 @@ void CUPnPFinder::DeleteExistingPortMappings(ServicePointer pService)
 						UPnPMessage( hrDel );
 					else
 					{
-						theApp.Message( MSG_DEBUG, L"Old port mapping deleted: %s",
-							strPort + strProtocol );
+						theApp.Message( MSG_DEBUG, L"Old port mapping deleted: %s", (LPCTSTR)( strPort + strProtocol ) );
 					}
 				}
 				else // different IP found in the port mapping entry
@@ -712,10 +708,9 @@ void CUPnPFinder::CreatePortMappings(ServicePointer pService)
 	if ( m_sLocalIP.IsEmpty() || !m_bPortIsFree )
 		return;
 
-	CString strPort, strInArgs, strFormatString, strResult;
+	CString strPort, strInArgs, strResult;
 
-	strFormatString = L"|VT_BSTR=|VT_UI2=%s|VT_BSTR=%s|VT_UI2=%s|VT_BSTR=%s|"
-		L"VT_BOOL=True|VT_BSTR=Shareaza %s|VT_UI4=0|";
+	LPCTSTR szFormatString = L"|VT_BSTR=|VT_UI2=%s|VT_BSTR=%s|VT_UI2=%s|VT_BSTR=%s|VT_BOOL=True|VT_BSTR=%s at %s:%s|VT_UI4=0|";
 
 	if ( Settings.Connection.InPort == 0 ) // random port
 	{
@@ -724,12 +719,14 @@ void CUPnPFinder::CreatePortMappings(ServicePointer pService)
 	strPort.Format( L"%hu", Settings.Connection.InPort );
 
 	// First map UDP if some buggy router overwrites TCP on top
-	strInArgs.Format( strFormatString, strPort, L"UDP", strPort, m_sLocalIP, L"UDP" );
+	strInArgs.Format( szFormatString, (LPCTSTR)strPort, L"UDP", (LPCTSTR)strPort, (LPCTSTR)m_sLocalIP,
+		CLIENT_NAME_T _T(" UDP"), (LPCTSTR)m_sLocalIP, (LPCTSTR)strPort );
 	HRESULT hr = InvokeAction( pService, L"AddPortMapping", strInArgs, strResult );
 	if ( FAILED( hr ) )
 		return (void)UPnPMessage( hr );
 
-	strInArgs.Format( strFormatString, strPort, L"TCP", strPort, m_sLocalIP, L"TCP" );
+	strInArgs.Format( szFormatString, (LPCTSTR)strPort, L"TCP", (LPCTSTR)strPort, (LPCTSTR)m_sLocalIP,
+		CLIENT_NAME_T _T(" TCP"), (LPCTSTR)m_sLocalIP, (LPCTSTR)strPort );
 	hr = InvokeAction( pService, L"AddPortMapping", strInArgs, strResult );
 	if ( FAILED( hr ) )
 		return (void)UPnPMessage( hr );
@@ -776,7 +773,7 @@ HRESULT CUPnPFinder::InvokeAction(ServicePointer pService,
 
 	for( INT_PTR nArg = 0 ; nArg < nArgs ; nArg++ )
 	{
-		nPos = nArg + 1;
+		nPos = (LONG)( nArg + 1 );
 		hr = SafeArrayPutElement( psaArgs, &nPos, ppVars[ nArg ] );
 		if ( FAILED( hr ) ) return hr;
 	}
@@ -1052,7 +1049,6 @@ void CUPnPFinder::DestroyVars(const INT_PTR nCount, VARIANT*** pppVars)
 // nFindData--AsyncFindHandle; pDevice--COM interface pointer of the device being added
 HRESULT CDeviceFinderCallback::DeviceAdded(LONG /*nFindData*/, IUPnPDevice* pDevice)
 {
-	ATLTRACE2( atlTraceCOM, 1, L"Device Added\n" );
 	m_instance.AddDevice( pDevice, true );
 	return S_OK;
 }
@@ -1061,7 +1057,6 @@ HRESULT CDeviceFinderCallback::DeviceAdded(LONG /*nFindData*/, IUPnPDevice* pDev
 // nFindData--AsyncFindHandle; bsUDN--UDN of the device being removed
 HRESULT CDeviceFinderCallback::DeviceRemoved(LONG /*nFindData*/, BSTR bsUDN)
 {
-	ATLTRACE2( atlTraceCOM, 1, "Device Removed: %s\n", bsUDN );
 	m_instance.RemoveDevice( bsUDN );
 	return S_OK;
 }
@@ -1131,7 +1126,7 @@ HRESULT CServiceCallback::ServiceInstanceDied(IUPnPService* pService)
 	HRESULT hr = pService->get_Id( &bsServiceId );
 	if ( SUCCEEDED( hr ) )
 	{
-		theApp.Message( MSG_ERROR, L"UPnP service %s died.", bsServiceId );
+		theApp.Message( MSG_ERROR, L"UPnP service %s died.", (LPCTSTR)bsServiceId );
 		return hr;
 	}
 

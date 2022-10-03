@@ -1,7 +1,7 @@
 //
 // HostCache.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2013.
+// Copyright (c) Shareaza Development Team, 2002-2017.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -97,7 +97,7 @@ BOOL CHostCache::Load()
 				ar.Abort();
 				pFile.Abort();
 				pException->Delete();
-				theApp.Message( MSG_ERROR, _T("Failed to load host cache: %s"), strFile );
+				theApp.Message( MSG_ERROR, _T("Failed to load host cache: %s"), (LPCTSTR)strFile );
 			}
 			pFile.Close();
 		}
@@ -105,11 +105,11 @@ BOOL CHostCache::Load()
 		{
 			pFile.Abort();
 			pException->Delete();
-			theApp.Message( MSG_ERROR, _T("Failed to load host cache: %s"), strFile );
+			theApp.Message( MSG_ERROR, _T("Failed to load host cache: %s"), (LPCTSTR)strFile );
 		}
 	}
 	else
-		theApp.Message( MSG_ERROR, _T("Failed to load host cache: %s"), strFile );
+		theApp.Message( MSG_ERROR, _T("Failed to load host cache: %s"), (LPCTSTR)strFile );
 
 	if ( Gnutella2.IsEmpty() )	CheckMinimumServers( PROTOCOL_G2 );
 	if ( Gnutella1.IsEmpty() )	CheckMinimumServers( PROTOCOL_G1 );
@@ -130,7 +130,7 @@ BOOL CHostCache::Save()
 	if ( ! pFile.Open( strTemp, CFile::modeWrite | CFile::modeCreate | CFile::shareExclusive | CFile::osSequentialScan ) )
 	{
 		DeleteFile( strTemp );
-		theApp.Message( MSG_ERROR, _T("Failed to save host cache: %s"), strTemp );
+		theApp.Message( MSG_ERROR, _T("Failed to save host cache: %s"), (LPCTSTR)strTemp );
 		return FALSE;
 	}
 
@@ -151,7 +151,7 @@ BOOL CHostCache::Save()
 			pFile.Abort();
 			pException->Delete();
 			DeleteFile( strTemp );
-			theApp.Message( MSG_ERROR, _T("Failed to save host cache: %s"), strTemp );
+			theApp.Message( MSG_ERROR, _T("Failed to save host cache: %s"), (LPCTSTR)strTemp );
 			return FALSE;
 		}
 		pFile.Close();
@@ -161,14 +161,14 @@ BOOL CHostCache::Save()
 		pFile.Abort();
 		pException->Delete();
 		DeleteFile( strTemp );
-		theApp.Message( MSG_ERROR, _T("Failed to save host cache: %s"), strTemp );
+		theApp.Message( MSG_ERROR, _T("Failed to save host cache: %s"), (LPCTSTR)strTemp );
 		return FALSE;
 	}
 
 	if ( ! MoveFileEx( strTemp, strFile, MOVEFILE_COPY_ALLOWED | MOVEFILE_REPLACE_EXISTING ) )
 	{
 		DeleteFile( strTemp );
-		theApp.Message( MSG_ERROR, _T("Failed to save host cache: %s"), strFile );
+		theApp.Message( MSG_ERROR, _T("Failed to save host cache: %s"), (LPCTSTR)strFile );
 		return FALSE;
 	}
 
@@ -244,6 +244,16 @@ CHostCacheHostPtr CHostCache::Find(const IN_ADDR* pAddress) const
 	return NULL;
 }
 
+CHostCacheHostPtr CHostCache::Find(const IN6_ADDR* pAddress) const
+{
+	for ( POSITION pos = m_pList.GetHeadPosition() ; pos ; )
+	{
+		CHostCacheList* pCache = m_pList.GetNext( pos );
+		if ( CHostCacheHostPtr pHost = pCache->Find( pAddress ) ) return pHost;
+	}
+	return NULL;
+}
+
 CHostCacheHostPtr CHostCache::Find(LPCTSTR szAddress) const
 {
 	for ( POSITION pos = m_pList.GetHeadPosition() ; pos ; )
@@ -302,7 +312,27 @@ void CHostCache::OnFailure(const IN_ADDR* pAddress, WORD nPort, PROTOCOLID nProt
 	}
 }
 
+void CHostCache::OnFailure(const IN6_ADDR* pAddress, WORD nPort, PROTOCOLID nProtocol, bool bRemove)
+{
+	for ( POSITION pos = m_pList.GetHeadPosition() ; pos ; )
+	{
+		CHostCacheList* pCache = m_pList.GetNext( pos );
+		if ( nProtocol == PROTOCOL_NULL || nProtocol == pCache->m_nProtocol )
+			pCache->OnFailure( pAddress, nPort, bRemove );
+	}
+}
+
 void CHostCache::OnSuccess(const IN_ADDR* pAddress, WORD nPort, PROTOCOLID nProtocol, bool bUpdate)
+{
+	for ( POSITION pos = m_pList.GetHeadPosition() ; pos ; )
+	{
+		CHostCacheList* pCache = m_pList.GetNext( pos );
+		if ( nProtocol == PROTOCOL_NULL || nProtocol == pCache->m_nProtocol )
+			pCache->OnSuccess( pAddress, nPort, bUpdate );
+	}
+}
+
+void CHostCache::OnSuccess(const IN6_ADDR* pAddress, WORD nPort, PROTOCOLID nProtocol, bool bUpdate)
 {
 	for ( POSITION pos = m_pList.GetHeadPosition() ; pos ; )
 	{
@@ -338,6 +368,12 @@ void CHostCacheList::Clear()
 		delete (*i).second;
 	}
 	m_Hosts.clear();
+
+	for( CHostCacheMapItrIPv6 i = m_HostsIPv6.begin(); i != m_HostsIPv6.end(); ++i )
+	{
+		delete (*i).second;
+	}
+	m_HostsIPv6.clear();
 	m_HostsTime.clear();
 
 	m_nCookie++;
@@ -346,7 +382,7 @@ void CHostCacheList::Clear()
 //////////////////////////////////////////////////////////////////////
 // CHostCacheList host add
 
-CHostCacheHostPtr CHostCacheList::Add(LPCTSTR pszHost, WORD nPort, DWORD tSeen, LPCTSTR pszVendor, DWORD nUptime, DWORD nCurrentLeaves, DWORD nLeafLimit)
+CHostCacheHostPtr CHostCacheList::Add(LPCTSTR pszHost, WORD nPort, const IN_ADDR* pFromAddress, DWORD tSeen, LPCTSTR pszVendor, DWORD nUptime, DWORD nCurrentLeaves, DWORD nLeafLimit)
 {
 	CString strHost( pszHost );
 	strHost.Trim();
@@ -361,12 +397,23 @@ CHostCacheHostPtr CHostCacheList::Add(LPCTSTR pszHost, WORD nPort, DWORD tSeen, 
 			return NULL;
 	}
 
-	return Add( NULL, nPort, tSeen, pszVendor, nUptime, nCurrentLeaves, nLeafLimit, strHost );
+	return Add( NULL, nPort, pFromAddress, tSeen, pszVendor, nUptime, nCurrentLeaves, nLeafLimit, strHost );
 }
 
-CHostCacheHostPtr CHostCacheList::Add(const IN_ADDR* pAddress, WORD nPort, DWORD tSeen, LPCTSTR pszVendor, DWORD nUptime, DWORD nCurrentLeaves, DWORD nLeafLimit, LPCTSTR szAddress)
+CHostCacheHostPtr CHostCacheList::Add(const IN_ADDR* pAddress, WORD nPort, const IN_ADDR* pFromAddress, DWORD tSeen, LPCTSTR pszVendor, DWORD nUptime, DWORD nCurrentLeaves, DWORD nLeafLimit, LPCTSTR szAddress)
 {
 	ASSERT( pAddress || szAddress );
+
+	if ( ! pAddress )
+	{
+		SOCKADDR_IN6 saHost;
+		if ( IPv6FromString( CString( szAddress ), &saHost ) )
+		{
+			if ( saHost.sin6_port )
+				nPort = ntohs( saHost.sin6_port );
+			return AddIPv6( &saHost.sin6_addr, nPort, NULL, tSeen, pszVendor, nUptime, nCurrentLeaves, nLeafLimit, szAddress );
+		}
+	}
 
 	if ( ! nPort )
 		// Use default port
@@ -375,11 +422,13 @@ CHostCacheHostPtr CHostCacheList::Add(const IN_ADDR* pAddress, WORD nPort, DWORD
 	SOCKADDR_IN saHost;
 	if ( ! pAddress )
 	{
+
 		// Try to quick resolve dotted IP address
 		if (  ! Network.Resolve( szAddress, nPort, &saHost, FALSE ) )
+		{
 			// Bad address
 			return NULL;
-
+		}
 		pAddress = &saHost.sin_addr;
 		nPort = ntohs( saHost.sin_port );
 
@@ -394,6 +443,8 @@ CHostCacheHostPtr CHostCacheList::Add(const IN_ADDR* pAddress, WORD nPort, DWORD
 				Network.IsFirewalledAddress( pAddress, TRUE ) ||
 			// check against IANA Reserved address.
 				Network.IsReserved( pAddress ) ||
+			// Check address is valid
+				( pFromAddress != NULL && ! Network.IsValidAddressFor( pFromAddress, pAddress ) ) ||
 			// Check security settings, don't add blocked IPs
 				Security.IsDenied( pAddress ) )
 				// Bad IP
@@ -408,6 +459,8 @@ CHostCacheHostPtr CHostCacheList::Add(const IN_ADDR* pAddress, WORD nPort, DWORD
 			Network.IsFirewalledAddress( pAddress, TRUE ) ||
 		// check against IANA Reserved address.
 			Network.IsReserved( pAddress ) ||
+		// Check address is valid
+			( pFromAddress != NULL && ! Network.IsValidAddressFor( pFromAddress, pAddress ) ) ||
 		// Check security settings, don't add blocked IPs
 			Security.IsDenied( pAddress ) )
 			// Bad IP
@@ -422,6 +475,9 @@ CHostCacheHostPtr CHostCacheList::Add(const IN_ADDR* pAddress, WORD nPort, DWORD
 		pHost = Find( szAddress );
 	if ( ! pHost )
 	{
+		if ( Security.IsIgnoredCountry( theApp.GetCountryCode( *pAddress ) ) )
+			return NULL;
+
 		// Create new host
 		pHost = new CHostCacheHost( m_nProtocol );
 		if ( pHost )
@@ -449,8 +505,64 @@ CHostCacheHostPtr CHostCacheList::Add(const IN_ADDR* pAddress, WORD nPort, DWORD
 		Update( pHost, nPort, tSeen, pszVendor, nUptime, nCurrentLeaves, nLeafLimit );
 	}
 
-	ASSERT( m_Hosts.size() == m_HostsTime.size() );
+	ASSERT( m_Hosts.size() + m_HostsIPv6.size() == m_HostsTime.size() );
 
+	return pHost;
+}
+
+CHostCacheHostPtr CHostCacheList::AddIPv6(const IN6_ADDR* pAddress, WORD nPort, const IN6_ADDR* pFromAddress, DWORD tSeen, LPCTSTR pszVendor, DWORD nUptime, DWORD nCurrentLeaves, DWORD nLeafLimit, LPCTSTR szAddress)
+{
+	ASSERT( pAddress );
+
+	if ( ! nPort )
+		// Use default port
+		nPort = protocolPorts[ m_nProtocol ];
+
+	// Don't add invalid addresses
+	// check against IANA Reserved address.
+	if ( Network.IsReserved( pAddress ) ||
+	// Don't add own firewalled IPs
+		Network.IsFirewalledAddress( pAddress, TRUE ) ||
+	// Check address is valid
+		( pFromAddress != NULL && ! Network.IsValidAddressFor( pFromAddress, pAddress ) ) ||
+	// Check security settings, don't add blocked IPs
+		Security.IsDenied( pAddress ) )
+		// Bad IP
+		return NULL;
+
+
+	// Check if we already have the host
+	CHostCacheHostPtr pHost = Find( pAddress );
+
+	if ( ! pHost )
+	{
+		// Create new host
+		pHost = new CHostCacheHost( m_nProtocol );
+		if ( pHost )
+		{
+			PruneHosts();
+
+			pHost->m_pAddressIPv6 = *pAddress;
+			pHost->m_sAddress = IPv6ToString( &pHost->m_pAddressIPv6 );
+			if ( szAddress ) pHost->m_sAddress = szAddress;
+
+			pHost->Update( nPort, tSeen, pszVendor, nUptime, nCurrentLeaves, nLeafLimit );
+
+			// Add host to map and index
+			m_HostsIPv6.insert( CHostCacheMapPairIPv6( pHost->m_pAddressIPv6, pHost ) );
+			m_HostsTime.insert( pHost );
+
+			m_nCookie++;
+		}
+	}
+	else
+	{
+		if ( szAddress ) pHost->m_sAddress = szAddress;
+		if ( pHost->m_sAddress.Find( _T("]") ) > 0 ) //Is IPv6?
+			pHost->m_sAddress = pHost->m_sAddress.SpanIncluding( _T("]") );
+
+		Update( pHost, nPort, tSeen, pszVendor, nUptime, nCurrentLeaves, nLeafLimit );
+	}
 	return pHost;
 }
 
@@ -458,7 +570,7 @@ void CHostCacheList::Update(CHostCacheHostPtr pHost, WORD nPort, DWORD tSeen, LP
 {
 	CQuickLock oLock( m_pSection );
 
-	ASSERT( m_Hosts.size() == m_HostsTime.size() );
+	ASSERT( m_Hosts.size() + m_HostsIPv6.size() == m_HostsTime.size() );
 
 	// Update host
 	if ( pHost->Update( nPort, tSeen, pszVendor, nUptime, nCurrentLeaves, nLeafLimit ) )
@@ -470,7 +582,7 @@ void CHostCacheList::Update(CHostCacheHostPtr pHost, WORD nPort, DWORD tSeen, LP
 		// Add host to new sorted position
 		m_HostsTime.insert( pHost );
 
-		ASSERT( m_Hosts.size() == m_HostsTime.size() );
+		ASSERT( m_Hosts.size() + m_HostsIPv6.size() == m_HostsTime.size() );
 	}
 
 	m_nCookie++;
@@ -479,49 +591,71 @@ void CHostCacheList::Update(CHostCacheHostPtr pHost, WORD nPort, DWORD tSeen, LP
 //////////////////////////////////////////////////////////////////////
 // CHostCacheList host remove
 
-CHostCacheMapItr CHostCacheList::Remove(CHostCacheHostPtr pHost)
+CHostCacheIterator CHostCacheList::Remove(CHostCacheHostPtr pHost)
 {
 	CQuickLock oLock( m_pSection );
 
 	CHostCacheIterator j = std::find( m_HostsTime.begin(), m_HostsTime.end(), pHost );
+
 	if ( j == m_HostsTime.end() )
 		// Wrong cache
-		return m_Hosts.end();
-	m_HostsTime.erase( j );
+		return m_HostsTime.end();
+
+	j = m_HostsTime.erase( j );
 
 	CHostCacheMapItr i = std::find_if( m_Hosts.begin(), m_Hosts.end(), std::bind2nd( is_host(), pHost ) );
-	ASSERT( i != m_Hosts.end() );
-	i = m_Hosts.erase( i );
+
+	if ( i != m_Hosts.end() )
+		m_Hosts.erase( i );
+	else
+	{
+		CHostCacheMapItrIPv6 x = std::find_if( m_HostsIPv6.begin(), m_HostsIPv6.end(), std::bind2nd( is_host_ipv6(), pHost ) );
+		if ( x != m_HostsIPv6.end() )
+			m_HostsIPv6.erase( x );
+	}
 
 	delete pHost;
 	m_nCookie++;
 
-	ASSERT( m_Hosts.size() == m_HostsTime.size() );
+	ASSERT( m_Hosts.size() + m_HostsIPv6.size() == m_HostsTime.size() );
 
-	return i;
+	return j;
 }
 
-CHostCacheMapItr CHostCacheList::Remove(const IN_ADDR* pAddress)
+void CHostCacheList::Remove(const IN_ADDR* pAddress)
 {
+	if ( !pAddress || pAddress->s_addr == 0 ) return;
+
 	CQuickLock oLock( m_pSection );
 
 	CHostCacheMapItr i = m_Hosts.find( *pAddress );
-	if ( i == m_Hosts.end() )
+	if ( i != m_Hosts.end() )
 		// Wrong cache/address
-		return m_Hosts.end();
+		Remove( (*i).second );
+}
 
-	return Remove( (*i).second );
+void CHostCacheList::Remove(const IN6_ADDR* pAddress)
+{
+	if ( !pAddress || IN6_IS_ADDR_UNSPECIFIED( pAddress ) ) return;
+
+	CQuickLock oLock( m_pSection );
+
+	CHostCacheMapItrIPv6 i = m_HostsIPv6.find( *pAddress );
+	if ( i != m_HostsIPv6.end() )
+		// Wrong cache/address
+		Remove( (*i).second );
 }
 
 void CHostCacheList::SanityCheck()
 {
 	CQuickLock oLock( m_pSection );
 
-	for( CHostCacheMapItr i = m_Hosts.begin(); i != m_Hosts.end(); )
+	for( CHostCacheIterator i = m_HostsTime.begin(); i != m_HostsTime.end(); )
 	{
-		CHostCacheHostPtr pHost = (*i).second;
-		if ( Security.IsDenied( &pHost->m_pAddress ) ||
-			( pHost->m_pVendor && Security.IsVendorBlocked( pHost->m_pVendor->m_sCode ) ) )
+		CHostCacheHostPtr pHost = (*i);
+
+		if ( ( pHost->IsIPv6Host() ? Security.IsDenied( &pHost->m_pAddressIPv6 ) : Security.IsDenied( &pHost->m_pAddress ) ) ||
+			 ( pHost->m_pVendor && Security.IsVendorBlocked( pHost->m_pVendor->m_sCode ) ) )
 		{
 			i = Remove( pHost );
 		}
@@ -552,9 +686,18 @@ void CHostCacheList::OnResolve(LPCTSTR szAddress, const IN_ADDR* pAddress, WORD 
 
 		if ( pHost )
 		{
+			CHostCacheMapItr i = std::find_if( m_Hosts.begin(), m_Hosts.end(),
+				std::bind2nd( is_host(), pHost ) );
 			// Remove from old place
-			m_Hosts.erase( std::find_if( m_Hosts.begin(), m_Hosts.end(),
-				std::bind2nd( is_host(), pHost ) ) );
+			if ( i != m_Hosts.end() )
+				m_Hosts.erase( i );
+			else
+			{
+				CHostCacheMapItrIPv6 i = std::find_if( m_HostsIPv6.begin(), m_HostsIPv6.end(),
+					std::bind2nd( is_host_ipv6(), pHost ) );
+				if ( i != m_HostsIPv6.end() )
+					m_HostsIPv6.erase( i );
+			}
 
 			pHost->m_pAddress = *pAddress;
 			pHost->m_nPort = nPort;
@@ -565,12 +708,12 @@ void CHostCacheList::OnResolve(LPCTSTR szAddress, const IN_ADDR* pAddress, WORD 
 
 			m_nCookie++;
 
-			ASSERT( m_Hosts.size() == m_HostsTime.size() );
+			ASSERT( m_Hosts.size() + m_HostsIPv6.size() == m_HostsTime.size() );
 		}
 		else
 		{
 			// New host
-			pHost = Add( pAddress, nPort, 0, 0, 0, 0, 0, szAddress );
+			pHost = Add( pAddress, nPort, NULL, 0, 0, 0, 0, 0, szAddress );
 		}
 	}
 	else
@@ -596,8 +739,38 @@ void CHostCacheList::OnFailure(const IN_ADDR* pAddress, WORD nPort, bool bRemove
 		pHost->m_bCheckedLocally = TRUE;
 
 		if ( ! pHost->m_sAddress.IsEmpty() )
+		{
 			// Clear current IP address to re-resolve name later
 			pHost->m_pAddress.s_addr = INADDR_ANY;
+			IN6_SET_ADDR_UNSPECIFIED( &pHost->m_pAddressIPv6 );
+		}
+
+		if ( ! pHost->m_bPriority 
+			&& ( bRemove || pHost->m_nFailures > Settings.Connection.FailureLimit ) 
+			&& HostCache.EnoughServers( m_nProtocol ) )
+			Remove( pHost );
+	}
+}
+
+void CHostCacheList::OnFailure(const IN6_ADDR* pAddress, WORD nPort, bool bRemove)
+{
+	CQuickLock oLock( m_pSection );
+
+	CHostCacheHostPtr pHost = Find( pAddress );
+
+	if ( pHost && ( ! nPort || pHost->m_nPort == nPort ) )
+	{
+		m_nCookie++;
+		pHost->m_nFailures++;
+		pHost->m_tFailure = static_cast< DWORD >( time( NULL ) );
+		pHost->m_bCheckedLocally = TRUE;
+
+		if ( ! pHost->m_sAddress.IsEmpty() )
+		{
+			// Clear current IP address to re-resolve name later
+			pHost->m_pAddress.s_addr = INADDR_ANY;
+			IN6_SET_ADDR_UNSPECIFIED( &pHost->m_pAddressIPv6 );
+		}
 
 		if ( ! pHost->m_bPriority && ( bRemove || pHost->m_nFailures > Settings.Connection.FailureLimit ) )
 			Remove( pHost );
@@ -645,6 +818,23 @@ CHostCacheHostPtr CHostCacheList::OnSuccess(const IN_ADDR* pAddress, WORD nPort,
 	return pHost;
 }
 
+CHostCacheHostPtr CHostCacheList::OnSuccess(const IN6_ADDR* pAddress, WORD nPort, bool bUpdate)
+{
+	CQuickLock oLock( m_pSection );
+
+	CHostCacheHostPtr pHost = AddIPv6( const_cast< IN6_ADDR* >( pAddress ), nPort );
+	if ( pHost && ( ! nPort || pHost->m_nPort == nPort ) )
+	{
+		m_nCookie++;
+		pHost->m_tFailure = 0;
+		pHost->m_nFailures = 0;
+		pHost->m_bCheckedLocally = TRUE;
+		if ( bUpdate )
+			Update( pHost, nPort );
+	}
+	return pHost;
+}
+
 //////////////////////////////////////////////////////////////////////
 // CHostCacheList prune old hosts
 
@@ -652,9 +842,11 @@ void CHostCacheList::PruneOldHosts(DWORD tNow)
 {
 	CQuickLock oLock( m_pSection );
 
-	for( CHostCacheMapItr i = m_Hosts.begin(); i != m_Hosts.end(); )
+	DWORD nCount = 0;
+
+	for( CHostCacheIterator i = m_HostsTime.begin(); i != m_HostsTime.end(); )
 	{
-		CHostCacheHostPtr pHost = (*i).second;
+		CHostCacheHostPtr pHost = (*i);
 
 		switch ( pHost->m_nProtocol )
 		{
@@ -693,11 +885,15 @@ void CHostCacheList::PruneOldHosts(DWORD tNow)
 			;
 		}
 
-		if ( ! pHost->m_bPriority &&
+		if ( nCount > 0 && !HostCache.EnoughServers( pHost->m_nProtocol, &nCount ) )
+			nCount = 0; // Count hosts again
+
+		if ( ! pHost->m_bPriority && 
 			 ( pHost->m_nFailures > Settings.Connection.FailureLimit ||
-			   pHost->IsExpired( tNow ) ) )
+			    pHost->IsExpired( tNow ) ) && HostCache.EnoughServers( pHost->m_nProtocol, &nCount ) )
 		{
 			i = Remove( pHost );
+			nCount--;
 		}
 		else
 			++i;
@@ -712,7 +908,7 @@ void CHostCacheList::PruneHosts()
 	CQuickLock oLock( m_pSection );
 
 	for( CHostCacheIndex::iterator i = m_HostsTime.end();
-		m_Hosts.size() > Settings.Gnutella.HostCacheSize && i != m_HostsTime.begin(); )
+		m_HostsTime.size() > Settings.Gnutella.HostCacheSize && i != m_HostsTime.begin(); )
 	{
 		--i;
 		CHostCacheHostPtr pHost = (*i);
@@ -720,27 +916,53 @@ void CHostCacheList::PruneHosts()
 		if ( ! pHost->m_bPriority )
 		{
 			i = m_HostsTime.erase( i );
-			m_Hosts.erase( std::find_if( m_Hosts.begin(), m_Hosts.end(),
-				std::bind2nd( is_host(), pHost ) ) );
+			
+			CHostCacheMapItr index = std::find_if( m_Hosts.begin(), m_Hosts.end(),
+				std::bind2nd( is_host(), pHost ) );
+
+			if ( index != m_Hosts.end() )
+				m_Hosts.erase( index );
+			else
+			{
+				CHostCacheMapItrIPv6 index = std::find_if( m_HostsIPv6.begin(), m_HostsIPv6.end(),
+					std::bind2nd( is_host_ipv6(), pHost ) );
+
+				if ( index != m_HostsIPv6.end() )
+					m_HostsIPv6.erase( index );
+			}
+
 			delete pHost;
 			m_nCookie++;
 		}
 	}
 
 	for( CHostCacheIndex::iterator i = m_HostsTime.end();
-		m_Hosts.size() > Settings.Gnutella.HostCacheSize && i != m_HostsTime.begin(); )
+		m_HostsTime.size() > Settings.Gnutella.HostCacheSize && i != m_HostsTime.begin(); )
 	{
 		--i;
 		CHostCacheHostPtr pHost = (*i);
 
 		i = m_HostsTime.erase( i );
-		m_Hosts.erase( std::find_if( m_Hosts.begin(), m_Hosts.end(),
-			std::bind2nd( is_host(), pHost ) ) );
+			
+		CHostCacheMapItr index = std::find_if( m_Hosts.begin(), m_Hosts.end(),
+				std::bind2nd( is_host(), pHost ) );
+
+		if ( index != m_Hosts.end() )
+			m_Hosts.erase( index );
+		else
+		{
+			CHostCacheMapItrIPv6 index = std::find_if( m_HostsIPv6.begin(), m_HostsIPv6.end(),
+				std::bind2nd( is_host_ipv6(), pHost ) );
+
+			if ( index != m_HostsIPv6.end() )
+				m_HostsIPv6.erase( index );
+		}
+
 		delete pHost;
 		m_nCookie++;
 	}
 
-	ASSERT( m_Hosts.size() == m_HostsTime.size() );
+	ASSERT( m_Hosts.size() + m_HostsIPv6.size() == m_HostsTime.size() );
 }
 
 //////////////////////////////////////////////////////////////////////
@@ -753,9 +975,9 @@ void CHostCacheList::Serialize(CArchive& ar, int nVersion)
 	if ( ar.IsStoring() )
 	{
 		ar.WriteCount( GetCount() );
-		for( CHostCacheMapItr i = m_Hosts.begin(); i != m_Hosts.end(); ++i )
+		for(  CHostCacheIndex::iterator i = m_HostsTime.begin(); i != m_HostsTime.end(); ++i )
 		{
-			CHostCacheHostPtr pHost = (*i).second;
+			CHostCacheHostPtr pHost = (*i);
 			pHost->Serialize( ar, nVersion );
 		}
 	}
@@ -768,16 +990,32 @@ void CHostCacheList::Serialize(CArchive& ar, int nVersion)
 			if ( pHost )
 			{
 				pHost->Serialize( ar, nVersion );
-				if ( ! Security.IsDenied( &pHost->m_pAddress ) &&
-					 ! Find( &pHost->m_pAddress ) &&
-					 ! Find( pHost->m_sAddress ) )
-				{
-					m_Hosts.insert( CHostCacheMapPair( pHost->m_pAddress, pHost ) );
-					m_HostsTime.insert( pHost );
+				if ( ! pHost->IsIPv6Host() )
+				{ //IPv4
+					if ( ! Security.IsDenied( &pHost->m_pAddress ) &&
+						 ! Find( &pHost->m_pAddress ) &&
+						 ! Find( pHost->m_sAddress ) )
+					{
+						m_Hosts.insert( CHostCacheMapPair( pHost->m_pAddress, pHost ) );
+						m_HostsTime.insert( pHost );
+					}
+					else
+						// Remove bad or duplicated host
+						delete pHost;
 				}
 				else
-					// Remove bad or duplicated host
-					delete pHost;
+				{ //IPv6
+					if ( ! Security.IsDenied( &pHost->m_pAddressIPv6 ) &&
+						 ! Find( &pHost->m_pAddressIPv6 ) &&
+						 ! Find( pHost->m_sAddress ) )
+					{
+						m_HostsIPv6.insert( CHostCacheMapPairIPv6( pHost->m_pAddressIPv6, pHost ) );
+						m_HostsTime.insert( pHost );
+					}
+					else
+						// Remove bad or duplicated host
+						delete pHost;
+				}
 			}
 		}
 
@@ -789,45 +1027,65 @@ void CHostCacheList::Serialize(CArchive& ar, int nVersion)
 
 int CHostCache::Import(LPCTSTR pszFile, BOOL bFreshOnly)
 {
-	LPCTSTR szExt = PathFindExtension( pszFile );
-
-	// Ignore too old file
-	if ( bFreshOnly && ! IsFileNewerThan( pszFile, 90ull * 24 * 60 * 60 * 1000 ) ) // 90 days
-		return 0;
-
-	CFile pFile;
-	if ( ! pFile.Open( pszFile, CFile::modeRead | CFile::shareDenyWrite | CFile::osSequentialScan ) )
-		return 0;
-
 	int nImported = 0;
 
-	if ( _tcsicmp( szExt, _T(".bz2") ) == 0 )
+	theApp.Message( MSG_DEBUG, _T( "Looking for: %s" ), pszFile );
+
+	CFileFind ff;
+	BOOL res = ff.FindFile( pszFile );
+	while ( res )
 	{
-		theApp.Message( MSG_NOTICE, _T("Importing HubList file: %s"), pszFile );
+		res = ff.FindNextFile();
 
-		nImported = ImportHubList( &pFile );
+		if ( ff.IsDirectory() )
+			continue;
+
+		const CString strPath = ff.GetFilePath();
+		LPCTSTR szExt = PathFindExtension( strPath );
+
+		// Ignore too old file
+		if ( bFreshOnly && ! IsFileNewerThan( strPath, 90ull * 24 * 60 * 60 * 1000 ) ) // 90 days
+		{
+			theApp.Message( MSG_DEBUG, _T( "Ignoring too old file: %s" ), (LPCTSTR)strPath );
+			continue;
+		}
+
+		CFile pFile;
+		if ( ! pFile.Open( strPath, CFile::modeRead | CFile::shareDenyWrite | CFile::osSequentialScan ) )
+		{
+			theApp.Message( MSG_DEBUG, _T( "Failed to open file: %s" ), (LPCTSTR)strPath );
+			continue;
+		}
+
+		if ( _tcsicmp( szExt, _T( ".bz2" ) ) == 0 )
+		{
+			theApp.Message( MSG_NOTICE, _T( "Importing DC++ Hub List file: %s" ), (LPCTSTR)strPath );
+
+			nImported = ImportHubList( &pFile );
+		}
+		else if ( _tcsicmp( szExt, _T( ".met" ) ) == 0 )
+		{
+			theApp.Message( MSG_NOTICE, _T( "Importing Server.met file: %s" ), (LPCTSTR)strPath );
+
+			nImported = ImportMET( &pFile );
+		}
+		else if ( _tcsicmp( szExt, _T( ".dat" ) ) == 0 )
+		{
+			theApp.Message( MSG_NOTICE, _T( "Importing Kademlia Nodes file: %s" ), (LPCTSTR)strPath );
+
+			nImported = ImportNodes( &pFile );
+		}
 	}
-	else if ( _tcsicmp( szExt, _T(".met") ) == 0 )
-	{
-		theApp.Message( MSG_NOTICE, _T("Importing MET file: %s"), pszFile );
 
-		nImported = ImportMET( &pFile );
-	}
-	else if ( _tcsicmp( szExt, _T(".dat") ) == 0 )
-	{
-		theApp.Message( MSG_NOTICE, _T("Importing Nodes file: %s"), pszFile );
-
-		nImported = ImportNodes( &pFile );
-	}
-
-	Save();
+	if ( nImported )
+		Save();
 
 	return nImported;
 }
 
 int CHostCache::ImportHubList(CFile* pFile)
 {
-	DWORD nSize = pFile->GetLength();
+	DWORD nSize = (DWORD)pFile->GetLength();
 
 	CBuffer pBuffer;
 	if ( ! pBuffer.EnsureBuffer( nSize ) )
@@ -883,7 +1141,7 @@ int CHostCache::ImportHubList(CFile* pFile)
 			int nMaxusers = _tstoi( pHub->GetAttributeValue( _T("Maxusers") ) );
 
 			CQuickLock oLock( DC.m_pSection );
-			CHostCacheHostPtr pServer = DC.Add( NULL, protocolPorts[ PROTOCOL_DC ], 0,
+			CHostCacheHostPtr pServer = DC.Add( NULL, protocolPorts[ PROTOCOL_DC ], NULL, 0,
 				protocolNames[ PROTOCOL_DC ], 0, nUsers, nMaxusers, sAddress );
 			if ( pServer )
 			{
@@ -1025,6 +1283,70 @@ int CHostCache::ImportNodes(CFile* pFile)
 	return nServers;
 }
 
+bool CHostCache::EnoughServers(PROTOCOLID nProtocol, DWORD* pCount) const
+{
+	switch ( nProtocol )
+	{
+	case PROTOCOL_G1:
+		if ( Settings.Gnutella1.EnableToday )
+		{
+			if ( pCount && *pCount > 0 )
+				return *pCount > 20;
+			else if ( pCount )
+				return ( *pCount = Gnutella1.CountHosts( TRUE ) ) > 20;
+			else
+				return Gnutella1.CountHosts( TRUE ) > 20;
+		}
+		return true;
+	case PROTOCOL_G2:
+		if ( Settings.Gnutella2.EnableToday )
+		{
+			if ( pCount && *pCount > 0 )
+				return *pCount > 25;
+			else if ( pCount )
+				return ( *pCount = Gnutella2.CountHosts( TRUE ) ) > 25;
+			else
+				return Gnutella2.CountHosts( TRUE ) > 25;
+		}
+		return true;
+	case PROTOCOL_ED2K:
+		if ( Settings.eDonkey.EnableToday )
+		{
+			if ( pCount && *pCount > 0 )
+				return true;
+			else if ( pCount )
+				return ( *pCount = eDonkey.CountHosts( TRUE ) ) > 0;
+			else
+				return eDonkey.CountHosts( TRUE ) > 0;
+		}
+		return true;
+	case PROTOCOL_DC:
+		if ( Settings.DC.EnableToday )
+		{
+			if ( pCount && *pCount > 0 )
+				return true;
+			else if ( pCount )
+				return ( *pCount = DC.CountHosts( TRUE ) ) > 0;
+			else
+				return DC.CountHosts( TRUE ) > 0;
+		}
+		return true;
+	case PROTOCOL_BT:
+		if ( Settings.BitTorrent.EnableToday )
+		{
+			if ( pCount && *pCount > 0 )
+				return true;
+			else if ( pCount )
+				return ( *pCount = BitTorrent.CountHosts( TRUE ) ) > 0;
+			else
+				return BitTorrent.CountHosts( TRUE ) > 0;
+		}
+		return true;
+	default:
+		return true;
+	}
+}
+
 //////////////////////////////////////////////////////////////////////
 // CHostCache Check Minimum Servers
 
@@ -1040,40 +1362,57 @@ bool CHostCache::CheckMinimumServers(PROTOCOLID nProtocol)
 		return true;
 
 	// Load default server list (if necessary)
-	LoadDefaultServers( nProtocol );
+	int nImported = LoadDefaultServers( nProtocol );
+
+	const static CString sRootPathes[] =
+	{
+		theApp.GetProgramFilesFolder().Left( 2 ),	// System disk
+		theApp.GetProgramFilesFolder(),
+		theApp.GetProgramFilesFolder64(),
+		theApp.GetLocalAppDataFolder(),
+		theApp.GetAppDataFolder()
+	};
 
 	// Get the server list from eMule (mods) if possible
 	if ( nProtocol == PROTOCOL_ED2K )
 	{
-		const LPCTSTR sServerMetPathes[ 8 ] =
+		const static LPCTSTR sServerMetPathes[] =
 		{
-			{ _T("\\eMule\\config\\server.met") },
-			{ _T("\\eMule\\server.met") },
-			{ _T("\\Neo Mule\\config\\server.met") },
-			{ _T("\\Neo Mule\\server.met") },
-			{ _T("\\hebMule\\config\\server.met") },
-			{ _T("\\hebMule\\server.met") },
-			{ _T("\\aMule\\config\\server.met") },
-			{ _T("\\aMule\\server.met") }
+			{ _T( "\\Neo Mule\\config\\server.met" ) },
+			{ _T( "\\Neo Mule\\server.met" ) },
+			{ _T( "\\aMule\\config\\server.met" ) },
+			{ _T( "\\aMule\\server.met" ) },
+			{ _T( "\\eMule\\config\\server.met" ) },
+			{ _T( "\\eMule\\server.met" ) },
+			{ _T( "\\hebMule\\config\\server.met" ) },
+			{ _T( "\\hebMule\\server.met" ) }
 		};
-
-		CString sRootPathes[ 3 ];
-		sRootPathes[ 0 ] = theApp.GetProgramFilesFolder();
-		sRootPathes[ 1 ] = theApp.GetLocalAppDataFolder();
-		sRootPathes[ 2 ] = theApp.GetAppDataFolder();
 
 		for ( int i = 0; i < _countof( sRootPathes ); ++i )
 			for ( int j = 0; j < _countof( sServerMetPathes ); ++j )
-				Import( sRootPathes[ i ] + sServerMetPathes[ j ], TRUE );
+				nImported += Import( sRootPathes[ i ] + sServerMetPathes[ j ], TRUE );
+	}
+	// Get the hub list from DC++ (mods) if possible
+	else if ( nProtocol == PROTOCOL_DC )
+	{
+		const static LPCTSTR sHubListPathes[] =
+		{
+			{ _T( "\\AirDC++\\HubLists\\*.xml.bz2" ) },
+			{ _T( "\\ApexDC++\\HubLists\\*.xml.bz2" ) },
+			{ _T( "\\DC++\\HubLists\\*.xml.bz2" ) },
+			{ _T( "\\EiskaltDC++\\HubLists\\*.xml.bz2" ) },
+			{ _T( "\\FlylinkDC++\\HubLists\\*.xml.bz2" ) },
+			{ _T( "\\PeLinkDC\\Settings\\HubLists\\*.xml.bz2" ) }
+		};
+
+		for ( int i = 0; i < _countof( sRootPathes ); ++i )
+			for ( int j = 0; j < _countof( sHubListPathes ); ++j )
+				nImported += Import( sRootPathes[ i ] + sHubListPathes[ j ], TRUE );
 	}
 
-	if ( EnoughServers( nProtocol ) )
-		return true;
+	theApp.Message( MSG_NOTICE, _T( "Imported %d new servers." ), nImported );
 
-	// Get server list from Web
-	DiscoveryServices.Execute( TRUE, nProtocol, TRUE );
-
-	return false;
+	return EnoughServers( nProtocol );
 }
 
 //////////////////////////////////////////////////////////////////////
@@ -1087,7 +1426,7 @@ int CHostCache::LoadDefaultServers(PROTOCOLID nProtocol)
 	CStdioFile pFile;
 	if ( pFile.Open( strFile, CFile::modeRead | CFile::shareDenyWrite | CFile::osSequentialScan ) )
 	{
-		theApp.Message( MSG_NOTICE, _T("Loading default server list for %s: %s"), protocolNames[ nProtocol ], strFile );
+		theApp.Message( MSG_NOTICE, _T("Loading default server list for %s: %s"), protocolNames[ nProtocol ], (LPCTSTR)strFile );
 
 		for (;;)
 		{
@@ -1198,6 +1537,7 @@ CHostCacheHost::CHostCacheHost(PROTOCOLID nProtocol) :
 	m_nKADVersion(0)
 {
 	m_pAddress.s_addr = INADDR_ANY;
+	IN6_SET_ADDR_UNSPECIFIED( &m_pAddressIPv6 );
 
 	// 10 sec cooldown to avoid neighbor add-remove oscillation
 	DWORD tNow = static_cast< DWORD >( time( NULL ) );
@@ -1224,6 +1564,8 @@ CString CHostCacheHost::Address() const
 {
 	if ( m_pAddress.s_addr != INADDR_ANY )
 		return CString( inet_ntoa( m_pAddress ) );
+	else if( IsIPv6Host() )
+		return IPv6ToString( &m_pAddressIPv6, true );
 	else
 		return m_sAddress;
 }
@@ -1235,6 +1577,8 @@ void CHostCacheHost::Serialize(CArchive& ar, int nVersion)
 {
 	if ( ar.IsStoring() )
 	{
+		// Version 20
+		ar.Write( &m_pAddressIPv6, sizeof(m_pAddressIPv6) );
 		ar.Write( &m_pAddress, sizeof(m_pAddress) );
 		ar << m_nPort;
 
@@ -1272,6 +1616,8 @@ void CHostCacheHost::Serialize(CArchive& ar, int nVersion)
 		{
 			ar << m_tKeyTime;
 			ar << m_nKeyHost;
+			// Version 21
+			ar.Write( &m_nKeyHostIPv6, sizeof( m_nKeyHostIPv6 ) );
 		}
 
 		ar << m_tFailure;
@@ -1298,11 +1644,16 @@ void CHostCacheHost::Serialize(CArchive& ar, int nVersion)
 		ar << m_sUser;
 		ar << m_sPass;
 
-		// Version 18
+		// Version 19
 		ar << m_sAddress;
 	}
 	else
 	{
+		if ( nVersion >= 20 )
+		{
+			ReadArchive( ar, &m_pAddressIPv6, sizeof(m_pAddressIPv6) );
+		}
+
 		ReadArchive( ar, &m_pAddress, sizeof(m_pAddress) );
 		ar >> m_nPort;
 
@@ -1322,7 +1673,7 @@ void CHostCacheHost::Serialize(CArchive& ar, int nVersion)
 		if ( szaVendor[0] )
 		{
 			ReadArchive( ar, szaVendor + 1, 3 );
-			TCHAR szVendor[5] = { szaVendor[0], szaVendor[1], szaVendor[2], szaVendor[3], 0 };
+			TCHAR szVendor[5] = { (TCHAR)szaVendor[0], (TCHAR)szaVendor[1], (TCHAR)szaVendor[2], (TCHAR)szaVendor[3], 0 };
 			m_pVendor = VendorCache.Lookup( szVendor );
 		}
 
@@ -1363,6 +1714,10 @@ void CHostCacheHost::Serialize(CArchive& ar, int nVersion)
 		{
 			ar >> m_tKeyTime;
 			ar >> m_nKeyHost;
+			if ( nVersion >= 21 )
+			{
+				ReadArchive( ar, &m_nKeyHostIPv6, sizeof( m_nKeyHostIPv6 ) );
+			}
 		}
 
 		if ( nVersion >= 11 )
@@ -1485,7 +1840,9 @@ bool CHostCacheHost::ConnectTo(BOOL bAutomatic)
 
 	if ( m_pAddress.s_addr != INADDR_ANY )
 		return Neighbours.ConnectTo( m_pAddress, m_nPort, m_nProtocol, bAutomatic ) != NULL;
-	
+	else if ( IsIPv6Host() )
+		return Neighbours.ConnectTo( m_pAddressIPv6, m_nPort, m_nProtocol, bAutomatic ) != NULL;
+
 	m_tConnect += 30; // Throttle for 30 seconds
 	return Network.ConnectTo( m_sAddress, m_nPort, m_nProtocol ) != FALSE;
 }
@@ -1502,14 +1859,14 @@ CString CHostCacheHost::ToString(const bool bLong) const
 		tm time = {};
 		if ( gmtime_s( &time, &tSeen ) == 0 )
 		{
-			str.Format( _T("%s:%i %.4i-%.2i-%.2iT%.2i:%.2iZ"),
+			str.Format( _T("%s:%u %.4i-%.2i-%.2iT%.2i:%.2iZ"),
 				(LPCTSTR)CString( inet_ntoa( m_pAddress ) ), m_nPort,
 				time.tm_year + 1900, time.tm_mon + 1, time.tm_mday,
 				time.tm_hour, time.tm_min ); // 2002-04-30T08:30Z
 			return str;
 		}
 	}
-	str.Format( _T("%s:%i"),
+	str.Format( _T("%s:%u"),
 		(LPCTSTR)CString( inet_ntoa( m_pAddress ) ), m_nPort );
 	return str;
 }
@@ -1565,13 +1922,15 @@ bool CHostCacheHost::CanConnect(DWORD tNow) const
 	// Don't connect to self
 	if ( Settings.Connection.IgnoreOwnIP && Network.IsSelfIP( m_pAddress ) ) return false;
 
+	DWORD nCount = 0;
+
 	return
 		// Let failed host rest some time...
 		( ! m_tFailure || ( tNow >= m_tFailure + Settings.Connection.FailurePenalty ) ) &&
 		// ...and we lost no hope on this host...
-		( m_nFailures <= Settings.Connection.FailureLimit ) &&
+		( m_nFailures <= Settings.Connection.FailureLimit || ! HostCache.EnoughServers( m_nProtocol, &nCount ) ) &&
 		// ...and host isn't expired...
-		( m_bPriority || ! IsExpired( tNow ) ) &&
+		( m_bPriority || ! IsExpired( tNow ) || ! HostCache.EnoughServers( m_nProtocol, &nCount ) ) &&
 		// ...and make sure we reconnect not too fast...
 		( ! IsThrottled( tNow ) );
 		// ...then we can connect!
@@ -1586,7 +1945,9 @@ bool CHostCacheHost::CanQuote(const DWORD tNow) const
 		// A host isn't dead...
 		( m_nFailures == 0 ) &&
 		// ...and host isn't expired...
-		( ! IsExpired( tNow ) );
+		( ! IsExpired( tNow ) ) &&
+		// ...and we checked this host...
+		( m_nUserLimit > 0 && m_bCheckedLocally );
 		// ...then we can tell about it to others!
 }
 
@@ -1659,5 +2020,20 @@ void CHostCacheHost::SetKey(const DWORD nKey, const IN_ADDR* pHost)
 		m_tKeyTime	= static_cast< DWORD >( time( NULL ) );
 		m_nKeyValue	= nKey;
 		m_nKeyHost	= pHost ? pHost->S_un.S_addr : Network.m_pHost.sin_addr.S_un.S_addr;
+		IN6_SET_ADDR_UNSPECIFIED( &m_nKeyHostIPv6 );
+	}
+}
+
+void CHostCacheHost::SetKeyIPv6(const DWORD nKey, const IN6_ADDR* pHost)
+{
+	if ( nKey )
+	{
+		m_tAck		= 0;
+		m_nFailures	= 0;
+		m_tFailure	= 0;
+		m_tKeyTime	= static_cast< DWORD >( time( NULL ) );
+		m_nKeyValue	= nKey;
+		m_nKeyHost = 0;
+		m_nKeyHostIPv6	= pHost ? *pHost: Network.m_pHostIPv6.sin6_addr;
 	}
 }

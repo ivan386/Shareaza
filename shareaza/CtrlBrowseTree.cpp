@@ -1,7 +1,7 @@
 //
 // CtrlBrowseTree.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2012.
+// Copyright (c) Shareaza Development Team, 2002-2017.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -362,7 +362,7 @@ BOOL CBrowseTreeCtrl::CleanItems(CBrowseTreeItem* pItem, DWORD nCookie, BOOL bVi
 
 void CBrowseTreeCtrl::NotifySelection()
 {
-	NMHDR pNM = { GetSafeHwnd(), GetDlgCtrlID(), BTN_SELCHANGED };
+	NMHDR pNM = { GetSafeHwnd(), (UINT_PTR)GetDlgCtrlID(), BTN_SELCHANGED };
 	GetOwner()->SendMessage( WM_NOTIFY, pNM.idFrom, (LPARAM)&pNM );
 }
 
@@ -873,8 +873,8 @@ void CBrowseTreeCtrl::OnTreePacket(CG2Packet* pPacket, DWORD nFinish, CBrowseTre
 		}
 		else if ( nType == G2_PACKET_METADATA && bCompound == FALSE )
 		{
-			CXMLElement* pXML = CXMLElement::FromString( pPacket->ReadString( nLength ) );
-			if ( pXML != NULL ) pItem->AddXML( pXML );
+			CAutoPtr< CXMLElement > pXML( CXMLElement::FromString( pPacket->ReadString( nLength ) ) );
+			pItem->AddXML( pXML );
 		}
 		else if ( nType == G2_PACKET_FILES && bCompound == FALSE )
 		{
@@ -952,8 +952,11 @@ CBrowseTreeItem* CBrowseTreeItem::Add(LPCTSTR pszName)
 
 		CBrowseTreeItem** pList = new CBrowseTreeItem*[ m_nBuffer ];
 
-		if ( m_nCount ) CopyMemory( pList, m_pList, m_nCount * sizeof( CBrowseTreeItem* ) );
-		if ( m_pList ) delete [] m_pList;
+		if ( m_pList )
+		{
+			if ( m_nCount ) CopyMemory( pList, m_pList, m_nCount * sizeof( CBrowseTreeItem* ) );
+			delete [] m_pList;
+		}
 
 		m_pList = pList;
 	}
@@ -991,8 +994,11 @@ CBrowseTreeItem* CBrowseTreeItem::Add(CBrowseTreeItem* pNewItem)
 
 		CBrowseTreeItem** pList = new CBrowseTreeItem*[ m_nBuffer ];
 
-		if ( m_nCount ) CopyMemory( pList, m_pList, m_nCount * sizeof( CBrowseTreeItem* ) );
-		if ( m_pList ) delete [] m_pList;
+		if ( m_pList )
+		{
+			if ( m_nCount ) CopyMemory( pList, m_pList, m_nCount * sizeof( CBrowseTreeItem* ) );
+			delete [] m_pList;
+		}
 
 		m_pList = pList;
 	}
@@ -1153,8 +1159,11 @@ void CBrowseTreeItem::Paint(CDC& dc, CRect& rc, BOOL bTarget, COLORREF crBack) c
 /////////////////////////////////////////////////////////////////////////////
 // CBrowseTreeItem add XML
 
-void CBrowseTreeItem::AddXML(CXMLElement* pXML)
+void CBrowseTreeItem::AddXML(const CXMLElement* pXML)
 {
+	if ( ! pXML )
+		return;
+
 	CString strURI = pXML->GetAttributeValue( CXMLAttribute::schemaName );
 
 	if ( ( m_pSchema = SchemaCache.Get( strURI ) ) != NULL )
@@ -1169,6 +1178,4 @@ void CBrowseTreeItem::AddXML(CXMLElement* pXML)
 	}
 
 	if ( m_sText.IsEmpty() ) m_sText = _T("Unnamed");
-
-	if ( pXML != NULL ) delete pXML;
 }

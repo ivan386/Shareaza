@@ -1,7 +1,7 @@
 //
 // Library.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2014.
+// Copyright (c) Shareaza Development Team, 2002-2017.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -81,7 +81,7 @@ CLibrary::~CLibrary()
 //////////////////////////////////////////////////////////////////////
 // CLibrary file and folder operations
 
-CLibraryFile* CLibrary::LookupFile(DWORD_PTR nIndex, BOOL bSharedOnly, BOOL bAvailableOnly) const
+CLibraryFile* CLibrary::LookupFile(DWORD nIndex, BOOL bSharedOnly, BOOL bAvailableOnly) const
 {
 	return LibraryMaps.LookupFile( nIndex, bSharedOnly, bAvailableOnly );
 }
@@ -97,7 +97,7 @@ void CLibrary::AddFile(CLibraryFile* pFile)
 
 	if ( pFile->HasHash() )
 	{
-		LibraryDictionary.AddFile( *pFile );
+		LibraryDictionary.AddFile( pFile );
 	}
 
 	if ( pFile->IsAvailable() )
@@ -134,7 +134,7 @@ void CLibrary::RemoveFile(CLibraryFile* pFile)
 
 	if ( pFile->m_nIndex )
 	{
-		LibraryDictionary.RemoveFile( *pFile );
+		LibraryDictionary.RemoveFile( pFile );
 	}
 }
 
@@ -154,7 +154,7 @@ bool CLibrary::OnQueryHits(const CQueryHit* pHits)
 			}
 		}
 	}
-	
+
 	return true;
 }
 
@@ -358,7 +358,7 @@ BOOL CLibrary::Load()
 BOOL CLibrary::Save()
 {
 	CSingleLock pLock( &m_pSection, TRUE );
-	
+
 	//CAutoPtr< CXMLElement > pXML( LibraryFolders.CreateXML( _T("/"), TRUE, xmlDC ) );
 	//CString strXML( pXML->ToString( TRUE, TRUE, TRUE, TRI_TRUE ) );
 	//CString strXMLFile;
@@ -378,7 +378,7 @@ BOOL CLibrary::Save()
 	CFile pFile;
 	if ( ! pFile.Open( strFile, CFile::modeWrite|CFile::modeCreate ) )
 	{
-		theApp.Message( MSG_ERROR, _T("Library save error to: %s"), strFile );
+		theApp.Message( MSG_ERROR, _T("Library save error to: %s"), (LPCTSTR)strFile );
 		return FALSE;
 	}
 
@@ -399,7 +399,7 @@ BOOL CLibrary::Save()
 			ar.Abort();
 			pFile.Abort();
 			pException->Delete();
-			theApp.Message( MSG_ERROR, _T("Library save error to: %s"), strFile );
+			theApp.Message( MSG_ERROR, _T("Library save error to: %s"), (LPCTSTR)strFile );
 			return FALSE;
 		}
 
@@ -413,12 +413,12 @@ BOOL CLibrary::Save()
 	{
 		pFile.Abort();
 		pException->Delete();
-		theApp.Message( MSG_ERROR, _T("Library save error to: %s"), strFile );
+		theApp.Message( MSG_ERROR, _T("Library save error to: %s"), (LPCTSTR)strFile );
 		return FALSE;
 	}
 
 	m_nSaveCookie = m_nUpdateCookie;
-	theApp.Message( MSG_DEBUG, _T("Library successfully saved to: %s"), strFile );
+	theApp.Message( MSG_DEBUG, _T("Library successfully saved to: %s"), (LPCTSTR)strFile );
 	return TRUE;
 }
 
@@ -485,14 +485,15 @@ BOOL CLibrary::ThreadScan()
 
 	// If folders not watched then scan them at periodic basis
 	// (default is one time per 5 seconds)
+	const DWORD nNow = GetTickCount();
 	BOOL bPeriodicScan = ! Settings.Library.WatchFolders &&
-		( m_nScanTime <  GetTickCount() - Settings.Library.WatchFoldersTimeout * 1000 );
+		( nNow < m_nScanTime || nNow - m_nScanTime > Settings.Library.WatchFoldersTimeout * 1000 );
 
 	BOOL bChanged = LibraryFolders.ThreadScan( bPeriodicScan || bForcedScan );
 
 	if ( bPeriodicScan || bForcedScan || bChanged )
 	{
-		m_nScanTime =  GetTickCount();
+		m_nScanTime =  nNow;
 
 		// Mark library as changed
 		if ( bChanged )
@@ -503,8 +504,9 @@ BOOL CLibrary::ThreadScan()
 
 	// Save library changes but not frequently
 	// (one time per 30 seconds)
-	if ( m_nUpdateCookie != m_nSaveCookie && GetTickCount() - m_nSaveTime > 30000 )
+	if ( m_nUpdateCookie != m_nSaveCookie && ( nNow < m_nSaveTime || nNow - m_nSaveTime > 30000 ) )
 	{
+		LibraryFolders.ClearGhosts( FALSE );
 		Save();
 	}
 

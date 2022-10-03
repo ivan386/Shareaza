@@ -1,7 +1,7 @@
 //
 // LibraryBuilderPlugins.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2010.
+// Copyright (c) Shareaza Development Team, 2002-2015.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -53,12 +53,11 @@ HRESULT CLibraryBuilderPlugins::SafeProcess(ILibraryBuilderPlugin* pPlugin, BSTR
 
 bool CLibraryBuilderPlugins::ExtractPluginMetadata(DWORD nIndex, const CString& strPath)
 {
-	CString strType = PathFindExtension( strPath );
-	strType.MakeLower();
+	LPCTSTR szType = PathFindExtension( strPath );
 
 	for ( int i = 0; i < 2; ++i )
 	{
-		CComPtr< ILibraryBuilderPlugin > pPlugin( LoadPlugin( strType ) );
+		CComQIPtr< ILibraryBuilderPlugin > pPlugin( Plugins.GetPlugin( _T( "LibraryBuilder" ), szType ) );
 		if ( ! pPlugin )
 			break;
 
@@ -87,7 +86,7 @@ bool CLibraryBuilderPlugins::ExtractPluginMetadata(DWORD nIndex, const CString& 
 		}
 		else if ( SERVERLOST( hr ) )
 		{
-			Plugins.ReloadPlugin( _T("LibraryBuilder"), strType );
+			Plugins.ReloadPlugin( _T("LibraryBuilder"), szType );
 
 			pPlugin.Release();
 
@@ -99,15 +98,4 @@ bool CLibraryBuilderPlugins::ExtractPluginMetadata(DWORD nIndex, const CString& 
 	}
 
 	return false;
-}
-
-//////////////////////////////////////////////////////////////////////
-// CLibraryBuilderPlugins load plugin
-
-ILibraryBuilderPlugin* CLibraryBuilderPlugins::LoadPlugin(LPCTSTR pszType)
-{
-	CComQIPtr< ILibraryBuilderPlugin > pPlugin(
-		Plugins.GetPlugin( _T("LibraryBuilder"), pszType ) );
-
-	return pPlugin.Detach();
 }

@@ -1,7 +1,7 @@
 //
 // HashDatabase.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2011.
+// Copyright (c) Shareaza Development Team, 2002-2017.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -104,7 +104,7 @@ BOOL CHashDatabase::Create()
 		{
 			m_pFile.Abort();
 			pException->Delete();
-			theApp.Message( MSG_ERROR, _T("Hash Database load error: %s"), m_sPath );
+			theApp.Message( MSG_ERROR, _T("Hash Database load error: %s"), (LPCTSTR)m_sPath );
 		}
 	}
 
@@ -131,7 +131,7 @@ BOOL CHashDatabase::Create()
 		}
 	}
 
-	theApp.Message( MSG_ERROR, _T("Hash Database create error: %s"), m_sPath );
+	theApp.Message( MSG_ERROR, _T("Hash Database create error: %s"), (LPCTSTR)m_sPath );
 	return FALSE;
 }
 
@@ -167,7 +167,7 @@ void CHashDatabase::Close()
 //////////////////////////////////////////////////////////////////////
 // CHashDatabase lookup
 
-HASHDB_INDEX* CHashDatabase::Lookup(DWORD nIndex, DWORD nType)
+HASHDB_INDEX* CHashDatabase::Lookup(DWORD nIndex, DWORD nType) const
 {
 	ASSERT( m_bOpen );
 	HASHDB_INDEX* pIndex = m_pIndex;
@@ -225,8 +225,11 @@ HASHDB_INDEX* CHashDatabase::PrepareToStore(DWORD nIndex, DWORD nType, DWORD nLe
 		{
 			m_nBuffer += 64;
 			HASHDB_INDEX* pNew = new HASHDB_INDEX[ m_nBuffer ];
-			if ( m_nIndex ) CopyMemory( pNew, m_pIndex, sizeof(HASHDB_INDEX) * m_nIndex );
-			if ( m_pIndex ) delete [] m_pIndex;
+			if ( m_pIndex )
+			{
+				if ( m_nIndex ) CopyMemory( pNew, m_pIndex, sizeof(HASHDB_INDEX) * m_nIndex );
+				delete [] m_pIndex;
+			}
 			m_pIndex = pNew;
 		}
 

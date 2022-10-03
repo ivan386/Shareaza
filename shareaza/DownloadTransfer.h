@@ -1,7 +1,7 @@
 //
 // DownloadTransfer.h
 //
-// Copyright (c) Shareaza Development Team, 2002-2013.
+// Copyright (c) Shareaza Development Team, 2002-2014.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -54,7 +54,7 @@ protected:
 	CDownload*					m_pDownload;
 	CDownloadSource*			m_pSource;
 	CTimeAverage< DWORD, 2000 >	m_AverageSpeed;
-	BYTE*				m_pAvailable;
+	std::vector< bool >			m_pAvailable;
 
 	DWORD				m_tSourceRequest;		// When source request was last sent (ms)
 	Fragments::Queue	m_oRequested;			// List of requested fragments (eDonkey2K and BitTorrent)
@@ -67,10 +67,10 @@ public:
 	void				DrawStateBar(CDC* pDC, CRect* prcBar, COLORREF crFill, bool bTop = false) const;
 
 protected:
-	void				ChunkifyRequest(QWORD* pnOffset, QWORD* pnLength, DWORD nChunk, BOOL bVerifyLock) const;
+	bool				ChunkifyRequest(QWORD* pnOffset, QWORD* pnLength, DWORD nChunk, BOOL bVerifyLock) const;
 	bool				SelectFragment(const Fragments::List& oPossible, QWORD& nOffset, QWORD& nLength, bool bEndGame = false) const;
 private:
-	blockPair			SelectBlock(const Fragments::List& oPossible, const BYTE* pAvailable, bool bEndGame) const;
+	blockPair			SelectBlock(const Fragments::List& oPossible, const std::vector< bool >& pAvailable, bool bEndGame) const;
 	void				CheckPart(QWORD* nPart, QWORD nPartBlock, QWORD* nRange, QWORD& nRangeBlock, QWORD* nBestRange) const;
 	void				CheckRange(QWORD* nRange, QWORD* nBestRange) const;
 
@@ -82,7 +82,7 @@ public:
 	virtual DWORD	GetAverageSpeed();
 	virtual DWORD	GetMeasuredSpeed();
 	virtual BOOL	SubtractRequested(Fragments::List& ppFragments) const = 0;
-	virtual bool	UnrequestRange(QWORD /*nOffset*/, QWORD /*nLength*/);
+	virtual bool	UnrequestRange(QWORD /*nOffset*/, QWORD /*nLength*/, bool /* bSendCancel */ = true);
 	virtual CString	GetStateText(BOOL bLong);
 	virtual BOOL	OnRun();
 protected:
@@ -91,7 +91,7 @@ protected:
 
 enum
 {
-	dtsNull, dtsConnecting, dtsRequesting, dtsHeaders, dtsDownloading,
+	dtsNull, dtsKeepSource, dtsConnecting, dtsRequesting, dtsHeaders, dtsDownloading,
 	dtsFlushing, dtsTiger, dtsHashset, dtsMetadata, dtsBusy, dtsEnqueue, dtsQueued,
 	dtsTorrent,
 

@@ -24,31 +24,18 @@
 #include "resource.h"
 #include "GFLImageServices.h"
 
-class ATL_NO_VTABLE CGFLReader : 
+class ATL_NO_VTABLE CGFLReader :
 	public CComObjectRootEx<CComMultiThreadModel>,
 	public CComCoClass<CGFLReader, &CLSID_GFLReader>,
 	public IImageServicePlugin
 {
 public:
-	CGFLReader () throw()
-	{
-		m_pUnkMarshaler = NULL;
-	}
 
 DECLARE_REGISTRY_RESOURCEID(IDR_GFLREADER)
 
 BEGIN_COM_MAP(CGFLReader)
 	COM_INTERFACE_ENTRY(IImageServicePlugin)
-	COM_INTERFACE_ENTRY_AGGREGATE(IID_IMarshal, m_pUnkMarshaler.p)
 END_COM_MAP()
-
-DECLARE_PROTECT_FINAL_CONSTRUCT()
-DECLARE_GET_CONTROLLING_UNKNOWN()
-
-	HRESULT FinalConstruct () throw();
-	void FinalRelease () throw();
-
-	CComPtr<IUnknown> m_pUnkMarshaler;
 
 // IImageServicePlugin
 public:

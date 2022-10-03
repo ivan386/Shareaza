@@ -1,7 +1,7 @@
 //
 // QuerySearch.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2014.
+// Copyright (c) Shareaza Development Team, 2002-2015.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -80,7 +80,8 @@ CQuerySearch::CQuerySearch(BOOL bGUID) :
 	m_bWhatsNew	( false ),
 	m_bDropMe	( false ),
 	m_oWords	(),
-	m_oNegWords	()
+	m_oNegWords	(),
+	m_nMyAddress()
 {
 	if ( bGUID ) Network.CreateID( m_oGUID );
 
@@ -302,16 +303,30 @@ CG1Packet* CQuerySearch::ToG1Packet(DWORD nTTL) const
 //////////////////////////////////////////////////////////////////////
 // CQuerySearch to G2 packet
 
-CG2Packet* CQuerySearch::ToG2Packet(SOCKADDR_IN* pUDP, DWORD nKey) const
+CG2Packet* CQuerySearch::ToG2Packet(SOCKADDR* pUDP,  DWORD nKey) const
 {
 	CG2Packet* pPacket = CG2Packet::New( G2_PACKET_QUERY, TRUE );
 
 	if ( pUDP )
 	{
-		pPacket->WritePacket( G2_PACKET_UDP, nKey ? 10 : 6 );
-		pPacket->WriteLongLE( pUDP->sin_addr.S_un.S_addr );
-		pPacket->WriteShortBE( htons( pUDP->sin_port ) );
-		if ( nKey ) pPacket->WriteLongBE( nKey );
+		if ( pUDP->sa_family == AF_INET )
+		{
+			SOCKADDR_IN* pUDPv4 = ( SOCKADDR_IN* ) pUDP;
+			pPacket->WritePacket( G2_PACKET_UDP, nKey ? 10 : 6 );
+			pPacket->WriteLongLE( pUDPv4->sin_addr.S_un.S_addr );
+			pPacket->WriteShortBE( htons( pUDPv4->sin_port ) );
+			if ( nKey ) pPacket->WriteLongBE( nKey );
+		}
+		else if( pUDP->sa_family == AF_INET6 )
+		{
+			SOCKADDR_IN6* pUDPv6 = ( SOCKADDR_IN6* ) pUDP;
+			pPacket->WritePacket( G2_PACKET_UDP, 28 );
+			pPacket->WriteLongLE( 0 );
+			pPacket->WriteShortBE( 0 );
+			pPacket->WriteLongBE( nKey );
+			pPacket->Write( &pUDPv6->sin6_addr, sizeof( IN6_ADDR ) );
+			pPacket->WriteShortBE( htons( pUDPv6->sin6_port ) );
+		}
 	}
 	else if ( nKey )
 	{
@@ -681,12 +696,18 @@ CDCPacket* CQuerySearch::ToDCPacket() const
 	strSearch.Replace( _T('|'), _T('$') );
 
 	CString strAddress;
+
+	SOCKADDR_IN nMyHost(Network.m_pHost);
+
+	if (m_nMyAddress.S_un.S_addr)
+		nMyHost.sin_addr = m_nMyAddress;
+
 	if ( Network.IsFirewalled( CHECK_IP ) )
 		// Passive search
 		strAddress = _T("Hub:") + m_sMyNick;
 	else
 		// Active search
-		strAddress = HostToString( &Network.m_pHost );
+		strAddress = HostToString( &nMyHost );
 
 	CString strQuery;
 	strQuery.Format( _T("$Search %s %c?%c?%I64u?%d?%s|"),
@@ -694,7 +715,7 @@ CDCPacket* CQuerySearch::ToDCPacket() const
 		( bSizeRestriced ? _T('T') : _T('F') ),
 		( bIsMaxSize ? _T('T') : _T('F') ),
 		( bSizeRestriced ? ( bIsMaxSize ? m_nMaxSize : m_nMinSize ) : 0ull ),
-		nType, 
+		nType,
 		(LPCTSTR)( m_oTiger ? ( _T("TTH:") + m_oTiger.toString() ) : strSearch ) );
 
 	pPacket->WriteString( strQuery, FALSE );
@@ -705,7 +726,7 @@ CDCPacket* CQuerySearch::ToDCPacket() const
 //////////////////////////////////////////////////////////////////////
 // CQuerySearch from packet root
 
-CQuerySearchPtr CQuerySearch::FromPacket(CPacket* pPacket, const SOCKADDR_IN* pEndpoint, BOOL bGUID)
+CQuerySearchPtr CQuerySearch::FromPacket(CPacket* pPacket, const SOCKADDR* pEndpoint, BOOL bGUID)
 {
 	CQuerySearchPtr pSearch = new CQuerySearch( bGUID );
 
@@ -713,7 +734,7 @@ CQuerySearchPtr CQuerySearch::FromPacket(CPacket* pPacket, const SOCKADDR_IN* pE
 	{
 		if ( pPacket->m_nProtocol == PROTOCOL_G1 )
 		{
-			if ( pSearch->ReadG1Packet( (CG1Packet*)pPacket, pEndpoint ) )
+			if ( pSearch->ReadG1Packet( (CG1Packet*)pPacket, (SOCKADDR_IN*)pEndpoint ) )
 				return pSearch;
 		}
 		else if ( pPacket->m_nProtocol == PROTOCOL_G2 )
@@ -723,7 +744,7 @@ CQuerySearchPtr CQuerySearch::FromPacket(CPacket* pPacket, const SOCKADDR_IN* pE
 		}
 		else if ( pPacket->m_nProtocol == PROTOCOL_DC )
 		{
-			if ( pSearch->ReadDCPacket( (CDCPacket*)pPacket, pEndpoint ) )
+			if ( pSearch->ReadDCPacket( (CDCPacket*)pPacket, (SOCKADDR_IN*)pEndpoint ) )
 				return pSearch;
 		}
 	}
@@ -916,7 +937,8 @@ void CQuerySearch::ReadGGEP(CG1Packet* pPacket)
 				else if ( oBTH.fromUrn(   strURN ) );	// Got BTH base32
 				else if ( oBTH.fromUrn< Hashes::base16Encoding >( strURN ) );	// Got BTH base16
 				else
-					theApp.Message( MSG_DEBUG | MSG_FACILITY_SEARCH, _T("[G1] Got query packet with GGEP \"u\" unknown URN: \"%s\" (%d bytes)"), strURN, pItemPos->m_nLength );
+					theApp.Message( MSG_DEBUG | MSG_FACILITY_SEARCH, _T("[G1] Got query packet with GGEP \"u\" unknown URN: \"%s\" (%d bytes)"),
+					(LPCTSTR)strURN, pItemPos->m_nLength );
 			}
 			else if ( pItemPos->IsNamed( GGEP_HEADER_SECURE_OOB ) )
 			{
@@ -961,7 +983,8 @@ void CQuerySearch::ReadGGEP(CG1Packet* pPacket)
 				m_bWhatsNew = true;
 			}
 			else
-				theApp.Message( MSG_DEBUG | MSG_FACILITY_SEARCH, _T("[G1] Got query packet with unknown GGEP \"%s\" (%d bytes)"), pItemPos->m_sID, pItemPos->m_nLength );
+				theApp.Message( MSG_DEBUG | MSG_FACILITY_SEARCH, _T("[G1] Got query packet with unknown GGEP \"%s\" (%d bytes)"),
+					(LPCTSTR)pItemPos->m_sID, pItemPos->m_nLength );
 		}
 
 		if ( oSHA1  && ! m_oSHA1 )  m_oSHA1  = oSHA1;
@@ -977,7 +1000,7 @@ void CQuerySearch::ReadGGEP(CG1Packet* pPacket)
 //////////////////////////////////////////////////////////////////////
 // CQuerySearch from G2 packet
 
-BOOL CQuerySearch::ReadG2Packet(CG2Packet* pPacket, const SOCKADDR_IN* pEndpoint)
+BOOL CQuerySearch::ReadG2Packet(CG2Packet* pPacket, const SOCKADDR * pEndpoint)
 {
 	if ( ! pPacket->m_bCompound )
 		return FALSE;
@@ -987,31 +1010,79 @@ BOOL CQuerySearch::ReadG2Packet(CG2Packet* pPacket, const SOCKADDR_IN* pEndpoint
 
 	m_bAndG1 = FALSE;
 
+	const SOCKADDR_IN* pEndpointIPv4 = pEndpoint && pEndpoint->sa_family == AF_INET ? (SOCKADDR_IN*) pEndpoint : NULL;
+	const SOCKADDR_IN6* pEndpointIPv6 = pEndpoint && pEndpoint->sa_family == AF_INET6 ? (SOCKADDR_IN6*) pEndpoint : NULL;
+
 	while ( pPacket->ReadPacket( nType, nLength ) )
 	{
 		DWORD nOffset = pPacket->m_nPosition + nLength;
 
 		if ( nType == G2_PACKET_QKY && nLength >= 4 )
 		{
-			if ( m_pEndpoint.sin_addr.S_un.S_addr == 0 && pEndpoint != NULL )
-				m_pEndpoint = *pEndpoint;
+			if ( pEndpointIPv4 )
+			{
+				if ( m_pEndpoint.sin_addr.S_un.S_addr == 0 )
+					m_pEndpoint = *pEndpointIPv4;
+			}
+			else if( pEndpointIPv6 )
+			{
+				if ( IN6_IS_ADDR_UNSPECIFIED( &m_pEndpointIPv6.sin6_addr ) )
+					m_pEndpointIPv6 = *pEndpointIPv6;
+			}
+			
 			m_bUDP = ! Network.IsFirewalledAddress( &m_pEndpoint.sin_addr );
+			m_bUDP = m_bUDP || ! Network.IsFirewalledAddress( &m_pEndpointIPv6.sin6_addr );
 
 			m_nKey = pPacket->ReadLongBE();
 			DWORD* pZero = (DWORD*)( pPacket->m_pBuffer + pPacket->m_nPosition - 4 );
 			*pZero = 0;
 		}
-		else if ( nType == G2_PACKET_UDP && nLength >= 6 )
+		else if ( nType == G2_PACKET_UDP )	
 		{
-			m_pEndpoint.sin_addr.S_un.S_addr = pPacket->ReadLongLE();
-			m_pEndpoint.sin_port = htons( pPacket->ReadShortBE() );
+			// Use only IPv4p, IPv4p + Key, IPv4p + Key + IPv6p, IPv4p + Key + IPv6p + Key
 
-			if ( m_pEndpoint.sin_addr.S_un.S_addr == 0 && pEndpoint != NULL )
-				m_pEndpoint = *pEndpoint;
-			m_bUDP = ! Network.IsFirewalledAddress( &m_pEndpoint.sin_addr );
-			if ( m_bUDP ) m_pEndpoint.sin_family = PF_INET;
+			//       IPv4p    ||    IPv4p + Key   ||  IPv4p + IPv6p
+			if ( nLength == 6 || nLength == 6 + 4 || nLength == 6 + 18 
+			//	||   IPv4p + Key + IPv6p || IPv4p + Key + IPv6p + Key
+				|| nLength == 6 + 4 + 18 || nLength == 6 + 4 + 18 + 4 ) // IPv4
+			{
+				m_pEndpoint.sin_addr.S_un.S_addr = pPacket->ReadLongLE();
+				m_pEndpoint.sin_port = htons( pPacket->ReadShortBE() );
 
-			if ( nLength >= 10 )
+				if ( m_pEndpoint.sin_addr.S_un.S_addr == 0 && pEndpointIPv4 != NULL )
+					m_pEndpoint = *pEndpointIPv4;
+
+				m_bUDP = ! Network.IsFirewalledAddress( &m_pEndpoint.sin_addr );
+
+				if ( m_bUDP ) m_pEndpoint.sin_family = PF_INET;
+			}
+
+			//	    IPv4 + Key    ||   IPv4 + Key + IPv6   || IPv4p + Key + IPv6p + Key
+			if ( nLength == 6 + 4 || nLength == 6 + 4 + 18 || nLength == 6 + 4 + 18 + 4 ) // Key
+			{
+				m_nKey = pPacket->ReadLongBE();
+				DWORD* pZero = (DWORD*)( pPacket->m_pBuffer + pPacket->m_nPosition - 4 );
+				*pZero = 0;
+			}
+		
+			//       IPv6p     ||    IPv6p + Key    ||   IPv4p + IPv6p    
+			if ( nLength == 18 || nLength == 18 + 4 ||  nLength == 6 + 18 
+			//  ||  IPv4p + Key + IPv6p  || IPv4p + Key + IPv6p + Key
+				|| nLength == 6 + 4 + 18 || nLength == 6 + 4 + 18 + 4 ) // IPv6
+			{
+				pPacket->Read( &m_pEndpointIPv6.sin6_addr, sizeof( IN6_ADDR ) );
+				m_pEndpointIPv6.sin6_port = htons( pPacket->ReadShortBE() );
+
+				if ( IN6_IS_ADDR_UNSPECIFIED( &m_pEndpointIPv6.sin6_addr ) && pEndpointIPv6 != NULL )
+					m_pEndpointIPv6 = *pEndpointIPv6;
+
+				m_bUDP = ! Network.IsFirewalledAddress( &m_pEndpointIPv6.sin6_addr );
+
+				if ( m_bUDP ) m_pEndpointIPv6.sin6_family = PF_INET6;
+			}
+
+			//	    IPv6p + Key    || IPv4p + Key + IPv6p + Key
+			if ( nLength == 18 + 4 || nLength == 6 + 4 + 18 + 4) // Key
 			{
 				m_nKey = pPacket->ReadLongBE();
 				DWORD* pZero = (DWORD*)( pPacket->m_pBuffer + pPacket->m_nPosition - 4 );
@@ -1168,7 +1239,7 @@ BOOL CQuerySearch::ReadDCPacket(CDCPacket* pPacket, const SOCKADDR_IN* pEndpoint
 	LPSTR szFlag2 = strchr( szFlag1, '?' );
 	if ( ! szFlag2 )
 		return FALSE;
-	*szFlag2++ = 0;	
+	*szFlag2++ = 0;
 
 	LPSTR szSize = strchr( szFlag2, '?' );
 	if ( ! szSize )
@@ -1415,7 +1486,7 @@ BOOL CQuerySearch::CheckValid(bool bExpression)
 				nValidCharacters = nLength * 2;
 				bExtendChar = true;	// set Extended char flag
 			}
-			else if ( 0x800 <= szChar && 0xffff >= szChar)  // check if the char is 3 byte length in UTF8 (non-char will not reach here)
+			else if ( 0x800 <= szChar )  // check if the char is 3 byte length in UTF8 (non-char will not reach here)
 			{
 				nValidCharacters = nLength * 3;
 				bExtendChar = true;	// set Extended char flag
@@ -1470,6 +1541,38 @@ BOOL CQuerySearch::CheckValid(bool bExpression)
 	return FALSE;
 
 #endif // LAN_MODE
+}
+
+CString CQuerySearch::GetSearch() const
+{
+	return HasHash() ? GetURN() : m_sSearch;
+}
+
+void CQuerySearch::SetSearch(const CString& sSearch)
+{
+	m_sSearch.Empty();
+	m_oTiger.clear();
+	m_oSHA1.clear();
+	m_oED2K.clear();
+	m_oMD5.clear();
+	m_oBTH.clear();
+
+	m_oTiger.fromUrn( sSearch ) || m_oTiger.fromUrn< Hashes::base16Encoding >( sSearch );
+	m_oSHA1.fromUrn( sSearch ) || m_oSHA1.fromUrn< Hashes::base16Encoding >( sSearch );
+	m_oED2K.fromUrn( sSearch );
+	m_oMD5.fromUrn( sSearch );
+	m_oBTH.fromUrn( sSearch ) || m_oBTH.fromUrn< Hashes::base16Encoding >( sSearch );
+	if ( ! HasHash() )
+	{
+		m_oTiger.fromString( sSearch ) || m_oTiger.fromString< Hashes::base16Encoding >( sSearch ) ||
+		m_oSHA1.fromString( sSearch ) || m_oSHA1.fromString< Hashes::base16Encoding >( sSearch ) ||
+		m_oED2K.fromString( sSearch ) ||
+		m_oMD5.fromString( sSearch ) ||
+		m_oBTH.fromString( sSearch ) || m_oBTH.fromString< Hashes::base16Encoding >( sSearch );
+	}
+	if ( ! HasHash() )
+		// Keyword search
+		m_sSearch = sSearch;
 }
 
 //////////////////////////////////////////////////////////////////////
@@ -1554,7 +1657,7 @@ TRISTATE CQuerySearch::MatchMetadata(LPCTSTR pszSchemaURI, const CXMLElement* pX
 
 	for ( POSITION pos = m_pSchema->GetMemberIterator() ; pos ; )
 	{
-		const CSchemaMember* pMember = m_pSchema->GetNextMember( pos );
+		CSchemaMemberPtr pMember = m_pSchema->GetNextMember( pos );
 
 		CString strSearch = pMember->GetValueFrom( pRoot );
 		CString strTarget = pMember->GetValueFrom( pXML );
@@ -1592,7 +1695,7 @@ BOOL CQuerySearch::MatchMetadataShallow(LPCTSTR pszSchemaURI, const CXMLElement*
 	{
 		for ( POSITION pos = pSchema->GetMemberIterator() ; pos ; )
 		{
-			CSchemaMember* pMember = pSchema->GetNextMember( pos );
+			CSchemaMemberPtr pMember = pSchema->GetNextMember( pos );
 
 			if ( pMember->m_bSearched )
 			{
@@ -1734,8 +1837,8 @@ BOOL CQuerySearch::NumberMatch(const CString& strValue, const CString& strRange)
 
 void CQuerySearch::BuildWordList(bool bExpression, bool /* bLocal */ )
 {
-	m_sSearch.Trim();
 	ToLower( m_sSearch );
+	m_sSearch.Trim();
 
 	// Parse "download-like" searches
 	if ( 0 == _tcsncmp( m_sSearch, _T("magnet:?"), 8 ) )
@@ -2000,7 +2103,7 @@ CString CQuerySearch::BuildRegExp(const CString& strPattern) const
 		{
 			bChanged = true;
 
-			int nLength = pszLt - pszPattern;
+			int nLength = (int)( pszLt - pszPattern );
 			if ( nLength )
 			{
 				strFilter.Append( pszPattern, nLength );
@@ -2024,8 +2127,8 @@ CString CQuerySearch::BuildRegExp(const CString& strPattern) const
 					// Add all keywords at the "<_>" position
 					for ( CQuerySearch::const_iterator i = begin(); i != end(); ++i )
 					{
-						strFilter.AppendFormat( L"%s\\s*", 
-							CString( i->first, (int)( i->second ) ) );
+						strFilter.AppendFormat( L"%s\\s*",
+							(LPCTSTR)CString( i->first, (int)( i->second ) ) );
 					}
 				}
 				else
@@ -2042,8 +2145,8 @@ CString CQuerySearch::BuildRegExp(const CString& strPattern) const
 					{
 						if ( nWord == nNumber )
 						{
-							strFilter.AppendFormat( L"%s\\s*", 
-								CString( i->first, (int)( i->second ) ) );
+							strFilter.AppendFormat( L"%s\\s*",
+								(LPCTSTR)CString( i->first, (int)( i->second ) ) );
 							break;
 						}
 					}
