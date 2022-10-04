@@ -154,8 +154,8 @@ ChangesEnvironment=yes
 OutputManifestFile=Manifest_{#ConfigurationName}{#PlatformName}.txt
 MinVersion=6.0
 #if PlatformName == "x64"
-ArchitecturesAllowed=x64
-ArchitecturesInstallIn64BitMode=x64
+ArchitecturesAllowed=x64 arm64
+ArchitecturesInstallIn64BitMode=x64 arm64
 #endif
 
 ; Set the CVS root as source dir (up 2 levels)
@@ -164,7 +164,7 @@ SourceDir={#SourcePath}..\..
 VersionInfoVersion={#version}
 VersionInfoDescription={#Description}
 AppPublisher={#Publisher}
-AppCopyright=Copyright © {#Publisher}. All rights reserved.
+AppCopyright=Copyright ï¿½ {#Publisher}. All rights reserved.
 
 ; Links to website for software panel
 AppPublisherURL=http://shareaza.sourceforge.net/
