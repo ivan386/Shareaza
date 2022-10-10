@@ -139,10 +139,10 @@
       <AdditionalIncludeDirectories>$(IntDir);%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ResourceCompile>
     <Link>
-      <AdditionalDependencies>bzlib.lib;regexp.lib;secur32.lib;rasapi32.lib;winmm.lib;version.lib;ws2_32.lib;wininet.lib;Iphlpapi.lib;msi.lib;powrprof.lib;mstask.lib;windowscodecs.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>bzlib.lib;regexp.lib;secur32.lib;rasapi32.lib;winmm.lib;version.lib;ws2_32.lib;wininet.lib;Iphlpapi.lib;msi.lib;powrprof.lib;mstask.lib;windowscodecs.lib;BugTrapD.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <SubSystem>Windows</SubSystem>
       <TargetMachine>MachineX86</TargetMachine>
-      <AdditionalLibraryDirectories>$(OutDir)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>..\BugTrap;$(OutDir)</AdditionalLibraryDirectories>
       <ImageHasSafeExceptionHandlers>false</ImageHasSafeExceptionHandlers>
       <GenerateDebugInformation>DebugFull</GenerateDebugInformation>
     </Link>
@@ -184,7 +184,7 @@
       <AdditionalIncludeDirectories>$(IntDir);%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ResourceCompile>
     <Link>
-      <AdditionalDependencies>bzlib.lib;regexp.lib;secur32.lib;rasapi32.lib;winmm.lib;version.lib;ws2_32.lib;wininet.lib;Iphlpapi.lib;msi.lib;powrprof.lib;mstask.lib;windowscodecs.lib;BugTrapD-x64.lib%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>bzlib.lib;regexp.lib;secur32.lib;rasapi32.lib;winmm.lib;version.lib;ws2_32.lib;wininet.lib;Iphlpapi.lib;msi.lib;powrprof.lib;mstask.lib;windowscodecs.lib;BugTrapD-x64.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <SubSystem>Windows</SubSystem>
       <TargetMachine>MachineX64</TargetMachine>
       <KeyFile>
@@ -238,7 +238,7 @@
       <AdditionalIncludeDirectories>$(IntDir);%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ResourceCompile>
     <Link>
-      <AdditionalDependencies>bzlib.lib;regexp.lib;secur32.lib;rasapi32.lib;winmm.lib;version.lib;ws2_32.lib;wininet.lib;Iphlpapi.lib;msi.lib;powrprof.lib;mstask.lib;windowscodecs.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>bzlib.lib;regexp.lib;secur32.lib;rasapi32.lib;winmm.lib;version.lib;ws2_32.lib;wininet.lib;Iphlpapi.lib;msi.lib;powrprof.lib;mstask.lib;windowscodecs.lib;BugTrap.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <SubSystem>Windows</SubSystem>
       <OptimizeReferences>true</OptimizeReferences>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
@@ -246,7 +246,7 @@
       <TargetMachine>MachineX86</TargetMachine>
       <KeyFile>
       </KeyFile>
-      <AdditionalLibraryDirectories>$(OutDir)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>..\BugTrap;$(OutDir)</AdditionalLibraryDirectories>
     </Link>
     <Manifest />
     <Bscmake>
@@ -292,7 +292,7 @@
       <AdditionalIncludeDirectories>$(IntDir);%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ResourceCompile>
     <Link>
-      <AdditionalDependencies>bzlib.lib;regexp.lib;secur32.lib;rasapi32.lib;winmm.lib;version.lib;ws2_32.lib;wininet.lib;Iphlpapi.lib;msi.lib;powrprof.lib;mstask.lib;windowscodecs.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>bzlib.lib;regexp.lib;secur32.lib;rasapi32.lib;winmm.lib;version.lib;ws2_32.lib;wininet.lib;Iphlpapi.lib;msi.lib;powrprof.lib;mstask.lib;windowscodecs.lib;BugTrap-x64.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <SubSystem>Windows</SubSystem>
       <OptimizeReferences>true</OptimizeReferences>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
@@ -300,7 +300,7 @@
       <TargetMachine>MachineX64</TargetMachine>
       <KeyFile>
       </KeyFile>
-      <AdditionalLibraryDirectories>$(OutDir)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>..\BugTrap;$(OutDir)</AdditionalLibraryDirectories>
     </Link>
     <Manifest />
     <Bscmake>
