@@ -202,7 +202,7 @@ Source: "{#Compiler}\{#PlatformName}\{#ConfigurationName}\bzlib.dll"; DestDir: "
 
 ; BugTrap
 Source: "BugTrap\BugTrap{#ConfigurationName}-{#PlatformName}.dll"; DestDir: "{app}"; DestName: "BugTrap.dll"; Flags: overwritereadonly replacesameversion restartreplace uninsremovereadonly sortfilesbyextension
-Source: "{#Compiler}\{#PlatformName}\{#ConfigurationName}\dbghelp.dll"; DestDir: "{app}"; Flags: overwritereadonly replacesameversion restartreplace uninsremovereadonly sortfilesbyextension
+Source: "BugTrap\dbghelp.dll"; DestDir: "{app}"; Flags: overwritereadonly replacesameversion restartreplace uninsremovereadonly sortfilesbyextension
 
 ; HashLib
 Source: "{#Compiler}\{#PlatformName}\{#ConfigurationName}\HashLib.dll"; DestDir: "{app}"; DestName: "HashLib.dll"; Flags: overwritereadonly replacesameversion restartreplace uninsremovereadonly sortfilesbyextension
