@@ -201,7 +201,7 @@ Source: "{#Compiler}\{#PlatformName}\{#ConfigurationName}\zlibwapi.dll"; DestDir
 Source: "{#Compiler}\{#PlatformName}\{#ConfigurationName}\bzlib.dll"; DestDir: "{app}"; Flags: overwritereadonly replacesameversion restartreplace uninsremovereadonly sortfilesbyextension
 
 ; BugTrap
-Source: "{#Compiler}\{#PlatformName}\{#ConfigurationName}\BugTrap.dll"; DestDir: "{app}"; Flags: overwritereadonly replacesameversion restartreplace uninsremovereadonly sortfilesbyextension
+Source: "BugTrap\BugTrap{#ConfigurationName}-{#PlatformName}.dll"; DestDir: "{app}"; DestName: "BugTrap.dll"; Flags: overwritereadonly replacesameversion restartreplace uninsremovereadonly sortfilesbyextension
 Source: "{#Compiler}\{#PlatformName}\{#ConfigurationName}\dbghelp.dll"; DestDir: "{app}"; Flags: overwritereadonly replacesameversion restartreplace uninsremovereadonly sortfilesbyextension
 
 ; HashLib

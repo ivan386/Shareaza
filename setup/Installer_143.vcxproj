@@ -103,10 +103,6 @@
     <None Include="scripts\readme.txt" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\BugTrap\BugTrap_143.vcxproj">
-      <Project>{e8cf1ada-264a-4127-86c2-fd7057d3792c}</Project>
-      <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
-    </ProjectReference>
     <ProjectReference Include="..\bzlib\bzlib_143.vcxproj">
       <Project>{a14f5e46-c04c-4f32-9985-2e15819a722a}</Project>
     </ProjectReference>
