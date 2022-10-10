@@ -257,7 +257,7 @@ Source: "{#Compiler}\{#PlatformName}\{#ConfigurationName}\ZIPBuilder.dll"; DestD
 
 ; Main files
 Source: "{#Compiler}\{#PlatformName}\{#ConfigurationName}\Shareaza.pdb"; DestDir: "{app}"; Flags: overwritereadonly replacesameversion restartreplace uninsremovereadonly sortfilesbyextension
-Source: "{#Compiler}\{#PlatformName}\{#ConfigurationName}\BugTrap.pdb"; DestDir: "{app}"; Flags: overwritereadonly replacesameversion restartreplace uninsremovereadonly sortfilesbyextension
+;Source: "{#Compiler}\{#PlatformName}\{#ConfigurationName}\BugTrap.pdb"; DestDir: "{app}"; Flags: overwritereadonly replacesameversion restartreplace uninsremovereadonly sortfilesbyextension
 
 #endif
 
