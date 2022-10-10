@@ -215,7 +215,6 @@ Source: "BugTrap\BugTrap-x64.dll"; DestDir: "{app}"; Flags: overwritereadonly re
 #endif
 #endif
 
-Source: "BugTrap\BugTrap{#ConfigurationName}-{#PlatformName}.dll"; DestDir: "{app}"; DestName: "BugTrap.dll"; Flags: overwritereadonly replacesameversion restartreplace uninsremovereadonly sortfilesbyextension
 Source: "BugTrap\dbghelp.dll"; DestDir: "{app}"; Flags: overwritereadonly replacesameversion restartreplace uninsremovereadonly sortfilesbyextension
 
 ; HashLib
