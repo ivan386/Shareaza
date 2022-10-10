@@ -201,8 +201,21 @@ Source: "{#Compiler}\{#PlatformName}\{#ConfigurationName}\zlibwapi.dll"; DestDir
 Source: "{#Compiler}\{#PlatformName}\{#ConfigurationName}\bzlib.dll"; DestDir: "{app}"; Flags: overwritereadonly replacesameversion restartreplace uninsremovereadonly sortfilesbyextension
 
 ; BugTrap
-Source: "{#Compiler}\{#PlatformName}\{#ConfigurationName}\BugTrap.dll"; DestDir: "{app}"; Flags: overwritereadonly replacesameversion restartreplace uninsremovereadonly sortfilesbyextension
-Source: "{#Compiler}\{#PlatformName}\{#ConfigurationName}\dbghelp.dll"; DestDir: "{app}"; Flags: overwritereadonly replacesameversion restartreplace uninsremovereadonly sortfilesbyextension
+#if ConfigurationName == "Debug"
+#if PlatformName == "Win32"
+Source: "BugTrap\BugTrapD.dll"; DestDir: "{app}"; Flags: overwritereadonly replacesameversion restartreplace uninsremovereadonly sortfilesbyextension
+#elif PlatformName == "x64"
+Source: "BugTrap\BugTrapD-x64.dll"; DestDir: "{app}"; Flags: overwritereadonly replacesameversion restartreplace uninsremovereadonly sortfilesbyextension
+#endif
+#elif ConfigurationName == "Release"
+#if PlatformName == "Win32"
+Source: "BugTrap\BugTrap.dll"; DestDir: "{app}"; Flags: overwritereadonly replacesameversion restartreplace uninsremovereadonly sortfilesbyextension
+#elif PlatformName == "x64"
+Source: "BugTrap\BugTrap-x64.dll"; DestDir: "{app}"; Flags: overwritereadonly replacesameversion restartreplace uninsremovereadonly sortfilesbyextension
+#endif
+#endif
+
+Source: "BugTrap\dbghelp.dll"; DestDir: "{app}"; Flags: overwritereadonly replacesameversion restartreplace uninsremovereadonly sortfilesbyextension
 
 ; HashLib
 Source: "{#Compiler}\{#PlatformName}\{#ConfigurationName}\HashLib.dll"; DestDir: "{app}"; DestName: "HashLib.dll"; Flags: overwritereadonly replacesameversion restartreplace uninsremovereadonly sortfilesbyextension
@@ -257,7 +270,7 @@ Source: "{#Compiler}\{#PlatformName}\{#ConfigurationName}\ZIPBuilder.dll"; DestD
 
 ; Main files
 Source: "{#Compiler}\{#PlatformName}\{#ConfigurationName}\Shareaza.pdb"; DestDir: "{app}"; Flags: overwritereadonly replacesameversion restartreplace uninsremovereadonly sortfilesbyextension
-Source: "{#Compiler}\{#PlatformName}\{#ConfigurationName}\BugTrap.pdb"; DestDir: "{app}"; Flags: overwritereadonly replacesameversion restartreplace uninsremovereadonly sortfilesbyextension
+;Source: "{#Compiler}\{#PlatformName}\{#ConfigurationName}\BugTrap.pdb"; DestDir: "{app}"; Flags: overwritereadonly replacesameversion restartreplace uninsremovereadonly sortfilesbyextension
 
 #endif
 
