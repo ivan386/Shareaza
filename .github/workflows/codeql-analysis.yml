@@ -56,8 +56,17 @@ jobs:
         
     # Autobuild attempts to build any compiled languages  (C/C++, C#, or Java).
     # If this step fails, then you should remove it and run the build manually (see below)
-    - name: Autobuild
+    - if: matrix.language == 'javascript'
+      name: Autobuild Javascript
       uses: github/codeql-action/autobuild@v2
+
+    - if: matrix.language == 'cpp'
+      name: Build C++ Shareaza PRJ
+      run: |
+        nuget restore zlibwapi/zlibwapi_143.vcxproj -PackagesDirectory zlibwapi/packages
+        nuget restore vc143/Shareaza.sln
+        msbuild vc143/Shareaza.sln /nologo /v:m /t:Rebuild /p:ForceImportBeforeCppTargets=vc143/ReleaseBuild.props /p:Configuration=Release /p:Platform=Win32 /fl /flp:Summary
+
 
     # ℹ️ Command-line programs to run using the OS shell.
     # 📚 See https://docs.github.com/en/actions/using-workflows/workflow-syntax-for-github-actions#jobsjob_idstepsrun
