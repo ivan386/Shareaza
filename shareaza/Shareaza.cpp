@@ -330,8 +330,9 @@ BOOL CShareazaApp::InitInstance()
 	AfxOleInit();									// Initializes OLE support for the application.
 	AfxGetThread()->m_lpfnOleTermOrFreeLib = AfxOleTermOrFreeLibSafe;
 	CoInitializeSecurity( NULL, -1, NULL, NULL, RPC_C_AUTHN_LEVEL_PKT, RPC_C_IMP_LEVEL_IMPERSONATE, NULL, EOAC_NONE, NULL );
-//	m_pFontManager = new CFontManager();
-	AfxEnableControlContainer( /*m_pFontManager*/); // Enable support for containment of OLE controls.
+	InitFonts();				// Loads default fonts. Depends on Settings.Load().
+	CFontManager *m_pFontManager = new CFontManager();
+	AfxEnableControlContainer(m_pFontManager); // Enable support for containment of OLE controls.
 	InitResources();			// Loads theApp settings.
 	Settings.Load();			// Loads settings. Depends on InitResources().
 
@@ -354,7 +355,6 @@ BOOL CShareazaApp::InitInstance()
 		}
 	}
 
-	InitFonts();				// Loads default fonts. Depends on Settings.Load().
 	Skin.CreateDefault();		// Loads colors, fonts and language. Depends on InitFonts().
 	Register();					// Re-register Shareaza Type Library
 	LoadStdProfileSettings();	// Load MRU file list and last preview state.

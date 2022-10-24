@@ -334,5 +334,5 @@ pip-log.txt
 /plugins/ZIPBuilder/ZIPBuilder.h
 
 #NuGet
-/vc2022/.vs/*
-/vc2022/packages/*
+/vc143/.vs/*
+/vc143/packages/*
