@@ -151,6 +151,7 @@
     <PostBuildEvent />
     <Manifest>
       <AdditionalManifestFiles>compatibility.manifest</AdditionalManifestFiles>
+      <EnableDpiAwareness>false</EnableDpiAwareness>
     </Manifest>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
@@ -202,6 +203,7 @@
     <PostBuildEvent />
     <Manifest>
       <AdditionalManifestFiles>compatibility.manifest</AdditionalManifestFiles>
+      <EnableDpiAwareness>false</EnableDpiAwareness>
     </Manifest>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -257,6 +259,7 @@
     <PostBuildEvent />
     <Manifest>
       <AdditionalManifestFiles>compatibility.manifest</AdditionalManifestFiles>
+      <EnableDpiAwareness>false</EnableDpiAwareness>
     </Manifest>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
@@ -311,6 +314,7 @@
     <PostBuildEvent />
     <Manifest>
       <AdditionalManifestFiles>compatibility.manifest</AdditionalManifestFiles>
+      <EnableDpiAwareness>false</EnableDpiAwareness>
     </Manifest>
   </ItemDefinitionGroup>
   <ItemGroup>

@@ -29,6 +29,14 @@ static char THIS_FILE[]=__FILE__;
 #define new DEBUG_NEW
 #endif
 
+int GetDpi(HWND hWnd)
+{
+	HDC hDC = ::GetDC(hWnd);
+	INT ydpi = ::GetDeviceCaps(hDC, LOGPIXELSY);
+	::ReleaseDC(hWnd, hDC);
+	return ydpi;
+}
+
 CFontManager::CFontManager(void)
 {
 	LOGFONT lf;
@@ -38,7 +46,15 @@ CFontManager::CFontManager(void)
 	if ( lf.lfHeight < 0 )
 		lf.lfHeight = -lf.lfHeight;
 
-	m_nDefaultSize = (WORD)MulDiv( lf.lfHeight, 72, GetDeviceCaps( hDC, LOGPIXELSY ) );
+	int dpi = GetDpi(GetDesktopWindow());
+	int scaling = static_cast<int>(100.0 * 96 / dpi);
+
+	//m_nDefaultSize = (WORD)MulDiv( lf.lfHeight, 96, GetDeviceCaps( hDC, LOGPIXELSY ) );
+	m_nDefaultSize = (WORD)lf.lfHeight * scaling/100;
+	//m_nDefaultSize = scaling;
+	
+//	m_nDefaultSize = 10;
+
 	m_sFontName = lf.lfFaceName;
 
 	ReleaseDC( NULL, hDC );
