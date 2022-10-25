@@ -9,6 +9,10 @@ jobs:
       SONAR_SCANNER_VERSION: 4.7.0.2747
       SONAR_SERVER_URL: "https://sonarcloud.io"
       BUILD_WRAPPER_OUT_DIR: build_wrapper_output_directory # Directory where build-wrapper output will be placed
+      # Path to the solution file relative to the root of the project.
+      SOLUTION_FILE_PATH: vc143/Shareaza.sln
+      RELEASEBUILD_FILE_PATH: vc143/ReleaseBuild.props
+
     steps:
       - uses: actions/checkout@v2
         with:
