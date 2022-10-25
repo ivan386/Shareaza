@@ -66,7 +66,7 @@ BOOL CDonkeyServersDlg::OnInitDialog()
 
 	m_sURL = Settings.eDonkey.ServerListURL;
 
-	m_wndOK.EnableWindow( m_sURL.Find( _T("http://") ) == 0 );
+	m_wndOK.EnableWindow( m_sURL.Find( _T("http://") ) == 0 || m_sURL.Find(_T("https://")) == 0 );
 	m_wndProgress.SetRange( 0, 100 );
 	m_wndProgress.SetPos( 0 );
 
@@ -79,14 +79,14 @@ void CDonkeyServersDlg::OnChangeURL()
 {
 	UpdateData();
 
-	m_wndOK.EnableWindow( m_sURL.Find( _T("http://") ) == 0 );
+	m_wndOK.EnableWindow( m_sURL.Find( _T("http://") ) == 0 || m_sURL.Find(_T("https://")) == 0);
 }
 
 void CDonkeyServersDlg::OnOK()
 {
 	UpdateData();
 
-	if ( m_sURL.Find( _T("http://") ) != 0 )
+	if ( !(m_sURL.Find( _T("http://")) == 0 || m_sURL.Find(_T("https://")) == 0) )
 		return;
 
 	if ( ! m_pRequest.SetURL( m_sURL ) )
