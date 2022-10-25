@@ -1,8 +1,8 @@
-/* $Id: wingenminiupnpcstrings.c,v 1.4 2015/02/08 08:46:06 nanard Exp $ */
+/* $Id: wingenminiupnpcstrings.c,v 1.6 2021/08/21 09:43:40 nanard Exp $ */
 /* Project: miniupnp
- * http://miniupnp.free.fr/ or http://miniupnp.tuxfamily.org/
+ * http://miniupnp.free.fr/ or https://miniupnp.tuxfamily.org/
  * Author: Thomas Bernard
- * Copyright (c) 2005-2015 Thomas Bernard
+ * Copyright (c) 2005-2021 Thomas Bernard
  * This software is subjects to the conditions detailed
  * in the LICENSE file provided within this distribution */
 #include <stdio.h>
@@ -44,7 +44,7 @@ int main(int argc, char * * argv) {
 	fin = fopen("VERSION", "r");
 	fgets(miniupnpcVersion, sizeof(miniupnpcVersion), fin);
 	fclose(fin);
-	for(n = 0; n < sizeof(miniupnpcVersion); n++) {
+	for(n = 0; n < (int)sizeof(miniupnpcVersion); n++) {
 		if(miniupnpcVersion[n] < ' ')
 			miniupnpcVersion[n] = '\0';
 	}
@@ -78,6 +78,38 @@ int main(int argc, char * * argv) {
 		fclose(fin);
 		fclose(fout);
 		printf("%d lines written to %s.\n", n, argv[2]);
+	}
+	if(argc >= 4) {
+		fout = fopen(argv[3], "w");
+		if(fout == NULL) {
+			fprintf(stderr, "Cannot open %s for writing.\n", argv[2]);
+			return 1;
+		} else {
+			char * cur, * next;
+			fprintf(fout, "#define LIBMINIUPNPC_DOTTED_VERSION \"%s\"\n", miniupnpcVersion);
+			next = strchr(miniupnpcVersion, '.');
+			if (next && *next) {
+				*next = '\0';
+				next++;
+			}
+			fprintf(fout, "#define LIBMINIUPNPC_MAJOR_VERSION %s\n", miniupnpcVersion);
+			cur = next;
+			next = strchr(cur, '.');
+			if (next && *next) {
+				*next = '\0';
+				next++;
+			}
+			fprintf(fout, "#define LIBMINIUPNPC_MINOR_VERSION %s\n", cur);
+			cur = next;
+			next = strchr(cur, '.');
+			if (next && *next) {
+				*next = '\0';
+				next++;
+			}
+			fprintf(fout, "#define LIBMINIUPNPC_MICRO_VERSION %s\n", cur);
+			fclose(fout);
+			printf("%s written\n", argv[3]);
+		}
 	}
   return 0;
 }
