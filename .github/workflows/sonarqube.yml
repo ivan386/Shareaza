@@ -5,6 +5,12 @@ jobs:
   build:
     name: Build and analyze
     runs-on: windows-latest
+    strategy:
+      matrix:
+#        platform: [ Win32, x64 ]
+#        type: [ Release, Debug ]
+        platform: [ Win32, x64 ]
+        type: [ Release ]
     env:
       SONAR_SCANNER_VERSION: 4.7.0.2747
       SONAR_SERVER_URL: "https://sonarcloud.io"
