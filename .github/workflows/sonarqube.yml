@@ -4,7 +4,9 @@ on:
 jobs:
   build:
     name: Build and analyze
-    runs-on: windows-latest
+    #runs-on: windows-latest
+    runs-on: self-hosted
+
     strategy:
       matrix:
 #        platform: [ Win32, x64 ]
