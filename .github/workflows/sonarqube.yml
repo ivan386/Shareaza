@@ -4,14 +4,14 @@ on:
 jobs:
   build:
     name: Build and analyze
-    #runs-on: windows-latest
-    runs-on: self-hosted
+    runs-on: windows-latest
+    #runs-on: self-hosted
 
     strategy:
       matrix:
 #        platform: [ Win32, x64 ]
 #        type: [ Release, Debug ]
-        platform: [ Win32, x64 ]
+        platform: [ Win32 ]
         type: [ Release ]
     env:
       SONAR_SCANNER_VERSION: 4.7.0.2747
