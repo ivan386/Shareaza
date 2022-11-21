@@ -452,6 +452,7 @@ __int64 GetRandomNum<__int64>(const __int64& min, const __int64& max);
 
 #define WEB_SITE			"https://github.com/ansani/Shareaza/releases"
 #define WEB_SITE_T			_T( WEB_SITE )
+#define CONNECTION_SITE_T	_T("https://connectiontest.kirurusec.com/")
 
 // URLs used by Shareaza
 // -----------------------------------------------------------------------
