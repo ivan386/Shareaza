@@ -2910,8 +2910,8 @@ void CMainWnd::OnHelpFaq()
 void CMainWnd::OnHelpConnectiontest()
 {
 	CString strWebSite;
-	strWebSite.Format( _T("%shelp/test/?port=%u&lang=%s&Version=%s"),
-		WEB_SITE_T, Settings.Connection.InPort,
+	strWebSite.Format( _T("%s?port=%u&lang=%s&Version=%s"),
+		CONNECTION_SITE_T, Settings.Connection.InPort,
 		(LPCTSTR)Settings.General.Language, (LPCTSTR)theApp.m_sVersion );
 	ShellExecute( GetSafeHwnd(), _T("open"), strWebSite,
 		NULL, NULL, SW_SHOWNORMAL );
