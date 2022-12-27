@@ -325,6 +325,16 @@
       <EnableDpiAwareness>false</EnableDpiAwareness>
     </Manifest>
   </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(RevisionSHA)' != ''">
+    <ClCompile>
+        <AdditionalOptions>/DRevisionSHA=$(RevisionSHA) %(AdditionalOptions)</AdditionalOptions>
+    </ClCompile>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(RevisionDate)' != ''">
+    <ClCompile>
+        <AdditionalOptions>/DRevisionDate=$(RevisionDate) %(AdditionalOptions)</AdditionalOptions>
+    </ClCompile>
+  </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="AlbumFolder.cpp" />
     <ClCompile Include="AntiVirus.cpp" />
