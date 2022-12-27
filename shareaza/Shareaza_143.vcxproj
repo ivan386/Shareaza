@@ -113,8 +113,10 @@
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <PreBuildEvent>
-      <Message>Pre-Building...</Message>
-      <Command>cscript.exe //E:jscript //nologo revision.js</Command>
+      <Message>
+      </Message>
+      <Command>
+      </Command>
     </PreBuildEvent>
     <Midl>
       <PreprocessorDefinitions>_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
@@ -156,8 +158,10 @@
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <PreBuildEvent>
-      <Message>Pre-Building...</Message>
-      <Command>cscript.exe //E:jscript //nologo revision.js</Command>
+      <Message>
+      </Message>
+      <Command>
+      </Command>
     </PreBuildEvent>
     <Midl>
       <PreprocessorDefinitions>_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
@@ -208,8 +212,10 @@
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <PreBuildEvent>
-      <Message>Pre-Building...</Message>
-      <Command>cscript.exe //E:jscript //nologo revision.js</Command>
+      <Message>
+      </Message>
+      <Command>
+      </Command>
     </PreBuildEvent>
     <Midl>
       <PreprocessorDefinitions>NDEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
@@ -264,8 +270,10 @@
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <PreBuildEvent>
-      <Message>Pre-Building...</Message>
-      <Command>cscript.exe //E:jscript //nologo revision.js</Command>
+      <Message>
+      </Message>
+      <Command>
+      </Command>
     </PreBuildEvent>
     <Midl>
       <PreprocessorDefinitions>NDEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
@@ -316,6 +324,16 @@
       <AdditionalManifestFiles>compatibility.manifest</AdditionalManifestFiles>
       <EnableDpiAwareness>false</EnableDpiAwareness>
     </Manifest>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(RevisionSHA)' != ''">
+    <ClCompile>
+        <AdditionalOptions>/DRevisionSHA=$(RevisionSHA) %(AdditionalOptions)</AdditionalOptions>
+    </ClCompile>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(RevisionDate)' != ''">
+    <ClCompile>
+        <AdditionalOptions>/DRevisionDate=$(RevisionDate) %(AdditionalOptions)</AdditionalOptions>
+    </ClCompile>
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="AlbumFolder.cpp" />
@@ -1334,7 +1352,6 @@
     <None Include="Res\Wizard.png" />
     <None Include="Res\WizardDot.ico" />
     <None Include="Res\World.ico" />
-    <None Include="revision.js" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\bzlib\bzlib_143.vcxproj">

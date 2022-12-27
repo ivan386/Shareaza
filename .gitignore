@@ -253,8 +253,6 @@ pip-log.txt
 /plugins/GFLImageServices/GFLImageServices.h
 /plugins/DocumentReader/DocumentReader.h
 /plugins/7ZipBuilder/7ZipBuilder.h
-/shareaza/revision.h
-
 /setup/builds
 
 /shareaza/ShareazaOM.h
@@ -294,8 +292,6 @@ pip-log.txt
 /plugins/7ZipBuilder/Shareaza.h
 /plugins/7ZipBuilder/7ZipBuilder.h
 /shareaza/ShareazaOM.h
-
-/shareaza/revision.h
 /plugins/7ZipBuilder/7ZipBuilder.h
 /plugins/7ZipBuilder/Shareaza.h
 /plugins/DocumentReader/DocumentReader.h

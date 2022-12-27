@@ -2699,7 +2699,6 @@
     <None Include="Res\World.ico">
       <Filter>Resource Files</Filter>
     </None>
-    <None Include="revision.js" />
     <None Include="Res\in.ico">
       <Filter>Resource Files</Filter>
     </None>
