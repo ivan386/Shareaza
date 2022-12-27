@@ -23,8 +23,13 @@ jobs:
     - name: Checkout GIT sources
       uses: actions/checkout@v3
 
+    - name: Install GitVersion
+      uses: gittools/actions/gitversion/setup@v0.9.15
+      with:
+        versionSpec: '5.x'
+
     - name: Add MSBuild to PATH
-      uses: microsoft/setup-msbuild@v1.0.2
+      uses: microsoft/setup-msbuild@v1.3
 
     - name: Restore NuGet packages (zlibwapi)
       working-directory: ${{env.GITHUB_WORKSPACE}}
@@ -33,6 +38,10 @@ jobs:
     - name: Restore NuGet packages (Shareaza)
       working-directory: ${{env.GITHUB_WORKSPACE}}
       run: nuget restore ${{env.SOLUTION_FILE_PATH}}
+
+    - name: Determine Version
+      id:   gitversion
+      uses: gittools/actions/gitversion/execute@v0.9.15
 
     - name: Build
       working-directory: ${{env.GITHUB_WORKSPACE}}
