@@ -3727,25 +3727,31 @@ bool CLibraryBuilderInternals::ReadPDF(DWORD nIndex, HANDLE hFile, LPCTSTR pszPa
 				// inside parentheses and restore missing character
 				if ( strLine.GetAt( 0 ) == _T('(') && strLine.Right( 1 ) != _T(')') )
 				{
-					DWORD nRead = 1;
-					while ( nRead )
-					{
-						// Restore character
-						CHAR cChar;
-						SetFilePointer( hFile, -1, NULL, FILE_CURRENT );
-						if ( ! ReadFile( hFile, &cChar, 1, &nRead, NULL ) )
-							break;
-						strLine += cChar;
-
-						CString strNextLine = ReadPDFLine( hFile, false, true );
-
-						// Workaround for string with embedded zero bytes
-						for ( int i = 0; i < strNextLine.GetLength(); i++ )
-							strLine += strNextLine.GetAt( i );
-
-						if ( strLine.GetAt( strLine.GetLength() - 1 ) == _T(')') )
-							break;
+					if (strLine.Find(_T(")")) != -1) {
+						strLine = strLine.Left(strLine.Find(_T(")")) +1 );
 					}
+					else {
+						DWORD nRead = 1;
+						while (nRead)
+						{
+							// Restore character
+							CHAR cChar;
+							SetFilePointer(hFile, -1, NULL, FILE_CURRENT);
+							if (!ReadFile(hFile, &cChar, 1, &nRead, NULL))
+								break;
+							strLine += cChar;
+
+							CString strNextLine = ReadPDFLine(hFile, false, true);
+
+							// Workaround for string with embedded zero bytes
+							for (int i = 0; i < strNextLine.GetLength(); i++)
+								strLine += strNextLine.GetAt(i);
+
+							if (strLine.GetAt(strLine.GetLength() - 1) == _T(')'))
+								break;
+						}
+					}
+					
 				}
 
 				const CString strDecodedLine = DecodePDFText( strLine );
