@@ -45,18 +45,6 @@ The "Unicode Inno Setup QuickStart Pack" incudes additional componets that are r
 
 Also make sure you install Inno on your C drive. I generally install my programs on another drive but found when setting up VS2005 last time that the visual studio project file used to build shareaza used a script reference to access Inno. This script assumed that Inno was installed on C drive, so not having Inno installed on C drive caused an error in compiling. To avoid this potential problem I installed Inno on my C drive this time and had no problems.
 
-### Download and install TortoiseSVN
-
-from http://tortoisesvn.net.
-
-Use [TortoiseSVN](http://tortoisesvn.net/) "Checkout" with URL repository
-https://shareaza.svn.sourceforge.net/svnroot/shareaza/trunk/
-to download current code.
-
-[TortoiseSVN](http://tortoisesvn.net) will notify you of updates to the program as they are made available.
-
-Please note, the [TortoiseSVN](http://tortoisesvn.net/) required for compilation, Shareaza uses its COM-interface to retrieve source tree revision.
-
 ### Compile
 
 Once all the above is in place you can compile.
